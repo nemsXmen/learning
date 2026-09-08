@@ -139,6 +139,21 @@ that depends on them is accepted.
   addons or visual-regression tooling until something needs them.
 - CDC question or assumption: none.
 
+## Decision: ESLint flat config at the root, not `next lint`
+
+- Status: accepted
+- Context: `next lint` is deprecated and prompts interactively when no config
+  exists, which cannot run in CI; and slice 00 needs a rule that keeps colours in
+  the token file.
+- Decision: one flat `eslint.config.mjs` at the workspace root, run as `eslint .`.
+  It carries the typescript-eslint recommended set plus a `no-restricted-syntax`
+  rule banning hard-coded hex colours in `packages/ui` and `apps/web`.
+- Consequences: one config for every package instead of one per app; the colour
+  rule is enforced by tooling rather than by convention. Tests are exempt, since
+  they legitimately assert on literals the source must not contain.
+- CDC question or assumption: none. Spacing and duration literals are not covered
+  yet; a Tailwind-aware rule would be needed and is not justified today.
+
 ## Decision: Vitest for packages and web, Jest for the API
 
 - Status: accepted

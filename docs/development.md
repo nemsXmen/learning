@@ -72,7 +72,7 @@ failing at the first request.
 | `pnpm dev` | build the shared packages, then run web and api with hot reload |
 | `pnpm verify` | everything CI runs: typecheck, lint, content:validate, test, build |
 | `pnpm build` | build every workspace package in dependency order |
-| `pnpm lint` / `pnpm typecheck` | ESLint / `tsc --noEmit` across the workspace |
+| `pnpm lint` / `pnpm typecheck` | `eslint .` / `tsc --noEmit` across the workspace |
 | `pnpm test` | Vitest in packages and web, Jest in api |
 | `pnpm infra:up` / `infra:down` | start / stop PostgreSQL, Redis and Mailpit |
 | `pnpm infra:reset` | drop the volumes and start a clean stack |
