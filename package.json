@@ -6,13 +6,26 @@
     "node": ">=22"
   },
   "scripts": {
+    "setup": "pnpm install && pnpm infra:up && pnpm db:migrate && pnpm content:validate && pnpm content:sync",
     "dev": "pnpm --filter \"./packages/*\" build && pnpm --parallel --filter \"./apps/*\" dev",
     "build": "pnpm -r build",
+    "verify": "pnpm typecheck && pnpm lint && pnpm content:validate && pnpm test && pnpm build",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
-    "content:validate": "pnpm --filter @app/content validate",
-    "content:sync": "pnpm --filter @app/api content:sync"
+    "infra:up": "docker compose -f docker/compose.yml up -d",
+    "infra:down": "docker compose -f docker/compose.yml down",
+    "infra:reset": "docker compose -f docker/compose.yml down -v && docker compose -f docker/compose.yml up -d --wait",
+    "infra:ps": "docker compose -f docker/compose.yml ps",
+    "infra:logs": "docker compose -f docker/compose.yml logs -f",
+    "db:migrate": "pnpm --filter @app/api migration:run",
+    "db:revert": "pnpm --filter @app/api migration:revert",
+    "db:migration": "pnpm --filter @app/api migration:generate",
+    "db:psql": "docker exec -it learning-platform-postgres-1 psql -U learn -d learning",
+    "db:reset": "pnpm infra:reset && pnpm db:migrate && pnpm content:sync",
+    "content:validate": "pnpm --filter @app/content build && pnpm --filter @app/content validate",
+    "content:sync": "pnpm --filter @app/content build && pnpm --filter @app/api content:sync",
+    "mail": "echo Mailpit inbox: http://localhost:8025"
   },
   "devDependencies": {
     "typescript": "^5.6.3"

@@ -13,14 +13,12 @@ No global Nest or Next CLI is required; both are workspace dependencies.
 ## First run
 
 ```bash
-pnpm install
-cp .env.example .env                 # then fill the secrets below
-docker compose -f docker/compose.yml up -d   # PostgreSQL, Redis, Mailpit
-pnpm --filter @app/api migration:run
-pnpm content:validate
-pnpm content:sync                    # projects content/ metadata into PostgreSQL
-pnpm dev                             # web on :3000, api on :3001
+cp .env.example .env   # then fill the secrets below
+pnpm setup             # install, start the stack, migrate, validate and sync content
+pnpm dev               # web on :3000, api on :3001
 ```
+
+`pnpm setup` is the whole first run. Each step is also its own script, listed below.
 
 `pnpm dev` builds the shared packages, then runs both apps;
 `pnpm --filter @app/web dev` runs one (build the packages first with
@@ -39,7 +37,7 @@ Server-side only. No credential is ever prefixed `NEXT_PUBLIC_`.
 | Name | Example | Notes |
 | --- | --- | --- |
 | `PORT` | `3001` | |
-| `DATABASE_URL` | `postgres://learn:learn@localhost:5432/learning` | |
+| `DATABASE_URL` | `postgres://learn:learn@localhost:5433/learning` | |
 | `REDIS_URL` | `redis://localhost:6379` | cache, rate limiting, BullMQ |
 | `JWT_ACCESS_SECRET` | random 32+ bytes | short-lived access token |
 | `JWT_REFRESH_SECRET` | random 32+ bytes | rotating refresh token |
@@ -70,16 +68,22 @@ failing at the first request.
 
 | Command | Does |
 | --- | --- |
-| `pnpm dev` | run web and api with hot reload |
+| `pnpm setup` | first run: install, start the stack, migrate, validate and sync content |
+| `pnpm dev` | build the shared packages, then run web and api with hot reload |
+| `pnpm verify` | everything CI runs: typecheck, lint, content:validate, test, build |
 | `pnpm build` | build every workspace package in dependency order |
 | `pnpm lint` / `pnpm typecheck` | ESLint / `tsc --noEmit` across the workspace |
 | `pnpm test` | Vitest in packages and web, Jest in api |
-| `pnpm test:e2e` | Playwright journeys against a running stack |
+| `pnpm infra:up` / `infra:down` | start / stop PostgreSQL, Redis and Mailpit |
+| `pnpm infra:reset` | drop the volumes and start a clean stack |
+| `pnpm infra:ps` / `infra:logs` | container status / follow the logs |
+| `pnpm db:migrate` / `db:revert` | apply / roll back migrations |
+| `pnpm db:migration src/database/migrations/<Name>` | generate a migration from the entities |
+| `pnpm db:reset` | clean stack, migrate, then re-sync the catalog |
+| `pnpm db:psql` | open a psql shell on the running database |
 | `pnpm content:validate` | content schema and graph checks (CDC §44) |
 | `pnpm content:sync` | project content metadata into PostgreSQL |
-| `pnpm --filter @app/api mail:test --to <addr>` | send one probe email to verify SMTP config |
-| `pnpm --filter @app/api migration:generate --name <name>` | create a migration |
-| `pnpm --filter @app/api migration:run` / `migration:revert` | apply / roll back |
+| `pnpm mail` | print the local inbox URL |
 
 ## Database rules
 
@@ -104,7 +108,7 @@ against a compose-provisioned stack.
 
 ## Ports
 
-`3000` web · `3001` api · `5432` postgres · `6379` redis ·
+`3000` web · `3001` api · `5433` postgres · `6379` redis ·
 `1025` Mailpit SMTP · `8025` Mailpit web inbox.
 
 ## Email in development
