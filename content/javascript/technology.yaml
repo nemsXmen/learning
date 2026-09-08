@@ -1,0 +1,7 @@
+slug: javascript
+name: JavaScript
+order: 1
+description: >
+  Du modèle mental des variables jusqu'au modèle d'exécution : ce que le moteur
+  fait réellement quand ton code s'exécute.
+published: true

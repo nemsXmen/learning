@@ -1,0 +1,65 @@
+id: javascript-variables-quiz
+kind: QUIZ
+questions:
+  - id: js-variables-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que fait exactement `const` ?
+    options:
+      - Il empêche de réaffecter la liaison, sans figer la valeur pointée
+      - Il rend la valeur complètement immuable, y compris les objets
+      - Il crée une variable de portée fonction
+      - Il empêche la remontée de la déclaration
+    answer: [0]
+    explanation: >
+      `const` gèle le nom, pas le contenu. `const u = {}` suivi de `u.nom = 'Ada'`
+      est parfaitement valide : on modifie l'objet, on ne réaffecte pas la liaison.
+      Pour figer un objet il faut `Object.freeze()`, et seulement en surface.
+    skills:
+      - variables
+
+  - id: js-variables-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Qu'affiche `console.log(a)` juste avant `var a = 1` ?
+    answer: 'undefined'
+    explanation: >
+      Une déclaration `var` est remontée et initialisée à `undefined` avant
+      l'exécution du corps. La liaison existe donc déjà, sans la valeur attendue —
+      c'est précisément le bug silencieux que `let` transforme en `ReferenceError`.
+    skills:
+      - variables
+
+  - id: js-variables-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Accéder à une variable `let` avant sa déclaration lève une `ReferenceError`.
+    answer: true
+    explanation: >
+      C'est la zone morte temporelle : la liaison existe dès l'entrée du bloc mais
+      reste inutilisable jusqu'à sa déclaration. L'erreur est volontaire — lire une
+      variable avant qu'elle n'ait de sens est presque toujours un bug.
+    skills:
+      - variables
+
+  - id: js-variables-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles affirmations sur `var` sont vraies ?
+    options:
+      - Sa portée est la fonction, pas le bloc
+      - Elle est initialisée à `undefined` avant l'exécution
+      - Elle crée une liaison par itération de boucle
+      - Elle peut être redéclarée dans la même portée sans erreur
+    answer: [0, 1, 3]
+    explanation: >
+      `var` a une portée de fonction, est remontée avec `undefined`, et tolère la
+      redéclaration. En revanche c'est `let` qui crée une liaison par itération dans
+      une boucle : avec `var`, les trois callbacks partagent la même variable et
+      affichent tous la valeur finale.
+    skills:
+      - variables

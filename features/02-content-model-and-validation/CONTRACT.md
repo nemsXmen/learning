@@ -18,7 +18,8 @@ Library and CLI only:
 Issue codes are stable and named: `DUPLICATE_ID`, `DUPLICATE_SLUG`, `UNKNOWN_SKILL`,
 `UNKNOWN_PREREQUISITE`, `CYCLIC_SKILL_GRAPH`, `MISSING_FRONTMATTER_FIELD`,
 `MISSING_SECTION`, `INVALID_QUIZ`, `ANSWER_OUT_OF_RANGE`, `MISSING_EXPLANATION`,
-`BROKEN_LINK`. All issues are collected; the validator never stops at the first.
+`BROKEN_LINK`, `MALFORMED_FILE` (unreadable file, absent frontmatter, broken YAML),
+`EMPTY_CONTENT_DIR`. All issues are collected; the validator never stops at the first.
 
 ## Invariants
 

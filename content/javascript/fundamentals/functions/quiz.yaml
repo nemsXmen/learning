@@ -1,0 +1,66 @@
+id: javascript-functions-quiz
+kind: QUIZ
+questions:
+  - id: js-functions-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      D'où une fonction fléchée tire-t-elle son `this` ?
+    options:
+      - De la portée dans laquelle elle est écrite
+      - De l'objet sur lequel elle est appelée
+      - Toujours de l'objet global
+      - Du premier argument passé à l'appel
+    answer: [0]
+    explanation: >
+      Une fléchée n'a pas de `this` propre : elle utilise celui de la portée
+      englobante, figé à l'écriture. C'est ce qui la rend parfaite en callback
+      (`setTimeout` dans une méthode) et inadaptée comme méthode d'objet.
+    skills:
+      - functions
+
+  - id: js-functions-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      On peut appeler une fonction déclarée avec `function` avant la ligne de sa
+      déclaration.
+    answer: true
+    explanation: >
+      Une déclaration de fonction est remontée avec son corps entier, contrairement à
+      une expression de fonction, qui suit la règle de la variable qui la porte — et
+      reste donc dans la zone morte temporelle avec `const` ou `let`.
+    skills:
+      - functions
+
+  - id: js-functions-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Qu'est-ce qu'une fonction fléchée ne possède pas ?
+    options:
+      - Un `this` propre
+      - Un objet `arguments`
+      - Un `prototype`
+      - La capacité de renvoyer une valeur
+    answer: [0, 1, 2]
+    explanation: >
+      Une fléchée n'a ni `this`, ni `arguments`, ni `prototype` — c'est pourquoi
+      `new` est impossible avec elle. Elle renvoie évidemment des valeurs, et la
+      forme courte le fait même implicitement.
+    skills:
+      - functions
+
+  - id: js-functions-q4
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que renvoie `creer('Ada')` avec
+      `function creer(nom, id = nom.toLowerCase()) { return id; }` ?
+    answer: 'ada'
+    explanation: >
+      Une valeur par défaut n'est évaluée que si l'argument est absent, et elle peut
+      utiliser les paramètres déclarés avant elle. Ici `id` vaut donc
+      `'Ada'.toLowerCase()`, soit `'ada'`.
+    skills:
+      - functions

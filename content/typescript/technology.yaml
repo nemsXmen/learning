@@ -1,0 +1,7 @@
+slug: typescript
+name: TypeScript
+order: 2
+description: >
+  Écrire des types qui décrivent la réalité du code, et laisser le compilateur
+  faire le travail que tu ferais à la main.
+published: true

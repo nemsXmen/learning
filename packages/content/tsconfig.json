@@ -1,1 +1,14 @@
-{ "extends": "@app/config/tsconfig.base.json", "include": ["src"] }
+{
+  "extends": "@app/config/tsconfig.base.json",
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "ES2022"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}

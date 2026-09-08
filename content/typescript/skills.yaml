@@ -1,0 +1,20 @@
+skills:
+  - id: type-inference
+    name: Inférence de types
+    importance: 4
+    requires: []
+
+  - id: primitive-types
+    name: Types primitifs
+    importance: 3
+    requires: []
+
+  - id: generics
+    name: Génériques
+    importance: 5
+    requires: [type-inference]
+
+  - id: type-constraints
+    name: Contraintes de types
+    importance: 4
+    requires: [generics]

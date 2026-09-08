@@ -1,0 +1,25 @@
+skills:
+  - id: variables
+    name: Variables et liaisons
+    importance: 4
+    requires: []
+
+  - id: functions
+    name: Fonctions
+    importance: 5
+    requires: []
+
+  - id: scope
+    name: Portée
+    importance: 5
+    requires: [variables]
+
+  - id: lexical-environment
+    name: Environnement lexical
+    importance: 4
+    requires: [scope]
+
+  - id: closures
+    name: Closures
+    importance: 5
+    requires: [scope, functions]

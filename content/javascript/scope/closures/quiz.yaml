@@ -1,0 +1,90 @@
+id: javascript-closures-quiz
+kind: QUIZ
+questions:
+  - id: js-closures-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Qu'est-ce qu'une closure ?
+    options:
+      - Une fonction qui conserve l'accès à son environnement lexical
+      - Une classe JavaScript
+      - Une Promise
+      - Un module ES
+    answer: [0]
+    explanation: >
+      Une closure permet à une fonction d'accéder aux variables de son environnement
+      lexical même après la fin de l'exécution de celui-ci. Ce n'est pas un type ni
+      une construction à activer : c'est la conséquence directe de la portée lexicale.
+    skills:
+      - closures
+      - lexical-environment
+
+  - id: js-closures-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche ce code ?
+      `let m = 'avant'; const f = () => console.log(m); m = 'après'; f();`
+    answer: 'après'
+    explanation: >
+      Une closure capture la **variable**, pas sa valeur au moment de l'écriture.
+      Quand `f` s'exécute, elle lit l'état courant de `m`, qui vaut désormais
+      `'après'`. C'est l'erreur de raisonnement la plus fréquente sur les closures.
+    skills:
+      - closures
+
+  - id: js-closures-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i))`
+      affiche-t-il `3, 3, 3` ?
+    options:
+      - Les trois callbacks partagent la même liaison, qui vaut 3 à leur exécution
+      - setTimeout exécute les callbacks dans le désordre
+      - Les callbacks sont créés après la fin de la boucle
+      - var convertit i en chaîne de caractères
+    answer: [0]
+    explanation: >
+      `var` a une portée de fonction : une seule liaison `i` existe pour toute la
+      boucle. Les callbacks, exécutés après la fin de la boucle, lisent tous la même
+      variable devenue 3. Avec `let`, chaque itération reçoit sa propre liaison, d'où
+      `0, 1, 2`.
+    skills:
+      - closures
+      - scope
+
+  - id: js-closures-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Deux appels à une même fonction fabrique produisent deux closures partageant le
+      même état.
+    answer: false
+    explanation: >
+      Chaque appel crée un environnement lexical neuf. `const a = creerCompteur()` et
+      `const b = creerCompteur()` ont chacun leur `total` : incrémenter `a` ne touche
+      pas `b`. C'est exactement ce qui rend les closures utilisables comme état privé.
+    skills:
+      - closures
+
+  - id: js-closures-q5
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Quelles situations créent un risque de fuite mémoire par closure ?
+    options:
+      - Un callback long à vivre déclaré à côté d'un gros tableau qu'il ne lit pas
+      - Un écouteur d'événement jamais retiré qui référence un nœud du DOM
+      - Une closure qui ne référence qu'un entier
+      - Un compteur créé puis immédiatement abandonné
+    answer: [0, 1]
+    explanation: >
+      Une closure maintient vivant tout son environnement, pas seulement ce qu'elle
+      lit : un gros tableau déclaré à côté reste joignable. Un écouteur non retiré
+      garde son nœud DOM en vie. En revanche une closure sur un entier ne coûte rien,
+      et un environnement abandonné est collecté normalement.
+    skills:
+      - closures
+      - lexical-environment

@@ -14,7 +14,7 @@ content/
       module.yaml                title, order
       variables/                 a chapter directory
         lesson.md                frontmatter + body — the chapter
-        quiz.md                  practice questions (CDC §10 schema, YAML front block)
+        quiz.yaml                practice questions (CDC §10 schema)
         test.yaml                chapter test (optional in V1)
         exercises/               one file per exercise (authored, ungraded in V1)
   typescript/
@@ -65,7 +65,7 @@ skills:
 Edges must be acyclic and every referenced skill must exist. The graph — not the
 chapter order — drives recommendations and unlocking (CDC §19, §27, §89.9).
 
-## Quiz format (CDC §10)
+## Quiz format — `quiz.yaml` (CDC §10)
 
 ```yaml
 id: js-closures-q1
@@ -96,7 +96,11 @@ in V1 — see the open question in [decisions.md](./decisions.md).
 
 Fails the build on: duplicate ids or slugs, unknown prerequisite, unknown skill, cyclic
 skill graph, missing required frontmatter field, missing required section, malformed
-quiz, `answer` index out of range, missing explanation, broken relative link or asset.
+quiz, `answer` index out of range, missing explanation, broken relative link or asset,
+an unreadable file or invalid YAML, and an empty content directory.
+
+Line endings are normalised before parsing and before hashing, so a CRLF checkout
+neither corrupts YAML values nor invalidates every cached render.
 
 Output is a list of `path:line — problem`, so a content author fixes it without
 reading code. CI runs it on every push (CDC §44).
