@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #0B1020; color: #E5E7EB;
+           font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif; margin: 0;
+                 letter-spacing: -0.02em; font-weight: 600; }
+    a { color: #A5B4FC; text-decoration: none; }
+    a:hover { color: #C7D2FE; }
+    p { margin: 0; line-height: 1.65; }
+    .card { border: 1px solid #1F2937; border-radius: 16px; background: #111827; padding: 22px;
+            display: flex; flex-direction: column; gap: 16px; }
+    .soon { border-style: dashed; border-color: #263248; background: #0F1626; }
+    .meta { display: flex; gap: 14px; font-size: 12.5px; color: #64748B; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; min-height: 940px; background: #0B1020; padding: 40px 48px 56px; display: flex; flex-direction: column; gap: 30px;">
+
+  <header style="display: flex; align-items: flex-end; justify-content: space-between;">
+    <div>
+      <h1 style="font-size: 30px; margin-bottom: 8px;">Apprendre</h1>
+      <p style="font-size: 15px; color: #94A3B8;">Deux parcours ouverts, six en préparation. Chaque parcours suit tes compétences, pas tes chapitres lus.</p>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <span style="padding: 8px 14px; border-radius: 999px; border: 1px solid #4338CA; background: #1E1B4B; font-size: 13px; color: #C7D2FE; font-weight: 500;">Tous</span>
+      <span style="padding: 8px 14px; border-radius: 999px; border: 1px solid #1F2937; font-size: 13px; color: #94A3B8;">En cours</span>
+      <span style="padding: 8px 14px; border-radius: 999px; border: 1px solid #1F2937; font-size: 13px; color: #94A3B8;">Bientôt</span>
+    </div>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;">
+
+    <!-- JavaScript -->
+    <div class="card" style="border-color: #312E81;">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="width: 38px; height: 38px; border-radius: 11px; background: #422006; color: #FCD34D; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;">JS</span>
+          <div>
+            <h3 style="font-size: 17px;">JavaScript</h3>
+            <div style="font-size: 12.5px; color: #64748B;">12 modules · 86 chapitres</div>
+          </div>
+        </div>
+        <span style="padding: 3px 9px; border-radius: 999px; background: #16162E; border: 1px solid #312E81; font-size: 11px; color: #C4B5FD;">En cours</span>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 8px;"><span style="color: #94A3B8;">Progression</span><span style="font-weight: 600;">78 %</span></div>
+        <div style="height: 6px; border-radius: 3px; background: #1F2937; overflow: hidden;"><div style="width: 78%; height: 100%; background: #818CF8;"></div></div>
+      </div>
+      <div class="meta"><span>21 / 40 compétences</span><span>34 chapitres terminés</span></div>
+      <div style="margin-top: 2px; padding: 11px; border-radius: 10px; background: #6366F1; color: #FFFFFF; font-size: 13.5px; font-weight: 600; text-align: center;">Reprendre : Closures</div>
+    </div>
+
+    <!-- TypeScript -->
+    <div class="card">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="width: 38px; height: 38px; border-radius: 11px; background: #0C2740; color: #7DD3FC; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;">TS</span>
+          <div>
+            <h3 style="font-size: 17px;">TypeScript</h3>
+            <div style="font-size: 12.5px; color: #64748B;">9 modules · 54 chapitres</div>
+          </div>
+        </div>
+        <span style="padding: 3px 9px; border-radius: 999px; background: #16162E; border: 1px solid #312E81; font-size: 11px; color: #C4B5FD;">En cours</span>
+      </div>
+      <div>
+        <div style="display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 8px;"><span style="color: #94A3B8;">Progression</span><span style="font-weight: 600;">54 %</span></div>
+        <div style="height: 6px; border-radius: 3px; background: #1F2937; overflow: hidden;"><div style="width: 54%; height: 100%; background: #818CF8;"></div></div>
+      </div>
+      <div class="meta"><span>11 / 28 compétences</span><span>17 chapitres terminés</span></div>
+      <div style="margin-top: 2px; padding: 11px; border-radius: 10px; border: 1px solid #1F2937; color: #E5E7EB; font-size: 13.5px; font-weight: 500; text-align: center;">Reprendre : Generics</div>
+    </div>
+
+    <!-- Empty / not started -->
+    <div class="card">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="width: 38px; height: 38px; border-radius: 11px; background: #0B2A26; color: #5EEAD4; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600;">RE</span>
+          <div>
+            <h3 style="font-size: 17px;">React</h3>
+            <div style="font-size: 12.5px; color: #64748B;">Contenu en cours d'écriture</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 13.5px; color: #94A3B8;">Tu peux passer le test de niveau dès maintenant : il servira à générer ton parcours le jour de l'ouverture.</p>
+      <div class="meta"><span>Ouverture prévue après TypeScript</span></div>
+      <div style="margin-top: auto; padding: 11px; border-radius: 10px; border: 1px solid #1F2937; color: #94A3B8; font-size: 13.5px; font-weight: 500; text-align: center;">Passer le test de niveau</div>
+    </div>
+
+    <!-- Soon cards -->
+    <div class="card soon">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="width: 38px; height: 38px; border-radius: 11px; background: #111827; color: #64748B; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px;">NX</span>
+        <div><h3 style="font-size: 16px; color: #94A3B8;">Next.js</h3><div style="font-size: 12.5px; color: #475569;">14 chapitres prévus</div></div>
+      </div>
+      <span style="align-self: flex-start; padding: 3px 9px; border-radius: 999px; border: 1px solid #263248; font-size: 11px; color: #64748B;">Bientôt</span>
+    </div>
+
+    <div class="card soon">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="width: 38px; height: 38px; border-radius: 11px; background: #111827; color: #64748B; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px;">NE</span>
+        <div><h3 style="font-size: 16px; color: #94A3B8;">NestJS</h3><div style="font-size: 12.5px; color: #475569;">20 chapitres prévus</div></div>
+      </div>
+      <span style="align-self: flex-start; padding: 3px 9px; border-radius: 999px; border: 1px solid #263248; font-size: 11px; color: #64748B;">Bientôt</span>
+    </div>
+
+    <div class="card soon">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="width: 38px; height: 38px; border-radius: 11px; background: #111827; color: #64748B; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 13px;">PG</span>
+        <div><h3 style="font-size: 16px; color: #94A3B8;">PostgreSQL</h3><div style="font-size: 12.5px; color: #475569;">15 chapitres prévus</div></div>
+      </div>
+      <span style="align-self: flex-start; padding: 3px 9px; border-radius: 999px; border: 1px solid #263248; font-size: 11px; color: #64748B;">Bientôt</span>
+    </div>
+  </div>
+
+  <!-- States row: loading + error, so the design system covers them -->
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;">
+    <div class="card" style="gap: 14px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="width: 38px; height: 38px; border-radius: 11px; background: #1A2233;"></span>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 7px;">
+          <span style="width: 96px; height: 12px; border-radius: 5px; background: #1A2233;"></span>
+          <span style="width: 148px; height: 10px; border-radius: 5px; background: #161E2E;"></span>
+        </div>
+      </div>
+      <span style="height: 6px; border-radius: 3px; background: #1A2233;"></span>
+      <span style="width: 60%; height: 10px; border-radius: 5px; background: #161E2E;"></span>
+      <div style="font-size: 11px; color: #475569; letter-spacing: 0.08em; text-transform: uppercase;">État : chargement</div>
+    </div>
+
+    <div class="card" style="border-color: #4C1D24; background: #150F12; gap: 12px;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.5"/></svg>
+        <h3 style="font-size: 15px; color: #FCA5A5;">Impossible de charger les parcours</h3>
+      </div>
+      <p style="font-size: 13.5px; color: #94A3B8;">Ta progression est intacte. C'est l'affichage de la liste qui a échoué.</p>
+      <div style="align-self: flex-start; padding: 9px 15px; border-radius: 9px; border: 1px solid #4C1D24; font-size: 13px; color: #FCA5A5;">Réessayer</div>
+      <div style="font-size: 11px; color: #475569; letter-spacing: 0.08em; text-transform: uppercase;">État : erreur</div>
+    </div>
+
+    <div class="card soon" style="align-items: flex-start; gap: 12px;">
+      <h3 style="font-size: 15px; color: #94A3B8;">Aucun parcours démarré</h3>
+      <p style="font-size: 13.5px; color: #64748B;">Choisis une technologie pour générer ton premier parcours. Deux minutes suffisent.</p>
+      <div style="padding: 9px 15px; border-radius: 9px; background: #6366F1; color: #FFFFFF; font-size: 13px; font-weight: 600;">Choisir un parcours</div>
+      <div style="font-size: 11px; color: #475569; letter-spacing: 0.08em; text-transform: uppercase;">État : vide</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

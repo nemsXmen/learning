@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+@import '@app/ui/tokens.css';
+
+/* Tailwind ignores node_modules, and @app/ui is symlinked there. */
+@source '../../../packages/ui/src';
+
+@layer base {
+  html {
+    color-scheme: dark light;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+  }
+
+  /* Focus is always visible, in both themes (docs/rules.md #24). */
+  :focus-visible {
+    outline: 2px solid var(--color-accent-soft);
+    outline-offset: 2px;
+  }
+}

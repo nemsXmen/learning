@@ -1,0 +1,23 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Espace connecté" },
+    { "id": "page-2", "name": "Landing & système" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Dashboard", "x": 0, "y": 0, "w": 1440, "h": 1000, "page": "page-1" },
+    { "file": "LearnGrid.dc.html", "title": "/learn — parcours", "x": 1560, "y": 0, "w": 1440, "h": 1060, "page": "page-1" },
+    { "file": "TechnologyRoadmap.dc.html", "title": "/learn/javascript — roadmap", "x": 3120, "y": 0, "w": 1440, "h": 1060, "page": "page-1" },
+    { "file": "ChapterReader.dc.html", "title": "Lecture de chapitre", "x": 0, "y": 1220, "w": 1440, "h": 1450, "page": "page-1" },
+    { "file": "QuizFeedback.dc.html", "title": "Quiz — feedback d'erreur", "x": 1560, "y": 1220, "w": 1440, "h": 1120, "page": "page-1" },
+    { "file": "BoostSession.dc.html", "title": "Learning Boost", "x": 3120, "y": 1220, "w": 1440, "h": 920, "page": "page-1" },
+    { "file": "Progress.dc.html", "title": "Progression", "x": 0, "y": 2830, "w": 1440, "h": 1120, "page": "page-1" },
+    { "file": "MobileDashboard.dc.html", "title": "Dashboard mobile", "x": 1560, "y": 2830, "w": 390, "h": 860, "page": "page-1" },
+    { "file": "Landing.dc.html", "title": "Landing publique", "x": 0, "y": 0, "w": 1440, "h": 3800, "page": "page-2" },
+    { "file": "DesignTokens.dc.html", "title": "Tokens & composants", "x": 1560, "y": 0, "w": 1440, "h": 1400, "page": "page-2" }
+  ],
+  "annotations": [
+    { "id": "note-bo", "x": 0, "y": -150, "w": 620, "page": "page-1", "text": "Espace connecté — chaque écran a une action principale unique et affiche la raison de la recommandation (CDC §66, §81).\nLe feedback de quiz suit la règle §76 : ta réponse, la bonne, pourquoi, quoi réviser." },
+    { "id": "note-landing", "x": 0, "y": -150, "w": 620, "page": "page-2", "text": "Landing : aucune preuve sociale inventée. Les faits manquants sont entre crochets — [TARIF À DÉFINIR], [NOM DE LA SOCIÉTÉ].\nÀ droite, les jetons qui alimentent la feature 00-design-system." }
+  ],
+  "launch": { "view": "canvas", "page": "page-1" }
+}

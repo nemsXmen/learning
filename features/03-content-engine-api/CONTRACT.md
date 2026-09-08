@@ -1,0 +1,58 @@
+# Contract
+
+## Inputs and outputs
+
+`GET /content/chapters/:technologySlug/:chapterSlug` → 200
+```json
+{
+  "id": "javascript-closures",
+  "title": "Comprendre les closures",
+  "technology": { "slug": "javascript", "name": "JavaScript" },
+  "module": { "slug": "scope", "title": "Scope & Execution" },
+  "level": "intermediate",
+  "order": 4,
+  "estimatedMinutes": 30,
+  "difficulty": 3,
+  "xp": 100,
+  "skills": [{ "id": "closures", "name": "Closures" }],
+  "prerequisites": ["javascript-functions"],
+  "outline": [{ "depth": 2, "id": "concept", "text": "Concept" }],
+  "html": "<h2 id=\"concept\">…</h2>",
+  "contentVersion": "b31f…",
+  "neighbours": { "previous": "javascript-scope", "next": "javascript-promises" }
+}
+```
+
+`GET /content/chapters/:technologySlug/:chapterSlug/quiz` → 200
+```json
+{
+  "quizId": "javascript-closures-quiz",
+  "kind": "QUIZ",
+  "contentVersion": "b31f…",
+  "questions": [
+    { "id": "js-closures-q1", "type": "multiple_choice", "difficulty": 2,
+      "question": "Qu'est-ce qu'une closure ?",
+      "options": ["…", "…", "…", "…"], "skills": ["closures"] }
+  ]
+}
+```
+
+## API or event boundary
+
+- Both endpoints require an authenticated session once slice 04 lands; until then they
+  are read-only and unauthenticated in local development only.
+- `content:sync` is a CLI command, not an endpoint.
+
+## Validation and errors
+
+- Unknown technology or chapter → `404 CONTENT_NOT_FOUND`.
+- Content that fails validation at runtime → `500 CONTENT_INVALID`, logged with the
+  offending path; the previous cached render is served if one exists.
+- Path parameters are slug-validated; no path segment reaches the filesystem unescaped.
+
+## Invariants
+
+- `answer` and `explanation` never appear in a response from this feature.
+- Rendered HTML is sanitized; no inline script or event handler survives.
+- `contentVersion` in a chapter response and its quiz response always match.
+- `content:sync` is idempotent: running it twice changes nothing.

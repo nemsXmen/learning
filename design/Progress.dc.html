@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #0B1020; color: #E5E7EB;
+           font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif; margin: 0;
+                 letter-spacing: -0.02em; font-weight: 600; }
+    a { color: #A5B4FC; text-decoration: none; }
+    a:hover { color: #C7D2FE; }
+    p { margin: 0; line-height: 1.65; }
+    .card { border: 1px solid #1F2937; border-radius: 16px; background: #111827; padding: 24px; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; min-height: 1000px; background: #0B1020; padding: 40px 48px 56px; display: flex; flex-direction: column; gap: 26px;">
+
+  <header>
+    <h1 style="font-size: 30px; margin-bottom: 8px;">Ta progression</h1>
+    <p style="font-size: 15px; color: #94A3B8;">La lecture d'un chapitre ne vaut pas maîtrise. Ce qui compte ici, c'est ce que tu retiens.</p>
+  </header>
+
+  <!-- Six dimensions of progress (CDC §11) -->
+  <section class="card">
+    <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 22px;">
+      <h2 style="font-size: 18px;">Closures</h2>
+      <span style="font-size: 13px; color: #64748B;">Dernière révision il y a 2 jours</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px;">
+
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">Lecture</div>
+        <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 100%; height: 100%; background: #34D399;"></div></div>
+        <div class="mono" style="font-size: 12.5px; color: #34D399;">100 %</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">Exercices</div>
+        <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 80%; height: 100%; background: #34D399;"></div></div>
+        <div class="mono" style="font-size: 12.5px; color: #34D399;">80 %</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">Quiz</div>
+        <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 100%; height: 100%; background: #34D399;"></div></div>
+        <div class="mono" style="font-size: 12.5px; color: #34D399;">100 %</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">Test</div>
+        <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 70%; height: 100%; background: #FBBF24;"></div></div>
+        <div class="mono" style="font-size: 12.5px; color: #FCD34D;">70 %</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div style="font-size: 12.5px; color: #E5E7EB; font-weight: 600;">Maîtrise</div>
+        <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 72%; height: 100%; background: #818CF8;"></div></div>
+        <div class="mono" style="font-size: 12.5px; color: #A5B4FC;">72 %</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">Rétention</div>
+        <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 60%; height: 100%; background: #A78BFA;"></div></div>
+        <div class="mono" style="font-size: 12.5px; color: #C4B5FD;">60 %</div>
+      </div>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 22px;">
+
+    <!-- Journey -->
+    <section class="card">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px;">
+        <h2 style="font-size: 18px;">JavaScript</h2>
+        <span class="mono" style="font-size: 13px; color: #94A3B8;">82 %</span>
+      </div>
+      <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden; margin-bottom: 22px;"><div style="width: 82%; height: 100%; background: linear-gradient(90deg, #818CF8, #A78BFA);"></div></div>
+
+      <div style="display: flex; flex-direction: column; gap: 13px;">
+        <div style="display: flex; align-items: center; gap: 12px; font-size: 14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>
+          <span style="flex: 1;">Fundamentals</span><span class="mono" style="font-size: 12.5px; color: #34D399;">100 %</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; font-size: 14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>
+          <span style="flex: 1;">Functions</span><span class="mono" style="font-size: 12.5px; color: #34D399;">100 %</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; font-size: 14px;">
+          <span style="width: 16px; display: flex; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #818CF8;"></span></span>
+          <span style="flex: 1;">Closures</span><span class="mono" style="font-size: 12.5px; color: #A5B4FC;">82 %</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; font-size: 14px;">
+          <span style="width: 16px; display: flex; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #FBBF24;"></span></span>
+          <span style="flex: 1;">Promises</span><span class="mono" style="font-size: 12.5px; color: #FCD34D;">74 %</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; font-size: 14px;">
+          <span style="width: 16px; display: flex; justify-content: center;"><span style="width: 8px; height: 8px; border-radius: 999px; background: #F87171;"></span></span>
+          <span style="flex: 1;">Event Loop</span><span class="mono" style="font-size: 12.5px; color: #FCA5A5;">43 %</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: #64748B;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <span style="flex: 1;">Advanced JS</span><span style="font-size: 12.5px;">Verrouillé</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weak areas + retention curve -->
+    <section style="display: flex; flex-direction: column; gap: 22px;">
+
+      <div class="card">
+        <h2 style="font-size: 18px; margin-bottom: 18px;">Points faibles</h2>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 8px;"><span>Event Loop</span><span class="mono" style="color: #FCA5A5;">43 %</span></div>
+            <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 43%; height: 100%; background: #F87171;"></div></div>
+            <div style="margin-top: 7px; font-size: 12px; color: #64748B;">3 échecs · révision en retard de 6 jours</div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 13.5px; margin-bottom: 8px;"><span>Prototypes</span><span class="mono" style="color: #FCD34D;">51 %</span></div>
+            <div style="height: 7px; border-radius: 4px; background: #1F2937; overflow: hidden;"><div style="width: 51%; height: 100%; background: #FBBF24;"></div></div>
+            <div style="margin-top: 7px; font-size: 12px; color: #64748B;">Prérequis de 2 chapitres verrouillés</div>
+          </div>
+        </div>
+        <div style="margin-top: 20px; padding: 11px; border-radius: 10px; border: 1px solid #312E81; background: #16162E; color: #C4B5FD; font-size: 13.5px; font-weight: 500; text-align: center;">Lancer un Boost sur ces deux compétences</div>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px;">
+          <h2 style="font-size: 18px;">Révisions à venir</h2>
+          <span style="font-size: 12.5px; color: #64748B;">7 prochains jours</span>
+        </div>
+        <div style="display: flex; align-items: flex-end; gap: 10px; height: 96px;">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 100%; height: 62px; border-radius: 5px 5px 0 0; background: #6366F1;"></div><span style="font-size: 11px; color: #64748B;">lun</span></div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 100%; height: 28px; border-radius: 5px 5px 0 0; background: #312E81;"></div><span style="font-size: 11px; color: #64748B;">mar</span></div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 100%; height: 44px; border-radius: 5px 5px 0 0; background: #312E81;"></div><span style="font-size: 11px; color: #64748B;">mer</span></div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 100%; height: 14px; border-radius: 5px 5px 0 0; background: #1F2937;"></div><span style="font-size: 11px; color: #64748B;">jeu</span></div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 100%; height: 34px; border-radius: 5px 5px 0 0; background: #312E81;"></div><span style="font-size: 11px; color: #64748B;">ven</span></div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 100%; height: 8px; border-radius: 5px 5px 0 0; background: #1F2937;"></div><span style="font-size: 11px; color: #64748B;">sam</span></div>
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px;"><div style="width: 100%; height: 20px; border-radius: 5px 5px 0 0; background: #1F2937;"></div><span style="font-size: 11px; color: #64748B;">dim</span></div>
+        </div>
+        <p style="margin-top: 14px; font-size: 12.5px; color: #64748B;">Les intervalles s'allongent quand tu réussis, se resserrent quand tu échoues.</p>
+      </div>
+    </section>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #0B1020; color: #E5E7EB;
+           font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif; margin: 0;
+                 letter-spacing: -0.02em; font-weight: 600; }
+    a { color: #A5B4FC; text-decoration: none; }
+    a:hover { color: #C7D2FE; }
+    p { margin: 0; line-height: 1.65; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .sw { border-radius: 12px; border: 1px solid #1F2937; overflow: hidden; }
+    .swb { height: 62px; }
+    .swl { padding: 10px 12px; background: #111827; }
+    .sec { border: 1px solid #1F2937; border-radius: 16px; background: #111827; padding: 26px; }
+    .lbl { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; color: #64748B; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; min-height: 1360px; background: #0B1020; padding: 44px 48px 56px; display: flex; flex-direction: column; gap: 26px;">
+
+  <header>
+    <h1 style="font-size: 30px; margin-bottom: 8px;">Système visuel</h1>
+    <p style="font-size: 15px; color: #94A3B8;">Une seule couleur d'accent, un vert, un ambre, un rouge, un orange de série. Tout le reste est neutre.</p>
+  </header>
+
+  <!-- Colour -->
+  <section class="sec">
+    <div class="lbl" style="margin-bottom: 18px;">Couleur — thème sombre (référence)</div>
+    <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px;">
+      <div class="sw"><div class="swb" style="background: #0B1020;"></div><div class="swl"><div style="font-size: 13px;">bg</div><div class="mono" style="font-size: 12px; color: #64748B;">#0B1020</div></div></div>
+      <div class="sw"><div class="swb" style="background: #111827;"></div><div class="swl"><div style="font-size: 13px;">surface</div><div class="mono" style="font-size: 12px; color: #64748B;">#111827</div></div></div>
+      <div class="sw"><div class="swb" style="background: #0F1626;"></div><div class="swl"><div style="font-size: 13px;">surfaceSunken</div><div class="mono" style="font-size: 12px; color: #64748B;">#0F1626</div></div></div>
+      <div class="sw"><div class="swb" style="background: #1F2937;"></div><div class="swl"><div style="font-size: 13px;">border</div><div class="mono" style="font-size: 12px; color: #64748B;">#1F2937</div></div></div>
+      <div class="sw"><div class="swb" style="background: #E5E7EB;"></div><div class="swl"><div style="font-size: 13px;">text</div><div class="mono" style="font-size: 12px; color: #64748B;">#E5E7EB</div></div></div>
+      <div class="sw"><div class="swb" style="background: #94A3B8;"></div><div class="swl"><div style="font-size: 13px;">textMuted</div><div class="mono" style="font-size: 12px; color: #64748B;">#94A3B8</div></div></div>
+
+      <div class="sw"><div class="swb" style="background: #6366F1;"></div><div class="swl"><div style="font-size: 13px;">accent</div><div class="mono" style="font-size: 12px; color: #64748B;">#6366F1</div></div></div>
+      <div class="sw"><div class="swb" style="background: #818CF8;"></div><div class="swl"><div style="font-size: 13px;">accentSoft</div><div class="mono" style="font-size: 12px; color: #64748B;">#818CF8</div></div></div>
+      <div class="sw"><div class="swb" style="background: #A78BFA;"></div><div class="swl"><div style="font-size: 13px;">accentAlt</div><div class="mono" style="font-size: 12px; color: #64748B;">#A78BFA</div></div></div>
+      <div class="sw"><div class="swb" style="background: #34D399;"></div><div class="swl"><div style="font-size: 13px;">success</div><div class="mono" style="font-size: 12px; color: #64748B;">#34D399</div></div></div>
+      <div class="sw"><div class="swb" style="background: #FBBF24;"></div><div class="swl"><div style="font-size: 13px;">warning</div><div class="mono" style="font-size: 12px; color: #64748B;">#FBBF24</div></div></div>
+      <div class="sw"><div class="swb" style="background: #F87171;"></div><div class="swl"><div style="font-size: 13px;">danger</div><div class="mono" style="font-size: 12px; color: #64748B;">#F87171</div></div></div>
+    </div>
+    <div style="margin-top: 20px; display: flex; align-items: center; gap: 24px;">
+      <div style="display: flex; align-items: center; gap: 10px;"><span style="width: 26px; height: 26px; border-radius: 8px; background: #FB923C;"></span><span style="font-size: 13px;">streak</span><span class="mono" style="font-size: 12px; color: #64748B;">#FB923C</span></div>
+      <p style="font-size: 13px; color: #64748B;">Le thème clair dérive des mêmes noms de jeton : seules les valeurs changent, jamais les rôles.</p>
+    </div>
+  </section>
+
+  <!-- Type + spacing -->
+  <div style="display: grid; grid-template-columns: 1fr 460px; gap: 22px;">
+    <section class="sec">
+      <div class="lbl" style="margin-bottom: 20px;">Typographie</div>
+      <div style="display: flex; flex-direction: column; gap: 18px;">
+        <div style="display: flex; align-items: baseline; gap: 20px;">
+          <span class="mono" style="width: 96px; font-size: 12px; color: #64748B;">display/38</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 38px; font-weight: 600; letter-spacing: -0.03em;">Comprendre les closures</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 20px;">
+          <span class="mono" style="width: 96px; font-size: 12px; color: #64748B;">title/24</span>
+          <span style="font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 600; letter-spacing: -0.02em;">Concept</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 20px;">
+          <span class="mono" style="width: 96px; font-size: 12px; color: #64748B;">body/15.5</span>
+          <span style="font-size: 15.5px; color: #CBD5E1;">Une closure conserve l'accès à son environnement lexical.</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 20px;">
+          <span class="mono" style="width: 96px; font-size: 12px; color: #64748B;">meta/13</span>
+          <span style="font-size: 13px; color: #94A3B8;">30 min · difficulté 3 · 100 XP</span>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 20px;">
+          <span class="mono" style="width: 96px; font-size: 12px; color: #64748B;">code/13.5</span>
+          <span class="mono" style="font-size: 13.5px; color: #C4B5FD;">const a = counter();</span>
+        </div>
+      </div>
+      <p style="margin-top: 22px; padding-top: 18px; border-top: 1px solid #1F2937; font-size: 13px; color: #64748B;">
+        Space Grotesk pour les titres, IBM Plex Sans pour le texte, JetBrains Mono pour le code. Trois familles, pas quatre.
+      </p>
+    </section>
+
+    <section class="sec">
+      <div class="lbl" style="margin-bottom: 20px;">Espacement et rayons</div>
+      <div style="display: flex; align-items: flex-end; gap: 12px; margin-bottom: 24px;">
+        <div style="text-align: center;"><div style="width: 4px; height: 4px; background: #818CF8; margin: 0 auto 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">4</span></div>
+        <div style="text-align: center;"><div style="width: 8px; height: 8px; background: #818CF8; margin: 0 auto 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">8</span></div>
+        <div style="text-align: center;"><div style="width: 12px; height: 12px; background: #818CF8; margin: 0 auto 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">12</span></div>
+        <div style="text-align: center;"><div style="width: 16px; height: 16px; background: #818CF8; margin: 0 auto 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">16</span></div>
+        <div style="text-align: center;"><div style="width: 24px; height: 24px; background: #818CF8; margin: 0 auto 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">24</span></div>
+        <div style="text-align: center;"><div style="width: 32px; height: 32px; background: #818CF8; margin: 0 auto 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">32</span></div>
+        <div style="text-align: center;"><div style="width: 48px; height: 48px; background: #818CF8; margin: 0 auto 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">48</span></div>
+      </div>
+      <div style="display: flex; gap: 14px;">
+        <div style="text-align: center;"><div style="width: 56px; height: 44px; border: 1px solid #334155; border-radius: 8px; margin-bottom: 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">8 · contrôle</span></div>
+        <div style="text-align: center;"><div style="width: 56px; height: 44px; border: 1px solid #334155; border-radius: 12px; margin-bottom: 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">12 · carte</span></div>
+        <div style="text-align: center;"><div style="width: 56px; height: 44px; border: 1px solid #334155; border-radius: 16px; margin-bottom: 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">16 · panneau</span></div>
+        <div style="text-align: center;"><div style="width: 56px; height: 44px; border: 1px solid #334155; border-radius: 999px; margin-bottom: 8px;"></div><span class="mono" style="font-size: 11px; color: #64748B;">999 · puce</span></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Components -->
+  <section class="sec">
+    <div class="lbl" style="margin-bottom: 22px;">Composants</div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px;">
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">Button</div>
+        <div style="padding: 11px 18px; border-radius: 10px; background: #6366F1; color: #FFFFFF; font-size: 14px; font-weight: 600; text-align: center;">Primaire</div>
+        <div style="padding: 11px 18px; border-radius: 10px; border: 1px solid #1F2937; color: #E5E7EB; font-size: 14px; font-weight: 500; text-align: center;">Secondaire</div>
+        <div style="padding: 11px 18px; border-radius: 10px; border: 1px solid #312E81; background: #16162E; color: #C4B5FD; font-size: 14px; font-weight: 500; text-align: center;">Accent discret</div>
+        <div style="padding: 11px 18px; border-radius: 10px; border: 1px solid #1A2233; color: #475569; font-size: 14px; text-align: center;">Désactivé</div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">Badge</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <span style="padding: 4px 11px; border-radius: 999px; border: 1px solid #312E81; background: #16162E; font-size: 12px; color: #C4B5FD;">En cours</span>
+          <span style="padding: 4px 11px; border-radius: 999px; border: 1px solid #166534; background: #0D1A14; font-size: 12px; color: #34D399;">Maîtrisé</span>
+          <span style="padding: 4px 11px; border-radius: 999px; border: 1px solid #7F1D1D; background: #150F12; font-size: 12px; color: #FCA5A5;">Faible</span>
+          <span style="padding: 4px 11px; border-radius: 999px; border: 1px solid #263248; font-size: 12px; color: #64748B;">Verrouillé</span>
+        </div>
+        <div style="font-size: 12.5px; color: #94A3B8; margin-top: 8px;">Progress</div>
+        <div style="height: 6px; border-radius: 3px; background: #1F2937; overflow: hidden;"><div style="width: 72%; height: 100%; background: #818CF8;"></div></div>
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: 4px;">
+          <svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+            <circle cx="26" cy="26" r="21" fill="none" stroke="#1F2937" stroke-width="6"/>
+            <circle cx="26" cy="26" r="21" fill="none" stroke="#818CF8" stroke-width="6" stroke-linecap="round" stroke-dasharray="132" stroke-dashoffset="37" transform="rotate(-90 26 26)"/>
+          </svg>
+          <span class="mono" style="font-size: 13px; color: #A5B4FC;">72 %</span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">États</div>
+        <div style="border: 1px solid #1F2937; border-radius: 11px; background: #0F1626; padding: 14px; display: flex; flex-direction: column; gap: 8px;">
+          <span style="width: 72%; height: 10px; border-radius: 5px; background: #1A2233;"></span>
+          <span style="width: 46%; height: 10px; border-radius: 5px; background: #161E2E;"></span>
+          <span class="mono" style="font-size: 11px; color: #475569;">skeleton</span>
+        </div>
+        <div style="border: 1px dashed #263248; border-radius: 11px; background: #0F1626; padding: 14px;">
+          <div style="font-size: 13px; margin-bottom: 4px;">Rien ici pour l'instant</div>
+          <span class="mono" style="font-size: 11px; color: #475569;">empty</span>
+        </div>
+        <div style="border: 1px solid #4C1D24; border-radius: 11px; background: #150F12; padding: 14px;">
+          <div style="font-size: 13px; color: #FCA5A5; margin-bottom: 4px;">Échec du chargement</div>
+          <span class="mono" style="font-size: 11px; color: #475569;">error</span>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="font-size: 12.5px; color: #94A3B8;">CodeBlock</div>
+        <div style="border: 1px solid #1F2937; border-radius: 11px; overflow: hidden; background: #0F1626;">
+          <div style="padding: 8px 12px; border-bottom: 1px solid #1F2937; background: #111827;"><span class="mono" style="font-size: 11px; color: #64748B;">example.ts</span></div>
+          <pre class="mono" style="margin: 0; padding: 14px; font-size: 12.5px; line-height: 1.7;"><span style="color: #C084FC;">type</span> <span style="color: #60A5FA;">Mastery</span> = {
+  score: <span style="color: #5EEAD4;">number</span>;
+  due: <span style="color: #5EEAD4;">Date</span>;
+};</pre>
+        </div>
+        <div style="font-size: 12.5px; color: #94A3B8; margin-top: 4px;">Focus</div>
+        <div style="padding: 11px 18px; border-radius: 10px; background: #111827; border: 1px solid #1F2937; outline: 2px solid #818CF8; outline-offset: 2px; font-size: 14px; text-align: center;">Anneau de focus</div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>

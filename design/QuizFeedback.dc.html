@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; background: #0B1020; color: #E5E7EB;
+           font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+           -webkit-font-smoothing: antialiased; }
+    h1, h2, h3 { font-family: 'Space Grotesk', 'IBM Plex Sans', sans-serif; margin: 0;
+                 letter-spacing: -0.02em; font-weight: 600; }
+    a { color: #A5B4FC; text-decoration: none; }
+    a:hover { color: #C7D2FE; }
+    p { margin: 0; line-height: 1.7; }
+    .opt { display: flex; align-items: center; gap: 14px; padding: 15px 18px;
+           border: 1px solid #1F2937; border-radius: 12px; background: #111827; font-size: 15px; }
+    .key { width: 26px; height: 26px; flex: none; border-radius: 7px; border: 1px solid #263248;
+           display: flex; align-items: center; justify-content: center; font-size: 12px;
+           font-family: 'JetBrains Mono', monospace; color: #94A3B8; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; min-height: 940px; background: #0B1020; display: flex; flex-direction: column;">
+
+  <header style="height: 64px; flex: none; border-bottom: 1px solid #1F2937; display: flex; align-items: center; justify-content: space-between; padding: 0 32px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <span style="font-size: 14px; color: #94A3B8;">Quiz · Comprendre les closures</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="font-size: 13px; color: #94A3B8;">Question 3 sur 5</span>
+      <div style="width: 180px; height: 5px; border-radius: 3px; background: #1F2937; overflow: hidden;"><div style="width: 60%; height: 100%; background: #818CF8;"></div></div>
+      <span style="font-size: 13px; color: #64748B;">Quitter</span>
+    </div>
+  </header>
+
+  <main style="flex: 1; display: flex; justify-content: center; padding: 44px 32px 56px;">
+    <div style="width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: 24px;">
+
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="padding: 4px 10px; border-radius: 999px; border: 1px solid #1F2937; background: #111827; font-size: 12px; color: #94A3B8;">Difficulté 2</span>
+        <span style="padding: 4px 10px; border-radius: 999px; border: 1px solid #1F2937; background: #111827; font-size: 12px; color: #94A3B8;">promises</span>
+      </div>
+
+      <h1 style="font-size: 26px; line-height: 1.35;">Quelle est la différence entre <span style="font-family: 'JetBrains Mono', monospace; font-size: 23px; color: #C4B5FD;">Promise.all</span> et <span style="font-family: 'JetBrains Mono', monospace; font-size: 23px; color: #C4B5FD;">Promise.allSettled</span> ?</h1>
+
+      <!-- Answered state -->
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+
+        <div class="opt" style="border-color: #14532D; background: #0D1A14;">
+          <span class="key" style="border-color: #166534; color: #34D399;">A</span>
+          <span style="flex: 1;">allSettled attend toutes les promesses, all rejette à la première erreur</span>
+          <span style="display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: #34D399;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg>
+            Bonne réponse
+          </span>
+        </div>
+
+        <div class="opt" style="border-color: #4C1D24; background: #1A1013;">
+          <span class="key" style="border-color: #7F1D1D; color: #FCA5A5;">B</span>
+          <span style="flex: 1;">all est asynchrone, allSettled est synchrone</span>
+          <span style="display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: #FCA5A5;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+            Ta réponse
+          </span>
+        </div>
+
+        <div class="opt" style="opacity: 0.5;">
+          <span class="key">C</span>
+          <span style="flex: 1;">allSettled n'existe que côté Node.js</span>
+        </div>
+
+        <div class="opt" style="opacity: 0.5;">
+          <span class="key">D</span>
+          <span style="flex: 1;">Il n'y a aucune différence de comportement</span>
+        </div>
+      </div>
+
+      <!-- Pedagogical feedback (CDC §76) -->
+      <section style="border: 1px solid #312E81; border-radius: 16px; background: #111827; overflow: hidden;">
+        <div style="padding: 20px 22px; display: flex; flex-direction: column; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 9px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.5"/></svg>
+            <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #A78BFA;">Pourquoi</span>
+          </div>
+          <p style="font-size: 15px; color: #CBD5E1;">
+            <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #C4B5FD;">Promise.all</span> rejette dès qu'une promesse échoue :
+            tu perds les résultats des autres. <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #C4B5FD;">Promise.allSettled</span>
+            attend toujours la fin de toutes les promesses et te renvoie un statut par promesse. Les deux sont
+            asynchrones — c'est la gestion de l'échec qui les sépare, pas la nature de l'appel.
+          </p>
+          <div style="border: 1px solid #1F2937; border-radius: 10px; background: #0F1626; padding: 14px 16px;">
+            <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #CBD5E1;"><span style="color: #C084FC;">await</span> Promise.<span style="color: #60A5FA;">all</span>([ok, ko]);        <span style="color: #64748B;">// throw</span>
+<span style="color: #C084FC;">await</span> Promise.<span style="color: #60A5FA;">allSettled</span>([ok, ko]); <span style="color: #64748B;">// [{status:'fulfilled'},{status:'rejected'}]</span></pre>
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid #1F2937; padding: 16px 22px; display: flex; align-items: center; justify-content: space-between; background: #0F1626;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 13px; color: #94A3B8;">À revoir</span>
+            <span style="padding: 4px 11px; border-radius: 999px; border: 1px solid #312E81; background: #16162E; font-size: 12.5px; color: #C4B5FD;">Promise combinators</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="padding: 9px 15px; border-radius: 9px; border: 1px solid #1F2937; font-size: 13.5px; color: #94A3B8;">Réessayer</div>
+            <div style="display: flex; align-items: center; gap: 7px; padding: 9px 15px; border-radius: 9px; border: 1px solid #312E81; background: #16162E; font-size: 13.5px; color: #C4B5FD; font-weight: 500;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+              Ajouter au Boost
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div style="display: flex; align-items: center; justify-content: space-between; padding-top: 4px;">
+        <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #64748B;">
+          <span style="display: inline-flex; width: 8px; height: 8px; border-radius: 999px; background: #34D399;"></span>
+          <span style="display: inline-flex; width: 8px; height: 8px; border-radius: 999px; background: #34D399;"></span>
+          <span style="display: inline-flex; width: 8px; height: 8px; border-radius: 999px; background: #F87171;"></span>
+          <span style="display: inline-flex; width: 8px; height: 8px; border-radius: 999px; background: #1F2937;"></span>
+          <span style="display: inline-flex; width: 8px; height: 8px; border-radius: 999px; background: #1F2937;"></span>
+          <span style="margin-left: 6px;">2 sur 3 correctes</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px; background: #6366F1; color: #FFFFFF; font-size: 14px; font-weight: 600;">
+          Question suivante
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M13 6l6 6-6 6"/></svg>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+</body>
+</html>

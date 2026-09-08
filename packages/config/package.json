@@ -1,0 +1,7 @@
+{
+  "name": "@app/config",
+  "version": "0.0.0",
+  "private": true,
+  "files": ["tsconfig.base.json", "tsconfig.node.json"],
+  "scripts": { "build": "echo no build", "lint": "echo no lint", "typecheck": "echo no typecheck", "test": "echo no tests" }
+}
