@@ -12,7 +12,8 @@
     "test:e2e": "jest --config jest.e2e.json --passWithNoTests",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/database/data-source.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts",
-    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/database/data-source.ts"
+    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/database/data-source.ts",
+    "content:sync": "ts-node -P tsconfig.json src/content/content-sync.cli.ts"
   },
   "dependencies": {
     "@app/types": "workspace:*",
@@ -28,7 +29,11 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20",
-    "zod": "^3.24.1"
+    "zod": "^3.24.1",
+    "@app/content": "workspace:*",
+    "highlight.js": "^11.11.0",
+    "markdown-it": "^14.1.0",
+    "sanitize-html": "2.13.1"
   },
   "devDependencies": {
     "@app/config": "workspace:*",
@@ -42,7 +47,9 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "@types/markdown-it": "^14.1.2",
+    "@types/sanitize-html": "^2.13.0"
   },
   "jest": {
     "preset": "ts-jest",

@@ -109,6 +109,24 @@ that depends on them is accepted.
   become a 30-second registration.
 - CDC question or assumption: none. Sender identity comes from `MAIL_FROM`.
 
+## Decision: markdown-it + sanitize-html + highlight.js for rendering
+
+- Status: accepted
+- Context: CDC §43 puts Markdown conversion in the API, §23 asks for premium code
+  blocks, and §60 requires a first-class dark theme alongside light.
+- Decision: `markdown-it` parses, `highlight.js` highlights, `sanitize-html` is the
+  last step in the pipeline. Three dependencies, all CommonJS.
+- Consequences: highlight.js emits semantic CSS classes (`hljs-keyword`), so one
+  stylesheet themes code in both light and dark from `packages/ui` tokens. Sanitising
+  last means nothing downstream can reintroduce markup. All three load under the
+  API's CommonJS runtime without ESM interop work. `sanitize-html` is pinned to
+  2.13.1: from 2.14 it pulls htmlparser2 v12, which is pure ESM and cannot be
+  loaded by Jest. Revisit when the API moves to ESM.
+- Alternative rejected: the unified/remark/rehype stack with Shiki — nine packages,
+  pure ESM against a CommonJS Nest runtime, and Shiki inlines colours, which would
+  hard-code one palette and defeat theme switching.
+- CDC question or assumption: none.
+
 ## Decision: An in-app `/design` gallery instead of Storybook
 
 - Status: accepted

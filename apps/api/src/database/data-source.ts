@@ -10,7 +10,7 @@ export const dataSourceOptions: DataSourceOptions = {
   url: env.DATABASE_URL,
   synchronize: false,
   migrationsRun: false,
-  entities: [__dirname + '/../**/*.entity.{ts,js}'],
+  entities: [__dirname + '/../**/*.entity.{ts,js}', __dirname + '/../**/*.entities.{ts,js}'],
   migrations: [__dirname + '/migrations/*.{ts,js}'],
   logging: env.NODE_ENV === 'development' ? (['warn', 'error'] as const) : (['error'] as const),
 };
