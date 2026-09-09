@@ -1,5 +1,5 @@
 import 'server-only';
-import { env } from './env';
+import { getEnv } from './env';
 
 export class ApiError extends Error {
   constructor(
@@ -25,7 +25,7 @@ export interface ApiRequest extends Omit<RequestInit, 'body'> {
 export async function apiFetch<T>(path: string, init: ApiRequest = {}): Promise<T> {
   const { body, accessToken, headers, ...rest } = init;
 
-  const response = await fetch(new URL(path, env.API_BASE_URL), {
+  const response = await fetch(new URL(path, getEnv().API_BASE_URL), {
     ...rest,
     headers: {
       accept: 'application/json',

@@ -2,7 +2,13 @@ import 'server-only';
 import { parseEnv, webEnvSchema, type WebEnv } from '@app/validation';
 
 /**
- * Server-only. No value here may ever be prefixed NEXT_PUBLIC_ — the browser
- * talks to Next.js, never to the API (docs/rules.md #21, #28).
+ * Server-only, and parsed on first use rather than at import: a route handler
+ * that never runs during `next build` must not require configuration to build.
+ * No value here may be prefixed NEXT_PUBLIC_ (docs/rules.md #21, #28).
  */
-export const env: WebEnv = parseEnv(webEnvSchema, process.env);
+let cached: WebEnv | null = null;
+
+export function getEnv(): WebEnv {
+  cached ??= parseEnv(webEnvSchema, process.env);
+  return cached;
+}
