@@ -89,8 +89,10 @@ that depends on them is accepted.
 
 - Status: accepted
 - Context: the CDC specifies authentication but not a hashing algorithm.
-- Decision: `argon2` (argon2id), parameters in config, never inline in code paths.
-- Consequences: one native dependency in the API; documented in `development.md`.
+- Decision: argon2id via `@node-rs/argon2`, whose prebuilt binaries avoid a
+  node-gyp toolchain on every developer machine and in CI.
+- Consequences: one native dependency in the API, installed without a compiler;
+  documented in `development.md`.
 - CDC question or assumption: none.
 
 ## Decision: Transactional email over SMTP, sent from a queue

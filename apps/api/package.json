@@ -13,7 +13,8 @@
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/database/data-source.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts",
     "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/database/data-source.ts",
-    "content:sync": "ts-node -P tsconfig.json src/content/content-sync.cli.ts"
+    "content:sync": "ts-node -P tsconfig.json src/content/content-sync.cli.ts",
+    "mail:test": "ts-node -P tsconfig.json src/mail/mail.cli.ts"
   },
   "dependencies": {
     "@app/types": "workspace:*",
@@ -33,7 +34,12 @@
     "@app/content": "workspace:*",
     "highlight.js": "^11.11.0",
     "markdown-it": "^14.1.0",
-    "sanitize-html": "2.13.1"
+    "sanitize-html": "2.13.1",
+    "@app/learning-engine": "workspace:*",
+    "@nestjs/jwt": "^11.0.0",
+    "@node-rs/argon2": "^2.0.2",
+    "bullmq": "^5.34.6",
+    "nodemailer": "^6.9.16"
   },
   "devDependencies": {
     "@app/config": "workspace:*",
@@ -49,7 +55,9 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3",
     "@types/markdown-it": "^14.1.2",
-    "@types/sanitize-html": "^2.13.0"
+    "@types/sanitize-html": "^2.13.0",
+    "@types/nodemailer": "^6.4.17",
+    "@types/express": "^5.0.0"
   },
   "jest": {
     "preset": "ts-jest",
