@@ -15,6 +15,8 @@ import { TokenService } from './token.service';
   imports: [TypeOrmModule.forFeature(AUTH_ENTITIES), JwtModule.register({}), MailModule],
   controllers: [AuthController],
   providers: [AuthService, CryptoService, EmailTokenService, TokenService, RateLimitService, JwtAuthGuard],
-  exports: [AuthService, JwtAuthGuard],
+  // JwtModule travels with the guard: any module using JwtAuthGuard needs the
+  // JwtService it depends on.
+  exports: [AuthService, JwtAuthGuard, JwtModule],
 })
 export class AuthModule {}
