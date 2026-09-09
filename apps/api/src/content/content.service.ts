@@ -68,7 +68,7 @@ export class ContentService implements OnModuleInit {
   /** Refuses to start on an invalid tree, naming the offending paths. */
   async onModuleInit(): Promise<void> {
     const result = await loadContentGraph(CONTENT_DIR);
-    if (!result.ok) {
+    if (result.ok === false) {
       const summary = result.issues
         .slice(0, 10)
         .map((issue) => `  ${issue.path}:${issue.line} — ${issue.message}`)
