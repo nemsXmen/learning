@@ -59,6 +59,43 @@ export default tseslint.config(
     },
   },
 
+  // The engine is pure by contract: no I/O, no ambient clock, no randomness. The
+  // clock is always an input, which is what makes every rule testable
+  // (features/09-learning-engine-core/CONTRACT.md).
+  {
+    files: ['packages/learning-engine/src/**/*.ts'],
+    ignores: ['packages/learning-engine/src/**/*.test.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "NewExpression[callee.name='Date'][arguments.length=0]",
+          message: 'Le moteur ne lit pas l’horloge : passe `now` en paramètre.',
+        },
+        {
+          selector: "MemberExpression[object.name='Date'][property.name='now']",
+          message: 'Le moteur ne lit pas l’horloge : passe `now` en paramètre.',
+        },
+        {
+          selector: "MemberExpression[object.name='Math'][property.name='random']",
+          message: 'Le moteur est déterministe : passe une graine si tu as besoin d’aléa.',
+        },
+        {
+          selector: "Identifier[name='process']",
+          message: 'Le moteur n’accède ni au process ni à l’environnement.',
+        },
+        {
+          selector: "CallExpression[callee.name='fetch']",
+          message: 'Le moteur ne fait pas d’entrées-sorties.',
+        },
+        {
+          selector: "ImportDeclaration[source.value=/^node:/]",
+          message: 'Le moteur ne dépend pas des modules Node.',
+        },
+      ],
+    },
+  },
+
   // Tests describe behaviour; they may assert on literals the source must not carry.
   {
     files: ['**/*.{test,spec}.{ts,tsx}'],

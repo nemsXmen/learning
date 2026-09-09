@@ -24,7 +24,7 @@ generateBoostSession(input: {
 // → { targetSkillIds, steps: [{ kind, ref, estimatedMinutes }], estimatedMinutes, reason }
 
 recommendNextAction(input: LearnerSnapshot): Recommendation
-// → { type: "NEXT_CHAPTER"|"REVIEW"|"EXERCISE"|"QUIZ"|"BOOST"|"PROJECT",
+// → { type: "NEXT_CHAPTER"|"REVIEW"|"EXERCISE"|"QUIZ"|"BOOST"|"PROJECT"|"CAUGHT_UP",
 //     ref, estimatedMinutes, priority, reason }
 ```
 
@@ -36,6 +36,18 @@ Mirrors CDC §65: `{ skill, mastery, confidence, failures, daysSinceReview, diff
 - Inputs are validated at the package boundary; an out-of-range score throws a typed
   `EngineInputError` naming the field rather than silently clamping.
 - Every output score is clamped to its documented range after computation.
+
+## Deviations from the CDC, and why
+
+- `CAUGHT_UP` is a seventh recommendation type the CDC's six do not cover: nothing
+  due, nothing left to unlock. Every screen still needs one thing to say (CDC §81),
+  so the absence of an action is itself an action with a reason, not a `null`.
+- CDC §15 gives `priority = weakness × forgettingRisk × importance ×
+  prerequisiteImpact`. Taken literally, any factor at zero zeroes the result — a
+  genuinely weak skill reviewed this morning would disappear from the list. Every
+  factor except weakness is therefore lifted into `[floor, 1]` before multiplying:
+  the shape of the formula is kept, the collapse is not. Weakness alone may still
+  zero it, which is correct — a mastered skill needs nothing.
 
 ## Invariants
 
