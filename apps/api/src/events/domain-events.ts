@@ -38,7 +38,14 @@ export interface QuizAttemptGraded {
   occurredAt: Date;
 }
 
+export interface MasteryUpdated {
+  userId: string;
+  changes: Array<{ skillId: string; from: number; to: number; reason: string }>;
+  occurredAt: Date;
+}
+
 export interface DomainEventMap {
+  'mastery.updated': MasteryUpdated;
   'quiz.attempt.graded': QuizAttemptGraded;
   'chapter.completed': ChapterCompleted;
   'progress.reported': ProgressReported;

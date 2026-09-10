@@ -50,6 +50,8 @@ export interface PriorityResult {
   priority: number; // 0..1
   band: PriorityBand;
   factors: PriorityFactors;
+  /** How long a review of this skill should take, in minutes (CDC §65). */
+  estimatedMinutes: number;
   reason: string;
 }
 

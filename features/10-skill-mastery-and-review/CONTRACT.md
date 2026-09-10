@@ -27,6 +27,19 @@ for dashboards and achievements.
 - Replay is idempotent and refuses to run against a technology mid-sync.
 - All reads are token-scoped; `401` unauthenticated, `404` unknown technology.
 
+## Deviations from the pack, and why
+
+- **`review_item` is not created.** `skill_mastery` already carries the schedule
+  (`next_review_at`, `interval_days`, `review_count`). A second table holding the
+  same schedule is a second source of truth waiting to drift. The audit the pack
+  wanted from it is served better by `mastery_change`, which records every move
+  with the engine's reason and the attempt or completion that caused it.
+- **Listeners run inside the request, not inside the attempt's transaction.**
+  Wrapping both would mean threading a transaction manager through the event bus.
+  The attempt is the fact; mastery is derived from it. A listener that fails is
+  logged and skipped, and `mastery:replay` rebuilds the state from attempt
+  history — which is why that command exists.
+
 ## Invariants
 
 - Mastery and confidence stay within 0–100.

@@ -54,8 +54,18 @@ export function calculateReviewPriority(
     priority,
     band: bandFor(priority),
     factors: { weakness, forgettingRisk, importance, prerequisiteImpact: impact },
+    estimatedMinutes: estimateMinutes(priority),
     reason: buildReason(skill, forgettingRisk, impact),
   };
+}
+
+/**
+ * A more urgent skill needs longer: the estimate rises with priority, between
+ * a quick refresher and a full review. Bounded so a plan can be built from it.
+ */
+function estimateMinutes(priority: number): number {
+  const { minMinutes, maxMinutes } = PARAMETERS.reviewEstimate;
+  return Math.round(minMinutes + clampUnit(priority) * (maxMinutes - minMinutes));
 }
 
 function buildReason(skill: SkillSnapshot, forgettingRisk: number, impact: number): string {

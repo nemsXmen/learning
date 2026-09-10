@@ -74,6 +74,14 @@ export const PARAMETERS = {
     demoteAfterFailures: 1,
   },
 
+  /** CDC §65 returns an estimate alongside the priority. */
+  reviewEstimate: {
+    /** A quick refresher on a skill barely below threshold. */
+    minMinutes: 3,
+    /** A skill at zero mastery, never reviewed, blocking the path. */
+    maxMinutes: 10,
+  },
+
   boost: {
     minMinutes: 5,
     maxMinutes: 15,

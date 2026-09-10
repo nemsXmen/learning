@@ -1,4 +1,11 @@
-import { Column, Entity, Index, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import type { ProgressStatus } from '@app/types';
 
 /**
@@ -76,4 +83,40 @@ export class SkillMasteryEntity {
   updatedAt!: Date;
 }
 
-export const LEARNING_ENTITIES = [UserProgressEntity, SkillMasteryEntity];
+/**
+ * Why a mastery score moved. Append-only: the engine's reason is stored, not just
+ * returned, so a change stays explainable long after the request (CDC §66).
+ */
+@Entity('mastery_change')
+@Index(['userId', 'skillId'])
+export class MasteryChangeEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
+
+  @Column({ type: 'uuid', name: 'user_id' })
+  userId!: string;
+
+  @Column({ type: 'varchar', length: 96, name: 'skill_id' })
+  skillId!: string;
+
+  @Column({ type: 'real', name: 'from_score' })
+  fromScore!: number;
+
+  @Column({ type: 'real', name: 'to_score' })
+  toScore!: number;
+
+  @Column({ type: 'text' })
+  reason!: string;
+
+  /** QUIZ_ATTEMPT or CHAPTER_COMPLETION, with the id that caused it. */
+  @Column({ type: 'varchar', length: 32, name: 'source_type' })
+  sourceType!: string;
+
+  @Column({ type: 'varchar', length: 96, name: 'source_id' })
+  sourceId!: string;
+
+  @Column({ type: 'timestamptz', name: 'occurred_at' })
+  occurredAt!: Date;
+}
+
+export const LEARNING_ENTITIES = [UserProgressEntity, SkillMasteryEntity, MasteryChangeEntity];

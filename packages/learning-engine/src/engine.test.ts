@@ -319,6 +319,32 @@ describe('prerequisiteImpact', () => {
   });
 });
 
+describe('estimatedMinutes', () => {
+  it('rises with priority, between the documented bounds', () => {
+    const urgent = calculateReviewPriority(
+      skill({ masteryScore: 5, lastReviewedAt: daysAgo(60), importance: 5 }),
+      GRAPH,
+      NOW,
+    );
+    const mild = calculateReviewPriority(
+      skill({ masteryScore: 58, lastReviewedAt: NOW, importance: 1 }),
+      GRAPH,
+      NOW,
+    );
+
+    expect(urgent.estimatedMinutes).toBeGreaterThan(mild.estimatedMinutes);
+    for (const result of [urgent, mild]) {
+      expect(result.estimatedMinutes).toBeGreaterThanOrEqual(PARAMETERS.reviewEstimate.minMinutes);
+      expect(result.estimatedMinutes).toBeLessThanOrEqual(PARAMETERS.reviewEstimate.maxMinutes);
+    }
+  });
+
+  it('is a whole number of minutes: it is shown to a learner', () => {
+    const result = calculateReviewPriority(skill({ masteryScore: 37 }), GRAPH, NOW);
+    expect(Number.isInteger(result.estimatedMinutes)).toBe(true);
+  });
+});
+
 describe('detectWeakSkills', () => {
   const skills = [
     skill({ skillId: 'event-loop', masteryScore: 43 }),
