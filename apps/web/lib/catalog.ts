@@ -65,3 +65,44 @@ export function listTechnologies(): Promise<TechnologySummary[]> {
 export function getTechnology(slug: string): Promise<TechnologyDetail> {
   return authorized<TechnologyDetail>(`/learn/technologies/${encodeURIComponent(slug)}`);
 }
+
+export interface OutlineEntry {
+  depth: number;
+  id: string;
+  text: string;
+}
+
+export interface ChapterPayload {
+  id: string;
+  title: string;
+  slug: string;
+  technology: { slug: string; name: string };
+  module: { slug: string; title: string };
+  level: string;
+  estimatedMinutes: number;
+  difficulty: number;
+  xp: number;
+  skills: Array<{ id: string; name: string }>;
+  outline: OutlineEntry[];
+  html: string;
+  contentVersion: string;
+  neighbours: { previous: string | null; next: string | null };
+}
+
+export interface ChapterProgress {
+  chapterId: string;
+  status: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
+  progressPercent: number;
+  timeSpentSeconds: number;
+  completedAt: string | null;
+}
+
+export function getChapter(technology: string, chapter: string): Promise<ChapterPayload> {
+  return authorized<ChapterPayload>(
+    `/content/chapters/${encodeURIComponent(technology)}/${encodeURIComponent(chapter)}`,
+  );
+}
+
+export function getChapterProgress(chapterId: string): Promise<ChapterProgress> {
+  return authorized<ChapterProgress>(`/me/progress/chapters/${encodeURIComponent(chapterId)}`);
+}

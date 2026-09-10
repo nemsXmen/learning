@@ -5,11 +5,12 @@ import { ContentModule } from '../content/content.module';
 import { LEARNING_ENTITIES } from './learning.entities';
 import { ProgressController } from './progress.controller';
 import { ProgressService } from './progress.service';
+import { ChapterAccessService } from './chapter-access.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature(LEARNING_ENTITIES), ContentModule, AuthModule],
   controllers: [ProgressController],
-  providers: [ProgressService],
+  providers: [ProgressService, ChapterAccessService],
   exports: [ProgressService],
 })
 export class ProgressModule {}

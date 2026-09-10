@@ -1,13 +1,13 @@
-import { ForbiddenException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Redis } from 'ioredis';
 import type { ProgressStatus } from '@app/types';
 import { ContentService } from '../content/content.service';
-import { prerequisiteSkillsOf, resolveLock } from '../catalog/catalog.view';
 import { DomainEvents } from '../events/domain-events';
+import { ChapterAccessService } from './chapter-access.service';
 import { REDIS } from '../redis/redis.tokens';
-import { SkillMasteryEntity, UserProgressEntity } from './learning.entities';
+import { UserProgressEntity } from './learning.entities';
 
 /** A single report cannot claim more than a few minutes of reading. */
 export const MAX_REPORT_SECONDS = 300;
@@ -49,11 +49,10 @@ export class ProgressService {
   constructor(
     private readonly content: ContentService,
     private readonly events: DomainEvents,
+    private readonly access: ChapterAccessService,
     @Inject(REDIS) private readonly redis: Redis,
     @InjectRepository(UserProgressEntity)
     private readonly progress: Repository<UserProgressEntity>,
-    @InjectRepository(SkillMasteryEntity)
-    private readonly mastery: Repository<SkillMasteryEntity>,
   ) {}
 
   async report(
@@ -62,7 +61,7 @@ export class ProgressService {
     input: { progressPercent?: number; timeSpentSeconds?: number },
     now = new Date(),
   ): Promise<ProgressView> {
-    await this.requireUnlockedChapter(userId, chapterId);
+    await this.access.requireUnlocked(userId, chapterId);
     const existing = await this.progress.findOne({ where: { userId, chapterId } });
 
     const grantedSeconds = await this.grantTime(userId, input.timeSpentSeconds ?? 0, now);
@@ -106,7 +105,7 @@ export class ProgressService {
    * concurrent requests cannot both see `affected === 1`, so the event fires once.
    */
   async complete(userId: string, chapterId: string, now = new Date()): Promise<CompletionResult> {
-    const chapter = await this.requireUnlockedChapter(userId, chapterId);
+    const chapter = await this.access.requireUnlocked(userId, chapterId);
 
     const claimed = await this.progress
       .createQueryBuilder()
@@ -227,34 +226,6 @@ export class ProgressService {
       // Redis down: fall back to the per-report cap rather than refusing progress.
       return perReport;
     }
-  }
-
-  private async requireUnlockedChapter(userId: string, chapterId: string) {
-    const chapter = this.content.getGraph().chapters.find((item) => item.id === chapterId);
-    if (!chapter) {
-      throw new NotFoundException({
-        code: 'CHAPTER_NOT_FOUND',
-        message: `Chapitre introuvable : ${chapterId}`,
-      });
-    }
-
-    const prerequisites = prerequisiteSkillsOf(this.content.getGraph(), chapterId);
-    if (prerequisites.length > 0) {
-      const rows = await this.mastery.find({ where: { userId } });
-      const scores = new Map(rows.map((row) => [row.skillId, row.masteryScore]));
-      const names = new Map(this.content.getGraph().skills.map((s) => [s.id, s.name]));
-      const lock = resolveLock(prerequisites, scores, names);
-
-      if (lock.locked) {
-        throw new ForbiddenException({
-          code: 'CHAPTER_LOCKED',
-          message: 'Ce chapitre est encore verrouillé.',
-          lockReason: lock.lockReason,
-        });
-      }
-    }
-
-    return chapter;
   }
 
   private toView(row: UserProgressEntity): ProgressView {

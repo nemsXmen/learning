@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { loadContentGraph, type ContentGraph } from '@app/content';
 import { DomainEvents, type ChapterCompleted } from '../events/domain-events';
+import { ChapterAccessService } from './chapter-access.service';
 import {
   MAX_DAILY_SECONDS,
   MAX_REPORT_SECONDS,
@@ -110,14 +111,17 @@ function build(options: {
   const events = new DomainEvents();
   const content = { getGraph: () => graph } as never;
 
+  // The real guard, not a stub: locking is the behaviour under test.
+  const access = new ChapterAccessService(mastery as never);
+
   const service = new ProgressService(
     content,
     events,
+    access,
     redis as never,
     progress as never,
-    mastery as never,
   );
-  return { service, progress, redis, events };
+  return { service, progress, redis, events, access };
 }
 
 /* -------------------------------------------------------------------------- */

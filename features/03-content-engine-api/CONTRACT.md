@@ -39,8 +39,10 @@
 
 ## API or event boundary
 
-- Both endpoints require an authenticated session once slice 04 lands; until then they
-  are read-only and unauthenticated in local development only.
+- Both endpoints require an authenticated session, and refuse a locked chapter with
+  `403 CHAPTER_LOCKED` and its reason. Enforcing the lock where the content is
+  served — not only where the catalogue displays it — is what makes a direct URL
+  useless (features/06-chapter-reader).
 - `content:sync` is a CLI command, not an endpoint.
 
 ## Validation and errors

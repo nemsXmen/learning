@@ -39,3 +39,8 @@ export async function requireUser(pathname: string): Promise<PublicUser> {
   if (!user) redirect(`/login?next=${encodeURIComponent(pathname)}`);
   return user;
 }
+
+/** The access token, for route handlers proxying on the learner's behalf. */
+export async function accessToken(): Promise<string | undefined> {
+  return (await cookies()).get(ACCESS_COOKIE)?.value;
+}

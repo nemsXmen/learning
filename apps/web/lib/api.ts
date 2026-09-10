@@ -6,6 +6,8 @@ export class ApiError extends Error {
     readonly status: number,
     readonly code: string,
     message: string,
+    /** The whole payload: some refusals carry a reason the screen must show. */
+    readonly body?: unknown,
   ) {
     super(message);
     this.name = 'ApiError';
@@ -42,6 +44,7 @@ export async function apiFetch<T>(path: string, init: ApiRequest = {}): Promise<
       response.status,
       payload?.code ?? 'UNKNOWN',
       payload?.message ?? `L'API a répondu ${response.status}`,
+      payload,
     );
   }
 

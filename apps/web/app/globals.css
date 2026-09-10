@@ -36,3 +36,102 @@
     outline-offset: 2px;
   }
 }
+
+/*
+ * The chapter body. The HTML arrives rendered and sanitised from the API, so it
+ * carries no classes of its own beyond highlight.js — everything below styles
+ * plain tags, and every colour comes from the token file.
+ */
+.chapter-prose {
+  color: var(--color-text);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.chapter-prose > * + * { margin-top: 1.15em; }
+
+.chapter-prose h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 2.25em;
+  scroll-margin-top: 2rem;
+}
+
+.chapter-prose h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1.75em;
+  scroll-margin-top: 2rem;
+}
+
+.chapter-prose p,
+.chapter-prose li { color: var(--color-text); }
+.chapter-prose ul, .chapter-prose ol { padding-left: 1.35rem; }
+.chapter-prose li + li { margin-top: 0.4em; }
+
+.chapter-prose a { color: var(--color-accent-soft); }
+.chapter-prose a:hover { color: var(--color-accent-alt); }
+
+.chapter-prose blockquote {
+  border-left: 2px solid var(--color-accent-border);
+  padding-left: 1rem;
+  color: var(--color-text-muted);
+}
+
+/* Inline code, distinct from a block. */
+.chapter-prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+  padding: 0.1em 0.35em;
+}
+
+.chapter-prose pre {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1rem 1.15rem;
+  /* Wide code scrolls inside its own block; the page never scrolls sideways. */
+  overflow-x: auto;
+}
+
+.chapter-prose pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+
+.chapter-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  display: block;
+  overflow-x: auto;
+}
+.chapter-prose th, .chapter-prose td {
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+}
+.chapter-prose th { color: var(--color-text-muted); font-weight: 600; }
+
+.chapter-prose hr { border: 0; border-top: 1px solid var(--color-border); margin: 2em 0; }
+
+/*
+ * highlight.js emits semantic classes, so one stylesheet themes code in both
+ * light and dark — the reason we did not pick an inline-colour highlighter.
+ */
+.hljs-comment, .hljs-quote { color: var(--color-text-subtle); font-style: italic; }
+.hljs-keyword, .hljs-selector-tag, .hljs-literal { color: var(--color-accent-alt); }
+.hljs-string, .hljs-attr, .hljs-addition { color: var(--color-success); }
+.hljs-number, .hljs-symbol, .hljs-bullet { color: var(--color-warning); }
+.hljs-title, .hljs-name, .hljs-section { color: var(--color-accent-soft); }
+.hljs-type, .hljs-built_in, .hljs-class .hljs-title { color: var(--color-streak); }
+.hljs-variable, .hljs-template-variable { color: var(--color-text); }
+.hljs-deletion { color: var(--color-danger); }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: 600; }
