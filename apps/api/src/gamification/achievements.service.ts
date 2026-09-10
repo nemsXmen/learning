@@ -2,7 +2,7 @@ import { Injectable, Logger, type OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PARAMETERS } from '@app/learning-engine';
-import { DomainEvents, type XpAwarded } from '../events/domain-events';
+import { DomainEvents } from '../events/domain-events';
 import { SkillMasteryEntity, UserProgressEntity } from '../learning/learning.entities';
 import { ACHIEVEMENTS, definitionOf, earnedAchievements, type AchievementDefinition } from './achievements';
 import { StreakService } from './streak.service';
@@ -38,18 +38,24 @@ export class AchievementsService implements OnModuleInit {
   ) {}
 
   onModuleInit(): void {
+    // Both signals matter. Listening to xp.awarded alone missed mastery badges:
+    // a retake that earns nothing still moves mastery, and a learner could pass
+    // the mastered threshold with no XP event to trigger detection.
     this.events.on('xp.awarded', async (payload) => {
-      await this.detect(payload);
+      await this.detect(payload.userId, payload.occurredAt);
+    });
+    this.events.on('mastery.updated', async (payload) => {
+      await this.detect(payload.userId, payload.occurredAt);
     });
   }
 
-  async detect(payload: XpAwarded): Promise<string[]> {
+  async detect(userId: string, occurredAt: Date): Promise<string[]> {
     const [xp, streak, masteryRows, progressRows, already] = await Promise.all([
-      this.xp.summary(payload.userId, payload.occurredAt),
-      this.streaks.view(payload.userId, payload.occurredAt),
-      this.mastery.find({ where: { userId: payload.userId } }),
-      this.progress.find({ where: { userId: payload.userId, status: 'COMPLETED' } }),
-      this.unlocked.find({ where: { userId: payload.userId } }),
+      this.xp.summary(userId, occurredAt),
+      this.streaks.view(userId, occurredAt),
+      this.mastery.find({ where: { userId } }),
+      this.progress.find({ where: { userId, status: 'COMPLETED' } }),
+      this.unlocked.find({ where: { userId } }),
     ]);
 
     const earned = earnedAchievements({
@@ -69,7 +75,7 @@ export class AchievementsService implements OnModuleInit {
     await this.unlocked
       .createQueryBuilder()
       .insert()
-      .values(fresh.map((code) => ({ userId: payload.userId, code })))
+      .values(fresh.map((code) => ({ userId, code })))
       .orIgnore()
       .execute();
 

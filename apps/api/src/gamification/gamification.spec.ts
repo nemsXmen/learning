@@ -282,6 +282,48 @@ describe('StreakService', () => {
 /* Achievements                                                                */
 /* -------------------------------------------------------------------------- */
 
+describe('AchievementsService triggers', () => {
+  it('detects on mastery.updated as well as xp.awarded', async () => {
+    // Found live: a retake earns no XP but still moves mastery, so a learner
+    // could cross the mastered threshold with no xp.awarded to react to.
+    const { AchievementsService } = await import('./achievements.service');
+    const events = new DomainEvents();
+
+    const service = new AchievementsService(
+      events,
+      { summary: async () => ({ level: 1 }) } as never,
+      { view: async () => ({ currentDays: 0 }) } as never,
+      { find: async () => [], createQueryBuilder: () => ({ insert: () => ({ values: () => ({ orIgnore: () => ({ execute: async () => undefined }) }) }) }) } as never,
+      { find: async () => [] } as never,
+      { find: async () => [] } as never,
+    );
+
+    const seen: string[] = [];
+    jest.spyOn(service, 'detect').mockImplementation(async (userId: string) => {
+      seen.push(userId);
+      return [];
+    });
+    service.onModuleInit();
+
+    await events.emit('xp.awarded', {
+      userId: 'u1',
+      amount: 10,
+      reason: 'CHAPTER_READ',
+      referenceType: 'chapter',
+      referenceId: 'c',
+      detail: '',
+      occurredAt: NOW,
+    });
+    await events.emit('mastery.updated', {
+      userId: 'u2',
+      changes: [{ skillId: 's', from: 0, to: 90, reason: 'r' }],
+      occurredAt: NOW,
+    });
+
+    expect(seen).toEqual(['u1', 'u2']);
+  });
+});
+
 describe('earnedAchievements', () => {
   const base = {
     xp: { total: 0, todayXp: 0, level: 1, levelStartXp: 0, nextLevelXp: 100, levelProgressPercent: 0, xpToNextLevel: 100 },
