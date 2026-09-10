@@ -10,6 +10,7 @@ import { ProgressModule } from './learning/progress.module';
 import { EventsModule } from './events/events.module';
 import { QuizModule } from './quiz/quiz.module';
 import { GamificationModule } from './gamification/gamification.module';
+import { BoostModule } from './boost/boost.module';
 import { ZodValidationPipe } from './zod-validation.pipe';
 
 @Module({
@@ -24,6 +25,7 @@ import { ZodValidationPipe } from './zod-validation.pipe';
     EventsModule,
     QuizModule,
     GamificationModule,
+    BoostModule,
   ],
   // Global: a handler that forgets to validate its body is a bug waiting, and a
   // per-parameter pipe made that easy to forget.

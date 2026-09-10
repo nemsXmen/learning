@@ -214,6 +214,18 @@ export class MasteryService implements OnModuleInit {
       .sort((a, b) => b.priority - a.priority || a.skillId.localeCompare(b.skillId));
   }
 
+  /** Engine-shaped snapshots for every declared skill. Used to plan a Boost. */
+  async snapshotsFor(userId: string): Promise<SkillSnapshot[]> {
+    const rows = await this.rowsOf(userId);
+    return bundledGraph.skills.map((skill) => this.snapshotFrom(skill.id, rows.get(skill.id)));
+  }
+
+  /** Current scores by skill, for measuring what a session actually moved. */
+  async scoresFor(userId: string): Promise<Map<string, number>> {
+    const rows = await this.rowsOf(userId);
+    return new Map([...rows.values()].map((row) => [row.skillId, row.masteryScore]));
+  }
+
   /* ---------------------------------------------------------------------- */
   /* Internals                                                               */
   /* ---------------------------------------------------------------------- */
