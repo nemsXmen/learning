@@ -1,7 +1,6 @@
 import 'reflect-metadata';
-import { loadContentGraph } from '@app/content';
+import { bundledGraph } from '@app/content';
 import { DataSource } from 'typeorm';
-import { CONTENT_DIR } from '../config/env';
 import { dataSourceOptions } from '../database/data-source';
 import {
   ChapterEntity,
@@ -78,15 +77,12 @@ async function applyPlan(dataSource: DataSource, plan: SyncPlan): Promise<void> 
 }
 
 async function main(): Promise<void> {
-  const result = await loadContentGraph(CONTENT_DIR);
-  if (!result.ok) {
-    console.error(
-      `Contenu invalide (${result.issues.length} problème(s)). Lance \`pnpm content:validate\`.`,
-    );
+  if (bundledGraph.chapters.length === 0) {
+    console.error('Contenu vide : lance `pnpm content:bundle` avant de synchroniser.');
     process.exit(1);
   }
 
-  const plan = buildSyncPlan(result.value);
+  const plan = buildSyncPlan(bundledGraph);
   const dataSource = new DataSource(dataSourceOptions);
   await dataSource.initialize();
 

@@ -1,12 +1,6 @@
 import { Inject, Injectable, Logger, NotFoundException, type OnModuleInit } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import {
-  loadContentGraph,
-  type ChapterNode,
-  type ContentGraph,
-  type QuizNode,
-} from '@app/content';
-import { CONTENT_DIR } from '../config/env';
+import { bundledGraph, type ChapterNode, type ContentGraph, type QuizNode } from '@app/content';
 import { REDIS } from '../redis/redis.tokens';
 import { renderMarkdown, type OutlineEntry } from './markdown';
 
@@ -65,23 +59,27 @@ export class ContentService implements OnModuleInit {
 
   constructor(@Inject(REDIS) private readonly redis: Redis) {}
 
-  /** Refuses to start on an invalid tree, naming the offending paths. */
-  async onModuleInit(): Promise<void> {
-    const result = await loadContentGraph(CONTENT_DIR);
-    if (result.ok === false) {
-      const summary = result.issues
-        .slice(0, 10)
-        .map((issue) => `  ${issue.path}:${issue.line} — ${issue.message}`)
-        .join('\n');
+  /**
+   * The graph is baked in at build time by `pnpm content:bundle`, not read from
+   * disk. A serverless bundler traces static imports only, so a directory read
+   * through a path from an environment variable is never packaged — and a
+   * relative CONTENT_DIR resolves against whatever working directory the
+   * platform happens to use.
+   *
+   * An empty bundle means the generation step never ran, so refuse to start
+   * rather than serve a catalogue with no chapters.
+   */
+  onModuleInit(): void {
+    if (bundledGraph.chapters.length === 0) {
       throw new Error(
-        `Contenu invalide (${result.issues.length} problème(s)) :\n${summary}\n` +
-          'Lance `pnpm content:validate` pour la liste complète.',
+        'Contenu vide : le module généré ne contient aucun chapitre.\n' +
+          'Lance `pnpm content:bundle`, et `pnpm content:validate` en cas de doute.',
       );
     }
 
-    this.graph = result.value;
+    this.graph = bundledGraph;
     this.logger.log(
-      `Contenu chargé : ${result.value.chapters.length} chapitres, ${result.value.skills.length} compétences`,
+      `Contenu chargé : ${bundledGraph.chapters.length} chapitres, ${bundledGraph.skills.length} compétences`,
     );
   }
 

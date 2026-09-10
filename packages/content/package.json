@@ -15,7 +15,8 @@
     "lint": "echo no lint",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run --passWithNoTests",
-    "validate": "node dist/validate-cli.js"
+    "validate": "node dist/validate-cli.js",
+    "bundle": "node dist/bundle-cli.js"
   },
   "dependencies": {
     "@app/types": "workspace:*",

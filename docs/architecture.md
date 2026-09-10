@@ -78,7 +78,8 @@ Server-side only, over the private network, with the user's access token in the
 view and renders. A rule that exists only in `apps/web` is a bug.
 
 ### NestJS ↔ content/
-`apps/api` is the single process that reads `content/`. It parses frontmatter,
+`apps/api` owns the content, but reads it from a module generated at build time by
+`pnpm content:bundle` rather than from disk (see decisions.md). It parses frontmatter,
 validates against the content schema, renders Markdown to sanitized HTML and caches
 the result in Redis keyed by content version. `apps/web` never touches the filesystem.
 

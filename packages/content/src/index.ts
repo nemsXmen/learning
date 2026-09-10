@@ -10,6 +10,8 @@ import type { ContentGraph } from './graph';
 export * from './graph';
 export * from './issues';
 export { contentVersion } from './loader';
+export { bundledGraph } from './bundled';
+export { bundleGraph, serializeGraph, GENERATED_PATH } from './bundle';
 export { parseFrontmatter, extractSections, extractRelativeLinks } from './frontmatter';
 
 /**

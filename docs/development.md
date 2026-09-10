@@ -82,6 +82,7 @@ failing at the first request.
 | `pnpm db:reset` | clean stack, migrate, then re-sync the catalog |
 | `pnpm db:psql` | open a psql shell on the running database |
 | `pnpm content:validate` | content schema and graph checks (CDC §44) |
+| `pnpm content:bundle` | regenerate the module the API imports; run after editing `content/` |
 | `pnpm content:sync` | project content metadata into PostgreSQL |
 | `pnpm mail` | print the local inbox URL |
 
@@ -95,7 +96,9 @@ reviewed migration or it does not exist. Reset locally with
 
 1. Edit or add files under `content/`.
 2. `pnpm content:validate` — it fails with `path:line — problem`.
-3. `pnpm content:sync` — updates the catalog mirror and invalidates the render cache.
+3. `pnpm content:bundle` — regenerates the module the API imports. A test fails
+   if you skip this, so the API can never serve stale content.
+4. `pnpm content:sync` — updates the catalog mirror.
 
 Adding a technology means adding a `content/<slug>/` tree and running these two
 commands. No code change should be required (CDC §89.28).

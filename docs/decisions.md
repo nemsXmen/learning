@@ -39,6 +39,28 @@ that depends on them is accepted.
   duplicates the parser and splits code-block styling across two runtimes.
 - CDC question or assumption: none.
 
+## Decision: the content graph is bundled at build time, not read at runtime
+
+- Status: accepted (amends "NestJS owns `content/`")
+- Context: the API read `content/` from disk at boot, with `CONTENT_DIR` resolved
+  relative to the working directory. Deployed to a serverless platform this fails
+  twice: `resolve('/var/task', '../../content')` yields `/content`, and a bundler
+  traces static imports only — a directory read through a path from an
+  environment variable is never packaged, so the Markdown is not deployed at all.
+- Decision: `pnpm content:bundle` turns `content/` into a committed JSON module
+  that the API imports statically. `ContentService` and `content:sync` both read
+  that module; neither touches the filesystem.
+- Consequences: the runtime has no dependency on repository layout or working
+  directory, and a cold start no longer walks and validates a tree. `CONTENT_DIR`
+  becomes an authoring concern with a default, so a deployment need not set it.
+  The generated file duplicates the Markdown in Git; a test fails if it drifts
+  from the source, which is the guard against serving stale content.
+- Consequence to watch: the bundle contains every answer key. On disk these were
+  unreachable from the browser; as a static import they would be shipped to it,
+  so a lint rule forbids `apps/web` from importing `@app/content`.
+- CDC question or assumption: none. Markdown stays the source of truth in Git
+  (§89.5); only the way it reaches the runtime changes.
+
 ## Decision: Frontmatter is the only content metadata source
 
 - Status: accepted
@@ -182,6 +204,18 @@ that depends on them is accepted.
 # Open questions
 
 These block acceptance of the features named. Do not guess an answer in code.
+
+## Question: where does the API run, given it needs a long-lived process
+
+- Affects: deployment of `apps/api`.
+- The mail worker (`MailWorker`) holds an open BullMQ `Worker`, and a serverless
+  function is frozen once it responds — verification and reset emails would never
+  be sent there. TypeORM pooling and the Redis connection assume a long process too.
+- Current handling: the content bundling above removes the filesystem obstacle, so
+  the API can boot on a serverless platform for testing. Email delivery on such a
+  platform is not solved and is not claimed to be.
+- Needed: a decision — a process host for the API (Railway, Fly, Render, a
+  container), or a separate always-on worker alongside the serverless functions.
 
 ## Question: does an unverified account get restricted
 

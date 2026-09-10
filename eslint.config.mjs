@@ -59,6 +59,28 @@ export default tseslint.config(
     },
   },
 
+  // The bundled content graph holds every quiz answer and explanation. On disk
+  // it was unreachable from the browser; as a static import it would be shipped
+  // to it. The web app talks to the API, which strips the answer key
+  // (docs/rules.md #29).
+  {
+    files: ['apps/web/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@app/content', '@app/content/*'],
+              message:
+                'Le graphe de contenu contient les corrigés : passe par l’API, jamais par un import direct.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+
   // The engine is pure by contract: no I/O, no ambient clock, no randomness. The
   // clock is always an input, which is what makes every rule testable
   // (features/09-learning-engine-core/CONTRACT.md).

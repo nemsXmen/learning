@@ -26,7 +26,9 @@ export const apiEnvSchema = z.object({
   JWT_ACCESS_TTL: duration.default('15m'),
   JWT_REFRESH_TTL: duration.default('30d'),
 
-  CONTENT_DIR: z.string().min(1),
+  // Authoring and bundling only. The API reads the generated module at runtime,
+  // so a deployment does not have to know where the repository lives.
+  CONTENT_DIR: z.string().min(1).default('../../content'),
   WEB_ORIGIN: z.string().url(),
   APP_URL: z.string().url(),
 

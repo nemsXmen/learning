@@ -6,7 +6,6 @@ const validApiEnv = {
   REDIS_URL: 'redis://localhost:6379',
   JWT_ACCESS_SECRET: 'a'.repeat(32),
   JWT_REFRESH_SECRET: 'b'.repeat(32),
-  CONTENT_DIR: '../../content',
   WEB_ORIGIN: 'http://localhost:3000',
   APP_URL: 'http://localhost:3000',
   SMTP_HOST: 'localhost',
@@ -27,6 +26,13 @@ describe('apiEnvSchema', () => {
     const source = { ...validApiEnv } as Record<string, unknown>;
     delete source[missing];
     expect(() => parseEnv(apiEnvSchema, source)).toThrowError(new RegExp(missing));
+  });
+
+  it('defaults CONTENT_DIR: the runtime reads the bundled graph, not the tree', () => {
+    expect(parseEnv(apiEnvSchema, validApiEnv).CONTENT_DIR).toBe('../../content');
+    expect(parseEnv(apiEnvSchema, { ...validApiEnv, CONTENT_DIR: '/srv/content' }).CONTENT_DIR).toBe(
+      '/srv/content',
+    );
   });
 
   it('rejects a short JWT secret rather than silently accepting it', () => {

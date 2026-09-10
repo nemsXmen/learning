@@ -1,0 +1,704 @@
+{
+  "technologies": [
+    {
+      "slug": "javascript",
+      "name": "JavaScript",
+      "order": 1,
+      "description": "Du modèle mental des variables jusqu'au modèle d'exécution : ce que le moteur fait réellement quand ton code s'exécute.\n",
+      "published": true,
+      "contentPath": "javascript/technology.yaml",
+      "contentVersion": "f676a852efbe"
+    },
+    {
+      "slug": "typescript",
+      "name": "TypeScript",
+      "order": 2,
+      "description": "Écrire des types qui décrivent la réalité du code, et laisser le compilateur faire le travail que tu ferais à la main.\n",
+      "published": true,
+      "contentPath": "typescript/technology.yaml",
+      "contentVersion": "4ddad606d85d"
+    }
+  ],
+  "modules": [
+    {
+      "slug": "fundamentals",
+      "title": "Fondamentaux",
+      "order": 1,
+      "technology": "javascript",
+      "contentPath": "javascript/fundamentals/module.yaml",
+      "contentVersion": "f269a692a2b6"
+    },
+    {
+      "slug": "scope",
+      "title": "Portée et exécution",
+      "order": 2,
+      "technology": "javascript",
+      "contentPath": "javascript/scope/module.yaml",
+      "contentVersion": "a6b57e796618"
+    },
+    {
+      "slug": "fundamentals",
+      "title": "Fondamentaux",
+      "order": 1,
+      "technology": "typescript",
+      "contentPath": "typescript/fundamentals/module.yaml",
+      "contentVersion": "f269a692a2b6"
+    },
+    {
+      "slug": "generics",
+      "title": "Génériques",
+      "order": 2,
+      "technology": "typescript",
+      "contentPath": "typescript/generics/module.yaml",
+      "contentVersion": "663e76bf28e6"
+    }
+  ],
+  "skills": [
+    {
+      "id": "variables",
+      "name": "Variables et liaisons",
+      "importance": 4,
+      "requires": [],
+      "technology": "javascript"
+    },
+    {
+      "id": "functions",
+      "name": "Fonctions",
+      "importance": 5,
+      "requires": [],
+      "technology": "javascript"
+    },
+    {
+      "id": "scope",
+      "name": "Portée",
+      "importance": 5,
+      "requires": [
+        "variables"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "lexical-environment",
+      "name": "Environnement lexical",
+      "importance": 4,
+      "requires": [
+        "scope"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "closures",
+      "name": "Closures",
+      "importance": 5,
+      "requires": [
+        "scope",
+        "functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "type-inference",
+      "name": "Inférence de types",
+      "importance": 4,
+      "requires": [],
+      "technology": "typescript"
+    },
+    {
+      "id": "primitive-types",
+      "name": "Types primitifs",
+      "importance": 3,
+      "requires": [],
+      "technology": "typescript"
+    },
+    {
+      "id": "generics",
+      "name": "Génériques",
+      "importance": 5,
+      "requires": [
+        "type-inference"
+      ],
+      "technology": "typescript"
+    },
+    {
+      "id": "type-constraints",
+      "name": "Contraintes de types",
+      "importance": 4,
+      "requires": [
+        "generics"
+      ],
+      "technology": "typescript"
+    }
+  ],
+  "chapters": [
+    {
+      "id": "javascript-functions",
+      "title": "Fonctions",
+      "slug": "functions",
+      "technology": "javascript",
+      "level": "beginner",
+      "module": "fundamentals",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 2,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-variables"
+      ],
+      "skills": [
+        "functions"
+      ],
+      "tags": [
+        "javascript",
+        "fundamentals"
+      ],
+      "contentPath": "javascript/fundamentals/functions/lesson.md",
+      "contentVersion": "9f08ace6177e",
+      "body": "\n# Fonctions\n\n## Objectifs\n\n- Distinguer déclaration, expression et fonction fléchée.\n- Prévoir la valeur de `this` selon la forme choisie.\n- Savoir quand une fonction fléchée est le mauvais outil.\n\n## Introduction\n\nEn JavaScript une fonction est une valeur ordinaire : on peut la stocker, la passer\nen argument, la renvoyer. C'est ce qui rend possibles les callbacks, les closures et\nla programmation fonctionnelle. Mais trois syntaxes coexistent, et elles ne diffèrent\npas seulement par l'apparence.\n\n## Concept\n\n| Forme | Remontée | `this` | `arguments` |\n| --- | --- | --- | --- |\n| Déclaration `function f() {}` | complète | dynamique, dépend de l'appel | oui |\n| Expression `const f = function () {}` | non | dynamique | oui |\n| Fléchée `const f = () => {}` | non | lexical, hérité | non |\n\nLa ligne qui compte est celle de `this`. Une fonction classique reçoit son `this` **au\nmoment de l'appel** ; une fonction fléchée le capture **là où elle est écrite**, une\nfois pour toutes.\n\n## Exemple\n\n```js\nconst compteur = {\n  total: 0,\n\n  incrementerClassique() {\n    // `this` dépend de l'appel : ici, l'objet compteur\n    this.total += 1;\n  },\n\n  incrementerRetarde() {\n    // La fléchée hérite du `this` de incrementerRetarde : l'objet compteur\n    setTimeout(() => {\n      this.total += 1;\n    }, 100);\n  },\n};\n```\n\nÉcrire le `setTimeout` avec `function () { this.total += 1 }` casserait tout : `this`\ny vaudrait l'objet global ou `undefined` en mode strict.\n\n## Comment ça fonctionne\n\nUne déclaration de fonction est entièrement remontée : le moteur l'enregistre, corps\ncompris, avant d'exécuter la moindre ligne. On peut donc l'appeler plus haut que sa\ndéfinition. Une expression de fonction suit la règle de la variable qui la porte :\navec `const`, elle reste dans la zone morte temporelle jusqu'à son affectation.\n\n```js\ndireBonjour();           // fonctionne : déclaration remontée\nfunction direBonjour() {}\n\ndireAurevoir();          // ReferenceError : const dans la zone morte\nconst direAurevoir = () => {};\n```\n\nLes paramètres suivent leurs propres règles : une valeur par défaut n'est évaluée\nqu'au moment où l'argument est absent, et elle peut dépendre des paramètres\nprécédents.\n\n```js\nfunction creer(nom, id = nom.toLowerCase()) {\n  return { nom, id };\n}\ncreer('Ada'); // { nom: 'Ada', id: 'ada' }\n```\n\n## Erreurs fréquentes\n\n**Utiliser une fléchée comme méthode d'objet.** Elle capture le `this` du module, pas\ncelui de l'objet :\n\n```js\nconst mauvais = {\n  total: 0,\n  incrementer: () => {\n    this.total += 1; // `this` n'est pas `mauvais`\n  },\n};\n```\n\n**Croire qu'une fléchée est juste une syntaxe plus courte.** Elle n'a ni `this`, ni\n`arguments`, ni `prototype` — donc pas de `new`, pas de méthode d'objet, pas de\nfonction constructeur.\n\n**Compter sur la remontée d'une expression.** Seule la déclaration `function` est\nutilisable avant sa ligne.\n\n## À retenir\n\n- Une fonction est une valeur : elle se passe, se stocke, se renvoie.\n- La déclaration est remontée avec son corps ; l'expression suit sa variable.\n- `this` classique dépend de l'appel ; `this` fléché dépend de l'écriture.\n- La fléchée est idéale en callback, inadaptée en méthode.\n\n## Exercices\n\n1. Réécris une méthode d'objet cassée par une fléchée pour qu'elle fonctionne.\n2. Écris une fonction dont le second paramètre a une valeur par défaut calculée à\n   partir du premier.\n3. Montre par un exemple qu'une déclaration est appelable avant sa définition, mais\n   pas une expression.\n\n## Questions d'entretien\n\n- Quelle est la différence de `this` entre une fonction fléchée et une fonction\n  classique, et quand cette différence devient-elle un bug ?\n- Pourquoi ne peut-on pas utiliser `new` avec une fonction fléchée ?\n- Dans quel ordre le moteur enregistre-t-il les déclarations de fonctions et les\n  déclarations `var` ?\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-variables",
+      "title": "Variables et liaisons",
+      "slug": "variables",
+      "technology": "javascript",
+      "level": "beginner",
+      "module": "fundamentals",
+      "order": 1,
+      "estimatedMinutes": 20,
+      "difficulty": 1,
+      "xp": 60,
+      "prerequisites": [],
+      "skills": [
+        "variables"
+      ],
+      "tags": [
+        "javascript",
+        "fundamentals"
+      ],
+      "contentPath": "javascript/fundamentals/variables/lesson.md",
+      "contentVersion": "02c2fed344fd",
+      "body": "\n# Variables et liaisons\n\n## Objectifs\n\n- Distinguer une variable, une liaison et une valeur.\n- Choisir entre `const` et `let` sans hésiter.\n- Expliquer pourquoi `const` n'empêche pas de modifier un objet.\n\n## Introduction\n\nUne variable en JavaScript n'est pas une boîte qui contient une valeur. C'est un\n**nom attaché à un emplacement mémoire** — ce que la spécification appelle une\n*liaison* (*binding*). Cette nuance, qui paraît théorique, explique la moitié des\nsurprises du langage : la réaffectation, les closures, le comportement de `const`\nsur les objets.\n\n## Concept\n\nTrois mots-clés créent des liaisons, et ils diffèrent sur deux axes seulement :\n\n| Mot-clé | Portée | Réaffectable | Remontée utilisable |\n| --- | --- | --- | --- |\n| `const` | bloc | non | non (zone morte temporelle) |\n| `let` | bloc | oui | non (zone morte temporelle) |\n| `var` | fonction | oui | oui, avec la valeur `undefined` |\n\n`const` gèle **la liaison**, pas la valeur. Le nom ne pourra plus pointer ailleurs ;\nce qu'il désigne reste modifiable si c'est un objet ou un tableau.\n\nLa règle pratique tient en une phrase : `const` par défaut, `let` quand la\nréaffectation est réellement nécessaire, `var` jamais dans du code neuf.\n\n## Exemple\n\n```js\nconst utilisateur = { nom: 'Ada' };\nutilisateur.nom = 'Grace'; // autorisé : on modifie l'objet\n// utilisateur = {};       // TypeError : on réaffecterait la liaison\n\nlet compteur = 0;\ncompteur += 1; // autorisé\n\n{\n  const interne = 'visible ici seulement';\n  console.log(interne); // 'visible ici seulement'\n}\n// console.log(interne); // ReferenceError : hors du bloc\n```\n\n## Comment ça fonctionne\n\nÀ l'entrée d'un bloc, le moteur crée un *environnement lexical* et y enregistre les\nliaisons `let` et `const` déclarées dans ce bloc — mais sans valeur. Elles existent\net sont pourtant inutilisables : c'est la **zone morte temporelle** (*temporal dead\nzone*). Y accéder lève une `ReferenceError`, ce qui est bien plus utile que le\n`undefined` silencieux de `var`.\n\n```js\nconsole.log(a); // undefined   → var existe déjà, sans valeur\nconsole.log(b); // ReferenceError → b est dans la zone morte\nvar a = 1;\nlet b = 2;\n```\n\nLa `ReferenceError` n'est pas une punition : c'est le moteur qui t'évite de lire une\nvariable avant qu'elle ne veuille dire quelque chose.\n\n## Erreurs fréquentes\n\n**Croire que `const` rend une valeur immuable.** Il gèle le nom, pas le contenu. Pour\nfiger un objet, il faut `Object.freeze()` — et encore, en surface uniquement.\n\n**Utiliser `var` dans une boucle avec un callback.** Les trois callbacks partagent la\nmême liaison de fonction et affichent tous `3` :\n\n```js\nfor (var i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 3, 3, 3\nfor (let j = 0; j < 3; j++) setTimeout(() => console.log(j)); // 0, 1, 2\n```\n\nAvec `let`, chaque itération reçoit sa propre liaison. C'est une règle spécifique aux\nboucles, et elle explique à elle seule pourquoi `var` a disparu du code moderne.\n\n## À retenir\n\n- Une variable est un nom attaché à un emplacement, pas une boîte.\n- `const` gèle la liaison, jamais la valeur pointée.\n- `let` et `const` sont limités au bloc ; `var` à la fonction.\n- La zone morte temporelle transforme une erreur silencieuse en erreur bruyante.\n\n## Exercices\n\n1. Écris un bloc où une même variable `total` existe en deux versions indépendantes,\n   sans jamais réaffecter.\n2. Corrige une boucle `var` avec `setTimeout` sans utiliser `let` (indice : une\n   fonction qui capture son argument).\n3. Explique en une phrase pourquoi `const config = {}` puis `config.debug = true`\n   ne lève aucune erreur.\n\n## Questions d'entretien\n\n- Quelle différence entre la remontée (*hoisting*) de `var` et celle de `let` ?\n- `const` rend-il un objet immuable ? Pourquoi cette question revient-elle si souvent ?\n- Pourquoi une boucle `let` produit-elle une liaison par itération alors qu'un bloc\n  ordinaire n'en produit qu'une ?\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-closures",
+      "title": "Comprendre les closures",
+      "slug": "closures",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "scope",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-functions"
+      ],
+      "skills": [
+        "closures",
+        "lexical-environment",
+        "scope"
+      ],
+      "tags": [
+        "javascript",
+        "scope"
+      ],
+      "contentPath": "javascript/scope/closures/lesson.md",
+      "contentVersion": "243b8926ae9f",
+      "body": "\n# Comprendre les closures\n\n## Objectifs\n\n- Expliquer ce qu'est une closure sans réciter une définition.\n- Identifier une closure dans du code existant.\n- Utiliser une closure sans provoquer de fuite mémoire.\n\n## Introduction\n\nLes closures ont mauvaise réputation : on les présente comme un mécanisme avancé\nalors qu'elles sont une **conséquence** de la portée lexicale, pas une fonctionnalité\nqu'on active. Si tu as déjà écrit un callback qui lit une variable extérieure, tu as\nécrit une closure sans le savoir.\n\n## Concept\n\n> Une closure se forme quand une fonction conserve l'accès à l'environnement lexical\n> dans lequel elle a été créée, même après que cet environnement a fini de s'exécuter.\n\nLe point qui change tout : une closure ne capture pas des **valeurs**, elle garde une\nréférence vers des **variables**. Si la variable change plus tard, la closure voit la\nnouvelle valeur. C'est cette nuance qui explique la quasi-totalité des surprises.\n\n## Exemple\n\n```js\nfunction creerCompteur() {\n  let total = 0; // vit dans l'environnement de creerCompteur\n\n  return () => {\n    total += 1;\n    return total;\n  };\n}\n\nconst a = creerCompteur();\nconst b = creerCompteur();\n\na(); // 1\na(); // 2\nb(); // 1  ← environnement distinct\n```\n\n`creerCompteur` a rendu la main depuis longtemps, et pourtant `total` existe encore :\nla fonction renvoyée en garde une référence. Chaque appel à `creerCompteur` crée un\nenvironnement neuf, d'où deux compteurs indépendants.\n\n## Comment ça fonctionne\n\nÀ chaque appel de fonction, le moteur crée un *environnement lexical* : une table des\nliaisons déclarées, plus un lien vers l'environnement parent. Cette chaîne est fixée à\nl'écriture du code, pas à l'appel — d'où le mot *lexical*.\n\n```text\nclosure interne\n      │ [[Environment]]\n      ▼\nenvironnement de creerCompteur   { total: 2 }\n      │\n      ▼\nenvironnement global\n```\n\nNormalement l'environnement d'un appel devient inaccessible dès le retour, et le\nramasse-miettes le libère. Mais si une fonction survivante pointe vers lui, il reste\njoignable, donc vivant. Une closure n'est rien d'autre que ça : une fonction plus la\nréférence vers son environnement de naissance.\n\nC'est aussi pourquoi les closures servent à créer de l'état privé : `total` n'est\naccessible par aucun autre chemin que la fonction renvoyée.\n\n## Erreurs fréquentes\n\n**Croire que la closure fige la valeur.** Elle référence la variable :\n\n```js\nlet message = 'avant';\nconst afficher = () => console.log(message);\nmessage = 'après';\nafficher(); // 'après', pas 'avant'\n```\n\n**La boucle `var` partagée.** Les trois callbacks référencent la même liaison, qui\nvaut `3` à l'exécution :\n\n```js\nfor (var i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 3, 3, 3\nfor (let j = 0; j < 3; j++) setTimeout(() => console.log(j)); // 0, 1, 2\n```\n\n**Retenir plus que nécessaire.** Une closure maintient en vie tout son environnement.\nUn callback qui ne lit qu'un identifiant mais se trouve déclaré à côté d'un gros\ntableau empêche ce tableau d'être libéré. Extrais la donnée utile avant de fermer.\n\n## À retenir\n\n- Une closure est une conséquence de la portée lexicale, pas une option.\n- Elle capture des variables, jamais des instantanés de valeurs.\n- Chaque appel de la fonction externe crée un environnement distinct.\n- Ce qu'une closure retient ne peut pas être libéré : garde-la étroite.\n\n## Exercices\n\n1. Écris `once(fn)` : une fonction qui n'exécute `fn` qu'au premier appel et renvoie\n   ensuite toujours le premier résultat.\n2. Corrige la boucle `var` sans utiliser `let`, en créant un environnement par\n   itération.\n3. Implémente un compteur avec `incrementer`, `decrementer` et `valeur`, sans exposer\n   la variable interne.\n\n## Questions d'entretien\n\n- Qu'est-ce qu'une closure, et pourquoi dire « elle capture la valeur » est-il faux ?\n- Pourquoi une boucle `var` avec `setTimeout` affiche-t-elle trois fois la même\n  valeur, et que change `let` exactement ?\n- Comment une closure peut-elle provoquer une fuite mémoire, et comment l'éviter ?\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "typescript-type-inference",
+      "title": "Inférence de types",
+      "slug": "type-inference",
+      "technology": "typescript",
+      "level": "beginner",
+      "module": "fundamentals",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 2,
+      "xp": 80,
+      "prerequisites": [],
+      "skills": [
+        "type-inference",
+        "primitive-types"
+      ],
+      "tags": [
+        "typescript",
+        "fundamentals"
+      ],
+      "contentPath": "typescript/fundamentals/type-inference/lesson.md",
+      "contentVersion": "5e423e47d092",
+      "body": "\n# Inférence de types\n\n## Objectifs\n\n- Savoir quand TypeScript infère un type et quand il faut l'écrire.\n- Comprendre pourquoi `let` et `const` n'infèrent pas la même chose.\n- Utiliser `as const` à bon escient.\n\n## Introduction\n\nLe premier réflexe en arrivant sur TypeScript est d'annoter tout. C'est une erreur :\nle compilateur infère mieux que nous dans la plupart des cas, et chaque annotation\nsuperflue est une occasion de mentir au compilateur. La compétence à acquérir n'est\npas « écrire des types », c'est **savoir quand se taire**.\n\n## Concept\n\nTypeScript infère à partir de trois sources : la valeur initiale, le contexte\nd'utilisation, et le type de retour des expressions. Deux règles suffisent à\nexpliquer 90 % des comportements :\n\n- Une liaison **`const`** avec un littéral obtient le type **littéral** (`'ada'`).\n- Une liaison **`let`**, réaffectable, obtient le type **élargi** (`string`).\n\nC'est ce qu'on appelle l'*élargissement* (*widening*). Il est logique : une variable\nréaffectable doit pouvoir accueillir d'autres chaînes.\n\n## Exemple\n\n```ts\nconst nom = 'ada';     // type 'ada'   (littéral)\nlet prenom = 'ada';    // type string  (élargi)\n\nconst point = { x: 1, y: 2 };\n// type { x: number; y: number } — les propriétés sont élargies\n\nconst couleurs = ['rouge', 'vert'];\n// type string[] — pas ('rouge' | 'vert')[]\n\nconst figees = ['rouge', 'vert'] as const;\n// type readonly ['rouge', 'vert']\n```\n\nL'annotation utile est celle qui **contraint** une valeur, pas celle qui répète ce que\nle compilateur sait déjà.\n\n## Comment ça fonctionne\n\nÀ l'affectation, le compilateur choisit le type le plus large qui reste correct pour\ntous les usages possibles de la liaison. Un `const` ne pouvant jamais être réaffecté,\nle type littéral reste sûr ; un `let` doit accepter n'importe quelle chaîne.\n\nLe contexte inverse la direction : quand une valeur est passée à une fonction dont le\nparamètre est typé, TypeScript utilise ce type attendu pour typer la valeur. C'est le\n*typage contextuel*, et il fait tout le travail dans les callbacks :\n\n```ts\nconst nombres = [1, 2, 3];\nnombres.map((n) => n * 2); // `n` est number, sans annotation\n```\n\nLes paramètres de fonction, eux, ne sont jamais inférés depuis les appels : ils\ndoivent être annotés, sinon ils valent `any` implicite — ce que `strict` interdit.\n\n## Erreurs fréquentes\n\n**Annoter ce qui est déjà su.** `const age: number = 30` n'apporte rien et empêche\nl'inférence de littéraux quand elle serait utile.\n\n**Attendre un type littéral d'un objet.** Les propriétés d'objet sont toujours\nélargies, même dans un `const` :\n\n```ts\nconst config = { mode: 'sombre' };\n// config.mode est string, pas 'sombre'\ndeclare function appliquer(mode: 'sombre' | 'clair'): void;\n// appliquer(config.mode); // erreur\n\nconst bonne = { mode: 'sombre' } as const; // mode: 'sombre'\nappliquer(bonne.mode);                     // ✓\n```\n\n**Utiliser `as` pour faire taire une erreur.** `as` n'est pas une conversion, c'est\nune affirmation : tu prends la responsabilité, et le compilateur cesse de vérifier.\nSi tu écris `as` pour calmer une erreur que tu ne comprends pas, le bug reste, mais\nsilencieux.\n\n## À retenir\n\n- Laisse inférer par défaut ; annote pour contraindre, jamais pour répéter.\n- `const` donne un type littéral, `let` un type élargi.\n- Les propriétés d'objet sont élargies : `as const` les fige.\n- Les paramètres de fonction s'annotent toujours ; les retours presque jamais.\n\n## Exercices\n\n1. Trouve les trois annotations superflues d'un fichier et supprime-les sans\n   provoquer d'erreur.\n2. Fais accepter `{ mode: 'sombre' }` par une fonction attendant `'sombre' | 'clair'`,\n   sans utiliser `as` autrement qu'avec `const`.\n3. Écris une fonction dont le type de retour est correctement inféré comme union\n   littérale.\n\n## Questions d'entretien\n\n- Pourquoi `const x = 'a'` et `let y = 'a'` n'ont-ils pas le même type ?\n- Que fait `as const`, et dans quel cas est-ce indispensable ?\n- Quelle différence entre `as` et une véritable vérification de type à l'exécution ?\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "typescript-generics",
+      "title": "Génériques",
+      "slug": "generics",
+      "technology": "typescript",
+      "level": "intermediate",
+      "module": "generics",
+      "order": 1,
+      "estimatedMinutes": 35,
+      "difficulty": 3,
+      "xp": 120,
+      "prerequisites": [
+        "typescript-type-inference"
+      ],
+      "skills": [
+        "generics",
+        "type-constraints"
+      ],
+      "tags": [
+        "typescript",
+        "generics"
+      ],
+      "contentPath": "typescript/generics/generics/lesson.md",
+      "contentVersion": "38a75ef21913",
+      "body": "\n# Génériques\n\n## Objectifs\n\n- Écrire une fonction générique qui préserve le type de son entrée.\n- Contraindre un paramètre de type avec `extends`.\n- Reconnaître un générique inutile et le supprimer.\n\n## Introduction\n\nUn générique n'est pas un type : c'est un **paramètre de type**, comme un paramètre de\nfonction mais résolu à la compilation. Il existe pour une seule raison : exprimer une\nrelation entre une entrée et une sortie que `any` détruirait et qu'une union ne\nsaurait pas dire.\n\n## Concept\n\nCompare trois signatures pour la même fonction :\n\n```ts\nfunction premier1(liste: any[]): any {}            // le type est perdu\nfunction premier2(liste: unknown[]): unknown {}    // sûr, mais inutilisable\nfunction premier3<T>(liste: T[]): T | undefined {} // la relation est conservée\n```\n\nSeule la troisième dit quelque chose de vrai : *le type renvoyé est celui des éléments\nreçus*. Le paramètre `T` n'est pas une valeur, c'est un trou que l'appelant remplit —\nle plus souvent sans avoir à l'écrire, grâce à l'inférence.\n\n## Exemple\n\n```ts\nfunction premier<T>(liste: readonly T[]): T | undefined {\n  return liste[0];\n}\n\nconst n = premier([1, 2, 3]);       // number | undefined\nconst s = premier(['a', 'b']);      // string | undefined\n\n// `extends` contraint ce que T peut être\nfunction parId<T extends { id: string }>(elements: T[], id: string): T | undefined {\n  return elements.find((element) => element.id === id);\n}\n\nparId([{ id: 'a', nom: 'Ada' }], 'a'); // { id: string; nom: string } | undefined\n```\n\n`parId` accède à `.id` : sans la contrainte, le compilateur refuserait, puisque `T`\npourrait être n'importe quoi.\n\n## Comment ça fonctionne\n\nÀ l'appel, TypeScript infère `T` depuis les arguments, puis vérifie la contrainte\n`extends`. Le générique disparaît ensuite complètement : rien n'existe à l'exécution,\naucun code n'est généré. Un générique est un raisonnement du compilateur, pas une\nstructure.\n\nLa contrainte a un second effet, souvent ignoré : elle définit ce que le corps de la\nfonction a le droit de faire avec `T`. Sans contrainte, `T` n'offre rien ; avec\n`T extends { id: string }`, `.id` devient lisible.\n\n```ts\nfunction cle<T, K extends keyof T>(objet: T, cle: K): T[K] {\n  return objet[cle];\n}\n\nconst utilisateur = { nom: 'Ada', age: 36 };\ncle(utilisateur, 'nom'); // string\ncle(utilisateur, 'age'); // number\n// cle(utilisateur, 'x'); // erreur : 'x' n'est pas une clé\n```\n\nIci deux paramètres de type coopèrent : `K` est contraint par `T`, et le retour `T[K]`\nest calculé à partir des deux.\n\n## Erreurs fréquentes\n\n**Le générique fantôme.** Si un paramètre de type n'apparaît qu'une fois, il ne relie\nrien et devrait être un type ordinaire :\n\n```ts\nfunction afficher<T>(valeur: T): void {}      // T ne sert à rien\nfunction afficher(valeur: unknown): void {}   // équivalent, plus clair\n```\n\n**Contraindre trop tard.** Écrire `T` puis caster dans le corps annule la sécurité que\nle générique était censé apporter. La contrainte se met dans la signature.\n\n**Confondre `extends` en générique et en type conditionnel.** Ici `extends` veut dire\n« doit être au moins » ; dans `A extends B ? X : Y`, il pose une question.\n\n## À retenir\n\n- Un générique exprime une **relation** entre types, sinon il est inutile.\n- L'inférence dispense presque toujours d'écrire `T` à l'appel.\n- `extends` restreint `T` et débloque ce que le corps peut en faire.\n- Un paramètre de type utilisé une seule fois est un signal de suppression.\n\n## Exercices\n\n1. Type `dernier(liste)` de sorte que `dernier([1, 2])` soit `number | undefined`.\n2. Écris `regrouperPar<T, K extends keyof T>` renvoyant un `Map` correctement typé.\n3. Trouve le générique fantôme dans une signature donnée et remplace-le.\n\n## Questions d'entretien\n\n- À quoi sert un générique que `any` ne saurait pas exprimer ?\n- Que change `T extends { id: string }` pour le corps de la fonction ?\n- Comment reconnaître un paramètre de type inutile dans une signature ?\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "javascript-functions-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-functions-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "D'où une fonction fléchée tire-t-elle son `this` ?\n",
+          "options": [
+            "De la portée dans laquelle elle est écrite",
+            "De l'objet sur lequel elle est appelée",
+            "Toujours de l'objet global",
+            "Du premier argument passé à l'appel"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une fléchée n'a pas de `this` propre : elle utilise celui de la portée englobante, figé à l'écriture. C'est ce qui la rend parfaite en callback (`setTimeout` dans une méthode) et inadaptée comme méthode d'objet.\n",
+          "skills": [
+            "functions"
+          ]
+        },
+        {
+          "id": "js-functions-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "On peut appeler une fonction déclarée avec `function` avant la ligne de sa déclaration.\n",
+          "answer": true,
+          "explanation": "Une déclaration de fonction est remontée avec son corps entier, contrairement à une expression de fonction, qui suit la règle de la variable qui la porte — et reste donc dans la zone morte temporelle avec `const` ou `let`.\n",
+          "skills": [
+            "functions"
+          ]
+        },
+        {
+          "id": "js-functions-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Qu'est-ce qu'une fonction fléchée ne possède pas ?\n",
+          "options": [
+            "Un `this` propre",
+            "Un objet `arguments`",
+            "Un `prototype`",
+            "La capacité de renvoyer une valeur"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Une fléchée n'a ni `this`, ni `arguments`, ni `prototype` — c'est pourquoi `new` est impossible avec elle. Elle renvoie évidemment des valeurs, et la forme courte le fait même implicitement.\n",
+          "skills": [
+            "functions"
+          ]
+        },
+        {
+          "id": "js-functions-q4",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que renvoie `creer('Ada')` avec `function creer(nom, id = nom.toLowerCase()) { return id; }` ?\n",
+          "answer": "ada",
+          "explanation": "Une valeur par défaut n'est évaluée que si l'argument est absent, et elle peut utiliser les paramètres déclarés avant elle. Ici `id` vaut donc `'Ada'.toLowerCase()`, soit `'ada'`.\n",
+          "skills": [
+            "functions"
+          ]
+        }
+      ],
+      "chapterId": "javascript-functions",
+      "technology": "javascript",
+      "contentPath": "javascript/fundamentals/functions/quiz.yaml",
+      "contentVersion": "13fef22086ec"
+    },
+    {
+      "id": "javascript-variables-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-variables-q1",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "Que fait exactement `const` ?\n",
+          "options": [
+            "Il empêche de réaffecter la liaison, sans figer la valeur pointée",
+            "Il rend la valeur complètement immuable, y compris les objets",
+            "Il crée une variable de portée fonction",
+            "Il empêche la remontée de la déclaration"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`const` gèle le nom, pas le contenu. `const u = {}` suivi de `u.nom = 'Ada'` est parfaitement valide : on modifie l'objet, on ne réaffecte pas la liaison. Pour figer un objet il faut `Object.freeze()`, et seulement en surface.\n",
+          "skills": [
+            "variables"
+          ]
+        },
+        {
+          "id": "js-variables-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Qu'affiche `console.log(a)` juste avant `var a = 1` ?\n",
+          "answer": "undefined",
+          "explanation": "Une déclaration `var` est remontée et initialisée à `undefined` avant l'exécution du corps. La liaison existe donc déjà, sans la valeur attendue — c'est précisément le bug silencieux que `let` transforme en `ReferenceError`.\n",
+          "skills": [
+            "variables"
+          ]
+        },
+        {
+          "id": "js-variables-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Accéder à une variable `let` avant sa déclaration lève une `ReferenceError`.\n",
+          "answer": true,
+          "explanation": "C'est la zone morte temporelle : la liaison existe dès l'entrée du bloc mais reste inutilisable jusqu'à sa déclaration. L'erreur est volontaire — lire une variable avant qu'elle n'ait de sens est presque toujours un bug.\n",
+          "skills": [
+            "variables"
+          ]
+        },
+        {
+          "id": "js-variables-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles affirmations sur `var` sont vraies ?\n",
+          "options": [
+            "Sa portée est la fonction, pas le bloc",
+            "Elle est initialisée à `undefined` avant l'exécution",
+            "Elle crée une liaison par itération de boucle",
+            "Elle peut être redéclarée dans la même portée sans erreur"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "`var` a une portée de fonction, est remontée avec `undefined`, et tolère la redéclaration. En revanche c'est `let` qui crée une liaison par itération dans une boucle : avec `var`, les trois callbacks partagent la même variable et affichent tous la valeur finale.\n",
+          "skills": [
+            "variables"
+          ]
+        }
+      ],
+      "chapterId": "javascript-variables",
+      "technology": "javascript",
+      "contentPath": "javascript/fundamentals/variables/quiz.yaml",
+      "contentVersion": "1b380d4cdeac"
+    },
+    {
+      "id": "javascript-closures-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-closures-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Qu'est-ce qu'une closure ?\n",
+          "options": [
+            "Une fonction qui conserve l'accès à son environnement lexical",
+            "Une classe JavaScript",
+            "Une Promise",
+            "Un module ES"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une closure permet à une fonction d'accéder aux variables de son environnement lexical même après la fin de l'exécution de celui-ci. Ce n'est pas un type ni une construction à activer : c'est la conséquence directe de la portée lexicale.\n",
+          "skills": [
+            "closures",
+            "lexical-environment"
+          ]
+        },
+        {
+          "id": "js-closures-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche ce code ? `let m = 'avant'; const f = () => console.log(m); m = 'après'; f();`\n",
+          "answer": "après",
+          "explanation": "Une closure capture la **variable**, pas sa valeur au moment de l'écriture. Quand `f` s'exécute, elle lit l'état courant de `m`, qui vaut désormais `'après'`. C'est l'erreur de raisonnement la plus fréquente sur les closures.\n",
+          "skills": [
+            "closures"
+          ]
+        },
+        {
+          "id": "js-closures-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i))` affiche-t-il `3, 3, 3` ?\n",
+          "options": [
+            "Les trois callbacks partagent la même liaison, qui vaut 3 à leur exécution",
+            "setTimeout exécute les callbacks dans le désordre",
+            "Les callbacks sont créés après la fin de la boucle",
+            "var convertit i en chaîne de caractères"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`var` a une portée de fonction : une seule liaison `i` existe pour toute la boucle. Les callbacks, exécutés après la fin de la boucle, lisent tous la même variable devenue 3. Avec `let`, chaque itération reçoit sa propre liaison, d'où `0, 1, 2`.\n",
+          "skills": [
+            "closures",
+            "scope"
+          ]
+        },
+        {
+          "id": "js-closures-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Deux appels à une même fonction fabrique produisent deux closures partageant le même état.\n",
+          "answer": false,
+          "explanation": "Chaque appel crée un environnement lexical neuf. `const a = creerCompteur()` et `const b = creerCompteur()` ont chacun leur `total` : incrémenter `a` ne touche pas `b`. C'est exactement ce qui rend les closures utilisables comme état privé.\n",
+          "skills": [
+            "closures"
+          ]
+        },
+        {
+          "id": "js-closures-q5",
+          "type": "multiple_answer",
+          "difficulty": 4,
+          "question": "Quelles situations créent un risque de fuite mémoire par closure ?\n",
+          "options": [
+            "Un callback long à vivre déclaré à côté d'un gros tableau qu'il ne lit pas",
+            "Un écouteur d'événement jamais retiré qui référence un nœud du DOM",
+            "Une closure qui ne référence qu'un entier",
+            "Un compteur créé puis immédiatement abandonné"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "Une closure maintient vivant tout son environnement, pas seulement ce qu'elle lit : un gros tableau déclaré à côté reste joignable. Un écouteur non retiré garde son nœud DOM en vie. En revanche une closure sur un entier ne coûte rien, et un environnement abandonné est collecté normalement.\n",
+          "skills": [
+            "closures",
+            "lexical-environment"
+          ]
+        }
+      ],
+      "chapterId": "javascript-closures",
+      "technology": "javascript",
+      "contentPath": "javascript/scope/closures/quiz.yaml",
+      "contentVersion": "e348fa7837f2"
+    },
+    {
+      "id": "typescript-type-inference-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "ts-inference-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel est le type de `nom` dans `const nom = 'ada'` ?\n",
+          "options": [
+            "Le type littéral `'ada'`",
+            "`string`",
+            "`any`",
+            "`readonly string`"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une liaison `const` ne pouvant jamais être réaffectée, TypeScript conserve le type littéral. Avec `let`, le type est élargi à `string`, puisque la variable doit pouvoir accueillir n'importe quelle chaîne.\n",
+          "skills": [
+            "type-inference"
+          ]
+        },
+        {
+          "id": "ts-inference-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Dans `const config = { mode: 'sombre' }`, la propriété `mode` a le type littéral `'sombre'`.\n",
+          "answer": false,
+          "explanation": "Les propriétés d'objet sont toujours élargies, même dans un `const` : `mode` a le type `string`. C'est précisément le cas où `as const` devient nécessaire, par exemple pour passer la valeur à une fonction attendant `'sombre' | 'clair'`.\n",
+          "skills": [
+            "type-inference",
+            "primitive-types"
+          ]
+        },
+        {
+          "id": "ts-inference-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que fait l'opérateur `as` ?\n",
+          "options": [
+            "Il affirme un type sans aucune vérification à l'exécution",
+            "Il convertit la valeur vers le type demandé",
+            "Il vérifie le type à l'exécution et lève une erreur si besoin",
+            "Il élargit le type inféré"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`as` est une affirmation adressée au compilateur, pas une conversion : rien n'est vérifié à l'exécution et aucun code n'est généré. Utilisé pour faire taire une erreur mal comprise, il ne supprime que le message — jamais le bug.\n",
+          "skills": [
+            "type-inference"
+          ]
+        },
+        {
+          "id": "ts-inference-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Dans quels cas une annotation explicite est-elle justifiée ?\n",
+          "options": [
+            "Sur les paramètres d'une fonction",
+            "Pour contraindre une valeur à une union plus étroite que l'inférence",
+            "Sur `const age = 30`, pour documenter que c'est un nombre",
+            "Sur le type de retour d'une fonction dont le corps est trivial"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "Les paramètres ne sont jamais inférés depuis les appels : sans annotation ils valent `any` implicite, que `strict` refuse. Contraindre une union est l'autre cas utile. En revanche répéter ce que le compilateur sait déjà n'apporte rien et empêche parfois une inférence plus fine.\n",
+          "skills": [
+            "type-inference"
+          ]
+        }
+      ],
+      "chapterId": "typescript-type-inference",
+      "technology": "typescript",
+      "contentPath": "typescript/fundamentals/type-inference/quiz.yaml",
+      "contentVersion": "15045eedc54f"
+    },
+    {
+      "id": "typescript-generics-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "ts-generics-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Qu'exprime un générique que `any` ne saurait pas exprimer ?\n",
+          "options": [
+            "Une relation entre le type d'entrée et le type de sortie",
+            "Une vérification supplémentaire à l'exécution",
+            "Une contrainte de performance",
+            "Une conversion automatique entre types"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`any` désactive la vérification : le lien entre l'argument et le retour est perdu. `function premier<T>(l: T[]): T | undefined` dit que le type renvoyé est celui des éléments reçus — une relation, pas une valeur. Rien de tout cela n'existe à l'exécution.\n",
+          "skills": [
+            "generics"
+          ]
+        },
+        {
+          "id": "ts-generics-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que permet `T extends { id: string }` dans le corps de la fonction ?\n",
+          "options": [
+            "Lire `.id` sur une valeur de type T",
+            "Créer une instance de T avec `new`",
+            "Convertir T en string à l'exécution",
+            "Rendre T optionnel"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une contrainte définit ce que le corps a le droit de faire avec `T`. Sans elle, `T` pourrait être n'importe quoi et `.id` serait refusé. Elle sert donc deux fois : filtrer les appels invalides, et débloquer l'accès aux membres garantis.\n",
+          "skills": [
+            "type-constraints"
+          ]
+        },
+        {
+          "id": "ts-generics-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Un paramètre de type qui n'apparaît qu'une seule fois dans une signature est généralement inutile.\n",
+          "answer": true,
+          "explanation": "Un générique existe pour relier deux positions. Utilisé une seule fois, il ne relie rien : `function afficher<T>(v: T): void` est strictement équivalent à `(v: unknown): void`, en moins lisible. C'est le « générique fantôme ».\n",
+          "skills": [
+            "generics"
+          ]
+        },
+        {
+          "id": "ts-generics-q4",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Avec `function cle<T, K extends keyof T>(o: T, k: K): T[K]` et `const u = { nom: 'Ada', age: 36 }`, quel est le type de `cle(u, 'age')` ?\n",
+          "answer": "number",
+          "explanation": "`K` est inféré comme le littéral `'age'`, contraint par `keyof T`. Le retour `T[K]` vaut donc le type de la propriété `age`, soit `number`. Deux paramètres de type coopèrent ici pour calculer un résultat précis.\n",
+          "skills": [
+            "generics",
+            "type-constraints"
+          ]
+        }
+      ],
+      "chapterId": "typescript-generics",
+      "technology": "typescript",
+      "contentPath": "typescript/generics/generics/quiz.yaml",
+      "contentVersion": "cb4aa809aa26"
+    }
+  ]
+}
