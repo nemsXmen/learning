@@ -106,3 +106,39 @@ export function getChapter(technology: string, chapter: string): Promise<Chapter
 export function getChapterProgress(chapterId: string): Promise<ChapterProgress> {
   return authorized<ChapterProgress>(`/me/progress/chapters/${encodeURIComponent(chapterId)}`);
 }
+
+export interface DashboardAction {
+  type: string;
+  label: string;
+  href: string;
+  estimatedMinutes: number;
+  reason: string;
+}
+
+export interface DashboardView {
+  user: { displayName: string; dailyMinutesTarget: number; emailVerified: boolean };
+  xp: { total: number; level: number; levelProgressPercent: number; xpToNextLevel: number; todayXp: number } | null;
+  streak: { currentDays: number; longestDays: number; activeToday: boolean; atRisk: boolean } | null;
+  overallProgressPercent: number;
+  continue: { technologySlug: string; chapterSlug: string; title: string; progressPercent: number } | null;
+  nextBestAction: DashboardAction;
+  attention: Array<{ skillId: string; name: string; mastery: number; reason: string }>;
+  todayPlan: Array<{ kind: string; label: string; estimatedMinutes: number; href: string }>;
+  technologies: Array<{ slug: string; name: string; progressPercent: number }>;
+  degraded: string[];
+}
+
+export function getDashboard(): Promise<DashboardView> {
+  return authorized<DashboardView>('/me/dashboard');
+}
+
+export interface BoostPreview {
+  available: boolean;
+  targetSkills: Array<{ id: string; name: string; mastery: number; reason: string }>;
+  suggestedMinutes: number;
+  reason?: string;
+}
+
+export function getBoostPreview(): Promise<BoostPreview> {
+  return authorized<BoostPreview>('/me/boost/preview');
+}
