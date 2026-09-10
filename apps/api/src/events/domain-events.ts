@@ -26,7 +26,20 @@ export interface ProgressReported {
   occurredAt: Date;
 }
 
+export interface QuizAttemptGraded {
+  userId: string;
+  attemptId: string;
+  quizId: string;
+  chapterId: string;
+  source: string;
+  scorePercent: number;
+  passed: boolean;
+  skillOutcomes: Array<{ skillId: string; correct: number; incorrect: number }>;
+  occurredAt: Date;
+}
+
 export interface DomainEventMap {
+  'quiz.attempt.graded': QuizAttemptGraded;
   'chapter.completed': ChapterCompleted;
   'progress.reported': ProgressReported;
 }

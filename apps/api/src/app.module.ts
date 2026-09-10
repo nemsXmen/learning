@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { CatalogModule } from './catalog/catalog.module';
 import { ProgressModule } from './learning/progress.module';
 import { EventsModule } from './events/events.module';
+import { QuizModule } from './quiz/quiz.module';
 
-@Module({ imports: [DatabaseModule, RedisModule, HealthModule, ContentModule, AuthModule, CatalogModule, ProgressModule, EventsModule] })
+@Module({ imports: [DatabaseModule, RedisModule, HealthModule, ContentModule, AuthModule, CatalogModule, ProgressModule, EventsModule, QuizModule] })
 export class AppModule {}
