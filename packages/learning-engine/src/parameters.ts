@@ -95,6 +95,18 @@ export const PARAMETERS = {
     },
   },
 
+  /**
+   * CDC §25 names 50 levels but not the curve. One exponent, so the whole shape
+   * is a single reviewable number — see the open question in docs/decisions.md.
+   */
+  levels: {
+    maxLevel: 50,
+    /** XP needed to leave level 1. */
+    baseXp: 100,
+    /** Above 1, each level costs more than the last. */
+    exponent: 1.6,
+  },
+
   xp: {
     /** CDC §25. */
     CHAPTER_READ: 10,

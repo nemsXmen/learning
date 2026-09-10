@@ -14,4 +14,6 @@
 implemented. Its shape is genuinely undecided: slice 11 needs "did this learner do
 something today", which the XP ledger answers more directly, and slice 12 creates
 boost sessions with a real start/end lifecycle. Inventing a third shape now would
-give those slices something to contradict. To be decided with slice 11.
+give those slices something to contradict. **Decided with slice 11**: the XP
+ledger is the activity record, and no `learning_session` table is created — see
+docs/decisions.md.

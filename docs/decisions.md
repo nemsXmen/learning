@@ -95,6 +95,37 @@ that depends on them is accepted.
   results. A small Zod validation pipe is written once in the API.
 - CDC question or assumption: none.
 
+## Decision: no `learning_session` table; the XP ledger is the activity record
+
+- Status: accepted (answers the question left open by slice 07)
+- Context: `learning_session` was listed under Must in slice 07. Its purpose was
+  to give streaks and analytics a source of "did this learner act today".
+- Decision: the streak reads the XP ledger instead. Earning XP is the definition
+  of activity — which is exactly the CDC §26 rule that reading a page again is
+  not effort. Boost sessions, which have a real start and end, keep their own
+  table in slice 12.
+- Consequences: one table fewer and no third notion of a session for slices 11
+  and 12 to contradict. Analytics that later need session windows will have to
+  reconstruct them from attempts and progress timestamps, or introduce the table
+  then with a shape driven by a real requirement.
+- CDC question or assumption: **assumption** — that activity means "earned XP
+  today" rather than "opened the app today". Recorded in the open questions.
+
+## Decision: achievements are detected synchronously, not on BullMQ
+
+- Status: accepted (amends the slice 11 pack)
+- Context: the pack asks for detection on a BullMQ queue so it cannot block the
+  learning path. A worker needs a process that stays alive, and there is none on
+  the serverless host this project deploys to for testing.
+- Decision: detection runs as a listener on `xp.awarded`, in the same request.
+  The event bus logs and swallows a listener error, so a badge failing cannot
+  undo XP, mastery or a completed chapter — which is the property the pack
+  actually wanted.
+- Consequences: detection cost is added to the request that earned the XP; it is
+  a handful of indexed reads. If it ever grows, the same `MAIL_DRIVER` pattern
+  applies — a queue where a worker can run, inline where none can.
+- CDC question or assumption: none.
+
 ## Decision: `nestjs-zod` and a global APP_PIPE
 
 - Status: accepted (refines "Zod as the single validation language")
@@ -316,9 +347,11 @@ These block acceptance of the features named. Do not guess an answer in code.
 ## Question: what counts as activity for a streak
 
 - Affects: `11-xp-streak-and-levels`, `13-dashboard-next-best-action`.
-- Current handling: **assumption** — any XP-earning event completed that day. Passive
-  page views do not count, consistent with CDC §26.
-- Needed: confirmation.
+- Current handling: **assumption, now implemented** — the streak advances when XP is
+  earned, and only then. Passive page views do not count, consistent with CDC §26.
+  There is no separate activity table; the ledger is the record.
+- Needed: confirmation. If opening the app should count, the streak needs its own
+  activity signal rather than reading the ledger.
 
 ## Question: open-ended and code answers cannot be graded deterministically
 

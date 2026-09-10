@@ -16,6 +16,7 @@ import {
   isMastered,
   isStreakAtRisk,
   isWeak,
+  levelForXp,
   localDay,
   PARAMETERS,
   prerequisiteImpact,
@@ -23,6 +24,7 @@ import {
   recommendNextChapter,
   scheduleNextReview,
   updateStreak,
+  xpForLevel,
   type ChapterRef,
   type QuestionRef,
   type SkillGraph,
@@ -481,6 +483,58 @@ describe('calculateXP', () => {
 /* -------------------------------------------------------------------------- */
 /* Streak                                                                      */
 /* -------------------------------------------------------------------------- */
+
+describe('levelForXp', () => {
+  it('starts everyone at level 1 with nothing', () => {
+    expect(levelForXp(0)).toMatchObject({ level: 1, levelStartXp: 0, levelProgressPercent: 0 });
+  });
+
+  it('is monotone: more XP never means a lower level', () => {
+    let previous = 0;
+    for (const total of [0, 50, 100, 500, 2_000, 10_000, 60_000]) {
+      const { level } = levelForXp(total);
+      expect(level).toBeGreaterThanOrEqual(previous);
+      previous = level;
+    }
+  });
+
+  it('levels up exactly at the threshold, not before', () => {
+    const threshold = xpForLevel(2);
+    expect(levelForXp(threshold - 1).level).toBe(1);
+    expect(levelForXp(threshold).level).toBe(2);
+  });
+
+  it('costs more at each level', () => {
+    const costs = [2, 3, 4, 10, 20].map((level) => xpForLevel(level) - xpForLevel(level - 1));
+    for (let i = 1; i < costs.length; i += 1) {
+      expect(costs[i]!).toBeGreaterThan(costs[i - 1]!);
+    }
+  });
+
+  it('stops at the ceiling and reports no next level', () => {
+    const top = levelForXp(xpForLevel(PARAMETERS.levels.maxLevel) * 10);
+    expect(top.level).toBe(PARAMETERS.levels.maxLevel);
+    expect(top.nextLevelXp).toBeNull();
+    expect(top.xpToNextLevel).toBe(0);
+    expect(top.levelProgressPercent).toBe(100);
+  });
+
+  it('reports progress inside the level, between 0 and 100', () => {
+    const start = xpForLevel(3);
+    const next = xpForLevel(4);
+    const middle = levelForXp(Math.floor((start + next) / 2));
+
+    expect(middle.level).toBe(3);
+    expect(middle.levelProgressPercent).toBeGreaterThan(40);
+    expect(middle.levelProgressPercent).toBeLessThan(60);
+    expect(middle.xpToNextLevel).toBeGreaterThan(0);
+  });
+
+  it('treats a negative or fractional total as its floor', () => {
+    expect(levelForXp(-500).level).toBe(1);
+    expect(levelForXp(99.9).level).toBe(levelForXp(99).level);
+  });
+});
 
 describe('updateStreak', () => {
   const empty = { currentDays: 0, longestDays: 0, lastActiveDate: null };

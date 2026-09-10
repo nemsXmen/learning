@@ -15,6 +15,8 @@ export { calculateForgettingRisk, isDue, daysOverdue } from './forgetting';
 export { calculateReviewPriority, detectWeakSkills, prerequisiteImpact } from './priority';
 export { scheduleNextReview, adjustDifficulty } from './review';
 export { calculateXP } from './xp';
+export { levelForXp, xpForLevel } from './levels';
+export type { LevelProgress } from './levels';
 export { updateStreak, localDay, isStreakAtRisk } from './streak';
 export { generateBoostSession } from './boost';
 export { recommendNextAction, recommendNextChapter, isChapterUnlocked } from './recommend';

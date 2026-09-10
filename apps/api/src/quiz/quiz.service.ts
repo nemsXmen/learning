@@ -125,6 +125,8 @@ export class QuizService {
       });
     }
 
+    const previousBestScore = await this.bestScoreBefore(userId, attempt.quizId);
+
     const graded = gradeAttempt(quiz.questions, answers);
     const submittedAt = new Date();
 
@@ -167,11 +169,25 @@ export class QuizService {
       source: attempt.source,
       scorePercent: graded.scorePercent,
       passed: graded.passed,
+      previousBestScore,
       skillOutcomes: graded.skillOutcomes,
       occurredAt: submittedAt,
     });
 
     return { attemptId, ...graded };
+  }
+
+  /**
+   * The best score already achieved on this quiz, or null if it was never
+   * passed. XP uses it to tell a first pass from an improvement (CDC §26).
+   */
+  private async bestScoreBefore(userId: string, quizId: string): Promise<number | null> {
+    const rows = await this.attempts.find({ where: { userId, quizId } });
+    const scored = rows
+      .filter((row) => row.submittedAt !== null && row.scorePercent !== null)
+      .map((row) => row.scorePercent as number);
+
+    return scored.length === 0 ? null : Math.max(...scored);
   }
 
   /** History for one quiz, newest first. */

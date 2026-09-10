@@ -34,6 +34,8 @@ export interface QuizAttemptGraded {
   source: string;
   scorePercent: number;
   passed: boolean;
+  /** Best score on this quiz before this attempt; null if never passed. */
+  previousBestScore: number | null;
   skillOutcomes: Array<{ skillId: string; correct: number; incorrect: number }>;
   occurredAt: Date;
 }
@@ -44,7 +46,18 @@ export interface MasteryUpdated {
   occurredAt: Date;
 }
 
+export interface XpAwarded {
+  userId: string;
+  amount: number;
+  reason: string;
+  referenceType: string;
+  referenceId: string;
+  detail: string;
+  occurredAt: Date;
+}
+
 export interface DomainEventMap {
+  'xp.awarded': XpAwarded;
   'mastery.updated': MasteryUpdated;
   'quiz.attempt.graded': QuizAttemptGraded;
   'chapter.completed': ChapterCompleted;
