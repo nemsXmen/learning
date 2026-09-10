@@ -10,6 +10,7 @@ import {
   type AttemptSummary,
   type StartedAttempt,
 } from './quiz.service';
+import { AnswerInput } from './grade';
 
 /** An answer is an index list, a boolean or a string, depending on the type. */
 const givenSchema = z.union([
@@ -57,7 +58,7 @@ export class QuizController {
     @Param('attemptId', UuidParam) attemptId: string,
     @Body() body: SubmitDto,
   ): Promise<AttemptResult> {
-    return this.quiz.submit(request.user.sub, attemptId, body.answers);
+    return this.quiz.submit(request.user.sub, attemptId, body.answers as AnswerInput[]);
   }
 
   @Get('me/quizzes/:quizId/attempts')
