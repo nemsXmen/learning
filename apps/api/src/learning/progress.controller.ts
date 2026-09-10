@@ -2,7 +2,8 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Param, Put, Post, Req, Use
 import { z } from 'zod';
 import { JwtAuthGuard, type AuthenticatedRequest } from '../auth/jwt.guard';
 import { SlugParam } from '../content/slug.pipe';
-import { ZodValidationPipe } from '../zod-validation.pipe';
+import { createZodDto } from '../zod-validation.pipe';
+import { ContentIdParam } from '../params.pipe';
 import {
   ProgressService,
   type CompletionResult,
@@ -15,7 +16,7 @@ const reportSchema = z.object({
   timeSpentSeconds: z.number().int().min(0).optional(),
 });
 
-const chapterIdSchema = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+class ReportDto extends createZodDto(reportSchema) {}
 
 @Controller('me/progress')
 @UseGuards(JwtAuthGuard)
@@ -25,8 +26,8 @@ export class ProgressController {
   @Put('chapters/:chapterId')
   report(
     @Req() request: AuthenticatedRequest,
-    @Param('chapterId', new ZodValidationPipe(chapterIdSchema)) chapterId: string,
-    @Body(new ZodValidationPipe(reportSchema)) body: z.infer<typeof reportSchema>,
+    @Param('chapterId', ContentIdParam) chapterId: string,
+    @Body() body: ReportDto,
   ): Promise<ProgressView> {
     // The user comes from the token, never the body (docs/rules.md #30).
     return this.progress.report(request.user.sub, chapterId, body);
@@ -36,7 +37,7 @@ export class ProgressController {
   @HttpCode(HttpStatus.OK)
   complete(
     @Req() request: AuthenticatedRequest,
-    @Param('chapterId', new ZodValidationPipe(chapterIdSchema)) chapterId: string,
+    @Param('chapterId', ContentIdParam) chapterId: string,
   ): Promise<CompletionResult> {
     return this.progress.complete(request.user.sub, chapterId);
   }
@@ -44,7 +45,7 @@ export class ProgressController {
   @Get('chapters/:chapterId')
   getChapter(
     @Req() request: AuthenticatedRequest,
-    @Param('chapterId', new ZodValidationPipe(chapterIdSchema)) chapterId: string,
+    @Param('chapterId', ContentIdParam) chapterId: string,
   ): Promise<ProgressView> {
     return this.progress.getChapter(request.user.sub, chapterId);
   }

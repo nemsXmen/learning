@@ -11,7 +11,7 @@ import {
 import type { Request } from 'express';
 import { z } from 'zod';
 import { loginSchema, passwordSchema, registerSchema, emailSchema } from '@app/validation';
-import { ZodValidationPipe } from '../zod-validation.pipe';
+import { createZodDto } from '../zod-validation.pipe';
 import { AuthService, type PublicUser, type Session } from './auth.service';
 import { JwtAuthGuard, type AuthenticatedRequest } from './jwt.guard';
 import { RateLimitService } from './rate-limit.service';
@@ -21,6 +21,14 @@ const refreshSchema = z.object({ refreshToken: z.string().min(1) });
 const verifyEmailSchema = z.object({ token: z.string().min(1) });
 const forgotSchema = z.object({ email: emailSchema });
 const resetSchema = z.object({ token: z.string().min(1), password: passwordSchema });
+
+// DTO classes carry their schema, which is what the global pipe reads.
+class RegisterDto extends createZodDto(registerSchema) {}
+class LoginDto extends createZodDto(loginSchema) {}
+class RefreshDto extends createZodDto(refreshSchema) {}
+class VerifyEmailDto extends createZodDto(verifyEmailSchema) {}
+class ForgotDto extends createZodDto(forgotSchema) {}
+class ResetDto extends createZodDto(resetSchema) {}
 
 /** Best-effort client address, used only as a rate-limit discriminator. */
 function clientIp(request: Request): string {
@@ -39,7 +47,7 @@ export class AuthController {
   @Post('register')
   async register(
     @Req() request: Request,
-    @Body(new ZodValidationPipe(registerSchema)) body: z.infer<typeof registerSchema>,
+    @Body() body: RegisterDto,
   ): Promise<Session> {
     await this.rateLimit.consume('register', clientIp(request));
     return this.auth.register(body);
@@ -49,7 +57,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(
     @Req() request: Request,
-    @Body(new ZodValidationPipe(loginSchema)) body: z.infer<typeof loginSchema>,
+    @Body() body: LoginDto,
   ): Promise<Session> {
     // Per IP and per account: either limit alone is trivially worked around.
     await this.rateLimit.consume('login', clientIp(request));
@@ -64,7 +72,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async refresh(
     @Req() request: Request,
-    @Body(new ZodValidationPipe(refreshSchema)) body: z.infer<typeof refreshSchema>,
+    @Body() body: RefreshDto,
   ): Promise<IssuedTokens> {
     await this.rateLimit.consume('refresh', clientIp(request));
     return this.auth.refresh(body.refreshToken);
@@ -73,7 +81,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.NO_CONTENT)
   async logout(
-    @Body(new ZodValidationPipe(refreshSchema)) body: z.infer<typeof refreshSchema>,
+    @Body() body: RefreshDto,
   ): Promise<void> {
     await this.auth.logout(body.refreshToken);
   }
@@ -88,7 +96,7 @@ export class AuthController {
   @Post('email/verify')
   @HttpCode(HttpStatus.OK)
   async verifyEmail(
-    @Body(new ZodValidationPipe(verifyEmailSchema)) body: z.infer<typeof verifyEmailSchema>,
+    @Body() body: VerifyEmailDto,
   ): Promise<{ emailVerified: boolean }> {
     const user = await this.auth.verifyEmail(body.token);
     return { emailVerified: user.emailVerified };
@@ -107,7 +115,7 @@ export class AuthController {
   @HttpCode(HttpStatus.ACCEPTED)
   async forgotPassword(
     @Req() request: Request,
-    @Body(new ZodValidationPipe(forgotSchema)) body: z.infer<typeof forgotSchema>,
+    @Body() body: ForgotDto,
   ): Promise<void> {
     await this.rateLimit.consume('forgotPassword', clientIp(request));
     await this.rateLimit.consume('forgotPassword', body.email);
@@ -117,7 +125,7 @@ export class AuthController {
   @Post('password/reset')
   @HttpCode(HttpStatus.NO_CONTENT)
   async resetPassword(
-    @Body(new ZodValidationPipe(resetSchema)) body: z.infer<typeof resetSchema>,
+    @Body() body: ResetDto,
   ): Promise<void> {
     await this.auth.resetPassword(body.token, body.password);
   }

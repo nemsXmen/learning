@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { ContentController } from './content.controller';
-import { SlugValidationPipe } from './slug.pipe';
+import { SlugParam } from './slug.pipe';
 
-describe('SlugValidationPipe', () => {
-  const pipe = new SlugValidationPipe();
+describe('SlugParam', () => {
+  const pipe = SlugParam;
 
   it.each(['javascript', 'type-inference', 'js2', 'a'])('accepts %s', (value) => {
     expect(pipe.transform(value)).toBe(value);

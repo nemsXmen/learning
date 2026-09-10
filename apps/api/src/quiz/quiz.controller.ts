@@ -2,7 +2,8 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UseGuard
 import { z } from 'zod';
 import { JwtAuthGuard, type AuthenticatedRequest } from '../auth/jwt.guard';
 import { SlugParam } from '../content/slug.pipe';
-import { ZodValidationPipe } from '../zod-validation.pipe';
+import { createZodDto } from '../zod-validation.pipe';
+import { ContentIdParam, UuidParam } from '../params.pipe';
 import {
   QuizService,
   type AttemptResult,
@@ -30,7 +31,7 @@ const submitSchema = z.object({
     .max(100),
 });
 
-const idSchema = z.string().min(1).max(96);
+class SubmitDto extends createZodDto(submitSchema) {}
 
 @Controller()
 @UseGuards(JwtAuthGuard)
@@ -53,8 +54,8 @@ export class QuizController {
   @HttpCode(HttpStatus.OK)
   submit(
     @Req() request: AuthenticatedRequest,
-    @Param('attemptId', new ZodValidationPipe(z.string().uuid())) attemptId: string,
-    @Body(new ZodValidationPipe(submitSchema)) body: z.infer<typeof submitSchema>,
+    @Param('attemptId', UuidParam) attemptId: string,
+    @Body() body: SubmitDto,
   ): Promise<AttemptResult> {
     return this.quiz.submit(request.user.sub, attemptId, body.answers);
   }
@@ -62,7 +63,7 @@ export class QuizController {
   @Get('me/quizzes/:quizId/attempts')
   history(
     @Req() request: AuthenticatedRequest,
-    @Param('quizId', new ZodValidationPipe(idSchema)) quizId: string,
+    @Param('quizId', ContentIdParam) quizId: string,
   ): Promise<AttemptSummary[]> {
     return this.quiz.history(request.user.sub, quizId);
   }

@@ -95,6 +95,28 @@ that depends on them is accepted.
   results. A small Zod validation pipe is written once in the API.
 - CDC question or assumption: none.
 
+## Decision: `nestjs-zod` and a global APP_PIPE
+
+- Status: accepted (refines "Zod as the single validation language")
+- Context: validation was a pipe instantiated per parameter,
+  `@Body(new ZodValidationPipe(schema))`. It worked, but a handler that forgot it
+  was silently unvalidated, and the schema had to be repeated next to the type.
+- Decision: `nestjs-zod`'s `createZodDto` turns a schema into a class that carries
+  it, and the pipe is registered once as `APP_PIPE`. A body is validated because
+  its type says so, not because the author remembered a decorator argument.
+- Consequences: one dependency (`@nestjs/swagger` is an optional peer we do not
+  install), and zod moves from ^3.24 to ^3.25 across the workspace, which the
+  library requires. The validation exception stays ours — `apps/web` reads
+  `fields` to place errors under the right input, and that contract predates this
+  change.
+- Route parameters are unaffected: their metatype is `String` with no schema, so
+  the global pipe passes them through. They keep explicit pipes, now declared
+  once in `params.pipe.ts` instead of inlined at each call site.
+- Alternative rejected: a hand-rolled ~15-line `createZodDto`. It would have
+  avoided the dependency, but this is a solved problem with a maintained library,
+  and the hand-rolled version would need the same metatype plumbing.
+- CDC question or assumption: none.
+
 ## Decision: Session cookie at the Next.js edge, JWT behind it
 
 - Status: accepted
