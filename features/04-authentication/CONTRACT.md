@@ -32,6 +32,10 @@ cleared by the handler.
 
 ## Email boundary
 
+`MAIL_DRIVER` selects how a message is sent: `queue` (BullMQ, retried) or `inline`
+(awaited in the request, two bounded attempts), the default. Either way a mail
+failure never fails the action — see docs/decisions.md.
+
 Enqueues `email.send { template, to, variables }` on the `email` queue. Templates:
 `verify-email`, `reset-password`, `password-changed`. Links are built from `APP_URL`.
 Retry with exponential backoff; a message exhausting retries is logged with the

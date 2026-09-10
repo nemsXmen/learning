@@ -38,6 +38,10 @@ export const apiEnvSchema = z.object({
   SMTP_USER: z.string().default(''),
   SMTP_PASSWORD: z.string().default(''),
   MAIL_FROM: z.string().min(3),
+  // `inline` awaits SMTP in the request and works anywhere, including a
+  // serverless function. `queue` retries with backoff and blocks nothing, but
+  // needs a worker, so it needs a long-lived process (docs/decisions.md).
+  MAIL_DRIVER: z.enum(['inline', 'queue']).default('inline'),
   EMAIL_VERIFICATION_TTL: duration.default('24h'),
   PASSWORD_RESET_TTL: duration.default('60m'),
 });

@@ -4,8 +4,12 @@ import { env } from '../config/env';
 import { EMAIL_QUEUE, MailTransport, type SendMailJob } from './mail.service';
 
 /**
- * Drains the email queue. Failures are retried with backoff by BullMQ; a message
- * that exhausts its attempts is logged with its template, never with its token.
+ * Drains the email queue — only under `MAIL_DRIVER=queue`.
+ *
+ * A worker holds a blocking Redis connection and waits for jobs, which needs a
+ * process that stays alive. Starting one where nothing can keep it running (a
+ * serverless function is frozen once it responds) would open a connection that
+ * never consumes anything.
  */
 @Injectable()
 export class MailWorker implements OnModuleInit, OnModuleDestroy {
@@ -15,6 +19,8 @@ export class MailWorker implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly transport: MailTransport) {}
 
   onModuleInit(): void {
+    if (env.MAIL_DRIVER !== 'queue') return;
+
     this.worker = new Worker<SendMailJob>(
       EMAIL_QUEUE,
       async (job) => this.transport.send(job.data),
@@ -26,6 +32,8 @@ export class MailWorker implements OnModuleInit, OnModuleDestroy {
         `Échec d'envoi « ${job?.data.template ?? 'inconnu'} » (tentative ${job?.attemptsMade ?? 0}) : ${error.message}`,
       );
     });
+
+    this.logger.log('Worker e-mail démarré');
   }
 
   async onModuleDestroy(): Promise<void> {

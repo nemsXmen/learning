@@ -10,7 +10,7 @@
     "dev": "pnpm --filter \"./packages/*\" build && pnpm --parallel --filter \"./apps/*\" dev",
     "build": "pnpm -r build",
     "build:web": "pnpm --filter \"./packages/*\" build && pnpm --filter @app/web build",
-    "build:api": "pnpm --filter \"./packages/*\" build && pnpm --filter @app/api build",
+    "build:api": "pnpm --filter \"./packages/*\" build && pnpm db:migrate && pnpm --filter @app/api build",
     "verify": "pnpm typecheck && pnpm lint && pnpm content:validate && pnpm test && pnpm build",
     "lint": "eslint .",
     "typecheck": "pnpm -r typecheck",

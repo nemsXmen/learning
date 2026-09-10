@@ -46,11 +46,12 @@ Server-side only. No credential is ever prefixed `NEXT_PUBLIC_`.
 | `CONTENT_DIR` | `../../content` | the only filesystem path the API reads |
 | `WEB_ORIGIN` | `http://localhost:3000` | CORS allowlist, exact match |
 | `APP_URL` | `http://localhost:3000` | base for links inside emails |
-| `SMTP_HOST` | `localhost` | Mailpit locally, real host when deployed |
+| `SMTP_HOST` | `127.0.0.1` | Mailpit locally. Not `localhost`: Node resolves it to `::1`, and a container published on `127.0.0.1` does not listen on IPv6 |
 | `SMTP_PORT` | `1025` | `587` with STARTTLS when deployed |
 | `SMTP_SECURE` | `false` | `true` for implicit TLS on 465 |
 | `SMTP_USER` / `SMTP_PASSWORD` | — | empty locally, required when deployed |
 | `MAIL_FROM` | `Learning <no-reply@example.com>` | sender identity |
+| `MAIL_DRIVER` | `inline` | `inline` sends in the request; `queue` uses BullMQ and needs a worker |
 | `EMAIL_VERIFICATION_TTL` | `24h` | |
 | `PASSWORD_RESET_TTL` | `60m` | |
 

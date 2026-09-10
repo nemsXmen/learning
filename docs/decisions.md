@@ -151,6 +151,28 @@ that depends on them is accepted.
   hard-code one palette and defeat theme switching.
 - CDC question or assumption: none.
 
+## Decision: two mail drivers, `inline` by default
+
+- Status: accepted (amends "Transactional email over SMTP, sent from a queue")
+- Context: a BullMQ worker holds a blocking Redis connection and waits for jobs,
+  so it needs a process that stays alive. A serverless function is frozen once it
+  responds: `queue.add()` would keep working and nothing would ever consume the
+  jobs. Verification and reset mails would pile up unsent.
+- Decision: `MAIL_DRIVER` selects the transport. `inline` — the default — awaits
+  SMTP inside the request, with two bounded attempts. `queue` keeps BullMQ, with
+  retries and backoff, and starts the worker.
+- Consequences: the platform stops dictating whether email works. The default
+  costs latency and durability, measured locally at 0.74s versus 0.19s for
+  registration; a message failing both inline attempts is lost, because there is
+  no queue to retry it later. Set `MAIL_DRIVER=queue` on any host that runs a
+  long-lived process — it is strictly better where it can run.
+- Alternative rejected: a cron-triggered function draining the queue. BullMQ has
+  no clean "process N jobs and return" API, so it means working against its model
+  for a minute of latency at best.
+- CDC question or assumption: none, but rule 34 is amended: mail is no longer
+  always enqueued. What holds unconditionally is that a mail failure never fails
+  the action.
+
 ## Decision: An in-app `/design` gallery instead of Storybook
 
 - Status: accepted
@@ -211,11 +233,14 @@ These block acceptance of the features named. Do not guess an answer in code.
 - The mail worker (`MailWorker`) holds an open BullMQ `Worker`, and a serverless
   function is frozen once it responds — verification and reset emails would never
   be sent there. TypeORM pooling and the Redis connection assume a long process too.
-- Current handling: the content bundling above removes the filesystem obstacle, so
-  the API can boot on a serverless platform for testing. Email delivery on such a
-  platform is not solved and is not claimed to be.
-- Needed: a decision — a process host for the API (Railway, Fly, Render, a
-  container), or a separate always-on worker alongside the serverless functions.
+- Current handling: content bundling removed the filesystem obstacle and
+  `MAIL_DRIVER=inline` removes the worker obstacle, so the API boots and sends mail
+  on a serverless platform. What remains unsolved there: no retry for a failed
+  message, TypeORM opening a pool per cold start, and no home for future background
+  work (analytics rollups, achievement detection, reminders).
+- Needed: a decision before production — a process host for the API (Railway, Fly,
+  Render, a container) with `MAIL_DRIVER=queue`, or an always-on worker beside the
+  functions.
 
 ## Question: does an unverified account get restricted
 

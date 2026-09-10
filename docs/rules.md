@@ -63,8 +63,9 @@ Every rule below traces to the CDC or to an accepted entry in
     only in the emailed link. — decisions.md
 33. Password reset and resend-verification never reveal whether an address has an
     account. — CDC §48
-34. Mail is enqueued, never awaited in a request; a mail failure never fails the action
-    that triggered it. — decisions.md
+34. A mail failure never fails the action that triggered it. How it is sent depends on
+    `MAIL_DRIVER`: `queue` (retries, nothing blocks) where a worker can run, `inline`
+    (awaited, bounded retries) where none can. — decisions.md
 
 ## Code shape
 
