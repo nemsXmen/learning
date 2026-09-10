@@ -200,6 +200,21 @@ that depends on them is accepted.
 - CDC question or assumption: none. Spacing and duration literals are not covered
   yet; a Tailwind-aware rule would be needed and is not justified today.
 
+## Decision: a hand-rolled typed event bus, not @nestjs/event-emitter
+
+- Status: accepted
+- Context: slice 07 emits `chapter.completed`, which slices 10 and 11 consume to
+  update mastery and award XP. Those consumers must run inside the same request
+  (docs/decisions.md, synchronous grading), so the bus has to await listeners.
+- Decision: a ~40-line `DomainEvents` service with a typed event map, awaited
+  emission, and unsubscribe. No dependency added.
+- Consequences: event names and payloads are checked by the compiler, and a
+  listener that throws is logged and skipped rather than undoing the action that
+  emitted — an achievement failing must not un-complete a chapter. If wildcard
+  subscriptions or cross-process events are ever needed, this is the moment to
+  reconsider the dependency.
+- CDC question or assumption: none.
+
 ## Decision: Vitest for packages and web, Jest for the API
 
 - Status: accepted
