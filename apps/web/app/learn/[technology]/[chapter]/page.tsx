@@ -72,7 +72,7 @@ export default async function ChapterPage({ params }: PageProps) {
   });
 
   // The bar is fixed over the page; without this the article ends underneath it.
-  const barVisible = !completed || step.action !== null;
+  const barVisible = !completed;
 
   return (
     <div className="mx-auto flex w-full max-w-[1400px] flex-col lg:flex-row lg:gap-10">
@@ -158,7 +158,6 @@ export default async function ChapterPage({ params }: PageProps) {
         chapterId={chapter.id}
         initialPercent={progress?.progressPercent ?? 0}
         completed={completed}
-        nextAction={step.action}
       />
     </div>
   );
