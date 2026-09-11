@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@app/ui';
 
@@ -24,6 +25,10 @@ export function scrollDepthPercent(
 interface Props {
   chapterId: string;
   initialPercent: number;
+  /** Already finished: the bar must stop offering an action that is done. */
+  completed: boolean;
+  /** The step decided by the page, so the bar and the closing card agree. */
+  nextAction: { label: string; href: string } | null;
 }
 
 /**
@@ -34,7 +39,7 @@ interface Props {
  * throttled and the last value is flushed when the page is hidden, so closing a
  * tab does not lose the reading.
  */
-export function ReadingTracker({ chapterId, initialPercent }: Props) {
+export function ReadingTracker({ chapterId, initialPercent, completed, nextAction }: Props) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -112,15 +117,37 @@ export function ReadingTracker({ chapterId, initialPercent }: Props) {
     }
   }
 
+  // Finished and nothing left to propose: the bar has no reason to cover the page.
+  if (completed && !nextAction) return null;
+
   return (
     <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-bg/95 px-5 py-3 backdrop-blur lg:left-72">
       <div className="mx-auto flex max-w-[46rem] items-center justify-between gap-4">
-        <p aria-live="polite" className="text-[13px] text-danger">
-          {error}
-        </p>
-        <Button onClick={complete} loading={pending} size="sm">
-          Marquer comme terminé
-        </Button>
+        {completed ? (
+          <p className="flex min-w-0 items-center gap-2 text-[13px] text-text-muted">
+            <span aria-hidden="true" className="text-success">
+              ✓
+            </span>
+            <span className="truncate">Chapitre terminé</span>
+          </p>
+        ) : (
+          <p aria-live="polite" className="text-[13px] text-danger">
+            {error}
+          </p>
+        )}
+
+        {completed ? (
+          <Link
+            href={nextAction!.href}
+            className="inline-flex h-9 shrink-0 items-center rounded-control bg-accent px-4 text-[13px] font-semibold text-accent-on no-underline"
+          >
+            {nextAction!.label}
+          </Link>
+        ) : (
+          <Button onClick={complete} loading={pending} size="sm">
+            Marquer comme terminé
+          </Button>
+        )}
       </div>
     </div>
   );

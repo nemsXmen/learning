@@ -10,6 +10,7 @@ import {
   getTechnology,
   type AttemptSummary,
   type ChapterPayload,
+  type ChapterView,
   type ChapterProgress,
   type TechnologyDetail,
 } from '../../../../lib/catalog';
@@ -54,6 +55,24 @@ export default async function ChapterPage({ params }: PageProps) {
   ]);
 
   const module = detail.modules.find((item) => item.slug === chapter.module.slug);
+  const completed = progress?.status === 'COMPLETED';
+
+  // Decided once and shared: the closing card and the fixed bar must never offer
+  // two different next steps.
+  const chapters = detail.modules.flatMap((item) => item.chapters);
+  const nextChapter = chapters.find((item) => item.id === chapter.neighbours.next) ?? null;
+  const step = decideNextStep({
+    technologySlug,
+    chapter,
+    progress,
+    attempts,
+    nextChapter: nextChapter
+      ? { slug: nextChapter.slug, title: nextChapter.title, locked: nextChapter.locked }
+      : null,
+  });
+
+  // The bar is fixed over the page; without this the article ends underneath it.
+  const barVisible = !completed || step.action !== null;
 
   return (
     <div className="mx-auto flex w-full max-w-[1400px] flex-col lg:flex-row lg:gap-10">
@@ -65,7 +84,9 @@ export default async function ChapterPage({ params }: PageProps) {
         quizHref={chapter.quiz ? `/learn/${technologySlug}/${chapter.slug}/quiz` : null}
       />
 
-      <main className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:py-12">
+      <main
+        className={`min-w-0 flex-1 px-5 py-8 sm:px-8 lg:py-12 ${barVisible ? 'pb-28' : ''}`}
+      >
         <article className="mx-auto flex max-w-[46rem] flex-col gap-7">
           <header className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center gap-2 text-xs text-text-subtle">
@@ -108,9 +129,8 @@ export default async function ChapterPage({ params }: PageProps) {
           <ChapterFooter
             technologySlug={technologySlug}
             chapter={chapter}
-            detail={detail}
-            progress={progress}
-            attempts={attempts}
+            chapters={chapters}
+            step={step}
           />
         </article>
       </main>
@@ -134,7 +154,12 @@ export default async function ChapterPage({ params }: PageProps) {
         </nav>
       </aside>
 
-      <ReadingTracker chapterId={chapter.id} initialPercent={progress?.progressPercent ?? 0} />
+      <ReadingTracker
+        chapterId={chapter.id}
+        initialPercent={progress?.progressPercent ?? 0}
+        completed={completed}
+        nextAction={step.action}
+      />
     </div>
   );
 }
@@ -142,29 +167,18 @@ export default async function ChapterPage({ params }: PageProps) {
 function ChapterFooter({
   technologySlug,
   chapter,
-  detail,
-  progress,
-  attempts,
+  chapters,
+  step,
 }: {
   technologySlug: string;
   chapter: ChapterPayload;
-  detail: TechnologyDetail;
-  progress: ChapterProgress | null;
-  attempts: AttemptSummary[];
+  chapters: ChapterView[];
+  step: NextStep;
 }) {
-  const chapters = detail.modules.flatMap((module) => module.chapters);
   const slugOf = (id: string | null) => chapters.find((item) => item.id === id)?.slug ?? null;
   const previousSlug = slugOf(chapter.neighbours.previous);
   const nextSlug = slugOf(chapter.neighbours.next);
   const next = chapters.find((item) => item.slug === nextSlug);
-
-  const step = decideNextStep({
-    technologySlug,
-    chapter,
-    progress,
-    attempts,
-    nextChapter: next ? { slug: next.slug, title: next.title, locked: next.locked } : null,
-  });
 
   return (
     <footer className="mt-4 flex flex-col gap-6 border-t border-border pt-7">
