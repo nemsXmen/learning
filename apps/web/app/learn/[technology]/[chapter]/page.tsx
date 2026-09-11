@@ -84,8 +84,16 @@ export default async function ChapterPage({ params }: PageProps) {
         quizHref={chapter.quiz ? `/learn/${technologySlug}/${chapter.slug}/quiz` : null}
       />
 
+      {/*
+        No `py` shorthand here: a `lg:py-*` rule lives in a media query and so
+        wins over a plain `pb-*` further up the stylesheet, which silently ate
+        the space reserved for the bar and let it cover the end of the article.
+        The bottom padding is stated once, and is the only rule that sets it.
+      */}
       <main
-        className={`min-w-0 flex-1 px-5 py-8 sm:px-8 lg:py-12 ${barVisible ? 'pb-28' : ''}`}
+        className={`min-w-0 flex-1 px-5 pt-8 sm:px-8 lg:pt-12 ${
+          barVisible ? 'pb-32' : 'pb-8 lg:pb-12'
+        }`}
       >
         <article className="mx-auto flex max-w-[46rem] flex-col gap-7">
           <header className="flex flex-col gap-4">
