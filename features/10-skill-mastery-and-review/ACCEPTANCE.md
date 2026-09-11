@@ -6,8 +6,10 @@
 - [x] All calculation delegates to `packages/learning-engine`; no formula in this module
 - [x] Every mastery change stores an explainable reason
 - [x] Weak-skill and due-review endpoints return ordered, explained results
-- [ ] Replay from attempt history is idempotent and reproduces live state - the
-      `mastery:replay` command is not written yet
+- [x] Replay from attempt history is idempotent and reproduces live state - verified
+      against the live database: replaying a learner with 6 attempts, 1 completion and
+      1 Boost session rebuilt their recorded fingerprint exactly, and a second run left
+      it unchanged
 - [ ] Empty and error states defined for the consuming surfaces - the API returns
       zeroed skills and empty lists; no UI consumes them until slice 13
 - [x] Automated tests pass
