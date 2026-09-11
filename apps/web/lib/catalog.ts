@@ -87,6 +87,16 @@ export interface ChapterPayload {
   html: string;
   contentVersion: string;
   neighbours: { previous: string | null; next: string | null };
+  /** The test that closes the chapter, or null when none is written yet. */
+  quiz: { id: string; kind: 'QUIZ' | 'CHAPTER_TEST'; questionCount: number } | null;
+}
+
+export interface AttemptSummary {
+  attemptId: string;
+  scorePercent: number | null;
+  passed: boolean | null;
+  submittedAt: string | null;
+  startedAt: string;
 }
 
 export interface ChapterProgress {
@@ -95,6 +105,10 @@ export interface ChapterProgress {
   progressPercent: number;
   timeSpentSeconds: number;
   completedAt: string | null;
+}
+
+export function getQuizHistory(quizId: string): Promise<AttemptSummary[]> {
+  return authorized<AttemptSummary[]>(`/me/quizzes/${encodeURIComponent(quizId)}/attempts`);
 }
 
 export function getChapter(technology: string, chapter: string): Promise<ChapterPayload> {

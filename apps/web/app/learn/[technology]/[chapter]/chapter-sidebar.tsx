@@ -10,22 +10,42 @@ interface Props {
   technologyName: string;
   module: ModuleView | null;
   currentSlug: string;
+  /** The chapter's test, when one is written — null hides the entry entirely. */
+  quizHref: string | null;
 }
 
 /** Sticky beside the text on desktop, a drawer on mobile — same list either way. */
-export function ChapterSidebar({ technologySlug, technologyName, module, currentSlug }: Props) {
+export function ChapterSidebar({
+  technologySlug,
+  technologyName,
+  module,
+  currentSlug,
+  quizHref,
+}: Props) {
   const [open, setOpen] = useState(false);
   if (!module) return null;
 
-  const list = <ChapterList technologySlug={technologySlug} module={module} currentSlug={currentSlug} />;
+  const list = (
+    <ChapterList
+      technologySlug={technologySlug}
+      module={module}
+      currentSlug={currentSlug}
+      quizHref={quizHref}
+    />
+  );
 
   return (
     <>
-      <div className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-bg/90 px-5 py-3 backdrop-blur lg:hidden">
+      <div className="sticky top-0 z-10 flex w-full items-center gap-3 border-b border-border bg-bg/90 px-5 py-3 backdrop-blur lg:hidden">
         <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
-          Sommaire du module
+          Sommaire
         </Button>
-        <span className="truncate text-[13px] text-text-muted">{module.title}</span>
+        <span className="min-w-0 flex-1 truncate text-[13px] text-text-muted">{module.title}</span>
+        {quizHref ? (
+          <Link href={quizHref} className="shrink-0 text-[13px] font-medium no-underline">
+            Test
+          </Link>
+        ) : null}
       </div>
 
       <Drawer open={open} onClose={() => setOpen(false)} title={module.title}>
@@ -51,7 +71,12 @@ export function ChapterSidebar({ technologySlug, technologyName, module, current
   );
 }
 
-function ChapterList({ technologySlug, module, currentSlug }: Omit<Props, 'technologyName'>) {
+function ChapterList({
+  technologySlug,
+  module,
+  currentSlug,
+  quizHref,
+}: Omit<Props, 'technologyName'>) {
   if (!module) return null;
 
   return (
@@ -100,6 +125,18 @@ function ChapterList({ technologySlug, module, currentSlug }: Omit<Props, 'techn
                 {content}
               </Link>
             )}
+
+            {current && quizHref ? (
+              <Link
+                href={quizHref}
+                className="ml-[1.6rem] mt-1 block rounded-control px-3 py-1.5 text-[13px] text-text-muted no-underline hover:bg-surface hover:text-text"
+              >
+                <span aria-hidden="true" className="mr-2">
+                  ⌁
+                </span>
+                Test du chapitre
+              </Link>
+            ) : null}
           </li>
         );
       })}

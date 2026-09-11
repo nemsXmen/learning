@@ -52,6 +52,32 @@ describe('ContentService', () => {
     expect(chapter.skills).toContainEqual({ id: 'closures', name: 'Closures' });
   });
 
+  it('announces the chapter test without leaking a single question', async () => {
+    // The reader offers the next step of the loop from this field alone, so it
+    // has to be present and it has to stay a count.
+    const { service } = await bootService();
+    const chapter = await service.getChapter('javascript', 'closures');
+
+    expect(chapter.quiz).toMatchObject({ id: expect.any(String), kind: expect.any(String) });
+    expect(chapter.quiz!.questionCount).toBeGreaterThan(0);
+    // A count, never the questions: three scalar keys and nothing nested.
+    expect(Object.keys(chapter.quiz!).sort()).toEqual(['id', 'kind', 'questionCount']);
+    expect(Object.values(chapter.quiz!).every((value) => typeof value !== 'object')).toBe(true);
+  });
+
+  it('says null rather than guessing when a chapter has no test', async () => {
+    const { service } = await bootService();
+    const graph = service.getGraph();
+    const withQuiz = new Set(graph.quizzes.map((quiz) => quiz.chapterId));
+    const orphan = graph.chapters.find((chapter) => !withQuiz.has(chapter.id));
+
+    // If every seed chapter has a quiz there is nothing to assert here, and the
+    // reader's "no test yet" branch is covered by its own test.
+    if (!orphan) return;
+    const chapter = await service.getChapter(orphan.technology, orphan.slug);
+    expect(chapter.quiz).toBeNull();
+  });
+
   it('orders neighbours by module then chapter', async () => {
     const { service } = await bootService();
 

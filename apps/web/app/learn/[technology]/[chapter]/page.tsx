@@ -6,11 +6,14 @@ import { ApiError } from '../../../../lib/api';
 import {
   getChapter,
   getChapterProgress,
+  getQuizHistory,
   getTechnology,
+  type AttemptSummary,
   type ChapterPayload,
   type ChapterProgress,
   type TechnologyDetail,
 } from '../../../../lib/catalog';
+import { decideNextStep, type NextStep } from './next-step';
 import { ChapterSidebar } from './chapter-sidebar';
 import { ReadingTracker } from './reading-tracker';
 import { LockedChapter } from './locked-chapter';
@@ -42,22 +45,24 @@ export default async function ChapterPage({ params }: PageProps) {
     throw error;
   }
 
-  let progress: ChapterProgress | null = null;
-  try {
-    progress = await getChapterProgress(chapter.id);
-  } catch {
-    // Progress is an enhancement here: the chapter must still be readable.
-  }
+  // Both are enhancements: a chapter must stay readable when either fails.
+  const [progress, attempts] = await Promise.all([
+    getChapterProgress(chapter.id).catch((): ChapterProgress | null => null),
+    chapter.quiz
+      ? getQuizHistory(chapter.quiz.id).catch((): AttemptSummary[] => [])
+      : Promise.resolve<AttemptSummary[]>([]),
+  ]);
 
   const module = detail.modules.find((item) => item.slug === chapter.module.slug);
 
   return (
-    <div className="mx-auto flex w-full max-w-[1400px] gap-0 lg:gap-10">
+    <div className="mx-auto flex w-full max-w-[1400px] flex-col lg:flex-row lg:gap-10">
       <ChapterSidebar
         technologySlug={technologySlug}
         technologyName={chapter.technology.name}
         module={module ?? null}
         currentSlug={chapter.slug}
+        quizHref={chapter.quiz ? `/learn/${technologySlug}/${chapter.slug}/quiz` : null}
       />
 
       <main className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:py-12">
@@ -72,7 +77,9 @@ export default async function ChapterPage({ params }: PageProps) {
               <span>{chapter.xp} XP</span>
             </div>
 
-            <h1 className="font-display text-4xl font-semibold leading-tight">{chapter.title}</h1>
+            <h1 className="font-display text-[1.75rem] font-semibold leading-tight sm:text-4xl">
+              {chapter.title}
+            </h1>
 
             {progress ? (
               <ProgressBar
@@ -102,7 +109,8 @@ export default async function ChapterPage({ params }: PageProps) {
             technologySlug={technologySlug}
             chapter={chapter}
             detail={detail}
-            completed={progress?.status === 'COMPLETED'}
+            progress={progress}
+            attempts={attempts}
           />
         </article>
       </main>
@@ -135,47 +143,97 @@ function ChapterFooter({
   technologySlug,
   chapter,
   detail,
-  completed,
+  progress,
+  attempts,
 }: {
   technologySlug: string;
   chapter: ChapterPayload;
   detail: TechnologyDetail;
-  completed: boolean;
+  progress: ChapterProgress | null;
+  attempts: AttemptSummary[];
 }) {
   const chapters = detail.modules.flatMap((module) => module.chapters);
   const slugOf = (id: string | null) => chapters.find((item) => item.id === id)?.slug ?? null;
-  const previous = slugOf(chapter.neighbours.previous);
-  const next = slugOf(chapter.neighbours.next);
-  const nextChapter = chapters.find((item) => item.slug === next);
+  const previousSlug = slugOf(chapter.neighbours.previous);
+  const nextSlug = slugOf(chapter.neighbours.next);
+  const next = chapters.find((item) => item.slug === nextSlug);
+
+  const step = decideNextStep({
+    technologySlug,
+    chapter,
+    progress,
+    attempts,
+    nextChapter: next ? { slug: next.slug, title: next.title, locked: next.locked } : null,
+  });
 
   return (
-    <footer className="mt-4 flex flex-col gap-5 border-t border-border pt-7">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        {previous ? (
-          <Link href={`/learn/${technologySlug}/${previous}`} className="text-[13px] text-text-muted">
+    <footer className="mt-4 flex flex-col gap-6 border-t border-border pt-7">
+      <NextStepCard step={step} />
+
+      {/* Sequential navigation stays, below the step that actually matters. */}
+      <nav
+        aria-label="Navigation entre chapitres"
+        className="flex flex-wrap items-center justify-between gap-4"
+      >
+        {previousSlug ? (
+          <Link
+            href={`/learn/${technologySlug}/${previousSlug}`}
+            className="text-[13px] text-text-muted"
+          >
             ← Chapitre précédent
           </Link>
         ) : (
           <span />
         )}
 
-        {next && !nextChapter?.locked ? (
-          <Link href={`/learn/${technologySlug}/${next}`} className="text-[13px]">
+        {nextSlug && !next?.locked ? (
+          <Link href={`/learn/${technologySlug}/${nextSlug}`} className="text-[13px]">
             Chapitre suivant →
           </Link>
         ) : null}
+      </nav>
+    </footer>
+  );
+}
+
+/**
+ * The answer to "what should I do next" (rules.md #11). On a phone the action is
+ * full width and comes first in the tap order; on a wider screen it sits beside
+ * the explanation.
+ */
+function NextStepCard({ step }: { step: NextStep }) {
+  const primary = step.tone === 'primary';
+
+  return (
+    <Card emphasis={primary} className="flex flex-col gap-4 sm:flex-row sm:items-center">
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <h2 className="font-display text-base font-semibold">{step.title}</h2>
+          {step.tone === 'done' ? <Badge tone="accent">Réussi</Badge> : null}
+        </div>
+        <p className="text-sm text-text-muted">{step.body}</p>
+
+        {step.bestScore !== null ? (
+          <p className="text-[13px] text-text-subtle">
+            Meilleur score : {step.bestScore} %{' '}
+            <span aria-hidden="true">·</span>{' '}
+            {step.attemptCount} tentative{step.attemptCount > 1 ? 's' : ''}
+          </p>
+        ) : null}
       </div>
 
-      {completed ? (
-        <Card emphasis className="flex flex-col gap-2">
-          <h2 className="font-display text-base font-semibold">Chapitre terminé</h2>
-          <p className="text-sm text-text-muted">
-            {nextChapter?.locked
-              ? 'La suite se débloquera quand tu auras montré ta maîtrise sur les compétences de ce chapitre.'
-              : 'Tu peux enchaîner sur le chapitre suivant.'}
-          </p>
-        </Card>
+      {step.action ? (
+        <Link
+          href={step.action.href}
+          className={`inline-flex h-11 shrink-0 items-center justify-center rounded-control px-5 text-sm font-semibold no-underline ${
+            primary || step.tone === 'done'
+              ? 'bg-accent text-accent-on'
+              : 'border border-border text-text'
+          }`}
+        >
+          {step.action.label}
+        </Link>
       ) : null}
-    </footer>
+    </Card>
   );
 }

@@ -21,6 +21,12 @@ export interface ChapterPayload {
   html: string;
   contentVersion: string;
   neighbours: { previous: string | null; next: string | null };
+  /**
+   * The test that closes this chapter, or null when none is written. The reader
+   * needs this to offer the next step of the loop without ever linking to a quiz
+   * that does not exist (CDC §1).
+   */
+  quiz: { id: string; kind: QuizNode['kind']; questionCount: number } | null;
 }
 
 /** No `answer`, no `explanation`: an answer key never leaves the API (CDC §9, §76). */
@@ -116,7 +122,14 @@ export class ContentService implements OnModuleInit {
       html: rendered.html,
       contentVersion: chapter.contentVersion,
       neighbours: this.neighboursOf(chapter),
+      quiz: this.quizSummaryOf(chapter),
     };
+  }
+
+  private quizSummaryOf(chapter: ChapterNode): ChapterPayload['quiz'] {
+    const quiz = this.getGraph().quizzes.find((item) => item.chapterId === chapter.id);
+    // The count only: questions and answers stay behind the attempt endpoint.
+    return quiz ? { id: quiz.id, kind: quiz.kind, questionCount: quiz.questions.length } : null;
   }
 
   async getQuiz(technologySlug: string, chapterSlug: string): Promise<QuizPayload> {
