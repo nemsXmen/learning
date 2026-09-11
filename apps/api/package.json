@@ -14,7 +14,8 @@
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/database/data-source.ts",
     "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/database/data-source.ts",
     "content:sync": "ts-node -P tsconfig.json src/content/content-sync.cli.ts",
-    "mail:test": "ts-node -P tsconfig.json src/mail/mail.cli.ts"
+    "mail:test": "ts-node -P tsconfig.json src/mail/mail.cli.ts",
+    "mastery:replay": "ts-node -P tsconfig.json src/learning/mastery-replay.cli.ts"
   },
   "dependencies": {
     "@app/types": "workspace:*",

@@ -40,6 +40,23 @@ for dashboards and achievements.
   logged and skipped, and `mastery:replay` rebuilds the state from attempt
   history — which is why that command exists.
 
+## What `mastery:replay` folds
+
+Three kinds of stored fact move mastery, and the replay reads all three. Missing
+one does not fail loudly — it rebuilds a learner as if part of their work never
+happened, and the rebuild overwrites the correct state:
+
+| Fact | Table | Read as |
+| --- | --- | --- |
+| Chapter completion | `user_progress` (`status = 'COMPLETED'`) | the chapter's skills |
+| Quiz attempt | `quiz_attempt` + `attempt_answer` | per-skill tally from the answers |
+| Boost session | `boost_session` (`status = 'COMPLETED'`) | per-skill tally from `plan.steps` × `answers` |
+
+A Boost session never writes a `quiz_attempt` row: it is graded from its own plan
+and answers, and emits the event directly. Its grading therefore lives in
+`boost/boost-outcomes.ts`, imported by both `BoostService` and the replay, so the
+live path and the rebuild cannot drift apart.
+
 ## Invariants
 
 - Mastery and confidence stay within 0–100.

@@ -19,6 +19,7 @@ import { MasteryService } from '../learning/mastery.service';
 import { XpService } from '../gamification/xp.service';
 import { gradeQuestion, type GivenAnswer } from '../quiz/grade';
 import { BoostSessionEntity } from './boost.entities';
+import { BOOST_PASS_PERCENT, boostScorePercent, boostSkillOutcomes } from './boost-outcomes';
 
 export interface BoostPreview {
   available: boolean;
@@ -209,13 +210,7 @@ export class BoostService {
       };
     }
 
-    const graded = session.plan.steps.filter((step) => step.ref !== null);
-    const correct = session.answers.filter((answer) => {
-      const step = session.plan.steps[answer.index];
-      return step?.ref !== null && answer.correct;
-    }).length;
-
-    const scorePercent = graded.length === 0 ? 0 : Math.round((correct / graded.length) * 100);
+    const scorePercent = boostScorePercent(session.plan, session.answers);
 
     // Mastery before, so the deltas shown are the ones this session produced.
     const before = await this.mastery.scoresFor(userId);
@@ -227,9 +222,9 @@ export class BoostService {
       chapterId: '',
       source: 'BOOST',
       scorePercent,
-      passed: scorePercent >= 60,
+      passed: scorePercent >= BOOST_PASS_PERCENT,
       previousBestScore: null,
-      skillOutcomes: this.skillOutcomes(session),
+      skillOutcomes: boostSkillOutcomes(session.plan, session.answers),
       occurredAt: now,
     });
 
@@ -258,22 +253,6 @@ export class BoostService {
   }
 
   /* ---------------------------------------------------------------------- */
-
-  private skillOutcomes(session: BoostSessionEntity) {
-    const tally = new Map<string, { skillId: string; correct: number; incorrect: number }>();
-
-    for (const answer of session.answers) {
-      const step = session.plan.steps[answer.index];
-      if (!step || step.ref === null) continue;
-
-      const entry = tally.get(step.skillId) ?? { skillId: step.skillId, correct: 0, incorrect: 0 };
-      if (answer.correct) entry.correct += 1;
-      else entry.incorrect += 1;
-      tally.set(step.skillId, entry);
-    }
-
-    return [...tally.values()];
-  }
 
   private async requireSession(userId: string, sessionId: string): Promise<BoostSessionEntity> {
     const session = await this.sessions.findOne({ where: { id: sessionId } });
