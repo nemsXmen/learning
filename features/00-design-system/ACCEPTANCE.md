@@ -6,7 +6,9 @@
 - [x] `/design` gallery renders every component, variant and state, in both themes, `noindex`
 - [x] Lint fails on a colour literal outside the token file (spacing and duration
       literals are not yet covered)
-- [ ] Axe passes on the gallery in both themes; keyboard traversal verified
+- [x] Axe passes on the gallery in both themes; keyboard traversal verified - both by
+      `pnpm test:a11y`; traversal found the tab panel focusable with its outline removed
+      and nothing drawn instead, fixed in `tabs.tsx`
 - [x] Reduced motion suppresses animation while preserving end state
 - [x] `packages/ui` contains no data fetching, API type or business rule
 - [x] Feature-specific cards are documented as owned by their own slice, not built here

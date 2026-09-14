@@ -120,8 +120,10 @@ export function ReadingTracker({ chapterId, initialPercent, completed }: Props) 
   // pinned over that same card reads as a bug rather than as a shortcut.
   if (completed) return null;
 
+  // Lines up with the article: past the app sidebar from lg (15.5rem), past the
+  // module outline too from xl (+18rem), and short of "sur cette page" from 2xl.
   return (
-    <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-bg/95 px-5 py-3 backdrop-blur lg:left-72 xl:right-56">
+    <div className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-bg/95 px-5 py-3 backdrop-blur lg:left-62 xl:left-[33.5rem] 2xl:right-56">
       <div className="mx-auto flex max-w-[46rem] items-center justify-between gap-4">
         <p aria-live="polite" className="text-[13px] text-danger">
           {error}

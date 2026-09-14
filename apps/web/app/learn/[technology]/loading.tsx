@@ -2,7 +2,7 @@ import { Card, Skeleton, SkeletonRegion } from '@app/ui';
 
 export default function TechnologyLoading() {
   return (
-    <main className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
+    <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
       <Skeleton width="10rem" height="0.8rem" />
       <div className="mb-10 mt-6 flex flex-col gap-3">
         <Skeleton width="14rem" height="2rem" rounded="control" />
@@ -25,6 +25,6 @@ export default function TechnologyLoading() {
           ))}
         </div>
       </SkeletonRegion>
-    </main>
+    </div>
   );
 }

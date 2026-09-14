@@ -21,6 +21,7 @@ export { Skeleton, SkeletonRegion, EmptyState, ErrorState } from './states';
 export type { SkeletonProps, EmptyStateProps, ErrorStateProps } from './states';
 
 export { AppShell, ThemeToggle } from './shell';
-export type { AppShellProps, NavItem, Theme } from './shell';
+export type { AppShellProps, NavItem } from './shell';
+export { THEME_KEY, THEME_SCRIPT, type Theme } from './theme';
 
 export { useFocusTrap } from './use-focus-trap';

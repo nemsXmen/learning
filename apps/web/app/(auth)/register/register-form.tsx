@@ -58,9 +58,17 @@ export function RegisterForm() {
             error={errors['password']}
           />
 
-          <fieldset className="flex flex-col gap-2">
-            <legend className="mb-1 text-[13px] font-medium text-text-muted">Ton objectif</legend>
+          {/*
+            A label, not a fieldset: a legend names a group of controls, so a
+            lone select inside one ends up with no accessible name at all. The
+            radio group below is the case a fieldset is actually for.
+          */}
+          <div className="flex flex-col gap-2">
+            <label htmlFor="register-goal" className="mb-1 text-[13px] font-medium text-text-muted">
+              Ton objectif
+            </label>
             <select
+              id="register-goal"
               name="goal"
               defaultValue="BETTER_DEVELOPER"
               className="h-11 w-full rounded-control border border-border bg-surface-sunken px-3 text-sm text-text focus-visible:border-accent-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft"
@@ -71,7 +79,7 @@ export function RegisterForm() {
                 </option>
               ))}
             </select>
-          </fieldset>
+          </div>
 
           <fieldset className="flex flex-col gap-2">
             <legend className="mb-1 text-[13px] font-medium text-text-muted">

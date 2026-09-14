@@ -16,7 +16,6 @@ import {
   Skeleton,
   SkeletonRegion,
   Tabs,
-  ThemeToggle,
   Toast,
   Tooltip,
   toneForMastery,
@@ -311,7 +310,6 @@ export default function DesignGalleryPage() {
           <span className="font-display text-[17px] font-bold tracking-tight">Atelier</span>
         </span>
       }
-      headerRight={<ThemeToggle />}
     >
       <div className="mx-auto max-w-5xl px-5 py-8 sm:px-8">
         <header className="mb-8">

@@ -51,13 +51,17 @@ export function ProgressBar({
           <span className="font-semibold text-text">{percent} %</span>
         </div>
       ) : null}
+      {/*
+        Always named. Showing the percentage used to drop the name entirely, on
+        the assumption that the visible label would stand in for it — but the
+        two were never linked, so the bar had no accessible name at all.
+      */}
       <div
         role="progressbar"
         aria-valuenow={percent}
         aria-valuemin={0}
         aria-valuemax={100}
-        aria-label={showValue ? undefined : label}
-        aria-labelledby={undefined}
+        aria-label={label}
         className="h-1.5 w-full overflow-hidden rounded-pill bg-border"
       >
         <div

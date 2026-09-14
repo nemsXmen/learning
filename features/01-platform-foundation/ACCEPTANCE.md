@@ -5,6 +5,9 @@
 - [x] `pnpm dev` serves web on :3000 and api on :3001
 - [x] `GET /health` reports database and Redis state accurately, including failure
 - [x] Missing environment variables abort startup with the variable named
-- [ ] Light and dark themes render with AA contrast and visible focus
+- [x] Light and dark themes render with AA contrast and visible focus - every screen
+      passes WCAG 2.1 AA in both themes and keeps a visible focus at each tab stop
+      (`pnpm test:a11y`); it took a corrected palette and a theme applied at the
+      document root, which had only ever reached the two pages carrying a toggle
 - [x] CI runs lint, typecheck, content:validate, test and build, and fails on each
 - [x] `docs/development.md` matches the commands that actually exist

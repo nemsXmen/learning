@@ -29,7 +29,8 @@
     "content:validate": "pnpm --filter @app/content build && pnpm --filter @app/content validate",
     "content:sync": "pnpm --filter @app/content build && pnpm --filter @app/api content:sync",
     "mail": "echo Mailpit inbox: http://localhost:8025",
-    "content:bundle": "pnpm --filter @app/content build && pnpm --filter @app/content bundle"
+    "content:bundle": "pnpm --filter @app/content build && pnpm --filter @app/content bundle",
+    "test:a11y": "pnpm --filter @app/web test:a11y"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

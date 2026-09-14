@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import { THEME_SCRIPT } from '@app/ui';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -11,6 +12,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
+        {/*
+          Before the stylesheet and before the first paint: a stored theme must
+          not arrive one frame late, and it must reach every screen, not only
+          the ones that happen to render a toggle.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link

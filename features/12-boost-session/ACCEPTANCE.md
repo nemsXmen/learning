@@ -7,6 +7,7 @@
 - [x] The unavailable case is a first-class state with a next action, not an error
 - [x] Loading, empty, error, success, disabled and expired states implemented
 - [ ] Fully keyboard operable; step progress announced; reduced motion respected -
-      built with radio groups in a fieldset and an aria-live step counter, but no
-      axe scan or keyboard audit has been run
+      the start screen passes axe in both themes and its primary action is reached
+      by keyboard; the running session (steps, aria-live counter) is not exercised
+      by `pnpm test:a11y` yet
 - [x] Automated tests pass

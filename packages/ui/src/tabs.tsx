@@ -86,7 +86,9 @@ export function Tabs({ items, defaultId, 'aria-label': ariaLabel }: TabsProps) {
           aria-labelledby={`${base}-tab-${item.id}`}
           hidden={index !== activeIndex}
           tabIndex={0}
-          className="pt-5 focus-visible:outline-none"
+          // Focusable per the ARIA tabs pattern, so its focus has to be seen: the
+          // outline was removed with nothing drawn in its place.
+          className="rounded-control pt-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
         >
           {item.content}
         </div>

@@ -75,6 +75,7 @@ failing at the first request.
 | `pnpm build` | build every workspace package in dependency order |
 | `pnpm lint` / `pnpm typecheck` | `eslint .` / `tsc --noEmit` across the workspace |
 | `pnpm test` | Vitest in packages and web, Jest in api |
+| `pnpm test:a11y` | Playwright against a production build: axe (WCAG 2.1 AA) on every screen in both themes, plus keyboard traversal; needs the stack up |
 | `pnpm infra:up` / `infra:down` | start / stop PostgreSQL, Redis and Mailpit |
 | `pnpm infra:reset` | drop the volumes and start a clean stack |
 | `pnpm infra:ps` / `infra:logs` | container status / follow the logs |

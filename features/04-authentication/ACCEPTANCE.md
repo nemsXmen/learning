@@ -12,6 +12,8 @@
 - [x] Refresh rotation is single use and family revocation works
 - [x] Rate limiting is enforced per IP and per account on login, forgot and resend
 - [x] Protected routes redirect and restore the intended destination
-- [ ] Form and banner states - implemented, but no axe scan or keyboard audit has been run
+- [x] Form and banner states - axe (WCAG 2.1 AA) passes on login, register and
+      forgot-password in both themes, focus stays visible at every tab stop, and the
+      login form is filled and submitted by keyboard alone (`pnpm test:a11y`)
 - [x] Every email has a plain-text part and a credible, non-marketing tone
 - [x] Automated tests pass

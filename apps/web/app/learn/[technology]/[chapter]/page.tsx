@@ -75,7 +75,7 @@ export default async function ChapterPage({ params }: PageProps) {
   const barVisible = !completed;
 
   return (
-    <div className="mx-auto flex w-full max-w-[1400px] flex-col lg:flex-row lg:gap-10">
+    <div className="mx-auto flex w-full max-w-[1400px] flex-col xl:flex-row xl:gap-10">
       <ChapterSidebar
         technologySlug={technologySlug}
         technologyName={chapter.technology.name}
@@ -90,7 +90,7 @@ export default async function ChapterPage({ params }: PageProps) {
         the space reserved for the bar and let it cover the end of the article.
         The bottom padding is stated once, and is the only rule that sets it.
       */}
-      <main
+      <div
         className={`min-w-0 flex-1 px-5 pt-8 sm:px-8 lg:pt-12 ${
           barVisible ? 'pb-32' : 'pb-8 lg:pb-12'
         }`}
@@ -141,9 +141,9 @@ export default async function ChapterPage({ params }: PageProps) {
             step={step}
           />
         </article>
-      </main>
+      </div>
 
-      <aside className="hidden w-56 shrink-0 py-12 pr-6 xl:block">
+      <aside className="hidden w-56 shrink-0 py-12 pr-6 2xl:block">
         <nav aria-label="Sur cette page" className="sticky top-12">
           <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-text-subtle">
             Sur cette page

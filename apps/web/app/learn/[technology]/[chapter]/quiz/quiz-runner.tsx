@@ -192,12 +192,12 @@ function Shell({
   children: React.ReactNode;
 }) {
   return (
-    <main className="mx-auto w-full max-w-2xl px-5 py-10 sm:px-8">
+    <div className="mx-auto w-full max-w-2xl px-5 py-10 sm:px-8">
       <p className="mb-6 text-[13px] text-text-muted">
         <Link href={`/learn/${technology}/${chapter}`}>← Revenir au chapitre</Link>
       </p>
       {children}
-    </main>
+    </div>
   );
 }
 

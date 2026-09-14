@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 import { cn } from './cn';
 import { Button } from './primitives';
 import { Drawer } from './overlays';
+import { THEME_KEY, type Theme } from './theme';
 
 export interface NavItem {
   href: string;
@@ -16,19 +17,13 @@ export interface NavItem {
 /* Theme                                                                       */
 /* -------------------------------------------------------------------------- */
 
-const THEME_KEY = 'atelier.theme';
-export type Theme = 'dark' | 'light';
-
 export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(THEME_KEY) as Theme | null;
-    const initial =
-      stored ??
-      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-    setTheme(initial);
-    document.documentElement.dataset['theme'] = initial;
+    // The root script already decided and applied it; the toggle only catches up
+    // so its label describes the theme the visitor is actually looking at.
+    setTheme((document.documentElement.dataset['theme'] as Theme | null) ?? 'dark');
   }, []);
 
   function toggle() {
@@ -126,8 +121,9 @@ export function AppShell({
       </a>
 
       <div className="flex">
-        {/* Desktop sidebar */}
-        <aside className="hidden w-62 shrink-0 flex-col gap-7 border-r border-border p-4 lg:flex">
+        {/* Desktop sidebar. Sticky: on a long chapter it used to scroll away with
+            the page, leaving only the sign-out link at the foot of an empty column. */}
+        <aside className="sticky top-0 hidden h-dvh w-62 shrink-0 flex-col gap-7 self-start overflow-y-auto border-r border-border p-4 lg:flex">
           {brand ? <div className="px-2">{brand}</div> : null}
           <NavList nav={nav} activeHref={activeHref} />
           {sidebarFooter ? <div className="mt-auto">{sidebarFooter}</div> : null}
@@ -157,7 +153,10 @@ export function AppShell({
               </Button>
               <div className="lg:hidden">{brand}</div>
             </div>
-            <div className="flex items-center gap-2.5">{headerRight}</div>
+            <div className="flex items-center gap-2.5">
+              <ThemeToggle />
+              {headerRight}
+            </div>
           </header>
 
           <main id="contenu" className="min-w-0 flex-1">

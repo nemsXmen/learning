@@ -36,7 +36,7 @@ export function ChapterSidebar({
 
   return (
     <>
-      <div className="sticky top-0 z-10 flex w-full items-center gap-3 border-b border-border bg-bg/90 px-5 py-3 backdrop-blur lg:hidden">
+      <div className="sticky top-0 z-10 flex w-full items-center gap-3 border-b border-border bg-bg/90 px-5 py-3 backdrop-blur xl:hidden">
         <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
           Sommaire
         </Button>
@@ -54,7 +54,7 @@ export function ChapterSidebar({
 
       <nav
         aria-label={`Chapitres du module ${module.title}`}
-        className="hidden w-72 shrink-0 border-r border-border px-4 py-12 lg:block"
+        className="hidden w-72 shrink-0 border-r border-border px-4 py-12 xl:block"
       >
         <div className="sticky top-12 flex flex-col gap-5">
           <Link href={`/learn/${technologySlug}`} className="text-[13px] text-text-muted no-underline">

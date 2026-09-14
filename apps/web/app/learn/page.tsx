@@ -48,7 +48,7 @@ export default async function LearnPage() {
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
+    <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
       <header className="mb-8">
         <h1 className="font-display text-3xl font-semibold">Apprendre</h1>
         <p className="mt-2 max-w-prose text-[15px] text-text-muted">
@@ -56,7 +56,7 @@ function Shell({ children }: { children: React.ReactNode }) {
         </p>
       </header>
       {children}
-    </main>
+    </div>
   );
 }
 

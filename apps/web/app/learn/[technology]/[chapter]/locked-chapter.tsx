@@ -21,7 +21,7 @@ export function LockedChapter({
   const reason = (error.body as { lockReason?: LockReason } | undefined)?.lockReason;
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-xl flex-col justify-center gap-5 px-5">
+    <div className="mx-auto flex max-w-xl flex-col justify-center gap-5 px-5 py-16">
       <Card quiet className="flex flex-col gap-4">
         <h1 className="font-display text-2xl font-semibold">Ce chapitre est encore verrouillé</h1>
 
@@ -51,6 +51,6 @@ export function LockedChapter({
           Revenir au parcours
         </Link>
       </Card>
-    </main>
+    </div>
   );
 }

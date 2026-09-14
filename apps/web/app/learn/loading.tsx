@@ -3,7 +3,7 @@ import { Card, Skeleton, SkeletonRegion } from '@app/ui';
 /** Skeletons match the final card metrics so nothing shifts when data lands. */
 export default function LearnLoading() {
   return (
-    <main className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
+    <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
       <div className="mb-8 flex flex-col gap-3">
         <Skeleton width="12rem" height="1.75rem" rounded="control" />
         <Skeleton width="24rem" height="0.9rem" />
@@ -22,6 +22,6 @@ export default function LearnLoading() {
           ))}
         </div>
       </SkeletonRegion>
-    </main>
+    </div>
   );
 }

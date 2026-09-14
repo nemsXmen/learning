@@ -23,7 +23,7 @@ export default async function TechnologyPage({ params }: PageProps) {
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
+    <div className="mx-auto max-w-5xl px-5 py-10 sm:px-8">
       <p className="mb-6 text-[13px] text-text-muted">
         <Link href="/learn">Apprendre</Link> <span aria-hidden="true">·</span> {detail.name}
       </p>
@@ -54,7 +54,7 @@ export default async function TechnologyPage({ params }: PageProps) {
           <ModuleSection key={module.slug} technologySlug={detail.slug} module={module} />
         ))}
       </div>
-    </main>
+    </div>
   );
 }
 

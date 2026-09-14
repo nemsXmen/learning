@@ -6,7 +6,8 @@
 - [x] Every CTA leads to `/register` or `/login`
 - [x] Unpublished paths are shown honestly as "bientôt" and are not clickable
 - [x] Built entirely from `packages/ui`; no duplicated primitive
-- [ ] Axe passes in both themes; keyboard traversal verified; reduced motion respected -
-      not run
+- [x] Axe passes in both themes; keyboard traversal verified; reduced motion respected -
+      verified by `pnpm test:a11y`, including that no transition or animation outlasts
+      a millisecond once reduced motion is requested
 - [x] No third-party script and no client-side fetch on first load
 - [x] Automated tests pass
