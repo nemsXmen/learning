@@ -34,6 +34,12 @@ export interface AttemptResult {
   attemptId: string;
   scorePercent: number;
   passed: boolean;
+  /**
+   * The best score on this quiz before this attempt, or null if it was never
+   * passed — what XP used to tell a first pass from a repeat, returned so the
+   * screen can say which one it was (CDC §26).
+   */
+  previousBestScore: number | null;
   results: QuestionResult[];
   skillOutcomes: SkillOutcome[];
   excludedTypes: QuestionType[];
@@ -174,7 +180,7 @@ export class QuizService {
       occurredAt: submittedAt,
     });
 
-    return { attemptId, ...graded };
+    return { attemptId, previousBestScore, ...graded };
   }
 
   /**

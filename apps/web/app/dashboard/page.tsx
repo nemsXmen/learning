@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Badge, Card, ErrorState, ProgressBar, ProgressRing, toneForMastery } from '@app/ui';
 import { getDashboard, type DashboardView } from '../../lib/catalog';
+import { callToAction } from '../../lib/dashboard-cta';
 import { requireUser } from '../../lib/auth-server';
 
 /** Private surface: never indexed (CDC §61). */
@@ -113,7 +114,7 @@ function NextBestAction({ view }: { view: DashboardView }) {
           href={action.href}
           className="inline-flex h-11 items-center rounded-control bg-accent px-5 text-sm font-semibold text-accent-on no-underline"
         >
-          {action.type === 'CAUGHT_UP' ? 'Explorer' : 'Commencer'}
+          {callToAction(view)}
         </Link>
         {action.estimatedMinutes > 0 ? (
           <span className="text-[13px] text-text-subtle">{action.estimatedMinutes} min</span>

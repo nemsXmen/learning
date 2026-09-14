@@ -37,6 +37,11 @@ export interface DashboardView {
  * null with its name in `degraded`: the dashboard still renders, and the primary
  * action never disappears (features/13-dashboard-next-best-action/CONTRACT.md).
  */
+/** True when the recommended chapter is the one the learner already started. */
+function resumes(chapter: { technology: string; slug: string }, resume: DashboardView['continue']): boolean {
+  return resume !== null && resume.technologySlug === chapter.technology && resume.chapterSlug === chapter.slug;
+}
+
 @Injectable()
 export class DashboardService {
   private readonly logger = new Logger(DashboardService.name);
@@ -108,7 +113,7 @@ export class DashboardService {
         mastery: skill.mastery,
         reason: skill.reason,
       })),
-      todayPlan: this.buildPlan(recommendation, weak ?? [], dailyMinutesTarget),
+      todayPlan: this.buildPlan(recommendation, weak ?? [], dailyMinutesTarget, resume),
       technologies: technologies.map((item) => ({
         slug: item.slug,
         name: item.name,
@@ -175,7 +180,11 @@ export class DashboardService {
         const chapter = bundledGraph.chapters.find((item) => item.id === recommendation.ref);
         return {
           type: recommendation.type,
-          label: chapter ? `Continuer : ${chapter.title}` : 'Continuer ton parcours',
+          // Resuming a half-read chapter and opening a new one are different asks;
+          // this said "Continuer" for both.
+          label: chapter
+            ? `${resumes(chapter, resume) ? 'Reprendre' : 'Commencer'} : ${chapter.title}`
+            : 'Continuer ton parcours',
           href: chapter
             ? `/learn/${chapter.technology}/${chapter.slug}`
             : resume
@@ -193,6 +202,7 @@ export class DashboardService {
     recommendation: Recommendation,
     weak: Array<{ skillId: string; name: string; estimatedMinutes: number }>,
     dailyMinutesTarget: number,
+    resume: DashboardView['continue'],
   ): DashboardView['todayPlan'] {
     const plan: DashboardView['todayPlan'] = [];
     let spent = 0;
@@ -200,9 +210,9 @@ export class DashboardService {
     if (recommendation.type !== 'CAUGHT_UP' && recommendation.estimatedMinutes <= dailyMinutesTarget) {
       plan.push({
         kind: recommendation.type,
-        label: this.toAction(recommendation, null).label,
+        label: this.toAction(recommendation, resume).label,
         estimatedMinutes: recommendation.estimatedMinutes,
-        href: this.toAction(recommendation, null).href,
+        href: this.toAction(recommendation, resume).href,
       });
       spent += recommendation.estimatedMinutes;
     }

@@ -24,16 +24,25 @@ async function focused(page: Page): Promise<Stop> {
       return { tag: 'body', type: '', text: '', visible: false };
     }
 
-    const style = getComputedStyle(element);
-    const outline = style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) > 0;
-    // Tailwind's focus ring is a box-shadow, not an outline.
-    const ring = style.boxShadow !== 'none' && style.boxShadow.trim() !== '';
+    const drawn = (target: Element) => {
+      const style = getComputedStyle(target);
+      const outline = style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) > 0;
+      // Tailwind's focus ring is a box-shadow, not an outline.
+      const ring = style.boxShadow !== 'none' && style.boxShadow.trim() !== '';
+      return outline || ring;
+    };
+
+    // A visually hidden control (an sr-only radio behind a styled label) draws its
+    // outline on a 1px box nobody can see; only its label can show the focus.
+    const rect = element.getBoundingClientRect();
+    const hidden = rect.width <= 1 || rect.height <= 1;
+    const label = element.closest('label');
 
     return {
       tag: element.tagName.toLowerCase(),
       type: element.getAttribute('type') ?? '',
       text: (element.getAttribute('aria-label') ?? element.textContent ?? '').trim().slice(0, 60),
-      visible: outline || ring,
+      visible: hidden ? Boolean(label && drawn(label)) : drawn(element),
     };
   });
 }
@@ -66,7 +75,7 @@ async function tabUntil(
 /** The one thing each screen exists for; it has to be reachable without a mouse. */
 const PRIMARY_ACTION: Partial<Record<string, RegExp>> = {
   '/': /créer mon parcours|commencer/i,
-  '/dashboard': /commencer|explorer/i,
+  '/dashboard': /commencer|reprendre|renforcer|explorer/i,
   '/learn/javascript/variables': /test|marquer comme terminé/i,
   '/boost': /commencer le boost/i,
 };
@@ -162,6 +171,51 @@ test.describe('parcours au clavier', () => {
       });
       // Correctness has to be readable without colour: a word and a glyph per question.
       await expect(page.getByText(/✓ Correct|✕ Incorrect/)).toHaveCount(total);
+    });
+
+    test('une session de Boost se déroule entièrement au clavier', async ({ page }) => {
+      await page.goto('/boost');
+      await page.waitForLoadState('networkidle');
+
+      // The duration is picked by keyboard too, and its radios are visually hidden.
+      const duration = await tabUntil(page, (stop) => stop.type === 'radio');
+      expect(duration.visible, 'focus invisible sur le choix de durée').toBe(true);
+      await page.keyboard.press('ArrowRight');
+
+      await tabUntil(page, (stop) => stop.tag === 'button' && /commencer le boost/i.test(stop.text));
+      await page.keyboard.press('Enter');
+      await page.waitForURL(/\/boost\/session\//, { timeout: 20_000 });
+
+      // Step progress is announced, not only drawn.
+      const counter = page.locator('[aria-live="polite"]', { hasText: /Étape \d+ sur \d+/ });
+      await expect(counter).toBeVisible({ timeout: 20_000 });
+      const total = Number((await counter.textContent())?.match(/sur (\d+)/)?.[1]);
+      expect(total).toBeGreaterThan(0);
+
+      for (let step = 1; step <= total; step += 1) {
+        await expect(page.getByText(new RegExp(`Étape ${step} sur ${total}`))).toBeVisible();
+
+        // Questions need an answer; explanation steps only need to be acknowledged.
+        if ((await page.locator('main input:not([disabled])').count()) > 0) {
+          const control = await tabUntil(page, (stop) => stop.tag === 'input');
+          if (control.type === 'text') await page.keyboard.type('x');
+          else await page.keyboard.press('Space');
+        }
+
+        await tabUntil(page, (stop) => stop.tag === 'button' && /^(valider|continuer)$/i.test(stop.text));
+        await page.keyboard.press('Enter');
+        await expect(page.getByText(/✓ Correct|✕ Incorrect/)).toBeVisible();
+
+        await tabUntil(
+          page,
+          (stop) => stop.tag === 'button' && /étape suivante|terminer la session/i.test(stop.text),
+        );
+        await page.keyboard.press('Enter');
+      }
+
+      await expect(page.getByRole('heading', { name: /session terminée/i })).toBeVisible({
+        timeout: 20_000,
+      });
     });
   });
 });

@@ -11,7 +11,7 @@ import {
   skillsFileSchema,
   technologyFileSchema,
 } from '@app/validation';
-import { extractRelativeLinks, extractSections, normaliseEol, parseFrontmatter } from './frontmatter';
+import { extractRelativeLinks, extractLevelOneHeadings, extractSections, normaliseEol, parseFrontmatter } from './frontmatter';
 import { issue, type IssueCode, type ValidationIssue } from './issues';
 import type { ChapterNode, ContentGraph, ModuleNode, QuizNode, SkillNode, TechnologyNode } from './graph';
 
@@ -237,6 +237,17 @@ export async function readContentTree(dir: string): Promise<LoadedTree> {
               ),
             );
           }
+        }
+
+        for (const heading of extractLevelOneHeadings(parsed.body, parsed.bodyStartLine)) {
+          issues.push(
+            issue(
+              lessonPath,
+              heading.line,
+              'TITLE_IN_BODY',
+              `Titre « # ${heading.text} » dans le corps : le titre vient du frontmatter, le corps commence au niveau 2`,
+            ),
+          );
         }
 
         for (const link of extractRelativeLinks(parsed.body, parsed.bodyStartLine)) {

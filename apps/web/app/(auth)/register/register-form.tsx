@@ -89,7 +89,7 @@ export function RegisterForm() {
               {MINUTES.map((minutes, index) => (
                 <label
                   key={minutes}
-                  className="cursor-pointer rounded-pill border border-border px-3.5 py-2 text-[13px] text-text-muted has-checked:border-accent-border has-checked:bg-accent-surface has-checked:text-accent-soft"
+                  className="cursor-pointer rounded-pill border border-border px-3.5 py-2 text-[13px] text-text-muted has-checked:border-accent-border has-checked:bg-accent-surface has-checked:text-accent-soft has-focus-visible:ring-2 has-focus-visible:ring-accent-soft has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-bg"
                 >
                   <input
                     type="radio"

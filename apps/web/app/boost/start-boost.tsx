@@ -50,7 +50,7 @@ export function StartBoost({ suggestedMinutes }: { suggestedMinutes: number }) {
           {DURATIONS.map((value) => (
             <label
               key={value}
-              className={`cursor-pointer rounded-pill border px-4 py-2.5 text-sm ${
+              className={`cursor-pointer rounded-pill border px-4 py-2.5 text-sm has-focus-visible:ring-2 has-focus-visible:ring-accent-soft has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-bg ${
                 minutes === value
                   ? 'border-accent-border bg-accent-surface text-accent-soft'
                   : 'border-border text-text-muted'

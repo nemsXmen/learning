@@ -19,8 +19,6 @@ tags:
   - generics
 ---
 
-# Génériques
-
 ## Objectifs
 
 - Écrire une fonction générique qui préserve le type de son entrée.

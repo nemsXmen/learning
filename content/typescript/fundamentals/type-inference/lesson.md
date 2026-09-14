@@ -18,8 +18,6 @@ tags:
   - fundamentals
 ---
 
-# Inférence de types
-
 ## Objectifs
 
 - Savoir quand TypeScript infère un type et quand il faut l'écrire.

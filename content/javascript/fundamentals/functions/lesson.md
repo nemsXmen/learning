@@ -18,8 +18,6 @@ tags:
   - fundamentals
 ---
 
-# Fonctions
-
 ## Objectifs
 
 - Distinguer déclaration, expression et fonction fléchée.

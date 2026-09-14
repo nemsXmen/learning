@@ -9,7 +9,7 @@
 timeSpentMs }] }` → `200`
 ```json
 {
-  "attemptId": "…", "scorePercent": 80, "passed": true,
+  "attemptId": "…", "scorePercent": 80, "passed": true, "previousBestScore": 60,
   "results": [{
     "questionId": "js-closures-q1", "isCorrect": false,
     "given": [1], "correct": [0],
@@ -20,12 +20,16 @@ timeSpentMs }] }` → `200`
 }
 ```
 
+`previousBestScore` is the best score on the quiz before this attempt, or `null` if it was
+never passed. XP decides from it whether a pass is a first pass or a repeat; the screen
+uses it to say so rather than leave a retake silently unpaid (CDC §26).
+
 `GET /me/quizzes/:quizId/attempts` → attempt history with scores and timestamps.
 
 ## API or event boundary
 
 Emits `quiz.attempt.graded { userId, attemptId, quizId, kind, source, scorePercent,
-passed, skillOutcomes, occurredAt }`, consumed synchronously by slices 10 and 11.
+passed, previousBestScore, skillOutcomes, occurredAt }`, consumed synchronously by slices 10 and 11.
 
 ## Validation and errors
 

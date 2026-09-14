@@ -68,6 +68,30 @@ export function extractSections(
   return sections;
 }
 
+/**
+ * Level-1 headings in the body, skipping fenced code where `# ` is a comment.
+ * The chapter title comes from the frontmatter: a `# Title` in the body renders a
+ * second <h1> under the one the page already draws.
+ */
+export function extractLevelOneHeadings(
+  body: string,
+  bodyStartLine: number,
+): Array<{ text: string; line: number }> {
+  const headings: Array<{ text: string; line: number }> = [];
+  let fence: string | null = null;
+  body.split('\n').forEach((line, index) => {
+    const marker = /^\s*(```|~~~)/.exec(line)?.[1];
+    if (marker) {
+      fence = fence === null ? marker : fence === marker ? null : fence;
+      return;
+    }
+    if (fence !== null) return;
+    const match = /^#\s+(.+?)\s*$/.exec(line);
+    if (match?.[1]) headings.push({ text: match[1], line: bodyStartLine + index });
+  });
+  return headings;
+}
+
 /** Relative Markdown links, excluding anchors and absolute URLs. */
 export function extractRelativeLinks(
   body: string,

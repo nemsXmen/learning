@@ -150,6 +150,22 @@ describe('QuizService.submit', () => {
     expect(graded.correct).toBeDefined();
   });
 
+  it('returns the best score before this attempt, the same one XP decided from', async () => {
+    const { service, started, events } = await startedAttempt();
+    const seen: QuizAttemptGraded[] = [];
+    events.on('quiz.attempt.graded', (payload) => {
+      seen.push(payload);
+    });
+
+    const result = await service.submit(USER, started.attemptId, [
+      { questionId: started.questions[0]!.id, given: [0] },
+    ]);
+
+    // Never passed before: nothing to compare against.
+    expect(result.previousBestScore).toBeNull();
+    expect(result.previousBestScore).toBe(seen[0]!.previousBestScore);
+  });
+
   it('records the time spent per question', async () => {
     const { service, started, answers } = await startedAttempt();
     await service.submit(USER, started.attemptId, [

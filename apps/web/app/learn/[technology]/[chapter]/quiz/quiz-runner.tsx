@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { xpNote } from './xp-note';
 import { Badge, Button, Card, ErrorState, Spinner } from '@app/ui';
 
 type Given = number[] | boolean | string | null;
@@ -33,6 +34,7 @@ interface Result {
 interface Graded {
   scorePercent: number;
   passed: boolean;
+  previousBestScore: number | null;
   results: Result[];
   excludedTypes: string[];
 }
@@ -334,6 +336,8 @@ function QuizResult({
           {graded.scorePercent} %
         </span>
       </Card>
+
+      {xpNote(graded) ? <p className="text-[13px] text-text-muted">{xpNote(graded)}</p> : null}
 
       {graded.excludedTypes.length > 0 ? (
         <p className="text-[13px] text-text-subtle">

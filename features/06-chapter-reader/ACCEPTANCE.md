@@ -4,8 +4,9 @@
 - [x] Sidebar reflects real per-chapter status and is usable on mobile
 - [x] Reading progress and explicit completion both persist and never regress
 - [x] Locked chapters are refused server-side with an explanatory page
-- [ ] Loading, empty, error, success and locked states implemented - locked, error
-      and success are done; no loading.tsx for the chapter route yet
+- [x] Loading, empty, error, success and locked states implemented - the chapter route
+      has its own loading.tsx, shaped like the chapter; before it, opening a chapter
+      flashed the technology page's list of cards
 - [x] Axe passes; keyboard-only journey works; AA contrast in both themes - no
       violation in either theme, focus visible at every tab stop, and the chapter
       test or completion reached by keyboard (`pnpm test:a11y`)

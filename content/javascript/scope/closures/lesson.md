@@ -20,8 +20,6 @@ tags:
   - scope
 ---
 
-# Comprendre les closures
-
 ## Objectifs
 
 - Expliquer ce qu'est une closure sans réciter une définition.

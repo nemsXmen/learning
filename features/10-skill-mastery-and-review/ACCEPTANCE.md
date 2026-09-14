@@ -10,6 +10,8 @@
       against the live database: replaying a learner with 6 attempts, 1 completion and
       1 Boost session rebuilt their recorded fingerprint exactly, and a second run left
       it unchanged
-- [ ] Empty and error states defined for the consuming surfaces - the API returns
-      zeroed skills and empty lists; no UI consumes them until slice 13
+- [x] Empty and error states defined for the consuming surfaces - the dashboard
+      (slice 13) consumes them: an empty list reads "Rien à renforcer", and a source
+      that fails is listed in `degraded` and its panel dropped while the next best
+      action stays
 - [x] Automated tests pass

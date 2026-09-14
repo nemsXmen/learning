@@ -17,8 +17,6 @@ tags:
   - fundamentals
 ---
 
-# Variables et liaisons
-
 ## Objectifs
 
 - Distinguer une variable, une liaison et une valeur.

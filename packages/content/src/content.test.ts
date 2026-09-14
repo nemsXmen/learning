@@ -32,7 +32,7 @@ afterEach(async () => {
 const sections = REQUIRED_SECTIONS.map((section) => `## ${section}\n\nDu contenu.\n`).join('\n');
 
 function lesson(frontmatter: string, body = sections): string {
-  return `---\n${frontmatter}\n---\n\n# Titre\n\n${body}`;
+  return `---\n${frontmatter}\n---\n\n${body}`;
 }
 
 const VALID_FRONTMATTER = `id: js-alpha
@@ -205,6 +205,23 @@ describe('validation issues', () => {
       }),
     );
     expect(codes).toContain('MISSING_SECTION');
+  });
+
+  it('TITLE_IN_BODY when the body repeats the title as a level-1 heading', async () => {
+    const codes = await codesFor(
+      validTree({
+        'javascript/fundamentals/alpha/lesson.md': lesson(VALID_FRONTMATTER, `# Alpha\n\n${sections}`),
+      }),
+    );
+    expect(codes).toContain('TITLE_IN_BODY');
+  });
+
+  it('TITLE_IN_BODY ignores a `#` comment inside fenced code', async () => {
+    const withShell = `${sections}\n` + '```bash\n# installer les dépendances\npnpm install\n```\n';
+    const codes = await codesFor(
+      validTree({ 'javascript/fundamentals/alpha/lesson.md': lesson(VALID_FRONTMATTER, withShell) }),
+    );
+    expect(codes).not.toContain('TITLE_IN_BODY');
   });
 
   it('MALFORMED_FILE on absent frontmatter and on broken YAML', async () => {

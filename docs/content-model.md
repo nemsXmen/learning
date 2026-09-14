@@ -52,6 +52,10 @@ A chapter is rejected by `content:validate` if it is only prose. Required sectio
 
 `Attention` and `Résumé` are optional. Section names are matched as level-2 headings.
 
+The body starts at level 2. The title lives in the frontmatter (`title`) and the
+reader draws it as the page's only `<h1>`; a `# Title` in the body is rejected with
+`TITLE_IN_BODY` (a `#` comment inside fenced code is not a heading).
+
 ## Skill graph (`skills.yaml`)
 
 ```yaml

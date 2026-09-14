@@ -66,3 +66,28 @@ for (const theme of THEMES) {
     }
   });
 }
+
+// A running session is reached through a URL no static list can hold, so it is
+// created here: the step screen is where the learner actually spends the Boost.
+test.describe('session de Boost en cours', () => {
+  test.use({ storageState: STORAGE_STATE });
+
+  for (const theme of THEMES) {
+    test(`thème ${theme} : une étape de Boost n'a aucune violation axe`, async ({ page }) => {
+      const started = await page.request.post('/api/boost/sessions', {
+        data: { availableMinutes: 10 },
+      });
+      expect(started.ok(), await started.text()).toBe(true);
+      const { sessionId } = (await started.json()) as { sessionId: string };
+
+      await useTheme(page, theme);
+      await page.goto(`/boost/session/${sessionId}`);
+      await page.waitForLoadState('networkidle');
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      await expect(page.locator('main')).toHaveCount(1);
+
+      const { violations } = await scan(page);
+      expect(violations.map((violation) => violation.id), report(violations)).toEqual([]);
+    });
+  }
+});
