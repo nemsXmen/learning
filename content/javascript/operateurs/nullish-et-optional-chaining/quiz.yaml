@@ -1,0 +1,55 @@
+id: javascript-nullish-optional-chaining-quiz
+kind: QUIZ
+questions:
+  - id: js-nullish-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `0 ?? 42` ?
+    answer: '0'
+    explanation: >
+      `??` ne renvoie le second opérande que si le premier vaut `null` ou `undefined`. `0` est
+      une valeur définie : il est conservé. Avec `||`, le résultat aurait été `42`.
+    skills:
+      - nullish-optional
+
+  - id: js-nullish-q2
+    type: predict_output
+    difficulty: 1
+    question: >
+      Si `utilisateur` vaut `null`, que vaut `utilisateur?.nom` ?
+    answer: 'undefined'
+    explanation: >
+      `?.` interrompt l'accès quand ce qui précède vaut `null` ou `undefined`, et renvoie
+      `undefined` au lieu de lever une `TypeError`.
+    skills:
+      - nullish-optional
+
+  - id: js-nullish-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `a || b ?? c` est une expression valide sans parenthèses.
+    answer: false
+    explanation: >
+      Mélanger `??` avec `||` ou `&&` sans parenthèses est une erreur de syntaxe voulue par
+      la spécification : il faut écrire `(a || b) ?? c` ou `a || (b ?? c)`.
+    skills:
+      - nullish-optional
+
+  - id: js-nullish-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture appelle la fonction `rappel` seulement si elle est définie ?
+    options:
+      - "rappel?.()"
+      - "rappel()?"
+      - "rappel?()"
+      - "?rappel()"
+    answer: [0]
+    explanation: >
+      La forme d'appel de l'optional chaining est `?.()`. Elle n'appelle la fonction que si
+      `rappel` ne vaut ni `null` ni `undefined`.
+    skills:
+      - nullish-optional

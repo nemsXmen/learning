@@ -100,9 +100,13 @@ describe('buildTechnologyList', () => {
     expect(list.map((item) => item.slug)).toEqual(['javascript', 'typescript']);
 
     const javascript = list[0]!;
-    expect(javascript.chapterCount).toBe(3);
-    expect(javascript.moduleCount).toBe(2);
-    expect(javascript.skillCount).toBe(5);
+    // Counted against the graph: writing content must not break a test about counting.
+    const ofJavascript = <T extends { technology: string }>(nodes: T[]) =>
+      nodes.filter((node) => node.technology === 'javascript').length;
+    expect(javascript.chapterCount).toBe(ofJavascript(graph.chapters));
+    expect(javascript.moduleCount).toBe(ofJavascript(graph.modules));
+    expect(javascript.skillCount).toBe(ofJavascript(graph.skills));
+    expect(javascript.chapterCount).toBeGreaterThan(0);
   });
 
   it('reports zero progress for a learner with no rows', () => {
@@ -115,8 +119,9 @@ describe('buildTechnologyList', () => {
       progress([{ chapterId: 'javascript-variables', progressPercent: 100 }]),
       [],
     );
-    // One chapter of three at 100%.
-    expect(list[0]!.progressPercent).toBe(33);
+    // One chapter at 100 %, every other chapter at zero.
+    const chapterCount = graph.chapters.filter((c) => c.technology === 'javascript').length;
+    expect(list[0]!.progressPercent).toBe(Math.round(100 / chapterCount));
   });
 
   it('counts only skills at or above the mastered threshold', () => {
@@ -137,6 +142,27 @@ describe('buildTechnologyList', () => {
 /* -------------------------------------------------------------------------- */
 
 describe('buildTechnologyDetail', () => {
+  it('groups modules into their parts, in order, with progress derived from chapters', () => {
+    for (const technology of graph.technologies) {
+      const detail = buildTechnologyDetail(graph, technology.slug, [], mastery({}))!;
+      const declared = technology.parts.map((part) => part.slug);
+
+      expect(detail.parts.map((part) => part.order)).toEqual(
+        [...detail.parts.map((part) => part.order)].sort((a, b) => a - b),
+      );
+      for (const module of detail.modules) {
+        if (declared.length === 0) expect(module.part).toBeNull();
+        else expect(declared).toContain(module.part);
+      }
+      for (const part of detail.parts) {
+        const members = detail.modules.filter((module) => module.part === part.slug);
+        expect(part.moduleSlugs).toEqual(members.map((module) => module.slug));
+        // No progress rows: every level agrees on zero.
+        expect(part.progressPercent).toBe(0);
+      }
+    }
+  });
+
   it('returns null for an unknown technology', () => {
     expect(buildTechnologyDetail(graph, 'ruby', [], [])).toBeNull();
   });
@@ -147,14 +173,24 @@ describe('buildTechnologyDetail', () => {
       'javascript',
       progress([
         { chapterId: 'javascript-variables', progressPercent: 100, status: 'COMPLETED' },
-        { chapterId: 'javascript-functions', progressPercent: 50 },
+        { chapterId: 'javascript-types-primitifs', progressPercent: 50 },
       ]),
       [],
     )!;
 
-    expect(detail.modules.map((m) => m.slug)).toEqual(['fundamentals', 'scope']);
-    expect(detail.modules[0]!.chapters.map((c) => c.slug)).toEqual(['variables', 'functions']);
-    expect(detail.modules[0]!.progressPercent).toBe(75);
+    const moduleOrders = detail.modules.map((m) => m.order);
+    expect(moduleOrders).toEqual([...moduleOrders].sort((a, b) => a - b));
+
+    const module = detail.modules.find((m) => m.slug === 'variables-et-valeurs')!;
+    const chapterOrders = module.chapters.map((c) => c.order);
+    expect(chapterOrders).toEqual([...chapterOrders].sort((a, b) => a - b));
+    expect(module.chapters[0]!.slug).toBe('variables');
+
+    const average = Math.round(
+      module.chapters.reduce((total, c) => total + c.progressPercent, 0) / module.chapters.length,
+    );
+    expect(module.progressPercent).toBe(average);
+    expect(module.progressPercent).toBeGreaterThan(0);
   });
 
   it('keeps technology, module and chapter progress consistent', () => {
@@ -197,8 +233,8 @@ describe('buildTechnologyDetail', () => {
     it('points at the first unlocked chapter for a new learner', () => {
       const detail = buildTechnologyDetail(graph, 'javascript', [], [])!;
       expect(detail.continue).toEqual({
-        chapterSlug: 'variables',
-        moduleSlug: 'fundamentals',
+        chapterSlug: 'introduction-javascript',
+        moduleSlug: 'introduction',
         progressPercent: 0,
       });
     });
@@ -227,16 +263,18 @@ describe('buildTechnologyDetail', () => {
     });
 
     it('never points at a locked chapter', () => {
+      // Without any mastery, finish every chapter that is open: only locked ones remain.
+      const fresh = buildTechnologyDetail(graph, 'javascript', [], [])!;
+      const chapters = fresh.modules.flatMap((m) => m.chapters);
+      const open = chapters.filter((c) => !c.locked);
+      expect(chapters.some((c) => c.locked)).toBe(true);
+
       const detail = buildTechnologyDetail(
         graph,
         'javascript',
-        progress([
-          { chapterId: 'javascript-variables', progressPercent: 100, status: 'COMPLETED' },
-          { chapterId: 'javascript-functions', progressPercent: 100, status: 'COMPLETED' },
-        ]),
+        progress(open.map((c) => ({ chapterId: c.id, progressPercent: 100, status: 'COMPLETED' as const }))),
         [],
       )!;
-      // Closures stays locked without mastery on `functions`, so there is nothing left.
       expect(detail.continue).toBeNull();
     });
   });

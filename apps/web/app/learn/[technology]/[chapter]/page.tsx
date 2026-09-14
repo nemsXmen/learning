@@ -81,6 +81,7 @@ export default async function ChapterPage({ params }: PageProps) {
         technologyName={chapter.technology.name}
         module={module ?? null}
         currentSlug={chapter.slug}
+        partTitle={detail.parts.find((part) => part.slug === module?.part)?.title ?? null}
         quizHref={chapter.quiz ? `/learn/${technologySlug}/${chapter.slug}/quiz` : null}
       />
 

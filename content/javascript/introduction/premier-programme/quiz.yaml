@@ -1,0 +1,61 @@
+id: javascript-premier-programme-quiz
+kind: QUIZ
+questions:
+  - id: js-premier-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Où `console.error` écrit-il ses messages dans Node.js ?
+    options:
+      - "Sur la sortie d'erreur standard (stderr)"
+      - "Sur la sortie standard (stdout)"
+      - "Dans un fichier de journal créé automatiquement"
+      - "Nulle part tant que le mode debug n'est pas activé"
+    answer: [0]
+    explanation: >
+      `console.error` et `console.warn` écrivent sur stderr, `console.log` sur stdout.
+      C'est ce qui permet de rediriger séparément les messages normaux et les erreurs.
+    skills:
+      - console-devtools
+
+  - id: js-premier-q2
+    type: predict_output
+    difficulty: 1
+    question: >
+      Qu'affiche `console.log(typeof console.log)` ?
+    answer: 'function'
+    explanation: >
+      `console.log` est une fonction, et `typeof` appliqué à une fonction renvoie la chaîne
+      `'function'`.
+    skills:
+      - console-devtools
+
+  - id: js-premier-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      L'objet `console` est défini par la spécification ECMAScript.
+    answer: false
+    explanation: >
+      `console` est fourni par l'environnement d'exécution : navigateurs et Node.js
+      l'implémentent chacun, en suivant une norme distincte d'ECMAScript. C'est pour cela
+      que son affichage diffère d'un environnement à l'autre.
+    skills:
+      - console-devtools
+
+  - id: js-premier-q4
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles méthodes existent sur l'objet `console` ?
+    options:
+      - "console.table"
+      - "console.time"
+      - "console.print"
+      - "console.group"
+    answer: [0, 1, 3]
+    explanation: >
+      `table` affiche un tableau d'objets en colonnes, `time` démarre un chronomètre et
+      `group` regroupe des messages. `console.print` n'existe pas.
+    skills:
+      - console-devtools

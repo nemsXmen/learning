@@ -19,12 +19,27 @@ export const technologyFileSchema = z.object({
   order: z.number().int().min(0),
   description: z.string().min(1),
   published: z.boolean().default(false),
+  /**
+   * Groups of modules shown together (Fundamentals, Functions…). Optional, but once
+   * a technology declares parts every one of its modules must name its own.
+   */
+  parts: z
+    .array(
+      z.object({
+        slug,
+        title: z.string().min(1),
+        order: z.number().int().min(0),
+        description: z.string().min(1).optional(),
+      }),
+    )
+    .default([]),
 });
 
 export const moduleFileSchema = z.object({
   slug,
   title: z.string().min(1),
   order: z.number().int().min(0),
+  part: slug.optional(),
 });
 
 export const skillsFileSchema = z.object({

@@ -1,0 +1,55 @@
+id: javascript-truthy-falsy-quiz
+kind: QUIZ
+questions:
+  - id: js-truthy-q1
+    type: true_false
+    difficulty: 1
+    question: >
+      Un tableau vide `[]` est falsy.
+    answer: false
+    explanation: >
+      Tout objet est truthy, même vide. Pour savoir si un tableau est vide, on teste
+      `tableau.length === 0`.
+    skills:
+      - truthiness
+
+  - id: js-truthy-q2
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles valeurs sont truthy ?
+    options:
+      - "'0'"
+      - "0n"
+      - "'false'"
+      - "{}"
+    answer: [0, 2, 3]
+    explanation: >
+      Une chaîne non vide est truthy quel que soit son contenu, et tout objet est truthy.
+      `0n`, le zéro de type bigint, fait partie des huit valeurs falsy.
+    skills:
+      - truthiness
+
+  - id: js-truthy-q3
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `Boolean(' ')`, avec une chaîne qui contient un seul espace ?
+    answer: 'true'
+    explanation: >
+      Seule la chaîne vide est falsy. Une chaîne contenant un espace n'est pas vide : elle est
+      truthy. C'est pourquoi on teste `texte.trim()` pour rejeter une saisie blanche.
+    skills:
+      - truthiness
+
+  - id: js-truthy-q4
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `!!NaN` ?
+    answer: 'false'
+    explanation: >
+      `NaN` fait partie des valeurs falsy. `!NaN` vaut `true`, et le second `!` donne
+      `false`.
+    skills:
+      - truthiness

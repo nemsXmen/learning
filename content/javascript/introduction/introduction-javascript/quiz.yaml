@@ -1,0 +1,62 @@
+id: javascript-introduction-quiz
+kind: QUIZ
+questions:
+  - id: js-intro-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Lequel de ces objets fait partie du langage lui-même, quel que soit l'environnement ?
+    options:
+      - "JSON"
+      - "document"
+      - "localStorage"
+      - "process"
+    answer: [0]
+    explanation: >
+      `JSON` est défini par ECMAScript et existe donc partout où tourne un moteur
+      JavaScript. `document` et `localStorage` sont fournis par le navigateur, `process`
+      par Node.js.
+    skills:
+      - js-runtime
+
+  - id: js-intro-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Node.js et Google Chrome utilisent le même moteur JavaScript, V8.
+    answer: true
+    explanation: >
+      Les deux embarquent V8. Ils partagent donc le langage, mais pas les API : Chrome
+      fournit le DOM, Node.js fournit le système de fichiers et le processus.
+    skills:
+      - js-runtime
+
+  - id: js-intro-q3
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles API sont fournies par l'environnement d'exécution plutôt que par le langage ?
+    options:
+      - "document"
+      - "setTimeout"
+      - "Array"
+      - "fs"
+    answer: [0, 1, 3]
+    explanation: >
+      `setTimeout` ne fait pas partie d'ECMAScript : navigateurs et Node.js le fournissent
+      chacun de leur côté. `document` vient du navigateur, `fs` de Node.js. `Array` est un
+      objet natif du langage.
+    skills:
+      - js-runtime
+
+  - id: js-intro-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Dans Node.js, qu'affiche `console.log(typeof window)` ?
+    answer: 'undefined'
+    explanation: >
+      `window` n'existe pas dans Node.js. Appliqué à un identifiant jamais déclaré,
+      `typeof` renvoie la chaîne `'undefined'` au lieu de lever une `ReferenceError`.
+    skills:
+      - js-runtime

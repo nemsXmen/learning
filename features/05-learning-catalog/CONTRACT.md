@@ -12,8 +12,13 @@
 ```json
 {
   "slug": "javascript", "name": "JavaScript", "progressPercent": 78,
+  "parts": [{
+    "slug": "functions", "title": "Functions — Le cœur du langage", "order": 3,
+    "description": "…", "progressPercent": 60, "moduleSlugs": ["scope"]
+  }],
   "modules": [{
-    "slug": "scope", "title": "Scope & Execution", "order": 2, "progressPercent": 60,
+    "slug": "scope", "title": "Scope & Execution", "order": 2, "part": "functions",
+    "progressPercent": 60,
     "chapters": [{
       "id": "javascript-closures", "slug": "closures", "title": "Comprendre les closures",
       "order": 4, "estimatedMinutes": 30, "difficulty": 3, "xp": 100,
@@ -38,7 +43,9 @@ Locked chapter example: `"locked": true, "lockReason": { "code": "PREREQUISITE_S
 
 ## Invariants
 
-- `progressPercent` for a module is derived from its chapters, and for a technology
-  from its modules; the three never disagree.
+- `progressPercent` for a module is derived from its chapters, and for a part and a
+  technology from the chapters they contain; no two levels ever disagree.
+- `parts` is empty for a technology that declares none, and every `module.part` is then
+  `null`. A part with an empty `moduleSlugs` is declared but not written yet.
 - Lock state is computed server-side from `skill_mastery` and the skill graph.
 - A locked chapter still exposes its title and reason, never its content.

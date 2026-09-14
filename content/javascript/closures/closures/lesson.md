@@ -4,7 +4,7 @@ title: Comprendre les closures
 slug: closures
 technology: javascript
 level: intermediate
-module: scope
+module: closures
 order: 1
 estimatedMinutes: 30
 difficulty: 3

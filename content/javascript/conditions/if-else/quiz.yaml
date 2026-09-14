@@ -1,0 +1,63 @@
+id: javascript-if-else-quiz
+kind: QUIZ
+questions:
+  - id: js-if-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `const note = 17`, qu'affiche ce code :
+      `if (note >= 10) console.log('A'); else if (note >= 16) console.log('B');` ?
+    answer: 'A'
+    explanation: >
+      La chaîne s'arrête à la première condition vraie. `17 >= 10` est vrai, donc `'A'` est
+      affiché et la branche `note >= 16` n'est jamais évaluée. Il fallait tester le seuil le
+      plus haut en premier.
+    skills:
+      - conditionals
+
+  - id: js-if-q2
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Combien de branches d'une chaîne `if` / `else if` / `else` s'exécutent au plus ?
+    options:
+      - "Une seule"
+      - "Toutes celles dont la condition est vraie"
+      - "Deux, la première vraie et le else"
+      - "Aucune dès qu'un else est présent"
+    answer: [0]
+    explanation: >
+      Une chaîne `if` / `else if` / `else` exécute au plus une branche : la première dont la
+      condition est vraie, ou le `else` si aucune ne l'est.
+    skills:
+      - conditionals
+
+  - id: js-if-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      `if (x = 5)` compare `x` à `5`.
+    answer: false
+    explanation: >
+      `=` affecte la valeur 5 à `x`. L'affectation est une expression qui vaut 5, une valeur
+      truthy : la condition est toujours vraie. La comparaison s'écrit `x === 5`.
+    skills:
+      - conditionals
+
+  - id: js-if-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles écritures sont équivalentes à `if (a) { if (b) { go(); } }` ?
+    options:
+      - "if (a && b) { go(); }"
+      - "if (a || b) { go(); }"
+      - "if (!(!a || !b)) { go(); }"
+      - "if (a) { go(); } else if (b) { go(); }"
+    answer: [0, 2]
+    explanation: >
+      `go()` ne s'exécute que si `a` et `b` sont vrais : c'est `a && b`. D'après la loi de De
+      Morgan, `!(!a || !b)` équivaut aussi à `a && b`. La dernière écriture appelle `go()`
+      dès que l'une des deux conditions est vraie.
+    skills:
+      - conditionals

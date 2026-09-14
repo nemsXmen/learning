@@ -2,6 +2,91 @@ slug: javascript
 name: JavaScript
 order: 1
 description: >
-  Du modèle mental des variables jusqu'au modèle d'exécution : ce que le moteur
-  fait réellement quand ton code s'exécute.
+  De la première ligne de code à une application de production : le langage, son
+  modèle d'exécution, le navigateur, Node.js, les tests, l'architecture et la sécurité.
 published: true
+parts:
+  - slug: fundamentals
+    title: Fundamentals — Les bases du JavaScript
+    order: 1
+    description: Exécuter du JavaScript, manipuler des valeurs, décider et répéter.
+  - slug: data-structures
+    title: Data Structures — Manipuler les données
+    order: 2
+    description: Chaînes, tableaux, objets, Map et Set, pour transformer des données sans les abîmer.
+  - slug: functions
+    title: Functions — Le cœur du langage
+    order: 3
+    description: Fonctions, portée et closures, ce qui fait de JavaScript un langage fonctionnel.
+  - slug: runtime
+    title: JavaScript Runtime — Comprendre réellement JS
+    order: 4
+    description: Contextes d'exécution, hoisting, this et prototypes.
+  - slug: object-oriented
+    title: Object-Oriented JavaScript
+    order: 5
+    description: Classes, héritage et patterns objet, et quand s'en passer.
+  - slug: asynchronous
+    title: Asynchronous JavaScript
+    order: 6
+    description: Event loop, Promises et async/await.
+  - slug: errors-debugging
+    title: Error Handling & Debugging
+    order: 7
+    description: Lever, attraper et diagnostiquer les erreurs avec méthode.
+  - slug: modules-modern
+    title: Modules & Modern JavaScript
+    order: 8
+    description: Les ES Modules et la syntaxe moderne du langage.
+  - slug: browser
+    title: Browser JavaScript
+    order: 9
+    description: Le DOM, les événements et les API du navigateur.
+  - slug: http-apis
+    title: HTTP & APIs
+    order: 10
+    description: HTTP vu par un développeur JavaScript, et la Fetch API.
+  - slug: advanced
+    title: Advanced JavaScript
+    order: 11
+    description: Itérateurs, générateurs, symboles, descripteurs de propriétés et mémoire.
+  - slug: functional
+    title: Functional Programming
+    order: 12
+    description: Fonctions pures, composition et transformation de données.
+  - slug: testing
+    title: Testing
+    order: 13
+    description: Tester des comportements, pas des détails d'implémentation.
+  - slug: performance
+    title: Performance
+    order: 14
+    description: Mesurer, comprendre le coût des opérations et optimiser au bon endroit.
+  - slug: nodejs
+    title: Node.js
+    order: 15
+    description: Le runtime Node.js, ses API et l'outillage npm.
+  - slug: architecture
+    title: Architecture JavaScript
+    order: 16
+    description: Code propre, design patterns et architecture d'application.
+  - slug: security
+    title: Security
+    order: 17
+    description: Les attaques qui visent JavaScript, et comment s'en protéger.
+  - slug: real-world
+    title: Real-World JavaScript
+    order: 18
+    description: Git, outillage professionnel et debugging d'une vraie application.
+  - slug: typescript-bridge
+    title: JavaScript + TypeScript Bridge
+    order: 19
+    description: Passer de JavaScript à TypeScript progressivement.
+  - slug: expert
+    title: Expert JavaScript
+    order: 20
+    description: La spécification, l'event loop en profondeur et l'asynchrone avancé.
+  - slug: projects
+    title: Projects — Passage de Zero à Hero
+    order: 21
+    description: Six projets pour assembler tout le reste.

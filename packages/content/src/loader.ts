@@ -150,6 +150,13 @@ export async function readContentTree(dir: string): Promise<LoadedTree> {
         contentPath: rel(technologyFile),
         contentVersion: technology.version,
       });
+      const seenParts = new Set<string>();
+      for (const part of technology.value.parts) {
+        if (seenParts.has(part.slug)) {
+          issues.push(issue(rel(technologyFile), 1, 'DUPLICATE_SLUG', `Partie « ${part.slug} » déclarée deux fois`));
+        }
+        seenParts.add(part.slug);
+      }
     }
 
     const skillsFile = join(technologyDir, 'skills.yaml');
@@ -179,6 +186,13 @@ export async function readContentTree(dir: string): Promise<LoadedTree> {
       if ('issues' in moduleResult) {
         issues.push(...moduleResult.issues);
       } else {
+        const parts = 'issues' in technology ? null : technology.value.parts;
+        const partSlug = moduleResult.value.part;
+        if (parts && parts.length > 0 && !partSlug) {
+          issues.push(issue(rel(moduleFile), 1, 'UNKNOWN_PART', `Le module « ${moduleSlug} » doit nommer sa partie : ${technologySlug} en déclare`));
+        } else if (parts && partSlug && !parts.some((part) => part.slug === partSlug)) {
+          issues.push(issue(rel(moduleFile), 1, 'UNKNOWN_PART', `Partie « ${partSlug} » inconnue : déclare-la dans ${technologySlug}/technology.yaml`));
+        }
         modules.push({
           ...moduleResult.value,
           technology: technologySlug,

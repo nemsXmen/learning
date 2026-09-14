@@ -1,0 +1,62 @@
+id: javascript-comparaisons-quiz
+kind: QUIZ
+questions:
+  - id: js-comparaisons-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `null == undefined` ?
+    answer: 'true'
+    explanation: >
+      L'égalité `==` a une règle spéciale : `null` et `undefined` sont égaux entre eux, et à
+      aucune autre valeur. C'est pourquoi `valeur == null` teste les deux à la fois.
+    skills:
+      - comparison
+
+  - id: js-comparaisons-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que vaut `'10' < '9'` ?
+    options:
+      - "true, car deux chaînes sont comparées caractère par caractère"
+      - "false, car 10 est plus grand que 9"
+      - "Une TypeError"
+      - "NaN"
+    answer: [0]
+    explanation: >
+      Deux chaînes sont comparées par codes de caractères : `'1'` est plus petit que `'9'`,
+      donc `'10' < '9'` est vrai. Il faut convertir en nombres pour une comparaison
+      numérique.
+    skills:
+      - comparison
+
+  - id: js-comparaisons-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `Object.is(NaN, NaN)` vaut `true`.
+    answer: true
+    explanation: >
+      `Object.is` est plus strict que `===` sur deux points : il considère `NaN` égal à
+      lui-même, et il distingue `0` de `-0`.
+    skills:
+      - comparison
+
+  - id: js-comparaisons-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles expressions valent `true` ?
+    options:
+      - "0 == ''"
+      - "0 === ''"
+      - "null == 0"
+      - "'0' == false"
+    answer: [0, 3]
+    explanation: >
+      `0 == ''` est vrai car la chaîne vide devient `0`. `'0' == false` est vrai car les deux
+      deviennent `0`. `===` ne convertit jamais, et `null` n'est égal qu'à `null` et à
+      `undefined`, donc `null == 0` est faux.
+    skills:
+      - comparison

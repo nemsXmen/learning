@@ -1,0 +1,64 @@
+id: javascript-syntaxe-quiz
+kind: QUIZ
+questions:
+  - id: js-syntaxe-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Laquelle de ces lignes est une expression ?
+    options:
+      - "a + b"
+      - "let a = 1"
+      - "if (a) {}"
+      - "for (;;) {}"
+    answer: [0]
+    explanation: >
+      `a + b` produit une valeur et peut être placé partout où une valeur est attendue.
+      `let`, `if` et `for` sont des instructions : elles effectuent une action sans
+      produire de valeur.
+    skills:
+      - syntax-expressions
+
+  - id: js-syntaxe-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Une fonction contient `return` seul sur une ligne, puis `42;` sur la ligne suivante.
+      Que renvoie-t-elle ?
+    answer: 'undefined'
+    explanation: >
+      L'insertion automatique de points-virgules ajoute un `;` juste après `return`. La
+      fonction renvoie donc `undefined`, et la ligne `42;` n'est jamais atteinte.
+    skills:
+      - syntax-expressions
+
+  - id: js-syntaxe-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      On peut passer une déclaration en argument, par exemple `console.log(let x = 1)`.
+    answer: false
+    explanation: >
+      `let x = 1` est une instruction, pas une expression : c'est une erreur de syntaxe.
+      En revanche `console.log(x = 1)` est valide, car une affectation est une expression
+      qui vaut la valeur affectée.
+    skills:
+      - syntax-expressions
+
+  - id: js-syntaxe-q4
+    type: multiple_answer
+    difficulty: 1
+    question: >
+      Quelles conventions de nommage sont usuelles en JavaScript ?
+    options:
+      - "camelCase pour les variables et les fonctions"
+      - "PascalCase pour les classes"
+      - "snake_case pour les fonctions"
+      - "MAJUSCULES_AVEC_TIRETS_BAS pour les constantes de configuration"
+    answer: [0, 1, 3]
+    explanation: >
+      JavaScript utilise camelCase pour les variables et les fonctions, PascalCase pour les
+      classes et les majuscules pour les constantes de configuration. Le snake_case est
+      courant en Python, pas en JavaScript.
+    skills:
+      - syntax-expressions

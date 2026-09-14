@@ -1,0 +1,70 @@
+id: javascript-choisir-sa-boucle-quiz
+kind: QUIZ
+questions:
+  - id: js-complexite-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Deux boucles imbriquées qui parcourent chacune le même tableau de n éléments ont une
+      complexité de…
+    options:
+      - "O(n²)"
+      - "O(n)"
+      - "O(2n)"
+      - "O(log n)"
+    answer: [0]
+    explanation: >
+      Pour chacun des n tours de la boucle extérieure, la boucle intérieure fait n tours :
+      n × n opérations, soit O(n²). Doubler les données multiplie le travail par quatre.
+    skills:
+      - loop-complexity
+
+  - id: js-complexite-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Vérifier la présence d'une valeur avec `Set.prototype.has` prend en moyenne un temps
+      constant, quelle que soit la taille du `Set`.
+    answer: true
+    explanation: >
+      Un `Set` ne parcourt pas ses éléments pour répondre : il retrouve la valeur directement.
+      C'est ce qui en fait le bon remplaçant d'un `includes` appelé dans une boucle.
+    skills:
+      - loop-complexity
+
+  - id: js-complexite-q3
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle boucle convient pour lire des saisies jusqu'à ce que l'utilisateur tape « stop »,
+      sans savoir combien il y en aura ?
+    options:
+      - "while"
+      - "for avec un compteur fixe"
+      - "for...in"
+      - "switch"
+    answer: [0]
+    explanation: >
+      Le nombre de tours est inconnu et dépend d'une condition : c'est exactement le rôle de
+      `while`. `do...while` convient aussi si l'on veut demander une première saisie avant
+      tout test.
+    skills:
+      - loop-complexity
+
+  - id: js-complexite-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques réduisent réellement le coût d'une boucle sur de grandes données ?
+    options:
+      - "Sortir avec break dès que le résultat est connu"
+      - "Remplacer un includes dans la boucle par un Set préparé avant"
+      - "Stocker systématiquement tableau.length dans une variable"
+      - "Éviter de reparcourir les mêmes données dans une boucle imbriquée"
+    answer: [0, 1, 3]
+    explanation: >
+      Sortir tôt, supprimer une recherche linéaire répétée et éviter les boucles imbriquées
+      changent la complexité du traitement. Mettre `length` en cache n'a presque aucun effet
+      dans les moteurs modernes.
+    skills:
+      - loop-complexity

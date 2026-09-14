@@ -40,7 +40,7 @@ describe('ContentService', () => {
       id: 'javascript-closures',
       slug: 'closures',
       technology: { slug: 'javascript', name: 'JavaScript' },
-      module: { slug: 'scope', title: 'Portée et exécution' },
+      module: { slug: 'closures', title: 'Closures' },
       level: 'intermediate',
       difficulty: 3,
       xp: 100,
@@ -81,9 +81,9 @@ describe('ContentService', () => {
   it('orders neighbours by module then chapter', async () => {
     const { service } = await bootService();
 
-    const first = await service.getChapter('javascript', 'variables');
+    const first = await service.getChapter('javascript', 'introduction-javascript');
     expect(first.neighbours.previous).toBeNull();
-    expect(first.neighbours.next).toBe('javascript-functions');
+    expect(first.neighbours.next).toBe('javascript-premier-programme');
 
     const last = await service.getChapter('javascript', 'closures');
     expect(last.neighbours.previous).toBe('javascript-functions');
@@ -150,7 +150,7 @@ describe('ContentService', () => {
 
       expect(redis.sets).toHaveLength(1);
       expect(redis.sets[0]).toMatch(
-        /^content:render:javascript\/scope\/closures\/lesson\.md:[0-9a-f]{12}$/,
+        /^content:render:javascript\/closures\/closures\/lesson\.md:[0-9a-f]{12}$/,
       );
     });
 

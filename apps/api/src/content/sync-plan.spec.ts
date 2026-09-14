@@ -10,13 +10,17 @@ async function seedGraph(): Promise<ContentGraph> {
 
 describe('buildSyncPlan', () => {
   it('projects every node of the graph', async () => {
-    const plan = buildSyncPlan(await seedGraph());
+    const graph = await seedGraph();
+    const plan = buildSyncPlan(graph);
 
     expect(plan.technologies.map((t) => t.slug).sort()).toEqual(['javascript', 'typescript']);
-    expect(plan.modules).toHaveLength(4);
-    expect(plan.chapters).toHaveLength(5);
-    expect(plan.skills).toHaveLength(9);
-    expect(plan.quizzes).toHaveLength(5);
+    // Counted against the graph, not hard-coded: writing a chapter must not break a
+    // test about the projection.
+    expect(plan.modules).toHaveLength(graph.modules.length);
+    expect(plan.chapters).toHaveLength(graph.chapters.length);
+    expect(plan.skills).toHaveLength(graph.skills.length);
+    expect(plan.quizzes).toHaveLength(graph.quizzes.length);
+    expect(plan.chapters.length).toBeGreaterThan(0);
   });
 
   it('is pure: the same graph yields an identical plan', async () => {
@@ -28,8 +32,10 @@ describe('buildSyncPlan', () => {
     const plan = buildSyncPlan(await seedGraph());
     const ids = plan.modules.map((module) => module.id);
 
-    // Both technologies have a "fundamentals" module; the keys must stay distinct.
-    expect(ids).toContain('javascript/fundamentals');
+    // Two technologies may share a module slug; the key is namespaced so they never collide.
+    for (const module of plan.modules) {
+      expect(module.id).toBe(moduleKey(module.technologySlug, module.slug));
+    }
     expect(ids).toContain('typescript/fundamentals');
     expect(new Set(ids).size).toBe(ids.length);
   });
@@ -68,7 +74,7 @@ describe('buildSyncPlan', () => {
     const plan = buildSyncPlan(await seedGraph());
     const chapter = plan.chapters.find((item) => item.id === 'javascript-closures');
 
-    expect(chapter?.contentPath).toBe('javascript/scope/closures/lesson.md');
+    expect(chapter?.contentPath).toBe('javascript/closures/closures/lesson.md');
     expect(chapter?.contentVersion).toMatch(/^[0-9a-f]{12}$/);
     expect(JSON.stringify(plan)).not.toContain('## Concept');
   });

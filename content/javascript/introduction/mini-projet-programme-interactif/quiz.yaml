@@ -1,0 +1,59 @@
+id: javascript-mini-projet-interactif-quiz
+kind: QUIZ
+questions:
+  - id: js-miniprojet-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      L'utilisateur tape 30 dans `prompt`. Qu'affiche `console.log(prompt('Âge ?') + 1)` ?
+    answer: '301'
+    explanation: >
+      `prompt` renvoie la chaîne `'30'`. Avec une chaîne d'un côté, `+` concatène : le
+      résultat est la chaîne `'301'`. Il fallait convertir la saisie avec `Number` avant
+      d'additionner.
+    skills:
+      - console-devtools
+      - syntax-expressions
+
+  - id: js-miniprojet-q2
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que renvoie `prompt` quand l'utilisateur clique sur Annuler ?
+    options:
+      - "null"
+      - "Une chaîne vide"
+      - "undefined"
+      - "false"
+    answer: [0]
+    explanation: >
+      Annuler renvoie `null`, alors que valider une saisie vide renvoie `''`. Les deux cas
+      doivent être traités, car `Number(null)` et `Number('')` valent tous deux `0`.
+    skills:
+      - console-devtools
+
+  - id: js-miniprojet-q3
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `Number('12,5')` ?
+    answer: 'NaN'
+    explanation: >
+      `Number` n'accepte que le point comme séparateur décimal. La virgule rend la chaîne
+      invalide et la conversion produit `NaN`. On remplace la virgule par un point avant de
+      convertir.
+    skills:
+      - syntax-expressions
+
+  - id: js-miniprojet-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      `Number(null)` vaut `NaN`.
+    answer: false
+    explanation: >
+      `Number(null)` vaut `0`. C'est pour cela qu'un programme qui ne traite pas
+      l'annulation de `prompt` affiche un résultat calculé pour zéro au lieu d'un message
+      d'erreur.
+    skills:
+      - syntax-expressions

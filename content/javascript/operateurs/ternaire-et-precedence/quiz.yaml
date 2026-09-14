@@ -1,0 +1,55 @@
+id: javascript-ternaire-precedence-quiz
+kind: QUIZ
+questions:
+  - id: js-precedence-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `2 + 3 * 4` ?
+    answer: '14'
+    explanation: >
+      La multiplication a une priorité plus haute que l'addition : `3 * 4` est calculé
+      d'abord, puis `2 + 12` donne `14`.
+    skills:
+      - precedence-expressions
+
+  - id: js-precedence-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `2 ** 3 ** 2` ?
+    answer: '512'
+    explanation: >
+      `**` est associatif à droite : l'expression se lit `2 ** (3 ** 2)`, soit `2 ** 9`, qui
+      vaut `512`. De gauche à droite, on aurait obtenu `64`.
+    skills:
+      - precedence-expressions
+
+  - id: js-precedence-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `-2 ** 2` vaut `4`.
+    answer: false
+    explanation: >
+      C'est une erreur de syntaxe : un opérateur unaire ne peut pas précéder directement la
+      base de `**`, car la lecture serait ambiguë. Il faut écrire `(-2) ** 2` ou `-(2 ** 2)`.
+    skills:
+      - precedence-expressions
+
+  - id: js-precedence-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que vaut `!0 === true` ?
+    options:
+      - "true"
+      - "false"
+      - "Une TypeError"
+      - "undefined"
+    answer: [0]
+    explanation: >
+      `!` a une priorité plus haute que `===` : l'expression se lit `(!0) === true`. `!0`
+      vaut `true`, donc la comparaison vaut `true`.
+    skills:
+      - precedence-expressions

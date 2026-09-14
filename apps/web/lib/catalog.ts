@@ -26,6 +26,7 @@ export interface ModuleView {
   slug: string;
   title: string;
   order: number;
+  part: string | null;
   progressPercent: number;
   chapters: ChapterView[];
 }
@@ -41,7 +42,17 @@ export interface TechnologySummary {
   skillCount: number;
 }
 
+export interface PartView {
+  slug: string;
+  title: string;
+  order: number;
+  description: string | null;
+  progressPercent: number;
+  moduleSlugs: string[];
+}
+
 export interface TechnologyDetail {
+  parts: PartView[];
   slug: string;
   name: string;
   description: string;

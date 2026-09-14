@@ -1,0 +1,61 @@
+id: javascript-symbol-bigint-typeof-quiz
+kind: QUIZ
+questions:
+  - id: js-typeof-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que renvoie `typeof null` ?
+    answer: 'object'
+    explanation: >
+      C'est une erreur historique du langage, jamais corrigée pour ne pas casser le code
+      existant. Pour tester `null`, on compare directement : `valeur === null`.
+    skills:
+      - js-primitive-types
+
+  - id: js-typeof-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que produit l'expression `10n + 5` ?
+    options:
+      - "Une TypeError"
+      - "La valeur 15n"
+      - "La valeur 15"
+      - "La chaîne 105"
+    answer: [0]
+    explanation: >
+      `bigint` et `number` ne se mélangent pas dans un calcul. Il faut convertir l'une des
+      deux valeurs : `10n + BigInt(5)` vaut `15n`, `Number(10n) + 5` vaut `15`.
+    skills:
+      - js-primitive-types
+
+  - id: js-typeof-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      `Symbol('id') === Symbol('id')` vaut `true`.
+    answer: false
+    explanation: >
+      Chaque appel à `Symbol` crée une valeur unique, même avec la même description. Seul
+      `Symbol.for('id')` renvoie le même symbole pour la même clé, via un registre global.
+    skills:
+      - js-primitive-types
+
+  - id: js-typeof-q4
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Pour quelles valeurs `typeof` renvoie-t-il `'object'` ?
+    options:
+      - "null"
+      - "[1, 2]"
+      - "function () {}"
+      - "{ a: 1 }"
+    answer: [0, 1, 3]
+    explanation: >
+      `typeof null` vaut `'object'` par erreur historique, un tableau est un objet, et
+      `{ a: 1 }` est un objet. Une fonction est aussi un objet, mais `typeof` lui réserve
+      le résultat `'function'`.
+    skills:
+      - js-primitive-types

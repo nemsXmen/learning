@@ -309,6 +309,21 @@ that depends on them is accepted.
 - CDC question or assumption: **assumption** — opening a solution costs no XP and does
   not lower mastery in V1.
 
+## Decision: parts are declared in `technology.yaml`, not as a directory level
+
+- Status: accepted
+- Context: the JavaScript programme has 21 parts over 64 modules. A flat list of 64
+  modules is unreadable, and the content tree had no level above modules.
+- Decision: `technology.yaml` declares `parts` (slug, title, order, description) and
+  each `module.yaml` names its `part`. Optional per technology; once declared, every
+  module must belong to one (`UNKNOWN_PART`). The catalog groups modules by part and
+  derives a part's progress from its chapters; a part without modules reads as
+  « En préparation », so the whole programme is visible before it is written.
+- Consequences: no path, URL or database change — chapter URLs, content paths and the
+  PostgreSQL mirror are untouched, and TypeScript keeps its flat list. Parts are
+  display structure only: unlocking still follows skills.
+- CDC question or assumption: none.
+
 # Open questions
 
 These block acceptance of the features named. Do not guess an answer in code.

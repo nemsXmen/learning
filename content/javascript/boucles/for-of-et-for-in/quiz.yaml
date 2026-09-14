@@ -1,0 +1,60 @@
+id: javascript-for-of-for-in-quiz
+kind: QUIZ
+questions:
+  - id: js-forof-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que parcourt `for...of` sur un tableau ?
+    options:
+      - "Les valeurs des éléments"
+      - "Les index sous forme de chaînes"
+      - "Les index sous forme de nombres"
+      - "Les propriétés héritées du tableau"
+    answer: [0]
+    explanation: >
+      `for...of` parcourt les valeurs d'un itérable. Pour obtenir aussi les index, on parcourt
+      `tableau.entries()`.
+    skills:
+      - iteration-for-of-in
+
+  - id: js-forof-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Qu'affiche le premier tour de `for (const k in ['a', 'b']) console.log(typeof k);` ?
+    answer: 'string'
+    explanation: >
+      `for...in` parcourt les noms de propriétés, et ce sont toujours des chaînes, y compris
+      pour les index d'un tableau : `k` vaut `'0'`, de type `'string'`.
+    skills:
+      - iteration-for-of-in
+
+  - id: js-forof-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `for (const valeur of { a: 1 })` parcourt les valeurs de l'objet.
+    answer: false
+    explanation: >
+      Un objet littéral n'est pas itérable : la boucle lève une `TypeError`. On parcourt
+      `Object.values(objet)` ou `Object.entries(objet)`.
+    skills:
+      - iteration-for-of-in
+
+  - id: js-forof-q4
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Sur quelles valeurs `for...of` fonctionne-t-il directement ?
+    options:
+      - "Un tableau"
+      - "Une chaîne"
+      - "Une Map"
+      - "Un objet littéral"
+    answer: [0, 1, 2]
+    explanation: >
+      Les tableaux, les chaînes et les `Map` sont itérables : ils possèdent une méthode
+      `Symbol.iterator`. Un objet littéral n'en a pas.
+    skills:
+      - iteration-for-of-in

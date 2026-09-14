@@ -4,8 +4,8 @@ title: Fonctions
 slug: functions
 technology: javascript
 level: beginner
-module: fundamentals
-order: 2
+module: fonctions
+order: 1
 estimatedMinutes: 25
 difficulty: 2
 xp: 80

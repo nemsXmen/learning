@@ -263,6 +263,38 @@ describe('validation issues', () => {
     expect(await practiceCodes(unclosed, answeredQuestion)).toContain('INVALID_CONTAINER');
   });
 
+  const PARTED_TECHNOLOGY =
+    'slug: javascript\nname: JavaScript\norder: 1\ndescription: Du JS.\npublished: true\nparts:\n  - slug: bases\n    title: Les bases\n    order: 1\n';
+
+  it('groups modules into the parts their technology declares', async () => {
+    const result = await loadContentGraph(
+      await tree(
+        validTree({
+          'javascript/technology.yaml': PARTED_TECHNOLOGY,
+          'javascript/fundamentals/module.yaml': 'slug: fundamentals\ntitle: Fondamentaux\norder: 1\npart: bases\n',
+        }),
+      ),
+    );
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.value.technologies[0]?.parts.map((part) => part.slug)).toEqual(['bases']);
+    expect(result.value.modules[0]?.part).toBe('bases');
+  });
+
+  it('UNKNOWN_PART when a module names a part its technology does not declare', async () => {
+    const codes = await codesFor(
+      validTree({
+        'javascript/technology.yaml': PARTED_TECHNOLOGY,
+        'javascript/fundamentals/module.yaml': 'slug: fundamentals\ntitle: Fondamentaux\norder: 1\npart: inconnue\n',
+      }),
+    );
+    expect(codes).toContain('UNKNOWN_PART');
+  });
+
+  it('UNKNOWN_PART when the technology declares parts and a module names none', async () => {
+    expect(await codesFor(validTree({ 'javascript/technology.yaml': PARTED_TECHNOLOGY }))).toContain('UNKNOWN_PART');
+  });
+
   it('MALFORMED_FILE on absent frontmatter and on broken YAML', async () => {
     expect(
       await codesFor(

@@ -1,0 +1,55 @@
+id: javascript-operateurs-logiques-quiz
+kind: QUIZ
+questions:
+  - id: js-logiques-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `0 || 10` ?
+    answer: '10'
+    explanation: >
+      `0` est falsy, donc `||` renvoie le second opérande, `10`. C'est ce qui rend `||`
+      dangereux pour une valeur par défaut quand `0` est une valeur légitime.
+    skills:
+      - logical-operators
+
+  - id: js-logiques-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `'Ada' && 'Grace'` ?
+    answer: 'Grace'
+    explanation: >
+      `'Ada'` est truthy, donc `&&` renvoie le second opérande tel quel. Le résultat est la
+      chaîne `'Grace'`, pas `true`.
+    skills:
+      - logical-operators
+
+  - id: js-logiques-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `a || b` renvoie toujours un booléen.
+    answer: false
+    explanation: >
+      `a || b` renvoie l'un de ses opérandes : `a` s'il est truthy, sinon `b`. Pour obtenir
+      un booléen, on écrit `Boolean(a || b)`.
+    skills:
+      - logical-operators
+
+  - id: js-logiques-q4
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles valeurs sont falsy ?
+    options:
+      - "0"
+      - "'0'"
+      - "''"
+      - "NaN"
+    answer: [0, 2, 3]
+    explanation: >
+      `0`, la chaîne vide et `NaN` font partie des huit valeurs falsy. La chaîne `'0'`
+      contient un caractère : elle est truthy.
+    skills:
+      - logical-operators

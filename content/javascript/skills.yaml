@@ -1,9 +1,106 @@
 skills:
+  # Partie 1 — Fundamentals
+  - id: js-runtime
+    name: Environnements d'exécution
+    importance: 3
+    requires: []
+
+  - id: console-devtools
+    name: console et outils de développement
+    importance: 3
+    requires: [js-runtime]
+
+  - id: syntax-expressions
+    name: Syntaxe, instructions et expressions
+    importance: 4
+    requires: []
+
+  - id: strict-mode-errors
+    name: Mode strict et erreurs
+    importance: 3
+    requires: [syntax-expressions]
+
   - id: variables
     name: Variables et liaisons
     importance: 4
     requires: []
 
+  - id: js-primitive-types
+    name: Types primitifs
+    importance: 5
+    requires: [variables]
+
+  - id: references-mutability
+    name: Primitives, références et mutabilité
+    importance: 4
+    requires: [js-primitive-types]
+
+  - id: arithmetic-assignment
+    name: Opérateurs arithmétiques et d'affectation
+    importance: 3
+    requires: [js-primitive-types]
+
+  - id: comparison
+    name: Comparaisons et égalité
+    importance: 5
+    requires: [js-primitive-types]
+
+  - id: logical-operators
+    name: Opérateurs logiques et court-circuit
+    importance: 4
+    requires: [comparison]
+
+  - id: nullish-optional
+    name: Nullish coalescing et optional chaining
+    importance: 4
+    requires: [logical-operators]
+
+  - id: precedence-expressions
+    name: Précédence et expressions
+    importance: 3
+    requires: [syntax-expressions]
+
+  - id: conditionals
+    name: Conditions if/else
+    importance: 5
+    requires: [comparison]
+
+  - id: truthiness
+    name: Truthy et falsy
+    importance: 5
+    requires: [js-primitive-types]
+
+  - id: switch-statement
+    name: switch
+    importance: 3
+    requires: [conditionals]
+
+  - id: guard-clauses
+    name: Guard clauses et validation
+    importance: 4
+    requires: [conditionals, truthiness]
+
+  - id: loops
+    name: Boucles while et for
+    importance: 5
+    requires: [conditionals]
+
+  - id: loop-control
+    name: break, continue et boucles imbriquées
+    importance: 4
+    requires: [loops]
+
+  - id: iteration-for-of-in
+    name: for...of et for...in
+    importance: 4
+    requires: [loops]
+
+  - id: loop-complexity
+    name: Choisir sa boucle et mesurer son coût
+    importance: 3
+    requires: [loop-control, iteration-for-of-in]
+
+  # Partie 3 — Functions
   - id: functions
     name: Fonctions
     importance: 5

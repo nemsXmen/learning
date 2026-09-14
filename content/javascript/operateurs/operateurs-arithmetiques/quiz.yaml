@@ -1,0 +1,55 @@
+id: javascript-operateurs-arithmetiques-quiz
+kind: QUIZ
+questions:
+  - id: js-arith-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `1 + 2 + '3'` ?
+    answer: '33'
+    explanation: >
+      L'évaluation va de gauche à droite : `1 + 2` vaut `3`, puis `3 + '3'` concatène, car
+      l'un des opérandes est une chaîne. Le résultat est la chaîne `'33'`.
+    skills:
+      - arithmetic-assignment
+
+  - id: js-arith-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Après `let n = 5; const a = n++;`, que valent `a` et `n` ?
+    options:
+      - "a vaut 5 et n vaut 6"
+      - "a vaut 6 et n vaut 6"
+      - "a vaut 5 et n vaut 5"
+      - "a vaut 6 et n vaut 5"
+    answer: [0]
+    explanation: >
+      En position suffixe, `n++` renvoie la valeur avant incrémentation, soit `5`, puis fait
+      passer `n` à `6`. Avec `++n`, `a` aurait valu `6`.
+    skills:
+      - arithmetic-assignment
+
+  - id: js-arith-q3
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `'6' * '7'` ?
+    answer: '42'
+    explanation: >
+      Contrairement à `+`, l'opérateur `*` n'a qu'un sens numérique : il convertit les deux
+      chaînes en nombres et renvoie `42`.
+    skills:
+      - arithmetic-assignment
+
+  - id: js-arith-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      `-7 % 3` vaut `2`.
+    answer: false
+    explanation: >
+      Le reste prend le signe du dividende : `-7 % 3` vaut `-1`. Pour un modulo toujours
+      positif, on écrit `((n % m) + m) % m`.
+    skills:
+      - arithmetic-assignment

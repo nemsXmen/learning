@@ -6,8 +6,17 @@ export interface TechnologyNode {
   order: number;
   description: string;
   published: boolean;
+  parts: PartNode[];
   contentPath: string;
   contentVersion: string;
+}
+
+/** A group of modules; display structure only, unlocking still follows skills. */
+export interface PartNode {
+  slug: string;
+  title: string;
+  order: number;
+  description?: string | undefined;
 }
 
 export interface ModuleNode {
@@ -15,6 +24,7 @@ export interface ModuleNode {
   technology: string;
   title: string;
   order: number;
+  part?: string | undefined;
   contentPath: string;
   contentVersion: string;
 }

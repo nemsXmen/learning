@@ -8,10 +8,10 @@ mirrors what the platform needs to reason about content.
 ```text
 content/
   javascript/
-    technology.yaml              name, order, description
+    technology.yaml              name, order, description, parts
     skills.yaml                  skill definitions and prerequisite edges (CDC §28)
     fundamentals/                a module directory
-      module.yaml                title, order
+      module.yaml                title, order, part
       variables/                 a chapter directory
         lesson.md                frontmatter + body — the chapter
         quiz.yaml                practice questions (CDC §10 schema)
@@ -22,6 +22,31 @@ content/
 
 A chapter directory name is its slug. Its `id` is declared in frontmatter and must be
 globally unique.
+
+## Parts (`technology.yaml` and `module.yaml`)
+
+A long programme groups its modules into parts. The technology declares them, each
+module names its own; the directory tree does not change:
+
+```yaml
+# javascript/technology.yaml
+parts:
+  - slug: fundamentals
+    title: Fundamentals — Les bases du JavaScript
+    order: 1
+    description: Exécuter du JavaScript, manipuler des valeurs, décider et répéter.
+
+# javascript/introduction/module.yaml
+slug: introduction
+title: Introduction à JavaScript
+order: 1          # unique across the technology, not only within the part
+part: fundamentals
+```
+
+Parts are optional: a technology without them keeps a flat list of modules. Once a
+technology declares parts, every module must name one it declares (`UNKNOWN_PART`).
+A declared part with no module yet is shown as « En préparation ». Parts are display
+structure only — unlocking still follows skills.
 
 ## Chapter frontmatter (required, CDC §7)
 

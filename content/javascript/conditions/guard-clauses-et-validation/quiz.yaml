@@ -1,0 +1,63 @@
+id: javascript-guard-clauses-quiz
+kind: QUIZ
+questions:
+  - id: js-guard-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Qu'est-ce qu'une guard clause ?
+    options:
+      - "Un test en début de fonction qui sort immédiatement si le cas n'est pas valide"
+      - "Un bloc try/catch qui protège toute une fonction"
+      - "Une condition placée dans le else final d'une chaîne"
+      - "Un commentaire qui documente les préconditions"
+    answer: [0]
+    explanation: >
+      Une guard clause traite un cas particulier ou invalide dès le début et sort de la
+      fonction. Le cas normal se lit ensuite sans imbrication.
+    skills:
+      - guard-clauses
+
+  - id: js-guard-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Une condition complexe est plus lisible quand ses parties sont stockées dans des
+      variables aux noms explicites.
+    answer: true
+    explanation: >
+      Des noms comme `estMajeur` ou `resideDansUnPaysAutorise` font lire la condition comme
+      la règle métier, et permettent d'afficher chaque partie pour comprendre un refus.
+    skills:
+      - guard-clauses
+
+  - id: js-guard-q3
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que renvoie `remise(null)` avec
+      `function remise(client) { if (!client) return 0; return client.fidele ? 10 : 5; }` ?
+    answer: '0'
+    explanation: >
+      `null` est falsy : la guard clause s'exécute et la fonction renvoie `0` sans jamais lire
+      `client.fidele`, ce qui aurait levé une `TypeError`.
+    skills:
+      - guard-clauses
+
+  - id: js-guard-q4
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quels sont les apports des guard clauses ?
+    options:
+      - "Moins d'imbrication"
+      - "Le cas normal se lit à la fin, sans indentation"
+      - "Une fonction forcément plus rapide"
+      - "Les cas invalides sont visibles en premier"
+    answer: [0, 1, 3]
+    explanation: >
+      Les guard clauses améliorent la lisibilité : moins de niveaux, cas refusés en tête, cas
+      normal à plat. Elles ne rendent pas le code plus rapide pour autant ; ce n'est pas leur
+      objectif.
+    skills:
+      - guard-clauses

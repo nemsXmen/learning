@@ -372,8 +372,11 @@ describe('reads', () => {
     });
     const view = await service.getTechnology(USER, 'javascript');
 
-    expect(view.chapters).toHaveLength(3);
-    expect(view.progressPercent).toBe(30);
+    // Every chapter of the technology counts, not only those with a row.
+    expect(view.chapters.length).toBeGreaterThan(1);
+    const others = view.chapters.filter((chapter) => chapter.chapterId !== 'javascript-variables');
+    expect(others.every((chapter) => chapter.progressPercent === 0)).toBe(true);
+    expect(view.progressPercent).toBe(Math.round(90 / view.chapters.length));
   });
 
   it('404s on an unknown technology', async () => {

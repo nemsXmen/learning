@@ -12,6 +12,8 @@ interface Props {
   currentSlug: string;
   /** The chapter's test, when one is written — null hides the entry entirely. */
   quizHref: string | null;
+  /** The part the module belongs to, for technologies organised in parts. */
+  partTitle?: string | null;
 }
 
 /** Sticky beside the text on desktop, a drawer on mobile — same list either way. */
@@ -21,6 +23,7 @@ export function ChapterSidebar({
   module,
   currentSlug,
   quizHref,
+  partTitle = null,
 }: Props) {
   const [open, setOpen] = useState(false);
   if (!module) return null;
@@ -61,6 +64,7 @@ export function ChapterSidebar({
             ← {technologyName}
           </Link>
           <div>
+            {partTitle ? <p className="mb-2 text-xs text-text-muted">{partTitle}</p> : null}
             <p className="text-[11px] uppercase tracking-[0.08em] text-text-subtle">Module</p>
             <h2 className="mt-1 font-display text-[15px] font-semibold">{module.title}</h2>
           </div>

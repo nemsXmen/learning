@@ -1,0 +1,62 @@
+id: javascript-types-primitifs-quiz
+kind: QUIZ
+questions:
+  - id: js-primitifs-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `0.1 + 0.2 === 0.3` ?
+    answer: 'false'
+    explanation: >
+      `0.1` et `0.2` n'ont pas de représentation binaire exacte : leur somme vaut
+      `0.30000000000000004`. On compare les décimaux avec une tolérance, ou on calcule en
+      entiers.
+    skills:
+      - js-primitive-types
+
+  - id: js-primitifs-q2
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle valeur représente une absence volontaire, écrite par le développeur ?
+    options:
+      - "null"
+      - "undefined"
+      - "NaN"
+      - "0"
+    answer: [0]
+    explanation: >
+      `null` exprime « il n'y a pas de valeur, et c'est voulu ». `undefined` est produit par
+      le moteur pour ce qui n'a jamais reçu de valeur. `NaN` signale un calcul numérique
+      impossible.
+    skills:
+      - js-primitive-types
+
+  - id: js-primitifs-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `NaN === NaN` vaut `true`.
+    answer: false
+    explanation: >
+      `NaN` n'est égal à aucune valeur, pas même à lui-même. Pour détecter `NaN`, on utilise
+      `Number.isNaN(valeur)`.
+    skills:
+      - js-primitive-types
+
+  - id: js-primitifs-q4
+    type: multiple_answer
+    difficulty: 1
+    question: >
+      Lesquels sont des types primitifs ?
+    options:
+      - "string"
+      - "boolean"
+      - "object"
+      - "undefined"
+    answer: [0, 1, 3]
+    explanation: >
+      `string`, `boolean` et `undefined` sont des primitives, tout comme `number`, `null`,
+      `symbol` et `bigint`. Tout le reste — tableaux, fonctions, objets — est de type objet.
+    skills:
+      - js-primitive-types

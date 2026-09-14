@@ -1,0 +1,64 @@
+id: javascript-primitives-references-quiz
+kind: QUIZ
+questions:
+  - id: js-references-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `{ a: 1 } === { a: 1 }` ?
+    answer: 'false'
+    explanation: >
+      Chaque littéral crée un objet distinct, et `===` compare l'identité des objets, pas
+      leur contenu. Deux objets créés séparément ne sont jamais égaux.
+    skills:
+      - references-mutability
+
+  - id: js-references-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Après `const b = a;` où `a` est un objet, on exécute `b.n = 2`. Que vaut `a.n` ?
+    options:
+      - "2"
+      - "undefined"
+      - "Une erreur, car a est une constante"
+      - "La valeur d'origine de a.n"
+    answer: [0]
+    explanation: >
+      `b = a` copie la référence : `a` et `b` désignent le même objet. Modifier une propriété
+      via `b` modifie donc l'objet que `a` désigne aussi. `const` n'empêche que la
+      réaffectation.
+    skills:
+      - references-mutability
+
+  - id: js-references-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `{ ...objet }` copie aussi en profondeur les objets imbriqués.
+    answer: false
+    explanation: >
+      Le spread crée une copie superficielle : un nouvel objet de premier niveau, dont les
+      propriétés objets restent partagées avec l'original. Pour une copie profonde, on
+      utilise `structuredClone`.
+    skills:
+      - references-mutability
+
+  - id: js-references-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles opérations modifient une valeur partagée par plusieurs variables ?
+    options:
+      - "Affecter une propriété d'un objet partagé"
+      - "Appeler push sur un tableau partagé"
+      - "Appeler toUpperCase sur une chaîne"
+      - "Ajouter 1 à une variable qui contient un nombre"
+    answer: [0, 1]
+    explanation: >
+      Les objets et les tableaux sont mutables : une modification est visible par toutes les
+      variables qui les référencent. Les primitives sont immuables : `toUpperCase` renvoie
+      une nouvelle chaîne, et une addition produit un nouveau nombre sans toucher les autres
+      variables.
+    skills:
+      - references-mutability

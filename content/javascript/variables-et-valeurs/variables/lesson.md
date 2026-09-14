@@ -4,7 +4,7 @@ title: Variables et liaisons
 slug: variables
 technology: javascript
 level: beginner
-module: fundamentals
+module: variables-et-valeurs
 order: 1
 estimatedMinutes: 20
 difficulty: 1

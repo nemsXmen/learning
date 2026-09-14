@@ -3,7 +3,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Badge, Card, ProgressRing } from '@app/ui';
 import { ApiError } from '../../../lib/api';
-import { getTechnology, type ChapterView, type ModuleView, type TechnologyDetail } from '../../../lib/catalog';
+import {
+  getTechnology,
+  type ChapterView,
+  type ModuleView,
+  type PartView,
+  type TechnologyDetail,
+} from '../../../lib/catalog';
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
 
@@ -47,14 +53,92 @@ export default async function TechnologyPage({ params }: PageProps) {
         </div>
       </header>
 
-      <Roadmap modules={detail.modules} />
-
-      <div className="mt-10 flex flex-col gap-8">
-        {detail.modules.map((module) => (
-          <ModuleSection key={module.slug} technologySlug={detail.slug} module={module} />
-        ))}
-      </div>
+      {detail.parts.length > 0 ? (
+        <>
+          <PartsOverview parts={detail.parts} />
+          <div className="mt-10 flex flex-col gap-14">
+            {detail.parts
+              .filter((part) => part.moduleSlugs.length > 0)
+              .map((part) => (
+                <section key={part.slug} id={`partie-${part.slug}`} className="scroll-mt-8">
+                  <h2 className="font-display text-2xl font-semibold">{part.title}</h2>
+                  {part.description ? (
+                    <p className="mt-2 max-w-prose text-[15px] text-text-muted">{part.description}</p>
+                  ) : null}
+                  <div className="mt-6 flex flex-col gap-8">
+                    {detail.modules
+                      .filter((module) => module.part === part.slug)
+                      .map((module) => (
+                        <ModuleSection key={module.slug} technologySlug={detail.slug} module={module} heading="h3" />
+                      ))}
+                  </div>
+                </section>
+              ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <Roadmap modules={detail.modules} />
+          <div className="mt-10 flex flex-col gap-8">
+            {detail.modules.map((module) => (
+              <ModuleSection key={module.slug} technologySlug={detail.slug} module={module} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
+  );
+}
+
+/**
+ * The whole programme at a glance. With dozens of modules a flat roadmap stops
+ * being readable, so parts come first; a part without modules yet is upcoming.
+ */
+function PartsOverview({ parts }: { parts: PartView[] }) {
+  return (
+    <Card>
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.08em] text-text-subtle">Programme</h2>
+      <ol className="grid list-none grid-cols-1 gap-1 p-0 sm:grid-cols-2">
+        {parts.map((part, index) => {
+          const ready = part.moduleSlugs.length > 0;
+          const content = (
+            <span className="flex items-center gap-3">
+              <span
+                aria-hidden="true"
+                className={`flex size-8 shrink-0 items-center justify-center rounded-pill border font-mono text-xs ${
+                  part.progressPercent === 100
+                    ? 'border-success/60 bg-success/10 text-success'
+                    : part.progressPercent > 0
+                      ? 'border-accent-soft bg-accent-surface text-accent-soft'
+                      : 'border-border-strong text-text-subtle'
+                }`}
+              >
+                {index + 1}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className={`block text-sm ${ready ? 'text-text' : 'text-text-muted'}`}>{part.title}</span>
+                <span className="block text-xs text-text-subtle">
+                  {ready
+                    ? `${part.moduleSlugs.length} module${part.moduleSlugs.length > 1 ? 's' : ''} · ${part.progressPercent} %`
+                    : 'En préparation'}
+                </span>
+              </span>
+            </span>
+          );
+          return (
+            <li key={part.slug}>
+              {ready ? (
+                <a href={`#partie-${part.slug}`} className="block rounded-control px-2 py-2 no-underline hover:bg-surface-raised">
+                  {content}
+                </a>
+              ) : (
+                <span className="block px-2 py-2">{content}</span>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+    </Card>
   );
 }
 
@@ -97,16 +181,19 @@ function Roadmap({ modules }: { modules: ModuleView[] }) {
 function ModuleSection({
   technologySlug,
   module,
+  heading: Heading = 'h2',
 }: {
   technologySlug: string;
   module: ModuleView;
+  /** h3 inside a part section, so the outline stays correctly nested. */
+  heading?: 'h2' | 'h3';
 }) {
   const done = module.chapters.filter((chapter) => chapter.status === 'COMPLETED').length;
 
   return (
     <section>
       <div className="mb-4 flex items-baseline justify-between gap-4">
-        <h2 className="font-display text-lg font-semibold">{module.title}</h2>
+        <Heading className="font-display text-lg font-semibold">{module.title}</Heading>
         <p className="text-[13px] text-text-subtle">
           {done} chapitre{done > 1 ? 's' : ''} sur {module.chapters.length} terminé
           {done > 1 ? 's' : ''}

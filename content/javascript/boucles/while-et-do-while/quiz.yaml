@@ -1,0 +1,54 @@
+id: javascript-while-quiz
+kind: QUIZ
+questions:
+  - id: js-while-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Combien de fois s'exécute au minimum le corps d'une boucle `do...while` ?
+    options:
+      - "Une fois"
+      - "Zéro fois"
+      - "Deux fois"
+      - "Cela dépend du nombre de break"
+    answer: [0]
+    explanation: >
+      `do...while` exécute le corps avant d'évaluer la condition : le corps s'exécute donc
+      toujours au moins une fois. Un `while` peut, lui, ne jamais s'exécuter.
+    skills:
+      - loops
+
+  - id: js-while-q2
+    type: predict_output
+    difficulty: 1
+    question: >
+      Qu'affiche `let n = 0; while (n < 3) { n++; } console.log(n);` ?
+    answer: '3'
+    explanation: >
+      La boucle tourne pour `n` égal à 0, 1 et 2. Au troisième tour, `n` passe à 3 ; la
+      condition `3 < 3` est fausse, la boucle s'arrête et affiche `3`.
+    skills:
+      - loops
+
+  - id: js-while-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      Dans `while (condition)`, la condition est évaluée après chaque exécution du corps.
+    answer: false
+    explanation: >
+      `while` évalue la condition avant chaque tour. C'est `do...while` qui l'évalue après.
+    skills:
+      - loops
+
+  - id: js-while-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `let i = 5; do { i++; } while (i < 3);`, que vaut `i` à la fin ?
+    answer: '6'
+    explanation: >
+      Le corps s'exécute une première fois sans test : `i` passe à 6. La condition `6 < 3`
+      est ensuite fausse, la boucle s'arrête. Avec `while`, `i` serait resté à 5.
+    skills:
+      - loops

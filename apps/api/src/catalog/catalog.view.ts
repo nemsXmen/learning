@@ -44,6 +44,8 @@ export interface ModuleView {
   slug: string;
   title: string;
   order: number;
+  /** The part this module belongs to, null for a technology without parts. */
+  part: string | null;
   progressPercent: number;
   chapters: ChapterView[];
 }
@@ -59,7 +61,18 @@ export interface TechnologySummary {
   skillCount: number;
 }
 
+/** A group of modules. A declared part with no module yet reads as upcoming. */
+export interface PartView {
+  slug: string;
+  title: string;
+  order: number;
+  description: string | null;
+  progressPercent: number;
+  moduleSlugs: string[];
+}
+
 export interface TechnologyDetail extends Omit<TechnologySummary, 'moduleCount' | 'chapterCount'> {
+  parts: PartView[];
   modules: ModuleView[];
   continue: { chapterSlug: string; moduleSlug: string; progressPercent: number } | null;
 }
@@ -206,6 +219,7 @@ export function buildTechnologyDetail(
         slug: module.slug,
         title: module.title,
         order: module.order,
+        part: module.part ?? null,
         // Derived from its chapters, so the two can never disagree.
         progressPercent: averagePercent(chapters.map((c) => c.progressPercent)),
         chapters,
@@ -217,6 +231,25 @@ export function buildTechnologyDetail(
   );
   const skills = graph.skills.filter((s) => s.technology === technologySlug);
 
+  // Derived from the chapters of its modules, like every level above a chapter,
+  // so a part can never disagree with the modules it groups.
+  const parts: PartView[] = technology.parts
+    .slice()
+    .sort((a, b) => a.order - b.order)
+    .map((part) => {
+      const members = modules.filter((module) => module.part === part.slug);
+      return {
+        slug: part.slug,
+        title: part.title,
+        order: part.order,
+        description: part.description ?? null,
+        progressPercent: averagePercent(
+          members.flatMap((module) => module.chapters.map((chapter) => chapter.progressPercent)),
+        ),
+        moduleSlugs: members.map((module) => module.slug),
+      };
+    });
+
   return {
     slug: technology.slug,
     name: technology.name,
@@ -225,6 +258,7 @@ export function buildTechnologyDetail(
     masteredSkillCount: skills.filter((s) => (masteryBySkill.get(s.id) ?? 0) >= MASTERED_THRESHOLD)
       .length,
     skillCount: skills.length,
+    parts,
     modules,
     continue: pickContinue(allChapters, progressByChapter),
   };

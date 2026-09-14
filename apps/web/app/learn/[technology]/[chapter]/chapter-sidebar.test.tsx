@@ -23,6 +23,7 @@ const MODULE: ModuleView = {
   slug: 'bases',
   title: 'Les bases',
   order: 1,
+  part: null,
   progressPercent: 20,
   chapters: [
     chapter({ slug: 'variables', title: 'Les variables', status: 'IN_PROGRESS' }),

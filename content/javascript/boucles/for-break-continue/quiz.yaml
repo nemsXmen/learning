@@ -1,0 +1,65 @@
+id: javascript-boucle-for-quiz
+kind: QUIZ
+questions:
+  - id: js-for-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `total` après
+      `let total = 0; for (let i = 1; i <= 5; i++) { if (i % 2 === 0) continue; total += i; }` ?
+    answer: '9'
+    explanation: >
+      `continue` saute les nombres pairs. Seuls 1, 3 et 5 sont additionnés : le total vaut 9.
+    skills:
+      - loop-control
+
+  - id: js-for-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans deux boucles imbriquées, que fait un `break` placé dans la boucle intérieure ?
+    options:
+      - "Il sort seulement de la boucle intérieure"
+      - "Il sort des deux boucles"
+      - "Il passe au tour suivant de la boucle intérieure"
+      - "Il lève une erreur de syntaxe"
+    answer: [0]
+    explanation: >
+      `break` ne sort que de la boucle la plus proche. La boucle extérieure continue avec son
+      tour suivant. Pour sortir des deux, on utilise une étiquette : `break nomDeLaBoucle`.
+    skills:
+      - loop-control
+
+  - id: js-for-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      `for (let i = 0; i <= tableau.length; i++)` parcourt exactement tous les éléments du
+      tableau.
+    answer: false
+    explanation: >
+      Les index vont de `0` à `length - 1`. Avec `<=`, le dernier tour lit
+      `tableau[tableau.length]`, qui vaut `undefined`. La condition correcte est
+      `i < tableau.length`.
+    skills:
+      - loops
+
+  - id: js-for-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Pour une boucle `for (initialisation; condition; miseAJour)`, quelles affirmations sont
+      vraies ?
+    options:
+      - "L'initialisation s'exécute une seule fois"
+      - "La condition est testée avant chaque tour"
+      - "La mise à jour s'exécute avant le corps"
+      - "continue passe directement à la mise à jour"
+    answer: [0, 1, 3]
+    explanation: >
+      L'initialisation n'a lieu qu'au début, la condition est testée avant chaque tour, et la
+      mise à jour s'exécute après le corps. `continue` saute la fin du corps et va directement
+      à la mise à jour, c'est pourquoi il ne bloque jamais le compteur d'un `for`.
+    skills:
+      - loops
+      - loop-control

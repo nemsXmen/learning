@@ -1,0 +1,68 @@
+id: javascript-mode-strict-erreurs-quiz
+kind: QUIZ
+questions:
+  - id: js-strict-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      En mode strict, que se passe-t-il quand on affecte une valeur à une variable jamais
+      déclarée ?
+    options:
+      - "Une ReferenceError est levée"
+      - "Une variable globale est créée"
+      - "La valeur est ignorée silencieusement"
+      - "Une SyntaxError empêche l'exécution du fichier"
+    answer: [0]
+    explanation: >
+      C'est l'un des apports principaux du mode strict : une faute de frappe sur un nom de
+      variable devient une `ReferenceError` au lieu de créer une variable globale.
+    skills:
+      - strict-mode-errors
+
+  - id: js-strict-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Le code d'un module ES est automatiquement en mode strict.
+    answer: true
+    explanation: >
+      Les modules ES, comme le corps des classes, sont toujours en mode strict. Il est
+      inutile d'y écrire `'use strict'`.
+    skills:
+      - strict-mode-errors
+
+  - id: js-strict-q3
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quel type d'erreur produit `null.nom` ?
+    options:
+      - "TypeError"
+      - "ReferenceError"
+      - "SyntaxError"
+      - "RangeError"
+    answer: [0]
+    explanation: >
+      `null` existe, donc ce n'est pas une `ReferenceError`. C'est une opération impossible
+      pour ce type de valeur : on ne peut pas lire une propriété de `null`, d'où une
+      `TypeError`.
+    skills:
+      - strict-mode-errors
+
+  - id: js-strict-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles erreurs sont détectées avant que la moindre ligne du fichier ne s'exécute ?
+    options:
+      - "Une parenthèse jamais fermée"
+      - "Un appel à une fonction qui n'existe pas"
+      - "Deux paramètres de même nom dans une fonction en mode strict"
+      - "La lecture d'une propriété de undefined"
+    answer: [0, 2]
+    explanation: >
+      Une parenthèse non fermée et des paramètres en double en mode strict sont des erreurs
+      de syntaxe, détectées à l'analyse. Appeler une fonction inexistante ou lire une
+      propriété de `undefined` échoue seulement au moment où la ligne s'exécute.
+    skills:
+      - strict-mode-errors

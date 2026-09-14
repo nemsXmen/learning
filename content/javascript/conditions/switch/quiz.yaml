@@ -1,0 +1,62 @@
+id: javascript-switch-quiz
+kind: QUIZ
+questions:
+  - id: js-switch-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Avec quelle comparaison `switch` confronte-t-il sa valeur à chaque `case` ?
+    options:
+      - "L'égalité stricte, comme ==="
+      - "L'égalité avec conversion, comme =="
+      - "Une comparaison des chaînes après conversion"
+      - "Object.is"
+    answer: [0]
+    explanation: >
+      `switch` utilise l'égalité stricte. Une chaîne `'1'` ne correspond donc pas à `case 1` :
+      il faut convertir la valeur avant le `switch`.
+    skills:
+      - switch-statement
+
+  - id: js-switch-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `x = 1`, ce code affiche `un`, puis quoi ?
+      `switch (x) { case 1: console.log('un'); case 2: console.log('deux'); }`
+    answer: 'deux'
+    explanation: >
+      Sans `break`, l'exécution continue dans le `case` suivant sans tester sa valeur : c'est
+      le passage d'un `case` à l'autre. Le code affiche donc `un`, puis `deux`.
+    skills:
+      - switch-statement
+
+  - id: js-switch-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Le bloc `default` doit obligatoirement être placé en dernier.
+    answer: false
+    explanation: >
+      `default` peut se trouver n'importe où dans le `switch`. Il n'est choisi que si aucun
+      `case` ne correspond. Le placer en dernier reste la convention la plus lisible.
+    skills:
+      - switch-statement
+
+  - id: js-switch-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Avec `const choix = '2'`, quelle branche s'exécute dans
+      `switch (choix) { case 2: ... default: ... }` ?
+    options:
+      - "default"
+      - "case 2"
+      - "Aucune branche"
+      - "Une TypeError est levée"
+    answer: [0]
+    explanation: >
+      La chaîne `'2'` n'est pas strictement égale au nombre `2`. Aucun `case` ne correspond,
+      donc c'est `default` qui s'exécute.
+    skills:
+      - switch-statement
