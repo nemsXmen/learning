@@ -114,13 +114,120 @@ silencieux.
 
 1. Trouve les trois annotations superflues d'un fichier et supprime-les sans
    provoquer d'erreur.
+
+   :::indice
+   Une annotation est superflue quand TypeScript infère exactement le même type : une
+   variable initialisée, un retour évident, un paramètre de rappel déjà typé par son
+   contexte.
+   :::
+
+   :::indice
+   Supprime-la et survole le nom dans ton éditeur : si le type affiché ne change pas,
+   elle ne servait à rien.
+   :::
+
+   :::solution
+   ```ts
+   // Avant
+   let port: number = 3000;
+   function double(n: number): number {
+     return n * 2;
+   }
+   const noms = ['Ada', 'Linus'].map((nom: string) => nom.toUpperCase());
+
+   // Après : TypeScript infère exactement les mêmes types
+   let port = 3000;
+   function double(n: number) {
+     return n * 2;
+   }
+   const noms = ['Ada', 'Linus'].map((nom) => nom.toUpperCase());
+   ```
+
+   Le paramètre `n` reste annoté : sans contexte, un paramètre n'est jamais inféré.
+   Attention à `const port = 3000`, qui aurait le type littéral `3000` et non `number`.
+   :::
+
 2. Fais accepter `{ mode: 'sombre' }` par une fonction attendant `'sombre' | 'clair'`,
    sans utiliser `as` autrement qu'avec `const`.
+
+   :::indice
+   Dans un objet, `'sombre'` est élargi en `string` : la propriété pourrait changer.
+   :::
+
+   :::solution
+   ```ts
+   function appliquer(mode: 'sombre' | 'clair') {
+     console.log(`Thème ${mode}`);
+   }
+
+   const options = { mode: 'sombre' } as const; // mode : 'sombre', en lecture seule
+   appliquer(options.mode); // accepté
+   ```
+
+   Sans `as const`, `options.mode` est une `string` et l'appel est refusé. Annoter
+   l'objet, `const options: { mode: 'sombre' | 'clair' } = …`, fonctionne aussi.
+   :::
+
 3. Écris une fonction dont le type de retour est correctement inféré comme union
    littérale.
+
+   :::indice
+   Écris plusieurs `return` de chaînes littérales différentes, puis regarde le type de
+   retour qu'affiche l'éditeur.
+   :::
+
+   :::solution
+   ```ts
+   function niveau(score: number) {
+     if (score >= 80) return 'maîtrisé';
+     if (score >= 60) return 'en cours';
+     return 'à revoir';
+   }
+   // retour inféré : 'maîtrisé' | 'en cours' | 'à revoir'
+   ```
+
+   Avec un seul `return 'maîtrisé'`, le retour serait élargi en `string` : TypeScript
+   conserve une union de littéraux, pas un littéral isolé.
+   :::
 
 ## Questions d'entretien
 
 - Pourquoi `const x = 'a'` et `let y = 'a'` n'ont-ils pas le même type ?
+
+  :::indice
+  Demande-toi si la valeur peut encore changer.
+  :::
+
+  :::reponse
+  `const x = 'a'` ne peut jamais changer : TypeScript lui donne le type littéral `'a'`.
+  `let y = 'a'` peut être réaffectée : son type est élargi en `string`. C'est
+  l'élargissement des littéraux (*widening*).
+  :::
+
 - Que fait `as const`, et dans quel cas est-ce indispensable ?
+
+  :::indice
+  Quel type obtient-on pour un tableau ou un objet littéral déclaré avec `const` seul ?
+  :::
+
+  :::reponse
+  `as const` fige un littéral : chaînes et nombres gardent leur type littéral, les
+  tableaux deviennent des tuples en lecture seule, les propriétés deviennent
+  `readonly`. C'est indispensable pour passer une propriété d'objet à une fonction qui
+  attend une union littérale, ou pour dériver une union d'un tableau :
+  `const MODES = ['sombre', 'clair'] as const; type Mode = (typeof MODES)[number];`.
+  :::
+
 - Quelle différence entre `as` et une véritable vérification de type à l'exécution ?
+
+  :::indice
+  Que reste-t-il de `as` une fois le code compilé en JavaScript ?
+  :::
+
+  :::reponse
+  `as` est une assertion : elle demande au compilateur de faire confiance, ne vérifie
+  rien et disparaît à la compilation. Si la donnée ne correspond pas, l'erreur surgit
+  plus loin, à l'exécution. Une vraie vérification — `typeof`, `in`, une garde de type,
+  un schéma Zod — s'exécute et affine le type en conséquence. Pour une donnée venue de
+  l'extérieur (API, formulaire, JSON), seule la vérification protège.
+  :::

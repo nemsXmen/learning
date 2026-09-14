@@ -141,6 +141,27 @@ test.describe('parcours au clavier', () => {
       await expect(page).toHaveURL(/#contenu$/);
     });
 
+    test('les indices s’ouvrent au clavier, un à la fois, et la solution reste à portée', async ({ page }) => {
+      await page.goto('/learn/javascript/variables');
+      await page.waitForLoadState('networkidle');
+
+      const first = page.locator('summary', { hasText: 'Voir un indice' }).first();
+      const next = page.locator('summary', { hasText: 'Un autre indice' }).first();
+      // The second hint of the first exercise waits for the first to be opened.
+      await expect(next).toBeHidden();
+
+      await first.focus();
+      await page.keyboard.press('Enter');
+      await expect(first.locator('xpath=..')).toHaveAttribute('open', '');
+      await expect(next).toBeVisible();
+
+      // "Je ne sais pas" is available without opening every hint first.
+      const solution = page.locator('summary', { hasText: /je ne sais pas/i }).first();
+      await solution.focus();
+      await page.keyboard.press('Enter');
+      await expect(solution.locator('xpath=..')).toHaveAttribute('open', '');
+    });
+
     test('le test se passe entièrement au clavier, et le résultat ne dépend pas de la couleur', async ({
       page,
     }) => {

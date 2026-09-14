@@ -56,6 +56,37 @@ The body starts at level 2. The title lives in the frontmatter (`title`) and the
 reader draws it as the page's only `<h1>`; a `# Title` in the body is rejected with
 `TITLE_IN_BODY` (a `#` comment inside fenced code is not a heading).
 
+### Hints and solutions
+
+Every exercise and every interview question carries help, so a learner who is stuck
+moves on without leaving the platform. It is written under the item, indented to its
+content, as blocks closed by `:::`:
+
+````markdown
+1. Écris `once(fn)`, qui n'exécute `fn` qu'au premier appel.
+
+   :::indice
+   Il te faut deux variables qui survivent entre les appels.
+   :::
+
+   :::solution
+   ```js
+   function once(fn) { … }
+   ```
+   :::
+````
+
+- `:::indice` — one or more, revealed in order: the next one only appears once the
+  previous one is open.
+- `:::solution` closes an exercise, `:::reponse` an interview question. Either is
+  offered at any time as « Je ne sais pas — voir la solution » / « voir une réponse ».
+
+The reader renders them as native `<details>`: closed by default, opened by keyboard,
+no client script. `content:validate` rejects an exercise without an `indice` and a
+`solution`, or an interview question without an `indice` and a `reponse`
+(`MISSING_HINT`), and an unknown, stray or unclosed block (`INVALID_CONTAINER`). A line
+holding only `:::` must not appear inside a code sample within a block.
+
 ## Skill graph (`skills.yaml`)
 
 ```yaml
@@ -99,7 +130,9 @@ in V1 — see the open question in [decisions.md](./decisions.md).
 ## Validation (`pnpm content:validate`, CDC §44)
 
 Fails the build on: duplicate ids or slugs, unknown prerequisite, unknown skill, cyclic
-skill graph, missing required frontmatter field, missing required section, malformed
+skill graph, missing required frontmatter field, missing required section, a title repeated in the
+body, an exercise or interview question without its hint and solution, a malformed
+hint block, malformed
 quiz, `answer` index out of range, missing explanation, broken relative link or asset,
 an unreadable file or invalid YAML, and an empty content directory.
 

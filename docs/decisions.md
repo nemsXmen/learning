@@ -291,6 +291,24 @@ that depends on them is accepted.
 
 ---
 
+## Decision: hints and solutions as Markdown blocks rendered to native `<details>`
+
+- Status: accepted
+- Context: exercises and interview questions ended each chapter with no help, so a
+  learner without the answer had to leave the platform to find one. CDC §30 gives
+  projects hints and a solution; it says nothing for chapters.
+- Decision: `:::indice`, `:::solution` and `:::reponse` blocks written under each item
+  in `lesson.md`, parsed by a small markdown-it block rule and rendered as `<details>`.
+  Hints reveal in order through CSS alone; the solution is always one action away.
+  `content:validate` makes the help mandatory, as it already does for quiz
+  explanations (CDC §76).
+- Consequences: the lesson stays the single source; no new file type, no payload change,
+  no client script, keyboard access for free. Three fixed block names did not justify a
+  plugin dependency. Nothing records that a hint or a solution was opened, so the engine
+  cannot use it — see the open question below.
+- CDC question or assumption: **assumption** — opening a solution costs no XP and does
+  not lower mastery in V1.
+
 # Open questions
 
 These block acceptance of the features named. Do not guess an answer in code.
@@ -370,3 +388,11 @@ These block acceptance of the features named. Do not guess an answer in code.
   skill reaches the mastery pass threshold, and the engine may still recommend a
   review before an unlocked chapter rather than blocking it (CDC §14).
 - Needed: confirmation that unlocking is advisory-plus-hard-gate as described.
+
+## Question: should opening a hint or a solution count as evidence
+
+- Affects: `06-chapter-reader`, `10-skill-mastery-and-review`.
+- Current handling: **assumption** — no. Hints and solutions are native `<details>`,
+  nothing is recorded, and neither XP nor mastery moves.
+- Needed: whether « je ne sais pas » should weaken the skill it belongs to or schedule a
+  review. Either would mean recording the action server-side.

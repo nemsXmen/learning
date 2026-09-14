@@ -224,6 +224,45 @@ describe('validation issues', () => {
     expect(codes).not.toContain('TITLE_IN_BODY');
   });
 
+  /** Every required section, with the two practice sections given explicitly. */
+  function withPractice(exercises: string, interview: string): string {
+    return REQUIRED_SECTIONS.map((section) => {
+      if (section === 'Exercices') return `## Exercices\n\n${exercises}\n`;
+      if (section === "Questions d'entretien") return `## Questions d'entretien\n\n${interview}\n`;
+      return `## ${section}\n\nDu contenu.\n`;
+    }).join('\n');
+  }
+  const helpedExercise = '1. Fais ceci.\n\n   :::indice\n   Une piste.\n   :::\n\n   :::solution\n   La solution.\n   :::';
+  const answeredQuestion = '- Pourquoi ?\n\n  :::indice\n  Une piste.\n  :::\n\n  :::reponse\n  Parce que.\n  :::';
+  const practiceCodes = (exercises: string, interview: string) =>
+    codesFor(
+      validTree({
+        'javascript/fundamentals/alpha/lesson.md': lesson(VALID_FRONTMATTER, withPractice(exercises, interview)),
+      }),
+    );
+
+  it('accepts exercises and interview questions that carry their help', async () => {
+    const codes = await practiceCodes(helpedExercise, answeredQuestion);
+    expect(codes).not.toContain('MISSING_HINT');
+    expect(codes).not.toContain('INVALID_CONTAINER');
+  });
+
+  it('MISSING_HINT when an exercise leaves the learner without a hint or a solution', async () => {
+    expect(await practiceCodes('1. Fais ceci.', answeredQuestion)).toContain('MISSING_HINT');
+  });
+
+  it('MISSING_HINT when an interview question has a solution instead of an answer', async () => {
+    const withSolution = answeredQuestion.replace(':::reponse', ':::solution');
+    expect(await practiceCodes(helpedExercise, withSolution)).toContain('MISSING_HINT');
+  });
+
+  it('INVALID_CONTAINER on an unknown or an unclosed block', async () => {
+    const unknown = helpedExercise.replace(':::indice', ':::astuce');
+    expect(await practiceCodes(unknown, answeredQuestion)).toContain('INVALID_CONTAINER');
+    const unclosed = '1. Fais ceci.\n\n   :::indice\n   Jamais fermé.';
+    expect(await practiceCodes(unclosed, answeredQuestion)).toContain('INVALID_CONTAINER');
+  });
+
   it('MALFORMED_FILE on absent frontmatter and on broken YAML', async () => {
     expect(
       await codesFor(

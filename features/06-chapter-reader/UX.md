@@ -12,6 +12,8 @@ action. The sidebar shows `✓` completed, `→` current and `○` not started (
 - empty: a chapter with no quiz yet still offers next-chapter navigation.
 - error: content fetch failure renders a retryable message with the sidebar intact.
 - success: completion shows the checklist (lesson, practice, test) and one primary action.
+- stuck on an exercise: « Voir un indice » opens the first hint; « Un autre indice »
+  appears only then; « Je ne sais pas — voir la solution » is available at any moment.
 - disabled / permission denied: locked chapter shows the required skills and a link to
   the review that unlocks it.
 

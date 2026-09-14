@@ -122,6 +122,48 @@
 .chapter-prose hr { border: 0; border-top: 1px solid var(--color-border); margin: 2em 0; }
 
 /*
+ * Hints and solutions (docs/content-model.md): native <details>, so they open by
+ * keyboard and need no script. A hint only appears once the one before it is
+ * open — help one step at a time — while the solution stays one action away,
+ * because "je ne sais pas" is a legitimate answer.
+ */
+.chapter-prose details { margin-top: 0.75em; }
+.chapter-prose details > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-accent-soft);
+  background: var(--color-accent-surface);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--radius-pill);
+  padding: 0.3rem 0.85rem;
+}
+.chapter-prose details > summary::-webkit-details-marker { display: none; }
+.chapter-prose details > summary::before { content: '+'; content: '+' / ''; font-family: var(--font-mono); }
+.chapter-prose details[open] > summary::before { content: '−'; content: '−' / ''; }
+.chapter-prose details > summary:focus-visible { outline: 2px solid var(--color-accent-soft); outline-offset: 2px; }
+.chapter-prose details.solution > summary {
+  color: var(--color-text-muted);
+  background: transparent;
+  border-color: var(--color-border-strong);
+}
+.chapter-prose details > .reveal {
+  margin-top: 0.6rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-surface);
+  border-left: 2px solid var(--color-accent-border);
+  border-radius: 0 var(--radius-card) var(--radius-card) 0;
+}
+.chapter-prose details > .reveal > * + * { margin-top: 0.75em; }
+
+/* The next hint waits until the previous one has been opened. */
+.chapter-prose details.hint:not([open]) + details.hint { display: none; }
+
+/*
  * highlight.js emits semantic classes, so one stylesheet themes code in both
  * light and dark — the reason we did not pick an inline-colour highlighter.
  */

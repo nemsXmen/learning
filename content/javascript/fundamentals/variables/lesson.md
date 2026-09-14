@@ -109,14 +109,108 @@ boucles, et elle explique à elle seule pourquoi `var` a disparu du code moderne
 
 1. Écris un bloc où une même variable `total` existe en deux versions indépendantes,
    sans jamais réaffecter.
-2. Corrige une boucle `var` avec `setTimeout` sans utiliser `let` (indice : une
-   fonction qui capture son argument).
+
+   :::indice
+   Un bloc `{ }` ouvre une nouvelle portée pour `let` et `const`.
+   :::
+
+   :::indice
+   Déclare `total` une fois dehors, puis une seconde fois dans le bloc : c'est une
+   autre liaison, qui masque la première le temps du bloc.
+   :::
+
+   :::solution
+   ```js
+   const total = 10;
+   {
+     const total = 20; // une nouvelle liaison, propre au bloc
+     console.log(total); // 20
+   }
+   console.log(total); // 10
+   ```
+
+   Aucune réaffectation : deux déclarations, donc deux liaisons distinctes.
+   :::
+
+2. Corrige une boucle `var` avec `setTimeout` sans utiliser `let`.
+
+   :::indice
+   Les trois rappels partagent le même `i`, qu'ils lisent une fois la boucle terminée.
+   :::
+
+   :::indice
+   Une fonction qui reçoit `i` en argument crée, à chaque appel, son propre paramètre.
+   :::
+
+   :::solution
+   ```js
+   for (var i = 0; i < 3; i++) {
+     (function (j) {
+       setTimeout(function () {
+         console.log(j);
+       }, 0);
+     })(i);
+   }
+   // 0, 1, 2
+   ```
+
+   Autre voie : `setTimeout(console.log, 0, i)` transmet la valeur de `i` au rappel au
+   moment où la minuterie est programmée.
+   :::
+
 3. Explique en une phrase pourquoi `const config = {}` puis `config.debug = true`
    ne lève aucune erreur.
+
+   :::indice
+   Demande-toi ce que `const` protège : la liaison, ou la valeur qu'elle désigne ?
+   :::
+
+   :::solution
+   `const` interdit de réaffecter la liaison `config`, pas de modifier l'objet qu'elle
+   désigne : `config.debug = true` ajoute une propriété, et `config` pointe toujours
+   vers le même objet.
+   :::
 
 ## Questions d'entretien
 
 - Quelle différence entre la remontée (*hoisting*) de `var` et celle de `let` ?
+
+  :::indice
+  Les deux sont remontées. Regarde ce qui se passe quand on les lit avant leur ligne
+  de déclaration.
+  :::
+
+  :::reponse
+  `var` est remontée et initialisée à `undefined` : la lire avant sa déclaration
+  renvoie `undefined`. `let` et `const` sont remontées mais pas initialisées : jusqu'à
+  leur déclaration, elles sont dans la zone morte temporelle, et y accéder lève une
+  `ReferenceError`. `var` est limitée à la fonction, `let` et `const` au bloc.
+  :::
+
 - `const` rend-il un objet immuable ? Pourquoi cette question revient-elle si souvent ?
+
+  :::indice
+  Essaie de modifier une propriété d'un objet déclaré avec `const`.
+  :::
+
+  :::reponse
+  Non. `const` empêche de réaffecter la liaison, pas de muter la valeur : les
+  propriétés restent modifiables. Pour figer un objet, il faut `Object.freeze()`, et
+  seulement en surface — les objets imbriqués restent modifiables. La question revient
+  parce qu'elle sépare qui sait ce qu'est une liaison de qui a retenu « const, donc
+  constant ».
+  :::
+
 - Pourquoi une boucle `let` produit-elle une liaison par itération alors qu'un bloc
   ordinaire n'en produit qu'une ?
+
+  :::indice
+  Pense à ce que capturent les fonctions créées dans le corps de la boucle.
+  :::
+
+  :::reponse
+  Pour une boucle `for`, la spécification crée une nouvelle liaison `let` à chaque
+  itération et y recopie la valeur de l'itération précédente. Chaque fonction créée
+  dans le corps capture donc sa propre liaison. Un bloc ordinaire n'est exécuté qu'une
+  fois : il ne crée qu'un environnement, donc qu'une liaison.
+  :::

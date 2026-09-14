@@ -11,7 +11,7 @@ import {
   skillsFileSchema,
   technologyFileSchema,
 } from '@app/validation';
-import { extractRelativeLinks, extractLevelOneHeadings, extractSections, normaliseEol, parseFrontmatter } from './frontmatter';
+import { extractRelativeLinks, extractLevelOneHeadings, extractSections, scanPractice, normaliseEol, parseFrontmatter } from './frontmatter';
 import { issue, type IssueCode, type ValidationIssue } from './issues';
 import type { ChapterNode, ContentGraph, ModuleNode, QuizNode, SkillNode, TechnologyNode } from './graph';
 
@@ -248,6 +248,29 @@ export async function readContentTree(dir: string): Promise<LoadedTree> {
               `Titre « # ${heading.text} » dans le corps : le titre vient du frontmatter, le corps commence au niveau 2`,
             ),
           );
+        }
+
+        const practice = scanPractice(parsed.body, parsed.bodyStartLine);
+        for (const problem of practice.problems) {
+          issues.push(issue(lessonPath, problem.line, 'INVALID_CONTAINER', problem.message));
+        }
+        for (const item of practice.items) {
+          const answer = item.section === 'Exercices' ? 'solution' : 'reponse';
+          const missing = [
+            item.blocks.includes('indice') ? null : '« :::indice »',
+            item.blocks.includes(answer) ? null : `« :::${answer} »`,
+          ].filter((part): part is string => part !== null);
+          if (missing.length > 0) {
+            const what = item.section === 'Exercices' ? 'Exercice' : "Question d'entretien";
+            issues.push(
+              issue(
+                lessonPath,
+                item.line,
+                'MISSING_HINT',
+                `${what} sans ${missing.join(' ni ')} : l'apprenant doit pouvoir avancer sans quitter la plateforme`,
+              ),
+            );
+          }
         }
 
         for (const link of extractRelativeLinks(parsed.body, parsed.bodyStartLine)) {

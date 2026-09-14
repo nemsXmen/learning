@@ -10,5 +10,9 @@
 - [x] Axe passes; keyboard-only journey works; AA contrast in both themes - no
       violation in either theme, focus visible at every tab stop, and the chapter
       test or completion reached by keyboard (`pnpm test:a11y`)
+- [x] Exercises and interview questions offer ordered hints and a solution, by keyboard -
+      every item of the five chapters carries them (`content:validate` refuses one that
+      does not); `pnpm test:a11y` opens a hint by keyboard, checks the next one appears
+      only then, reaches « Je ne sais pas », and scans the chapter with every block open
 - [x] No client-side Markdown parsing and no answer key in the payload
 - [x] Automated tests pass

@@ -124,14 +124,128 @@ tableau empêche ce tableau d'être libéré. Extrais la donnée utile avant de 
 
 1. Écris `once(fn)` : une fonction qui n'exécute `fn` qu'au premier appel et renvoie
    ensuite toujours le premier résultat.
+
+   :::indice
+   Il te faut deux variables qui survivent entre les appels : « déjà appelée ? » et
+   « le résultat ».
+   :::
+
+   :::indice
+   Garde-les dans la portée de `once`, et renvoie une fonction qui les lit et les met à
+   jour.
+   :::
+
+   :::solution
+   ```js
+   function once(fn) {
+     let appelee = false;
+     let resultat;
+
+     return function (...args) {
+       if (!appelee) {
+         appelee = true;
+         resultat = fn.apply(this, args);
+       }
+       return resultat;
+     };
+   }
+
+   const init = once(() => Math.random());
+   init() === init(); // true
+   ```
+   :::
+
 2. Corrige la boucle `var` sans utiliser `let`, en créant un environnement par
    itération.
+
+   :::indice
+   Chaque appel de fonction crée un nouvel environnement. Combien d'appels te faut-il ?
+   :::
+
+   :::solution
+   ```js
+   for (var i = 0; i < 3; i++) {
+     (function (copie) {
+       setTimeout(function () {
+         console.log(copie);
+       }, 0);
+     })(i);
+   }
+   // 0, 1, 2
+   ```
+
+   La fonction appelée à chaque tour crée un environnement où `copie` garde la valeur
+   de ce tour-là.
+   :::
+
 3. Implémente un compteur avec `incrementer`, `decrementer` et `valeur`, sans exposer
    la variable interne.
+
+   :::indice
+   La variable doit vivre dans une fonction ; seules les fonctions renvoyées doivent
+   pouvoir la toucher.
+   :::
+
+   :::solution
+   ```js
+   function creerCompteur() {
+     let compte = 0;
+
+     return {
+       incrementer: () => ++compte,
+       decrementer: () => --compte,
+       valeur: () => compte,
+     };
+   }
+
+   const compteur = creerCompteur();
+   compteur.incrementer();
+   compteur.valeur(); // 1
+   compteur.compte; // undefined : la variable n'est pas exposée
+   ```
+   :::
 
 ## Questions d'entretien
 
 - Qu'est-ce qu'une closure, et pourquoi dire « elle capture la valeur » est-il faux ?
+
+  :::indice
+  Modifie la variable après avoir créé la fonction, puis appelle la fonction.
+  :::
+
+  :::reponse
+  Une closure est une fonction accompagnée de l'environnement lexical où elle a été
+  créée. Elle capture la liaison, pas la valeur : si la variable change après la
+  création de la fonction, la fonction voit la nouvelle valeur. C'est exactement ce qui
+  piège la boucle `var` avec `setTimeout`.
+  :::
+
 - Pourquoi une boucle `var` avec `setTimeout` affiche-t-elle trois fois la même
   valeur, et que change `let` exactement ?
+
+  :::indice
+  Combien de variables `i` existe-t-il pendant toute la boucle `var` ?
+  :::
+
+  :::reponse
+  Avec `var`, il n'existe qu'une liaison `i` pour toute la boucle. Les rappels
+  s'exécutent après la fin de la boucle et lisent tous cette même liaison, qui vaut
+  alors 3. Avec `let`, la boucle `for` crée une nouvelle liaison à chaque itération :
+  chaque rappel capture la sienne, d'où 0, 1, 2.
+  :::
+
 - Comment une closure peut-elle provoquer une fuite mémoire, et comment l'éviter ?
+
+  :::indice
+  Tant qu'une fonction reste joignable, son environnement l'est aussi. Qu'est-ce qui
+  garde une fonction joignable longtemps ?
+  :::
+
+  :::reponse
+  Une closure garde vivant tout ce qu'elle référence. Si elle est conservée longtemps —
+  écouteur d'événement jamais retiré, minuterie jamais arrêtée, cache global — les
+  objets qu'elle capture ne sont jamais libérés. Pour l'éviter : retirer les écouteurs
+  (`removeEventListener`, `AbortController`), arrêter les minuteries, ne capturer que ce
+  qui sert plutôt qu'un gros objet entier, et associer des données à des objets avec
+  une `WeakMap`.
+  :::

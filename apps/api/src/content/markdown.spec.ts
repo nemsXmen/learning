@@ -53,6 +53,60 @@ describe('renderMarkdown', () => {
   });
 });
 
+describe('hints and solutions', () => {
+  const exercise = [
+    '1. Écris `once(fn)`.',
+    '',
+    '   :::indice',
+    '   Garde un drapeau dans la portée de `once`.',
+    '   :::',
+    '',
+    '   :::indice',
+    '   Renvoie une fonction qui le lit.',
+    '   :::',
+    '',
+    '   :::solution',
+    '   ```js',
+    '   const appelee = false;',
+    '   ```',
+    '   :::',
+  ].join('\n');
+
+  it('renders a hint as a closed disclosure the learner opens', () => {
+    const { html } = renderMarkdown(exercise);
+    expect(html).toContain('<details class="hint"><summary>Voir un indice</summary><div class="reveal">');
+    expect(html).toContain('<code>once</code>.</p>');
+    expect(html).not.toMatch(/<details[^>]*\sopen/);
+  });
+
+  it('labels a hint that follows another as more help', () => {
+    const { html } = renderMarkdown(exercise);
+    expect(html.indexOf('Voir un indice')).toBeLessThan(html.indexOf('Un autre indice'));
+  });
+
+  it('offers the solution as "je ne sais pas" and still highlights its code', () => {
+    const { html } = renderMarkdown(exercise);
+    expect(html).toContain('<details class="solution"><summary>Je ne sais pas — voir la solution</summary>');
+    expect(html).toContain('<pre class="hljs language-js">');
+  });
+
+  it('offers an answer, not a solution, to an interview question', () => {
+    const { html } = renderMarkdown('- Pourquoi ?\n\n  :::reponse\n  Parce que.\n  :::');
+    expect(html).toContain('<summary>Je ne sais pas — voir une réponse</summary>');
+  });
+
+  it('leaves an unknown block name as plain text', () => {
+    const { html } = renderMarkdown(':::astuce\nTexte.\n:::');
+    expect(html).not.toContain('<details');
+    expect(html).toContain(':::astuce');
+  });
+
+  it('does not let a raw <details open> in the source become live markup', () => {
+    const { html } = renderMarkdown('<details open><summary>x</summary></details>');
+    expect(html).not.toMatch(/<details/);
+  });
+});
+
 describe('sanitisation', () => {
   const hostile = [
     '<script>alert(1)</script>',

@@ -19,6 +19,8 @@ the module, and finishes with an obvious next action.
 - Chapter footer: previous / next navigation and the next best action (quiz, or the
   engine recommendation once slice 13 lands).
 - Sticky, collapsible sidebar on desktop; a drawer on mobile.
+- Every exercise and interview question offers hints revealed one at a time and a
+  « Je ne sais pas » action that shows the solution, without leaving the page.
 
 ### Must not
 

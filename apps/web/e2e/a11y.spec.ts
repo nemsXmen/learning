@@ -57,6 +57,14 @@ for (const theme of THEMES) {
           // one <main>, and a screen that renders its own would nest a second.
           await expect(page.locator('main')).toHaveCount(1);
 
+          // Hints and solutions are closed <details>, and closed content is not
+          // rendered, so axe would never see it. Open them all before scanning.
+          await page.evaluate(() => {
+            document.querySelectorAll('details').forEach((details) => {
+              details.open = true;
+            });
+          });
+
           const { violations } = await scan(page);
           // Compared on ids so the diff stays readable; the detail — which rule,
           // which element, which contrast ratio — travels in the message.

@@ -118,11 +118,119 @@ le générique était censé apporter. La contrainte se met dans la signature.
 ## Exercices
 
 1. Type `dernier(liste)` de sorte que `dernier([1, 2])` soit `number | undefined`.
+
+   :::indice
+   Le type des éléments doit venir de l'argument : c'est un paramètre de type.
+   :::
+
+   :::indice
+   Un tableau peut être vide : le type de retour doit l'avouer.
+   :::
+
+   :::solution
+   ```ts
+   function dernier<T>(liste: readonly T[]): T | undefined {
+     return liste[liste.length - 1];
+   }
+
+   const n = dernier([1, 2]); // number | undefined
+   ```
+   :::
+
 2. Écris `regrouperPar<T, K extends keyof T>` renvoyant un `Map` correctement typé.
+
+   :::indice
+   La clé du `Map` a le type de la propriété choisie : `T[K]`.
+   :::
+
+   :::indice
+   Chaque valeur du `Map` est un tableau d'éléments de type `T`.
+   :::
+
+   :::solution
+   ```ts
+   function regrouperPar<T, K extends keyof T>(liste: readonly T[], cle: K): Map<T[K], T[]> {
+     const groupes = new Map<T[K], T[]>();
+     for (const element of liste) {
+       const valeur = element[cle];
+       const groupe = groupes.get(valeur);
+       if (groupe) groupe.push(element);
+       else groupes.set(valeur, [element]);
+     }
+     return groupes;
+   }
+
+   const parNiveau = regrouperPar(
+     [
+       { nom: 'Ada', niveau: 'expert' },
+       { nom: 'Linus', niveau: 'avancé' },
+     ],
+     'niveau',
+   );
+   // Map<string, { nom: string; niveau: string }[]>
+   ```
+   :::
+
 3. Trouve le générique fantôme dans une signature donnée et remplace-le.
+
+   :::indice
+   Un paramètre de type qui n'apparaît qu'une seule fois ne relie rien : il ne
+   contraint aucune autre position.
+   :::
+
+   :::solution
+   ```ts
+   // Avant : T n'apparaît qu'une fois, il ne relie aucune entrée à aucune sortie
+   function afficherAvant<T>(valeur: T): void {
+     console.log(valeur);
+   }
+
+   // Après : même comportement, sans paramètre inutile
+   function afficher(valeur: unknown): void {
+     console.log(valeur);
+   }
+   ```
+   :::
 
 ## Questions d'entretien
 
 - À quoi sert un générique que `any` ne saurait pas exprimer ?
+
+  :::indice
+  Compare le type de `identite(42)` écrit avec `any`, puis avec un générique.
+  :::
+
+  :::reponse
+  Un générique relie des types : `function identite<T>(x: T): T` garantit que la
+  sortie a le type de l'entrée, donc `identite(42)` est un `number`. Avec `any`, le lien
+  est perdu : la sortie est `any`, et TypeScript cesse de vérifier tout ce qui en
+  découle.
+  :::
+
 - Que change `T extends { id: string }` pour le corps de la fonction ?
+
+  :::indice
+  Qu'as-tu le droit d'écrire avec une valeur de type `T` sans aucune contrainte ?
+  :::
+
+  :::reponse
+  Sans contrainte, `T` peut être n'importe quoi : le corps ne peut lire aucune
+  propriété. Avec `T extends { id: string }`, il peut lire `valeur.id` comme une
+  `string`, et l'appelant ne peut passer que des valeurs qui ont un `id` de ce type. Si
+  la fonction renvoie `T`, l'appelant récupère son type complet, pas seulement
+  `{ id: string }`.
+  :::
+
 - Comment reconnaître un paramètre de type inutile dans une signature ?
+
+  :::indice
+  Compte combien de fois chaque paramètre de type apparaît dans la signature.
+  :::
+
+  :::reponse
+  Un paramètre de type utile relie au moins deux positions : deux paramètres, ou un
+  paramètre et le retour. S'il n'apparaît qu'une fois, il ne contraint rien et se
+  remplace par sa contrainte ou par `unknown`. Exemple :
+  `function longueur<T extends { length: number }>(x: T): number` s'écrit simplement
+  `function longueur(x: { length: number }): number`.
+  :::

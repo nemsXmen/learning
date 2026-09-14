@@ -92,6 +92,77 @@ export function extractLevelOneHeadings(
   return headings;
 }
 
+export type PracticeKind = 'indice' | 'solution' | 'reponse';
+export type PracticeSection = 'Exercices' | "Questions d'entretien";
+
+export interface PracticeScan {
+  items: Array<{ section: PracticeSection; line: number; blocks: PracticeKind[] }>;
+  problems: Array<{ line: number; message: string }>;
+}
+
+const PRACTICE_SECTIONS: readonly string[] = ['Exercices', "Questions d'entretien"];
+const PRACTICE_KINDS: readonly string[] = ['indice', 'solution', 'reponse'];
+
+/**
+ * Exercises and interview questions, with the hint and solution blocks written
+ * under each (docs/content-model.md). Fence-aware: `:::` inside code is code.
+ */
+export function scanPractice(body: string, bodyStartLine: number): PracticeScan {
+  const items: PracticeScan['items'] = [];
+  const problems: PracticeScan['problems'] = [];
+  const lines = body.split('\n');
+  let section: PracticeSection | null = null;
+  let fence: string | null = null;
+  let open: { kind: string; line: number } | null = null;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const raw = lines[index] ?? '';
+    const line = bodyStartLine + index;
+
+    const marker = /^\s*(```|~~~)/.exec(raw)?.[1];
+    if (marker) {
+      fence = fence === null ? marker : fence === marker ? null : fence;
+      continue;
+    }
+    if (fence !== null) continue;
+
+    const heading = /^##\s+(.+?)\s*$/.exec(raw)?.[1];
+    if (heading) {
+      if (open) problems.push({ line: open.line, message: `Bloc « :::${open.kind} » jamais fermé` });
+      open = null;
+      section = PRACTICE_SECTIONS.includes(heading) ? (heading as PracticeSection) : null;
+      continue;
+    }
+
+    if (/^\s*:::\s*$/.test(raw)) {
+      if (!open) problems.push({ line, message: 'Fermeture « ::: » sans bloc ouvert' });
+      open = null;
+      continue;
+    }
+
+    const opener = /^\s*:::\s*(\S+)\s*$/.exec(raw)?.[1];
+    if (opener) {
+      if (open) problems.push({ line: open.line, message: `Bloc « :::${open.kind} » jamais fermé` });
+      open = { kind: opener, line };
+      const current = items[items.length - 1];
+      if (!PRACTICE_KINDS.includes(opener)) {
+        problems.push({ line, message: `Bloc « :::${opener} » inconnu (attendu : indice, solution ou reponse)` });
+      } else if (!section || !current || current.section !== section) {
+        problems.push({ line, message: `Bloc « :::${opener} » hors d'un exercice ou d'une question d'entretien` });
+      } else {
+        current.blocks.push(opener as PracticeKind);
+      }
+      continue;
+    }
+
+    if (open) continue;
+    if (section && /^(\d+\.|[-*])\s+\S/.test(raw)) items.push({ section, line, blocks: [] });
+  }
+
+  if (open) problems.push({ line: open.line, message: `Bloc « :::${open.kind} » jamais fermé` });
+  return { items, problems };
+}
+
 /** Relative Markdown links, excluding anchors and absolute URLs. */
 export function extractRelativeLinks(
   body: string,
