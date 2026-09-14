@@ -703,7 +703,12 @@ function chapter(overrides: Partial<ChapterRef> = {}): ChapterRef {
 
 describe('isChapterUnlocked', () => {
   it('requires every prerequisite skill to pass the threshold', () => {
-    const skills = [skill({ skillId: 'scope', masteryScore: 70 }), skill({ skillId: 'functions', masteryScore: 30 })];
+    // At the threshold a prerequisite counts; one point below, it does not.
+    const threshold = PARAMETERS.mastery.unlockThreshold;
+    const skills = [
+      skill({ skillId: 'scope', masteryScore: threshold }),
+      skill({ skillId: 'functions', masteryScore: threshold - 1 }),
+    ];
     expect(isChapterUnlocked(chapter({ prerequisiteSkillIds: ['scope'] }), skills)).toBe(true);
     expect(isChapterUnlocked(chapter({ prerequisiteSkillIds: ['scope', 'functions'] }), skills)).toBe(false);
     expect(isChapterUnlocked(chapter({ prerequisiteSkillIds: [] }), skills)).toBe(true);

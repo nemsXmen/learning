@@ -25,8 +25,15 @@ export const PARAMETERS = {
     masteredThreshold: 80,
     /** Below this, a skill is weak enough to surface as needing attention. */
     weakThreshold: 60,
-    /** Prerequisite mastery required before a chapter unlocks. */
-    unlockThreshold: 60,
+    /**
+     * Prerequisite mastery required before a chapter unlocks. 30 means « read the
+     * chapter, then pass its test once » (trajectory.test.ts). It used to be 60, the
+     * quiz pass mark, which took three perfect attempts per prerequisite and left
+     * almost all of Part 1 locked for a new learner. The gate opens earlier; the
+     * follow-up does not disappear, since a skill under weakThreshold still surfaces
+     * for review and in the Boost.
+     */
+    unlockThreshold: 30,
   },
 
   confidence: {

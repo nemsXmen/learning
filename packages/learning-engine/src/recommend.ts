@@ -6,7 +6,7 @@ import type { ChapterRef, LearnerSnapshot, Recommendation, SkillSnapshot } from 
 
 const { mastery: M, priority: P } = PARAMETERS;
 
-/** A chapter unlocks when every prerequisite skill reaches the pass threshold. */
+/** A chapter unlocks when every prerequisite skill reaches the unlock threshold. */
 export function isChapterUnlocked(chapter: ChapterRef, skills: SkillSnapshot[]): boolean {
   const byId = new Map(skills.map((skill) => [skill.skillId, skill]));
   return chapter.prerequisiteSkillIds.every(

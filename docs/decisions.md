@@ -324,6 +324,24 @@ that depends on them is accepted.
   display structure only: unlocking still follows skills.
 - CDC question or assumption: none.
 
+## Decision: a chapter unlocks when its prerequisites are read and passed once
+
+- Status: accepted
+- Context: the unlocking rule was an open question, handled by assuming the quiz pass
+  mark (60 % mastery) as the gate. With the default engine coefficients that took three
+  perfect tests per prerequisite skill, and once Part 1 of the JavaScript programme was
+  written almost every chapter was locked for a new learner.
+- Decision: `PARAMETERS.mastery.unlockThreshold` is 30. Read the prerequisite chapter
+  and pass its test once — 33.8 %, or 33.8 % too for a 75 % pass — and the next chapter
+  opens. A failed test after reading (27.3 %) does not, and a perfect test without
+  reading (25 %) needs a second attempt. Unlocking stays a hard gate; the engine still
+  recommends reviewing a weak prerequisite rather than blocking on it (CDC §14).
+- Consequences: the learner moves on after demonstrating the prerequisite once, while
+  the follow-up remains: a skill under `weakThreshold` (60 %) keeps surfacing in the
+  dashboard's attention list and in the Boost. `trajectory.test.ts` specifies the rule;
+  changing a coefficient that moves it has to change that fixture on purpose.
+- CDC question or assumption: decided with the product owner on 2026-09-14.
+
 # Open questions
 
 These block acceptance of the features named. Do not guess an answer in code.
@@ -394,15 +412,6 @@ These block acceptance of the features named. Do not guess an answer in code.
   prediction. Open-ended and code items are authored and stored but excluded from
   scoring and mastery until a grader exists.
 - Needed: the V2 grading approach (rubric, tests, or AI-assisted review).
-
-## Question: chapter unlocking rule
-
-- Affects: `05-learning-catalog`, `13-dashboard-next-best-action`.
-- CDC §79 shows a locked chapter; §19 requires an adaptive graph rather than a list.
-- Current handling: **assumption** — a chapter is unlocked when every prerequisite
-  skill reaches the mastery pass threshold, and the engine may still recommend a
-  review before an unlocked chapter rather than blocking it (CDC §14).
-- Needed: confirmation that unlocking is advisory-plus-hard-gate as described.
 
 ## Question: should opening a hint or a solution count as evidence
 

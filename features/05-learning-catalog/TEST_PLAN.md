@@ -3,7 +3,7 @@
 ## Unit
 
 - Progress aggregation: chapter → module → technology, including zero and complete.
-- Lock resolution: unlocked when all prerequisite skills pass, locked with the exact
+- Lock resolution: unlocked when all prerequisite skills reach the unlock threshold, locked with the exact
   failing skills listed otherwise.
 - Continue selection: most recent in-progress chapter, else first unlocked chapter.
 

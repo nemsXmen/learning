@@ -102,7 +102,7 @@ function averagePercent(values: number[]): number {
 }
 
 /**
- * A chapter unlocks when every prerequisite skill reaches the pass threshold.
+ * A chapter unlocks when every prerequisite skill reaches the unlock threshold.
  * The reason is computed here and returned, so no screen has to re-derive it
  * (features/05-learning-catalog/CONTRACT.md).
  */

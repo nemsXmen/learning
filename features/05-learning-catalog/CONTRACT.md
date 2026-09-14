@@ -31,7 +31,7 @@
 ```
 
 Locked chapter example: `"locked": true, "lockReason": { "code": "PREREQUISITE_SKILLS",
-"skills": [{ "id": "scope", "name": "Scope", "mastery": 34, "required": 60 }] }`.
+"skills": [{ "id": "scope", "name": "Scope", "mastery": 18, "required": 30 }] }`.
 
 `GET /learn/technologies/:slug/skills` → the skill graph with per-user mastery.
 

@@ -12,7 +12,8 @@ what is still locked and why.
 - API: list technologies with per-user progress; technology detail with modules,
   chapters, counts and lock state; skill graph for a technology.
 - Lock resolution: a chapter is unlocked when every prerequisite skill reaches the
-  mastery pass threshold; the reason for a lock is returned, never inferred by the UI.
+  unlock threshold (30 % — read the prerequisite chapter, then pass its test once); the
+  reason for a lock is returned, never inferred by the UI.
 - Pages `/learn` (technology grid) and `/learn/[technology]` (roadmap + module list).
 - Roadmap visualisation of the module sequence (CDC §21).
 

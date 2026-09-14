@@ -91,20 +91,33 @@ describe('un apprenant qui lit, puis se teste', () => {
     expect(unlocks(read)).toBe(false);
   });
 
-  it('il faut trois tests parfaits pour franchir le seuil de déverrouillage', () => {
-    // Matches what the live stack showed on 2026-09-10: 8.8 % after reading,
-    // 33.8 % after one perfect test, 58.8 % after two, 72.4 % after three.
-    // Three identical perfect attempts is probably more than intended — an open
-    // question in docs/decisions.md. If the coefficients change, so does this.
+  it('lire le chapitre puis réussir son test une fois débloque la suite', () => {
+    // The unlock rule, written down. It used to take three perfect tests (8.8 → 33.8 →
+    // 58.8 → 72.4 % against a 60 % threshold), which left almost all of Part 1 locked
+    // for a new learner; at 30 % one pass after reading is enough (docs/decisions.md).
     let skill = complete(fresh(), dayAt(0));
+    expect(unlocks(skill)).toBe(false);
 
     skill = perfect(skill, dayAt(0));
+    expect(unlocks(skill)).toBe(true);
+  });
+
+  it('un test réussi de justesse après lecture suffit aussi', () => {
+    const skill = attempt(complete(fresh(), dayAt(0)), 3, 1, dayAt(0)); // 75 %
+    expect(unlocks(skill)).toBe(true);
+  });
+
+  it('un test raté ne débloque pas, même après lecture', () => {
+    const skill = attempt(complete(fresh(), dayAt(0)), 2, 2, dayAt(0)); // 50 %
+    expect(unlocks(skill)).toBe(false);
+  });
+
+  it('sans lecture, un test parfait ne suffit pas du premier coup', () => {
+    // Reading still counts: skipping the chapter costs a second attempt.
+    let skill = perfect(fresh(), dayAt(0));
     expect(unlocks(skill)).toBe(false);
 
     skill = perfect(skill, dayAt(1));
-    expect(unlocks(skill)).toBe(false);
-
-    skill = perfect(skill, dayAt(2));
     expect(unlocks(skill)).toBe(true);
   });
 
