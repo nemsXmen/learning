@@ -1,0 +1,57 @@
+id: javascript-polymorphisme-quiz
+kind: QUIZ
+questions:
+  - id: js-polymorphisme-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `class A { nom() { return 'A'; } dire() { return this.nom(); } }` et
+      `class B extends A { nom() { return 'B'; } }`, que renvoie `new B().dire()` ?
+    answer: 'B'
+    explanation: >
+      `this.nom()` part de l'instance réelle, un `B` : la version redéfinie est trouvée en
+      premier, même si `dire` est écrite dans `A`.
+    skills:
+      - polymorphism
+
+  - id: js-polymorphisme-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      En JavaScript, un objet doit hériter d'une classe pour pouvoir être utilisé à sa place.
+    answer: false
+    explanation: >
+      Seules les méthodes appelées comptent : un objet littéral qui les possède convient.
+      C'est le typage par comportement.
+    skills:
+      - polymorphism
+
+  - id: js-polymorphisme-q3
+    type: predict_output
+    difficulty: 4
+    question: >
+      Avec `class P { constructor() { this.v = this.lire(); } lire() {} }` et
+      `class E extends P { x = 1; lire() { return this.x; } }`, que vaut `new E().v` ?
+    answer: 'undefined'
+    explanation: >
+      Le constructeur de `P` s'exécute pendant `super()`, avant l'installation du champ `x` de
+      `E`. La méthode redéfinie lit donc un champ pas encore initialisé.
+    skills:
+      - polymorphism
+
+  - id: js-polymorphisme-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel est le principal avantage du polymorphisme sur un `switch` testant le type ?
+    options:
+      - "Ajouter un cas sans modifier le code existant"
+      - "Un code plus rapide à l'exécution"
+      - "Ne plus avoir besoin de classes"
+      - "Supprimer toute vérification des erreurs"
+    answer: [0]
+    explanation: >
+      Un nouveau cas devient une nouvelle classe ou un nouvel objet. Avec un `switch`, il
+      faut retrouver et modifier chaque endroit qui teste le type.
+    skills:
+      - polymorphism

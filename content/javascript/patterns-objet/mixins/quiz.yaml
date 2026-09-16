@@ -1,0 +1,62 @@
+id: javascript-mixins-quiz
+kind: QUIZ
+questions:
+  - id: js-mixins-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Après `class C {}` et
+      `Object.assign(C.prototype, { f() { return 'X'; } }, { f() { return 'Y'; } })`,
+      que renvoie `new C().f()` ?
+    answer: 'Y'
+    explanation: >
+      `Object.assign` copie les sources dans l'ordre : la seconde écrase la première, sans
+      aucune erreur. C'est le risque de collision des mixins objet.
+    skills:
+      - mixins
+
+  - id: js-mixins-q2
+    type: true_false
+    difficulty: 4
+    question: >
+      `Object.assign` copie un getter d'un mixin en conservant l'accesseur.
+    answer: false
+    explanation: >
+      Il lit la propriété une fois et copie la valeur obtenue, qui reste figée. Pour garder
+      l'accesseur, on copie les descripteurs avec `Object.getOwnPropertyDescriptors`.
+    skills:
+      - mixins
+
+  - id: js-mixins-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle écriture définit un mixin de classe ?
+    options:
+      - "const Mixin = (Base) => class extends Base { }"
+      - "const Mixin = class extends Object { }"
+      - "Object.assign(Base, Mixin)"
+      - "class Mixin extends Base, Autre { }"
+    answer: [0]
+    explanation: >
+      Un mixin de classe est une fonction qui reçoit une classe et renvoie une sous-classe.
+      JavaScript n'autorise qu'un seul parent après `extends`.
+    skills:
+      - mixins
+
+  - id: js-mixins-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels sont des risques propres aux mixins ?
+    options:
+      - "Des collisions de noms qui écrasent une méthode sans erreur"
+      - "Des dépendances implicites à des propriétés de this"
+      - "Une perte de lisibilité quand plusieurs mixins s'empilent"
+      - "L'impossibilité d'appeler une méthode du mixin sur une instance"
+    answer: [0, 1, 2]
+    explanation: >
+      Les méthodes mélangées s'appellent normalement ; les risques viennent des noms partagés,
+      des hypothèses non déclarées sur `this` et de l'origine difficile à retrouver des méthodes.
+    skills:
+      - mixins

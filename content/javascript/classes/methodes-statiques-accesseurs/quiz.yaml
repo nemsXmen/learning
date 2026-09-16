@@ -1,0 +1,56 @@
+id: javascript-classes-accesseurs-quiz
+kind: QUIZ
+questions:
+  - id: js-accesseurs-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `class C { static f() { return 1; } }`, que vaut `typeof new C().f` ?
+    answer: 'undefined'
+    explanation: >
+      Une méthode statique est une propriété de la classe, pas du prototype : les instances
+      ne la voient pas.
+    skills:
+      - class-accessors
+
+  - id: js-accesseurs-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `class R { constructor(l) { this.l = l; } get double() { return this.l * 2; } }`,
+      que vaut `r.double` après `const r = new R(2); r.l = 5;` ?
+    answer: '10'
+    explanation: >
+      Un getter ne stocke rien : il recalcule à chaque lecture à partir de l'état courant.
+    skills:
+      - class-accessors
+
+  - id: js-accesseurs-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans `set nom(v) { this.nom = v; }`, l'affectation stocke simplement la valeur.
+    answer: false
+    explanation: >
+      `this.nom = v` rappelle le setter, qui se rappelle indéfiniment jusqu'à une
+      `RangeError`. Il faut stocker sous un autre nom, idéalement un champ privé.
+    skills:
+      - class-accessors
+
+  - id: js-accesseurs-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Une méthode statique `creer()` définie sur `Parent` est appelée par `Enfant.creer()`,
+      avec `class Enfant extends Parent`. Que vaut `this` dans `creer` ?
+    options:
+      - "Enfant"
+      - "Parent"
+      - "undefined"
+      - "Une nouvelle instance"
+    answer: [0]
+    explanation: >
+      Dans une méthode statique, `this` est la classe sur laquelle on l'appelle. C'est ce qui
+      permet d'écrire `new this()` dans une fabrique héritable.
+    skills:
+      - class-accessors

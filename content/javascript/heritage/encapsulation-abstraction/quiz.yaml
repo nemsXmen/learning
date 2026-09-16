@@ -1,0 +1,66 @@
+id: javascript-encapsulation-quiz
+kind: QUIZ
+questions:
+  - id: js-encapsulation-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture suit le principe « ordonne, ne demande pas » ?
+    options:
+      - "compte.retirer(30)"
+      - "if (compte.solde >= 30) compte.solde -= 30"
+      - "compte.solde = compte.solde - 30"
+      - "const s = compte.solde; compte.solde = s - 30"
+    answer: [0]
+    explanation: >
+      L'objet reçoit l'ordre et applique lui-même sa règle. Les autres écritures lisent son
+      état et décident à sa place.
+    skills:
+      - encapsulation-abstraction
+
+  - id: js-encapsulation-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans le constructeur d'une classe de base, quand `new.target === Base` est-il vrai ?
+    options:
+      - "Quand on instancie Base directement"
+      - "Quand on instancie une sous-classe de Base"
+      - "Dans tous les cas"
+      - "Jamais, new.target vaut toujours undefined"
+    answer: [0]
+    explanation: >
+      `new.target` désigne la classe réellement instanciée. Pour une sous-classe, il vaut la
+      sous-classe : le test bloque donc seulement l'instanciation directe de la base.
+    skills:
+      - encapsulation-abstraction
+
+  - id: js-encapsulation-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Ajouter un getter et un setter pour chaque champ suffit à encapsuler un objet.
+    answer: false
+    explanation: >
+      Si les setters n'appliquent aucune règle, l'état est aussi ouvert qu'avec des propriétés
+      publiques. L'encapsulation consiste à ne laisser l'état changer que par des opérations
+      qui garantissent les règles.
+    skills:
+      - encapsulation-abstraction
+
+  - id: js-encapsulation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment traiter une chaîne d'accès comme `commande.client.adresse.ville` ?
+    options:
+      - "Ajouter une méthode comme commande.villeDeLivraison()"
+      - "Rendre toutes ces propriétés publiques"
+      - "Copier l'adresse dans chaque objet"
+      - "Utiliser un setter sur ville"
+    answer: [0]
+    explanation: >
+      Une méthode sur l'objet manipulé cache la structure interne : elle peut ensuite changer
+      sans casser l'appelant.
+    skills:
+      - encapsulation-abstraction

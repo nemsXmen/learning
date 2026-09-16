@@ -1,0 +1,60 @@
+id: javascript-champs-prives-quiz
+kind: QUIZ
+questions:
+  - id: js-prives-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que produit `compte.#solde` écrit en dehors du corps de la classe ?
+    options:
+      - "Une SyntaxError, avant toute exécution"
+      - "undefined"
+      - "Une TypeError à l'exécution"
+      - "La valeur du solde"
+    answer: [0]
+    explanation: >
+      Un nom privé n'existe que dans le corps de sa classe : l'écrire ailleurs est une erreur
+      de syntaxe, détectée à l'analyse du fichier.
+    skills:
+      - class-private-fields
+
+  - id: js-prives-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `class A { #x = 1; y = 2; }`, que renvoie `JSON.stringify(new A())` ?
+    answer: '{"y":2}'
+    explanation: >
+      Les champs privés n'apparaissent dans aucune énumération ni sérialisation : seul le champ
+      public `y` est converti.
+    skills:
+      - class-private-fields
+
+  - id: js-prives-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Une sous-classe peut lire `this.#x` quand le champ `#x` est déclaré par sa classe parente.
+    answer: false
+    explanation: >
+      Le nom privé appartient au corps de la classe qui le déclare. La sous-classe passe par
+      les méthodes et accesseurs publics du parent.
+    skills:
+      - class-private-fields
+
+  - id: js-prives-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que vérifie `#solde in objet`, écrit dans la classe ?
+    options:
+      - "Que l'objet possède le champ privé installé par le constructeur de la classe"
+      - "Que l'objet a une propriété publique nommée solde"
+      - "Que la classe figure dans la chaîne de prototypes de l'objet"
+      - "Que le solde est supérieur à zéro"
+    answer: [0]
+    explanation: >
+      C'est un test de marque : il confirme que l'objet a réellement été construit par la
+      classe, là où `instanceof` se laisse tromper par `Object.create`.
+    skills:
+      - class-private-fields

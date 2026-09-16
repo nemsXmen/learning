@@ -1,0 +1,65 @@
+id: javascript-quand-classe-quiz
+kind: QUIZ
+questions:
+  - id: js-quand-classe-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que faire d'une classe qui ne contient que des méthodes statiques sans état ?
+    options:
+      - "La remplacer par des fonctions exportées d'un module"
+      - "La transformer en singleton"
+      - "Ajouter un constructeur vide"
+      - "La faire hériter d'une classe de base"
+    answer: [0]
+    explanation: >
+      Elle ne sert que d'espace de noms, ce qu'un module ES fournit déjà. Les fonctions
+      exportées s'importent une à une et s'éliminent du bundle quand elles ne servent pas.
+    skills:
+      - class-design-choice
+
+  - id: js-quand-classe-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels éléments justifient d'écrire une classe ?
+    options:
+      - "Un invariant à protéger sur un état"
+      - "De nombreuses instances partageant le même comportement"
+      - "Un environnement qui l'impose, comme une sous-classe d'Error"
+      - "Un ensemble de fonctions utilitaires sans état"
+    answer: [0, 1, 2]
+    explanation: >
+      État protégé, instances nombreuses et contrainte de l'environnement sont les vrais
+      motifs. Des fonctions sans état relèvent d'un module.
+    skills:
+      - class-design-choice
+
+  - id: js-quand-classe-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Un module ES n'est évalué qu'une fois et peut donc servir de singleton.
+    answer: true
+    explanation: >
+      Tous les imports partagent la même évaluation du module : ses variables non exportées
+      sont privées, et son état est unique.
+    skills:
+      - class-design-choice
+
+  - id: js-quand-classe-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle forme choisir pour la configuration de l'application, lue une fois au démarrage ?
+    options:
+      - "Un objet littéral"
+      - "Une classe avec getters et setters"
+      - "Une fabrique avec closure"
+      - "Une hiérarchie de classes"
+    answer: [0]
+    explanation: >
+      Ce sont des données sans comportement : un objet littéral est lisible et se sérialise
+      directement.
+    skills:
+      - class-design-choice

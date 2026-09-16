@@ -1,0 +1,62 @@
+id: javascript-strategie-observateur-quiz
+kind: QUIZ
+questions:
+  - id: js-strategie-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle est la forme la plus idiomatique d'une stratégie en JavaScript ?
+    options:
+      - "Une fonction passée en paramètre"
+      - "Une interface et une classe abstraite"
+      - "Un singleton par algorithme"
+      - "Un mixin appliqué à chaque classe"
+    answer: [0]
+    explanation: >
+      Les fonctions sont des valeurs : un algorithme interchangeable se passe directement en
+      paramètre ou se range dans un objet registre.
+    skills:
+      - behavioral-patterns
+
+  - id: js-strategie-q2
+    type: predict_output
+    difficulty: 4
+    question: >
+      Un émetteur appelle ses abonnés dans une boucle sans protection. Le premier abonné lève
+      une erreur, le second ajoute un élément à `recus`. Après `try { emettre() } catch {}`,
+      que vaut `recus.length` ?
+    answer: '0'
+    explanation: >
+      L'erreur interrompt la boucle : le second abonné n'est jamais appelé. Un émetteur robuste
+      entoure chaque appel d'un `try` / `catch`.
+    skills:
+      - behavioral-patterns
+
+  - id: js-strategie-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      L'injection de dépendances nécessite un conteneur d'injection.
+    answer: false
+    explanation: >
+      Le principe consiste à recevoir ses collaborateurs en paramètre. Un conteneur automatise
+      le câblage des grosses applications, mais n'est pas indispensable.
+    skills:
+      - behavioral-patterns
+
+  - id: js-strategie-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi `abonner` renvoie-t-il une fonction ?
+    options:
+      - "Pour permettre de se désabonner et éviter les fuites mémoire"
+      - "Pour déclencher immédiatement l'événement"
+      - "Pour rendre l'abonnement asynchrone"
+      - "Pour copier la liste des abonnés"
+    answer: [0]
+    explanation: >
+      Sans désabonnement, un abonné reste référencé par l'émetteur, avec tout ce qu'il capture,
+      aussi longtemps que l'émetteur existe.
+    skills:
+      - behavioral-patterns

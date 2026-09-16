@@ -1,0 +1,63 @@
+id: javascript-composition-quiz
+kind: QUIZ
+questions:
+  - id: js-composition-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      « Une voiture a un moteur » : quelle relation cette phrase décrit-elle ?
+    options:
+      - "Une composition"
+      - "Un héritage"
+      - "Un polymorphisme"
+      - "Une méthode statique"
+    answer: [0]
+    explanation: >
+      « A un » décrit une composition : la voiture contient un moteur et lui délègue.
+      « Est un » décrirait un héritage.
+    skills:
+      - composition-over-inheritance
+
+  - id: js-composition-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une modification interne d'une classe parente peut casser une sous-classe qui n'a pas
+      été modifiée.
+    answer: true
+    explanation: >
+      C'est le problème de la classe de base fragile : l'enfant dépend de la manière dont le
+      parent utilise ses propres méthodes.
+    skills:
+      - composition-over-inheritance
+
+  - id: js-composition-q3
+    type: predict_output
+    difficulty: 4
+    question: >
+      Le parent implémente `ajouterTous(liste)` en appelant `this.ajouter` pour chaque élément.
+      L'enfant compte 1 dans `ajouter` et `liste.length` dans `ajouterTous`, puis appelle les
+      versions parentes. Combien d'ajouts compte-t-il après `ajouterTous(['a', 'b', 'c'])` ?
+    answer: '6'
+    explanation: >
+      L'enfant compte 3 dans `ajouterTous`, puis le parent appelle `this.ajouter` trois fois —
+      la version redéfinie, qui compte encore 3.
+    skills:
+      - composition-over-inheritance
+
+  - id: js-composition-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment éviter une sous-classe par combinaison de capacités, comme `CanardVolantNageur` ?
+    options:
+      - "Assembler des capacités indépendantes dans chaque objet"
+      - "Ajouter un niveau d'héritage intermédiaire"
+      - "Copier les méthodes dans chaque sous-classe"
+      - "Utiliser uniquement des méthodes statiques"
+    answer: [0]
+    explanation: >
+      Chaque capacité devient une pièce indépendante ; un objet assemble celles dont il a
+      besoin, et toutes les combinaisons existent sans nouvelle classe.
+    skills:
+      - composition-over-inheritance

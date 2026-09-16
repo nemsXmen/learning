@@ -1,0 +1,65 @@
+id: javascript-fabrique-singleton-quiz
+kind: QUIZ
+questions:
+  - id: js-fabrique-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment éviter qu'une fabrique contienne un switch qui s'allonge à chaque nouveau type ?
+    options:
+      - "Utiliser un registre qui associe chaque nom à son constructeur"
+      - "Créer une sous-classe de la fabrique par type"
+      - "Transformer la fabrique en singleton"
+      - "Remplacer le switch par des if imbriqués"
+    answer: [0]
+    explanation: >
+      Un registre rend l'ajout d'un type local : on enregistre une entrée, sans modifier la
+      fonction qui crée les objets.
+    skills:
+      - creational-patterns
+
+  - id: js-fabrique-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Un module ES est réévalué à chaque fois qu'il est importé.
+    answer: false
+    explanation: >
+      Un module n'est évalué qu'une fois ; tous les imports partagent ses exports. C'est ce qui
+      en fait un singleton naturel.
+    skills:
+      - creational-patterns
+
+  - id: js-fabrique-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi un singleton modifiable rend-il les tests fragiles ?
+    options:
+      - "Son état persiste d'un test à l'autre, qui s'influencent selon leur ordre"
+      - "Il ralentit l'exécution des tests"
+      - "Il empêche d'utiliser des classes"
+      - "Il ne peut pas être importé dans un fichier de test"
+    answer: [0]
+    explanation: >
+      L'instance est globale : ce qu'un test y modifie, le suivant le retrouve. Créer l'instance
+      au démarrage et la passer en paramètre supprime ce couplage.
+    skills:
+      - creational-patterns
+
+  - id: js-fabrique-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Qu'est-ce qu'un dépôt ne doit pas faire ?
+    options:
+      - "Renvoyer des objets propres à la technologie de stockage"
+      - "Exposer une méthode trouverParEmail"
+      - "Avoir une version en mémoire pour les tests"
+      - "Renvoyer des copies des données"
+    answer: [0]
+    explanation: >
+      Un dépôt isole le métier du stockage. S'il laisse sortir un objet d'ORM ou un constructeur
+      de requêtes, le métier redevient dépendant de la base.
+    skills:
+      - creational-patterns

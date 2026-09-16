@@ -329,6 +329,56 @@ skills:
     importance: 5
     requires: [objects-basics, factory-functions, constructor-functions]
 
+  - id: class-accessors
+    name: Méthodes statiques, getters et setters
+    importance: 4
+    requires: [classes-basics]
+
+  - id: class-private-fields
+    name: Champs privés et invariants
+    importance: 4
+    requires: [class-accessors]
+
+  - id: class-design-choice
+    name: Choisir entre classe, fabrique, objet et module
+    importance: 3
+    requires: [class-private-fields, factory-functions]
+
+  - id: class-inheritance
+    name: extends et super
+    importance: 4
+    requires: [class-private-fields, prototypal-inheritance]
+
+  - id: polymorphism
+    name: Redéfinition et polymorphisme
+    importance: 4
+    requires: [class-inheritance]
+
+  - id: composition-over-inheritance
+    name: Composition contre héritage
+    importance: 4
+    requires: [polymorphism]
+
+  - id: encapsulation-abstraction
+    name: Encapsulation et abstraction
+    importance: 4
+    requires: [composition-over-inheritance]
+
+  - id: mixins
+    name: Mixins
+    importance: 3
+    requires: [composition-over-inheritance]
+
+  - id: creational-patterns
+    name: Fabrique, singleton et dépôt
+    importance: 4
+    requires: [encapsulation-abstraction, class-design-choice]
+
+  - id: behavioral-patterns
+    name: Stratégie, observateur et injection de dépendances
+    importance: 4
+    requires: [creational-patterns, callbacks]
+
   # Partie 7 — Error Handling & Debugging
   - id: error-types
     name: Familles d'erreurs

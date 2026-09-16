@@ -1,0 +1,61 @@
+id: javascript-extends-super-quiz
+kind: QUIZ
+questions:
+  - id: js-extends-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il si un constructeur dérivé affecte `this.x` avant d'appeler `super()` ?
+    options:
+      - "Une ReferenceError est levée"
+      - "La propriété est créée normalement"
+      - "La propriété est ignorée sans erreur"
+      - "Le parent n'est jamais appelé"
+    answer: [0]
+    explanation: >
+      Dans une classe dérivée, l'objet est créé par le constructeur parent pendant `super()`.
+      Avant cet appel, `this` n'existe pas.
+    skills:
+      - class-inheritance
+
+  - id: js-extends-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une classe dérivée sans constructeur transmet automatiquement ses arguments au parent.
+    answer: true
+    explanation: >
+      Le constructeur implicite équivaut à `constructor(...args) { super(...args); }`.
+    skills:
+      - class-inheritance
+
+  - id: js-extends-q3
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `class A { f() { return 'A'; } }` et
+      `class B extends A { f() { return super.f() + 'B'; } }`, que renvoie `new B().f()` ?
+    answer: 'AB'
+    explanation: >
+      `super.f()` appelle la version de `A`, qui renvoie `'A'`, puis la méthode de `B` ajoute
+      `'B'`.
+    skills:
+      - class-inheritance
+
+  - id: js-extends-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans une erreur personnalisée, que faut-il définir en plus de `super(message)` pour
+      qu'elle s'affiche avec son propre type dans les journaux ?
+    options:
+      - "this.name"
+      - "this.stack"
+      - "this.constructor"
+      - "this.prototype"
+    answer: [0]
+    explanation: >
+      Sans `name`, l'erreur hérite du nom `'Error'`. `super(message)` fournit déjà le message
+      et la pile d'appels.
+    skills:
+      - class-inheritance

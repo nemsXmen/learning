@@ -231,6 +231,15 @@
       "contentVersion": "458579a777d7"
     },
     {
+      "slug": "heritage",
+      "title": "Héritage",
+      "order": 18,
+      "part": "object-oriented",
+      "technology": "javascript",
+      "contentPath": "javascript/heritage/module.yaml",
+      "contentVersion": "5a0b33aee358"
+    },
+    {
       "slug": "introduction",
       "title": "Introduction à JavaScript",
       "order": 1,
@@ -265,6 +274,15 @@
       "technology": "javascript",
       "contentPath": "javascript/operateurs/module.yaml",
       "contentVersion": "b0bbc55b3cc5"
+    },
+    {
+      "slug": "patterns-objet",
+      "title": "Patterns objet",
+      "order": 19,
+      "part": "object-oriented",
+      "technology": "javascript",
+      "contentPath": "javascript/patterns-objet/module.yaml",
+      "contentVersion": "e54665e6e8ed"
     },
     {
       "slug": "portee",
@@ -920,6 +938,100 @@
       "technology": "javascript"
     },
     {
+      "id": "class-accessors",
+      "name": "Méthodes statiques, getters et setters",
+      "importance": 4,
+      "requires": [
+        "classes-basics"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "class-private-fields",
+      "name": "Champs privés et invariants",
+      "importance": 4,
+      "requires": [
+        "class-accessors"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "class-design-choice",
+      "name": "Choisir entre classe, fabrique, objet et module",
+      "importance": 3,
+      "requires": [
+        "class-private-fields",
+        "factory-functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "class-inheritance",
+      "name": "extends et super",
+      "importance": 4,
+      "requires": [
+        "class-private-fields",
+        "prototypal-inheritance"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "polymorphism",
+      "name": "Redéfinition et polymorphisme",
+      "importance": 4,
+      "requires": [
+        "class-inheritance"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "composition-over-inheritance",
+      "name": "Composition contre héritage",
+      "importance": 4,
+      "requires": [
+        "polymorphism"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "encapsulation-abstraction",
+      "name": "Encapsulation et abstraction",
+      "importance": 4,
+      "requires": [
+        "composition-over-inheritance"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "mixins",
+      "name": "Mixins",
+      "importance": 3,
+      "requires": [
+        "composition-over-inheritance"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "creational-patterns",
+      "name": "Fabrique, singleton et dépôt",
+      "importance": 4,
+      "requires": [
+        "encapsulation-abstraction",
+        "class-design-choice"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "behavioral-patterns",
+      "name": "Stratégie, observateur et injection de dépendances",
+      "importance": 4,
+      "requires": [
+        "creational-patterns",
+        "callbacks"
+      ],
+      "technology": "javascript"
+    },
+    {
       "id": "error-types",
       "name": "Familles d'erreurs",
       "importance": 4,
@@ -1253,6 +1365,42 @@
       ]
     },
     {
+      "id": "javascript-champs-prives",
+      "title": "Champs publics, champs privés et invariants",
+      "slug": "champs-prives",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "classes",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-classes-accesseurs"
+      ],
+      "skills": [
+        "class-private-fields"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/classes/champs-prives/lesson.md",
+      "contentVersion": "158842ff8d29",
+      "body": "\n## Objectifs\n\n- Déclarer des champs publics et des champs privés `#` dans le corps d'une classe.\n- Protéger un invariant : un état qu'aucun code extérieur ne peut rendre incohérent.\n- Tester qu'un objet est bien une instance de la classe avec `#champ in objet`.\n\n## Introduction\n\nUn compte bancaire dont n'importe quel code peut écrire `compte.solde = 1e9` ne protège\nrien. Jusqu'ici, deux solutions existaient : la convention `_solde`, qui n'empêche aucun\naccès, et les closures, qui obligent à renoncer aux classes. Depuis ES2022, les classes ont\ndes **champs privés**, garantis par le langage : hors de la classe, ils n'existent tout\nsimplement pas.\n\n## Concept\n\n| Écriture | Nature | Accessible depuis |\n| --- | --- | --- |\n| `solde = 0;` | champ public | partout |\n| `#solde = 0;` | champ privé | le corps de la classe uniquement |\n| `#verifier() {}` | méthode privée | le corps de la classe uniquement |\n| `static #compteur = 0;` | champ statique privé | le corps de la classe uniquement |\n| `#solde in objet` | test de marque | le corps de la classe ; vrai si l'objet possède ce champ |\n\nLes champs se déclarent **dans le corps de la classe**, hors du constructeur. Un champ privé\ndoit obligatoirement y être déclaré avant d'être utilisé : l'écrire seulement dans le\nconstructeur est une erreur de syntaxe.\n\nUn **invariant** est une règle toujours vraie pour un objet valide — « le solde n'est jamais\nnégatif ». Les champs privés permettent de la garantir : la seule façon de modifier l'état\npasse par des méthodes qui la vérifient.\n\n## Exemple\n\n```js\nclass CompteBancaire {\n  static #prochainNumero = 1;\n\n  #solde = 0;\n  #historique = [];\n  numero;\n\n  constructor(titulaire) {\n    this.titulaire = titulaire;\n    this.numero = CompteBancaire.#prochainNumero++;\n  }\n\n  deposer(montant) {\n    this.#verifierMontant(montant);\n    this.#solde += montant;\n    this.#historique.push(`+${montant}`);\n  }\n\n  retirer(montant) {\n    this.#verifierMontant(montant);\n    if (montant > this.#solde) {\n      throw new RangeError('Solde insuffisant');\n    }\n    this.#solde -= montant;\n    this.#historique.push(`-${montant}`);\n  }\n\n  get solde() {\n    return this.#solde;\n  }\n\n  get historique() {\n    return [...this.#historique]; // une copie : l'appelant ne peut pas le modifier\n  }\n\n  #verifierMontant(montant) {\n    if (!(montant > 0)) {\n      throw new RangeError('Le montant doit être positif');\n    }\n  }\n\n  static estCompte(objet) {\n    return #solde in objet;\n  }\n}\n\nconst compte = new CompteBancaire('Ada');\ncompte.deposer(100);\ncompte.retirer(30);\nconsole.log(compte.solde, compte.historique); // 70 ['+100', '-30']\n\ntry {\n  compte.solde = 1_000_000; // getter seul : affectation refusée\n} catch (erreur) {\n  console.log(erreur.name); // 'TypeError'\n}\n\nconsole.log(Object.keys(compte)); // ['numero', 'titulaire'] : aucun champ privé\nconsole.log(JSON.stringify(compte)); // '{\"numero\":1,\"titulaire\":\"Ada\"}'\nconsole.log(CompteBancaire.estCompte(compte), CompteBancaire.estCompte({ solde: 70 })); // true false\n// compte.#solde; // SyntaxError : impossible d'écrire ce nom hors de la classe\n```\n\n## Comment ça fonctionne\n\nUn nom commençant par `#` n'est pas une clé de propriété ordinaire : c'est un **nom privé**,\ndont la portée est le corps de la classe, exactement comme une variable a une portée. Hors\nde ce corps, le nom n'existe pas, et écrire `compte.#solde` est une **erreur de syntaxe**\ndétectée avant toute exécution. Les champs privés n'apparaissent ni dans `Object.keys`, ni\ndans `JSON.stringify`, ni dans `for...in`, et un `structuredClone` de l'instance les perd.\n\nChaque instance porte ses propres emplacements privés. Lire `objet.#solde` sur un objet qui\nn'a pas été construit par la classe lève une `TypeError`. D'où le **test de marque**\n`#solde in objet` : il répond sans lever d'erreur, et contrairement à `instanceof`, il ne se\nlaisse pas tromper par un objet fabriqué avec `Object.create(CompteBancaire.prototype)`.\n\nLes champs sont initialisés à la construction, dans l'ordre de déclaration. Pour une classe\nsans parent, ils le sont **avant** le corps du constructeur — ce qui explique que `numero`\nprécède `titulaire` dans `Object.keys`. Pour une classe dérivée, ils le sont juste **après**\nle retour de `super()`. Un initialiseur de champ ne voit donc pas les paramètres du\nconstructeur : `#solde = soldeInitial` ne fonctionne pas, il faut affecter dans le\nconstructeur.\n\nLes noms privés ne s'héritent pas en tant que noms : une sous-classe ne peut pas écrire\n`this.#solde`, même si ses instances possèdent bien cet emplacement. Elle passe par les\nméthodes et accesseurs publics de la classe parente. C'est voulu : la classe parente reste seule garante de son invariant.\n\nAvant les champs privés, les deux solutions étaient la convention `_solde`, simple mais\ncontournable, et une closure autour de la classe ou une `WeakMap` indexée par instance. Le\nrésultat est le même que `#`, avec plus de code : en JavaScript moderne, `#` est la réponse\npar défaut.\n\n## Erreurs fréquentes\n\n**Utiliser un champ privé sans le déclarer dans le corps.** `this.#solde = 0` seul dans le\nconstructeur est une erreur de syntaxe.\n\n**Exposer une référence vers un état privé.** Un getter qui renvoie `this.#historique`\ndirectement laisse l'appelant le modifier : renvoie une copie.\n\n**Initialiser un champ avec un paramètre du constructeur.** L'initialiseur ne voit pas les\nparamètres : affecte dans le constructeur.\n\n**Attendre les champs privés dans une sérialisation.** `JSON.stringify` et `structuredClone`\nles ignorent : prévois une méthode `toJSON` si nécessaire.\n\n**Vouloir lire `#champ` depuis une sous-classe.** Passe par l'interface publique du parent.\n\n## À retenir\n\n- `#nom` est privé au corps de la classe ; hors de celui-ci, c'est une erreur de syntaxe.\n- Un champ privé doit être déclaré dans le corps avant d'être utilisé.\n- Les champs sont initialisés avant le constructeur, ou juste après `super()`.\n- `#champ in objet` teste qu'un objet a vraiment été construit par la classe.\n- Les champs privés servent à garantir un invariant : l'état ne change que par des méthodes\n  qui le vérifient.\n\n## Exercices\n\n1. Remplace la convention `_valeur` par un vrai champ privé, sans changer l'usage de la\n   classe.\n\n   ```js\n   class Jauge {\n     constructor(maximum) {\n       this.maximum = maximum;\n       this._valeur = 0;\n     }\n     remplir(quantite) {\n       this._valeur = Math.min(this.maximum, this._valeur + quantite);\n     }\n     get valeur() {\n       return this._valeur;\n     }\n   }\n   ```\n\n   :::indice\n   Le champ privé se déclare dans le corps de la classe, puis s'utilise avec `this.#…`.\n   :::\n\n   :::solution\n   ```js\n   class Jauge {\n     #valeur = 0;\n\n     constructor(maximum) {\n       this.maximum = maximum;\n     }\n\n     remplir(quantite) {\n       this.#valeur = Math.min(this.maximum, this.#valeur + quantite);\n     }\n\n     get valeur() {\n       return this.#valeur;\n     }\n   }\n\n   const jauge = new Jauge(10);\n   jauge.remplir(7);\n   jauge.remplir(7);\n   console.log(jauge.valeur, Object.keys(jauge)); // 10 ['maximum']\n   ```\n   :::\n\n2. Écris une méthode statique `Jauge.estJauge(objet)` qui ne se laisse pas tromper par un\n   objet créé avec `Object.create(Jauge.prototype)`.\n\n   :::indice\n   `instanceof` regarde la chaîne de prototypes ; un test sur un champ privé regarde ce que\n   le constructeur a réellement installé.\n   :::\n\n   :::solution\n   ```js\n   class Jauge {\n     #valeur = 0;\n\n     static estJauge(objet) {\n       return #valeur in objet;\n     }\n   }\n\n   const vraie = new Jauge();\n   const imitation = Object.create(Jauge.prototype);\n\n   console.log(imitation instanceof Jauge); // true : trompé\n   console.log(Jauge.estJauge(vraie), Jauge.estJauge(imitation)); // true false\n   ```\n   :::\n\n3. Écris une classe `Intervalle(debut, fin)` qui garantit en permanence `debut <= fin` :\n   refus à la construction, et méthode `deplacer(decalage)` qui conserve l'invariant.\n\n   :::indice\n   Garde `debut` et `fin` en champs privés, expose-les en lecture seule, et vérifie la règle\n   dans le constructeur.\n   :::\n\n   :::solution\n   ```js\n   class Intervalle {\n     #debut;\n     #fin;\n\n     constructor(debut, fin) {\n       if (debut > fin) {\n         throw new RangeError('Le début doit précéder la fin');\n       }\n       this.#debut = debut;\n       this.#fin = fin;\n     }\n\n     get debut() {\n       return this.#debut;\n     }\n\n     get fin() {\n       return this.#fin;\n     }\n\n     deplacer(decalage) {\n       return new Intervalle(this.#debut + decalage, this.#fin + decalage);\n     }\n   }\n\n   const creneau = new Intervalle(9, 12).deplacer(2);\n   console.log(creneau.debut, creneau.fin); // 11 14\n   try {\n     new Intervalle(5, 1);\n   } catch (erreur) {\n     console.log(erreur.name); // 'RangeError'\n   }\n   ```\n\n   Renvoyer un nouvel intervalle plutôt que modifier l'existant rend l'invariant encore plus\n   simple à garantir : un objet valide ne cesse jamais de l'être.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre un champ `#prive` et la convention `_prive` ?\n\n  :::indice\n  L'un est une règle du langage, l'autre un accord entre développeurs.\n  :::\n\n  :::reponse\n  `_prive` est une propriété publique ordinaire : n'importe quel code peut la lire ou la\n  modifier, elle apparaît dans `Object.keys` et dans le JSON. `#prive` est un nom privé dont la\n  portée est le corps de la classe : y accéder ailleurs est une erreur de syntaxe, et il\n  n'apparaît dans aucune énumération. La convention signale une intention ; le champ privé\n  garantit l'encapsulation, donc l'invariant.\n  :::\n\n- Champs privés ou closures : lesquels choisir pour cacher un état ?\n\n  :::indice\n  Les deux cachent réellement l'état. Qu'est-ce qui les distingue à l'usage ?\n  :::\n\n  :::reponse\n  Les deux offrent une confidentialité réelle. Les champs privés s'intègrent à une classe :\n  méthodes partagées sur le prototype, héritage, test de marque avec `#champ in objet`, et un\n  coût mémoire par instance limité aux données. Une factory avec closures évite `this` et\n  `new`, mais recrée ses fonctions pour chaque objet. Dans une base de code qui utilise des\n  classes, `#` est la réponse ; dans un style fonctionnel, la closure reste naturelle.\n  :::\n\n- Qu'est-ce qu'un test de marque, et pourquoi l'utiliser plutôt qu'`instanceof` ?\n\n  :::indice\n  Que regarde `instanceof`, et peut-on le tromper ?\n  :::\n\n  :::reponse\n  `#champ in objet` vérifie que l'objet possède l'emplacement privé installé par le\n  constructeur de la classe, donc qu'il a réellement été construit par elle. `instanceof` ne\n  regarde que la chaîne de prototypes : un objet créé avec `Object.create(Classe.prototype)`\n  ou dont on a changé le prototype le trompe, et il échoue entre deux fenêtres ou iframes. Le\n  test de marque est la vérification fiable avant d'accéder à des champs privés.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-classes-bases",
       "title": "Classes : pourquoi, et la syntaxe de base",
       "slug": "classes-bases",
@@ -1278,6 +1426,78 @@
       "contentPath": "javascript/classes/classes-bases/lesson.md",
       "contentVersion": "8ee93879440d",
       "body": "\n## Objectifs\n\n- Déclarer une classe avec `class` et son `constructor`.\n- Créer des instances avec `new`, et comprendre ce que fait cet opérateur.\n- Reconnaître ce qu'une classe apporte face à un objet littéral répété.\n\n## Introduction\n\nDès qu'une application manipule plusieurs objets de même forme — des utilisateurs, des\ncommandes, des tâches —, écrire chaque objet à la main devient répétitif et fragile : il\nsuffit d'oublier une propriété pour qu'une fonction plante trois fichiers plus loin. Une\nclasse est un moule : elle décrit une fois la forme et les opérations, et produit ensuite\nautant d'objets qu'on veut, tous cohérents.\n\n`class` est arrivé avec ES2015. Ce n'est pas un nouveau modèle d'objets — JavaScript n'a\nqu'un seul modèle —, c'est une syntaxe plus lisible pour ce qu'on écrivait déjà avec des\nfonctions constructrices. Cette syntaxe est aujourd'hui celle qu'on croise dans la plupart\ndes bases de code, et celle que les autres langages rendent immédiatement familière.\n\n## Concept\n\nUne classe déclare un nom et un corps. Le corps contient un `constructor`, exécuté à chaque\ncréation d'instance, et des méthodes.\n\n| Élément | Rôle |\n| --- | --- |\n| `class Nom { … }` | déclare le moule |\n| `constructor(args)` | initialise une instance, reçoit les arguments de `new` |\n| `this` | l'instance en cours de construction ou d'utilisation |\n| `new Nom(args)` | crée une instance et renvoie l'objet |\n\nTrois règles à retenir dès maintenant :\n\n- Une classe s'appelle **obligatoirement** avec `new`. `Personne('Ana')` lève une\n  `TypeError`.\n- Le corps d'une classe est toujours en **mode strict**, même dans un fichier qui ne l'est\n  pas.\n- Une déclaration de classe n'est pas utilisable avant sa ligne : contrairement à\n  `function`, elle reste dans la zone morte temporelle.\n\n## Exemple\n\n```js\nclass Tache {\n  constructor(titre, echeance) {\n    this.titre = titre;\n    this.echeance = echeance;\n    this.terminee = false;\n  }\n\n  terminer() {\n    this.terminee = true;\n    return this;\n  }\n\n  resume() {\n    const etat = this.terminee ? 'faite' : 'à faire';\n    return `${this.titre} (${etat}, ${this.echeance})`;\n  }\n}\n\nconst tache = new Tache('Écrire le rapport', '2026-10-02');\nconsole.log(tache.resume()); // 'Écrire le rapport (à faire, 2026-10-02)'\n\ntache.terminer();\nconsole.log(tache.resume()); // 'Écrire le rapport (faite, 2026-10-02)'\n\nconst autre = new Tache('Relire', '2026-10-05');\nconsole.log(autre.terminee); // false : état indépendant\n\nconsole.log(tache instanceof Tache); // true\nconsole.log(typeof Tache); // 'function'\n```\n\n## Comment ça fonctionne\n\n`new Tache('Écrire le rapport', '2026-10-02')` fait quatre choses, dans cet ordre : il crée\nun objet vide, il lie ce nouvel objet à `this`, il exécute le `constructor` avec les\narguments reçus, puis il renvoie l'objet. On n'écrit donc jamais `return this` dans un\nconstructeur : c'est déjà son comportement.\n\nLes propriétés affectées dans le constructeur — `this.titre`, `this.terminee` — appartiennent\nà **chaque instance** : deux tâches ont deux titres. Les méthodes, elles, ne sont pas copiées\ndans chaque objet ; elles sont définies une seule fois et partagées par toutes les instances.\nC'est la différence de coût avec une fabrique, où chaque objet renvoyé embarque ses propres\nfonctions.\n\n```js\nconst a = new Tache('A', '2026-01-01');\nconst b = new Tache('B', '2026-01-02');\nconsole.log(a.terminer === b.terminer); // true : une seule fonction partagée\nconsole.log(a.titre === b.titre); // false : un état par instance\n```\n\nLe mot-clé `this`, à l'intérieur d'une méthode, désigne l'objet sur lequel la méthode est\nappelée. `tache.resume()` met `tache` dans `this`. Ce point mérite d'être gardé en tête :\nsi la méthode est détachée de son objet — passée en callback, par exemple —, `this` n'est\nplus celui qu'on croit. On y reviendra ; en attendant, appelle tes méthodes sur leur objet.\n\nUne classe peut aussi s'écrire comme une expression, utile pour la créer dans une fonction\nou la passer en argument :\n\n```js\nconst Point = class {\n  constructor(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n};\nconsole.log(new Point(1, 2).x); // 1\n```\n\nEnfin, `typeof Tache` vaut `'function'`. Une classe est une fonction particulière, marquée\ncomme non appelable sans `new`. C'est la confirmation que la syntaxe recouvre un mécanisme\nplus ancien, pas un type inédit.\n\n## Erreurs fréquentes\n\n**Oublier `new`.** `const t = Tache('titre')` lève `TypeError: Class constructor Tache cannot\nbe invoked without 'new'`. C'est une amélioration par rapport aux fonctions constructrices,\nqui polluaient silencieusement l'objet global.\n\n**Mettre une virgule entre les méthodes.** Un corps de classe n'est pas un objet littéral :\nles méthodes se suivent sans séparateur, et une virgule est une erreur de syntaxe.\n\n**Écrire `return quelqueChose` dans le constructeur.** Renvoyer un objet remplace l'instance\net casse `instanceof` ; renvoyer une primitive est simplement ignoré. Dans les deux cas, le\nlecteur est induit en erreur.\n\n**Utiliser la classe avant sa déclaration.** `new Tache()` placé au-dessus de `class Tache`\nlève une `ReferenceError`. Le hoisting des `function` ne s'applique pas ici.\n\n**Faire d'une classe un simple sac de fonctions.** Une classe sans état, dont toutes les\nméthodes sont statiques, n'apporte rien qu'un module ne fasse déjà.\n\n## À retenir\n\n- `class` déclare un moule ; `constructor` initialise chaque instance.\n- `new` crée l'objet, le lie à `this`, exécute le constructeur et renvoie l'objet.\n- Les propriétés sont propres à l'instance, les méthodes sont partagées.\n- Appeler une classe sans `new` lève une `TypeError`.\n- Le corps d'une classe est en mode strict et n'est pas hoisté.\n\n## Exercices\n\n1. Écris une classe `Livre` avec `titre`, `auteur` et `pages`, et une méthode `description()`\n   qui renvoie `\"Titre — Auteur (320 pages)\"`. Crée deux livres et affiche leur description.\n\n   :::indice\n   Les trois valeurs arrivent en arguments du constructeur et se rangent dans `this`.\n   :::\n\n   :::solution\n   ```js\n   class Livre {\n     constructor(titre, auteur, pages) {\n       this.titre = titre;\n       this.auteur = auteur;\n       this.pages = pages;\n     }\n\n     description() {\n       return `${this.titre} — ${this.auteur} (${this.pages} pages)`;\n     }\n   }\n\n   const un = new Livre('Le Horla', 'Maupassant', 120);\n   const deux = new Livre('Bouvard et Pécuchet', 'Flaubert', 320);\n   console.log(un.description()); // 'Le Horla — Maupassant (120 pages)'\n   console.log(deux.description()); // 'Bouvard et Pécuchet — Flaubert (320 pages)'\n   ```\n   :::\n\n2. Écris une classe `Compteur` avec une valeur de départ par défaut à `0`, une méthode\n   `incrementer()` et une méthode `reinitialiser()`. Fais en sorte que `incrementer()` puisse\n   s'enchaîner : `compteur.incrementer().incrementer()`.\n\n   :::indice\n   Une valeur par défaut se déclare dans la signature du constructeur.\n   :::\n\n   :::indice\n   Pour enchaîner les appels, chaque méthode doit renvoyer l'instance elle-même.\n   :::\n\n   :::solution\n   ```js\n   class Compteur {\n     constructor(depart = 0) {\n       this.valeur = depart;\n     }\n\n     incrementer() {\n       this.valeur += 1;\n       return this;\n     }\n\n     reinitialiser() {\n       this.valeur = 0;\n       return this;\n     }\n   }\n\n   const compteur = new Compteur(5);\n   compteur.incrementer().incrementer();\n   console.log(compteur.valeur); // 7\n   console.log(compteur.reinitialiser().valeur); // 0\n   ```\n   :::\n\n3. Ce code produit deux tâches identiques alors qu'on en attend deux différentes. Trouve le\n   problème et corrige-le.\n\n   ```js\n   class Tache {\n     constructor(titre) {\n       titre = titre;\n     }\n   }\n\n   const a = new Tache('A');\n   console.log(a.titre); // undefined\n   ```\n\n   :::indice\n   Regarde ce que la ligne du constructeur affecte réellement, et à quoi.\n   :::\n\n   :::solution\n   ```js\n   class Tache {\n     constructor(titre) {\n       this.titre = titre; // sans `this.`, on réaffecte le paramètre à lui-même\n     }\n   }\n\n   const a = new Tache('A');\n   const b = new Tache('B');\n   console.log(a.titre, b.titre); // 'A' 'B'\n   ```\n\n   `titre = titre` réaffecte le paramètre local : l'instruction est légale, sans effet, et\n   l'instance ne reçoit aucune propriété.\n   :::\n\n## Questions d'entretien\n\n- Que fait exactement l'opérateur `new` ?\n\n  :::indice\n  Décompose l'opération en étapes, depuis l'objet vide jusqu'à la valeur renvoyée.\n  :::\n\n  :::reponse\n  `new` crée un objet vide, lie cet objet à `this`, exécute le constructeur avec les\n  arguments fournis, puis renvoie l'objet — sans qu'on ait à écrire `return`. Le nouvel\n  objet est aussi relié à la classe, ce qui rend `instanceof` fiable et donne accès aux\n  méthodes partagées. Si le constructeur renvoie explicitement un objet, c'est cet objet qui\n  sort à la place, ce qui casse `instanceof` ; renvoyer une primitive est ignoré.\n  :::\n\n- Une classe JavaScript est-elle un nouveau type d'entité dans le langage ?\n\n  :::indice\n  Que vaut `typeof MaClasse` ?\n  :::\n\n  :::reponse\n  Non. `typeof MaClasse` vaut `'function'` : une classe est une fonction, avec des règles\n  supplémentaires — appel obligatoire avec `new`, corps en mode strict, pas de hoisting\n  utilisable. La syntaxe `class` donne une écriture claire et un vocabulaire commun avec les\n  autres langages, mais le modèle d'objets sous-jacent de JavaScript n'a pas changé.\n  :::\n\n- Une classe stocke-t-elle ses méthodes dans chaque instance ?\n\n  :::indice\n  Compare `a.methode === b.methode` pour deux instances.\n  :::\n\n  :::reponse\n  Non. Les propriétés affectées dans le constructeur appartiennent à chaque instance, mais\n  les méthodes sont définies une seule fois et partagées : pour deux instances `a` et `b`,\n  `a.methode === b.methode` vaut `true`. C'est la différence de coût mémoire avec une factory\n  function, dont chaque objet renvoyé porte ses propres fonctions. À l'échelle de quelques\n  milliers d'objets, l'écart est sans importance ; il compte sur des volumes très élevés.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-classes-accesseurs",
+      "title": "Méthodes statiques, getters et setters",
+      "slug": "methodes-statiques-accesseurs",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "classes",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-classes-bases"
+      ],
+      "skills": [
+        "class-accessors"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/classes/methodes-statiques-accesseurs/lesson.md",
+      "contentVersion": "af425f2cb1d2",
+      "body": "\n## Objectifs\n\n- Distinguer une méthode d'instance d'une méthode statique, et savoir où placer chaque\n  comportement.\n- Exposer une valeur calculée ou validée avec un `get` et un `set`.\n- Écrire une fabrique statique qui crée des instances à partir d'un autre format.\n\n## Introduction\n\nLe chapitre précédent a posé l'essentiel : un constructeur et des méthodes. Une classe\nréelle a souvent besoin de plus. Certaines opérations concernent **le type** plutôt qu'une\ninstance — comparer deux températures, en créer une depuis un autre format. D'autres\nvaleurs se lisent comme des propriétés mais sont **calculées** ou **contrôlées**. Les\nméthodes statiques et les accesseurs répondent à ces deux besoins.\n\n## Concept\n\n| Élément | Écriture | Appelé sur | Rangé sur |\n| --- | --- | --- | --- |\n| Méthode d'instance | `resume() {}` | une instance : `tache.resume()` | `Classe.prototype` |\n| Méthode statique | `static comparer(a, b) {}` | la classe : `Classe.comparer()` | la classe elle-même |\n| Champ statique | `static MAXIMUM = 10;` | la classe : `Classe.MAXIMUM` | la classe elle-même |\n| Getter | `get aire() {}` | lu comme une propriété : `forme.aire` | `Classe.prototype` |\n| Setter | `set largeur(v) {}` | affecté comme une propriété : `forme.largeur = 3` | `Classe.prototype` |\n\nUn **accesseur** ressemble à une propriété pour qui l'utilise, mais exécute une fonction à\nchaque lecture ou écriture.\n\n## Exemple\n\n```js\nclass Temperature {\n  static ZERO_ABSOLU = -273.15;\n\n  constructor(celsius) {\n    this.celsius = celsius;\n  }\n\n  get fahrenheit() {\n    return this.celsius * 1.8 + 32;\n  }\n\n  set fahrenheit(valeur) {\n    this.celsius = (valeur - 32) / 1.8;\n  }\n\n  static depuisFahrenheit(valeur) {\n    const temperature = new Temperature(0);\n    temperature.fahrenheit = valeur;\n    return temperature;\n  }\n\n  static comparer(a, b) {\n    return a.celsius - b.celsius;\n  }\n}\n\nconst ebullition = new Temperature(100);\nconsole.log(ebullition.fahrenheit); // 212 : lu comme une propriété, calculé\n\nconst gel = new Temperature(10);\ngel.fahrenheit = 32; // le setter met à jour celsius\nconsole.log(gel.celsius); // 0\n\nconst tiede = Temperature.depuisFahrenheit(50);\nconsole.log(tiede.celsius); // 10\n\nconst triees = [ebullition, gel, tiede].sort(Temperature.comparer);\nconsole.log(triees.map((t) => t.celsius)); // [0, 10, 100]\n\nconsole.log(Temperature.ZERO_ABSOLU); // -273.15\nconsole.log(typeof ebullition.comparer); // 'undefined' : statique, absente des instances\nconsole.log(Object.keys(ebullition)); // ['celsius'] : l'accesseur vit sur le prototype\n```\n\n## Comment ça fonctionne\n\nUne méthode d'instance est rangée sur `Classe.prototype` et trouvée par la chaîne de\nprototypes de chaque instance. Une méthode **statique** est une propriété de la fonction\nclasse elle-même : les instances ne la voient pas, puisque la classe ne fait pas partie de\nleur chaîne. Dans une méthode statique, `this` vaut la classe sur laquelle on l'appelle ;\nune sous-classe qui hérite de la méthode l'appelle donc avec `this` égal à la sous-classe,\nce qui permet d'écrire `new this()` dans une fabrique réutilisable.\n\nUn getter et un setter définissent une **propriété accesseur** sur le prototype. Lire\n`ebullition.fahrenheit` ne trouve pas de valeur stockée : le moteur remonte la chaîne,\nrencontre l'accesseur et exécute le getter avec `this` égal à l'instance. Écrire\n`gel.fahrenheit = 32` fait de même avec le setter — c'est l'exception à la règle « une\nécriture crée une propriété propre » vue avec les prototypes.\n\nUn getter **sans setter** rend la propriété lisible mais non modifiable : dans du code en\nmode strict, donc dans un module, l'affectation lève une `TypeError`. Un setter doit stocker\nsa valeur **ailleurs** que sous son propre nom : `set celsius(v) { this.celsius = v; }`\nrappellerait le setter à l'infini, jusqu'au débordement de pile. On utilise un autre nom,\nou un champ privé, présenté au chapitre suivant.\n\nUn getter doit rester **bon marché et sans effet de bord** : celui qui écrit `forme.aire`\ns'attend à lire une valeur, pas à déclencher une requête réseau ou à modifier l'objet. Si\nl'opération est coûteuse ou prend des paramètres, c'est une méthode.\n\nLes méthodes statiques conviennent aux **fabriques** — `depuisFahrenheit`, `depuisJSON` —,\naux **comparateurs** et aux constantes liées au type. Une classe qui ne contient **que** des\nmembres statiques, en revanche, n'a pas besoin d'être une classe : un module de fonctions\nsuffit, comme le détaille le chapitre 4.\n\n## Erreurs fréquentes\n\n**Appeler une méthode statique sur une instance.** `ebullition.comparer` vaut `undefined` :\nécris `Temperature.comparer`.\n\n**Écrire un setter qui s'affecte lui-même.** `this.nom = v` dans `set nom` déclenche une\nrécursion infinie.\n\n**Affecter une propriété qui n'a qu'un getter.** `TypeError` en mode strict.\n\n**Cacher un calcul coûteux ou un effet de bord dans un getter.** Utilise une méthode.\n\n**Remplir une classe de méthodes statiques.** Des fonctions exportées font le même travail.\n\n## À retenir\n\n- Méthode d'instance sur le prototype ; méthode et champ statiques sur la classe.\n- Dans une méthode statique, `this` est la classe appelante.\n- `get` et `set` exposent une propriété calculée ou contrôlée, rangée sur le prototype.\n- Un setter stocke sous un autre nom, sinon il se rappelle à l'infini.\n- Fabriques et comparateurs en statique ; calculs légers en getter ; le reste en méthodes.\n\n## Exercices\n\n1. Écris une classe `Rectangle` avec `largeur` et `hauteur`, et un getter `aire`. Vérifie\n   que l'aire suit les changements de dimensions.\n\n   :::indice\n   Le getter ne stocke rien : il recalcule à chaque lecture à partir des propriétés.\n   :::\n\n   :::solution\n   ```js\n   class Rectangle {\n     constructor(largeur, hauteur) {\n       this.largeur = largeur;\n       this.hauteur = hauteur;\n     }\n\n     get aire() {\n       return this.largeur * this.hauteur;\n     }\n   }\n\n   const r = new Rectangle(2, 3);\n   console.log(r.aire); // 6\n   r.largeur = 5;\n   console.log(r.aire); // 15\n   ```\n   :::\n\n2. Écris une classe `Personne` dont le setter `age` refuse une valeur négative avec une\n   `RangeError`, et dont le getter renvoie l'âge enregistré.\n\n   :::indice\n   Le setter ne peut pas écrire `this.age` : stocke la valeur sous un autre nom.\n   :::\n\n   :::solution\n   ```js\n   class Personne {\n     constructor(nom, age) {\n       this.nom = nom;\n       this.age = age; // passe déjà par le setter\n     }\n\n     get age() {\n       return this.ageEnregistre;\n     }\n\n     set age(valeur) {\n       if (valeur < 0) {\n         throw new RangeError('Un âge ne peut pas être négatif');\n       }\n       this.ageEnregistre = valeur;\n     }\n   }\n\n   const ada = new Personne('Ada', 36);\n   console.log(ada.age); // 36\n   try {\n     ada.age = -1;\n   } catch (erreur) {\n     console.log(erreur.name); // 'RangeError'\n   }\n   console.log(ada.age); // 36 : valeur inchangée\n   ```\n\n   La validation s'applique aussi dans le constructeur, puisqu'il passe par le setter. Le nom\n   `ageEnregistre` reste visible de l'extérieur : le chapitre suivant le rend réellement\n   privé.\n   :::\n\n3. Ajoute à une classe `Couleur(r, v, b)` une fabrique statique `depuisHex('#ff8000')`.\n\n   :::indice\n   Découpe la chaîne en trois paires de caractères, puis `parseInt(paire, 16)`.\n   :::\n\n   :::solution\n   ```js\n   class Couleur {\n     constructor(r, v, b) {\n       Object.assign(this, { r, v, b });\n     }\n\n     static depuisHex(hex) {\n       const [r, v, b] = [1, 3, 5].map((debut) => parseInt(hex.slice(debut, debut + 2), 16));\n       return new this(r, v, b);\n     }\n   }\n\n   console.log(Couleur.depuisHex('#ff8000')); // Couleur { r: 255, v: 128, b: 0 }\n   ```\n\n   `new this(...)` plutôt que `new Couleur(...)` : une sous-classe qui hérite de la fabrique\n   obtient des instances de son propre type.\n   :::\n\n## Questions d'entretien\n\n- Quand utiliser une méthode statique plutôt qu'une méthode d'instance ?\n\n  :::indice\n  L'opération a-t-elle besoin des données d'une instance précise ?\n  :::\n\n  :::reponse\n  Quand l'opération concerne le type sans dépendre d'une instance : fabriquer une instance\n  depuis un autre format, comparer deux instances, exposer une constante. Une méthode\n  d'instance, elle, travaille sur les données de `this`. Si une classe finit par ne contenir\n  que des membres statiques, c'est le signe qu'un module de fonctions suffirait.\n  :::\n\n- Getter ou méthode : comment choisir ?\n\n  :::indice\n  Qu'attend celui qui lit `objet.valeur` ?\n  :::\n\n  :::reponse\n  Un getter se lit comme une propriété : il doit donc se comporter comme une valeur, rapide à\n  obtenir, sans paramètre et sans effet de bord. On l'utilise pour une donnée dérivée, comme\n  une aire ou un nom complet. Dès que l'opération est coûteuse, peut échouer, prend des\n  arguments ou modifie quelque chose, une méthode rend ce coût visible à l'appel.\n  :::\n\n- Pourquoi `set nom(valeur) { this.nom = valeur; }` provoque-t-il une erreur ?\n\n  :::indice\n  Que déclenche l'affectation `this.nom = …` à l'intérieur du setter ?\n  :::\n\n  :::reponse\n  Parce que `this.nom = valeur` passe à nouveau par l'accesseur `nom`, qui se rappelle\n  lui-même indéfiniment, jusqu'à `RangeError: Maximum call stack size exceeded`. Le setter\n  doit stocker la valeur sous un autre nom — une propriété interne, ou de préférence un champ\n  privé `#nom` — et le getter lire ce même emplacement.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-quand-classe",
+      "title": "Quand une classe est le bon outil",
+      "slug": "quand-utiliser-une-classe",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "classes",
+      "order": 4,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-champs-prives"
+      ],
+      "skills": [
+        "class-design-choice"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/classes/quand-utiliser-une-classe/lesson.md",
+      "contentVersion": "9d78baf7763a",
+      "body": "\n## Objectifs\n\n- Choisir entre un objet littéral, un module de fonctions, une fabrique et une classe.\n- Reconnaître les classes qui n'en sont pas : sans état, ou sans comportement.\n- Justifier une classe par ce qu'elle apporte réellement : un état protégé et des instances\n  nombreuses.\n\n## Introduction\n\nAprès trois chapitres sur les classes, la tentation est de tout écrire en classes. Beaucoup\nde développeurs venus de Java ou de C# le font, et produisent des `class Utils` pleines de\nméthodes statiques. JavaScript offre d'autres outils, souvent plus simples. Ce chapitre ne\nprésente aucune syntaxe : il donne des critères pour ne sortir la classe que lorsqu'elle\npaie son coût.\n\n## Concept\n\n| Besoin | Outil adapté |\n| --- | --- |\n| Des données sans comportement | un objet littéral |\n| Des traitements sans état | des fonctions exportées d'un module |\n| Un état caché, peu d'instances, pas d'héritage | une fabrique avec closure |\n| Un état à protéger, de nombreuses instances, un comportement partagé | une classe |\n| Un framework ou une API native qui exige une classe | une classe |\n\nTrois signaux indiquent qu'une classe n'est **pas** justifiée :\n\n- elle ne contient que des méthodes statiques : c'est un module déguisé ;\n- elle n'a qu'un constructeur et une méthode : c'est une fonction déguisée ;\n- elle n'expose que des getters et setters sur ses champs : c'est un objet littéral déguisé.\n\n## Exemple\n\n```js\n// 1. Aucun état, que des statiques : une classe pour rien.\nclass OutilsPrix {\n  static ttc(ht, taux = 0.2) {\n    return Math.round(ht * (1 + taux) * 100) / 100;\n  }\n}\n// Le même service en fonction : importable seule, sans this ni new.\nconst ttc = (ht, taux = 0.2) => Math.round(ht * (1 + taux) * 100) / 100;\nconsole.log(OutilsPrix.ttc(10), ttc(10)); // 12 12\n\n// 2. Des données sans comportement : un objet suffit, et se sérialise tel quel.\nconst adresse = { rue: '1 rue de la Paix', ville: 'Paris' };\nconsole.log(JSON.stringify(adresse)); // '{\"rue\":\"1 rue de la Paix\",\"ville\":\"Paris\"}'\n\n// 3. Un état cohérent à garantir : la classe apporte quelque chose.\nclass Panier {\n  #lignes = new Map();\n\n  ajouter(produit, prix, quantite = 1) {\n    if (!(quantite > 0)) {\n      throw new RangeError('Quantité invalide');\n    }\n    const ligne = this.#lignes.get(produit) ?? { prix, quantite: 0 };\n    ligne.quantite += quantite;\n    this.#lignes.set(produit, ligne);\n  }\n\n  get total() {\n    let total = 0;\n    for (const { prix, quantite } of this.#lignes.values()) {\n      total += prix * quantite;\n    }\n    return total;\n  }\n}\n\nconst panier = new Panier();\npanier.ajouter('clavier', 50);\npanier.ajouter('clavier', 50);\npanier.ajouter('souris', 20);\nconsole.log(panier.total); // 120\n```\n\n## Comment ça fonctionne\n\nUne classe a des **coûts** réels, même s'ils sont discrets. Elle introduit `this`, avec les\npièges de liaison vus dans la partie Runtime. Ses instances se sérialisent mal : `JSON`\nproduit un objet ordinaire, et il faut reconstruire l'instance à la lecture. Ses méthodes\nstatiques inutilisées sont plus difficiles à éliminer du bundle final que des fonctions\nexportées une à une, que les outils de build retirent quand personne ne les importe. Enfin,\nelle invite à l'héritage, dont les inconvénients sont traités au module suivant.\n\nCes coûts valent la peine quand la classe apporte ce que les autres outils n'offrent pas\naussi bien :\n\n- un **invariant** protégé par des champs privés, comme le total du panier qui ne peut pas\n  devenir incohérent, puisque les lignes ne changent que par `ajouter` ;\n- de **nombreuses instances** qui partagent leur comportement via le prototype ;\n- une **identité** et un cycle de vie : une connexion, un minuteur, un composant ;\n- un **contrat attendu par l'environnement** : une sous-classe d'`Error`, un élément\n  personnalisé du DOM, un contrôleur de framework.\n\nFace à une **fabrique**, le choix est plus fin. La fabrique évite `this` et `new`, et cache\nson état sans syntaxe nouvelle ; la classe partage ses méthodes, offre l'héritage et le test\nde marque. Le critère le plus solide reste la cohérence avec le reste de la base de code : un\nprojet qui mélange les deux styles sans raison est plus difficile à lire que l'un ou l'autre.\n\nUn **module ES** joue déjà le rôle d'espace de noms et de singleton : ses variables sont\nprivées tant qu'elles ne sont pas exportées, et il n'est évalué qu'une fois. Une classe\ninstanciée une seule fois, ou remplie de statiques, reproduit ce que le module donne\ngratuitement.\n\n## Erreurs fréquentes\n\n**Écrire une classe de méthodes statiques.** Exporte des fonctions.\n\n**Envelopper des données dans des getters et setters sans règle.** Un objet littéral dit la\nmême chose en moins de lignes.\n\n**Créer une classe pour un seul appel.** `new Calcul(x).executer()` est une fonction.\n\n**Instancier une classe une seule fois pour s'en servir d'espace de noms.** Un module le fait\ndéjà.\n\n**Choisir la classe par habitude d'un autre langage.** Pars du besoin : état, invariant,\nnombre d'instances.\n\n## À retenir\n\n- Données seules : objet. Traitements sans état : fonctions d'un module.\n- État caché et peu d'instances : fabrique. Invariant et nombreuses instances : classe.\n- Une classe uniquement statique, ou à une seule méthode, n'est pas une classe utile.\n- Une classe coûte : `this`, sérialisation, bundle, tentation de l'héritage.\n- Le module ES est déjà un espace de noms et un singleton.\n\n## Exercices\n\n1. Pour chaque besoin, choisis entre objet littéral, fonctions de module, fabrique et classe,\n   en une phrase de justification.\n\n   - a) La configuration de l'application, lue au démarrage.\n   - b) Des fonctions de formatage de dates.\n   - c) Des centaines de minuteurs indépendants, chacun avec son état et ses méthodes.\n   - d) Une erreur applicative `ValidationError` portant la liste des champs invalides.\n\n   :::indice\n   Pour chaque cas, demande-toi : y a-t-il un état ? Faut-il le protéger ? Combien\n   d'instances ? L'environnement impose-t-il une forme ?\n   :::\n\n   :::solution\n   - a) **Objet littéral** : des données sans comportement, lisibles et sérialisables.\n   - b) **Fonctions de module** : des traitements sans état ; chaque fonction s'importe\n     séparément.\n   - c) **Classe** : un état par instance, un comportement partagé par le prototype, et des\n     invariants à tenir.\n   - d) **Classe** : l'environnement l'impose — `class ValidationError extends Error` conserve\n     la pile d'appels et fonctionne avec `instanceof`.\n   :::\n\n2. Remplace cette classe par des fonctions exportées, sans changer le résultat des appels.\n\n   ```js\n   export class Texte {\n     static majuscules(s) { return s.toUpperCase(); }\n     static tronquer(s, n) { return s.length > n ? `${s.slice(0, n)}…` : s; }\n   }\n   ```\n\n   :::indice\n   Aucune méthode n'utilise `this` : rien ne relie ces fonctions à une instance.\n   :::\n\n   :::solution\n   ```js\n   export function majuscules(s) {\n     return s.toUpperCase();\n   }\n\n   export function tronquer(s, n) {\n     return s.length > n ? `${s.slice(0, n)}…` : s;\n   }\n\n   console.log(majuscules('ada'), tronquer('JavaScript', 4)); // 'ADA' 'Java…'\n   ```\n\n   Chez l'appelant, `Texte.tronquer(x, 4)` devient `tronquer(x, 4)`, ou\n   `import * as Texte from './texte.js'` pour garder exactement la même écriture.\n   :::\n\n3. Ce code laisse n'importe qui rendre le stock négatif. Transforme-le en classe qui garantit\n   que la quantité reste positive ou nulle.\n\n   ```js\n   const stock = { quantite: 10 };\n   function retirer(stock, n) {\n     stock.quantite -= n;\n   }\n   ```\n\n   :::indice\n   La quantité doit devenir un champ privé, modifiable seulement par une méthode qui vérifie\n   la règle.\n   :::\n\n   :::solution\n   ```js\n   class Stock {\n     #quantite;\n\n     constructor(quantite) {\n       if (!(quantite >= 0)) {\n         throw new RangeError('Quantité initiale invalide');\n       }\n       this.#quantite = quantite;\n     }\n\n     retirer(n) {\n       if (n > this.#quantite) {\n         throw new RangeError('Stock insuffisant');\n       }\n       this.#quantite -= n;\n     }\n\n     get quantite() {\n       return this.#quantite;\n     }\n   }\n\n   const stock = new Stock(10);\n   stock.retirer(4);\n   console.log(stock.quantite); // 6\n   ```\n\n   Ici la classe se justifie : il y a une règle métier à tenir, et plus aucun chemin ne permet\n   de la contourner.\n   :::\n\n## Questions d'entretien\n\n- Quand une classe est-elle justifiée en JavaScript ?\n\n  :::indice\n  Qu'apporte-t-elle que ni un objet, ni un module, ni une fabrique n'offrent aussi bien ?\n  :::\n\n  :::reponse\n  Quand il y a un état à protéger par des invariants, de nombreuses instances qui partagent\n  leur comportement, une identité ou un cycle de vie, ou quand l'environnement impose une\n  classe — sous-classe d'`Error`, élément personnalisé, contrôleur de framework. Pour des\n  données seules, un objet suffit ; pour des traitements sans état, des fonctions ; pour peu\n  d'instances avec état caché, une fabrique est souvent plus simple.\n  :::\n\n- Pourquoi une classe ne contenant que des méthodes statiques est-elle un défaut de\n  conception ?\n\n  :::indice\n  Qu'est-ce qu'un module ES offre déjà ?\n  :::\n\n  :::reponse\n  Parce qu'elle n'utilise aucune des capacités d'une classe : pas d'instance, pas d'état, pas\n  de `this`. Elle ne sert que d'espace de noms, ce qu'un module ES fournit déjà. Les fonctions\n  exportées sont plus simples à importer une par une, plus faciles à éliminer du bundle quand\n  elles ne servent pas, et `import * as Nom` redonne la même écriture si on la souhaite.\n  :::\n\n- Classe ou fonction fabrique : comment trancher ?\n\n  :::indice\n  Pense au partage des méthodes, à `this`, à l'héritage et à la cohérence du projet.\n  :::\n\n  :::reponse\n  La fabrique évite `this` et `new`, cache son état par closure et se compose facilement ; son\n  coût est une copie des fonctions par objet. La classe partage ses méthodes via le prototype,\n  offre l'héritage, les champs privés et le test de marque, au prix des pièges de `this`. Pour\n  beaucoup d'instances ou quand un framework attend une classe, la classe l'emporte ; sinon,\n  les deux sont légitimes, et le critère décisif est la cohérence avec le reste du code.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -1980,6 +2200,151 @@
       ]
     },
     {
+      "id": "javascript-composition",
+      "title": "Composition contre héritage",
+      "slug": "composition-vs-heritage",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "heritage",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-polymorphisme"
+      ],
+      "skills": [
+        "composition-over-inheritance"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/heritage/composition-vs-heritage/lesson.md",
+      "contentVersion": "c77780278e22",
+      "body": "\n## Objectifs\n\n- Distinguer une relation « est un » d'une relation « a un ».\n- Reconnaître deux défauts typiques de l'héritage : la classe de base fragile et l'explosion\n  des combinaisons.\n- Reconstruire un comportement par composition d'objets plus petits.\n\n## Introduction\n\n« Préférer la composition à l'héritage » est l'un des conseils les plus répétés en conception\nobjet, et l'un des plus mal compris : il ne dit pas que l'héritage est interdit, mais qu'il\ncrée un couplage fort, rarement nécessaire. Ce chapitre montre concrètement où l'héritage\ncasse, et comment la composition résout les mêmes problèmes avec des pièces indépendantes.\n\n## Concept\n\n| | Héritage | Composition |\n| --- | --- | --- |\n| Relation | « est un » : un carré est une forme | « a un » : une voiture a un moteur |\n| Liaison | fixée à la définition de la classe | choisie à la construction de l'objet |\n| Couplage | l'enfant dépend des détails du parent | l'objet dépend de l'interface de ses parties |\n| Réutilisation | tout le parent, ou rien | seulement les parties utiles |\n| Changement de comportement | nouvelle sous-classe | nouvelle partie, ou remplacement à l'exécution |\n\nDeux symptômes signalent un héritage mal choisi :\n\n- **la classe de base fragile** : une modification interne du parent casse un enfant qui n'a\n  pas changé ;\n- **l'explosion des combinaisons** : `CanardVolant`, `CanardNageur`, `CanardVolantNageur`…\n  une sous-classe par mélange de capacités.\n\n## Exemple\n\n```js\n// Héritage : l'enfant dépend de la façon dont le parent est écrit.\nclass Ensemble {\n  #elements = [];\n  ajouter(element) {\n    this.#elements.push(element);\n  }\n  ajouterTous(liste) {\n    for (const element of liste) {\n      this.ajouter(element); // détail interne : ajouterTous passe par ajouter\n    }\n  }\n  get taille() {\n    return this.#elements.length;\n  }\n}\n\nclass EnsembleCompteHerite extends Ensemble {\n  ajouts = 0;\n  ajouter(element) {\n    this.ajouts += 1;\n    super.ajouter(element);\n  }\n  ajouterTous(liste) {\n    this.ajouts += liste.length;\n    super.ajouterTous(liste);\n  }\n}\n\nconst herite = new EnsembleCompteHerite();\nherite.ajouterTous(['a', 'b', 'c']);\nconsole.log(herite.ajouts, herite.taille); // 6 3 : chaque ajout compté deux fois\n\n// Composition : on enveloppe un ensemble, on ne dépend que de son interface.\nclass EnsembleCompte {\n  #ensemble = new Ensemble();\n  ajouts = 0;\n  ajouter(element) {\n    this.ajouts += 1;\n    this.#ensemble.ajouter(element);\n  }\n  ajouterTous(liste) {\n    for (const element of liste) {\n      this.ajouter(element);\n    }\n  }\n  get taille() {\n    return this.#ensemble.taille;\n  }\n}\n\nconst compose = new EnsembleCompte();\ncompose.ajouterTous(['a', 'b', 'c']);\nconsole.log(compose.ajouts, compose.taille); // 3 3\n```\n\n## Comment ça fonctionne\n\nLe compteur hérité est faux sans qu'aucune de ses lignes le soit. `EnsembleCompteHerite`\ncompte trois ajouts dans `ajouterTous`, puis appelle `super.ajouterTous`, qui appelle\n`this.ajouter` pour chaque élément — et `this.ajouter` désigne la version **redéfinie**, qui\ncompte à nouveau. Le bug vient d'un détail d'implémentation du parent, que l'enfant ne peut\npas voir : si l'auteur d'`Ensemble` réécrit un jour `ajouterTous` sans passer par `ajouter`,\nle compteur redevient juste, puis casse autrement. C'est la **classe de base fragile** :\nhériter, c'est dépendre du « comment » du parent, pas seulement de son « quoi ».\n\nLa version composée ne connaît qu'une chose d'`Ensemble` : ses méthodes publiques. Elle\n**délègue** à l'objet qu'elle contient et ajoute son comportement autour. Les changements\ninternes d'`Ensemble` ne peuvent plus l'atteindre.\n\nLa composition règle aussi l'**explosion des combinaisons**. Plutôt qu'une sous-classe par\nmélange de capacités, on construit l'objet à partir de pièces :\n\n```js\nconst peutVoler = (etat) => ({ voler: () => `${etat.nom} vole` });\nconst peutNager = (etat) => ({ nager: () => `${etat.nom} nage` });\n\nfunction creerCanard(nom) {\n  const etat = { nom };\n  return { ...peutVoler(etat), ...peutNager(etat) };\n}\n```\n\nDeux capacités, trois combinaisons possibles, zéro sous-classe. Ajouter une capacité ajoute\nune fonction, pas une rangée de classes.\n\nL'héritage garde sa place quand la relation « est un » est **stable** et que le parent est\n**conçu pour être étendu** : une sous-classe d'`Error`, un composant d'un framework qui\ndocumente ses points d'extension, une hiérarchie courte de un ou deux niveaux. Le problème\nn'est pas `extends`, mais l'héritage utilisé pour récupérer du code.\n\n## Erreurs fréquentes\n\n**Hériter pour réutiliser quelques méthodes.** Si la relation n'est pas « est un »,\ncompose.\n\n**Redéfinir une méthode dont le parent se sert en interne.** Le comportement dépend alors de\ndétails que tu ne contrôles pas.\n\n**Multiplier les sous-classes pour chaque combinaison.** Assemble des capacités.\n\n**Composer ce qui est simple.** Pour un comportement unique et stable, une petite classe ou une\nfonction suffit : la composition est un outil, pas un rituel.\n\n## À retenir\n\n- Héritage : « est un », couplage aux détails du parent. Composition : « a un », couplage à une\n  interface.\n- Classe de base fragile : une modification interne du parent casse l'enfant.\n- La composition délègue à des objets contenus et ajoute son comportement autour.\n- Des capacités assemblées évitent l'explosion des sous-classes.\n- L'héritage convient à une relation stable, courte, et à un parent prévu pour être étendu.\n\n## Exercices\n\n1. Pour chaque paire, dis s'il s'agit d'une relation « est un » ou « a un », et donc\n   d'héritage ou de composition.\n\n   - a) `Voiture` et `Moteur`\n   - b) `ErreurReseau` et `Error`\n   - c) `Utilisateur` et `ListeDePermissions`\n   - d) `Commande` et `ServiceDePaiement`\n\n   :::indice\n   Formule la phrase à voix haute : « une voiture est un moteur » a-t-il un sens ?\n   :::\n\n   :::solution\n   - a) « Une voiture **a un** moteur » : composition.\n   - b) « Une erreur réseau **est une** erreur » : héritage, et `Error` est conçue pour être\n     étendue.\n   - c) « Un utilisateur **a une** liste de permissions » : composition.\n   - d) « Une commande **utilise** un service de paiement » : composition, ou même un simple\n     paramètre passé à la méthode qui paie.\n   :::\n\n2. Cette `Pile` hérite de `Array` pour ne proposer qu'`empiler` et `depiler`, mais expose\n   aussi `splice`, `sort` et toutes les autres méthodes de tableau. Réécris-la par composition.\n\n   ```js\n   class Pile extends Array {\n     empiler(x) { this.push(x); }\n     depiler() { return this.pop(); }\n   }\n   ```\n\n   :::indice\n   Garde un tableau dans un champ privé, et n'expose que les opérations d'une pile.\n   :::\n\n   :::solution\n   ```js\n   class Pile {\n     #elements = [];\n\n     empiler(element) {\n       this.#elements.push(element);\n     }\n\n     depiler() {\n       return this.#elements.pop();\n     }\n\n     get taille() {\n       return this.#elements.length;\n     }\n   }\n\n   const pile = new Pile();\n   pile.empiler(1);\n   pile.empiler(2);\n   console.log(pile.depiler(), pile.taille, typeof pile.splice); // 2 1 'undefined'\n   ```\n\n   L'héritage faisait de la pile « un tableau », avec toutes ses opérations, y compris celles\n   qui cassent l'ordre d'une pile. La composition n'expose que le contrat voulu.\n   :::\n\n3. On veut des personnages de jeu qui peuvent, selon les cas, attaquer, soigner, ou les deux.\n   Écris une solution sans aucune sous-classe.\n\n   :::indice\n   Écris une fonction par capacité, qui reçoit l'état et renvoie les méthodes, puis assemble\n   celles dont chaque personnage a besoin.\n   :::\n\n   :::solution\n   ```js\n   const peutAttaquer = (etat) => ({\n     attaquer: (cible) => `${etat.nom} attaque ${cible}`,\n   });\n\n   const peutSoigner = (etat) => ({\n     soigner: (cible) => `${etat.nom} soigne ${cible}`,\n   });\n\n   function creerPersonnage(nom, ...capacites) {\n     const etat = { nom };\n     return Object.assign({ nom }, ...capacites.map((capacite) => capacite(etat)));\n   }\n\n   const guerrier = creerPersonnage('Ada', peutAttaquer);\n   const paladin = creerPersonnage('Grace', peutAttaquer, peutSoigner);\n\n   console.log(guerrier.attaquer('le dragon')); // 'Ada attaque le dragon'\n   console.log(paladin.soigner('Ada'), typeof guerrier.soigner); // 'Grace soigne Ada' 'undefined'\n   ```\n\n   Une troisième capacité s'ajoute par une nouvelle fonction, et toutes les combinaisons sont\n   disponibles sans créer de classe.\n   :::\n\n## Questions d'entretien\n\n- Que signifie « préférer la composition à l'héritage » ?\n\n  :::indice\n  Qu'est-ce que chacun des deux couple ?\n  :::\n\n  :::reponse\n  Que pour réutiliser ou varier un comportement, il vaut mieux assembler des objets qui\n  collaborent par leurs interfaces que créer une sous-classe. L'héritage couple l'enfant aux\n  détails internes du parent et fige la combinaison au moment de la définition ; la composition\n  ne dépend que des méthodes publiques et permet de choisir, voire de remplacer, les parties à\n  la construction. Ce n'est pas une interdiction : l'héritage reste adapté à une relation « est\n  un » stable et à un parent conçu pour être étendu.\n  :::\n\n- Qu'est-ce que le problème de la classe de base fragile ?\n\n  :::indice\n  Une sous-classe peut-elle casser sans avoir été modifiée ?\n  :::\n\n  :::reponse\n  C'est le fait qu'une modification interne d'une classe parente, parfaitement valide de son\n  point de vue, casse une sous-classe qui n'a pas changé. Cela arrive quand l'enfant redéfinit\n  des méthodes que le parent utilise en interne, et dépend donc de l'ordre et de la manière\n  dont le parent les appelle. La composition supprime ce risque, puisque l'objet englobant ne\n  voit que l'interface publique de l'objet qu'il contient.\n  :::\n\n- Quand l'héritage reste-t-il le bon choix ?\n\n  :::indice\n  Pense à la stabilité de la relation, à la profondeur, et à l'intention de l'auteur du parent.\n  :::\n\n  :::reponse\n  Quand la relation « est un » est vraie et stable, que la hiérarchie reste courte — un ou deux\n  niveaux —, et que le parent est explicitement conçu pour être étendu, avec des points\n  d'extension documentés. Les erreurs personnalisées qui étendent `Error`, ou les composants\n  d'un framework qui prévoit l'héritage, en sont les exemples typiques. Hors de ces cas,\n  hériter pour récupérer du code crée plus de couplage qu'il n'en économise.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-encapsulation",
+      "title": "Encapsulation, abstraction et conception d'objets",
+      "slug": "encapsulation-abstraction",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "heritage",
+      "order": 4,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-composition"
+      ],
+      "skills": [
+        "encapsulation-abstraction"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/heritage/encapsulation-abstraction/lesson.md",
+      "contentVersion": "0307e75647a0",
+      "body": "\n## Objectifs\n\n- Distinguer encapsulation — cacher l'état — et abstraction — cacher la manière de faire.\n- Concevoir des objets qui reçoivent des ordres plutôt que d'exposer leurs données.\n- Simuler une classe abstraite en JavaScript, qui n'a pas de mot-clé pour cela.\n\n## Introduction\n\nUn objet dont tout l'état est public et dont chaque décision est prise à l'extérieur n'est\nqu'une structure de données déguisée. Les règles métier se retrouvent dispersées dans le code\nappelant, recopiées, et finissent par diverger. L'encapsulation et l'abstraction rassemblent\nces règles là où sont les données, et laissent à l'extérieur une interface courte et stable.\n\n## Concept\n\n| Principe | Question | Moyen en JavaScript |\n| --- | --- | --- |\n| Encapsulation | Qui peut modifier l'état ? | champs privés, méthodes qui vérifient les règles |\n| Abstraction | Que doit savoir l'appelant ? | une interface minimale, les détails cachés derrière |\n| *Tell, don't ask* | Qui prend la décision ? | l'objet qui possède les données |\n| Classe abstraite | Qu'est-ce qui doit être fourni par les sous-classes ? | erreur levée dans la méthode de base, contrôle de `new.target` |\n\n« *Tell, don't ask* » — « ordonne, ne demande pas » — résume la conception d'objets : plutôt que\nlire l'état d'un objet pour décider à sa place, on lui demande d'agir, et c'est lui qui applique\nses règles.\n\n## Exemple\n\n```js\n// Demander : la règle est dans le code appelant, et peut être oubliée ailleurs.\nconst compteOuvert = { solde: 100 };\nif (compteOuvert.solde >= 30) {\n  compteOuvert.solde -= 30;\n}\n\n// Ordonner : la règle vit dans l'objet, et c'est le seul chemin possible.\nclass Compte {\n  #solde;\n  constructor(solde) {\n    this.#solde = solde;\n  }\n  retirer(montant) {\n    if (montant > this.#solde) {\n      return false;\n    }\n    this.#solde -= montant;\n    return true;\n  }\n  get solde() {\n    return this.#solde;\n  }\n}\nconst compte = new Compte(100);\nconsole.log(compte.retirer(30), compte.retirer(500), compte.solde); // true false 70\n\n// Abstraction : l'appelant ne sait pas comment le message part.\nclass Notificateur {\n  constructor() {\n    if (new.target === Notificateur) {\n      throw new TypeError('Notificateur est abstrait');\n    }\n  }\n  notifier(destinataire, message) {\n    return this.envoyer(destinataire, message.trim());\n  }\n  envoyer() {\n    throw new Error('envoyer() doit être implémentée par la sous-classe');\n  }\n}\n\nclass NotificateurEmail extends Notificateur {\n  envoyer(destinataire, message) {\n    return `email à ${destinataire} : ${message}`;\n  }\n}\n\nconsole.log(new NotificateurEmail().notifier('ada@exemple.fr', '  Bienvenue  '));\n// 'email à ada@exemple.fr : Bienvenue'\n\ntry {\n  new Notificateur();\n} catch (erreur) {\n  console.log(erreur.message); // 'Notificateur est abstrait'\n}\n```\n\n## Comment ça fonctionne\n\nL'**encapsulation** protège l'état : dans `Compte`, le solde est un champ privé, et la seule\nfaçon de le modifier est `retirer`, qui applique la règle. Il n'existe plus de chemin où le\nsolde deviendrait négatif. L'objet ouvert du début, lui, dépend de la discipline de chaque\nappelant : il suffit d'un endroit du code qui oublie le test.\n\nL'**abstraction** protège l'appelant des détails. Celui qui appelle `notifier` ne sait pas si le\nmessage part par courriel, SMS ou notification push ; il ne connaît qu'un verbe et deux\nparamètres. Changer de canal revient à fournir une autre sous-classe, ou un autre objet qui\npossède `envoyer` — sans toucher au code appelant.\n\nJavaScript n'a ni mot-clé `abstract` ni interfaces. Deux conventions les remplacent. Une méthode\nde base qui **lève une erreur** signale ce que les sous-classes doivent fournir : l'oubli se\nmanifeste au premier appel, avec un message explicite. Le test **`new.target === Classe`** dans\nle constructeur empêche d'instancier la classe de base elle-même, tout en laissant les\nsous-classes passer, puisque `new.target` vaut alors la sous-classe. TypeScript offre de vrais\nmots-clés `abstract` et `interface`, vérifiés à la compilation.\n\nUne interface minimale se protège aussi dans ce qu'elle **renvoie**. Un getter qui renvoie\ndirectement un tableau privé rend l'encapsulation illusoire, puisque l'appelant peut le\nmodifier : on renvoie une copie, ou une valeur immuable.\n\nUn signe fréquent d'encapsulation manquée est la **chaîne d'accès** :\n`commande.client.adresse.ville`. Le code appelant connaît alors la structure interne de trois\nobjets. Une méthode comme `commande.villeDeLivraison()` cache cette structure, qui peut ensuite\nchanger sans casser l'appelant.\n\n## Erreurs fréquentes\n\n**Exposer l'état et décider à l'extérieur.** La règle métier se disperse et se contredit.\n\n**Ajouter un getter et un setter pour chaque champ.** L'état est aussi ouvert qu'avec des\npropriétés publiques.\n\n**Renvoyer une référence vers une collection privée.** Renvoie une copie.\n\n**Laisser une classe « abstraite » instanciable.** Vérifie `new.target` dans son constructeur.\n\n**Enchaîner les accès à travers plusieurs objets.** Ajoute une méthode sur l'objet le plus proche.\n\n## À retenir\n\n- Encapsulation : l'état ne change que par des méthodes qui en garantissent les règles.\n- Abstraction : l'appelant connaît le « quoi », jamais le « comment ».\n- *Tell, don't ask* : demande à l'objet d'agir plutôt que de lire son état pour décider.\n- Classe abstraite en JavaScript : méthode de base qui lève une erreur, et `new.target`.\n- Méfie-toi des getters sur tout, des collections exposées et des chaînes d'accès.\n\n## Exercices\n\n1. Réécris ce code dans le style « ordonne, ne demande pas » : la règle doit vivre dans l'objet.\n\n   ```js\n   const ticket = { places: 2, reservees: 0 };\n   if (ticket.reservees < ticket.places) {\n     ticket.reservees += 1;\n   }\n   ```\n\n   :::indice\n   Crée une classe avec les compteurs en champs privés et une méthode `reserver()` qui\n   renvoie si la réservation a réussi.\n   :::\n\n   :::solution\n   ```js\n   class Evenement {\n     #places;\n     #reservees = 0;\n\n     constructor(places) {\n       this.#places = places;\n     }\n\n     reserver() {\n       if (this.#reservees >= this.#places) {\n         return false;\n       }\n       this.#reservees += 1;\n       return true;\n     }\n\n     get placesRestantes() {\n       return this.#places - this.#reservees;\n     }\n   }\n\n   const concert = new Evenement(2);\n   console.log(concert.reserver(), concert.reserver(), concert.reserver()); // true true false\n   console.log(concert.placesRestantes); // 0\n   ```\n   :::\n\n2. Écris une classe abstraite `Exporteur` avec une méthode `exporter(donnees)` qui délègue à\n   `formater`, à fournir par les sous-classes, puis une sous-classe `ExporteurCsv`. Instancier\n   `Exporteur` directement doit échouer.\n\n   :::indice\n   Dans le constructeur, compare `new.target` à `Exporteur` ; dans la classe de base, `formater`\n   lève une erreur.\n   :::\n\n   :::solution\n   ```js\n   class Exporteur {\n     constructor() {\n       if (new.target === Exporteur) {\n         throw new TypeError('Exporteur est abstrait');\n       }\n     }\n\n     exporter(donnees) {\n       return this.formater(donnees);\n     }\n\n     formater() {\n       throw new Error('formater() doit être implémentée');\n     }\n   }\n\n   class ExporteurCsv extends Exporteur {\n     formater(lignes) {\n       return lignes.map((ligne) => ligne.join(';')).join('\\n');\n     }\n   }\n\n   console.log(new ExporteurCsv().exporter([['nom', 'age'], ['Ada', 36]]));\n   // 'nom;age\\nAda;36'\n   try {\n     new Exporteur();\n   } catch (erreur) {\n     console.log(erreur.name); // 'TypeError'\n   }\n   ```\n   :::\n\n3. Cache la chaîne d'accès `commande.client.adresse.ville` derrière une méthode, de façon que\n   l'appelant n'ait plus besoin de connaître la structure du client.\n\n   :::indice\n   Ajoute la méthode sur l'objet que l'appelant manipule déjà : la commande.\n   :::\n\n   :::solution\n   ```js\n   class Commande {\n     #client;\n\n     constructor(client) {\n       this.#client = client;\n     }\n\n     villeDeLivraison() {\n       return this.#client.adresse?.ville ?? 'Adresse inconnue';\n     }\n   }\n\n   const commande = new Commande({ nom: 'Ada', adresse: { ville: 'Lyon' } });\n   console.log(commande.villeDeLivraison()); // 'Lyon'\n   console.log(new Commande({ nom: 'Grace' }).villeDeLivraison()); // 'Adresse inconnue'\n   ```\n\n   Si l'adresse change de structure, seule `villeDeLivraison` est à modifier, et le cas de\n   l'adresse absente est traité à un seul endroit.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre encapsulation et abstraction ?\n\n  :::indice\n  L'une cache des données, l'autre cache une manière de faire.\n  :::\n\n  :::reponse\n  L'encapsulation contrôle l'accès à l'état : les données sont cachées et ne changent que par\n  des méthodes qui garantissent les règles. L'abstraction réduit ce que l'appelant doit savoir :\n  il utilise une opération — `notifier`, `exporter` — sans connaître son implémentation. Les deux\n  vont souvent ensemble, mais on peut encapsuler sans abstraire, en exposant toutes les\n  opérations internes, ou abstraire sans encapsuler, avec une interface simple sur un état\n  public.\n  :::\n\n- Que signifie *Tell, don't ask* ?\n\n  :::indice\n  Où se trouve la décision dans chacun des deux styles ?\n  :::\n\n  :::reponse\n  C'est le principe selon lequel on demande à un objet d'accomplir une action plutôt que de lire\n  son état pour décider à sa place. `compte.retirer(30)` laisse le compte appliquer sa règle ;\n  `if (compte.solde >= 30) compte.solde -= 30` recopie la règle chez l'appelant. Le style\n  « ordonner » garde les règles à côté des données, évite leur duplication, et permet de changer\n  l'implémentation sans toucher aux appelants.\n  :::\n\n- Comment simuler une classe abstraite en JavaScript ?\n\n  :::indice\n  Deux besoins : empêcher l'instanciation directe, et imposer des méthodes aux sous-classes.\n  :::\n\n  :::reponse\n  Dans le constructeur, `if (new.target === ClasseDeBase) throw new TypeError(…)` empêche\n  d'instancier la base tout en autorisant les sous-classes, pour lesquelles `new.target` vaut la\n  sous-classe. Les méthodes à fournir sont définies dans la base et lèvent une erreur explicite,\n  ce qui signale l'oubli dès le premier appel. Ce contrôle a lieu à l'exécution ; TypeScript\n  fournit `abstract` et `interface` pour le vérifier dès la compilation.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-extends-super",
+      "title": "extends et super",
+      "slug": "extends-et-super",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "heritage",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-champs-prives",
+        "javascript-heritage-prototypal"
+      ],
+      "skills": [
+        "class-inheritance"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/heritage/extends-et-super/lesson.md",
+      "contentVersion": "46706487e09e",
+      "body": "\n## Objectifs\n\n- Déclarer une classe dérivée avec `extends`, et appeler le constructeur parent avec `super`.\n- Réutiliser une méthode parente avec `super.methode()`.\n- Étendre correctement une classe native comme `Error`.\n\n## Introduction\n\nLa partie Runtime a montré ce que `extends` construit sous le capot : deux chaînes de\nprototypes reliées. Ce chapitre passe du côté de l'usage : les règles précises de `super`,\nqui provoquent la plupart des erreurs, et le cas le plus courant d'héritage en JavaScript\napplicatif — les erreurs personnalisées.\n\n## Concept\n\n| Écriture | Rôle |\n| --- | --- |\n| `class Cercle extends Forme` | `Cercle` hérite des méthodes d'instance et statiques de `Forme` |\n| `super(arguments)` | appelle le constructeur parent ; obligatoire dans un constructeur dérivé |\n| `super.methode()` | appelle la version parente d'une méthode |\n| Pas de constructeur | équivaut à `constructor(...args) { super(...args); }` |\n\nDeux règles sur le constructeur d'une classe dérivée :\n\n1. il **doit** appeler `super(...)` avant de se terminer ;\n2. il ne peut pas utiliser `this` **avant** cet appel.\n\n## Exemple\n\n```js\nclass Forme {\n  constructor(nom) {\n    this.nom = nom;\n  }\n\n  aire() {\n    return 0;\n  }\n\n  decrire() {\n    return `${this.nom} d'aire ${this.aire()}`;\n  }\n}\n\nclass Cercle extends Forme {\n  constructor(rayon) {\n    super('cercle'); // d'abord le parent\n    this.rayon = rayon; // ensuite seulement, this\n  }\n\n  aire() {\n    return Math.round(Math.PI * this.rayon ** 2 * 100) / 100;\n  }\n}\n\nclass Carre extends Forme {\n  constructor(cote) {\n    super('carré');\n    this.cote = cote;\n  }\n\n  aire() {\n    return this.cote ** 2;\n  }\n\n  decrire() {\n    return `${super.decrire()} (côté ${this.cote})`;\n  }\n}\n\nconsole.log(new Cercle(2).decrire()); // \"cercle d'aire 12.57\"\nconsole.log(new Carre(3).decrire()); // \"carré d'aire 9 (côté 3)\"\nconsole.log(new Carre(3) instanceof Forme); // true\n\nclass ErreurHttp extends Error {\n  constructor(statut, message) {\n    super(message);\n    this.name = 'ErreurHttp';\n    this.statut = statut;\n  }\n}\n\nconst erreur = new ErreurHttp(404, 'Ressource introuvable');\nconsole.log(erreur instanceof Error, erreur.statut); // true 404\nconsole.log(String(erreur)); // 'ErreurHttp: Ressource introuvable'\n```\n\n## Comment ça fonctionne\n\nDans une classe de base, `new` crée l'objet avant d'exécuter le constructeur. Dans une\nclasse **dérivée**, c'est différent : l'objet est créé par le constructeur **parent**, au\nmoment de l'appel `super(...)`. Avant cet appel, `this` n'existe tout simplement pas encore.\nLe lire lève `ReferenceError: Must call super constructor in derived class before accessing\n'this'`. Oublier complètement `super` produit la même erreur à la fin du constructeur.\n\nCe fonctionnement a une conséquence sur l'ordre d'initialisation. Les champs déclarés dans la\nclasse dérivée sont installés **juste après** le retour de `super()`. Si le constructeur\nparent appelle une méthode que l'enfant redéfinit, cette méthode s'exécute alors que les\nchamps de l'enfant valent encore `undefined`. C'est un piège classique, détaillé au chapitre\nsuivant.\n\n`super.methode()` ne passe pas par `this` pour trouver le parent. Chaque méthode déclarée dans\nune classe mémorise l'objet où elle est définie, et `super` part du prototype de cet objet.\nC'est pourquoi `super.decrire()` dans `Carre` trouve bien `Forme.prototype.decrire`, et que\nl'exécution se fait avec `this` égal à l'instance : `this.aire()` y appelle la version du\ncarré.\n\nUne classe sans constructeur reçoit un constructeur implicite qui transmet tous ses arguments\nau parent. On n'écrit donc un constructeur dérivé que pour ajouter quelque chose.\n\nÉtendre une classe **native** fonctionne avec `class`, contrairement à l'ancienne méthode par\nprototypes. Pour `Error`, deux détails comptent : appeler `super(message)` pour obtenir le\nmessage et la pile d'appels, et définir `name`, faute de quoi l'erreur s'affiche comme une\nsimple `Error`. Pour `Array`, les méthodes comme `map` renvoient même des instances de la\nsous-classe.\n\n## Erreurs fréquentes\n\n**Utiliser `this` avant `super()`.** `ReferenceError` : appelle le parent en premier.\n\n**Oublier `super()` dans un constructeur dérivé.** Même erreur, à la sortie du constructeur.\n\n**Écrire un constructeur qui se contente d'appeler `super`.** Le constructeur implicite fait\ndéjà exactement cela.\n\n**Oublier `name` dans une erreur personnalisée.** Les journaux affichent `Error` au lieu du\nvrai type.\n\n**Hériter pour réutiliser deux méthodes.** L'héritage exprime une relation « est un » ; pour\nréutiliser du code, préfère la composition, vue plus loin dans ce module.\n\n## À retenir\n\n- `extends` relie les instances et les méthodes statiques au parent.\n- Dans un constructeur dérivé, `super(...)` crée l'objet : rien sur `this` avant lui.\n- `super.methode()` appelle la version parente, avec `this` égal à l'instance.\n- Sans constructeur, les arguments sont transmis au parent automatiquement.\n- Erreur personnalisée : `extends Error`, `super(message)` et un `name` explicite.\n\n## Exercices\n\n1. Écris `Rectangle extends Forme` avec `largeur` et `hauteur`, qui redéfinit `aire()`, en\n   partant de la classe `Forme` de l'exemple.\n\n   :::indice\n   Le constructeur appelle d'abord `super('rectangle')`, puis stocke ses dimensions.\n   :::\n\n   :::solution\n   ```js\n   class Rectangle extends Forme {\n     constructor(largeur, hauteur) {\n       super('rectangle');\n       this.largeur = largeur;\n       this.hauteur = hauteur;\n     }\n\n     aire() {\n       return this.largeur * this.hauteur;\n     }\n   }\n\n   console.log(new Rectangle(3, 4).decrire()); // \"rectangle d'aire 12\"\n   ```\n\n   `decrire`, héritée de `Forme`, appelle `this.aire()` : c'est la version du rectangle qui\n   s'exécute.\n   :::\n\n2. Ce constructeur lève une `ReferenceError`. Explique pourquoi et corrige.\n\n   ```js\n   class Administrateur extends Utilisateur {\n     constructor(nom, droits) {\n       this.droits = droits;\n       super(nom);\n     }\n   }\n   ```\n\n   :::indice\n   Dans une classe dérivée, qui crée l'objet désigné par `this` ?\n   :::\n\n   :::solution\n   Dans une classe dérivée, l'objet est créé par le constructeur parent lors de `super(nom)`.\n   Avant cet appel, `this` n'existe pas : l'affecter lève une `ReferenceError`.\n\n   ```js\n   class Administrateur extends Utilisateur {\n     constructor(nom, droits) {\n       super(nom);\n       this.droits = droits;\n     }\n   }\n   ```\n   :::\n\n3. Écris `ErreurValidation extends Error` qui reçoit la liste des champs invalides, produit\n   le message `Champs invalides : email, age`, et se reconnaît avec `instanceof`.\n\n   :::indice\n   Construis le message avant de le passer à `super`, puis définis `name` et `champs`.\n   :::\n\n   :::solution\n   ```js\n   class ErreurValidation extends Error {\n     constructor(champs) {\n       super(`Champs invalides : ${champs.join(', ')}`);\n       this.name = 'ErreurValidation';\n       this.champs = champs;\n     }\n   }\n\n   try {\n     throw new ErreurValidation(['email', 'age']);\n   } catch (erreur) {\n     if (erreur instanceof ErreurValidation) {\n       console.log(erreur.message, erreur.champs.length); // 'Champs invalides : email, age' 2\n     }\n   }\n   ```\n   :::\n\n## Questions d'entretien\n\n- Pourquoi faut-il appeler `super()` avant d'utiliser `this` dans une classe dérivée ?\n\n  :::indice\n  Dans une classe dérivée, l'objet est-il créé par `new` ou par le parent ?\n  :::\n\n  :::reponse\n  Parce que dans une classe dérivée, l'instance est créée par le constructeur parent au moment\n  de `super()`. Avant cet appel, il n'existe aucun objet à désigner, et toute lecture de `this`\n  lève une `ReferenceError`. Ce modèle permet d'étendre des classes natives comme `Array` ou\n  `Error`, dont les instances ont une structure interne que seul leur propre constructeur sait\n  créer.\n  :::\n\n- Que fait une classe dérivée qui n'a pas de constructeur ?\n\n  :::indice\n  Le moteur ajoute un constructeur implicite. Que contient-il ?\n  :::\n\n  :::reponse\n  Elle reçoit un constructeur implicite équivalent à `constructor(...args) { super(...args); }` :\n  tous les arguments sont transmis au parent. Il est donc inutile d'écrire un constructeur qui\n  ne fait qu'appeler `super` ; on en écrit un seulement pour ajouter des propriétés ou une\n  validation.\n  :::\n\n- Comment écrire correctement une erreur personnalisée ?\n\n  :::indice\n  Pense au message, à la pile d'appels, au nom affiché et à `instanceof`.\n  :::\n\n  :::reponse\n  On étend `Error` avec `class`, on appelle `super(message)` pour obtenir `message` et `stack`,\n  on définit `this.name` pour que les journaux affichent le bon type, et on ajoute les données\n  utiles au diagnostic, comme un code de statut ou la liste des champs. L'appelant peut alors\n  filtrer avec `instanceof` et lire ces données. Depuis ES2022, l'option `{ cause }` de `super`\n  permet aussi de chaîner l'erreur d'origine.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-polymorphisme",
+      "title": "Redéfinition de méthode et polymorphisme",
+      "slug": "polymorphisme",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "heritage",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-extends-super"
+      ],
+      "skills": [
+        "polymorphism"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/heritage/polymorphisme/lesson.md",
+      "contentVersion": "e08e57be97b0",
+      "body": "\n## Objectifs\n\n- Redéfinir une méthode héritée sans casser le contrat du parent.\n- Remplacer un `switch` sur le type d'un objet par un appel polymorphe.\n- Reconnaître le typage par comportement (*duck typing*), propre à JavaScript.\n\n## Introduction\n\nUn programme qui calcule des frais de livraison écrit souvent\n`if (colis.type === 'express') … else if (colis.type === 'standard') …`, et ce test se\nrecopie dans chaque fonction qui dépend du type. Chaque nouveau mode de livraison oblige alors\nà modifier tous ces endroits. Le **polymorphisme** inverse la logique : chaque objet sait\nrépondre au même message à sa façon, et le code appelant n'a plus besoin de connaître les\ntypes.\n\n## Concept\n\n| Notion | Définition |\n| --- | --- |\n| Redéfinition | une sous-classe fournit sa propre version d'une méthode héritée |\n| Polymorphisme | le même appel produit un comportement adapté à chaque objet |\n| Contrat | ce qu'une méthode promet : paramètres acceptés, type renvoyé, erreurs possibles |\n| Duck typing | un objet convient s'il possède les méthodes attendues, quel que soit son type |\n\nLa règle qui rend le polymorphisme sûr — le **principe de substitution** — tient en une\nphrase : partout où le code attend le parent, une instance de la sous-classe doit pouvoir\nêtre utilisée sans surprise.\n\n## Exemple\n\n```js\n// Avant : le type est testé à chaque usage.\nfunction fraisAvecSwitch(colis) {\n  switch (colis.type) {\n    case 'standard':\n      return 5;\n    case 'express':\n      return 5 + colis.poids * 2;\n    default:\n      throw new Error(`Type inconnu : ${colis.type}`);\n  }\n}\nconsole.log(fraisAvecSwitch({ type: 'express', poids: 3 })); // 11\n\n// Après : chaque type porte sa propre règle.\nclass Livraison {\n  constructor(poids) {\n    this.poids = poids;\n  }\n  frais() {\n    return 5;\n  }\n  resume() {\n    return `${this.constructor.name} : ${this.frais()} €`;\n  }\n}\n\nclass LivraisonExpress extends Livraison {\n  frais() {\n    return super.frais() + this.poids * 2;\n  }\n}\n\nclass RetraitMagasin extends Livraison {\n  frais() {\n    return 0;\n  }\n}\n\nconst envois = [new Livraison(3), new LivraisonExpress(3), new RetraitMagasin(3)];\nconsole.log(envois.map((envoi) => envoi.resume()));\n// ['Livraison : 5 €', 'LivraisonExpress : 11 €', 'RetraitMagasin : 0 €']\n\n// Duck typing : aucun héritage, mais le même comportement suffit.\nconst coursier = { poids: 1, frais: () => 12, resume() { return `Coursier : ${this.frais()} €`; } };\nconsole.log([...envois, coursier].reduce((total, envoi) => total + envoi.frais(), 0)); // 28\n```\n\n## Comment ça fonctionne\n\nQuand `resume()` appelle `this.frais()`, le moteur cherche `frais` en partant de l'**instance\nréelle**, pas de la classe où `resume` est écrite. Pour une `LivraisonExpress`, la recherche\ntrouve d'abord `LivraisonExpress.prototype.frais` et s'arrête : c'est la **répartition\ndynamique**, qui découle directement de la chaîne de prototypes. `resume` est écrite une\nseule fois, dans le parent, et chaque sous-classe n'a qu'à fournir la partie qui varie. Ce\nmotif porte un nom : la *méthode patron* (*template method*).\n\nLe gain apparaît quand on ajoute un cas. Avec le `switch`, un nouveau mode de livraison impose\nde retrouver et de modifier chaque fonction qui teste le type. Avec le polymorphisme, on\najoute une classe, et aucun code existant ne change.\n\nJavaScript ne vérifie pas les types : un objet convient dès qu'il répond aux méthodes\nappelées. Le coursier de l'exemple n'hérite de rien, et pourtant il s'intègre au calcul.\nL'héritage n'est donc pas une condition du polymorphisme en JavaScript ; il sert à partager\ndu code, pas à « autoriser » un objet. TypeScript formalise ce comportement avec des\ninterfaces vérifiées à la compilation.\n\nLe polymorphisme n'est sûr que si chaque redéfinition **respecte le contrat** du parent. Une\nsous-classe qui lève une erreur là où le parent renvoyait un nombre, ou qui renvoie une chaîne\nau lieu d'un nombre, casse tout code écrit pour le parent — même si chaque classe prise seule\nsemble correcte.\n\nUn piège propre à JavaScript : appeler une méthode redéfinissable **depuis le constructeur du\nparent**. Le constructeur parent s'exécute pendant `super()`, avant l'installation des champs\nde l'enfant. La méthode redéfinie s'exécute donc avec des champs encore à `undefined`. On\névite d'appeler des méthodes redéfinissables dans un constructeur.\n\nEnfin, `this.constructor.name` convient à un exemple, mais pas à une logique métier : un outil\nde minification renomme les classes en production.\n\n## Erreurs fréquentes\n\n**Tester le type avec `switch` ou `instanceof` dans tout le code.** Déplace la règle dans une\nméthode de chaque type.\n\n**Changer le contrat dans une redéfinition.** Type de retour, erreurs levées et paramètres\ndoivent rester compatibles.\n\n**Appeler une méthode redéfinissable dans le constructeur parent.** Les champs de l'enfant ne\nsont pas encore initialisés.\n\n**Créer une hiérarchie de classes pour un seul comportement variable.** Une fonction passée en\nparamètre, ou un objet stratégie, suffit souvent.\n\n## À retenir\n\n- Redéfinir une méthode remplace la version parente pour les instances de la sous-classe.\n- `this.methode()` part toujours de l'instance réelle : c'est la répartition dynamique.\n- Le polymorphisme remplace les tests de type répétés, et rend l'ajout d'un cas local.\n- En JavaScript, il suffit qu'un objet ait les bonnes méthodes : pas besoin d'héritage.\n- Une redéfinition respecte le contrat du parent, et n'est pas appelée depuis son constructeur.\n\n## Exercices\n\n1. Remplace ce `switch` par des classes qui portent chacune leur règle de réduction.\n\n   ```js\n   function reduction(client, montant) {\n     switch (client.statut) {\n       case 'standard': return 0;\n       case 'fidele': return montant * 0.05;\n       case 'premium': return montant * 0.1;\n     }\n   }\n   ```\n\n   :::indice\n   Une classe de base `Client` avec `reduction(montant)` qui renvoie `0`, puis une\n   redéfinition par statut.\n   :::\n\n   :::solution\n   ```js\n   class Client {\n     reduction(montant) {\n       return 0;\n     }\n   }\n\n   class ClientFidele extends Client {\n     reduction(montant) {\n       return montant * 0.05;\n     }\n   }\n\n   class ClientPremium extends Client {\n     reduction(montant) {\n       return montant * 0.1;\n     }\n   }\n\n   const clients = [new Client(), new ClientFidele(), new ClientPremium()];\n   console.log(clients.map((client) => client.reduction(200))); // [0, 10, 20]\n   ```\n\n   Ajouter un statut revient maintenant à ajouter une classe : aucune fonction existante n'est\n   modifiée.\n   :::\n\n2. Sans héritage, ajoute à la liste `clients` de l'exercice précédent un client partenaire\n   dont la réduction est fixe, de 15 €, et vérifie que le calcul fonctionne toujours.\n\n   :::indice\n   Le code appelant n'utilise qu'une méthode : un objet littéral qui la possède suffit.\n   :::\n\n   :::solution\n   ```js\n   const partenaire = {\n     reduction: () => 15,\n   };\n\n   console.log([...clients, partenaire].map((client) => client.reduction(200))); // [0, 10, 20, 15]\n   ```\n\n   C'est le typage par comportement : l'objet convient parce qu'il répond à `reduction`, pas\n   parce qu'il descend de `Client`.\n   :::\n\n3. Ce code affiche `undefined` au lieu de `[journal] prêt`. Explique pourquoi et corrige.\n\n   ```js\n   class Composant {\n     constructor() {\n       this.afficher();\n     }\n     afficher() {}\n   }\n\n   class Journal extends Composant {\n     prefixe = '[journal]';\n     afficher() {\n       console.log(this.prefixe && `${this.prefixe} prêt`);\n     }\n   }\n\n   new Journal();\n   ```\n\n   :::indice\n   À quel moment le champ `prefixe` est-il installé, par rapport à l'exécution du constructeur\n   de `Composant` ?\n   :::\n\n   :::solution\n   `new Journal()` exécute d'abord le constructeur de `Composant`, pendant `super()`. Celui-ci\n   appelle `afficher`, qui est la version redéfinie de `Journal`. Or les champs de `Journal` ne\n   sont installés qu'**après** le retour de `super()` : `this.prefixe` vaut encore `undefined`.\n\n   ```js\n   class Composant {\n     demarrer() {\n       this.afficher();\n       return this;\n     }\n     afficher() {}\n   }\n\n   class Journal extends Composant {\n     prefixe = '[journal]';\n     afficher() {\n       console.log(`${this.prefixe} prêt`);\n     }\n   }\n\n   new Journal().demarrer(); // '[journal] prêt'\n   ```\n\n   Le constructeur se contente d'initialiser ; le comportement redéfinissable est déclenché\n   ensuite, une fois l'objet complet.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que le polymorphisme, et qu'apporte-t-il ?\n\n  :::indice\n  Pense à ce qui se passe quand on ajoute un nouveau type.\n  :::\n\n  :::reponse\n  C'est la capacité d'objets différents à répondre au même appel, chacun à sa manière. Le code\n  appelant écrit `envoi.frais()` sans connaître le type exact. Son intérêt principal est\n  l'extension : ajouter un cas consiste à ajouter une classe ou un objet, sans modifier les\n  fonctions existantes, là où un `switch` sur le type obligerait à retoucher chaque endroit\n  qui teste ce type.\n  :::\n\n- Qu'est-ce que le duck typing en JavaScript ?\n\n  :::indice\n  « Si ça marche comme un canard et que ça cancane comme un canard… »\n  :::\n\n  :::reponse\n  C'est le fait de juger un objet sur ce qu'il sait faire plutôt que sur son type déclaré : un\n  objet convient s'il possède les méthodes appelées. JavaScript ne vérifie aucun type à\n  l'exécution, donc un objet littéral peut remplacer une instance de classe dès qu'il expose la\n  même interface. Cela rend l'héritage facultatif pour le polymorphisme. TypeScript en garde\n  l'esprit avec un typage structurel, vérifié à la compilation.\n  :::\n\n- Pourquoi éviter d'appeler une méthode redéfinissable dans un constructeur ?\n\n  :::indice\n  Que vaut un champ de la sous-classe pendant l'exécution du constructeur parent ?\n  :::\n\n  :::reponse\n  Parce que le constructeur parent s'exécute pendant `super()`, avant que les champs de la\n  sous-classe soient installés. Si le parent appelle une méthode redéfinie, celle-ci travaille\n  sur un objet incomplet, avec des champs à `undefined`, et produit des bugs difficiles à\n  relier à leur cause. Un constructeur doit se limiter à initialiser l'état ; le comportement\n  se déclenche ensuite, par une méthode appelée sur l'objet terminé.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-introduction",
       "title": "Qu'est-ce que JavaScript : navigateur, Node.js et moteur",
       "slug": "introduction-javascript",
@@ -2611,6 +2976,116 @@
       "contentPath": "javascript/operateurs/ternaire-et-precedence/lesson.md",
       "contentVersion": "d9846717f087",
       "body": "\n## Objectifs\n\n- Utiliser l'opérateur ternaire là où une valeur est attendue, et l'éviter ailleurs.\n- Prévoir l'ordre d'évaluation d'une expression grâce à la précédence et à\n  l'associativité.\n- Ajouter des parenthèses là où la lecture n'est pas évidente.\n\n## Introduction\n\n`2 + 3 * 4` vaut `14`, pas `20` : tout le monde l'a appris à l'école. JavaScript applique\nla même idée à tous ses opérateurs, y compris `&&`, `===`, `typeof` ou `=`, avec des\nrègles moins intuitives. L'opérateur ternaire, lui, est la version expression d'un\n`if` : il produit une valeur. Bien utilisé, il rend le code plus direct ; imbriqué, il le\nrend illisible.\n\n## Concept\n\nL'**opérateur ternaire** `condition ? siVrai : siFaux` est une **expression** : il\nproduit une valeur, là où `if` est une instruction qui n'en produit pas.\n\n```js\nconst libelle = stock > 0 ? 'En stock' : 'Rupture';\n```\n\nLa **précédence** décide quel opérateur s'applique en premier. Du plus prioritaire au\nmoins prioritaire, pour les plus courants :\n\n| Priorité | Opérateurs |\n| --- | --- |\n| 1 | `( )` groupement, `.` et `[ ]` accès, `( )` appel |\n| 2 | `++` `--` suffixes |\n| 3 | `!` `typeof` `+` `-` unaires, `++` `--` préfixes |\n| 4 | `**` |\n| 5 | `*` `/` `%` |\n| 6 | `+` `-` |\n| 7 | `<` `>` `<=` `>=` `in` `instanceof` |\n| 8 | `==` `!=` `===` `!==` |\n| 9 | `&&` |\n| 10 | `\\|\\|` `??` |\n| 11 | `? :` ternaire |\n| 12 | `=` `+=` et les autres affectations |\n\nL'**associativité** décide de l'ordre entre opérateurs de même priorité. La plupart sont\névalués de gauche à droite (`10 - 4 - 3` vaut `3`). Deux exceptions à connaître : `**` et\nl'affectation, évalués de droite à gauche.\n\n## Exemple\n\n```js\nconsole.log(2 + 3 * 4); // 14\nconsole.log((2 + 3) * 4); // 20\nconsole.log(10 - 4 - 3); // 3 : (10 - 4) - 3\nconsole.log(2 ** 3 ** 2); // 512 : 2 ** (3 ** 2)\n\nlet a;\nlet b;\na = b = 5; // a = (b = 5) : les deux valent 5\n\nconst valeur = 'Ada';\nconsole.log(typeof valeur === 'string'); // true : typeof s'applique avant ===\n\nconst age = 20;\nconst tarif = age < 26 ? 'jeune' : 'plein';\nconsole.log(`Tarif ${tarif}`); // Tarif jeune\n```\n\n## Comment ça fonctionne\n\nLe moteur construit un arbre à partir de l'expression : l'opérateur le moins prioritaire\nse retrouve à la racine, les plus prioritaires dans les feuilles. `2 + 3 * 4` devient une\naddition dont l'opérande de droite est la multiplication.\n\nCertaines combinaisons sont volontairement interdites pour éviter une ambiguïté :\n\n```js\n-2 ** 2; // SyntaxError : faut-il lire (-2) ** 2 ou -(2 ** 2) ?\n(-2) ** 2; // 4\n-(2 ** 2); // -4\n```\n\nLa précédence explique aussi des bugs discrets :\n\n```js\nconst estVide = !liste.length === 0; // (!liste.length) === 0 : toujours false\nconst estVideCorrige = liste.length === 0;\n```\n\nLe ternaire a une priorité très basse : dans `prix + estMembre ? 5 : 0`, c'est\n`prix + estMembre` qui sert de condition. Il faut écrire `prix + (estMembre ? 5 : 0)`.\n\n## Erreurs fréquentes\n\n**Imbriquer des ternaires.** Au-delà d'un niveau, le code devient une devinette.\nPréfère une suite de `if`, ou une table de correspondance.\n\n**Utiliser un ternaire pour ses effets de bord.** `estValide ? envoyer() : afficherErreur()`\nexécute des actions sans produire de valeur utile : c'est le rôle d'un `if`.\n\n**Oublier la priorité basse du ternaire dans une addition ou une concaténation.**\nEntoure le ternaire de parenthèses.\n\n**Appliquer `!` au mauvais opérande.** `!a === b` compare `!a` à `b`. Écris `a !== b` ou\n`!(a === b)`.\n\n**Compter sur sa mémoire de la table de priorité.** Dès qu'un doute existe, des\nparenthèses rendent l'intention évidente pour tout le monde.\n\n## À retenir\n\n- Le ternaire est une expression : il sert à produire une valeur, pas à exécuter des\n  actions.\n- `*` avant `+`, `===` avant `&&`, `&&` avant `||`, affectation en dernier.\n- `**` et `=` s'évaluent de droite à gauche ; les autres de gauche à droite.\n- `-2 ** 2` est une erreur de syntaxe.\n- En cas de doute, des parenthèses.\n\n## Exercices\n\n1. Prévois la valeur de `2 + 3 * 4 ** 2`, `(2 + 3) * 4`, `10 - 4 - 3` et `2 ** 3 ** 2`.\n\n   :::indice\n   `**` passe avant `*`, qui passe avant `+`. Et `**` s'évalue de droite à gauche.\n   :::\n\n   :::solution\n   - `2 + 3 * 4 ** 2` : `4 ** 2` vaut `16`, `3 * 16` vaut `48`, puis `50`.\n   - `(2 + 3) * 4` : `20`, les parenthèses passent en premier.\n   - `10 - 4 - 3` : `3`, soit `(10 - 4) - 3`.\n   - `2 ** 3 ** 2` : `2 ** 9`, soit `512`.\n   :::\n\n2. Remplace ce `if` / `else`, qui ne sert qu'à choisir une valeur, par une expression\n   ternaire.\n\n   ```js\n   let libelle;\n   if (stock > 0) {\n     libelle = 'En stock';\n   } else {\n     libelle = 'Rupture';\n   }\n   ```\n\n   :::indice\n   Le ternaire produit directement la valeur : la variable peut alors devenir une\n   constante.\n   :::\n\n   :::solution\n   ```js\n   const libelle = stock > 0 ? 'En stock' : 'Rupture';\n   ```\n\n   On gagne en concision, et `libelle` devient une constante : elle ne pourra plus être\n   réaffectée par erreur plus loin.\n   :::\n\n3. Ce ternaire imbriqué est difficile à lire. Réécris-le clairement.\n\n   ```js\n   const tarif = age < 12 ? 'enfant' : age < 26 ? 'jeune' : age >= 65 ? 'senior' : 'plein';\n   ```\n\n   :::indice\n   Une suite de `if` / `else if` exprime la même logique, une condition par ligne.\n   :::\n\n   :::solution\n   ```js\n   let tarif;\n   if (age < 12) {\n     tarif = 'enfant';\n   } else if (age < 26) {\n     tarif = 'jeune';\n   } else if (age >= 65) {\n     tarif = 'senior';\n   } else {\n     tarif = 'plein';\n   }\n   ```\n\n   Chaque cas se lit sur sa ligne, et l'ordre des conditions devient visible : c'est lui\n   qui garantit qu'un enfant n'est pas classé « jeune ».\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `-2 ** 2` est-il une erreur de syntaxe en JavaScript ?\n\n  :::indice\n  Écris les deux façons possibles de lire cette expression, et calcule-les.\n  :::\n\n  :::reponse\n  L'expression est ambiguë : `(-2) ** 2` vaut `4`, `-(2 ** 2)` vaut `-4`, et les\n  mathématiques comme les autres langages ne s'accordent pas sur la lecture attendue. Plutôt\n  que de choisir une règle que la moitié des développeurs lirait mal, la spécification\n  interdit un opérateur unaire directement devant la base de `**`. Il faut écrire les\n  parenthèses.\n  :::\n\n- Quand préférer un ternaire à un `if` ?\n\n  :::indice\n  Qu'est-ce qu'un ternaire produit, et qu'est-ce qu'un `if` ne produit pas ?\n  :::\n\n  :::reponse\n  Quand il s'agit de choisir entre deux valeurs : initialiser une constante, passer un\n  argument, construire une chaîne. Le ternaire est une expression, il s'utilise là où une\n  valeur est attendue. On garde `if` pour exécuter des actions, pour plus de deux cas, ou\n  dès que le ternaire deviendrait imbriqué.\n  :::\n\n- Que signifie l'associativité d'un opérateur ? Donne un exemple.\n\n  :::indice\n  Que se passe-t-il quand plusieurs opérateurs de même priorité se suivent ?\n  :::\n\n  :::reponse\n  L'associativité décide de l'ordre d'évaluation entre des opérateurs de même priorité. La\n  soustraction est associative à gauche : `10 - 4 - 3` se lit `(10 - 4) - 3` et vaut `3`.\n  La puissance et l'affectation sont associatives à droite : `2 ** 3 ** 2` se lit\n  `2 ** (3 ** 2)` et vaut `512`, et `a = b = 5` affecte d'abord `b`, puis `a`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-fabrique-singleton",
+      "title": "Fabrique, singleton et dépôt",
+      "slug": "fabrique-singleton-depot",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "patterns-objet",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-encapsulation",
+        "javascript-quand-classe"
+      ],
+      "skills": [
+        "creational-patterns"
+      ],
+      "tags": [
+        "javascript",
+        "patterns"
+      ],
+      "contentPath": "javascript/patterns-objet/fabrique-singleton-depot/lesson.md",
+      "contentVersion": "34872ed2fbae",
+      "body": "\n## Objectifs\n\n- Centraliser le choix d'un type concret dans une fabrique extensible.\n- Reconnaître le coût d'un singleton, et savoir qu'un module ES en tient souvent lieu.\n- Isoler l'accès aux données derrière un dépôt, remplaçable en test.\n\n## Introduction\n\nCes trois patterns répondent à la même question : **qui crée les objets, et qui sait où ils\nsont stockés ?** Mal réglée, cette question disperse des `new` et des requêtes dans tout le\ncode, et rend impossible de changer de canal de notification ou de base de données sans tout\nreprendre. Chacun a une version idiomatique en JavaScript, souvent plus légère que celle des\nlivres écrits pour Java.\n\n## Concept\n\n| Pattern | Problème | Idée | Version idiomatique en JavaScript |\n| --- | --- | --- | --- |\n| Fabrique | le type à créer dépend d'une donnée | une fonction choisit et crée | une fonction et un registre `{ type: constructeur }` |\n| Singleton | une seule instance doit exister | un point d'accès unique | l'export d'un module, évalué une fois |\n| Dépôt (*repository*) | le code métier connaît le stockage | une interface de collection | une classe `trouver`, `enregistrer`, `supprimer` |\n\nUn dépôt parle le langage du domaine — `trouverParEmail` — et jamais celui du stockage — SQL,\nclés Redis, requêtes HTTP. C'est ce qui permet d'en fournir une version en mémoire pour les\ntests, et une version base de données en production.\n\n## Exemple\n\n```js\n// Fabrique : un registre plutôt qu'un switch qui grossit.\nclass NotificationEmail {\n  envoyer(message) { return `email : ${message}`; }\n}\nclass NotificationSms {\n  envoyer(message) { return `sms : ${message.slice(0, 18)}`; }\n}\n\nconst canaux = { email: NotificationEmail, sms: NotificationSms };\n\nfunction creerNotification(canal) {\n  const Canal = canaux[canal];\n  if (!Canal) {\n    throw new Error(`Canal inconnu : ${canal}`);\n  }\n  return new Canal();\n}\nconsole.log(creerNotification('sms').envoyer('Votre colis arrive demain matin')); // 'sms : Votre colis arrive'\n\n// Singleton : un module est évalué une seule fois, son export est unique.\n// config.js\nexport const configuration = Object.freeze({ langue: 'fr', devise: 'EUR' });\n\n// Dépôt : une collection en mémoire, qui ne laisse sortir que des copies.\nclass DepotUtilisateurs {\n  #utilisateurs = new Map();\n\n  enregistrer(utilisateur) {\n    this.#utilisateurs.set(utilisateur.id, { ...utilisateur });\n  }\n\n  trouverParId(id) {\n    const utilisateur = this.#utilisateurs.get(id);\n    return utilisateur ? { ...utilisateur } : null;\n  }\n\n  trouverParEmail(email) {\n    for (const utilisateur of this.#utilisateurs.values()) {\n      if (utilisateur.email === email) return { ...utilisateur };\n    }\n    return null;\n  }\n}\n\nconst depot = new DepotUtilisateurs();\ndepot.enregistrer({ id: 1, email: 'ada@exemple.fr', nom: 'Ada' });\nconst trouve = depot.trouverParEmail('ada@exemple.fr');\ntrouve.nom = 'Modifié';\nconsole.log(depot.trouverParId(1).nom); // 'Ada' : le dépôt n'est pas altéré\n```\n\n## Comment ça fonctionne\n\nLa **fabrique** sépare deux décisions : quoi créer, et quand l'utiliser. Le code appelant\nécrit `creerNotification(preference)` sans connaître aucune classe concrète. Le registre\n`canaux` remplace un `switch` : ajouter un canal consiste à ajouter une entrée, et le cas\ninconnu est traité à un seul endroit, avec un message explicite. Une fabrique peut aussi\nchoisir selon l'environnement — une implémentation factice en test, réelle en production.\n\nLe **singleton** garantit une instance unique et un accès global. En JavaScript, un module ES\nle fournit sans effort : il n'est évalué qu'une fois, et tous les imports reçoivent le même\nobjet. Écrire une classe avec un champ statique `#instance` et une méthode `obtenir()` reproduit\nce comportement avec plus de code. Surtout, un singleton est un **état global** : tout le code\nqui l'importe en dépend sans que cela se voie dans les signatures, et les tests s'influencent\nmutuellement s'ils le modifient. Pour une configuration figée, c'est acceptable ; pour un état\nmodifiable ou une connexion, il vaut mieux créer l'instance une fois au démarrage et la\n**passer** à ceux qui en ont besoin — c'est l'injection de dépendances du chapitre suivant.\n\nLe **dépôt** est une frontière. Du côté du domaine, il expose des opérations de collection\nformulées avec le vocabulaire métier ; de l'autre, il sait parler à PostgreSQL, à une API ou à\nune `Map`. Le code métier ne dépend que de l'interface : on peut écrire les tests avec la\nversion en mémoire, rapide et sans infrastructure, et brancher la vraie base en production.\nDans une application réelle, les méthodes d'un dépôt sont **asynchrones** et renvoient des\npromesses, puisque le stockage l'est — la partie Asynchronous y revient.\n\nLe dépôt de l'exemple renvoie des **copies** : un appelant qui modifie l'objet obtenu ne change\npas les données stockées sans passer par `enregistrer`. C'est l'encapsulation appliquée à une\ncollection.\n\n## Erreurs fréquentes\n\n**Laisser grossir un `switch` dans la fabrique.** Un registre rend l'ajout local.\n\n**Faire de chaque service un singleton.** Les dépendances deviennent invisibles et les tests\ncouplés : crée une instance et passe-la.\n\n**Écrire une classe singleton là où un export de module suffit.** Le module est déjà unique.\n\n**Laisser fuir le stockage hors du dépôt.** Un dépôt qui renvoie un constructeur de requêtes ou\nun objet de l'ORM n'isole plus rien.\n\n**Renvoyer les objets stockés eux-mêmes.** L'appelant peut les modifier en contournant le dépôt.\n\n## À retenir\n\n- Fabrique : une fonction choisit le type concret ; un registre remplace le `switch`.\n- Singleton : un module ES l'offre déjà ; c'est un état global, à réserver à l'immuable.\n- Dépôt : une interface de collection en vocabulaire métier, qui cache le stockage.\n- Un dépôt en mémoire rend les tests rapides ; la version réelle est asynchrone.\n- Les données sortent du dépôt en copies.\n\n## Exercices\n\n1. Écris une fabrique `creerExport(format)` qui renvoie un exporteur `csv` ou `json`, lève une\n   erreur claire pour un format inconnu, et permet d'enregistrer un nouveau format sans modifier\n   la fabrique.\n\n   :::indice\n   Un registre dans un objet ou une `Map`, et une fonction `enregistrerFormat(nom, fabrique)`\n   qui l'enrichit.\n   :::\n\n   :::solution\n   ```js\n   const formats = new Map([\n     ['csv', () => ({ exporter: (lignes) => lignes.map((l) => l.join(';')).join('\\n') })],\n     ['json', () => ({ exporter: (lignes) => JSON.stringify(lignes) })],\n   ]);\n\n   function enregistrerFormat(nom, fabrique) {\n     formats.set(nom, fabrique);\n   }\n\n   function creerExport(format) {\n     const fabrique = formats.get(format);\n     if (!fabrique) {\n       throw new Error(`Format inconnu : ${format}`);\n     }\n     return fabrique();\n   }\n\n   enregistrerFormat('tsv', () => ({ exporter: (lignes) => lignes.map((l) => l.join('\\t')).join('\\n') }));\n   console.log(creerExport('json').exporter([[1, 2]])); // '[[1,2]]'\n   console.log(creerExport('tsv').exporter([['a', 'b']]) === 'a\\tb'); // true\n   ```\n   :::\n\n2. Cette classe singleton rend les tests dépendants les uns des autres. Explique pourquoi, puis\n   propose une conception qui garde une instance unique en production sans ce défaut.\n\n   ```js\n   class Panier {\n     static #instance;\n     static obtenir() {\n       return (Panier.#instance ??= new Panier());\n     }\n     articles = [];\n   }\n   ```\n\n   :::indice\n   Que contient `Panier.obtenir().articles` au début du deuxième test, si le premier y a ajouté\n   un article ?\n   :::\n\n   :::solution\n   L'instance est globale et survit d'un test à l'autre : ce qu'un test ajoute, le suivant le\n   retrouve. L'ordre d'exécution change les résultats. La correction consiste à ne plus cacher\n   la création : on construit l'instance au démarrage et on la passe à ceux qui en ont besoin.\n\n   ```js\n   class Panier {\n     articles = [];\n     ajouter(article) {\n       this.articles.push(article);\n     }\n   }\n\n   function creerApplication(panier = new Panier()) {\n     return { ajouterAuPanier: (article) => panier.ajouter(article), panier };\n   }\n\n   const test1 = creerApplication();\n   test1.ajouterAuPanier('clavier');\n   const test2 = creerApplication();\n   console.log(test1.panier.articles.length, test2.panier.articles.length); // 1 0\n   ```\n\n   En production, `creerApplication` est appelée une seule fois : l'instance reste unique, mais\n   ce n'est plus une contrainte du code.\n   :::\n\n3. Écris un dépôt en mémoire `DepotProduits` avec `enregistrer`, `trouverParId` et\n   `listerDisponibles()`, qui ne renvoie jamais de référence vers ses données internes.\n\n   :::indice\n   Stocke dans une `Map` indexée par `id`, et renvoie des copies avec le spread.\n   :::\n\n   :::solution\n   ```js\n   class DepotProduits {\n     #produits = new Map();\n\n     enregistrer(produit) {\n       this.#produits.set(produit.id, { ...produit });\n     }\n\n     trouverParId(id) {\n       const produit = this.#produits.get(id);\n       return produit ? { ...produit } : null;\n     }\n\n     listerDisponibles() {\n       return [...this.#produits.values()]\n         .filter((produit) => produit.stock > 0)\n         .map((produit) => ({ ...produit }));\n     }\n   }\n\n   const depot = new DepotProduits();\n   depot.enregistrer({ id: 1, nom: 'Clavier', stock: 3 });\n   depot.enregistrer({ id: 2, nom: 'Souris', stock: 0 });\n\n   const disponibles = depot.listerDisponibles();\n   disponibles[0].stock = 0;\n   console.log(disponibles.length, depot.trouverParId(1).stock); // 1 3\n   ```\n   :::\n\n## Questions d'entretien\n\n- À quoi sert une fabrique ?\n\n  :::indice\n  Qui décide du type concret, et combien d'endroits faut-il modifier pour en ajouter un ?\n  :::\n\n  :::reponse\n  Elle centralise le choix du type concret à créer à partir d'une donnée — préférence de\n  l'utilisateur, format, environnement. Le code appelant ne dépend plus d'aucune classe\n  concrète, et l'ajout d'un type se fait à un seul endroit, idéalement en enrichissant un\n  registre plutôt qu'en allongeant un `switch`. En JavaScript, une simple fonction suffit ; il\n  n'est pas nécessaire d'écrire une classe « Factory ».\n  :::\n\n- Pourquoi le singleton est-il souvent considéré comme un anti-pattern ?\n\n  :::indice\n  Pense aux dépendances cachées et aux tests.\n  :::\n\n  :::reponse\n  Parce qu'un singleton est un état global déguisé : le code qui l'utilise en dépend sans que\n  cela apparaisse dans ses paramètres, ce qui cache les dépendances et couple les modules. Les\n  tests partagent la même instance et s'influencent selon leur ordre. Il reste acceptable pour\n  une valeur immuable, comme une configuration figée. Sinon, on crée l'instance une fois au\n  démarrage et on la passe explicitement — l'unicité devient une décision de câblage, pas une\n  contrainte du code. En JavaScript, un export de module couvre déjà le cas légitime.\n  :::\n\n- Quel est l'intérêt d'un dépôt ?\n\n  :::indice\n  De quoi le code métier cesse-t-il de dépendre ?\n  :::\n\n  :::reponse\n  Il isole le code métier du mécanisme de stockage derrière une interface de collection exprimée\n  en vocabulaire du domaine. Le métier appelle `trouverParEmail` sans savoir s'il y a derrière du\n  SQL, une API ou une `Map`. On peut ainsi tester le métier avec un dépôt en mémoire, changer de\n  base sans toucher aux règles, et regrouper les requêtes au même endroit. Il ne tient cette\n  promesse que s'il ne laisse fuir aucun objet propre au stockage.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-mixins",
+      "title": "Mixins et réutilisation horizontale",
+      "slug": "mixins",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "patterns-objet",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-composition"
+      ],
+      "skills": [
+        "mixins"
+      ],
+      "tags": [
+        "javascript",
+        "patterns"
+      ],
+      "contentPath": "javascript/patterns-objet/mixins/lesson.md",
+      "contentVersion": "cf3ed6cd772c",
+      "body": "\n## Objectifs\n\n- Ajouter un même comportement à des classes sans lien de parenté, avec un mixin.\n- Écrire un mixin objet et un mixin de classe, et connaître la différence.\n- Repérer les risques des mixins : collisions de noms, dépendances implicites, getters figés.\n\n## Introduction\n\nL'héritage est vertical : une classe n'a qu'un parent. Or certains comportements traversent\ndes types sans rapport — sérialiser, horodater, valider concernent aussi bien un article\nqu'une commande. Les copier dans chaque classe duplique le code ; créer un parent commun\ninvente une relation « est un » qui n'existe pas. Le **mixin** propose une troisième voie :\nmélanger un comportement dans une classe, horizontalement.\n\n## Concept\n\n| Forme | Écriture | Particularité |\n| --- | --- | --- |\n| Mixin objet | `Object.assign(Classe.prototype, mixin)` | copie les méthodes dans le prototype |\n| Mixin de classe | `const Mixin = (Base) => class extends Base { … }` | crée un maillon de chaîne ; `super` fonctionne |\n| Application | `class Article extends AvecA(AvecB(Document)) {}` | les mixins s'empilent de l'intérieur vers l'extérieur |\n\nUn mixin de classe est une **fonction qui reçoit une classe et renvoie une sous-classe**.\nChaque application ajoute un niveau à la chaîne de prototypes, entre la classe de base et la\nclasse finale.\n\n## Exemple\n\n```js\n// Mixin objet : des méthodes copiées dans un prototype.\nconst Journalisable = {\n  journaliser(message) {\n    return `[${this.constructor.name}] ${message}`;\n  },\n};\n\nclass Commande {}\nObject.assign(Commande.prototype, Journalisable);\nconsole.log(new Commande().journaliser('créée')); // '[Commande] créée'\n\n// Mixins de classe : des fonctions qui fabriquent une sous-classe.\nconst AvecValidation = (Base) =>\n  class extends Base {\n    estValide() {\n      return this.texte.trim().length > 0;\n    }\n  };\n\nconst AvecResume = (Base) =>\n  class extends Base {\n    resume(longueur = 10) {\n      return this.texte.length > longueur ? `${this.texte.slice(0, longueur)}…` : this.texte;\n    }\n  };\n\nclass Document {\n  constructor(texte) {\n    this.texte = texte;\n  }\n}\n\nclass Article extends AvecResume(AvecValidation(Document)) {}\n\nconst article = new Article('Les mixins en JavaScript');\nconsole.log(article.estValide(), article.resume()); // true 'Les mixins…'\nconsole.log(article instanceof Document); // true\n\n// Collision : deux mixins définissent la même méthode, le dernier gagne sans prévenir.\nconst EnMajuscules = { afficher() { return 'MAJ'; } };\nconst EnMinuscules = { afficher() { return 'min'; } };\nclass Etiquette {}\nObject.assign(Etiquette.prototype, EnMajuscules, EnMinuscules);\nconsole.log(new Etiquette().afficher()); // 'min'\n```\n\n## Comment ça fonctionne\n\nUn **mixin objet** repose sur `Object.assign`, qui copie les propriétés propres et\nénumérables de chaque source dans la cible. Les méthodes arrivent sur le prototype et se\ncomportent comme des méthodes écrites dans la classe. Deux limites découlent de cette copie.\nSi deux sources définissent le même nom, la dernière **écrase** la précédente sans erreur.\nEt un **getter** n'est pas copié comme accesseur : `Object.assign` le lit une fois et copie\nla **valeur** obtenue, qui reste figée. Pour conserver les accesseurs, on copie les\ndescripteurs : `Object.defineProperties(cible, Object.getOwnPropertyDescriptors(mixin))`.\n\nUn **mixin de classe** ne copie rien : `AvecValidation(Document)` crée une vraie sous-classe\nde `Document`, et `AvecResume(...)` une sous-classe de celle-ci. La chaîne d'`Article` est\ndonc `Article → AvecResume → AvecValidation → Document`. Tout ce que permet l'héritage\nfonctionne : `super.methode()`, un constructeur qui appelle `super(...args)`, l'ordre de\nrésolution prévisible. L'ordre d'application compte : le mixin le plus extérieur est trouvé en\npremier, et c'est lui qui gagne en cas de collision.\n\nLes deux formes partagent un défaut : la **dépendance implicite**. `AvecValidation` suppose\nque l'objet possède `this.texte`, sans que rien ne l'exprime. Appliqué à une classe sans\n`texte`, il échoue à l'exécution. Plus on empile de mixins, plus ces hypothèses cachées se\nmultiplient, et plus il devient difficile de savoir d'où vient une méthode.\n\nC'est la différence avec la **composition** vue au module précédent : les mixins fusionnent\ntous les comportements dans **un seul objet**, qui partage un seul espace de noms ; la\ncomposition garde des objets séparés, qui communiquent par leurs interfaces. Les mixins\nconviennent à de petits comportements transverses, indépendants et stables ; dès qu'un\ncomportement a son propre état ou ses propres règles, un objet composé est plus sûr.\n\n## Erreurs fréquentes\n\n**Ignorer les collisions.** Deux mixins avec une méthode `valider` : l'un des deux disparaît\nen silence. Nomme précisément, ou vérifie l'absence du nom avant de mélanger.\n\n**Copier un getter avec `Object.assign`.** Il devient une valeur figée : copie les\ndescripteurs.\n\n**Laisser des dépendances implicites.** Documente ce que le mixin attend, ou vérifie-le.\n\n**Empiler de nombreux mixins.** Au-delà de deux ou trois, la chaîne devient illisible :\ncompose des objets.\n\n**Mélanger dans un prototype natif.** `Object.assign(Array.prototype, …)` modifie tous les\ntableaux du programme et des bibliothèques.\n\n## À retenir\n\n- Un mixin ajoute un comportement transverse à des classes sans parent commun.\n- Mixin objet : `Object.assign` copie les méthodes ; collisions et getters figés.\n- Mixin de classe : `(Base) => class extends Base {}` ; vraie chaîne, `super` disponible.\n- Le mixin le plus extérieur est trouvé en premier.\n- Au-delà de petits comportements sans état, préfère la composition.\n\n## Exercices\n\n1. Écris un mixin objet `Comparable` qui ajoute `estPlusGrandQue(autre)` à toute classe\n   possédant une méthode `valeur()`, et applique-le à `Prix` et à `Duree`.\n\n   :::indice\n   Le mixin appelle `this.valeur()` et `autre.valeur()` : il dépend de cette méthode, sans rien\n   savoir d'autre sur la classe.\n   :::\n\n   :::solution\n   ```js\n   const Comparable = {\n     estPlusGrandQue(autre) {\n       return this.valeur() > autre.valeur();\n     },\n   };\n\n   class Prix {\n     constructor(euros) { this.euros = euros; }\n     valeur() { return this.euros; }\n   }\n\n   class Duree {\n     constructor(minutes) { this.minutes = minutes; }\n     valeur() { return this.minutes; }\n   }\n\n   Object.assign(Prix.prototype, Comparable);\n   Object.assign(Duree.prototype, Comparable);\n\n   console.log(new Prix(20).estPlusGrandQue(new Prix(15))); // true\n   console.log(new Duree(5).estPlusGrandQue(new Duree(30))); // false\n   ```\n   :::\n\n2. Écris un mixin de classe `Horodatable` qui ajoute une propriété `creeLe` à chaque instance,\n   sans empêcher la classe de base de recevoir ses propres arguments.\n\n   :::indice\n   Le mixin a besoin d'un constructeur : il doit transmettre tous les arguments à `super`.\n   :::\n\n   :::solution\n   ```js\n   const Horodatable = (Base) =>\n     class extends Base {\n       constructor(...args) {\n         super(...args);\n         this.creeLe = new Date().toISOString().slice(0, 10);\n       }\n     };\n\n   class Utilisateur {\n     constructor(nom) {\n       this.nom = nom;\n     }\n   }\n\n   class UtilisateurHorodate extends Horodatable(Utilisateur) {}\n\n   const ada = new UtilisateurHorodate('Ada');\n   console.log(ada.nom, /^\\d{4}-\\d{2}-\\d{2}$/.test(ada.creeLe)); // 'Ada' true\n   ```\n   :::\n\n3. Ce mixin est censé toujours renvoyer l'heure courante, mais la valeur ne change jamais.\n   Explique pourquoi et corrige sans abandonner le mixin objet.\n\n   ```js\n   const Horloge = {\n     get maintenant() {\n       return Date.now();\n     },\n   };\n   class Tableau {}\n   Object.assign(Tableau.prototype, Horloge);\n   ```\n\n   :::indice\n   Que copie `Object.assign` quand la source possède un getter ?\n   :::\n\n   :::solution\n   `Object.assign` lit chaque propriété de la source et copie sa **valeur**. Le getter est donc\n   exécuté une seule fois, au moment du mélange, et `Tableau.prototype.maintenant` devient un\n   nombre figé. Il faut copier les descripteurs pour conserver l'accesseur :\n\n   ```js\n   const Horloge = {\n     get maintenant() {\n       return Date.now();\n     },\n   };\n   class Tableau {}\n   Object.defineProperties(Tableau.prototype, Object.getOwnPropertyDescriptors(Horloge));\n\n   const descripteur = Object.getOwnPropertyDescriptor(Tableau.prototype, 'maintenant');\n   console.log(typeof descripteur.get); // 'function' : l'accesseur est conservé\n   ```\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'un mixin, et quel problème résout-il ?\n\n  :::indice\n  Pense à un comportement utile à des classes qui n'ont aucun parent commun.\n  :::\n\n  :::reponse\n  Un mixin est un ensemble de méthodes que l'on ajoute à une classe sans héritage direct, pour\n  partager un comportement transverse — sérialisation, horodatage, comparaison — entre des types\n  sans relation « est un ». Il évite à la fois la duplication du code et l'invention d'un parent\n  commun artificiel. Il reste adapté à de petits comportements sans état ; au-delà, la\n  composition d'objets est plus sûre.\n  :::\n\n- Quelle différence entre un mixin objet et un mixin de classe ?\n\n  :::indice\n  L'un copie des propriétés, l'autre crée un maillon de chaîne.\n  :::\n\n  :::reponse\n  Le mixin objet copie des méthodes dans un prototype avec `Object.assign` : c'est simple, mais\n  les collisions écrasent en silence, les getters sont figés, et `super` n'a pas de sens. Le\n  mixin de classe est une fonction `(Base) => class extends Base {}` qui crée une vraie\n  sous-classe : il s'insère dans la chaîne de prototypes, peut avoir un constructeur et utiliser\n  `super`, et l'ordre d'application définit clairement qui gagne en cas de conflit.\n  :::\n\n- Quels sont les risques des mixins ?\n\n  :::indice\n  Trois pistes : les noms, les hypothèses sur `this`, et la lisibilité.\n  :::\n\n  :::reponse\n  Les collisions de noms, qui font disparaître une méthode sans erreur ; les dépendances\n  implicites, puisqu'un mixin suppose des propriétés sur `this` que rien ne déclare ; et la\n  perte de lisibilité quand plusieurs mixins s'empilent, au point de ne plus savoir d'où vient\n  une méthode. S'y ajoutent, pour les mixins objet, les getters figés par `Object.assign`. On les\n  limite en gardant les mixins petits, sans état, peu nombreux et documentés.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-strategie-observateur",
+      "title": "Stratégie, observateur et injection de dépendances",
+      "slug": "strategie-observateur-injection",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "patterns-objet",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-fabrique-singleton",
+        "javascript-callbacks"
+      ],
+      "skills": [
+        "behavioral-patterns"
+      ],
+      "tags": [
+        "javascript",
+        "patterns"
+      ],
+      "contentPath": "javascript/patterns-objet/strategie-observateur-injection/lesson.md",
+      "contentVersion": "1ef690752183",
+      "body": "\n## Objectifs\n\n- Rendre un algorithme interchangeable avec une stratégie, souvent une simple fonction.\n- Écrire un observateur qui prévient ses abonnés et permet de se désabonner.\n- Passer à un objet les collaborateurs dont il a besoin, pour pouvoir le tester.\n\n## Introduction\n\nCes trois patterns partagent une idée : **ne pas figer une décision dans le code qui\nl'utilise**. La stratégie laisse varier un calcul, l'observateur laisse varier les réactions à\nun événement, l'injection laisse varier les collaborateurs. En JavaScript, où les fonctions\nsont des valeurs, ils s'écrivent souvent en quelques lignes — et savoir quand une fonction\nsuffit fait partie du pattern.\n\n## Concept\n\n| Pattern | Ce qui varie | Forme idiomatique en JavaScript |\n| --- | --- | --- |\n| Stratégie | l'algorithme | une fonction passée en paramètre, ou un objet de fonctions |\n| Observateur | qui réagit à un événement | `abonner(evenement, rappel)` qui renvoie une fonction de désabonnement |\n| Injection de dépendances | les collaborateurs | les recevoir dans le constructeur au lieu de les créer |\n\nL'injection de dépendances ne demande aucun outil : c'est simplement **passer en paramètre**\nce qu'on créait auparavant avec `new` à l'intérieur de la classe. Les objets sont assemblés en\nun seul endroit, au démarrage de l'application.\n\n## Exemple\n\n```js\n// Stratégie : des fonctions interchangeables.\nconst livraison = {\n  standard: (commande) => (commande.total >= 50 ? 0 : 5),\n  express: () => 12,\n};\n\nfunction fraisDeLivraison(commande, strategie = livraison.standard) {\n  return strategie(commande);\n}\nconsole.log(fraisDeLivraison({ total: 30 }), fraisDeLivraison({ total: 30 }, livraison.express)); // 5 12\n\n// Observateur : s'abonner, être prévenu, se désabonner.\nclass Emetteur {\n  #abonnes = new Map();\n\n  abonner(evenement, rappel) {\n    if (!this.#abonnes.has(evenement)) {\n      this.#abonnes.set(evenement, new Set());\n    }\n    this.#abonnes.get(evenement).add(rappel);\n    return () => this.#abonnes.get(evenement).delete(rappel);\n  }\n\n  emettre(evenement, donnees) {\n    for (const rappel of this.#abonnes.get(evenement) ?? []) {\n      rappel(donnees);\n    }\n  }\n}\n\nconst panier = new Emetteur();\nconst journal = [];\nconst seDesabonner = panier.abonner('ajout', (article) => journal.push(`ajouté : ${article}`));\npanier.emettre('ajout', 'clavier');\nseDesabonner();\npanier.emettre('ajout', 'souris');\nconsole.log(journal); // ['ajouté : clavier']\n\n// Injection : le service reçoit ses collaborateurs au lieu de les fabriquer.\nclass ServiceInscription {\n  #depot;\n  #notifier;\n\n  constructor(depot, notifier) {\n    this.#depot = depot;\n    this.#notifier = notifier;\n  }\n\n  inscrire(email) {\n    if (this.#depot.existe(email)) {\n      return false;\n    }\n    this.#depot.ajouter(email);\n    this.#notifier(`Bienvenue ${email}`);\n    return true;\n  }\n}\n\n// En test : des collaborateurs factices, sans base de données ni envoi réel.\nconst emails = new Set();\nconst messages = [];\nconst service = new ServiceInscription(\n  { existe: (email) => emails.has(email), ajouter: (email) => emails.add(email) },\n  (message) => messages.push(message),\n);\nconsole.log(service.inscrire('ada@exemple.fr'), service.inscrire('ada@exemple.fr')); // true false\nconsole.log(messages); // ['Bienvenue ada@exemple.fr']\n```\n\n## Comment ça fonctionne\n\nDans les livres de patterns, une **stratégie** est une interface et une classe par\nalgorithme. En JavaScript, une fonction est déjà une valeur : l'interface se réduit à « une\nfonction qui reçoit une commande et renvoie un montant ». Un objet de fonctions sert de\nregistre, et ajouter un mode de livraison revient à ajouter une propriété. Une classe ne se\njustifie que si la stratégie a un état ou plusieurs méthodes liées.\n\nL'**observateur** découple l'émetteur des réactions : le panier ne sait pas qui l'écoute, et\nde nouvelles réactions s'ajoutent sans le modifier. Trois détails font la différence entre une\nversion jouet et une version fiable. Un `Set` évite d'enregistrer deux fois le même rappel. La\n**fonction de désabonnement** renvoyée par `abonner` permet de nettoyer, sans quoi un abonné\nreste référencé pour toujours — la fuite mémoire vue avec les closures. Enfin, un rappel qui\n**lève une erreur** interrompt la boucle, et les abonnés suivants ne sont pas prévenus : un\németteur robuste entoure chaque appel d'un `try` / `catch`. L'environnement fournit déjà ce\npattern : `EventTarget` dans les navigateurs et dans Node, `EventEmitter` dans Node.\n\nL'**injection de dépendances** rend visibles les collaborateurs d'un objet. Un service qui\nécrit `new DepotPostgres()` dans son constructeur ne peut pas être testé sans base de données,\net son couplage ne se voit qu'en lisant son code. En recevant `depot` et `notifier`, il\nannonce ses besoins dans sa signature, et le test lui passe des versions factices. Les objets\nréels sont créés et reliés en un seul endroit, souvent le fichier de démarrage, appelé\n**racine de composition**. Un conteneur d'injection, comme celui de NestJS, automatise ce\ncâblage dans les grosses applications ; il n'est pas nécessaire pour appliquer le principe.\n\nCes patterns sont des outils, pas des objectifs. Si un calcul ne varie jamais, une stratégie\nest une indirection inutile ; si un seul composant réagit à un événement, un appel direct est\nplus lisible qu'un émetteur. Et une transformation de données s'écrit mieux comme une suite de\nfonctions que comme une hiérarchie d'objets.\n\n## Erreurs fréquentes\n\n**Créer une classe par stratégie quand une fonction suffit.** L'interface est la signature.\n\n**Oublier de se désabonner.** L'abonné et tout ce qu'il retient restent en mémoire.\n\n**Laisser un abonné en erreur bloquer les autres.** Protège chaque appel dans l'émetteur.\n\n**Instancier ses dépendances dans le constructeur.** Reçois-les, pour pouvoir les remplacer.\n\n**Introduire un conteneur d'injection dans une petite application.** Passer les objets en\nparamètre suffit.\n\n## À retenir\n\n- Stratégie : un algorithme interchangeable, en JavaScript souvent une fonction.\n- Observateur : `abonner` renvoie de quoi se désabonner ; protège la boucle d'émission.\n- Injection : un objet reçoit ses collaborateurs au lieu de les créer.\n- Les objets réels sont assemblés à un seul endroit, au démarrage.\n- Un pattern se justifie par une variation réelle : sinon, un appel direct suffit.\n\n## Exercices\n\n1. Remplace cette cascade de conditions par des stratégies, sélectionnées par le nom de\n   l'abonnement.\n\n   ```js\n   function prixMensuel(abonnement, utilisateurs) {\n     if (abonnement === 'gratuit') return 0;\n     if (abonnement === 'equipe') return utilisateurs * 8;\n     if (abonnement === 'entreprise') return Math.max(200, utilisateurs * 6);\n   }\n   ```\n\n   :::indice\n   Un objet dont chaque propriété est une fonction de calcul, puis une fonction qui choisit et\n   signale un abonnement inconnu.\n   :::\n\n   :::solution\n   ```js\n   const tarifs = {\n     gratuit: () => 0,\n     equipe: (utilisateurs) => utilisateurs * 8,\n     entreprise: (utilisateurs) => Math.max(200, utilisateurs * 6),\n   };\n\n   function prixMensuel(abonnement, utilisateurs) {\n     const tarif = tarifs[abonnement];\n     if (!tarif) {\n       throw new Error(`Abonnement inconnu : ${abonnement}`);\n     }\n     return tarif(utilisateurs);\n   }\n\n   console.log(prixMensuel('equipe', 5), prixMensuel('entreprise', 10)); // 40 200\n   ```\n\n   La version d'origine renvoyait silencieusement `undefined` pour un abonnement inconnu ; le\n   registre rend ce cas explicite.\n   :::\n\n2. Ajoute à `Emetteur` une méthode `abonnerUneFois(evenement, rappel)` : le rappel ne doit être\n   exécuté qu'à la première émission.\n\n   :::indice\n   Abonne une fonction intermédiaire qui se désabonne elle-même avant d'appeler le rappel.\n   :::\n\n   :::solution\n   ```js\n   class EmetteurUneFois extends Emetteur {\n     abonnerUneFois(evenement, rappel) {\n       const seDesabonner = this.abonner(evenement, (donnees) => {\n         seDesabonner();\n         rappel(donnees);\n       });\n       return seDesabonner;\n     }\n   }\n\n   const emetteur = new EmetteurUneFois();\n   const recus = [];\n   emetteur.abonnerUneFois('pret', (valeur) => recus.push(valeur));\n   emetteur.emettre('pret', 1);\n   emetteur.emettre('pret', 2);\n   console.log(recus); // [1]\n   ```\n\n   Retirer l'élément courant d'un `Set` pendant qu'on le parcourt est sûr : l'itération continue\n   normalement avec les éléments suivants.\n   :::\n\n3. Ce service est impossible à tester sans envoyer de vrais courriels. Rends ses dépendances\n   injectables, puis écris un test avec un envoi factice.\n\n   ```js\n   class Relance {\n     constructor() {\n       this.mailer = new MailerSmtp();\n     }\n     relancer(factures) {\n       for (const facture of factures.filter((f) => !f.payee)) {\n         this.mailer.envoyer(facture.email, 'Facture en attente');\n       }\n     }\n   }\n   ```\n\n   :::indice\n   Le constructeur reçoit le `mailer` au lieu de le créer ; le test lui passe un objet qui\n   enregistre les appels.\n   :::\n\n   :::solution\n   ```js\n   class Relance {\n     #mailer;\n\n     constructor(mailer) {\n       this.#mailer = mailer;\n     }\n\n     relancer(factures) {\n       const impayees = factures.filter((facture) => !facture.payee);\n       for (const facture of impayees) {\n         this.#mailer.envoyer(facture.email, 'Facture en attente');\n       }\n       return impayees.length;\n     }\n   }\n\n   const envois = [];\n   const mailerFactice = { envoyer: (destinataire) => envois.push(destinataire) };\n\n   const relance = new Relance(mailerFactice);\n   const nombre = relance.relancer([\n     { email: 'ada@exemple.fr', payee: false },\n     { email: 'grace@exemple.fr', payee: true },\n   ]);\n   console.log(nombre, envois); // 1 ['ada@exemple.fr']\n   ```\n\n   En production, le fichier de démarrage écrit `new Relance(new MailerSmtp(configuration))` :\n   c'est le seul endroit qui connaît la classe réelle.\n   :::\n\n## Questions d'entretien\n\n- Comment s'écrit le pattern Stratégie en JavaScript ?\n\n  :::indice\n  Qu'est-ce qu'une fonction, dans ce langage ?\n  :::\n\n  :::reponse\n  Le plus souvent, avec des fonctions : puisqu'une fonction est une valeur, l'algorithme\n  interchangeable se passe en paramètre ou se range dans un objet qui sert de registre. Il n'est\n  pas nécessaire de créer une interface et une classe par variante, comme en Java. On passe à\n  des objets ou des classes seulement quand une stratégie a besoin d'un état ou de plusieurs\n  opérations liées.\n  :::\n\n- Quels sont les pièges d'un observateur fait maison ?\n\n  :::indice\n  Pense à la mémoire, aux erreurs et aux doublons.\n  :::\n\n  :::reponse\n  Les abonnés jamais retirés, qui restent référencés et provoquent des fuites mémoire — d'où une\n  fonction de désabonnement renvoyée par `abonner`. Un abonné qui lève une erreur et empêche les\n  suivants d'être prévenus, si la boucle d'émission n'est pas protégée. Les doublons, si le même\n  rappel est enregistré deux fois dans un tableau. Et une notification synchrone qui surprend\n  quand un abonné modifie l'émetteur pendant l'émission. `EventTarget` et `EventEmitter`\n  règlent déjà une partie de ces questions.\n  :::\n\n- Qu'est-ce que l'injection de dépendances, et faut-il un conteneur ?\n\n  :::indice\n  Qui crée les collaborateurs d'un objet, et où ?\n  :::\n\n  :::reponse\n  C'est le fait qu'un objet reçoive ses collaborateurs — dépôt, service d'envoi, horloge — au\n  lieu de les créer lui-même. Ses dépendances deviennent visibles dans sa signature, et on peut\n  les remplacer par des versions factices en test. Les objets réels sont assemblés à un seul\n  endroit, la racine de composition. Un conteneur, comme celui de NestJS, automatise ce câblage\n  dans les grosses applications, mais le principe s'applique très bien à la main, en passant des\n  paramètres.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -3961,6 +4436,76 @@
       "contentVersion": "fab4e94c54f3"
     },
     {
+      "id": "javascript-champs-prives-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-prives-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que produit `compte.#solde` écrit en dehors du corps de la classe ?\n",
+          "options": [
+            "Une SyntaxError, avant toute exécution",
+            "undefined",
+            "Une TypeError à l'exécution",
+            "La valeur du solde"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un nom privé n'existe que dans le corps de sa classe : l'écrire ailleurs est une erreur de syntaxe, détectée à l'analyse du fichier.\n",
+          "skills": [
+            "class-private-fields"
+          ]
+        },
+        {
+          "id": "js-prives-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `class A { #x = 1; y = 2; }`, que renvoie `JSON.stringify(new A())` ?\n",
+          "answer": "{\"y\":2}",
+          "explanation": "Les champs privés n'apparaissent dans aucune énumération ni sérialisation : seul le champ public `y` est converti.\n",
+          "skills": [
+            "class-private-fields"
+          ]
+        },
+        {
+          "id": "js-prives-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une sous-classe peut lire `this.#x` quand le champ `#x` est déclaré par sa classe parente.\n",
+          "answer": false,
+          "explanation": "Le nom privé appartient au corps de la classe qui le déclare. La sous-classe passe par les méthodes et accesseurs publics du parent.\n",
+          "skills": [
+            "class-private-fields"
+          ]
+        },
+        {
+          "id": "js-prives-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que vérifie `#solde in objet`, écrit dans la classe ?\n",
+          "options": [
+            "Que l'objet possède le champ privé installé par le constructeur de la classe",
+            "Que l'objet a une propriété publique nommée solde",
+            "Que la classe figure dans la chaîne de prototypes de l'objet",
+            "Que le solde est supérieur à zéro"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "C'est un test de marque : il confirme que l'objet a réellement été construit par la classe, là où `instanceof` se laisse tromper par `Object.create`.\n",
+          "skills": [
+            "class-private-fields"
+          ]
+        }
+      ],
+      "chapterId": "javascript-champs-prives",
+      "technology": "javascript",
+      "contentPath": "javascript/classes/champs-prives/quiz.yaml",
+      "contentVersion": "d2062056ebad"
+    },
+    {
       "id": "javascript-classes-bases-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -4021,6 +4566,148 @@
       "technology": "javascript",
       "contentPath": "javascript/classes/classes-bases/quiz.yaml",
       "contentVersion": "8dd90e7e24e5"
+    },
+    {
+      "id": "javascript-classes-accesseurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-accesseurs-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `class C { static f() { return 1; } }`, que vaut `typeof new C().f` ?\n",
+          "answer": "undefined",
+          "explanation": "Une méthode statique est une propriété de la classe, pas du prototype : les instances ne la voient pas.\n",
+          "skills": [
+            "class-accessors"
+          ]
+        },
+        {
+          "id": "js-accesseurs-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `class R { constructor(l) { this.l = l; } get double() { return this.l * 2; } }`, que vaut `r.double` après `const r = new R(2); r.l = 5;` ?\n",
+          "answer": "10",
+          "explanation": "Un getter ne stocke rien : il recalcule à chaque lecture à partir de l'état courant.\n",
+          "skills": [
+            "class-accessors"
+          ]
+        },
+        {
+          "id": "js-accesseurs-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Dans `set nom(v) { this.nom = v; }`, l'affectation stocke simplement la valeur.\n",
+          "answer": false,
+          "explanation": "`this.nom = v` rappelle le setter, qui se rappelle indéfiniment jusqu'à une `RangeError`. Il faut stocker sous un autre nom, idéalement un champ privé.\n",
+          "skills": [
+            "class-accessors"
+          ]
+        },
+        {
+          "id": "js-accesseurs-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Une méthode statique `creer()` définie sur `Parent` est appelée par `Enfant.creer()`, avec `class Enfant extends Parent`. Que vaut `this` dans `creer` ?\n",
+          "options": [
+            "Enfant",
+            "Parent",
+            "undefined",
+            "Une nouvelle instance"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Dans une méthode statique, `this` est la classe sur laquelle on l'appelle. C'est ce qui permet d'écrire `new this()` dans une fabrique héritable.\n",
+          "skills": [
+            "class-accessors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-classes-accesseurs",
+      "technology": "javascript",
+      "contentPath": "javascript/classes/methodes-statiques-accesseurs/quiz.yaml",
+      "contentVersion": "ba365516a6ab"
+    },
+    {
+      "id": "javascript-quand-classe-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-quand-classe-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que faire d'une classe qui ne contient que des méthodes statiques sans état ?\n",
+          "options": [
+            "La remplacer par des fonctions exportées d'un module",
+            "La transformer en singleton",
+            "Ajouter un constructeur vide",
+            "La faire hériter d'une classe de base"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Elle ne sert que d'espace de noms, ce qu'un module ES fournit déjà. Les fonctions exportées s'importent une à une et s'éliminent du bundle quand elles ne servent pas.\n",
+          "skills": [
+            "class-design-choice"
+          ]
+        },
+        {
+          "id": "js-quand-classe-q2",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quels éléments justifient d'écrire une classe ?\n",
+          "options": [
+            "Un invariant à protéger sur un état",
+            "De nombreuses instances partageant le même comportement",
+            "Un environnement qui l'impose, comme une sous-classe d'Error",
+            "Un ensemble de fonctions utilitaires sans état"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "État protégé, instances nombreuses et contrainte de l'environnement sont les vrais motifs. Des fonctions sans état relèvent d'un module.\n",
+          "skills": [
+            "class-design-choice"
+          ]
+        },
+        {
+          "id": "js-quand-classe-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un module ES n'est évalué qu'une fois et peut donc servir de singleton.\n",
+          "answer": true,
+          "explanation": "Tous les imports partagent la même évaluation du module : ses variables non exportées sont privées, et son état est unique.\n",
+          "skills": [
+            "class-design-choice"
+          ]
+        },
+        {
+          "id": "js-quand-classe-q4",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "Quelle forme choisir pour la configuration de l'application, lue une fois au démarrage ?\n",
+          "options": [
+            "Un objet littéral",
+            "Une classe avec getters et setters",
+            "Une fabrique avec closure",
+            "Une hiérarchie de classes"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Ce sont des données sans comportement : un objet littéral est lisible et se sérialise directement.\n",
+          "skills": [
+            "class-design-choice"
+          ]
+        }
+      ],
+      "chapterId": "javascript-quand-classe",
+      "technology": "javascript",
+      "contentPath": "javascript/classes/quand-utiliser-une-classe/quiz.yaml",
+      "contentVersion": "a4449c90bf39"
     },
     {
       "id": "javascript-closures-quiz",
@@ -5303,6 +5990,286 @@
       "contentVersion": "af9247d8751b"
     },
     {
+      "id": "javascript-composition-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-composition-q1",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "« Une voiture a un moteur » : quelle relation cette phrase décrit-elle ?\n",
+          "options": [
+            "Une composition",
+            "Un héritage",
+            "Un polymorphisme",
+            "Une méthode statique"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "« A un » décrit une composition : la voiture contient un moteur et lui délègue. « Est un » décrirait un héritage.\n",
+          "skills": [
+            "composition-over-inheritance"
+          ]
+        },
+        {
+          "id": "js-composition-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une modification interne d'une classe parente peut casser une sous-classe qui n'a pas été modifiée.\n",
+          "answer": true,
+          "explanation": "C'est le problème de la classe de base fragile : l'enfant dépend de la manière dont le parent utilise ses propres méthodes.\n",
+          "skills": [
+            "composition-over-inheritance"
+          ]
+        },
+        {
+          "id": "js-composition-q3",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Le parent implémente `ajouterTous(liste)` en appelant `this.ajouter` pour chaque élément. L'enfant compte 1 dans `ajouter` et `liste.length` dans `ajouterTous`, puis appelle les versions parentes. Combien d'ajouts compte-t-il après `ajouterTous(['a', 'b', 'c'])` ?\n",
+          "answer": "6",
+          "explanation": "L'enfant compte 3 dans `ajouterTous`, puis le parent appelle `this.ajouter` trois fois — la version redéfinie, qui compte encore 3.\n",
+          "skills": [
+            "composition-over-inheritance"
+          ]
+        },
+        {
+          "id": "js-composition-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment éviter une sous-classe par combinaison de capacités, comme `CanardVolantNageur` ?\n",
+          "options": [
+            "Assembler des capacités indépendantes dans chaque objet",
+            "Ajouter un niveau d'héritage intermédiaire",
+            "Copier les méthodes dans chaque sous-classe",
+            "Utiliser uniquement des méthodes statiques"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Chaque capacité devient une pièce indépendante ; un objet assemble celles dont il a besoin, et toutes les combinaisons existent sans nouvelle classe.\n",
+          "skills": [
+            "composition-over-inheritance"
+          ]
+        }
+      ],
+      "chapterId": "javascript-composition",
+      "technology": "javascript",
+      "contentPath": "javascript/heritage/composition-vs-heritage/quiz.yaml",
+      "contentVersion": "55539ecd1146"
+    },
+    {
+      "id": "javascript-encapsulation-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-encapsulation-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle écriture suit le principe « ordonne, ne demande pas » ?\n",
+          "options": [
+            "compte.retirer(30)",
+            "if (compte.solde >= 30) compte.solde -= 30",
+            "compte.solde = compte.solde - 30",
+            "const s = compte.solde; compte.solde = s - 30"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'objet reçoit l'ordre et applique lui-même sa règle. Les autres écritures lisent son état et décident à sa place.\n",
+          "skills": [
+            "encapsulation-abstraction"
+          ]
+        },
+        {
+          "id": "js-encapsulation-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans le constructeur d'une classe de base, quand `new.target === Base` est-il vrai ?\n",
+          "options": [
+            "Quand on instancie Base directement",
+            "Quand on instancie une sous-classe de Base",
+            "Dans tous les cas",
+            "Jamais, new.target vaut toujours undefined"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`new.target` désigne la classe réellement instanciée. Pour une sous-classe, il vaut la sous-classe : le test bloque donc seulement l'instanciation directe de la base.\n",
+          "skills": [
+            "encapsulation-abstraction"
+          ]
+        },
+        {
+          "id": "js-encapsulation-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Ajouter un getter et un setter pour chaque champ suffit à encapsuler un objet.\n",
+          "answer": false,
+          "explanation": "Si les setters n'appliquent aucune règle, l'état est aussi ouvert qu'avec des propriétés publiques. L'encapsulation consiste à ne laisser l'état changer que par des opérations qui garantissent les règles.\n",
+          "skills": [
+            "encapsulation-abstraction"
+          ]
+        },
+        {
+          "id": "js-encapsulation-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment traiter une chaîne d'accès comme `commande.client.adresse.ville` ?\n",
+          "options": [
+            "Ajouter une méthode comme commande.villeDeLivraison()",
+            "Rendre toutes ces propriétés publiques",
+            "Copier l'adresse dans chaque objet",
+            "Utiliser un setter sur ville"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une méthode sur l'objet manipulé cache la structure interne : elle peut ensuite changer sans casser l'appelant.\n",
+          "skills": [
+            "encapsulation-abstraction"
+          ]
+        }
+      ],
+      "chapterId": "javascript-encapsulation",
+      "technology": "javascript",
+      "contentPath": "javascript/heritage/encapsulation-abstraction/quiz.yaml",
+      "contentVersion": "eb457115d430"
+    },
+    {
+      "id": "javascript-extends-super-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-extends-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que se passe-t-il si un constructeur dérivé affecte `this.x` avant d'appeler `super()` ?\n",
+          "options": [
+            "Une ReferenceError est levée",
+            "La propriété est créée normalement",
+            "La propriété est ignorée sans erreur",
+            "Le parent n'est jamais appelé"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Dans une classe dérivée, l'objet est créé par le constructeur parent pendant `super()`. Avant cet appel, `this` n'existe pas.\n",
+          "skills": [
+            "class-inheritance"
+          ]
+        },
+        {
+          "id": "js-extends-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une classe dérivée sans constructeur transmet automatiquement ses arguments au parent.\n",
+          "answer": true,
+          "explanation": "Le constructeur implicite équivaut à `constructor(...args) { super(...args); }`.\n",
+          "skills": [
+            "class-inheritance"
+          ]
+        },
+        {
+          "id": "js-extends-q3",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `class A { f() { return 'A'; } }` et `class B extends A { f() { return super.f() + 'B'; } }`, que renvoie `new B().f()` ?\n",
+          "answer": "AB",
+          "explanation": "`super.f()` appelle la version de `A`, qui renvoie `'A'`, puis la méthode de `B` ajoute `'B'`.\n",
+          "skills": [
+            "class-inheritance"
+          ]
+        },
+        {
+          "id": "js-extends-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans une erreur personnalisée, que faut-il définir en plus de `super(message)` pour qu'elle s'affiche avec son propre type dans les journaux ?\n",
+          "options": [
+            "this.name",
+            "this.stack",
+            "this.constructor",
+            "this.prototype"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Sans `name`, l'erreur hérite du nom `'Error'`. `super(message)` fournit déjà le message et la pile d'appels.\n",
+          "skills": [
+            "class-inheritance"
+          ]
+        }
+      ],
+      "chapterId": "javascript-extends-super",
+      "technology": "javascript",
+      "contentPath": "javascript/heritage/extends-et-super/quiz.yaml",
+      "contentVersion": "768cd613af93"
+    },
+    {
+      "id": "javascript-polymorphisme-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-polymorphisme-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `class A { nom() { return 'A'; } dire() { return this.nom(); } }` et `class B extends A { nom() { return 'B'; } }`, que renvoie `new B().dire()` ?\n",
+          "answer": "B",
+          "explanation": "`this.nom()` part de l'instance réelle, un `B` : la version redéfinie est trouvée en premier, même si `dire` est écrite dans `A`.\n",
+          "skills": [
+            "polymorphism"
+          ]
+        },
+        {
+          "id": "js-polymorphisme-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "En JavaScript, un objet doit hériter d'une classe pour pouvoir être utilisé à sa place.\n",
+          "answer": false,
+          "explanation": "Seules les méthodes appelées comptent : un objet littéral qui les possède convient. C'est le typage par comportement.\n",
+          "skills": [
+            "polymorphism"
+          ]
+        },
+        {
+          "id": "js-polymorphisme-q3",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Avec `class P { constructor() { this.v = this.lire(); } lire() {} }` et `class E extends P { x = 1; lire() { return this.x; } }`, que vaut `new E().v` ?\n",
+          "answer": "undefined",
+          "explanation": "Le constructeur de `P` s'exécute pendant `super()`, avant l'installation du champ `x` de `E`. La méthode redéfinie lit donc un champ pas encore initialisé.\n",
+          "skills": [
+            "polymorphism"
+          ]
+        },
+        {
+          "id": "js-polymorphisme-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel est le principal avantage du polymorphisme sur un `switch` testant le type ?\n",
+          "options": [
+            "Ajouter un cas sans modifier le code existant",
+            "Un code plus rapide à l'exécution",
+            "Ne plus avoir besoin de classes",
+            "Supprimer toute vérification des erreurs"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un nouveau cas devient une nouvelle classe ou un nouvel objet. Avec un `switch`, il faut retrouver et modifier chaque endroit qui teste le type.\n",
+          "skills": [
+            "polymorphism"
+          ]
+        }
+      ],
+      "chapterId": "javascript-polymorphisme",
+      "technology": "javascript",
+      "contentPath": "javascript/heritage/polymorphisme/quiz.yaml",
+      "contentVersion": "6ade0aaaf110"
+    },
+    {
       "id": "javascript-introduction-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -6492,6 +7459,226 @@
       "technology": "javascript",
       "contentPath": "javascript/operateurs/ternaire-et-precedence/quiz.yaml",
       "contentVersion": "593d900cd422"
+    },
+    {
+      "id": "javascript-fabrique-singleton-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-fabrique-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment éviter qu'une fabrique contienne un switch qui s'allonge à chaque nouveau type ?\n",
+          "options": [
+            "Utiliser un registre qui associe chaque nom à son constructeur",
+            "Créer une sous-classe de la fabrique par type",
+            "Transformer la fabrique en singleton",
+            "Remplacer le switch par des if imbriqués"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un registre rend l'ajout d'un type local : on enregistre une entrée, sans modifier la fonction qui crée les objets.\n",
+          "skills": [
+            "creational-patterns"
+          ]
+        },
+        {
+          "id": "js-fabrique-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un module ES est réévalué à chaque fois qu'il est importé.\n",
+          "answer": false,
+          "explanation": "Un module n'est évalué qu'une fois ; tous les imports partagent ses exports. C'est ce qui en fait un singleton naturel.\n",
+          "skills": [
+            "creational-patterns"
+          ]
+        },
+        {
+          "id": "js-fabrique-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi un singleton modifiable rend-il les tests fragiles ?\n",
+          "options": [
+            "Son état persiste d'un test à l'autre, qui s'influencent selon leur ordre",
+            "Il ralentit l'exécution des tests",
+            "Il empêche d'utiliser des classes",
+            "Il ne peut pas être importé dans un fichier de test"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'instance est globale : ce qu'un test y modifie, le suivant le retrouve. Créer l'instance au démarrage et la passer en paramètre supprime ce couplage.\n",
+          "skills": [
+            "creational-patterns"
+          ]
+        },
+        {
+          "id": "js-fabrique-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Qu'est-ce qu'un dépôt ne doit pas faire ?\n",
+          "options": [
+            "Renvoyer des objets propres à la technologie de stockage",
+            "Exposer une méthode trouverParEmail",
+            "Avoir une version en mémoire pour les tests",
+            "Renvoyer des copies des données"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un dépôt isole le métier du stockage. S'il laisse sortir un objet d'ORM ou un constructeur de requêtes, le métier redevient dépendant de la base.\n",
+          "skills": [
+            "creational-patterns"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fabrique-singleton",
+      "technology": "javascript",
+      "contentPath": "javascript/patterns-objet/fabrique-singleton-depot/quiz.yaml",
+      "contentVersion": "6a97c6d921f1"
+    },
+    {
+      "id": "javascript-mixins-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-mixins-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Après `class C {}` et `Object.assign(C.prototype, { f() { return 'X'; } }, { f() { return 'Y'; } })`, que renvoie `new C().f()` ?\n",
+          "answer": "Y",
+          "explanation": "`Object.assign` copie les sources dans l'ordre : la seconde écrase la première, sans aucune erreur. C'est le risque de collision des mixins objet.\n",
+          "skills": [
+            "mixins"
+          ]
+        },
+        {
+          "id": "js-mixins-q2",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "`Object.assign` copie un getter d'un mixin en conservant l'accesseur.\n",
+          "answer": false,
+          "explanation": "Il lit la propriété une fois et copie la valeur obtenue, qui reste figée. Pour garder l'accesseur, on copie les descripteurs avec `Object.getOwnPropertyDescriptors`.\n",
+          "skills": [
+            "mixins"
+          ]
+        },
+        {
+          "id": "js-mixins-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle écriture définit un mixin de classe ?\n",
+          "options": [
+            "const Mixin = (Base) => class extends Base { }",
+            "const Mixin = class extends Object { }",
+            "Object.assign(Base, Mixin)",
+            "class Mixin extends Base, Autre { }"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un mixin de classe est une fonction qui reçoit une classe et renvoie une sous-classe. JavaScript n'autorise qu'un seul parent après `extends`.\n",
+          "skills": [
+            "mixins"
+          ]
+        },
+        {
+          "id": "js-mixins-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quels sont des risques propres aux mixins ?\n",
+          "options": [
+            "Des collisions de noms qui écrasent une méthode sans erreur",
+            "Des dépendances implicites à des propriétés de this",
+            "Une perte de lisibilité quand plusieurs mixins s'empilent",
+            "L'impossibilité d'appeler une méthode du mixin sur une instance"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Les méthodes mélangées s'appellent normalement ; les risques viennent des noms partagés, des hypothèses non déclarées sur `this` et de l'origine difficile à retrouver des méthodes.\n",
+          "skills": [
+            "mixins"
+          ]
+        }
+      ],
+      "chapterId": "javascript-mixins",
+      "technology": "javascript",
+      "contentPath": "javascript/patterns-objet/mixins/quiz.yaml",
+      "contentVersion": "20931be2f4ff"
+    },
+    {
+      "id": "javascript-strategie-observateur-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-strategie-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle est la forme la plus idiomatique d'une stratégie en JavaScript ?\n",
+          "options": [
+            "Une fonction passée en paramètre",
+            "Une interface et une classe abstraite",
+            "Un singleton par algorithme",
+            "Un mixin appliqué à chaque classe"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les fonctions sont des valeurs : un algorithme interchangeable se passe directement en paramètre ou se range dans un objet registre.\n",
+          "skills": [
+            "behavioral-patterns"
+          ]
+        },
+        {
+          "id": "js-strategie-q2",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Un émetteur appelle ses abonnés dans une boucle sans protection. Le premier abonné lève une erreur, le second ajoute un élément à `recus`. Après `try { emettre() } catch {}`, que vaut `recus.length` ?\n",
+          "answer": "0",
+          "explanation": "L'erreur interrompt la boucle : le second abonné n'est jamais appelé. Un émetteur robuste entoure chaque appel d'un `try` / `catch`.\n",
+          "skills": [
+            "behavioral-patterns"
+          ]
+        },
+        {
+          "id": "js-strategie-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "L'injection de dépendances nécessite un conteneur d'injection.\n",
+          "answer": false,
+          "explanation": "Le principe consiste à recevoir ses collaborateurs en paramètre. Un conteneur automatise le câblage des grosses applications, mais n'est pas indispensable.\n",
+          "skills": [
+            "behavioral-patterns"
+          ]
+        },
+        {
+          "id": "js-strategie-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi `abonner` renvoie-t-il une fonction ?\n",
+          "options": [
+            "Pour permettre de se désabonner et éviter les fuites mémoire",
+            "Pour déclencher immédiatement l'événement",
+            "Pour rendre l'abonnement asynchrone",
+            "Pour copier la liste des abonnés"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Sans désabonnement, un abonné reste référencé par l'émetteur, avec tout ce qu'il capture, aussi longtemps que l'émetteur existe.\n",
+          "skills": [
+            "behavioral-patterns"
+          ]
+        }
+      ],
+      "chapterId": "javascript-strategie-observateur",
+      "technology": "javascript",
+      "contentPath": "javascript/patterns-objet/strategie-observateur-injection/quiz.yaml",
+      "contentVersion": "a22540d455a7"
     },
     {
       "id": "javascript-erreurs-portee-quiz",
