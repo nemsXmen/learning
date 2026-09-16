@@ -168,6 +168,15 @@
       "contentVersion": "a989e81a2a95"
     },
     {
+      "slug": "classes",
+      "title": "Classes",
+      "order": 17,
+      "part": "object-oriented",
+      "technology": "javascript",
+      "contentPath": "javascript/classes/module.yaml",
+      "contentVersion": "0e0550a5a100"
+    },
+    {
       "slug": "closures",
       "title": "Closures",
       "order": 13,
@@ -184,6 +193,24 @@
       "technology": "javascript",
       "contentPath": "javascript/conditions/module.yaml",
       "contentVersion": "06c1ce012769"
+    },
+    {
+      "slug": "erreurs",
+      "title": "Gestion des erreurs",
+      "order": 23,
+      "part": "errors-debugging",
+      "technology": "javascript",
+      "contentPath": "javascript/erreurs/module.yaml",
+      "contentVersion": "e3284616b77c"
+    },
+    {
+      "slug": "execution-context",
+      "title": "Contexte d'exécution",
+      "order": 14,
+      "part": "runtime",
+      "technology": "javascript",
+      "contentPath": "javascript/execution-context/module.yaml",
+      "contentVersion": "ec3c89092ced"
     },
     {
       "slug": "fonctions",
@@ -780,6 +807,34 @@
       "technology": "javascript"
     },
     {
+      "id": "execution-context",
+      "name": "Contexte d'exécution et pile d'appels",
+      "importance": 4,
+      "requires": [
+        "scope-chain"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "classes-basics",
+      "name": "Classes et constructeur",
+      "importance": 5,
+      "requires": [
+        "objects-basics",
+        "factory-functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "error-types",
+      "name": "Familles d'erreurs",
+      "importance": 4,
+      "requires": [
+        "strict-mode-errors"
+      ],
+      "technology": "javascript"
+    },
+    {
       "id": "type-inference",
       "name": "Inférence de types",
       "importance": 4,
@@ -1104,6 +1159,43 @@
       ]
     },
     {
+      "id": "javascript-classes-bases",
+      "title": "Classes : pourquoi, et la syntaxe de base",
+      "slug": "classes-bases",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "classes",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-objets-creer",
+        "javascript-factory-functions"
+      ],
+      "skills": [
+        "classes-basics"
+      ],
+      "tags": [
+        "javascript",
+        "classes"
+      ],
+      "contentPath": "javascript/classes/classes-bases/lesson.md",
+      "contentVersion": "21892ff06338",
+      "body": "\n## Objectifs\n\n- Déclarer une classe avec `class` et son `constructor`.\n- Créer des instances avec `new`, et comprendre ce que fait cet opérateur.\n- Reconnaître ce qu'une classe apporte face à un objet littéral répété.\n\n## Introduction\n\nDès qu'une application manipule plusieurs objets de même forme — des utilisateurs, des\ncommandes, des tâches —, écrire chaque objet à la main devient répétitif et fragile : il\nsuffit d'oublier une propriété pour qu'une fonction plante trois fichiers plus loin. Une\nclasse est un moule : elle décrit une fois la forme et les opérations, et produit ensuite\nautant d'objets qu'on veut, tous cohérents.\n\n`class` est arrivé avec ES2015. Ce n'est pas un nouveau modèle d'objets — JavaScript n'a\nqu'un seul modèle —, c'est une syntaxe plus lisible pour ce qu'on écrivait déjà avec des\nfonctions constructrices. Cette syntaxe est aujourd'hui celle qu'on croise dans la plupart\ndes bases de code, et celle que les autres langages rendent immédiatement familière.\n\n## Concept\n\nUne classe déclare un nom et un corps. Le corps contient un `constructor`, exécuté à chaque\ncréation d'instance, et des méthodes.\n\n| Élément | Rôle |\n| --- | --- |\n| `class Nom { … }` | déclare le moule |\n| `constructor(args)` | initialise une instance, reçoit les arguments de `new` |\n| `this` | l'instance en cours de construction ou d'utilisation |\n| `new Nom(args)` | crée une instance et renvoie l'objet |\n\nTrois règles à retenir dès maintenant :\n\n- Une classe s'appelle **obligatoirement** avec `new`. `Personne('Ana')` lève une\n  `TypeError`.\n- Le corps d'une classe est toujours en **mode strict**, même dans un fichier qui ne l'est\n  pas.\n- Une déclaration de classe n'est pas utilisable avant sa ligne : contrairement à\n  `function`, elle reste dans la zone morte temporelle.\n\n## Exemple\n\n```js\nclass Tache {\n  constructor(titre, echeance) {\n    this.titre = titre;\n    this.echeance = echeance;\n    this.terminee = false;\n  }\n\n  terminer() {\n    this.terminee = true;\n    return this;\n  }\n\n  resume() {\n    const etat = this.terminee ? 'faite' : 'à faire';\n    return `${this.titre} (${etat}, ${this.echeance})`;\n  }\n}\n\nconst tache = new Tache('Écrire le rapport', '2026-10-02');\nconsole.log(tache.resume()); // 'Écrire le rapport (à faire, 2026-10-02)'\n\ntache.terminer();\nconsole.log(tache.resume()); // 'Écrire le rapport (faite, 2026-10-02)'\n\nconst autre = new Tache('Relire', '2026-10-05');\nconsole.log(autre.terminee); // false : état indépendant\n\nconsole.log(tache instanceof Tache); // true\nconsole.log(typeof Tache); // 'function'\n```\n\n## Comment ça fonctionne\n\n`new Tache('Écrire le rapport', '2026-10-02')` fait quatre choses, dans cet ordre : il crée\nun objet vide, il lie ce nouvel objet à `this`, il exécute le `constructor` avec les\narguments reçus, puis il renvoie l'objet. On n'écrit donc jamais `return this` dans un\nconstructeur : c'est déjà son comportement.\n\nLes propriétés affectées dans le constructeur — `this.titre`, `this.terminee` — appartiennent\nà **chaque instance** : deux tâches ont deux titres. Les méthodes, elles, ne sont pas copiées\ndans chaque objet ; elles sont définies une seule fois et partagées par toutes les instances.\nC'est la différence de coût avec une fabrique, où chaque objet renvoyé embarque ses propres\nfonctions.\n\n```js\nconst a = new Tache('A', '2026-01-01');\nconst b = new Tache('B', '2026-01-02');\nconsole.log(a.terminer === b.terminer); // true : une seule fonction partagée\nconsole.log(a.titre === b.titre); // false : un état par instance\n```\n\nLe mot-clé `this`, à l'intérieur d'une méthode, désigne l'objet sur lequel la méthode est\nappelée. `tache.resume()` met `tache` dans `this`. Ce point mérite d'être gardé en tête :\nsi la méthode est détachée de son objet — passée en callback, par exemple —, `this` n'est\nplus celui qu'on croit. On y reviendra ; en attendant, appelle tes méthodes sur leur objet.\n\nUne classe peut aussi s'écrire comme une expression, utile pour la créer dans une fonction\nou la passer en argument :\n\n```js\nconst Point = class {\n  constructor(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n};\nconsole.log(new Point(1, 2).x); // 1\n```\n\nEnfin, `typeof Tache` vaut `'function'`. Une classe est une fonction particulière, marquée\ncomme non appelable sans `new`. C'est la confirmation que la syntaxe recouvre un mécanisme\nplus ancien, pas un type inédit.\n\n## Erreurs fréquentes\n\n**Oublier `new`.** `const t = Tache('titre')` lève `TypeError: Class constructor Tache cannot\nbe invoked without 'new'`. C'est une amélioration par rapport aux fonctions constructrices,\nqui polluaient silencieusement l'objet global.\n\n**Mettre une virgule entre les méthodes.** Un corps de classe n'est pas un objet littéral :\nles méthodes se suivent sans séparateur, et une virgule est une erreur de syntaxe.\n\n**Écrire `return quelqueChose` dans le constructeur.** Renvoyer un objet remplace l'instance\net casse `instanceof` ; renvoyer une primitive est simplement ignoré. Dans les deux cas, le\nlecteur est induit en erreur.\n\n**Utiliser la classe avant sa déclaration.** `new Tache()` placé au-dessus de `class Tache`\nlève une `ReferenceError`. Le hoisting des `function` ne s'applique pas ici.\n\n**Faire d'une classe un simple sac de fonctions.** Une classe sans état, dont toutes les\nméthodes sont statiques, n'apporte rien qu'un module ne fasse déjà.\n\n## À retenir\n\n- `class` déclare un moule ; `constructor` initialise chaque instance.\n- `new` crée l'objet, le lie à `this`, exécute le constructeur et renvoie l'objet.\n- Les propriétés sont propres à l'instance, les méthodes sont partagées.\n- Appeler une classe sans `new` lève une `TypeError`.\n- Le corps d'une classe est en mode strict et n'est pas hoisté.\n\n## Exercices\n\n1. Écris une classe `Livre` avec `titre`, `auteur` et `pages`, et une méthode `description()`\n   qui renvoie `\"Titre — Auteur (320 pages)\"`. Crée deux livres et affiche leur description.\n\n   :::indice\n   Les trois valeurs arrivent en arguments du constructeur et se rangent dans `this`.\n   :::\n\n   :::solution\n   ```js\n   class Livre {\n     constructor(titre, auteur, pages) {\n       this.titre = titre;\n       this.auteur = auteur;\n       this.pages = pages;\n     }\n\n     description() {\n       return `${this.titre} — ${this.auteur} (${this.pages} pages)`;\n     }\n   }\n\n   const un = new Livre('Le Horla', 'Maupassant', 120);\n   const deux = new Livre('Bouvard et Pécuchet', 'Flaubert', 320);\n   console.log(un.description()); // 'Le Horla — Maupassant (120 pages)'\n   console.log(deux.description()); // 'Bouvard et Pécuchet — Flaubert (320 pages)'\n   ```\n   :::\n\n2. Écris une classe `Compteur` avec une valeur de départ par défaut à `0`, une méthode\n   `incrementer()` et une méthode `reinitialiser()`. Fais en sorte que `incrementer()` puisse\n   s'enchaîner : `compteur.incrementer().incrementer()`.\n\n   :::indice\n   Une valeur par défaut se déclare dans la signature du constructeur.\n   :::\n\n   :::indice\n   Pour enchaîner les appels, chaque méthode doit renvoyer l'instance elle-même.\n   :::\n\n   :::solution\n   ```js\n   class Compteur {\n     constructor(depart = 0) {\n       this.valeur = depart;\n     }\n\n     incrementer() {\n       this.valeur += 1;\n       return this;\n     }\n\n     reinitialiser() {\n       this.valeur = 0;\n       return this;\n     }\n   }\n\n   const compteur = new Compteur(5);\n   compteur.incrementer().incrementer();\n   console.log(compteur.valeur); // 7\n   console.log(compteur.reinitialiser().valeur); // 0\n   ```\n   :::\n\n3. Ce code produit deux tâches identiques alors qu'on en attend deux différentes. Trouve le\n   problème et corrige-le.\n\n   ```js\n   class Tache {\n     constructor(titre) {\n       titre = titre;\n     }\n   }\n\n   const a = new Tache('A');\n   console.log(a.titre); // undefined\n   ```\n\n   :::indice\n   Regarde ce que la ligne du constructeur affecte réellement, et à quoi.\n   :::\n\n   :::solution\n   ```js\n   class Tache {\n     constructor(titre) {\n       this.titre = titre; // sans `this.`, on réaffecte le paramètre à lui-même\n     }\n   }\n\n   const a = new Tache('A');\n   const b = new Tache('B');\n   console.log(a.titre, b.titre); // 'A' 'B'\n   ```\n\n   `titre = titre` réaffecte le paramètre local : l'instruction est légale, sans effet, et\n   l'instance ne reçoit aucune propriété.\n   :::\n\n## Questions d'entretien\n\n- Que fait exactement l'opérateur `new` ?\n\n  :::indice\n  Décompose l'opération en étapes, depuis l'objet vide jusqu'à la valeur renvoyée.\n  :::\n\n  :::reponse\n  `new` crée un objet vide, lie cet objet à `this`, exécute le constructeur avec les\n  arguments fournis, puis renvoie l'objet — sans qu'on ait à écrire `return`. Le nouvel\n  objet est aussi relié à la classe, ce qui rend `instanceof` fiable et donne accès aux\n  méthodes partagées. Si le constructeur renvoie explicitement un objet, c'est cet objet qui\n  sort à la place, ce qui casse `instanceof` ; renvoyer une primitive est ignoré.\n  :::\n\n- Une classe JavaScript est-elle un nouveau type d'entité dans le langage ?\n\n  :::indice\n  Que vaut `typeof MaClasse` ?\n  :::\n\n  :::reponse\n  Non. `typeof MaClasse` vaut `'function'` : une classe est une fonction, avec des règles\n  supplémentaires — appel obligatoire avec `new`, corps en mode strict, pas de hoisting\n  utilisable. La syntaxe `class` donne une écriture claire et un vocabulaire commun avec les\n  autres langages, mais le modèle d'objets sous-jacent de JavaScript n'a pas changé.\n  :::\n\n- Une classe stocke-t-elle ses méthodes dans chaque instance ?\n\n  :::indice\n  Compare `a.methode === b.methode` pour deux instances.\n  :::\n\n  :::reponse\n  Non. Les propriétés affectées dans le constructeur appartiennent à chaque instance, mais\n  les méthodes sont définies une seule fois et partagées : pour deux instances `a` et `b`,\n  `a.methode === b.methode` vaut `true`. C'est la différence de coût mémoire avec une factory\n  function, dont chaque objet renvoyé porte ses propres fonctions. À l'échelle de quelques\n  milliers d'objets, l'écart est sans importance ; il compte sur des volumes très élevés.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-closures",
       "title": "Comprendre les closures",
       "slug": "closures",
@@ -1382,6 +1474,78 @@
       "contentPath": "javascript/conditions/truthy-et-falsy/lesson.md",
       "contentVersion": "63b6ae2456fa",
       "body": "\n## Objectifs\n\n- Connaître par cœur les valeurs falsy.\n- Savoir que `'0'`, `'false'`, `[]` et `{}` sont truthy.\n- Écrire des conditions explicites quand `0`, `''` ou un tableau vide sont des cas\n  légitimes.\n\n## Introduction\n\n`if (panier.length)`, `if (!nom)`, `while (element)` : le code JavaScript utilise sans\ncesse des valeurs qui ne sont pas des booléens comme conditions. Le langage les convertit\nselon une règle simple, qui tient en huit valeurs. Cette règle rend le code concis, mais\nelle fait aussi disparaître des cas légitimes — un âge de 0, un commentaire vide, une\nremise de 0 € — quand on l'applique sans y penser.\n\n## Concept\n\nUne valeur est **falsy** si elle devient `false` lorsqu'on la convertit en booléen. Il y en\na exactement huit :\n\n| Valeur falsy | Type |\n| --- | --- |\n| `false` | boolean |\n| `0` et `-0` | number |\n| `0n` | bigint |\n| `''` | string |\n| `null` | null |\n| `undefined` | undefined |\n| `NaN` | number |\n\n**Toutes les autres valeurs sont truthy**, y compris celles qui « ont l'air fausses » :\n\n| Valeur truthy surprenante | Pourquoi |\n| --- | --- |\n| `'0'`, `'false'` | une chaîne non vide est truthy, quel que soit son contenu |\n| `' '` | un espace, c'est une chaîne non vide |\n| `[]`, `{}` | tout objet est truthy, même vide |\n| `new Boolean(false)` | c'est un objet, donc truthy |\n\nOn obtient explicitement la valeur booléenne avec `Boolean(valeur)` ou `!!valeur`.\n\n## Exemple\n\n```js\nconst panier = [];\nconst commentaire = '   ';\nconst quantite = 0;\n\nif (panier) console.log('Toujours affiché : un tableau vide est truthy');\nif (panier.length > 0) console.log('Jamais affiché : le panier est vide');\n\nif (commentaire) console.log('Affiché : des espaces, c’est une chaîne non vide');\nif (commentaire.trim()) console.log('Jamais affiché : trim() renvoie une chaîne vide');\n\nif (!quantite) console.log('Affiché : 0 est falsy, même s’il est légitime');\n\nconsole.log(Boolean('false'), Boolean(0), !!NaN); // true false false\n```\n\n## Comment ça fonctionne\n\nLes instructions et opérateurs qui attendent une condition appliquent l'opération\nabstraite **ToBoolean** : `if`, `while`, `for`, le ternaire `? :`, `!`, `&&` et `||`.\nCette conversion ne regarde que la liste des huit valeurs falsy ; elle ne regarde jamais\nle contenu d'un objet.\n\nIl ne faut pas confondre cette conversion avec celle de `==`, qui transforme en nombre :\n\n```js\nconsole.log(Boolean([])); // true : tout objet est truthy\nconsole.log([] == false); // true : [] devient '', puis 0 ; false devient 0\n```\n\nUn tableau vide est donc truthy dans un `if`, tout en étant « égal » à `false` avec `==`.\nEncore une raison de préférer `===`.\n\nLa vérité implicite est un raccourci pour « cette valeur existe et n'est pas vide ». Elle\nest parfaite quand **toutes** les valeurs falsy doivent être traitées de la même façon, et\ndangereuse dès que l'une d'elles est un cas normal.\n\n## Erreurs fréquentes\n\n**Tester l'existence d'un nombre avec `if (!valeur)`.** Un âge de 0, un stock de 0 ou une\nremise de 0 sont traités comme absents. Teste `valeur === undefined`, ou `valeur == null`.\n\n**Tester un tableau avec `if (tableau)`.** Un tableau vide est truthy. Teste\n`tableau.length > 0`.\n\n**Tester le texte d'un formulaire avec `if (texte)`.** Une saisie faite uniquement\nd'espaces passe. Teste `texte.trim() !== ''`.\n\n**Comparer à la chaîne `'false'`.** Une valeur venue d'un formulaire ou d'une URL est\nune chaîne : `'false'` est truthy. Compare explicitement `valeur === 'true'`.\n\n## À retenir\n\n- Huit valeurs falsy : `false`, `0`, `-0`, `0n`, `''`, `null`, `undefined`, `NaN`.\n- Tout le reste est truthy : `'0'`, `'false'`, `[]`, `{}`.\n- `if (tableau)` est toujours vrai : teste `tableau.length`.\n- Quand `0` ou `''` sont des valeurs légitimes, écris une condition explicite.\n\n## Exercices\n\n1. Classe ces valeurs en truthy et falsy : `0`, `'0'`, `''`, `' '`, `[]`, `{}`, `null`,\n   `NaN`, `'false'`.\n\n   :::indice\n   Seules les huit valeurs de la liste sont falsy. Une chaîne est falsy uniquement si elle\n   est vide.\n   :::\n\n   :::solution\n   - Falsy : `0`, `''`, `null`, `NaN`.\n   - Truthy : `'0'`, `' '`, `[]`, `{}`, `'false'`.\n\n   Vérification rapide dans la console :\n   `[0, '0', '', ' ', [], {}, null, NaN, 'false'].map(Boolean)`.\n   :::\n\n2. Ce code refuse d'inscrire un bébé dont l'âge vaut 0. Corrige la condition pour ne\n   refuser qu'un âge absent.\n\n   ```js\n   if (!inscription.age) {\n     console.log('Âge manquant');\n   }\n   ```\n\n   :::indice\n   `0` est falsy. Quelles valeurs représentent réellement « pas d'âge » ?\n   :::\n\n   :::solution\n   ```js\n   if (inscription.age === undefined || inscription.age === null) {\n     console.log('Âge manquant');\n   }\n   ```\n\n   `inscription.age == null` teste aussi `null` et `undefined` en une fois ; c'est l'un\n   des rares usages acceptés de `==`.\n   :::\n\n3. Affiche « Panier vide » quand le tableau `panier` ne contient aucun article.\n\n   :::indice\n   Un tableau vide est un objet, donc truthy. Quelle propriété décrit son contenu ?\n   :::\n\n   :::solution\n   ```js\n   const panier = [];\n\n   if (panier.length === 0) {\n     console.log('Panier vide');\n   }\n   ```\n\n   `if (!panier)` ne s'exécuterait jamais pour un tableau vide : il ne détecte que\n   l'absence du tableau lui-même.\n   :::\n\n## Questions d'entretien\n\n- Quelles sont les valeurs falsy en JavaScript ?\n\n  :::indice\n  Il y en a huit, réparties entre booléen, nombres, bigint, chaîne, `null` et `undefined`.\n  :::\n\n  :::reponse\n  `false`, `0`, `-0`, `0n`, la chaîne vide `''`, `null`, `undefined` et `NaN`. Toutes les\n  autres valeurs sont truthy, y compris `'0'`, `'false'`, les tableaux et objets vides.\n  C'est l'opération ToBoolean, appliquée par `if`, `while`, le ternaire et les opérateurs\n  logiques.\n  :::\n\n- Pourquoi `if ([])` exécute-t-il son bloc, alors que `[] == false` est vrai ?\n\n  :::indice\n  `if` et `==` n'appliquent pas la même conversion.\n  :::\n\n  :::reponse\n  `if` convertit la valeur en booléen, et tout objet — même un tableau vide — est truthy.\n  `==` suit une autre règle : il convertit les deux côtés en nombre. `false` devient `0`, et\n  `[]` devient d'abord la chaîne vide, puis `0`. Les deux mécanismes donnent donc des\n  résultats opposés, ce qui est l'une des raisons d'éviter `==`.\n  :::\n\n- Quand ne faut-il pas se reposer sur la vérité implicite d'une valeur ?\n\n  :::indice\n  Pense aux valeurs falsy qui peuvent être parfaitement légitimes.\n  :::\n\n  :::reponse\n  Dès qu'une valeur falsy est un cas normal : un nombre qui peut valoir 0, une chaîne qui\n  peut être vide, un booléen qui peut valoir `false`, ou un tableau qu'on veut savoir vide.\n  `if (!stock)` traite alors un stock nul comme une donnée absente. On écrit une condition\n  explicite : `stock === undefined`, `texte.trim() === ''`, `tableau.length === 0`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-familles-erreurs",
+      "title": "Les trois familles d'erreurs",
+      "slug": "familles-d-erreurs",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "erreurs",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-mode-strict-erreurs"
+      ],
+      "skills": [
+        "error-types"
+      ],
+      "tags": [
+        "javascript",
+        "erreurs"
+      ],
+      "contentPath": "javascript/erreurs/familles-d-erreurs/lesson.md",
+      "contentVersion": "9656e029475b",
+      "body": "\n## Objectifs\n\n- Distinguer une erreur de syntaxe, une erreur d'exécution et une erreur de logique.\n- Savoir à quel moment le moteur peut détecter chacune, et ce qu'il ne détectera jamais.\n- Choisir la bonne technique de diagnostic selon la famille.\n\n## Introduction\n\n« Ça ne marche pas » recouvre trois situations qui n'ont ni la même cause, ni le même\nmoment d'apparition, ni la même méthode de correction. Le code refuse de démarrer, il\ndémarre puis s'interrompt, ou il tourne jusqu'au bout en produisant un résultat faux.\n\nClasser l'erreur avant de la chercher fait gagner beaucoup de temps. Une erreur de\nsyntaxe se lit dans le message ; une erreur d'exécution se lit dans la pile d'appels ;\nune erreur de logique ne se lit nulle part — il faut la reproduire et la réduire. Ce\nchapitre pose ce tri, qui sert de plan à toute la partie.\n\n## Concept\n\n| Famille | Quand | Le moteur la détecte ? | Symptôme |\n| --- | --- | --- | --- |\n| Syntaxe | à l'analyse, avant toute exécution | oui, toujours | rien ne s'exécute dans le fichier |\n| Exécution | pendant l'exécution, à la ligne fautive | oui, au moment où elle survient | le programme s'interrompt |\n| Logique | jamais signalée | non | le programme finit, le résultat est faux |\n\nUne **erreur de syntaxe** est une violation de la grammaire du langage : parenthèse non\nfermée, `const` sans nom, mot-clé mal placé. Le moteur analyse tout le fichier avant de\nl'exécuter, donc aucune ligne ne tourne, même celles écrites avant la faute.\n\nUne **erreur d'exécution** est un code grammaticalement correct qui demande l'impossible :\nappeler ce qui n'est pas une fonction, lire une propriété de `null`, dépasser une limite.\nLe moteur lève alors un objet `Error` et interrompt le programme si personne ne l'attrape.\n\nUne **erreur de logique** est un programme valide qui fait autre chose que ce qu'on\nvoulait : un `<` à la place d'un `<=`, une soustraction inversée, une condition oubliée.\nLe moteur n'a aucun moyen de la voir : il exécute exactement ce qui est écrit.\n\n## Exemple\n\n```js\n// 1 — Syntaxe : rien ne s'exécute, pas même ce console.log\nconsole.log('début');\nconst prix = ; // SyntaxError: Unexpected token ';'\n```\n\n```js\n// 2 — Exécution : la première ligne s'affiche, la seconde interrompt le programme\nconst client = { nom: 'Ada' };\nconsole.log(client.nom); // 'Ada'\nconsole.log(client.adresse.ville); // TypeError: Cannot read properties of undefined\nconsole.log('jamais atteint');\n```\n\n```js\n// 3 — Logique : aucune erreur, un résultat faux\nfunction moyenne(notes) {\n  let somme = 0;\n  for (let i = 0; i < notes.length - 1; i++) {\n    somme += notes[i];\n  }\n  return somme / notes.length;\n}\nconsole.log(moyenne([10, 20, 30])); // 10 — attendu : 20\n```\n\nLe troisième cas est le plus coûteux : il ne se plaint pas. C'est le rôle des tests et de\nla méthode de débogage de le faire apparaître.\n\n## Comment ça fonctionne\n\nLe moteur travaille en deux temps. D'abord il **analyse** le fichier entier et construit\nsa représentation interne ; toute faute de grammaire arrête ce travail et lève une\n`SyntaxError` avant la moindre exécution. C'est pourquoi un `console.log` placé en\npremière ligne ne s'affiche pas quand la faute est à la trentième.\n\nEnsuite il **exécute**. Chaque opération impossible produit une erreur d'exécution, levée\nau moment précis où l'opération a lieu. L'erreur remonte alors la pile d'appels jusqu'à\nun `try` ; si elle n'en trouve aucun, le programme s'arrête et l'erreur est affichée avec\nsa pile.\n\nDeux nuances utiles. Certains fichiers sont analysés indépendamment les uns des autres :\nen modules ES, une `SyntaxError` dans un fichier n'empêche pas les autres d'être valides,\nmais elle empêche l'import. Et une erreur peut changer de famille selon le moment : un\n`eval('const x = ;')` produit une `SyntaxError`… à l'exécution, puisque la chaîne n'est\nanalysée qu'au moment de l'appel.\n\nLe mode strict déplace la frontière entre logique et exécution. Sans lui, une affectation\nà une variable non déclarée crée une globale silencieuse — une erreur de logique. Avec\n`'use strict'` (et donc dans tout module), la même ligne lève une `ReferenceError` : le\nmoteur transforme un bug invisible en erreur visible. C'est la raison principale d'écrire\ndu code en mode strict.\n\nPour les erreurs de logique, le langage n'offre rien : il faut d'autres outils. Un\nlinter attrape quelques cas (comparaison toujours fausse, variable inutilisée), les types\nen attrapent d'autres, et les tests attrapent le reste en comparant le résultat obtenu au\nrésultat attendu.\n\n## Erreurs fréquentes\n\n**Chercher la faute de syntaxe à la ligne indiquée.** Le moteur signale l'endroit où il\ncomprend qu'il y a un problème, pas l'endroit où il a été créé. Une accolade manquante\nligne 12 est souvent signalée à la fin du fichier. Remonte vers le haut depuis la ligne\nindiquée.\n\n**Croire qu'un fichier « en partie exécuté » avait une erreur de syntaxe.** S'il a affiché\nquelque chose avant de s'arrêter, c'est une erreur d'exécution : l'analyse avait réussi.\n\n**Traiter une erreur de logique en lisant le code.** Relire dix fois la même fonction ne\nrévèle presque jamais la faute, parce qu'on relit son intention. Il faut instrumenter :\nafficher les valeurs intermédiaires ou écrire un test qui échoue.\n\n**Faire taire une erreur d'exécution au lieu de la corriger.** Entourer d'un `try` vide\nune ligne qui plante transforme une erreur d'exécution en erreur de logique : on perd le\nsignal et on garde le bug.\n\n**Oublier que le mode strict change le diagnostic.** Le même code peut échouer\nsilencieusement dans un `<script>` classique et lever une erreur dans un module.\n\n## À retenir\n\n- Syntaxe : détectée à l'analyse, rien ne s'exécute, message souvent décalé vers le bas.\n- Exécution : détectée à la ligne fautive, interrompt le programme, laisse une pile.\n- Logique : jamais détectée par le moteur ; seuls les tests et l'instrumentation la voient.\n- Le mode strict convertit certaines erreurs de logique en erreurs d'exécution.\n- Classer l'erreur d'abord ; la méthode de recherche découle de la famille.\n\n## Exercices\n\n1. Pour chacun de ces trois extraits, dis à quelle famille appartient le problème et ce\n   que le programme affiche avant de s'arrêter.\n\n   ```js\n   // A\n   console.log('A');\n   function f( { return 1; }\n\n   // B\n   console.log('B');\n   const liste = null;\n   console.log(liste.length);\n\n   // C\n   console.log('C');\n   const tva = (prix) => prix * 0.2;\n   console.log(tva(100)); // attendu : le prix TTC\n   ```\n\n   :::indice\n   Pose-toi une seule question par extrait : le moteur a-t-il pu analyser le fichier, puis\n   a-t-il pu exécuter chaque opération demandée ?\n   :::\n\n   :::solution\n   - **A** — erreur de syntaxe : la parenthèse des paramètres n'est pas fermée. Le fichier\n     n'est pas analysable, donc `'A'` ne s'affiche **pas**.\n   - **B** — erreur d'exécution : `'B'` s'affiche, puis `liste.length` lève une\n     `TypeError: Cannot read properties of null`.\n   - **C** — erreur de logique : `'C'` puis `20` s'affichent, sans aucune erreur. La\n     fonction calcule la TVA, pas le prix TTC ; il fallait `prix * 1.2`.\n   :::\n\n2. Cette fonction doit renvoyer le plus grand nombre d'un tableau. Elle ne lève aucune\n   erreur mais se trompe sur certaines entrées. Trouve le cas qui échoue et corrige.\n\n   ```js\n   function maximum(nombres) {\n     let max = 0;\n     for (const n of nombres) {\n       if (n > max) max = n;\n     }\n     return max;\n   }\n   console.log(maximum([3, 9, 4])); // 9\n   ```\n\n   :::indice\n   La valeur de départ de `max` suppose quelque chose sur le contenu du tableau.\n   :::\n\n   :::indice\n   Essaie `maximum([-5, -2, -9])`.\n   :::\n\n   :::solution\n   ```js\n   function maximum(nombres) {\n     if (nombres.length === 0) return undefined;\n     let max = nombres[0]; // pas 0 : on part d'une valeur réellement présente\n     for (const n of nombres) {\n       if (n > max) max = n;\n     }\n     return max;\n   }\n\n   console.log(maximum([-5, -2, -9])); // -2 (et non 0)\n   console.log(maximum([])); // undefined\n   ```\n\n   C'est une erreur de logique typique : `0` n'appartient pas au tableau. Aucun message ne\n   la signale, seul un test sur des nombres négatifs la fait apparaître.\n   :::\n\n3. Transforme une erreur de logique en erreur d'exécution. Cette fonction accepte\n   silencieusement une entrée invalide et renvoie `NaN` ; fais-la échouer tôt et clairement.\n\n   ```js\n   function surface(largeur, hauteur) {\n     return largeur * hauteur;\n   }\n   console.log(surface(3, 'grand')); // NaN\n   ```\n\n   :::indice\n   Un `NaN` qui circule contamine tous les calculs suivants. Mieux vaut refuser l'entrée au\n   moment où elle arrive.\n   :::\n\n   :::indice\n   `typeof valeur !== 'number'` ou `Number.isFinite(valeur)` pour valider, puis `throw`.\n   :::\n\n   :::solution\n   ```js\n   function surface(largeur, hauteur) {\n     if (!Number.isFinite(largeur) || !Number.isFinite(hauteur)) {\n       throw new TypeError('surface attend deux nombres finis');\n     }\n     return largeur * hauteur;\n   }\n\n   console.log(surface(3, 4)); // 12\n   surface(3, 'grand'); // TypeError: surface attend deux nombres finis\n   ```\n\n   Le bug existait déjà ; il est maintenant visible à la ligne qui l'a créé, avec une pile\n   d'appels qui désigne l'appelant fautif, au lieu d'un `NaN` découvert trois écrans plus\n   loin.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi un `console.log` en première ligne ne s'affiche-t-il pas quand le fichier\n  contient une erreur de syntaxe plus bas ?\n\n  :::indice\n  Pense aux deux phases du moteur : que fait-il avant d'exécuter la première instruction ?\n  :::\n\n  :::reponse\n  Parce que le moteur analyse le fichier entier avant d'en exécuter la moindre ligne.\n  L'analyse construit la représentation interne du programme ; si la grammaire est violée\n  quelque part, cette construction échoue et le moteur lève une `SyntaxError` sans jamais\n  passer à la phase d'exécution. Rien du fichier ne tourne, pas même le code situé avant la\n  faute. C'est un bon test de diagnostic : si le programme a affiché quelque chose avant de\n  s'arrêter, la faute n'est pas syntaxique mais d'exécution.\n  :::\n\n- Quelle est la différence pratique entre une erreur d'exécution et une erreur de logique,\n  et laquelle est la plus dangereuse ?\n\n  :::indice\n  Compare le signal que chacune envoie, et le moment où on l'apprend.\n  :::\n\n  :::reponse\n  Une erreur d'exécution est bruyante : le moteur l'annonce, indique la ligne et fournit la\n  pile d'appels. On sait qu'il y a un problème et souvent où. Une erreur de logique est\n  silencieuse : le programme se termine normalement avec un résultat faux, qui peut être\n  stocké, facturé ou affiché à un utilisateur pendant des mois. La seconde est donc plus\n  dangereuse, malgré son apparence inoffensive. Toute la valeur du mode strict, des tests,\n  du typage et des validations d'entrée est de transformer des erreurs de logique en erreurs\n  d'exécution, le plus tôt possible après leur cause.\n  :::\n\n- Le mode strict fait-il apparaître de nouvelles erreurs, ou révèle-t-il des erreurs\n  existantes ?\n\n  :::indice\n  Que devient `x = 5` sans déclaration, dans chacun des deux modes ?\n  :::\n\n  :::reponse\n  Il révèle des erreurs existantes. Sans mode strict, `x = 5` sur une variable non déclarée\n  crée une propriété globale : le programme continue, mais la variable attendue n'a pas été\n  écrite là où on croyait — c'est déjà un bug, simplement invisible. En mode strict, la même\n  ligne lève une `ReferenceError`. Le code ne devient pas plus fautif, la faute devient\n  visible au bon endroit. C'est la même idée qu'une validation d'entrée qui `throw` : on\n  déplace la détection au plus près de la cause. Les modules ES sont en mode strict par\n  défaut, ce qui donne ce comportement sans rien écrire.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-contexte-execution",
+      "title": "Contexte d'exécution et pile d'appels",
+      "slug": "contexte-execution-et-pile-appels",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "execution-context",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-portees"
+      ],
+      "skills": [
+        "execution-context"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/execution-context/contexte-execution-et-pile-appels/lesson.md",
+      "contentVersion": "71414875b6cb",
+      "body": "\n## Objectifs\n\n- Décrire ce qu'est un contexte d'exécution et ce qu'il contient.\n- Suivre l'empilement et le dépilement des contextes dans la pile d'appels.\n- Lire une trace d'erreur et reconnaître un débordement de pile.\n\n## Introduction\n\nJusqu'ici, le code a été lu comme un texte : des portées imbriquées, des noms visibles ou\nnon. Le moteur, lui, ne lit pas un texte : il **empile des contextes**. Chaque appel de\nfonction crée une petite structure qui sait quelles variables existent, quel est son `this`\net où revenir une fois terminée. Comprendre cette structure explique d'un coup la trace\nd'une erreur, l'ordre des `console.log`, et le fameux `Maximum call stack size exceeded`.\n\n## Concept\n\nUn **contexte d'exécution** est l'ensemble des informations dont le moteur a besoin pour\nexécuter un morceau de code. Il en existe trois sortes :\n\n| Contexte | Créé quand | Détruit quand |\n| --- | --- | --- |\n| Global | le script ou le module démarre | le programme se termine |\n| De fonction | une fonction est appelée | la fonction retourne |\n| `eval` | `eval()` est appelé | l'évaluation se termine |\n\nChaque contexte contient trois choses :\n\n1. Un **environnement lexical** : les noms déclarés ici, plus un lien vers le contexte\n   englobant lexicalement — c'est la chaîne de portée, vue au module 12.\n2. Un **environnement de variables** : la partie réservée aux déclarations `var`.\n3. Une valeur de **`this`**, déterminée par la manière dont la fonction a été appelée.\n\nCes contextes sont rangés dans une **pile d'appels** : le dernier créé est le premier\nretiré. Le moteur n'exécute jamais que le contexte au sommet. Un seul thread, une seule\npile : c'est ce qui fait que JavaScript ne fait qu'une chose à la fois.\n\n## Exemple\n\n```js\nfunction troisieme() {\n  console.log('sommet de la pile');\n  return 3;\n}\n\nfunction deuxieme() {\n  return troisieme() + 2;\n}\n\nfunction premiere() {\n  return deuxieme() + 1;\n}\n\nconsole.log(premiere()); // 'sommet de la pile' puis 6\n```\n\nAu moment où `troisieme` s'exécute, la pile contient, de bas en haut :\n\n```text\ntroisieme        <- en cours d'exécution\ndeuxieme\npremiere\nglobal\n```\n\nChaque `return` retire le contexte du sommet et rend la main à celui d'en dessous. Quand\n`premiere` retourne, la pile ne contient plus que le contexte global.\n\n```js\nfunction niveau(n) {\n  if (n === 0) throw new Error('arrivé au fond');\n  return niveau(n - 1);\n}\n\ntry {\n  niveau(3);\n} catch (erreur) {\n  console.log(erreur.message); // 'arrivé au fond'\n  // erreur.stack liste : niveau, niveau, niveau, niveau, puis l'appelant\n}\n```\n\n## Comment ça fonctionne\n\nAu démarrage, le moteur crée le contexte global et le place au bas de la pile. Dans un\nnavigateur, son `this` vaut `window` ; dans un module ES, il vaut `undefined`. Puis il\nexécute les instructions.\n\nChaque fois qu'un appel de fonction est rencontré, un nouveau contexte est **empilé** :\nses paramètres sont liés aux arguments reçus, ses déclarations enregistrées, son `this`\nfixé. L'exécution de l'appelant est suspendue exactement à cette ligne. Quand la fonction\natteint un `return` — ou sa dernière ligne, ce qui revient à `return undefined` —, son\ncontexte est **dépilé** : ses variables locales deviennent inaccessibles et l'appelant\nreprend là où il s'était arrêté. La valeur renvoyée est le seul lien qui subsiste — sauf si\nune fonction interne a été renvoyée, auquel cas son environnement survit : c'est la closure.\n\nLa propriété `stack` d'une erreur est une photographie de la pile au moment où l'erreur a\nété créée. Elle se lit de haut en bas : la ligne du haut est la fonction qui a échoué, les\nsuivantes sont ses appelants. C'est la première chose à regarder devant une erreur, avant\nmême le message.\n\nLa pile a une taille limitée, de l'ordre de quelques milliers de contextes selon le moteur.\nUne récursion sans condition d'arrêt l'épuise et lève `RangeError: Maximum call stack size\nexceeded`. Ce n'est pas une fuite de mémoire : c'est simplement trop d'appels imbriqués en\nmême temps.\n\n```js\nfunction sansFin() {\n  return sansFin();\n}\n// sansFin(); // RangeError: Maximum call stack size exceeded\n```\n\nEnfin, la pile explique pourquoi une fonction longue **bloque** la page : tant que son\ncontexte est au sommet, rien d'autre ne s'exécute, ni un clic, ni un rendu. Les tâches\nasynchrones ne s'exécutent que lorsque la pile est vide — c'est le sujet de la partie\nconsacrée à l'event loop.\n\n## Erreurs fréquentes\n\n**Confondre pile d'appels et chaîne de portée.** La pile dit **qui a appelé qui** et change\nà chaque exécution ; la chaîne de portée dit **où le code est écrit** et ne change jamais.\nUne fonction ne voit pas les variables de son appelant, même s'il est juste en dessous\nd'elle dans la pile.\n\n**Lire une trace d'erreur à l'envers.** La ligne du haut est la plus proche du problème ;\ncelles du bas ne sont que le chemin qui y a mené.\n\n**Oublier la condition d'arrêt d'une récursion.** Toute fonction récursive doit avoir un cas\nde base atteint avec certitude, sinon la pile déborde.\n\n**Croire qu'une fonction asynchrone s'exécute « en parallèle ».** Elle attend que la pile\nsoit vide. Une boucle de calcul de dix secondes gèle tout le reste.\n\n**Compter sur les variables locales après le retour.** Le contexte est dépilé : ce qui n'a\npas été renvoyé, ou capturé par une closure, disparaît.\n\n## À retenir\n\n- Un contexte d'exécution contient un environnement lexical, un environnement de variables\n  et un `this`.\n- Chaque appel empile un contexte ; chaque `return` le dépile.\n- Le moteur n'exécute que le contexte au sommet : un seul thread, une seule pile.\n- La propriété `stack` d'une erreur se lit de haut en bas.\n- Une récursion sans cas de base lève `RangeError: Maximum call stack size exceeded`.\n\n## Exercices\n\n1. Donne l'ordre exact des affichages de ce code, et décris la pile au moment où\n   `console.log('c')` s'exécute.\n\n   ```js\n   function c() {\n     console.log('c');\n   }\n   function b() {\n     console.log('b avant');\n     c();\n     console.log('b après');\n   }\n   function a() {\n     console.log('a avant');\n     b();\n     console.log('a après');\n   }\n   a();\n   ```\n\n   :::indice\n   Un appel suspend l'appelant à la ligne exacte où il se trouve.\n   :::\n\n   :::solution\n   L'ordre est : `a avant`, `b avant`, `c`, `b après`, `a après`.\n\n   Au moment de `console.log('c')`, la pile contient, de bas en haut : global, `a`, `b`,\n   `c`. Chaque appelant est suspendu sur sa ligne d'appel et ne reprend qu'une fois le\n   contexte supérieur dépilé.\n   :::\n\n2. Cette fonction déborde la pile. Corrige-la pour qu'elle calcule la somme des entiers de\n   `n` à 1.\n\n   ```js\n   function somme(n) {\n     return n + somme(n - 1);\n   }\n   ```\n\n   :::indice\n   Il manque le cas où la récursion doit s'arrêter.\n   :::\n\n   :::indice\n   Que doit renvoyer `somme(0)` pour que l'addition reste juste ?\n   :::\n\n   :::solution\n   ```js\n   function somme(n) {\n     if (n <= 0) return 0;\n     return n + somme(n - 1);\n   }\n\n   console.log(somme(4)); // 10\n   ```\n\n   Sans le cas de base, `somme` s'appelle avec `-1`, `-2`, et ainsi de suite : chaque appel\n   empile un contexte jusqu'à `RangeError`. Pour de très grands `n`, une boucle évite le\n   problème entièrement, puisqu'elle n'empile rien.\n   :::\n\n3. Écris une fonction `profondeurMax()` qui mesure combien d'appels imbriqués la pile\n   supporte dans ton environnement, sans faire planter le programme.\n\n   :::indice\n   Une récursion qui compte, et un `try` / `catch` autour du premier appel.\n   :::\n\n   :::indice\n   L'erreur attendue est une `RangeError` : attrape-la au niveau de l'appel initial.\n   :::\n\n   :::solution\n   ```js\n   function profondeurMax() {\n     let profondeur = 0;\n\n     function descendre() {\n       profondeur += 1;\n       descendre();\n     }\n\n     try {\n       descendre();\n     } catch (erreur) {\n       // RangeError : la pile est pleine\n     }\n\n     return profondeur;\n   }\n\n   console.log(profondeurMax()); // par exemple 11034 — dépend du moteur\n   ```\n\n   Le nombre varie d'un moteur à l'autre et d'une exécution à l'autre : il dépend de la\n   taille de la pile et de la place que prend chaque contexte. C'est pourquoi aucun code de\n   production ne doit s'appuyer sur une profondeur précise.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la pile d'appels, et pourquoi n'y en a-t-il qu'une ?\n\n  :::indice\n  Combien de choses JavaScript peut-il exécuter à un instant donné ?\n  :::\n\n  :::reponse\n  C'est la structure qui empile les contextes d'exécution : chaque appel en ajoute un au\n  sommet, chaque retour le retire. Le moteur n'exécute que le contexte du sommet. Il n'y en a\n  qu'une parce que JavaScript s'exécute sur un seul thread : à un instant donné, une seule\n  fonction est en cours. C'est ce qui rend le modèle simple à raisonner — pas de verrou, pas\n  de condition de course sur les variables — et ce qui impose que tout travail long soit\n  découpé ou déporté, faute de quoi il bloque l'interface.\n  :::\n\n- Quelle différence entre la pile d'appels et la chaîne de portée ?\n\n  :::indice\n  L'une dépend de l'exécution, l'autre de l'écriture.\n  :::\n\n  :::reponse\n  La pile décrit l'**exécution** : qui a appelé qui, et dans quel ordre les contextes seront\n  dépilés. Elle change à chaque exécution du programme. La chaîne de portée décrit\n  l'**écriture** : quels environnements une fonction peut consulter pour résoudre un nom,\n  déterminé une fois pour toutes par l'endroit où elle est définie. Une fonction peut donc être\n  au sommet de la pile juste au-dessus de son appelant sans voir aucune de ses variables\n  locales.\n  :::\n\n- Que signifie `Maximum call stack size exceeded`, et comment le corriger ?\n\n  :::indice\n  Quelle ressource est épuisée, et par quoi ?\n  :::\n\n  :::reponse\n  La pile a atteint sa taille limite : trop de contextes sont empilés simultanément. Dans la\n  quasi-totalité des cas, la cause est une récursion sans cas de base, ou dont le cas de base\n  n'est jamais atteint — un décrément qui saute la valeur d'arrêt, par exemple. Plus rarement,\n  c'est une récursion correcte mais trop profonde pour le volume de données. On corrige en\n  ajoutant ou en réparant le cas de base, puis, si la profondeur reste un problème, en\n  réécrivant l'algorithme sous forme de boucle avec une pile explicite, ce qui n'empile plus\n  de contextes.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -3375,6 +3539,68 @@
       "contentVersion": "fab4e94c54f3"
     },
     {
+      "id": "javascript-classes-bases-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-classes-bases-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que fait `new` avec une classe ?\n",
+          "options": [
+            "Il crée l'objet, le lie à this, exécute le constructeur et renvoie l'objet",
+            "Il appelle simplement le constructeur comme une fonction",
+            "Il copie la classe dans une nouvelle variable",
+            "Il crée un objet vide sans appeler le constructeur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`new` crée l'instance, la relie au prototype de la classe, exécute le constructeur avec `this` lié à l'objet, puis renvoie cet objet.\n",
+          "skills": [
+            "classes-basics"
+          ]
+        },
+        {
+          "id": "js-classes-bases-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Quel type d'erreur lève l'appel d'une classe sans `new` ? (donne le nom du type d'erreur)\n",
+          "answer": "TypeError",
+          "explanation": "Une classe ne peut pas être appelée comme une fonction ordinaire : `Personne('Ada')` lève `TypeError: Class constructor cannot be invoked without 'new'`.\n",
+          "skills": [
+            "classes-basics"
+          ]
+        },
+        {
+          "id": "js-classes-bases-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Chaque instance d'une classe possède sa propre copie des méthodes.\n",
+          "answer": false,
+          "explanation": "Les méthodes vivent sur le prototype et sont partagées par toutes les instances. Seules les propriétés définies dans le constructeur sont propres à chaque objet.\n",
+          "skills": [
+            "classes-basics"
+          ]
+        },
+        {
+          "id": "js-classes-bases-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une déclaration de classe peut être utilisée avant la ligne où elle est écrite.\n",
+          "answer": false,
+          "explanation": "Comme `let` et `const`, une classe est enregistrée sans valeur : elle reste en zone morte temporelle jusqu'à sa ligne, contrairement à une déclaration de fonction.\n",
+          "skills": [
+            "classes-basics"
+          ]
+        }
+      ],
+      "chapterId": "javascript-classes-bases",
+      "technology": "javascript",
+      "contentPath": "javascript/classes/classes-bases/quiz.yaml",
+      "contentVersion": "8dd90e7e24e5"
+    },
+    {
       "id": "javascript-closures-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -3937,6 +4163,138 @@
       "technology": "javascript",
       "contentPath": "javascript/conditions/truthy-et-falsy/quiz.yaml",
       "contentVersion": "7fcf37535747"
+    },
+    {
+      "id": "javascript-familles-erreurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-familles-erreurs-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle famille d'erreurs empêche tout le fichier de s'exécuter ?\n",
+          "options": [
+            "Les erreurs de syntaxe",
+            "Les erreurs d'exécution",
+            "Les erreurs de logique",
+            "Les erreurs de réseau"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une erreur de syntaxe est détectée à l'analyse, avant la première instruction : rien ne s'exécute, et le message pointe souvent plus bas que la vraie faute.\n",
+          "skills": [
+            "error-types"
+          ]
+        },
+        {
+          "id": "js-familles-erreurs-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Le moteur JavaScript détecte les erreurs de logique.\n",
+          "answer": false,
+          "explanation": "Un programme qui calcule faux est syntaxiquement valide et s'exécute sans incident : seuls les tests, les assertions et l'instrumentation révèlent ces erreurs.\n",
+          "skills": [
+            "error-types"
+          ]
+        },
+        {
+          "id": "js-familles-erreurs-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Qu'apporte le mode strict face aux erreurs ?\n",
+          "options": [
+            "Il transforme certaines erreurs silencieuses en erreurs d'exécution",
+            "Il détecte les erreurs de logique",
+            "Il supprime les erreurs de syntaxe",
+            "Il capture automatiquement les exceptions"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Affectation à une variable non déclarée, écriture sur un objet gelé, doublon de paramètre : autant de cas qui échouaient en silence et qui lèvent désormais.\n",
+          "skills": [
+            "error-types"
+          ]
+        },
+        {
+          "id": "js-familles-erreurs-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une erreur d'exécution laisse une pile d'appels exploitable.\n",
+          "answer": true,
+          "explanation": "La propriété `stack` de l'erreur donne le chemin des appels jusqu'à la ligne fautive, ce qui en fait le point de départ du diagnostic.\n",
+          "skills": [
+            "error-types"
+          ]
+        }
+      ],
+      "chapterId": "javascript-familles-erreurs",
+      "technology": "javascript",
+      "contentPath": "javascript/erreurs/familles-d-erreurs/quiz.yaml",
+      "contentVersion": "76fd6055dafc"
+    },
+    {
+      "id": "javascript-contexte-execution-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-contexte-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que contient un contexte d'exécution ?\n",
+          "options": [
+            "Un environnement lexical, un environnement de variables et un this",
+            "Uniquement les variables locales de la fonction",
+            "La liste des fonctions appelées depuis le début du programme",
+            "Le code source de la fonction"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Chaque contexte porte ces trois éléments. L'environnement lexical le relie à la portée où la fonction a été écrite, ce qui construit la chaîne de portée.\n",
+          "skills": [
+            "execution-context"
+          ]
+        },
+        {
+          "id": "js-contexte-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Plusieurs contextes d'exécution peuvent s'exécuter en même temps en JavaScript.\n",
+          "answer": false,
+          "explanation": "Le langage n'a qu'un seul fil d'exécution et une seule pile : seul le contexte au sommet s'exécute. Les autres attendent qu'il soit dépilé.\n",
+          "skills": [
+            "execution-context"
+          ]
+        },
+        {
+          "id": "js-contexte-q3",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Quelle erreur lève une fonction récursive sans cas de base ? (donne le nom du type d'erreur)\n",
+          "answer": "RangeError",
+          "explanation": "Chaque appel empile un contexte sans jamais le dépiler : la pile déborde et le moteur lève `RangeError: Maximum call stack size exceeded`.\n",
+          "skills": [
+            "execution-context"
+          ]
+        },
+        {
+          "id": "js-contexte-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un `return` dépile le contexte d'exécution de la fonction.\n",
+          "answer": true,
+          "explanation": "Le contexte vit le temps de l'appel : il est empilé à l'appel et dépilé au retour, ce qui rend la main au contexte situé en dessous.\n",
+          "skills": [
+            "execution-context"
+          ]
+        }
+      ],
+      "chapterId": "javascript-contexte-execution",
+      "technology": "javascript",
+      "contentPath": "javascript/execution-context/contexte-execution-et-pile-appels/quiz.yaml",
+      "contentVersion": "8a18fa758b7c"
     },
     {
       "id": "javascript-fonctions-pures-quiz",

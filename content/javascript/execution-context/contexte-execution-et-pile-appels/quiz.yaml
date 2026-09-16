@@ -1,0 +1,56 @@
+id: javascript-contexte-execution-quiz
+kind: QUIZ
+questions:
+  - id: js-contexte-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que contient un contexte d'exécution ?
+    options:
+      - "Un environnement lexical, un environnement de variables et un this"
+      - "Uniquement les variables locales de la fonction"
+      - "La liste des fonctions appelées depuis le début du programme"
+      - "Le code source de la fonction"
+    answer: [0]
+    explanation: >
+      Chaque contexte porte ces trois éléments. L'environnement lexical le relie à la portée
+      où la fonction a été écrite, ce qui construit la chaîne de portée.
+    skills:
+      - execution-context
+
+  - id: js-contexte-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Plusieurs contextes d'exécution peuvent s'exécuter en même temps en JavaScript.
+    answer: false
+    explanation: >
+      Le langage n'a qu'un seul fil d'exécution et une seule pile : seul le contexte au
+      sommet s'exécute. Les autres attendent qu'il soit dépilé.
+    skills:
+      - execution-context
+
+  - id: js-contexte-q3
+    type: predict_output
+    difficulty: 3
+    question: >
+      Quelle erreur lève une fonction récursive sans cas de base ?
+      (donne le nom du type d'erreur)
+    answer: 'RangeError'
+    explanation: >
+      Chaque appel empile un contexte sans jamais le dépiler : la pile déborde et le moteur
+      lève `RangeError: Maximum call stack size exceeded`.
+    skills:
+      - execution-context
+
+  - id: js-contexte-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Un `return` dépile le contexte d'exécution de la fonction.
+    answer: true
+    explanation: >
+      Le contexte vit le temps de l'appel : il est empilé à l'appel et dépilé au retour, ce
+      qui rend la main au contexte situé en dessous.
+    skills:
+      - execution-context

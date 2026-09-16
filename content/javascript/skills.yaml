@@ -276,3 +276,21 @@ skills:
     name: Pièges des closures
     importance: 4
     requires: [closures]
+
+  # Partie 4 — JavaScript Runtime
+  - id: execution-context
+    name: Contexte d'exécution et pile d'appels
+    importance: 4
+    requires: [scope-chain]
+
+  # Partie 5 — Object-Oriented JavaScript
+  - id: classes-basics
+    name: Classes et constructeur
+    importance: 5
+    requires: [objects-basics, factory-functions]
+
+  # Partie 7 — Error Handling & Debugging
+  - id: error-types
+    name: Familles d'erreurs
+    importance: 4
+    requires: [strict-mode-errors]

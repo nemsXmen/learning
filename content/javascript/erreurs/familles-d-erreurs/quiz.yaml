@@ -1,0 +1,60 @@
+id: javascript-familles-erreurs-quiz
+kind: QUIZ
+questions:
+  - id: js-familles-erreurs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle famille d'erreurs empêche tout le fichier de s'exécuter ?
+    options:
+      - "Les erreurs de syntaxe"
+      - "Les erreurs d'exécution"
+      - "Les erreurs de logique"
+      - "Les erreurs de réseau"
+    answer: [0]
+    explanation: >
+      Une erreur de syntaxe est détectée à l'analyse, avant la première instruction : rien ne
+      s'exécute, et le message pointe souvent plus bas que la vraie faute.
+    skills:
+      - error-types
+
+  - id: js-familles-erreurs-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Le moteur JavaScript détecte les erreurs de logique.
+    answer: false
+    explanation: >
+      Un programme qui calcule faux est syntaxiquement valide et s'exécute sans incident :
+      seuls les tests, les assertions et l'instrumentation révèlent ces erreurs.
+    skills:
+      - error-types
+
+  - id: js-familles-erreurs-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Qu'apporte le mode strict face aux erreurs ?
+    options:
+      - "Il transforme certaines erreurs silencieuses en erreurs d'exécution"
+      - "Il détecte les erreurs de logique"
+      - "Il supprime les erreurs de syntaxe"
+      - "Il capture automatiquement les exceptions"
+    answer: [0]
+    explanation: >
+      Affectation à une variable non déclarée, écriture sur un objet gelé, doublon de
+      paramètre : autant de cas qui échouaient en silence et qui lèvent désormais.
+    skills:
+      - error-types
+
+  - id: js-familles-erreurs-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Une erreur d'exécution laisse une pile d'appels exploitable.
+    answer: true
+    explanation: >
+      La propriété `stack` de l'erreur donne le chemin des appels jusqu'à la ligne fautive,
+      ce qui en fait le point de départ du diagnostic.
+    skills:
+      - error-types

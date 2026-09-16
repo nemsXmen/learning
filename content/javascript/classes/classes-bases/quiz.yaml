@@ -1,0 +1,56 @@
+id: javascript-classes-bases-quiz
+kind: QUIZ
+questions:
+  - id: js-classes-bases-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que fait `new` avec une classe ?
+    options:
+      - "Il crée l'objet, le lie à this, exécute le constructeur et renvoie l'objet"
+      - "Il appelle simplement le constructeur comme une fonction"
+      - "Il copie la classe dans une nouvelle variable"
+      - "Il crée un objet vide sans appeler le constructeur"
+    answer: [0]
+    explanation: >
+      `new` crée l'instance, la relie au prototype de la classe, exécute le constructeur avec
+      `this` lié à l'objet, puis renvoie cet objet.
+    skills:
+      - classes-basics
+
+  - id: js-classes-bases-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Quel type d'erreur lève l'appel d'une classe sans `new` ?
+      (donne le nom du type d'erreur)
+    answer: 'TypeError'
+    explanation: >
+      Une classe ne peut pas être appelée comme une fonction ordinaire : `Personne('Ada')`
+      lève `TypeError: Class constructor cannot be invoked without 'new'`.
+    skills:
+      - classes-basics
+
+  - id: js-classes-bases-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Chaque instance d'une classe possède sa propre copie des méthodes.
+    answer: false
+    explanation: >
+      Les méthodes vivent sur le prototype et sont partagées par toutes les instances. Seules
+      les propriétés définies dans le constructeur sont propres à chaque objet.
+    skills:
+      - classes-basics
+
+  - id: js-classes-bases-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Une déclaration de classe peut être utilisée avant la ligne où elle est écrite.
+    answer: false
+    explanation: >
+      Comme `let` et `const`, une classe est enregistrée sans valeur : elle reste en zone
+      morte temporelle jusqu'à sa ligne, contrairement à une déclaration de fonction.
+    skills:
+      - classes-basics
