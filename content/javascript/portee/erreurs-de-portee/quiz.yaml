@@ -1,0 +1,61 @@
+id: javascript-erreurs-portee-quiz
+kind: QUIZ
+questions:
+  - id: js-erreurs-portee-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que signifie `Cannot access 'x' before initialization` ?
+    options:
+      - "x est déclarée plus bas dans la portée et lue trop tôt"
+      - "x n'existe dans aucune portée"
+      - "x est une constante réaffectée"
+      - "x contient undefined"
+    answer: [0]
+    explanation: >
+      Le nom existe bien dans la portée, mais sa ligne de déclaration n'a pas encore été
+      exécutée : c'est la zone morte d'un `let`, d'un `const` ou d'une classe.
+    skills:
+      - scope-errors
+
+  - id: js-erreurs-portee-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      `const utilisateur = {}` interdit de modifier les propriétés de l'objet.
+    answer: false
+    explanation: >
+      `const` fige la liaison, pas le contenu : `utilisateur.nom = 'Ada'` est autorisé, seul
+      `utilisateur = {}` lève `Assignment to constant variable`. Pour figer le contenu,
+      `Object.freeze`.
+    skills:
+      - scope-errors
+
+  - id: js-erreurs-portee-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      En mode strict, que produit `resultat = 10` sans déclaration préalable ?
+    options:
+      - "Une ReferenceError"
+      - "Une variable globale"
+      - "Une variable locale à la fonction"
+      - "Une SyntaxError"
+    answer: [0]
+    explanation: >
+      Le mode strict — actif d'office dans les modules ES — refuse les affectations à des
+      variables non déclarées, au lieu de créer silencieusement une globale.
+    skills:
+      - scope-errors
+
+  - id: js-erreurs-portee-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      `typeof inexistant` lève une erreur si la variable n'a jamais été déclarée.
+    answer: false
+    explanation: >
+      C'est l'exception historique de `typeof` : il renvoie `'undefined'` pour un nom inconnu.
+      En revanche, il lève bien une erreur sur une variable en zone morte.
+    skills:
+      - scope-errors

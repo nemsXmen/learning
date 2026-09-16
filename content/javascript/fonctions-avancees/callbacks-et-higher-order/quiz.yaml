@@ -1,0 +1,57 @@
+id: javascript-callbacks-quiz
+kind: QUIZ
+questions:
+  - id: js-callbacks-q1
+    type: predict_output
+    difficulty: 4
+    question: >
+      Que vaut `['1', '7', '11'].map(parseInt)[1]` ?
+    answer: 'NaN'
+    explanation: >
+      `map` passe l'index comme second argument, et `parseInt` le prend pour une base :
+      `parseInt('7', 1)` est invalide et donne `NaN`. Écris `map((n) => parseInt(n, 10))`.
+    skills:
+      - callbacks
+
+  - id: js-callbacks-q2
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Comment exécuter `afficher` dans une seconde ?
+    options:
+      - "setTimeout(afficher, 1000)"
+      - "setTimeout(afficher(), 1000)"
+      - "setTimeout('afficher', 1000)"
+      - "setTimeout(afficher, '1s')"
+    answer: [0]
+    explanation: >
+      Il faut passer la fonction, pas son résultat : avec les parenthèses, `afficher` est
+      appelée tout de suite et c'est sa valeur de retour, souvent `undefined`, qui est
+      programmée.
+    skills:
+      - callbacks
+
+  - id: js-callbacks-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Un callback est toujours exécuté de façon asynchrone.
+    answer: false
+    explanation: >
+      Les callbacks de `map`, `filter` ou `sort` sont appelés immédiatement et dans l'ordre.
+      Seuls ceux confiés à `setTimeout`, au réseau ou aux événements sont différés.
+    skills:
+      - callbacks
+
+  - id: js-callbacks-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que renvoie `appliquer(3)` avec
+      `const appliquer = (n) => [(x) => x + 1, (x) => x * 2].reduce((v, f) => f(v), n);` ?
+    answer: '8'
+    explanation: >
+      Les fonctions sont appliquées dans l'ordre : `3 + 1` vaut 4, puis `4 * 2` vaut 8. C'est
+      le principe de la composition, détaillé au chapitre suivant.
+    skills:
+      - higher-order-functions

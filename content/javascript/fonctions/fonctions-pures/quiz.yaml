@@ -1,0 +1,62 @@
+id: javascript-fonctions-pures-quiz
+kind: QUIZ
+questions:
+  - id: js-pures-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Laquelle de ces fonctions est pure ?
+    options:
+      - "(a, b) => a + b"
+      - "(liste) => liste.push(1)"
+      - "() => Date.now()"
+      - "(x) => { compteur += x; return compteur; }"
+    answer: [0]
+    explanation: >
+      Seule la première renvoie toujours la même sortie pour les mêmes entrées sans rien
+      modifier. Les autres mutent un argument, lisent l'horloge ou modifient une variable
+      extérieure.
+    skills:
+      - pure-functions
+
+  - id: js-pures-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une fonction qui modifie une propriété de l'objet reçu en argument peut être pure.
+    answer: false
+    explanation: >
+      Modifier un argument est un effet observable par l'appelant : la fonction est impure.
+      La version pure renvoie un nouvel objet, par exemple avec `{ ...objet, champ: valeur }`.
+    skills:
+      - pure-functions
+
+  - id: js-pures-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment rendre testable une fonction qui utilise `Math.random()` en son cœur ?
+    options:
+      - "En passant la source aléatoire en paramètre"
+      - "En ajoutant un console.log avant l'appel"
+      - "En remplaçant Math.random par Date.now"
+      - "En enveloppant l'appel dans un try/catch"
+    answer: [0]
+    explanation: >
+      Une dépendance cachée devient un paramètre, éventuellement avec une valeur par défaut
+      pour la production. Le test fournit alors une valeur fixe et la fonction redevient
+      prévisible.
+    skills:
+      - pure-functions
+
+  - id: js-pures-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Un programme utile peut être entièrement composé de fonctions pures.
+    answer: false
+    explanation: >
+      Sans effet de bord, un programme ne pourrait ni afficher, ni enregistrer, ni répondre.
+      L'objectif est de garder un noyau pur et de repousser les effets aux bords du programme.
+    skills:
+      - pure-functions

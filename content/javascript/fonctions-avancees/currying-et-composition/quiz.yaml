@@ -1,0 +1,55 @@
+id: javascript-currying-quiz
+kind: QUIZ
+questions:
+  - id: js-currying-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `m(2)(3)` avec `const m = (a) => (b) => a * b;` ?
+    answer: '6'
+    explanation: >
+      Le premier appel renvoie une fonction qui retient `a`, le second lui fournit `b` :
+      le résultat est 6.
+    skills:
+      - currying-composition
+
+  - id: js-currying-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Avec `pipe(f, g)(x)`, dans quel ordre les fonctions sont-elles appliquées ?
+    options:
+      - "f d'abord, puis g sur son résultat"
+      - "g d'abord, puis f sur son résultat"
+      - "Les deux sur x, puis les résultats sont additionnés"
+      - "L'ordre dépend du nombre d'arguments"
+    answer: [0]
+    explanation: >
+      `pipe` suit l'ordre de lecture : `pipe(f, g)(x)` vaut `g(f(x))`. C'est `compose` qui
+      applique de droite à gauche.
+    skills:
+      - currying-composition
+
+  - id: js-currying-q3
+    type: predict_output
+    difficulty: 4
+    question: >
+      Que renvoie `pipe((n) => n + 1, (n) => n * 3)(2)` avec
+      `const pipe = (...fs) => (v) => fs.reduce((r, f) => f(r), v);` ?
+    answer: '9'
+    explanation: >
+      `2 + 1` vaut 3, puis `3 * 3` vaut 9. Avec `compose`, l'ordre inverse donnerait 7.
+    skills:
+      - currying-composition
+
+  - id: js-currying-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Une fonction curryfiée retient ses arguments grâce à une closure.
+    answer: true
+    explanation: >
+      La fonction renvoyée garde accès à l'environnement où les premiers arguments ont été
+      reçus : c'est exactement le mécanisme des closures, détaillé au module 13.
+    skills:
+      - currying-composition

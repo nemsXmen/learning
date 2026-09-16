@@ -211,3 +211,68 @@ skills:
     name: Closures
     importance: 5
     requires: [scope, functions]
+
+  - id: functions-parameters
+    name: Paramètres, arguments et valeurs par défaut
+    importance: 5
+    requires: [functions]
+
+  - id: pure-functions
+    name: Fonctions pures et effets de bord
+    importance: 4
+    requires: [functions-parameters]
+
+  - id: arrow-functions
+    name: Expressions de fonction et fonctions fléchées
+    importance: 5
+    requires: [functions]
+
+  - id: rest-spread-arguments
+    name: Rest et spread sur les arguments
+    importance: 4
+    requires: [functions-parameters]
+
+  - id: callbacks
+    name: Callbacks et fonctions comme valeurs
+    importance: 5
+    requires: [arrow-functions]
+
+  - id: higher-order-functions
+    name: Fonctions d'ordre supérieur
+    importance: 4
+    requires: [callbacks]
+
+  - id: currying-composition
+    name: Currying et composition
+    importance: 3
+    requires: [higher-order-functions]
+
+  - id: scope-chain
+    name: Chaîne de portée
+    importance: 5
+    requires: [scope]
+
+  - id: hoisting-tdz
+    name: Hoisting et zone morte temporelle
+    importance: 4
+    requires: [scope-chain]
+
+  - id: scope-errors
+    name: Diagnostiquer les erreurs de portée
+    importance: 3
+    requires: [hoisting-tdz]
+
+  - id: factory-functions
+    name: Factory functions et données privées
+    importance: 4
+    requires: [closures]
+
+  - id: memoization
+    name: Mémoïsation
+    importance: 3
+    requires: [factory-functions]
+
+  - id: closure-pitfalls
+    name: Pièges des closures
+    importance: 4
+    requires: [closures]

@@ -1,0 +1,62 @@
+id: javascript-memoization-quiz
+kind: QUIZ
+questions:
+  - id: js-memo-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Combien de fois la fonction d'origine est-elle appelée par
+      `const f = memoize(lent); f(2); f(2); f(3);` ?
+    answer: '2'
+    explanation: >
+      Le premier `f(2)` calcule et met en cache, le second lit le cache, et `f(3)` calcule une
+      nouvelle entrée : deux appels réels.
+    skills:
+      - memoization
+
+  - id: js-memo-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      On peut mémoïser sans risque une fonction qui lit l'heure courante.
+    answer: false
+    explanation: >
+      Le résultat ne dépend pas seulement des arguments : le cache servirait indéfiniment la
+      première valeur. La mémoïsation suppose une fonction pure.
+    skills:
+      - memoization
+
+  - id: js-memo-q3
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Pourquoi tester `cache.has(cle)` plutôt que `cache.get(cle) !== undefined` ?
+    options:
+      - "Pour ne pas recalculer un résultat qui vaut légitimement undefined"
+      - "Parce que get est plus lent que has"
+      - "Parce que get supprime l'entrée du cache"
+      - "Parce que has accepte des clés objets"
+    answer: [0]
+    explanation: >
+      Une fonction peut renvoyer `undefined` ou toute autre valeur falsy : seul `has`
+      distingue « absent du cache » de « présent, avec cette valeur ».
+    skills:
+      - memoization
+
+  - id: js-memo-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel cache convient le mieux quand la clé est un objet dont la durée de vie est gérée
+      ailleurs ?
+    options:
+      - "Une WeakMap"
+      - "Un objet littéral"
+      - "Un tableau de paires"
+      - "Une Map"
+    answer: [0]
+    explanation: >
+      Une `WeakMap` accepte les objets comme clés sans les retenir en mémoire : l'entrée
+      disparaît quand l'objet n'est plus utilisé ailleurs, ce qui évite la fuite.
+    skills:
+      - memoization

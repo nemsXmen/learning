@@ -17,6 +17,18 @@ function fakeRedis(seed: Record<string, string> = {}) {
   };
 }
 
+/** Module order, then chapter order: the reading order the reader walks. */
+function orderedChapters(graph: ReturnType<ContentService['getGraph']>, technology = 'javascript') {
+  return graph.modules
+    .filter((module) => module.technology === technology)
+    .sort((a, b) => a.order - b.order)
+    .flatMap((module) =>
+      graph.chapters
+        .filter((chapter) => chapter.technology === technology && chapter.module === module.slug)
+        .sort((a, b) => a.order - b.order),
+    );
+}
+
 async function bootService(redis = fakeRedis()) {
   const service = new ContentService(redis as never);
   await service.onModuleInit();
@@ -44,8 +56,9 @@ describe('ContentService', () => {
       level: 'intermediate',
       difficulty: 3,
       xp: 100,
-      prerequisites: ['javascript-functions'],
     });
+    // A chapter on closures builds on functions; it may well require more.
+    expect(chapter.prerequisites).toContain('javascript-functions');
     expect(chapter.contentVersion).toMatch(/^[0-9a-f]{12}$/);
     expect(chapter.html).toContain('<h2 id="concept">');
     expect(chapter.outline.map((entry) => entry.id)).toContain('erreurs-frequentes');
@@ -80,13 +93,23 @@ describe('ContentService', () => {
 
   it('orders neighbours by module then chapter', async () => {
     const { service } = await bootService();
+    const graph = service.getGraph();
 
     const first = await service.getChapter('javascript', 'introduction-javascript');
     expect(first.neighbours.previous).toBeNull();
     expect(first.neighbours.next).toBe('javascript-premier-programme');
 
-    const last = await service.getChapter('javascript', 'closures');
-    expect(last.neighbours.previous).toBe('javascript-functions');
+    // Consistency rather than a fixed pair of ids: whoever is announced as the
+    // previous chapter must announce this one as its next.
+    const middle = await service.getChapter('javascript', 'closures');
+    const previousId = middle.neighbours.previous!;
+    expect(previousId).not.toBeNull();
+    const previous = graph.chapters.find((chapter) => chapter.id === previousId)!;
+    const backwards = await service.getChapter('javascript', previous.slug);
+    expect(backwards.neighbours.next).toBe(middle.id);
+
+    const ordered = orderedChapters(graph);
+    const last = await service.getChapter('javascript', ordered.at(-1)!.slug);
     expect(last.neighbours.next).toBeNull();
   });
 

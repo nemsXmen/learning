@@ -1,0 +1,55 @@
+id: javascript-fonctions-flechees-quiz
+kind: QUIZ
+questions:
+  - id: js-flechees-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `f()` avec `const f = () => { nom: 'Ada' };` ?
+    answer: 'undefined'
+    explanation: >
+      L'accolade ouvre un corps de fonction, pas un objet : le corps ne contient aucun
+      `return`. Pour renvoyer l'objet, il faut écrire `() => ({ nom: 'Ada' })`.
+    skills:
+      - arrow-functions
+
+  - id: js-flechees-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `typeof f()` avec `const f = () => ({ a: 1 });` ?
+    answer: 'object'
+    explanation: >
+      Les parenthèses forcent la lecture en objet littéral : la fonction renvoie bien
+      `{ a: 1 }`, dont le `typeof` vaut `'object'`.
+    skills:
+      - arrow-functions
+
+  - id: js-flechees-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Une fonction fléchée peut être appelée avec `new`.
+    answer: false
+    explanation: >
+      Une fléchée n'a pas de `prototype` et ne peut pas servir de constructeur : `new f()`
+      lève une `TypeError`. Il faut une fonction classique ou une classe.
+    skills:
+      - arrow-functions
+
+  - id: js-flechees-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle forme peut être appelée avant la ligne où elle est écrite ?
+    options:
+      - "function double(n) { return n * 2; }"
+      - "const double = (n) => n * 2;"
+      - "const double = function (n) { return n * 2; };"
+      - "let double = (n) => n * 2;"
+    answer: [0]
+    explanation: >
+      Seule la déclaration de fonction est hoistée entièrement. Les expressions suivent la
+      zone morte temporelle de `const` et `let`, et lèvent une `ReferenceError`.
+    skills:
+      - arrow-functions

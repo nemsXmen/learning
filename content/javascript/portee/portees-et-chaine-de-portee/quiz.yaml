@@ -1,0 +1,56 @@
+id: javascript-portees-quiz
+kind: QUIZ
+questions:
+  - id: js-portees-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `appeler()` avec `const m = 'A'; const lire = () => m;
+      function appeler() { const m = 'B'; return lire(); }` ?
+    answer: 'A'
+    explanation: >
+      La portée est lexicale : `lire` résout `m` là où elle est écrite, pas là où elle est
+      appelée. La variable locale de `appeler` n'a aucun effet sur elle.
+    skills:
+      - scope-chain
+
+  - id: js-portees-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une variable déclarée avec `var` dans un bloc `if` est visible après ce bloc.
+    answer: true
+    explanation: >
+      `var` est lié à la fonction, pas au bloc : la variable survit au `if` et vaut `undefined`
+      si la branche n'a pas été exécutée. `let` et `const` restent dans le bloc.
+    skills:
+      - scope-chain
+
+  - id: js-portees-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que fait le moteur quand un nom est introuvable dans la portée courante ?
+    options:
+      - "Il remonte la chaîne de portée, puis lève une ReferenceError"
+      - "Il renvoie undefined"
+      - "Il crée la variable automatiquement"
+      - "Il regarde dans la fonction appelante"
+    answer: [0]
+    explanation: >
+      La recherche remonte les portées englobantes du lieu d'écriture. Si le nom n'existe
+      nulle part, c'est `ReferenceError: x is not defined`.
+    skills:
+      - scope-chain
+
+  - id: js-portees-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Les variables déclarées au niveau supérieur d'un module ES sont globales.
+    answer: false
+    explanation: >
+      Un module a sa propre portée : ses variables ne sont visibles que dans le module, sauf
+      s'il les exporte. C'est ce qui évite les collisions entre fichiers.
+    skills:
+      - scope-chain

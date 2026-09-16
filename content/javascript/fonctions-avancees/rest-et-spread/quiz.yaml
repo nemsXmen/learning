@@ -1,0 +1,55 @@
+id: javascript-rest-spread-quiz
+kind: QUIZ
+questions:
+  - id: js-rest-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que renvoie `f(1, 2, 3)` avec `function f(...n) { return n.length; }` ?
+    answer: '3'
+    explanation: >
+      Le paramètre de reste rassemble tous les arguments dans un vrai tableau : il en contient
+      trois.
+    skills:
+      - rest-spread-arguments
+
+  - id: js-rest-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `Math.max([1, 5, 3])` ?
+    answer: 'NaN'
+    explanation: >
+      `Math.max` attend des nombres séparés : un tableau est converti en chaîne puis en `NaN`.
+      Il faut écrire `Math.max(...[1, 5, 3])`, qui vaut 5.
+    skills:
+      - rest-spread-arguments
+
+  - id: js-rest-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Un paramètre de reste peut être placé n'importe où dans la liste des paramètres.
+    answer: false
+    explanation: >
+      Il doit être unique et en dernière position : `function f(...a, b)` est une erreur de
+      syntaxe, puisque rien ne pourrait rester après lui.
+    skills:
+      - rest-spread-arguments
+
+  - id: js-rest-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi préférer `...args` à l'objet `arguments` ?
+    options:
+      - "C'est un vrai tableau et il apparaît dans la signature"
+      - "Il est plus rapide à l'exécution"
+      - "Il accepte des arguments nommés"
+      - "Il fonctionne uniquement en mode strict"
+    answer: [0]
+    explanation: >
+      `...args` dispose des méthodes de tableau, rend la fonction lisible depuis sa signature,
+      et fonctionne dans les fonctions fléchées, où `arguments` n'existe pas.
+    skills:
+      - rest-spread-arguments

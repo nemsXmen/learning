@@ -1,0 +1,60 @@
+id: javascript-hoisting-quiz
+kind: QUIZ
+questions:
+  - id: js-hoisting-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Qu'affiche `console.log(x); var x = 1;` ?
+    answer: 'undefined'
+    explanation: >
+      `var x` est enregistrée avec la valeur `undefined` dès la phase de création ; seule
+      l'affectation attend sa ligne.
+    skills:
+      - hoisting-tdz
+
+  - id: js-hoisting-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que produit `console.log(y); let y = 1;` ?
+    options:
+      - "Une ReferenceError : accès avant initialisation"
+      - "undefined"
+      - "1"
+      - "null"
+    answer: [0]
+    explanation: >
+      `let` est enregistrée sans valeur : elle reste en zone morte temporelle jusqu'à sa
+      ligne, et toute lecture avant lève une `ReferenceError`.
+    skills:
+      - hoisting-tdz
+
+  - id: js-hoisting-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `typeof` protège de toute erreur, y compris sur une variable en zone morte.
+    answer: false
+    explanation: >
+      `typeof` ne renvoie `'undefined'` sans erreur que pour un nom jamais déclaré. Sur une
+      variable en zone morte, il lève une `ReferenceError` comme une lecture normale.
+    skills:
+      - hoisting-tdz
+
+  - id: js-hoisting-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Qu'est-ce qui est hoisté avec son corps, donc appelable avant sa ligne ?
+    options:
+      - "Une déclaration de fonction"
+      - "Une fonction fléchée dans une const"
+      - "Une expression de fonction dans une let"
+      - "Une classe"
+    answer: [0]
+    explanation: >
+      Seule la déclaration `function nom() {}` est enregistrée avec son corps. Les expressions
+      suivent leur variable, et les classes sont en zone morte.
+    skills:
+      - hoisting-tdz

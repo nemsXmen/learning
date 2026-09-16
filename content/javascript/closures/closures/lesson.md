@@ -11,6 +11,7 @@ difficulty: 3
 xp: 100
 prerequisites:
   - javascript-functions
+  - javascript-portees
 skills:
   - closures
   - lexical-environment

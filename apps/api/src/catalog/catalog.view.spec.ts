@@ -80,8 +80,20 @@ describe('resolveLock', () => {
 
 describe('prerequisiteSkillsOf', () => {
   it('resolves a chapter prerequisite into the skills it teaches', () => {
-    // closures requires the chapter javascript-functions, which teaches `functions`.
-    expect(prerequisiteSkillsOf(graph, 'javascript-closures')).toEqual(['functions']);
+    // Derived from the graph on purpose: a hard-coded skill list only records
+    // what the programme happened to contain the day the test was written, and
+    // breaks every time a chapter gains a prerequisite.
+    const closures = graph.chapters.find((chapter) => chapter.id === 'javascript-closures')!;
+    const taught = [
+      ...new Set(
+        closures.prerequisites.flatMap(
+          (id) => graph.chapters.find((chapter) => chapter.id === id)?.skills ?? [],
+        ),
+      ),
+    ];
+
+    expect(taught.length).toBeGreaterThan(0);
+    expect(prerequisiteSkillsOf(graph, 'javascript-closures')).toEqual(taught);
   });
 
   it('returns nothing for a chapter without prerequisites or for an unknown chapter', () => {
@@ -213,12 +225,18 @@ describe('buildTechnologyDetail', () => {
     const closuresLocked = locked.modules
       .flatMap((m) => m.chapters)
       .find((c) => c.slug === 'closures')!;
+    const required = prerequisiteSkillsOf(graph, 'javascript-closures');
     expect(closuresLocked.locked).toBe(true);
-    expect(closuresLocked.lockReason?.skills[0]?.id).toBe('functions');
+    expect(closuresLocked.lockReason?.skills.map((skill) => skill.id)).toEqual(required);
     // A locked chapter still exposes its title: only the content is withheld.
     expect(closuresLocked.title).toBe('Comprendre les closures');
 
-    const unlocked = buildTechnologyDetail(graph, 'javascript', [], mastery({ functions: 90 }))!;
+    const unlocked = buildTechnologyDetail(
+      graph,
+      'javascript',
+      [],
+      mastery(Object.fromEntries(required.map((skillId) => [skillId, 90]))),
+    )!;
     expect(
       unlocked.modules.flatMap((m) => m.chapters).find((c) => c.slug === 'closures')!.locked,
     ).toBe(false);

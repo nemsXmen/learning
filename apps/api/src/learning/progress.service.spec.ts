@@ -2,6 +2,7 @@ import { resolve } from 'node:path';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { loadContentGraph, type ContentGraph } from '@app/content';
 import { DomainEvents, type ChapterCompleted } from '../events/domain-events';
+import { prerequisiteSkillsOf } from '../catalog/catalog.view';
 import { ChapterAccessService } from './chapter-access.service';
 import {
   MAX_DAILY_SECONDS,
@@ -178,14 +179,17 @@ describe('ProgressService.report', () => {
 
   it('403s on a locked chapter, with the reason', async () => {
     const { service } = build();
-    // `closures` needs the `functions` skill, and nothing is mastered here.
+    // `closures` has prerequisites, and nothing is mastered here.
     const error = await service.report(USER, 'javascript-closures', {}, NOW).catch((e) => e);
     expect(error).toBeInstanceOf(ForbiddenException);
     expect(error.getResponse()).toMatchObject({ code: 'CHAPTER_LOCKED' });
   });
 
   it('allows a chapter once its prerequisite skill is mastered', async () => {
-    const { service } = build({ mastery: { functions: 90 } });
+    const required = prerequisiteSkillsOf(graph, 'javascript-closures');
+    const { service } = build({
+      mastery: Object.fromEntries(required.map((skillId) => [skillId, 90])),
+    });
     await expect(
       service.report(USER, 'javascript-closures', { progressPercent: 10 }, NOW),
     ).resolves.toMatchObject({ status: 'IN_PROGRESS' });

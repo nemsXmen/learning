@@ -1,0 +1,56 @@
+id: javascript-factory-functions-quiz
+kind: QUIZ
+questions:
+  - id: js-factory-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `c.valeur` avec `function creer() { let valeur = 0;
+      return { lire: () => valeur }; } const c = creer();` ?
+    answer: 'undefined'
+    explanation: >
+      `valeur` vit dans la portée de la fabrique et n'est exposée par aucune propriété : elle
+      n'est accessible que par les fonctions renvoyées.
+    skills:
+      - factory-functions
+
+  - id: js-factory-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Deux objets créés par la même factory partagent le même état interne.
+    answer: false
+    explanation: >
+      Chaque appel crée une nouvelle portée, donc un état indépendant. Pour un état partagé,
+      il faut appeler la fabrique une seule fois et réutiliser l'objet renvoyé.
+    skills:
+      - factory-functions
+
+  - id: js-factory-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle écriture protège réellement un état interne ?
+    options:
+      - "Une variable de la fabrique, exposée seulement par des méthodes"
+      - "Une propriété nommée _valeur sur l'objet renvoyé"
+      - "Une propriété non énumérable"
+      - "Un commentaire indiquant que la propriété est privée"
+    answer: [0]
+    explanation: >
+      Seule la closure rend l'accès impossible. Le tiret bas est une convention, et une
+      propriété non énumérable reste lisible dès qu'on connaît son nom.
+    skills:
+      - factory-functions
+
+  - id: js-factory-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Avec une factory, chaque objet créé possède ses propres copies des méthodes.
+    answer: true
+    explanation: >
+      Les fonctions sont recréées à chaque appel, attachées à leur propre environnement.
+      C'est le coût du motif ; une classe partage ses méthodes via le prototype.
+    skills:
+      - factory-functions

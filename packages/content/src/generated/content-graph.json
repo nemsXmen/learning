@@ -195,6 +195,15 @@
       "contentVersion": "3eb2d1079eef"
     },
     {
+      "slug": "fonctions-avancees",
+      "title": "Fonctions avancées",
+      "order": 11,
+      "part": "functions",
+      "technology": "javascript",
+      "contentPath": "javascript/fonctions-avancees/module.yaml",
+      "contentVersion": "458579a777d7"
+    },
+    {
       "slug": "introduction",
       "title": "Introduction à JavaScript",
       "order": 1,
@@ -229,6 +238,15 @@
       "technology": "javascript",
       "contentPath": "javascript/operateurs/module.yaml",
       "contentVersion": "b0bbc55b3cc5"
+    },
+    {
+      "slug": "portee",
+      "title": "Portée",
+      "order": 12,
+      "part": "functions",
+      "technology": "javascript",
+      "contentPath": "javascript/portee/module.yaml",
+      "contentVersion": "8f62552d7a92"
     },
     {
       "slug": "tableaux",
@@ -645,6 +663,123 @@
       "technology": "javascript"
     },
     {
+      "id": "functions-parameters",
+      "name": "Paramètres, arguments et valeurs par défaut",
+      "importance": 5,
+      "requires": [
+        "functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "pure-functions",
+      "name": "Fonctions pures et effets de bord",
+      "importance": 4,
+      "requires": [
+        "functions-parameters"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "arrow-functions",
+      "name": "Expressions de fonction et fonctions fléchées",
+      "importance": 5,
+      "requires": [
+        "functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "rest-spread-arguments",
+      "name": "Rest et spread sur les arguments",
+      "importance": 4,
+      "requires": [
+        "functions-parameters"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "callbacks",
+      "name": "Callbacks et fonctions comme valeurs",
+      "importance": 5,
+      "requires": [
+        "arrow-functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "higher-order-functions",
+      "name": "Fonctions d'ordre supérieur",
+      "importance": 4,
+      "requires": [
+        "callbacks"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "currying-composition",
+      "name": "Currying et composition",
+      "importance": 3,
+      "requires": [
+        "higher-order-functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "scope-chain",
+      "name": "Chaîne de portée",
+      "importance": 5,
+      "requires": [
+        "scope"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "hoisting-tdz",
+      "name": "Hoisting et zone morte temporelle",
+      "importance": 4,
+      "requires": [
+        "scope-chain"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "scope-errors",
+      "name": "Diagnostiquer les erreurs de portée",
+      "importance": 3,
+      "requires": [
+        "hoisting-tdz"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "factory-functions",
+      "name": "Factory functions et données privées",
+      "importance": 4,
+      "requires": [
+        "closures"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "memoization",
+      "name": "Mémoïsation",
+      "importance": 3,
+      "requires": [
+        "factory-functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "closure-pitfalls",
+      "name": "Pièges des closures",
+      "importance": 4,
+      "requires": [
+        "closures"
+      ],
+      "technology": "javascript"
+    },
+    {
       "id": "type-inference",
       "name": "Inférence de types",
       "importance": 4,
@@ -980,7 +1115,8 @@
       "difficulty": 3,
       "xp": 100,
       "prerequisites": [
-        "javascript-functions"
+        "javascript-functions",
+        "javascript-portees"
       ],
       "skills": [
         "closures",
@@ -992,8 +1128,116 @@
         "scope"
       ],
       "contentPath": "javascript/closures/closures/lesson.md",
-      "contentVersion": "93e8a9265fd1",
+      "contentVersion": "5d4fb08d5028",
       "body": "\n## Objectifs\n\n- Expliquer ce qu'est une closure sans réciter une définition.\n- Identifier une closure dans du code existant.\n- Utiliser une closure sans provoquer de fuite mémoire.\n\n## Introduction\n\nLes closures ont mauvaise réputation : on les présente comme un mécanisme avancé\nalors qu'elles sont une **conséquence** de la portée lexicale, pas une fonctionnalité\nqu'on active. Si tu as déjà écrit un callback qui lit une variable extérieure, tu as\nécrit une closure sans le savoir.\n\n## Concept\n\n> Une closure se forme quand une fonction conserve l'accès à l'environnement lexical\n> dans lequel elle a été créée, même après que cet environnement a fini de s'exécuter.\n\nLe point qui change tout : une closure ne capture pas des **valeurs**, elle garde une\nréférence vers des **variables**. Si la variable change plus tard, la closure voit la\nnouvelle valeur. C'est cette nuance qui explique la quasi-totalité des surprises.\n\n## Exemple\n\n```js\nfunction creerCompteur() {\n  let total = 0; // vit dans l'environnement de creerCompteur\n\n  return () => {\n    total += 1;\n    return total;\n  };\n}\n\nconst a = creerCompteur();\nconst b = creerCompteur();\n\na(); // 1\na(); // 2\nb(); // 1  ← environnement distinct\n```\n\n`creerCompteur` a rendu la main depuis longtemps, et pourtant `total` existe encore :\nla fonction renvoyée en garde une référence. Chaque appel à `creerCompteur` crée un\nenvironnement neuf, d'où deux compteurs indépendants.\n\n## Comment ça fonctionne\n\nÀ chaque appel de fonction, le moteur crée un *environnement lexical* : une table des\nliaisons déclarées, plus un lien vers l'environnement parent. Cette chaîne est fixée à\nl'écriture du code, pas à l'appel — d'où le mot *lexical*.\n\n```text\nclosure interne\n      │ [[Environment]]\n      ▼\nenvironnement de creerCompteur   { total: 2 }\n      │\n      ▼\nenvironnement global\n```\n\nNormalement l'environnement d'un appel devient inaccessible dès le retour, et le\nramasse-miettes le libère. Mais si une fonction survivante pointe vers lui, il reste\njoignable, donc vivant. Une closure n'est rien d'autre que ça : une fonction plus la\nréférence vers son environnement de naissance.\n\nC'est aussi pourquoi les closures servent à créer de l'état privé : `total` n'est\naccessible par aucun autre chemin que la fonction renvoyée.\n\n## Erreurs fréquentes\n\n**Croire que la closure fige la valeur.** Elle référence la variable :\n\n```js\nlet message = 'avant';\nconst afficher = () => console.log(message);\nmessage = 'après';\nafficher(); // 'après', pas 'avant'\n```\n\n**La boucle `var` partagée.** Les trois callbacks référencent la même liaison, qui\nvaut `3` à l'exécution :\n\n```js\nfor (var i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 3, 3, 3\nfor (let j = 0; j < 3; j++) setTimeout(() => console.log(j)); // 0, 1, 2\n```\n\n**Retenir plus que nécessaire.** Une closure maintient en vie tout son environnement.\nUn callback qui ne lit qu'un identifiant mais se trouve déclaré à côté d'un gros\ntableau empêche ce tableau d'être libéré. Extrais la donnée utile avant de fermer.\n\n## À retenir\n\n- Une closure est une conséquence de la portée lexicale, pas une option.\n- Elle capture des variables, jamais des instantanés de valeurs.\n- Chaque appel de la fonction externe crée un environnement distinct.\n- Ce qu'une closure retient ne peut pas être libéré : garde-la étroite.\n\n## Exercices\n\n1. Écris `once(fn)` : une fonction qui n'exécute `fn` qu'au premier appel et renvoie\n   ensuite toujours le premier résultat.\n\n   :::indice\n   Il te faut deux variables qui survivent entre les appels : « déjà appelée ? » et\n   « le résultat ».\n   :::\n\n   :::indice\n   Garde-les dans la portée de `once`, et renvoie une fonction qui les lit et les met à\n   jour.\n   :::\n\n   :::solution\n   ```js\n   function once(fn) {\n     let appelee = false;\n     let resultat;\n\n     return function (...args) {\n       if (!appelee) {\n         appelee = true;\n         resultat = fn.apply(this, args);\n       }\n       return resultat;\n     };\n   }\n\n   const init = once(() => Math.random());\n   init() === init(); // true\n   ```\n   :::\n\n2. Corrige la boucle `var` sans utiliser `let`, en créant un environnement par\n   itération.\n\n   :::indice\n   Chaque appel de fonction crée un nouvel environnement. Combien d'appels te faut-il ?\n   :::\n\n   :::solution\n   ```js\n   for (var i = 0; i < 3; i++) {\n     (function (copie) {\n       setTimeout(function () {\n         console.log(copie);\n       }, 0);\n     })(i);\n   }\n   // 0, 1, 2\n   ```\n\n   La fonction appelée à chaque tour crée un environnement où `copie` garde la valeur\n   de ce tour-là.\n   :::\n\n3. Implémente un compteur avec `incrementer`, `decrementer` et `valeur`, sans exposer\n   la variable interne.\n\n   :::indice\n   La variable doit vivre dans une fonction ; seules les fonctions renvoyées doivent\n   pouvoir la toucher.\n   :::\n\n   :::solution\n   ```js\n   function creerCompteur() {\n     let compte = 0;\n\n     return {\n       incrementer: () => ++compte,\n       decrementer: () => --compte,\n       valeur: () => compte,\n     };\n   }\n\n   const compteur = creerCompteur();\n   compteur.incrementer();\n   compteur.valeur(); // 1\n   compteur.compte; // undefined : la variable n'est pas exposée\n   ```\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'une closure, et pourquoi dire « elle capture la valeur » est-il faux ?\n\n  :::indice\n  Modifie la variable après avoir créé la fonction, puis appelle la fonction.\n  :::\n\n  :::reponse\n  Une closure est une fonction accompagnée de l'environnement lexical où elle a été\n  créée. Elle capture la liaison, pas la valeur : si la variable change après la\n  création de la fonction, la fonction voit la nouvelle valeur. C'est exactement ce qui\n  piège la boucle `var` avec `setTimeout`.\n  :::\n\n- Pourquoi une boucle `var` avec `setTimeout` affiche-t-elle trois fois la même\n  valeur, et que change `let` exactement ?\n\n  :::indice\n  Combien de variables `i` existe-t-il pendant toute la boucle `var` ?\n  :::\n\n  :::reponse\n  Avec `var`, il n'existe qu'une liaison `i` pour toute la boucle. Les rappels\n  s'exécutent après la fin de la boucle et lisent tous cette même liaison, qui vaut\n  alors 3. Avec `let`, la boucle `for` crée une nouvelle liaison à chaque itération :\n  chaque rappel capture la sienne, d'où 0, 1, 2.\n  :::\n\n- Comment une closure peut-elle provoquer une fuite mémoire, et comment l'éviter ?\n\n  :::indice\n  Tant qu'une fonction reste joignable, son environnement l'est aussi. Qu'est-ce qui\n  garde une fonction joignable longtemps ?\n  :::\n\n  :::reponse\n  Une closure garde vivant tout ce qu'elle référence. Si elle est conservée longtemps —\n  écouteur d'événement jamais retiré, minuterie jamais arrêtée, cache global — les\n  objets qu'elle capture ne sont jamais libérés. Pour l'éviter : retirer les écouteurs\n  (`removeEventListener`, `AbortController`), arrêter les minuteries, ne capturer que ce\n  qui sert plutôt qu'un gros objet entier, et associer des données à des objets avec\n  une `WeakMap`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-factory-functions",
+      "title": "Factory functions et données privées",
+      "slug": "factory-functions",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "closures",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-closures"
+      ],
+      "skills": [
+        "factory-functions"
+      ],
+      "tags": [
+        "javascript",
+        "closures"
+      ],
+      "contentPath": "javascript/closures/factory-functions/lesson.md",
+      "contentVersion": "faee33e4b497",
+      "body": "\n## Objectifs\n\n- Fabriquer des objets avec une fonction plutôt qu'avec un constructeur.\n- Rendre un état réellement inaccessible de l'extérieur grâce à une closure.\n- Reconnaître le motif module, et savoir quand une classe est préférable.\n\n## Introduction\n\nUn compteur dont la valeur ne peut pas être modifiée de l'extérieur, un porte-monnaie dont\nle solde n'est accessible que par des opérations autorisées : dans beaucoup de langages,\ncela demande un mot-clé `private`. En JavaScript, une closure suffit — et c'est un motif\nqu'on croise dans d'innombrables bibliothèques.\n\n## Concept\n\nUne **factory function** est une fonction ordinaire qui renvoie un objet. Les variables\ndéclarées dans la fabrique restent visibles par les méthodes renvoyées, et **seulement**\npar elles.\n\n| Motif | Idée |\n| --- | --- |\n| Factory | `function creer(...) { … return { methode() {} }; }` |\n| Données privées | une variable de la fabrique, jamais exposée dans l'objet renvoyé |\n| Motif module | une fonction exécutée immédiatement, qui renvoie une interface publique |\n\nComparé à `class`, ce motif n'a besoin ni de `new`, ni de `this` : chaque objet renvoyé\npossède ses propres fonctions, attachées à son propre environnement.\n\n## Exemple\n\n```js\nfunction creerCompteur(depart = 0) {\n  let valeur = depart; // privée : aucune référence ne sort\n\n  return {\n    incrementer() {\n      valeur += 1;\n      return valeur;\n    },\n    valeurActuelle() {\n      return valeur;\n    },\n  };\n}\n\nconst compteur = creerCompteur(10);\nconsole.log(compteur.incrementer()); // 11\nconsole.log(compteur.valeurActuelle()); // 11\nconsole.log(compteur.valeur); // undefined : inaccessible\ncompteur.valeur = 999; // ajoute une propriété sans effet\nconsole.log(compteur.valeurActuelle()); // 11\n\nconst autre = creerCompteur();\nconsole.log(autre.valeurActuelle()); // 0 : état indépendant\n\nfunction creerPorteMonnaie(solde = 0) {\n  return {\n    deposer(montant) {\n      if (montant <= 0) throw new Error('Montant invalide');\n      solde += montant;\n      return solde;\n    },\n    retirer(montant) {\n      if (montant > solde) throw new Error('Solde insuffisant');\n      solde -= montant;\n      return solde;\n    },\n    get solde() {\n      return solde;\n    },\n  };\n}\n\nconst compte = creerPorteMonnaie(100);\ncompte.deposer(50);\nconsole.log(compte.solde); // 150\n```\n\n## Comment ça fonctionne\n\nÀ chaque appel de `creerCompteur`, une nouvelle portée est créée, avec sa variable `valeur`.\nLes fonctions renvoyées sont écrites **à l'intérieur** de cette portée : elles gardent un\nlien vers elle, et c'est ce lien qui les rend capables de lire et modifier `valeur` après le\nretour de la fabrique. Deux compteurs créés séparément ont donc deux états indépendants,\nsans aucune coordination de notre part.\n\nLa confidentialité est réelle, pas conventionnelle : `valeur` n'est référencée par aucune\npropriété de l'objet renvoyé, donc il n'existe aucun chemin pour y accéder — ni\n`compteur.valeur`, ni `Object.keys`, ni le débogueur d'un autre module. C'est la différence\navec la convention `_valeur`, qui signale une intention sans rien empêcher.\n\nLe **motif module** applique la même idée à l'échelle d'un fichier : une fonction exécutée\nimmédiatement enferme l'état et ne renvoie que l'interface publique. Avant les modules ES,\nc'était la façon standard d'éviter de polluer l'espace global ; aujourd'hui, un module ES\nfait cela nativement, et le motif sert surtout pour un singleton avec état.\n\nFace aux **classes**, le choix se pose ainsi. La fabrique : pas de `new`, pas de `this`, une\nconfidentialité totale, mais chaque objet embarque ses propres fonctions — un coût mémoire\nqui ne compte que pour des dizaines de milliers d'instances. La classe : méthodes partagées\npar le prototype, héritage natif, champs privés `#champ` depuis ES2022, et un `this` dont il\nfaut gérer la liaison. Les deux sont légitimes ; ce qui est à éviter, c'est de les mélanger\ndans une même base de code sans raison.\n\n## Erreurs fréquentes\n\n**Exposer l'état par mégarde.** Renvoyer `{ valeur, incrementer }` fige une copie de la\nprimitive et brise l'encapsulation ; pour un objet, cela donne un accès direct.\n\n**Croire que `_prive` est privé.** Le tiret bas est une convention : rien n'empêche l'accès.\n\n**Oublier que chaque appel crée un état neuf.** Deux appels à la fabrique donnent deux\nobjets sans mémoire commune ; il faut un seul appel partagé pour un état commun.\n\n**Recréer la fabrique dans une boucle serrée.** Chaque objet porte ses propres fonctions :\nsur de très grands volumes, une classe est plus économe.\n\n## À retenir\n\n- Une factory est une fonction qui renvoie un objet, sans `new` ni `this`.\n- Les variables de la fabrique deviennent un état réellement privé.\n- Chaque appel crée un état indépendant.\n- Motif module : enfermer l'état, ne renvoyer que l'interface publique.\n- Classe ou fabrique : méthodes partagées et héritage d'un côté, simplicité et\n  confidentialité de l'autre.\n\n## Exercices\n\n1. Écris `creerCompteur(depart)` dont la valeur ne peut être ni lue ni modifiée directement,\n   et vérifie que deux compteurs sont indépendants.\n\n   :::indice\n   La variable d'état se déclare dans la fabrique, et n'apparaît dans aucune propriété de\n   l'objet renvoyé.\n   :::\n\n   :::solution\n   ```js\n   function creerCompteur(depart = 0) {\n     let valeur = depart;\n     return {\n       incrementer: () => (valeur += 1),\n       lire: () => valeur,\n     };\n   }\n\n   const a = creerCompteur(10);\n   const b = creerCompteur();\n   a.incrementer();\n   console.log(a.lire(), b.lire()); // 11 0\n   console.log(a.valeur); // undefined\n   ```\n   :::\n\n2. Écris `creerPorteMonnaie(solde)` qui refuse un dépôt négatif et un retrait supérieur au\n   solde, et n'expose le solde qu'en lecture.\n\n   :::indice\n   Un accesseur `get` permet d'exposer une valeur sans permettre son écriture.\n   :::\n\n   :::solution\n   ```js\n   function creerPorteMonnaie(solde = 0) {\n     return {\n       deposer(montant) {\n         if (montant <= 0) throw new Error('Montant invalide');\n         return (solde += montant);\n       },\n       retirer(montant) {\n         if (montant > solde) throw new Error('Solde insuffisant');\n         return (solde -= montant);\n       },\n       get solde() {\n         return solde;\n       },\n     };\n   }\n\n   const compte = creerPorteMonnaie(100);\n   compte.deposer(50);\n   compte.solde = 10_000; // sans effet : pas de setter\n   console.log(compte.solde); // 150\n   ```\n   :::\n\n3. Transforme ce code en motif module : une seule instance, un état caché, deux opérations\n   publiques.\n\n   ```js\n   let entrees = [];\n   function ajouter(ligne) { entrees.push(ligne); }\n   function tout() { return entrees; }\n   ```\n\n   :::indice\n   Une fonction exécutée immédiatement enferme l'état et renvoie l'interface publique.\n   :::\n\n   :::solution\n   ```js\n   const journal = (() => {\n     const entrees = [];\n     return {\n       ajouter(ligne) {\n         entrees.push(ligne);\n         return entrees.length;\n       },\n       tout() {\n         return [...entrees]; // copie : l'appelant ne peut pas modifier l'état\n       },\n     };\n   })();\n\n   journal.ajouter('démarrage');\n   journal.tout().push('triche'); // sans effet sur l'état interne\n   console.log(journal.tout()); // ['démarrage']\n   ```\n\n   Renvoyer une copie est essentiel : sans elle, `tout()` livrerait une référence directe sur\n   le tableau privé.\n   :::\n\n## Questions d'entretien\n\n- Comment obtenir des données réellement privées en JavaScript ?\n\n  :::indice\n  Qu'est-ce qui rend une variable inaccessible depuis l'extérieur ?\n  :::\n\n  :::reponse\n  Par une closure : une variable déclarée dans une fabrique, référencée seulement par les\n  fonctions renvoyées, n'est atteignable par aucun chemin extérieur. Depuis ES2022, les\n  classes offrent aussi les champs privés `#champ`, avec la même garantie au niveau du\n  langage. La convention `_champ`, en revanche, ne protège rien : elle signale une intention.\n  :::\n\n- Factory ou classe : comment choisir ?\n\n  :::indice\n  Pense au partage des méthodes, à `this`, et à l'héritage.\n  :::\n\n  :::reponse\n  La fabrique évite `new` et `this`, offre une confidentialité totale et se compose bien ;\n  son coût est que chaque objet porte ses propres fonctions, ce qui ne pèse qu'à très grande\n  échelle. La classe partage ses méthodes via le prototype, propose l'héritage, les champs\n  privés et un vocabulaire familier, mais impose de surveiller la liaison de `this`. Le\n  critère décisif est la cohérence : suivre ce que fait déjà la base de code.\n  :::\n\n- Qu'est-ce que le motif module, et sert-il encore ?\n\n  :::indice\n  Quel problème résolvait-il avant les modules ES ?\n  :::\n\n  :::reponse\n  C'est une fonction exécutée immédiatement qui enferme un état et ne renvoie qu'une\n  interface publique. Avant les modules ES, c'était la seule façon d'éviter de polluer\n  l'espace global dans un fichier chargé par `<script>`. Les modules ES rendent cet isolement\n  natif, mais le motif reste utile pour créer un singleton avec état à l'intérieur d'un\n  module — un cache, un journal, une file.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-memoization",
+      "title": "Mémoïsation et cas pratiques des closures",
+      "slug": "memoization",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "closures",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-factory-functions"
+      ],
+      "skills": [
+        "memoization"
+      ],
+      "tags": [
+        "javascript",
+        "closures"
+      ],
+      "contentPath": "javascript/closures/memoization/lesson.md",
+      "contentVersion": "88723f39d63c",
+      "body": "\n## Objectifs\n\n- Écrire une fonction `memoize` qui garde les résultats déjà calculés.\n- Choisir une clé de cache correcte, et savoir quand le cache est dangereux.\n- Reconnaître les autres usages courants des closures : `once`, compteurs, limitation\n  d'appels.\n\n## Introduction\n\nUn calcul coûteux appelé deux fois avec les mêmes arguments n'a aucune raison d'être refait.\nLa **mémoïsation** consiste à garder les résultats dans un cache que seule la fonction\nconnaît — donc dans une closure. C'est l'usage le plus visible d'une famille de motifs où\nune fonction retient quelque chose entre deux appels.\n\n## Concept\n\n| Motif | Ce que la closure retient | Usage |\n| --- | --- | --- |\n| `memoize(f)` | une `Map` des résultats par argument | éviter de recalculer |\n| `once(f)` | un booléen et le résultat | garantir un seul appel utile |\n| compteur | un nombre | identifiants, statistiques |\n| limitation d'appels | un horodatage ou un minuteur | *debounce*, *throttle* |\n\nLa mémoïsation suppose une fonction **pure** : si le résultat dépend de l'heure, du réseau\nou d'un état modifiable, le cache renverra une réponse périmée.\n\n## Exemple\n\n```js\nfunction memoize(fonction) {\n  const cache = new Map();\n\n  return (...arguments_) => {\n    const cle = JSON.stringify(arguments_);\n    if (cache.has(cle)) {\n      return cache.get(cle);\n    }\n    const resultat = fonction(...arguments_);\n    cache.set(cle, resultat);\n    return resultat;\n  };\n}\n\nlet appels = 0;\nconst lent = (n) => {\n  appels += 1;\n  return n * 2;\n};\n\nconst rapide = memoize(lent);\nconsole.log(rapide(21), rapide(21), appels); // 42 42 1 : un seul calcul\n\nfunction once(fonction) {\n  let fait = false;\n  let resultat;\n  return (...arguments_) => {\n    if (!fait) {\n      fait = true;\n      resultat = fonction(...arguments_);\n    }\n    return resultat;\n  };\n}\n\nconst initialiser = once(() => {\n  console.log('initialisation');\n  return { pret: true };\n});\ninitialiser(); // affiche\ninitialiser(); // n'affiche plus\n\nconst identifiant = (() => {\n  let n = 0;\n  return () => (n += 1);\n})();\nconsole.log(identifiant(), identifiant()); // 1 2\n```\n\n## Comment ça fonctionne\n\n`memoize` renvoie une fonction qui garde le `cache` dans sa closure : il n'est accessible\npar personne d'autre, et il survit d'un appel à l'autre. La fonction d'origine n'est appelée\nque lorsque la clé est absente.\n\nLe point délicat est la **clé**. `JSON.stringify(arguments_)` est simple et suffit pour des\narguments primitifs, mais il a des limites : l'ordre des propriétés d'un objet change la\nchaîne produite, `undefined` et les fonctions disparaissent, et une référence circulaire lève\nune erreur. Pour une fonction à un seul argument primitif, la valeur elle-même fait une\nmeilleure clé ; pour un argument objet, une `WeakMap` indexée par cet objet évite à la fois\nla sérialisation et la rétention mémoire.\n\nUn cache n'est valable que si la fonction est **pure**. Mémoïser une fonction qui lit\nl'heure, interroge le réseau ou dépend d'un état modifiable revient à figer une réponse\npérimée. C'est le même raisonnement que pour les fonctions pures : la mémoïsation est une\nrécompense de la pureté.\n\nUn cache non borné est une fuite mémoire lente : chaque nouvelle combinaison d'arguments\najoute une entrée définitive. En production, on borne la taille — en supprimant l'entrée la\nplus ancienne, par exemple — ou l'on donne une durée de vie aux entrées.\n\nEnfin, la mémoïsation ne rend rien plus rapide toute seule : elle échange du temps contre de\nla mémoire. Elle est utile pour un calcul coûteux répété avec les mêmes entrées, inutile pour\nune fonction déjà rapide, et contre-productive pour une fonction appelée chaque fois avec des\narguments différents.\n\n## Erreurs fréquentes\n\n**Mémoïser une fonction impure.** Le cache sert des résultats périmés.\n\n**Construire une clé fragile.** `String(arguments_)` confond `[1, 2]` et `'1,2'` ;\n`JSON.stringify` dépend de l'ordre des clés.\n\n**Laisser le cache grandir sans limite.** Sur un service de longue durée, c'est une fuite.\n\n**Mémoïser au mauvais endroit.** Un cache créé à l'intérieur de la fonction appelée est\nrecréé à chaque appel et ne sert à rien.\n\n## À retenir\n\n- `memoize` garde un cache privé dans une closure ; la fonction d'origine reste inchangée.\n- La clé doit distinguer exactement les appels : attention à `JSON.stringify`.\n- Ne mémoïse que des fonctions pures.\n- Un cache non borné finit par fuir : borne la taille ou la durée de vie.\n- Même famille de motifs : `once`, compteurs, *debounce* et *throttle*.\n\n## Exercices\n\n1. Écris `memoize(fonction)` pour une fonction à un seul argument primitif, et vérifie\n   qu'un second appel identique ne recalcule pas.\n\n   :::indice\n   Le cache doit vivre dans la closure, pas dans la fonction appelée.\n   :::\n\n   :::indice\n   Avec un seul argument primitif, l'argument lui-même peut servir de clé.\n   :::\n\n   :::solution\n   ```js\n   function memoize(fonction) {\n     const cache = new Map();\n     return (argument) => {\n       if (!cache.has(argument)) {\n         cache.set(argument, fonction(argument));\n       }\n       return cache.get(argument);\n     };\n   }\n\n   let appels = 0;\n   const carre = memoize((n) => {\n     appels += 1;\n     return n * n;\n   });\n\n   console.log(carre(4), carre(4), appels); // 16 16 1\n   ```\n\n   `has` plutôt qu'un test sur `get` : sinon, un résultat valant `undefined` ou `0` serait\n   recalculé à chaque fois.\n   :::\n\n2. Écris `once(fonction)` : le premier appel exécute, les suivants renvoient le même\n   résultat sans réexécuter.\n\n   :::indice\n   La closure doit retenir deux choses : le fait que l'appel a eu lieu, et son résultat.\n   :::\n\n   :::solution\n   ```js\n   function once(fonction) {\n     let fait = false;\n     let resultat;\n     return (...arguments_) => {\n       if (!fait) {\n         fait = true;\n         resultat = fonction(...arguments_);\n       }\n       return resultat;\n     };\n   }\n\n   const init = once(() => {\n     console.log('initialisation');\n     return { pret: true };\n   });\n\n   console.log(init(), init()); // 'initialisation' affiché une seule fois\n   ```\n\n   Le drapeau `fait` est nécessaire : tester `resultat === undefined` échouerait pour une\n   fonction qui renvoie précisément `undefined`.\n   :::\n\n3. Explique pourquoi mémoïser cette fonction est une mauvaise idée, puis corrige la\n   conception.\n\n   ```js\n   const tauxDuJour = memoize((devise) => lireTauxDepuisApi(devise));\n   ```\n\n   :::indice\n   Le résultat dépend-il uniquement de l'argument ?\n   :::\n\n   :::solution\n   Le taux change avec le temps : la fonction n'est pas pure, et le cache servira\n   indéfiniment la première valeur obtenue. Il faut une durée de vie explicite.\n\n   ```js\n   function memoizeAvecDuree(fonction, dureeMs) {\n     const cache = new Map();\n     return (cle, maintenant = Date.now()) => {\n       const entree = cache.get(cle);\n       if (entree && maintenant - entree.a < dureeMs) {\n         return entree.valeur;\n       }\n       const valeur = fonction(cle);\n       cache.set(cle, { valeur, a: maintenant });\n       return valeur;\n     };\n   }\n   ```\n\n   L'instant passe en paramètre, ce qui garde la fonction testable.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la mémoïsation, et que suppose-t-elle ?\n\n  :::indice\n  Qu'échange-t-on contre quoi, et à quelle condition ?\n  :::\n\n  :::reponse\n  C'est le fait de garder les résultats déjà calculés dans un cache privé, pour renvoyer\n  immédiatement la réponse d'un appel identique. Elle échange de la mémoire contre du temps,\n  et n'a de sens que si la fonction est pure : une fonction qui dépend de l'heure, du réseau\n  ou d'un état modifiable renverrait une valeur périmée. Elle ne se justifie que pour un\n  calcul réellement coûteux, répété avec les mêmes arguments.\n  :::\n\n- Comment choisir la clé de cache ?\n\n  :::indice\n  Que se passe-t-il si deux appels différents produisent la même clé ?\n  :::\n\n  :::reponse\n  La clé doit distinguer exactement deux appels qui doivent donner des résultats différents.\n  Pour un argument primitif unique, l'argument lui-même suffit, avec une `Map` qui accepte\n  tout type. `JSON.stringify` des arguments est pratique mais fragile : il dépend de l'ordre\n  des propriétés, perd `undefined` et les fonctions, et échoue sur une référence circulaire.\n  Pour un argument objet, une `WeakMap` indexée par cet objet évite la sérialisation et\n  laisse le ramasse-miettes faire son travail.\n  :::\n\n- Quel est le risque d'un cache en mémoire dans un service de longue durée ?\n\n  :::indice\n  Que devient le cache après des millions d'appels différents ?\n  :::\n\n  :::reponse\n  Un cache non borné grandit indéfiniment : chaque combinaison d'arguments ajoute une entrée\n  qui ne sera jamais libérée, ce qui constitue une fuite mémoire lente et difficile à\n  diagnostiquer. On borne donc la taille — en évinçant l'entrée la plus ancienne ou la moins\n  utilisée —, on donne une durée de vie aux entrées, ou l'on utilise une `WeakMap` quand les\n  clés sont des objets dont la durée de vie est déjà gérée ailleurs.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-pieges-closures",
+      "title": "Pièges des closures",
+      "slug": "pieges-des-closures",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "closures",
+      "order": 4,
+      "estimatedMinutes": 25,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-closures"
+      ],
+      "skills": [
+        "closure-pitfalls"
+      ],
+      "tags": [
+        "javascript",
+        "closures"
+      ],
+      "contentPath": "javascript/closures/pieges-des-closures/lesson.md",
+      "contentVersion": "05cd0e933cca",
+      "body": "\n## Objectifs\n\n- Expliquer le piège classique des closures dans une boucle `var`.\n- Comprendre qu'une closure capture une **liaison**, pas une copie de valeur.\n- Repérer les closures qui retiennent trop de mémoire.\n\n## Introduction\n\n`for (var i = 0; i < 3; i++) setTimeout(() => console.log(i))` affiche `3 3 3`. Ce résultat\nest la question d'entretien la plus posée sur les closures, et il n'a rien d'un cas\nartificiel : c'est la conséquence directe de ce qu'une closure capture. Le comprendre une\nfois évite une famille entière de bugs.\n\n## Concept\n\nUne closure capture la **liaison** — l'emplacement de la variable — et non la valeur qu'elle\navait au moment de la création. Quand la fonction s'exécute plus tard, elle lit la valeur\n**actuelle** de cette liaison.\n\n| Situation | Conséquence |\n| --- | --- |\n| `var` dans une boucle | une seule liaison pour tous les tours |\n| `let` dans une boucle | une nouvelle liaison à chaque tour |\n| Capture d'un gros objet | l'objet reste en mémoire tant que la fonction vit |\n| Écouteur d'événement non retiré | la closure et ce qu'elle retient survivent à la page |\n\n## Exemple\n\n```js\nfor (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log('var', i)); // var 3, var 3, var 3\n}\n\nfor (let j = 0; j < 3; j++) {\n  setTimeout(() => console.log('let', j)); // let 0, let 1, let 2\n}\n\n// Correction historique, avant let : une fonction par tour.\nfor (var k = 0; k < 3; k++) {\n  ((copie) => setTimeout(() => console.log('copie', copie)))(k); // 0, 1, 2\n}\n\nfunction creerFonctions() {\n  const fonctions = [];\n  for (var i = 0; i < 3; i++) {\n    fonctions.push(() => i);\n  }\n  return fonctions;\n}\nconsole.log(creerFonctions().map((f) => f())); // [3, 3, 3]\n\nfunction preparer() {\n  const enorme = new Array(1_000_000).fill('x');\n  const taille = enorme.length;\n  return () => taille; // ne retient que le nombre\n}\nconsole.log(preparer()()); // 1000000\n```\n\n## Comment ça fonctionne\n\nUne boucle `var` ne crée **qu'une seule liaison** `i`, partagée par tous les tours, puisque\n`var` appartient à la fonction. Les trois fonctions passées à `setTimeout` capturent donc la\nmême liaison. Quand elles s'exécutent — après la fin de la boucle —, cette liaison vaut 3,\nla valeur qui a fait sortir de la boucle. D'où `3 3 3`.\n\nUne boucle `let` crée **une liaison par itération**, et le moteur y recopie la valeur de fin\nde tour. Chaque fonction capture donc une liaison différente, et l'on obtient `0 1 2`. C'est\nune règle spécifique aux boucles, introduite avec ES2015 précisément pour ce problème, et\nc'est l'argument le plus concret en faveur de `let`.\n\nAvant `let`, la solution consistait à créer une portée par tour avec une fonction appelée\nimmédiatement, qui recevait la valeur courante en argument — la variante avec `copie` dans\nl'exemple. On rencontre encore ce motif dans du code ancien.\n\nLe second piège est la **mémoire**. Une closure garde en vie tout l'environnement dont elle\ndépend. Une fonction qui n'utilise qu'un nombre extrait d'un énorme tableau ne retient que ce\nnombre si le tableau n'est plus référencé ; mais si elle mentionne le tableau, même dans une\nbranche jamais exécutée, il reste en mémoire. Le cas le plus courant en navigateur est\nl'écouteur d'événement attaché à un élément supprimé : tant que l'écouteur n'est pas retiré,\nla closure et les objets qu'elle référence survivent.\n\nDernier piège, plus discret : une closure lit la valeur **actuelle**, pas celle du moment de\nsa création. Si l'on veut figer une valeur, il faut la copier explicitement dans une variable\nlocale.\n\n## Erreurs fréquentes\n\n**Utiliser `var` dans une boucle qui crée des fonctions.** Toutes voient la dernière valeur.\n\n**Croire que la closure copie la valeur.** Elle lit la liaison au moment de l'exécution.\n\n**Oublier de retirer un écouteur d'événement.** La closure retient l'élément et son\nenvironnement.\n\n**Capturer un gros objet pour en extraire une seule valeur.** Extrait la valeur avant, pour\nque l'objet puisse être libéré.\n\n## À retenir\n\n- Une closure capture une liaison, pas une valeur figée.\n- `var` dans une boucle : une seule liaison, donc la valeur finale partout.\n- `let` dans une boucle : une liaison par itération, valeurs distinctes.\n- Une closure maintient en vie tout ce qu'elle référence.\n- Retire les écouteurs, et n'extrais que ce dont la fonction a réellement besoin.\n\n## Exercices\n\n1. Corrige ce code pour qu'il affiche `0 1 2`, de deux façons différentes.\n\n   ```js\n   for (var i = 0; i < 3; i++) {\n     setTimeout(() => console.log(i));\n   }\n   ```\n\n   :::indice\n   Le problème est qu'une seule liaison `i` existe. Comment en obtenir une par tour ?\n   :::\n\n   :::solution\n   ```js\n   // 1. La déclaration de boucle crée une liaison par itération.\n   for (let i = 0; i < 3; i++) {\n     setTimeout(() => console.log(i)); // 0 1 2\n   }\n\n   // 2. Une fonction appelée immédiatement crée une portée par tour.\n   for (var j = 0; j < 3; j++) {\n     ((copie) => setTimeout(() => console.log(copie)))(j); // 0 1 2\n   }\n   ```\n\n   La première est la bonne réponse en code moderne ; la seconde explique comment on faisait\n   avant ES2015, et se rencontre encore.\n   :::\n\n2. Explique le résultat, puis corrige-le.\n\n   ```js\n   function creerBoutons(noms) {\n     const actions = [];\n     for (var i = 0; i < noms.length; i++) {\n       actions.push(() => `clic sur ${noms[i]}`);\n     }\n     return actions;\n   }\n   console.log(creerBoutons(['a', 'b']).map((f) => f()));\n   ```\n\n   :::indice\n   Que vaut `i` au moment où les fonctions sont enfin appelées ?\n   :::\n\n   :::solution\n   Toutes les fonctions partagent la même liaison `i`, qui vaut 2 après la boucle :\n   `noms[2]` est `undefined`, donc le résultat est\n   `['clic sur undefined', 'clic sur undefined']`.\n\n   ```js\n   function creerBoutons(noms) {\n     return noms.map((nom) => () => `clic sur ${nom}`);\n   }\n   console.log(creerBoutons(['a', 'b']).map((f) => f())); // ['clic sur a', 'clic sur b']\n   ```\n\n   `map` donne à chaque fonction son propre paramètre : le problème disparaît sans même parler\n   de closures.\n   :::\n\n3. Montre qu'une closure peut retenir un objet volumineux, et corrige pour ne garder que ce\n   qui est nécessaire.\n\n   :::indice\n   Extrais la valeur utile avant de créer la fonction, pour que l'objet ne soit plus\n   référencé.\n   :::\n\n   :::solution\n   ```js\n   function mauvais() {\n     const enorme = new Array(1_000_000).fill('x');\n     return () => enorme.length; // retient tout le tableau\n   }\n\n   function bon() {\n     const enorme = new Array(1_000_000).fill('x');\n     const taille = enorme.length; // seule cette valeur est capturée\n     return () => taille;\n   }\n\n   console.log(mauvais()(), bon()()); // 1000000 1000000\n   ```\n\n   Les deux donnent le même résultat, mais la première maintient le tableau en mémoire tant\n   que la fonction renvoyée existe.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i))` affiche-t-il\n  `3 3 3` ?\n\n  :::indice\n  Combien de liaisons `i` la boucle crée-t-elle ?\n  :::\n\n  :::reponse\n  Parce que `var` appartient à la fonction : la boucle ne crée qu'une seule liaison `i`,\n  partagée par les trois fonctions. Les callbacks de `setTimeout` s'exécutent après la fin de\n  la boucle, et lisent alors la valeur courante de cette liaison unique, soit 3. Avec `let`,\n  le moteur crée une liaison par itération et le résultat devient `0 1 2`.\n  :::\n\n- Une closure capture-t-elle la valeur ou la variable ?\n\n  :::indice\n  Que se passe-t-il si la variable change après la création de la fonction ?\n  :::\n\n  :::reponse\n  La variable — plus précisément la liaison. La fonction lit la valeur **au moment de son\n  exécution**, pas de sa création : si la variable a changé entre-temps, la closure voit la\n  nouvelle valeur. C'est ce qui permet à un compteur de fonctionner, et c'est aussi la cause\n  du piège des boucles. Pour figer une valeur, il faut la copier dans une variable propre à\n  la portée, ce que fait `let` à chaque tour.\n  :::\n\n- Comment une closure peut-elle provoquer une fuite mémoire ?\n\n  :::indice\n  Qu'arrive-t-il à l'environnement capturé tant que la fonction est référencée ?\n  :::\n\n  :::reponse\n  Tant que la fonction vit, l'environnement qu'elle capture reste en mémoire, avec tout ce\n  qu'il référence. Le cas typique est un écouteur d'événement jamais retiré : il retient\n  l'élément du DOM et les objets voisins, même après le retrait de l'élément. Les remèdes sont\n  de retirer l'écouteur — `removeEventListener`, un `AbortController` —, de n'extraire que la\n  valeur utile plutôt que de capturer un gros objet, et de vérifier au profileur mémoire quand\n  un doute subsiste.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -1151,6 +1395,42 @@
       ]
     },
     {
+      "id": "javascript-fonctions-pures",
+      "title": "Fonctions pures et effets de bord",
+      "slug": "fonctions-pures",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "fonctions",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-fonctions-parametres"
+      ],
+      "skills": [
+        "pure-functions"
+      ],
+      "tags": [
+        "javascript",
+        "fonctions"
+      ],
+      "contentPath": "javascript/fonctions/fonctions-pures/lesson.md",
+      "contentVersion": "d3459c027d0f",
+      "body": "\n## Objectifs\n\n- Reconnaître une fonction pure, et nommer les effets de bord d'une fonction impure.\n- Rendre une fonction testable en sortant ses dépendances cachées.\n- Organiser un programme avec un noyau pur et des effets repoussés aux bords.\n\n## Introduction\n\nDeux fonctions qui calculent la même chose peuvent être très différentes à l'usage : l'une\nse teste en une ligne, l'autre demande de préparer une base de données et de figer\nl'horloge. La différence tient à la **pureté** — une notion simple, et probablement le plus\ngrand levier de qualité disponible sans rien changer à ses outils.\n\n## Concept\n\nUne fonction est **pure** si elle respecte deux conditions :\n\n1. pour les mêmes entrées, elle renvoie toujours la même sortie ;\n2. elle ne produit aucun effet observable en dehors d'elle-même.\n\nUn **effet de bord** est tout ce qu'une fonction fait d'autre que renvoyer une valeur :\n\n| Effet de bord | Exemple |\n| --- | --- |\n| Modifier une variable extérieure | `total += prix` |\n| Modifier un argument | `panier.push(article)` |\n| Écrire quelque part | `console.log`, DOM, fichier, réseau |\n| Lire une source changeante | `Date.now()`, `Math.random()`, une variable globale |\n\nLes deux dernières lignes cassent la première condition : même entrée, sortie différente.\n\n## Exemple\n\n```js\n// Impure : dépend d'un état extérieur et le modifie.\nlet total = 0;\nfunction ajouter(prix) {\n  total += prix;\n  console.log('total', total);\n  return total;\n}\n\n// Pure : tout ce dont elle a besoin entre par les paramètres.\nfunction additionner(total, prix) {\n  return total + prix;\n}\nconsole.log(additionner(0, 10), additionner(0, 10)); // 10 10, toujours\n\n// Impure : lit l'horloge.\nfunction estExpire(jeton) {\n  return jeton.expireLe < Date.now();\n}\n\n// Pure : l'instant devient une entrée.\nfunction estExpireA(jeton, maintenant) {\n  return jeton.expireLe < maintenant;\n}\nconsole.log(estExpireA({ expireLe: 100 }, 200)); // true, testable sans horloge\n\n// Impure : modifie l'argument reçu.\nfunction trierPrix(produits) {\n  return produits.sort((a, b) => a.prix - b.prix);\n}\n\n// Pure : renvoie une nouvelle liste.\nfunction parPrix(produits) {\n  return produits.toSorted((a, b) => a.prix - b.prix);\n}\n```\n\n## Comment ça fonctionne\n\nUne fonction pure est **remplaçable par son résultat** : puisque `additionner(0, 10)` vaut\ntoujours 10, le programme se comporte pareil si on écrit 10 à la place. Cette propriété a\ntrois conséquences pratiques.\n\n**Le test devient trivial** : on appelle avec des valeurs, on compare le résultat. Aucun\nmontage, aucun nettoyage, aucun ordre d'exécution à respecter. Les tests d'une fonction\nimpure, eux, doivent figer l'horloge, remplacer le réseau ou remettre l'état à zéro.\n\n**La mémoïsation devient possible** : on peut garder le résultat d'un appel et le\nréutiliser, ce qui n'a aucun sens si la fonction dépend de l'heure.\n\n**Le raisonnement reste local** : pour comprendre une fonction pure, il suffit de la lire.\nPour une fonction impure, il faut connaître tout ce qui touche à l'état qu'elle lit.\n\nUn programme entièrement pur ne servirait à rien : il ne pourrait ni afficher, ni\nenregistrer. L'objectif n'est donc pas la pureté partout, mais une **répartition** : un\nnoyau pur qui décide et calcule, une fine coquille impure qui lit les entrées et applique\nles effets. Les dépendances cachées — horloge, aléa, requêtes — deviennent des\n**paramètres** : la fonction reste pure, et l'appelant fournit `Date.now()` une seule fois,\nau bord du programme.\n\n`console.log` est un effet de bord au sens strict, puisqu'il écrit dans un flux extérieur.\nEn pratique, on le tolère pendant la mise au point, mais une fonction dont le journal fait\npartie du contrat n'est plus testable comme une fonction pure.\n\n## Erreurs fréquentes\n\n**Modifier les arguments reçus.** `produits.sort(...)` réordonne la liste de l'appelant.\nUtilise `toSorted`, `map`, `filter`.\n\n**Lire l'horloge ou l'aléa au fond d'une fonction.** La fonction devient intestable :\nfais-en un paramètre.\n\n**Renvoyer une valeur *et* modifier un état.** Le lecteur ne voit que la première moitié du\ncontrat.\n\n**Dépendre d'une variable globale.** La fonction cesse d'être réutilisable ailleurs.\n\n## À retenir\n\n- Pure : mêmes entrées, même sortie, aucun effet observable.\n- Effets courants : mutation d'argument, variable globale, écriture, horloge, aléa.\n- Une fonction pure se teste sans montage et peut être mémoïsée.\n- On ne supprime pas les effets : on les repousse aux bords du programme.\n- Les dépendances cachées deviennent des paramètres.\n\n## Exercices\n\n1. Rends pure cette fonction, qui s'appuie sur un total global.\n\n   ```js\n   let total = 0;\n   function ajouter(prix) {\n     total += prix;\n     return total;\n   }\n   ```\n\n   :::indice\n   Tout ce dont la fonction a besoin doit entrer par ses paramètres, et tout ce qu'elle\n   produit doit sortir par son retour.\n   :::\n\n   :::solution\n   ```js\n   function additionner(total, prix) {\n     return total + prix;\n   }\n\n   console.log(additionner(0, 10)); // 10\n   console.log([10, 20, 5].reduce(additionner, 0)); // 35\n   ```\n\n   L'état ne disparaît pas : il est tenu par l'appelant, ici par `reduce`. La fonction, elle,\n   redevient prévisible et réutilisable.\n   :::\n\n2. Rends testable une fonction qui vérifie l'expiration d'un jeton avec `Date.now()`.\n\n   :::indice\n   L'instant présent est une entrée comme une autre.\n   :::\n\n   :::solution\n   ```js\n   function estExpire(jeton, maintenant = Date.now()) {\n     return jeton.expireLe < maintenant;\n   }\n\n   console.log(estExpire({ expireLe: 100 }, 200)); // true\n   console.log(estExpire({ expireLe: 100 }, 50)); // false\n   ```\n\n   La valeur par défaut garde l'appel courant simple, et le test fournit son propre instant :\n   plus besoin de figer l'horloge.\n   :::\n\n3. Repère les trois impuretés de cette fonction, puis propose une version pure.\n\n   ```js\n   const remises = { ada: 0.1 };\n   function prixFinal(panier) {\n     panier.total = panier.articles.reduce((s, a) => s + a.prix, 0);\n     console.log('calcul', new Date());\n     return panier.total * (1 - (remises[panier.client] ?? 0));\n   }\n   ```\n\n   :::indice\n   Regarde ce qu'elle modifie, ce qu'elle écrit, et ce qu'elle lit en dehors de ses\n   paramètres.\n   :::\n\n   :::solution\n   Elle modifie son argument (`panier.total`), elle écrit dans la console une valeur qui\n   change à chaque appel, et elle lit la table `remises` définie à l'extérieur.\n\n   ```js\n   function prixFinal(panier, remise = 0) {\n     const total = panier.articles.reduce((somme, a) => somme + a.prix, 0);\n     return total * (1 - remise);\n   }\n\n   const panier = { client: 'ada', articles: [{ prix: 100 }] };\n   console.log(prixFinal(panier, remises[panier.client] ?? 0)); // 90\n   console.log(panier.total); // undefined : le panier est intact\n   ```\n\n   La table des remises reste utile, mais c'est l'appelant qui la consulte : la décision\n   métier sort du calcul.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'une fonction pure, et pourquoi en écrire ?\n\n  :::indice\n  Deux conditions, et trois bénéfices concrets.\n  :::\n\n  :::reponse\n  Une fonction pure renvoie toujours la même sortie pour les mêmes entrées et ne produit\n  aucun effet observable : pas de mutation d'argument, pas d'écriture, pas de lecture d'une\n  source changeante. L'intérêt est pratique : elle se teste sans montage ni nettoyage, elle\n  peut être mémoïsée ou déplacée sans risque, et on peut la comprendre en la lisant seule,\n  sans connaître le reste du programme.\n  :::\n\n- `console.log` rend-il une fonction impure ?\n\n  :::indice\n  Est-ce observable en dehors de la fonction ?\n  :::\n\n  :::reponse\n  Oui, au sens strict : écrire dans un flux extérieur est un effet de bord, et une fonction\n  qui journalise ne peut plus être remplacée par son résultat. En pratique, on tolère un\n  journal temporaire de mise au point, mais dès que le journal fait partie du contrat — un\n  audit, une trace attendue —, il doit être traité comme un effet à part entière, produit par\n  l'appelant ou par un collaborateur injecté.\n  :::\n\n- Comment tester une fonction qui dépend de l'heure ou du hasard ?\n\n  :::indice\n  D'où viennent ces valeurs, et où pourraient-elles venir à la place ?\n  :::\n\n  :::reponse\n  En sortant la dépendance : l'instant ou la source aléatoire devient un paramètre, avec\n  éventuellement une valeur par défaut pour le code de production —\n  `function estExpire(jeton, maintenant = Date.now())`. Le test fournit alors ses propres\n  valeurs, et la fonction redevient pure. L'autre approche, remplacer l'horloge globale par\n  un faux objet dans le test, fonctionne aussi mais couple le test à l'implémentation et\n  rend l'ordre des tests important.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-functions",
       "title": "Fonctions",
       "slug": "functions",
@@ -1174,6 +1454,187 @@
       "contentPath": "javascript/fonctions/functions/lesson.md",
       "contentVersion": "c0c45386a07e",
       "body": "\n## Objectifs\n\n- Distinguer déclaration, expression et fonction fléchée.\n- Prévoir la valeur de `this` selon la forme choisie.\n- Savoir quand une fonction fléchée est le mauvais outil.\n\n## Introduction\n\nEn JavaScript une fonction est une valeur ordinaire : on peut la stocker, la passer\nen argument, la renvoyer. C'est ce qui rend possibles les callbacks, les closures et\nla programmation fonctionnelle. Mais trois syntaxes coexistent, et elles ne diffèrent\npas seulement par l'apparence.\n\n## Concept\n\n| Forme | Remontée | `this` | `arguments` |\n| --- | --- | --- | --- |\n| Déclaration `function f() {}` | complète | dynamique, dépend de l'appel | oui |\n| Expression `const f = function () {}` | non | dynamique | oui |\n| Fléchée `const f = () => {}` | non | lexical, hérité | non |\n\nLa ligne qui compte est celle de `this`. Une fonction classique reçoit son `this` **au\nmoment de l'appel** ; une fonction fléchée le capture **là où elle est écrite**, une\nfois pour toutes.\n\n## Exemple\n\n```js\nconst compteur = {\n  total: 0,\n\n  incrementerClassique() {\n    // `this` dépend de l'appel : ici, l'objet compteur\n    this.total += 1;\n  },\n\n  incrementerRetarde() {\n    // La fléchée hérite du `this` de incrementerRetarde : l'objet compteur\n    setTimeout(() => {\n      this.total += 1;\n    }, 100);\n  },\n};\n```\n\nÉcrire le `setTimeout` avec `function () { this.total += 1 }` casserait tout : `this`\ny vaudrait l'objet global ou `undefined` en mode strict.\n\n## Comment ça fonctionne\n\nUne déclaration de fonction est entièrement remontée : le moteur l'enregistre, corps\ncompris, avant d'exécuter la moindre ligne. On peut donc l'appeler plus haut que sa\ndéfinition. Une expression de fonction suit la règle de la variable qui la porte :\navec `const`, elle reste dans la zone morte temporelle jusqu'à son affectation.\n\n```js\ndireBonjour();           // fonctionne : déclaration remontée\nfunction direBonjour() {}\n\ndireAurevoir();          // ReferenceError : const dans la zone morte\nconst direAurevoir = () => {};\n```\n\nLes paramètres suivent leurs propres règles : une valeur par défaut n'est évaluée\nqu'au moment où l'argument est absent, et elle peut dépendre des paramètres\nprécédents.\n\n```js\nfunction creer(nom, id = nom.toLowerCase()) {\n  return { nom, id };\n}\ncreer('Ada'); // { nom: 'Ada', id: 'ada' }\n```\n\n## Erreurs fréquentes\n\n**Utiliser une fléchée comme méthode d'objet.** Elle capture le `this` du module, pas\ncelui de l'objet :\n\n```js\nconst mauvais = {\n  total: 0,\n  incrementer: () => {\n    this.total += 1; // `this` n'est pas `mauvais`\n  },\n};\n```\n\n**Croire qu'une fléchée est juste une syntaxe plus courte.** Elle n'a ni `this`, ni\n`arguments`, ni `prototype` — donc pas de `new`, pas de méthode d'objet, pas de\nfonction constructeur.\n\n**Compter sur la remontée d'une expression.** Seule la déclaration `function` est\nutilisable avant sa ligne.\n\n## À retenir\n\n- Une fonction est une valeur : elle se passe, se stocke, se renvoie.\n- La déclaration est remontée avec son corps ; l'expression suit sa variable.\n- `this` classique dépend de l'appel ; `this` fléché dépend de l'écriture.\n- La fléchée est idéale en callback, inadaptée en méthode.\n\n## Exercices\n\n1. Réécris une méthode d'objet cassée par une fléchée pour qu'elle fonctionne.\n\n   :::indice\n   Une fléchée n'a pas son propre `this` : elle garde celui de l'endroit où elle est\n   écrite, pas l'objet qui l'appelle.\n   :::\n\n   :::indice\n   La syntaxe de méthode `nom() { … }` reçoit `this` au moment de l'appel `objet.nom()`.\n   :::\n\n   :::solution\n   ```js\n   const compteur = {\n     valeur: 0,\n     // Cassé : incrementer: () => ++this.valeur — this n'est pas compteur\n     incrementer() {\n       return ++this.valeur;\n     },\n   };\n\n   compteur.incrementer(); // 1\n   ```\n   :::\n\n2. Écris une fonction dont le second paramètre a une valeur par défaut calculée à\n   partir du premier.\n\n   :::indice\n   Les valeurs par défaut sont évaluées de gauche à droite, au moment de l'appel.\n   :::\n\n   :::solution\n   ```js\n   function rectangle(largeur, hauteur = largeur) {\n     return largeur * hauteur;\n   }\n\n   rectangle(3); // 9\n   rectangle(3, 4); // 12\n   ```\n\n   Une valeur par défaut peut utiliser les paramètres qui la précèdent, jamais ceux qui\n   la suivent.\n   :::\n\n3. Montre par un exemple qu'une déclaration est appelable avant sa définition, mais\n   pas une expression.\n\n   :::indice\n   Une déclaration est remontée avec son corps ; une expression de fonction n'est\n   qu'une valeur affectée à une variable.\n   :::\n\n   :::solution\n   ```js\n   direBonjour(); // fonctionne : la déclaration est remontée entière\n\n   function direBonjour() {\n     console.log('Bonjour');\n   }\n\n   direAuRevoir(); // ReferenceError : la variable est en zone morte temporelle\n\n   const direAuRevoir = function () {\n     console.log('Au revoir');\n   };\n   ```\n\n   Avec `var` à la place de `const`, l'erreur devient une `TypeError` : la variable\n   existe déjà, mais vaut encore `undefined`.\n   :::\n\n## Questions d'entretien\n\n- Quelle est la différence de `this` entre une fonction fléchée et une fonction\n  classique, et quand cette différence devient-elle un bug ?\n\n  :::indice\n  Qui décide de `this` : l'appel, ou l'endroit où la fonction est écrite ?\n  :::\n\n  :::reponse\n  Une fonction classique reçoit `this` au moment de l'appel : `objet.methode()` le lie\n  à `objet`, un appel détaché le perd. Une fléchée n'a pas de `this` propre : elle\n  garde celui de la portée où elle est définie. Le bug typique : une fléchée utilisée\n  comme méthode d'objet, où `this` n'est pas l'objet, ou une méthode classique passée\n  en rappel, où `this` est perdu. Les fléchées sont idéales en rappel, inadaptées en\n  méthode.\n  :::\n\n- Pourquoi ne peut-on pas utiliser `new` avec une fonction fléchée ?\n\n  :::indice\n  Que doit faire `new` avec `this` et avec la propriété `prototype` ?\n  :::\n\n  :::reponse\n  `new` crée un objet, le lie à `this` et le rattache au `prototype` de la fonction.\n  Une fléchée n'a ni `this` propre ni propriété `prototype` : elle n'est pas\n  constructible, et `new` lève une `TypeError`.\n  :::\n\n- Dans quel ordre le moteur enregistre-t-il les déclarations de fonctions et les\n  déclarations `var` ?\n\n  :::indice\n  Essaie `console.log(typeof a)` placé avant `var a = 1;` et `function a() {}`.\n  :::\n\n  :::reponse\n  Avant d'exécuter le code, le moteur crée toutes les liaisons de la portée : les\n  `var` sont initialisées à `undefined`, les déclarations de fonctions reçoivent\n  directement leur fonction, et une fonction l'emporte sur une `var` du même nom.\n  `typeof a` vaut donc `'function'` avant la première ligne ; c'est l'affectation\n  `a = 1`, une fois exécutée, qui la remplace.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-fonctions-parametres",
+      "title": "Paramètres, arguments et valeurs par défaut",
+      "slug": "parametres-et-arguments",
+      "technology": "javascript",
+      "level": "beginner",
+      "module": "fonctions",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 2,
+      "xp": 60,
+      "prerequisites": [
+        "javascript-functions"
+      ],
+      "skills": [
+        "functions-parameters"
+      ],
+      "tags": [
+        "javascript",
+        "fonctions"
+      ],
+      "contentPath": "javascript/fonctions/parametres-et-arguments/lesson.md",
+      "contentVersion": "6636a07815a7",
+      "body": "\n## Objectifs\n\n- Distinguer un paramètre d'un argument, et savoir ce qui arrive quand ils ne\n  correspondent pas.\n- Donner des valeurs par défaut, et comprendre quand elles s'appliquent.\n- Remplacer une longue liste de paramètres par un objet d'options.\n\n## Introduction\n\nUne fonction est une machine : les paramètres sont ses entrées. Tout ce qui rend une\nfonction agréable ou pénible à utiliser se joue là — le nombre d'entrées, leur ordre, ce\nqui se passe quand on en oublie une. JavaScript est très permissif sur ce point : il\nn'impose ni le nombre d'arguments, ni leur type. À nous de rendre les appels lisibles.\n\n## Concept\n\n| Terme | Où | Exemple |\n| --- | --- | --- |\n| Paramètre | dans la déclaration | `function saluer(nom)` |\n| Argument | à l'appel | `saluer('Ada')` |\n| Valeur par défaut | dans la déclaration | `function saluer(nom = 'invité')` |\n\nCe qui se passe quand les deux ne correspondent pas :\n\n| Appel | Résultat |\n| --- | --- |\n| Argument manquant | le paramètre vaut `undefined`, ou sa valeur par défaut |\n| Argument en trop | il est ignoré |\n| `f.length` | le nombre de paramètres avant le premier défaut |\n\n## Exemple\n\n```js\nfunction creerUtilisateur(nom, role = 'membre', actif = true) {\n  return { nom, role, actif };\n}\n\nconsole.log(creerUtilisateur('Ada')); // { nom: 'Ada', role: 'membre', actif: true }\nconsole.log(creerUtilisateur('Grace', 'admin')); // role: 'admin'\nconsole.log(creerUtilisateur('Linus', undefined, false)); // role: 'membre', actif: false\nconsole.log(creerUtilisateur('Ken', null)); // role: null : le défaut ne s'applique pas\n\nfunction aire(largeur, hauteur = largeur) {\n  return largeur * hauteur;\n}\nconsole.log(aire(3), aire(3, 4)); // 9 12\n\n// Une liste d'arguments illisible à l'appel…\nfunction envoyer(message, urgent, silencieux, archiver) {}\nenvoyer('Bonjour', true, false, true);\n\n// …devient un objet d'options nommées.\nfunction envoyerOptions(message, { urgent = false, archiver = false } = {}) {\n  return `${message} (urgent: ${urgent}, archivé: ${archiver})`;\n}\nconsole.log(envoyerOptions('Bonjour', { archiver: true }));\n```\n\n## Comment ça fonctionne\n\nUne valeur par défaut s'applique quand l'argument vaut **`undefined`** — qu'il soit absent\nou explicitement `undefined`. Elle ne s'applique pas à `null`, à `0` ni à `''`, qui sont\ndes valeurs comme les autres.\n\nLe défaut est **évalué à chaque appel**, pas une fois pour toutes : `function f(liste = [])`\ncrée un tableau neuf à chaque appel, sans le piège de partage qu'on trouve dans d'autres\nlangages. Il peut aussi utiliser les paramètres déclarés avant lui, comme\n`function aire(largeur, hauteur = largeur)`.\n\nLes arguments sont passés **par valeur**. Pour un objet, cette valeur est une référence :\nla fonction ne peut pas remplacer l'objet de l'appelant, mais elle peut le **modifier**.\n\n```js\nfunction renommer(utilisateur) {\n  utilisateur.nom = 'Modifié'; // visible par l'appelant\n  utilisateur = { nom: 'Ignoré' }; // réaffecte la variable locale, sans effet\n}\n```\n\nDans une fonction classique, l'objet `arguments` contient tous les arguments reçus, même\nnon déclarés. Il n'existe pas dans les fonctions fléchées, et les paramètres du reste\n`...args`, vus au module suivant, le remplacent avantageusement.\n\nEnfin, `f.length` compte les paramètres **avant** le premier paramètre à valeur par défaut\nou de reste : `(a, b = 1, c) => {}` a une longueur de 1.\n\n## Erreurs fréquentes\n\n**Enchaîner les paramètres booléens.** `envoyer('Bonjour', true, false, true)` est\nindéchiffrable à la lecture. Passe un objet d'options.\n\n**Passer `null` en espérant la valeur par défaut.** Seul `undefined` la déclenche.\n\n**Oublier `= {}` sur un paramètre objet destructuré.** `f()` lève alors une `TypeError`.\n\n**Modifier l'objet reçu sans le dire.** L'appelant subit une modification qu'il n'a pas\ndemandée : travaille sur une copie, ou documente clairement l'intention.\n\n## À retenir\n\n- Paramètre à la déclaration, argument à l'appel ; les arguments en trop sont ignorés.\n- Le défaut ne se déclenche que sur `undefined`, jamais sur `null` ou `0`.\n- Les défauts sont évalués à chaque appel et peuvent utiliser les paramètres précédents.\n- Modifier un objet reçu est visible par l'appelant ; le réaffecter ne l'est pas.\n- Au-delà de deux ou trois entrées, un objet d'options se lit mieux.\n\n## Exercices\n\n1. Écris `saluer(nom, salutation)` qui affiche « Bonjour Ada » par défaut, et accepte une\n   autre salutation.\n\n   :::indice\n   La valeur par défaut se déclare directement dans la liste des paramètres.\n   :::\n\n   :::solution\n   ```js\n   function saluer(nom, salutation = 'Bonjour') {\n     return `${salutation} ${nom}`;\n   }\n\n   console.log(saluer('Ada')); // 'Bonjour Ada'\n   console.log(saluer('Ada', 'Salut')); // 'Salut Ada'\n   ```\n   :::\n\n2. Transforme `envoyer(message, urgent, silencieux, archiver)` en une fonction dont l'appel\n   se lit sans deviner l'ordre des booléens, et qui fonctionne sans second argument.\n\n   :::indice\n   Un objet nommé remplace les positions ; le destructuring lui donne des valeurs par défaut.\n   :::\n\n   :::indice\n   Sans `= {}` à la fin, appeler la fonction sans options lèverait une `TypeError`.\n   :::\n\n   :::solution\n   ```js\n   function envoyer(message, { urgent = false, silencieux = false, archiver = false } = {}) {\n     return { message, urgent, silencieux, archiver };\n   }\n\n   console.log(envoyer('Bonjour'));\n   console.log(envoyer('Alerte', { urgent: true }));\n   ```\n\n   À l'appel, chaque option est nommée : plus besoin de compter les positions.\n   :::\n\n3. Montre qu'une fonction peut modifier l'objet qu'on lui passe, puis corrige-la pour\n   qu'elle laisse l'original intact.\n\n   :::indice\n   Modifier une propriété de l'objet reçu, et réaffecter le paramètre, n'ont pas le même\n   effet.\n   :::\n\n   :::solution\n   ```js\n   const utilisateur = { nom: 'Ada', role: 'membre' };\n\n   function promouvoir(cible) {\n     cible.role = 'admin'; // modifie l'objet de l'appelant\n   }\n   promouvoir(utilisateur);\n   console.log(utilisateur.role); // 'admin'\n\n   function promu(cible) {\n     return { ...cible, role: 'admin' }; // renvoie une nouvelle version\n   }\n   const remis = { nom: 'Ada', role: 'membre' };\n   console.log(promu(remis).role, remis.role); // 'admin' 'membre'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre un paramètre et un argument ?\n\n  :::indice\n  L'un appartient à la déclaration, l'autre à l'appel.\n  :::\n\n  :::reponse\n  Le paramètre est le nom déclaré entre les parenthèses de la fonction : c'est une variable\n  locale. L'argument est la valeur réellement passée lors de l'appel. JavaScript ne vérifie\n  ni leur nombre ni leur type : un argument manquant laisse le paramètre à `undefined`, un\n  argument en trop est ignoré — accessible seulement via `arguments` ou un paramètre de\n  reste.\n  :::\n\n- Quand une valeur par défaut s'applique-t-elle ?\n\n  :::indice\n  Essaie avec un argument absent, puis `undefined`, `null` et `0`.\n  :::\n\n  :::reponse\n  Uniquement quand l'argument vaut `undefined`, c'est-à-dire absent ou passé explicitement\n  à `undefined`. `null`, `0`, `''` et `false` sont des valeurs légitimes et n'activent pas le\n  défaut. Le défaut est réévalué à chaque appel, ce qui rend `= []` ou `= {}` sûrs, et il\n  peut s'appuyer sur les paramètres déclarés avant lui.\n  :::\n\n- JavaScript passe-t-il les arguments par valeur ou par référence ?\n\n  :::indice\n  Que se passe-t-il si la fonction modifie l'objet reçu ? Et si elle le remplace ?\n  :::\n\n  :::reponse\n  Toujours par valeur. Pour un objet, la valeur copiée est une **référence** : la fonction\n  et l'appelant désignent le même objet, donc modifier une propriété est visible des deux\n  côtés. En revanche, réaffecter le paramètre ne change que la variable locale : l'appelant\n  garde son objet. On résume parfois cela par « passage par partage » ; la conséquence\n  pratique est qu'il faut annoncer clairement toute fonction qui modifie ce qu'elle reçoit.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-callbacks",
+      "title": "Callbacks et fonctions d'ordre supérieur",
+      "slug": "callbacks-et-higher-order",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "fonctions-avancees",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-fonctions-flechees"
+      ],
+      "skills": [
+        "callbacks",
+        "higher-order-functions"
+      ],
+      "tags": [
+        "javascript",
+        "fonctions"
+      ],
+      "contentPath": "javascript/fonctions-avancees/callbacks-et-higher-order/lesson.md",
+      "contentVersion": "eed486e70105",
+      "body": "\n## Objectifs\n\n- Traiter une fonction comme une valeur : la stocker, la passer, la renvoyer.\n- Écrire une fonction d'ordre supérieur qui reçoit un comportement en argument.\n- Distinguer passer une fonction et appeler une fonction.\n\n## Introduction\n\n`map`, `filter`, `sort`, `addEventListener`, `setTimeout` : toutes ces fonctions ont un\npoint commun, elles prennent **une fonction en argument**. C'est le mécanisme d'extension\nde JavaScript : plutôt que de prévoir tous les comportements, une fonction laisse l'appelant\nfournir la partie variable. Comprendre ce mécanisme, c'est pouvoir écrire ses propres\nabstractions au lieu de seulement consommer celles des autres.\n\n## Concept\n\n| Terme | Définition |\n| --- | --- |\n| Fonction comme valeur | une fonction se range dans une variable, un tableau, un objet |\n| Callback | une fonction passée en argument, appelée par celle qui la reçoit |\n| Fonction d'ordre supérieur | une fonction qui reçoit une fonction, en renvoie une, ou les deux |\n\nLa distinction la plus importante du chapitre :\n\n| Écriture | Sens |\n| --- | --- |\n| `traiter(action)` | passe la fonction, qui sera appelée plus tard |\n| `traiter(action())` | appelle la fonction **maintenant** et passe son résultat |\n\n## Exemple\n\n```js\nconst crier = (texte) => texte.toUpperCase();\nconst chuchoter = (texte) => texte.toLowerCase();\n\nconst styles = { crier, chuchoter };\nconsole.log(styles.crier('bonjour')); // 'BONJOUR'\n\nfunction repeter(nombre, action) {\n  for (let i = 0; i < nombre; i++) {\n    action(i);\n  }\n}\nrepeter(3, (i) => console.log(`tour ${i}`)); // tour 0, tour 1, tour 2\n\nfunction appliquer(valeur, ...transformations) {\n  let resultat = valeur;\n  for (const transformation of transformations) {\n    resultat = transformation(resultat);\n  }\n  return resultat;\n}\nconsole.log(appliquer(' Ada ', (t) => t.trim(), crier)); // 'ADA'\n\nconst produits = [{ prix: 30 }, { prix: 10 }];\nconsole.log(produits.toSorted((a, b) => a.prix - b.prix)[0].prix); // 10\n\nconsole.log(['1', '7', '11'].map(parseInt)); // [1, NaN, 3] : surprise expliquée plus bas\n```\n\n## Comment ça fonctionne\n\nPasser une fonction, c'est passer sa **référence** : `repeter(3, action)` transmet la\nfonction elle-même, que `repeter` appellera au moment voulu. Ajouter des parenthèses,\n`repeter(3, action())`, l'appelle immédiatement et transmet son résultat — le plus souvent\n`undefined`. C'est l'erreur la plus fréquente avec les gestionnaires d'événements.\n\nLa fonction qui reçoit le callback décide **quand** l'appeler, **combien de fois**, et avec\n**quels arguments**. C'est la clé de la surprise de l'exemple : `map` appelle son callback\navec trois arguments — élément, index, tableau — et `parseInt` en accepte deux, la chaîne et\nla **base**. `parseInt('7', 1)` est invalide et donne `NaN`, `parseInt('11', 2)` lit du\nbinaire et donne 3. La correction est d'écrire un callback qui ne prend que ce qu'il veut :\n`['1', '7', '11'].map((n) => parseInt(n, 10))`.\n\nUn callback n'est pas forcément asynchrone. Celui de `map` est appelé immédiatement, dans\nl'ordre ; celui de `setTimeout` ou d'un écouteur d'événement est appelé plus tard, une fois\nla pile vidée. C'est la partie Asynchronous qui détaille ce mécanisme ; ici, retiens\nseulement que rien ne garantit le moment de l'appel.\n\nEn Node.js historique, les callbacks suivent la convention **erreur d'abord** :\n`lire(chemin, (erreur, donnees) => …)`. L'imbrication de ces callbacks a donné le fameux\n« callback hell », que les promesses et `async`/`await` ont résolu.\n\nEnfin, un callback nommé rend les piles d'appels lisibles et le code testable séparément :\n`bouton.addEventListener('click', envoyerFormulaire)` se relit mieux qu'une fonction\nanonyme de vingt lignes.\n\n## Erreurs fréquentes\n\n**Appeler au lieu de passer.** `setTimeout(afficher(), 1000)` exécute tout de suite ; il\nfaut `setTimeout(afficher, 1000)`.\n\n**Passer une fonction qui accepte plus d'arguments que prévu.** `map(parseInt)` en est\nl'exemple canonique : enveloppe-la.\n\n**Supposer qu'un callback s'exécute immédiatement.** Un résultat lu juste après l'appel\npeut ne pas encore exister.\n\n**Empiler les callbacks anonymes.** Au-delà de deux niveaux, nomme-les, ou passe aux\npromesses.\n\n## À retenir\n\n- Une fonction est une valeur : elle se stocke, se passe, se renvoie.\n- Callback : fonction passée à une autre, qui décide quand l'appeler.\n- Fonction d'ordre supérieur : elle reçoit ou renvoie une fonction.\n- `f` passe la fonction, `f()` passe son résultat.\n- La fonction receveuse impose les arguments du callback : `map(parseInt)` en est la preuve.\n\n## Exercices\n\n1. Écris `repeter(nombre, action)` qui appelle `action` autant de fois que demandé, en lui\n   passant le numéro du tour.\n\n   :::indice\n   `action` est une fonction reçue en paramètre : appelle-la dans la boucle avec l'index.\n   :::\n\n   :::solution\n   ```js\n   function repeter(nombre, action) {\n     for (let i = 0; i < nombre; i++) {\n       action(i);\n     }\n   }\n\n   repeter(3, (tour) => console.log(`tour ${tour}`));\n   // tour 0\n   // tour 1\n   // tour 2\n   ```\n   :::\n\n2. Écris ta propre version de `filter`, sous la forme `filtrer(tableau, predicat)`, sans\n   utiliser la méthode native.\n\n   :::indice\n   Le prédicat est une fonction qui renvoie vrai ou faux pour chaque élément.\n   :::\n\n   :::solution\n   ```js\n   function filtrer(tableau, predicat) {\n     const resultat = [];\n     for (let i = 0; i < tableau.length; i++) {\n       if (predicat(tableau[i], i, tableau)) {\n         resultat.push(tableau[i]);\n       }\n     }\n     return resultat;\n   }\n\n   console.log(filtrer([1, 2, 3, 4], (n) => n % 2 === 0)); // [2, 4]\n   ```\n\n   En passant aussi l'index et le tableau, la fonction respecte la convention des méthodes\n   natives.\n   :::\n\n3. Explique pourquoi `['1', '7', '11'].map(parseInt)` renvoie `[1, NaN, 3]`, et corrige.\n\n   :::indice\n   Avec combien d'arguments `map` appelle-t-il son callback ? Et que fait `parseInt` du\n   deuxième ?\n   :::\n\n   :::solution\n   `map` appelle son callback avec trois arguments : élément, index, tableau. `parseInt` en\n   accepte deux : la chaîne et la **base**. Les appels réels sont donc `parseInt('1', 0)`,\n   `parseInt('7', 1)` et `parseInt('11', 2)`. La base 0 est traitée comme 10, la base 1\n   n'existe pas — d'où `NaN` —, et `'11'` en binaire vaut 3.\n\n   ```js\n   console.log(['1', '7', '11'].map((n) => parseInt(n, 10))); // [1, 7, 11]\n   console.log(['1', '7', '11'].map(Number)); // [1, 7, 11]\n   ```\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'une fonction d'ordre supérieur ?\n\n  :::indice\n  Regarde ce qu'elle prend en entrée et ce qu'elle renvoie.\n  :::\n\n  :::reponse\n  Une fonction qui reçoit une fonction en argument, en renvoie une, ou les deux. `map`,\n  `filter`, `sort`, `setTimeout` et `addEventListener` en sont : elles laissent l'appelant\n  fournir la partie variable du comportement. C'est possible parce qu'en JavaScript une\n  fonction est une valeur de première classe, qu'on peut stocker et transmettre comme un\n  nombre ou un objet.\n  :::\n\n- Quelle différence entre passer `f` et passer `f()` ?\n\n  :::indice\n  À quel moment la fonction s'exécute-t-elle dans chaque cas ?\n  :::\n\n  :::reponse\n  `f` passe la fonction elle-même : c'est le destinataire qui l'appellera, quand il le\n  décidera. `f()` l'exécute immédiatement et passe sa **valeur de retour**, souvent\n  `undefined`. D'où `setTimeout(afficher, 1000)` et non `setTimeout(afficher(), 1000)`. Quand\n  il faut passer une fonction avec des arguments figés, on l'enveloppe :\n  `setTimeout(() => afficher('salut'), 1000)`.\n  :::\n\n- Un callback s'exécute-t-il toujours de façon asynchrone ?\n\n  :::indice\n  Compare celui de `map` et celui de `setTimeout`.\n  :::\n\n  :::reponse\n  Non. Le callback de `map`, `filter` ou `sort` est appelé immédiatement et dans l'ordre :\n  tout est terminé quand la méthode renvoie. Celui de `setTimeout`, d'une requête réseau ou\n  d'un écouteur d'événement est appelé plus tard. La règle de prudence est de ne rien\n  supposer : on lit le résultat là où le callback le produit, pas sur la ligne qui suit\n  l'appel.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-currying",
+      "title": "Fonctions qui renvoient des fonctions : currying et composition",
+      "slug": "currying-et-composition",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "fonctions-avancees",
+      "order": 4,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-callbacks"
+      ],
+      "skills": [
+        "currying-composition"
+      ],
+      "tags": [
+        "javascript",
+        "fonctions"
+      ],
+      "contentPath": "javascript/fonctions-avancees/currying-et-composition/lesson.md",
+      "contentVersion": "061a5a7b909d",
+      "body": "\n## Objectifs\n\n- Écrire une fonction qui renvoie une fonction, et comprendre ce qu'elle retient.\n- Fabriquer une version spécialisée d'une fonction par application partielle.\n- Enchaîner des transformations avec une composition, et savoir quand s'en abstenir.\n\n## Introduction\n\nUne fonction peut recevoir une fonction ; elle peut aussi en **renvoyer** une. Cela permet\nde fabriquer des fonctions sur mesure à partir d'une fonction générale : une seule fonction\n`multiplier` donne `doubler` et `tripler`. C'est la base du style fonctionnel — puissant,\net facile à pousser trop loin, ce que ce chapitre dit aussi.\n\n## Concept\n\n| Technique | Idée | Exemple |\n| --- | --- | --- |\n| Fabrique | une fonction renvoie une fonction configurée | `multiplier(2)` donne `doubler` |\n| Application partielle | fixer une partie des arguments maintenant, le reste plus tard | `journal('info')` |\n| Currying | transformer `f(a, b)` en `f(a)(b)` | `somme(1)(2)` |\n| Composition | enchaîner des fonctions, la sortie de l'une devenant l'entrée de la suivante | `pipe(trim, majuscules)` |\n\nDeux ordres d'enchaînement existent :\n\n- `pipe(f, g)(x)` vaut `g(f(x))` — on lit de gauche à droite, dans l'ordre d'exécution ;\n- `compose(f, g)(x)` vaut `f(g(x))` — l'ordre des mathématiques, de droite à gauche.\n\n## Exemple\n\n```js\nconst multiplier = (facteur) => (nombre) => nombre * facteur;\n\nconst doubler = multiplier(2);\nconst tripler = multiplier(3);\nconsole.log(doubler(5), tripler(5)); // 10 15\nconsole.log(multiplier(10)(5)); // 50 : les deux appels d'affilée\n\nconst journal = (niveau) => (message) => `[${niveau}] ${message}`;\nconst info = journal('info');\nconsole.log(info('serveur démarré')); // '[info] serveur démarré'\n\nconst pipe = (...fonctions) => (valeur) =>\n  fonctions.reduce((resultat, fonction) => fonction(resultat), valeur);\n\nconst nettoyer = pipe(\n  (texte) => texte.trim(),\n  (texte) => texte.toLowerCase(),\n  (texte) => texte.replaceAll(' ', '-'),\n);\nconsole.log(nettoyer('  Mon Titre  ')); // 'mon-titre'\n\nconsole.log([1, 2, 3].map(multiplier(10))); // [10, 20, 30]\n```\n\n## Comment ça fonctionne\n\nQuand `multiplier(2)` s'exécute, la fonction interne est créée et **retient** `facteur`.\nCette mémoire s'appelle une closure : c'est le sujet du module 13, et c'est elle qui rend\ntout ce chapitre possible. `doubler` n'est pas une copie de `multiplier` : c'est une\nfonction d'un seul paramètre, attachée à un environnement où `facteur` vaut 2.\n\nLe **currying** transforme une fonction à plusieurs paramètres en une chaîne de fonctions à\nun paramètre : `somme(1, 2)` devient `somme(1)(2)`. L'**application partielle** est plus\nsouple : elle fixe certains arguments et laisse les autres, sans imposer un appel par\nargument. En pratique, c'est l'application partielle qu'on utilise le plus, pour fabriquer\ndes variantes spécialisées d'une fonction générale.\n\nL'intérêt principal apparaît avec les fonctions d'ordre supérieur : `map(multiplier(10))` se\nlit mieux que `map((n) => n * 10)` quand la transformation porte un nom métier, et ce nom\npeut être testé isolément.\n\nLa composition s'écrit avec `reduce` : on part de la valeur d'entrée et on applique chaque\nfonction au résultat de la précédente. `pipe` suit l'ordre de lecture ; `compose` suit la\nnotation mathématique. Les deux exigent des fonctions à **un seul argument**, ce qui est\nprécisément ce que produit l'application partielle.\n\nLe revers est réel : une composition de fonctions anonymes rend les piles d'appels opaques,\net une fonction curryfiée à trois niveaux se débogue mal. Le style fonctionnel se justifie\nquand il nomme des étapes réutilisables, pas quand il remplace une suite d'instructions\nparfaitement claire.\n\n## Erreurs fréquentes\n\n**Confondre `pipe` et `compose`.** L'ordre des fonctions est inversé : vérifie lequel tu\nutilises.\n\n**Curryfier une fonction variadique.** Une fonction à nombre libre d'arguments ne sait pas\nquand elle a tout reçu ; le currying suppose une arité connue.\n\n**Composer des fonctions à plusieurs arguments.** Chaque étape ne reçoit qu'une valeur :\napplique partiellement d'abord.\n\n**Abstraire trop tôt.** Une `pipe` de trois fonctions anonymes utilisée une seule fois est\nplus difficile à lire que trois lignes successives.\n\n## À retenir\n\n- Une fonction qui renvoie une fonction retient ses arguments par closure.\n- Application partielle : fixer une partie des arguments pour fabriquer une variante.\n- Currying : `f(a, b)` devient `f(a)(b)`, un argument à la fois.\n- `pipe` se lit de gauche à droite, `compose` de droite à gauche.\n- Ces outils servent à **nommer** des étapes, pas à compresser du code.\n\n## Exercices\n\n1. Écris `multiplier` de sorte que `multiplier(2)(5)` vaille 10, puis fabrique `doubler` et\n   `tripler`.\n\n   :::indice\n   La fonction externe reçoit le facteur et renvoie une fonction qui reçoit le nombre.\n   :::\n\n   :::solution\n   ```js\n   const multiplier = (facteur) => (nombre) => nombre * facteur;\n\n   const doubler = multiplier(2);\n   const tripler = multiplier(3);\n\n   console.log(multiplier(2)(5), doubler(5), tripler(5)); // 10 10 15\n   console.log([1, 2, 3].map(doubler)); // [2, 4, 6]\n   ```\n   :::\n\n2. Écris `pipe(...fonctions)` qui renvoie une fonction appliquant chaque transformation dans\n   l'ordre, et utilise-la pour transformer `'  Mon Titre  '` en `'mon-titre'`.\n\n   :::indice\n   `reduce` part de la valeur d'entrée et applique chaque fonction au résultat précédent.\n   :::\n\n   :::indice\n   `pipe` renvoie une fonction : c'est donc une fonction qui renvoie une fonction.\n   :::\n\n   :::solution\n   ```js\n   const pipe = (...fonctions) => (valeur) =>\n     fonctions.reduce((resultat, fonction) => fonction(resultat), valeur);\n\n   const versSlug = pipe(\n     (texte) => texte.trim(),\n     (texte) => texte.toLowerCase(),\n     (texte) => texte.replaceAll(' ', '-'),\n   );\n\n   console.log(versSlug('  Mon Titre  ')); // 'mon-titre'\n   ```\n   :::\n\n3. À partir de `journal(niveau, message)`, fabrique `info` et `erreur` sans réécrire la\n   logique.\n\n   :::indice\n   Fixe le premier argument maintenant, laisse le second pour plus tard.\n   :::\n\n   :::solution\n   ```js\n   const journal = (niveau) => (message) => `[${niveau}] ${message}`;\n\n   const info = journal('info');\n   const erreur = journal('erreur');\n\n   console.log(info('serveur démarré')); // '[info] serveur démarré'\n   console.log(erreur('connexion perdue')); // '[erreur] connexion perdue'\n   ```\n\n   Sans currying, la même idée s'écrit avec une fonction ordinaire :\n   `const info = (message) => journalComplet('info', message)`. C'est souvent plus lisible, et\n   parfaitement légitime.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre currying et application partielle ?\n\n  :::indice\n  Combien d'arguments chaque appel accepte-t-il ?\n  :::\n\n  :::reponse\n  Le currying transforme une fonction de `n` arguments en `n` fonctions d'un argument :\n  `f(a, b, c)` devient `f(a)(b)(c)`. L'application partielle fixe simplement une partie des\n  arguments et renvoie une fonction attendant le reste, sans contrainte sur le découpage :\n  `partielle(f, a, b)` peut encore accepter `c` et `d` ensemble. Le currying est une forme\n  stricte ; l'application partielle est ce dont on a besoin la plupart du temps.\n  :::\n\n- À quoi sert une fonction `pipe` ?\n\n  :::indice\n  Que devient une suite d'appels imbriqués quand on la compose ?\n  :::\n\n  :::reponse\n  À nommer et enchaîner des transformations : `pipe(trim, minuscules, slugifier)` remplace\n  `slugifier(minuscules(trim(texte)))`, qui se lit de l'intérieur vers l'extérieur. Chaque\n  étape est une fonction à un argument, testable séparément et réutilisable ailleurs. La\n  composition n'apporte rien si les étapes n'ont pas de nom propre : trois instructions\n  successives sont alors plus claires.\n  :::\n\n- Quand faut-il éviter ce style ?\n\n  :::indice\n  Pense au lecteur du code et à la pile d'appels d'une erreur.\n  :::\n\n  :::reponse\n  Quand l'abstraction n'est utilisée qu'une fois, quand les fonctions composées sont anonymes\n  — la pile d'appels devient illisible au moment du diagnostic —, ou quand la fonction de\n  départ est variadique, auquel cas le currying n'a pas d'arité fixe à respecter. Le critère\n  est simple : si chaque étape mérite un nom et sera réutilisée, ce style aide ; sinon, il\n  ajoute une couche à traverser pour rien.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-fonctions-flechees",
+      "title": "Expressions de fonction et fonctions fléchées",
+      "slug": "expressions-et-fonctions-flechees",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "fonctions-avancees",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-functions"
+      ],
+      "skills": [
+        "arrow-functions"
+      ],
+      "tags": [
+        "javascript",
+        "fonctions"
+      ],
+      "contentPath": "javascript/fonctions-avancees/expressions-et-fonctions-flechees/lesson.md",
+      "contentVersion": "4ccb43578a3d",
+      "body": "\n## Objectifs\n\n- Écrire une fonction sous forme d'expression, nommée ou anonyme.\n- Utiliser les fonctions fléchées et leur retour implicite.\n- Choisir entre déclaration, expression et fléchée en connaissant ce que chacune apporte.\n\n## Introduction\n\nJusqu'ici, une fonction se déclarait avec `function`. Mais une fonction est une **valeur** :\non peut la ranger dans une variable, la passer en argument, la renvoyer. Les fonctions\nfléchées, arrivées avec ES2015, rendent cette écriture assez courte pour tenir dans un\nappel à `map` — et c'est la forme que l'on croise le plus souvent dans le code moderne.\n\n## Concept\n\n| Forme | Écriture | Hoistée | `this` propre |\n| --- | --- | --- | --- |\n| Déclaration | `function double(n) { return n * 2; }` | oui | oui |\n| Expression anonyme | `const double = function (n) { return n * 2; };` | non | oui |\n| Expression nommée | `const double = function calcul(n) { … };` | non | oui |\n| Fléchée | `const double = (n) => n * 2;` | non | non, hérité |\n\nLes formes d'une fonction fléchée, de la plus complète à la plus courte :\n\n```js\nconst double = (n) => { return n * 2; }; // corps en bloc, return explicite\nconst double2 = (n) => n * 2;            // retour implicite\nconst somme = (a, b) => a + b;           // plusieurs paramètres\nconst zero = () => 0;                    // aucun paramètre\nconst point = () => ({ x: 0, y: 0 });    // objet : parenthèses obligatoires\n```\n\n## Exemple\n\n```js\nfunction doubleDeclare(n) {\n  return n * 2;\n}\n\nconst doubleExpression = function (n) {\n  return n * 2;\n};\n\nconst doubleFleche = (n) => n * 2;\n\nconsole.log(doubleDeclare(4), doubleExpression(4), doubleFleche(4)); // 8 8 8\n\nconst nombres = [1, 2, 3];\nconsole.log(nombres.map((n) => n * 2)); // [2, 4, 6]\nconsole.log(nombres.filter((n) => n % 2 === 1)); // [1, 3]\n\nconst versObjet = (nom) => ({ nom, cree: true });\nconsole.log(versObjet('Ada')); // { nom: 'Ada', cree: true }\n\nconst sansParentheses = (nom) => { nom, cree: true };\nconsole.log(sansParentheses('Ada')); // undefined : le corps est un bloc, pas un objet\n\nconsole.log(avantDeclaration()); // 'ok' : la déclaration est hoistée\nfunction avantDeclaration() {\n  return 'ok';\n}\n```\n\n## Comment ça fonctionne\n\nUne **déclaration** de fonction est hoistée entièrement : le moteur la connaît avant\nd'exécuter la ligne, donc on peut l'appeler plus haut dans le fichier. Une **expression**\nsuit les règles de la variable qui la reçoit : avec `const` ou `let`, l'appeler avant sa\nligne lève une `ReferenceError` — la zone morte temporelle.\n\nUne **fonction fléchée** est plus qu'une syntaxe courte : elle n'a pas de `this` propre, pas\nd'objet `arguments`, pas de `prototype`, et ne peut pas être appelée avec `new`. Elle\nemprunte le `this` de l'endroit où elle est écrite, ce qui est exactement ce qu'on veut dans\nun callback, et exactement ce qu'on ne veut pas pour une méthode d'objet qui doit parler de\nson objet. Le détail de `this` est traité dans la partie Runtime ; retiens pour l'instant\nque la fléchée ne s'en attribue pas.\n\nLe **retour implicite** ne fonctionne que sans accolades : `(n) => n * 2` renvoie, alors que\n`(n) => { n * 2; }` exécute un bloc et renvoie `undefined`. Pour renvoyer un objet littéral,\nil faut des parenthèses, sinon l'accolade est lue comme un bloc : `() => ({ x: 0 })`.\n\nLes fonctions gardent un nom même anonymes : `const double = () => {}` donne à la fonction\nle nom `double`, ce qui rend les piles d'appel lisibles. Une expression nommée,\n`const f = function calcul() {}`, permet en plus à la fonction de s'appeler elle-même par\nson nom interne.\n\n## Erreurs fréquentes\n\n**Oublier les parenthèses autour d'un objet renvoyé.** `() => { x: 1 }` renvoie `undefined`.\n\n**Appeler une expression avant sa définition.** `ReferenceError` : contrairement à une\ndéclaration, elle n'est pas hoistée.\n\n**Utiliser une fléchée comme méthode qui a besoin de `this`.** Elle hérite du `this`\nextérieur et ne parle pas de son objet.\n\n**Ajouter des accolades en gardant le retour implicite en tête.** Dès qu'il y a un bloc, il\nfaut écrire `return`.\n\n## À retenir\n\n- Une fonction est une valeur : elle se range dans une variable, se passe, se renvoie.\n- Déclaration : hoistée. Expression : soumise à la zone morte temporelle.\n- Fléchée : courte, retour implicite sans accolades, pas de `this` ni de `new`.\n- Objet renvoyé par une fléchée : parenthèses obligatoires.\n- Pour un callback, la fléchée est le choix par défaut.\n\n## Exercices\n\n1. Réécris ces trois fonctions en fléchées les plus concises possibles.\n\n   ```js\n   function carre(n) { return n * n; }\n   function somme(a, b) { return a + b; }\n   function saluer() { return 'Bonjour'; }\n   ```\n\n   :::indice\n   Sans accolades, le corps d'une fléchée est directement la valeur renvoyée. Un paramètre\n   unique peut se passer de parenthèses, mais la convention est de les garder.\n   :::\n\n   :::solution\n   ```js\n   const carre = (n) => n * n;\n   const somme = (a, b) => a + b;\n   const saluer = () => 'Bonjour';\n\n   console.log(carre(4), somme(2, 3), saluer()); // 16 5 'Bonjour'\n   ```\n   :::\n\n2. Écris en une seule ligne une fonction `enPoint(x, y)` qui renvoie `{ x, y }`.\n\n   :::indice\n   Une accolade en début de corps est lue comme un bloc : il faut lever l'ambiguïté.\n   :::\n\n   :::solution\n   ```js\n   const enPoint = (x, y) => ({ x, y });\n\n   console.log(enPoint(1, 2)); // { x: 1, y: 2 }\n   console.log(((x, y) => { x, y })(1, 2)); // undefined : sans parenthèses, c'est un bloc\n   ```\n   :::\n\n3. Explique pourquoi le premier appel échoue et pas le second.\n\n   ```js\n   console.log(aire(2)); // ?\n   console.log(perimetre(2)); // ?\n   const aire = (c) => c * c;\n   function perimetre(c) { return c * 4; }\n   ```\n\n   :::indice\n   Les deux formes ne sont pas connues du moteur au même moment.\n   :::\n\n   :::solution\n   `aire` est une expression affectée à un `const` : la liaison existe mais reste dans la zone\n   morte temporelle jusqu'à sa ligne, donc l'appel lève\n   `ReferenceError: Cannot access 'aire' before initialization`. `perimetre` est une\n   déclaration : elle est hoistée complètement et peut être appelée avant sa ligne.\n\n   ```js\n   console.log(perimetre(2)); // 8\n   const aire = (c) => c * c;\n   console.log(aire(2)); // 4, une fois la ligne exécutée\n   function perimetre(c) { return c * 4; }\n   ```\n\n   En pratique, on déclare avant d'utiliser : compter sur le hoisting rend la lecture plus\n   difficile.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre une déclaration et une expression de fonction ?\n\n  :::indice\n  Essaie d'appeler chacune avant sa ligne.\n  :::\n\n  :::reponse\n  Une déclaration, `function f() {}`, est hoistée entièrement : elle est utilisable avant sa\n  ligne dans la même portée. Une expression, `const f = function () {}` ou une fléchée, suit\n  la variable qui la reçoit : avec `const` ou `let`, l'appeler avant lève une `ReferenceError`.\n  L'expression a l'avantage d'être une valeur ordinaire, qu'on peut passer, renvoyer ou\n  définir conditionnellement.\n  :::\n\n- Que perd-on en utilisant une fonction fléchée ?\n\n  :::indice\n  Trois choses qu'une fonction classique possède et qu'une fléchée n'a pas.\n  :::\n\n  :::reponse\n  Une fléchée n'a pas de `this` propre — elle emprunte celui de son environnement d'écriture\n  —, pas d'objet `arguments`, et pas de `prototype` : elle ne peut pas être utilisée avec\n  `new`. Ces absences sont un avantage dans un callback, où l'on veut justement garder le\n  `this` extérieur, et un défaut pour une méthode d'objet ou un constructeur, qui ont besoin\n  du leur.\n  :::\n\n- Pourquoi `() => { nom: 'Ada' }` ne renvoie-t-il pas d'objet ?\n\n  :::indice\n  Comment le moteur lit-il une accolade juste après la flèche ?\n  :::\n\n  :::reponse\n  Après la flèche, une accolade ouvre un **corps de fonction**, pas un objet littéral. Le\n  contenu est alors lu comme des instructions : `nom:` devient une étiquette et `'Ada'` une\n  expression sans effet. Le corps ne contient aucun `return`, donc la fonction renvoie\n  `undefined`. Il faut entourer l'objet de parenthèses : `() => ({ nom: 'Ada' })`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-rest-spread",
+      "title": "Rest et spread : un nombre libre d'arguments",
+      "slug": "rest-et-spread",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "fonctions-avancees",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-fonctions-parametres"
+      ],
+      "skills": [
+        "rest-spread-arguments"
+      ],
+      "tags": [
+        "javascript",
+        "fonctions"
+      ],
+      "contentPath": "javascript/fonctions-avancees/rest-et-spread/lesson.md",
+      "contentVersion": "931609437d54",
+      "body": "\n## Objectifs\n\n- Accepter un nombre libre d'arguments avec un paramètre de reste.\n- Étaler un tableau en arguments à l'appel avec le spread.\n- Remplacer l'objet `arguments` par une écriture moderne et lisible.\n\n## Introduction\n\n`Math.max(1, 2, 3)` accepte autant d'arguments qu'on veut ; `console.log` aussi. À\nl'inverse, on a souvent un tableau et une fonction qui attend des arguments séparés. Les\ntrois points `...` répondent aux deux besoins : **rester** côté déclaration, **étaler**\ncôté appel. Même symbole, deux sens opposés — et c'est ce qui les rend faciles à confondre.\n\n## Concept\n\n| Où | Nom | Rôle |\n| --- | --- | --- |\n| Dans la déclaration | reste | rassemble les arguments restants dans un tableau |\n| Dans l'appel | spread | étale un itérable en arguments séparés |\n\n```js\nfunction additionner(...nombres) {}  // reste : nombres est un tableau\nadditionner(...[1, 2, 3]);           // spread : trois arguments\n```\n\nRègles du paramètre de reste : il est **unique**, toujours **en dernier**, et c'est un vrai\ntableau — avec `map`, `filter` et `reduce`, contrairement à l'objet `arguments`.\n\n## Exemple\n\n```js\nfunction additionner(...nombres) {\n  return nombres.reduce((somme, n) => somme + n, 0);\n}\nconsole.log(additionner()); // 0\nconsole.log(additionner(1, 2, 3)); // 6\n\nfunction journaliser(niveau, ...messages) {\n  return `[${niveau}] ${messages.join(' ')}`;\n}\nconsole.log(journaliser('info', 'serveur', 'démarré')); // '[info] serveur démarré'\n\nconst scores = [12, 45, 7];\nconsole.log(Math.max(...scores)); // 45\nconsole.log(Math.max(scores)); // NaN : un tableau n'est pas un nombre\n\nconst debut = [1, 2];\nconst fin = [5, 6];\nconsole.log([...debut, 3, 4, ...fin]); // [1, 2, 3, 4, 5, 6]\n\nfunction ancienne() {\n  return Array.from(arguments).join('-'); // objet arguments, forme historique\n}\nconsole.log(ancienne('a', 'b')); // 'a-b'\n```\n\n## Comment ça fonctionne\n\nLe paramètre de reste rassemble tout ce qui n'a pas été capté par les paramètres précédents,\ndans un **vrai tableau** — vide s'il ne reste rien. C'est sa principale différence avec\nl'objet `arguments`, qui ressemble à un tableau sans en être un, n'existe pas dans les\nfonctions fléchées, et ne dit pas quels arguments la fonction attend vraiment.\n\nLe spread, côté appel, fonctionne avec n'importe quel **itérable** : tableau, chaîne, `Set`,\n`Map`. `Math.max(...scores)` transmet donc trois arguments distincts, là où\n`Math.max(scores)` transmet un tableau, converti en `NaN`.\n\nIl y a une limite pratique : étaler un très grand tableau — de l'ordre de la centaine de\nmilliers d'éléments — peut dépasser la taille de la pile d'appels et lever une\n`RangeError`. Pour un maximum sur un gros volume, une boucle ou un `reduce` reste plus sûr.\n\n`f.length` ignore le paramètre de reste : `(a, ...reste) => {}` a une longueur de 1. Et\ncomme le reste doit être le dernier paramètre, `function f(...nombres, dernier)` est une\nerreur de syntaxe.\n\nLe même symbole sert à copier un tableau, `[...liste]`, ou un objet, `{ ...objet }` : dans\nles deux cas, il s'agit d'étaler le contenu dans une nouvelle structure.\n\n## Erreurs fréquentes\n\n**Passer un tableau à une fonction variadique.** `Math.max(scores)` donne `NaN` : il faut\n`Math.max(...scores)`.\n\n**Placer le reste ailleurs qu'en dernier.** C'est une erreur de syntaxe.\n\n**Utiliser `arguments` dans une fonction fléchée.** Il n'y existe pas : utilise `...args`.\n\n**Traiter `arguments` comme un tableau.** Il n'a ni `map` ni `filter` ; il faut d'abord\n`Array.from(arguments)`.\n\n## À retenir\n\n- Déclaration : `...nom` rassemble les arguments restants dans un tableau.\n- Appel : `...iterable` étale les valeurs en arguments séparés.\n- Le reste est unique et toujours en dernier ; il est vide plutôt qu'absent.\n- `arguments` est une survivance : `...args` le remplace, y compris dans les fléchées.\n- Étaler un très grand tableau peut lever une `RangeError`.\n\n## Exercices\n\n1. Écris `moyenne(...notes)` qui accepte un nombre libre de notes et renvoie `0` si on ne\n   lui en passe aucune.\n\n   :::indice\n   Le paramètre de reste est un tableau, éventuellement vide : teste sa longueur avant de\n   diviser.\n   :::\n\n   :::solution\n   ```js\n   function moyenne(...notes) {\n     if (notes.length === 0) {\n       return 0;\n     }\n     return notes.reduce((somme, note) => somme + note, 0) / notes.length;\n   }\n\n   console.log(moyenne(12, 15, 9)); // 12\n   console.log(moyenne()); // 0\n   ```\n\n   Sans le garde-fou, la division par `0` renverrait `NaN`.\n   :::\n\n2. À partir de `const scores = [12, 45, 7]`, affiche le plus grand score, puis crée un\n   tableau qui insère `0` avant ces scores et `100` après.\n\n   :::indice\n   `Math.max` attend des arguments séparés, pas un tableau.\n   :::\n\n   :::solution\n   ```js\n   const scores = [12, 45, 7];\n\n   console.log(Math.max(...scores)); // 45\n   console.log([0, ...scores, 100]); // [0, 12, 45, 7, 100]\n   ```\n   :::\n\n3. Écris `journaliser(niveau, ...messages)` qui produit `[info] serveur démarré`, puis\n   appelle-la en lui passant un tableau de messages déjà constitué.\n\n   :::indice\n   Le reste rassemble à la déclaration ; le spread étale à l'appel. Les deux se combinent.\n   :::\n\n   :::solution\n   ```js\n   function journaliser(niveau, ...messages) {\n     return `[${niveau}] ${messages.join(' ')}`;\n   }\n\n   console.log(journaliser('info', 'serveur', 'démarré')); // '[info] serveur démarré'\n\n   const parties = ['serveur', 'démarré'];\n   console.log(journaliser('info', ...parties)); // même résultat\n   console.log(journaliser('info', parties)); // '[info] serveur,démarré' : un seul argument\n   ```\n\n   Le dernier appel montre la différence : sans spread, le tableau entier devient un seul\n   message, et `join` affiche sa conversion en chaîne.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre le reste et le spread ?\n\n  :::indice\n  Le symbole est le même : ce qui change, c'est l'endroit où il apparaît.\n  :::\n\n  :::reponse\n  Le reste apparaît dans une **déclaration** — paramètres, destructuring — et **rassemble**\n  plusieurs valeurs dans un tableau ou un objet. Le spread apparaît dans un **appel** ou un\n  littéral et **étale** un itérable en valeurs séparées. L'un concentre, l'autre disperse ;\n  on les distingue en regardant si l'on est en train de recevoir ou d'envoyer des valeurs.\n  :::\n\n- Pourquoi préférer `...args` à l'objet `arguments` ?\n\n  :::indice\n  Regarde le type de chacun, et les fonctions où ils existent.\n  :::\n\n  :::reponse\n  `...args` est un vrai tableau : il a `map`, `filter` et `reduce`, et il apparaît dans la\n  signature, donc le lecteur voit que la fonction est variadique. `arguments` est un\n  objet ressemblant à un tableau, qu'il faut convertir avec `Array.from`, il n'existe pas dans\n  les fonctions fléchées, et il masque la véritable signature. C'est une survivance d'avant\n  ES2015.\n  :::\n\n- Y a-t-il une limite au spread dans un appel ?\n\n  :::indice\n  Que devient chaque valeur étalée, du point de vue de l'appel de fonction ?\n  :::\n\n  :::reponse\n  Oui : chaque valeur devient un argument, et le nombre d'arguments d'un appel est limité par\n  la pile. Étaler un tableau de plusieurs centaines de milliers d'éléments peut lever une\n  `RangeError: Maximum call stack size exceeded`. Pour agréger un gros volume, on utilise une\n  boucle ou `reduce` plutôt que `Math.max(...enorme)`.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -1818,6 +2279,114 @@
       "contentPath": "javascript/operateurs/ternaire-et-precedence/lesson.md",
       "contentVersion": "d9846717f087",
       "body": "\n## Objectifs\n\n- Utiliser l'opérateur ternaire là où une valeur est attendue, et l'éviter ailleurs.\n- Prévoir l'ordre d'évaluation d'une expression grâce à la précédence et à\n  l'associativité.\n- Ajouter des parenthèses là où la lecture n'est pas évidente.\n\n## Introduction\n\n`2 + 3 * 4` vaut `14`, pas `20` : tout le monde l'a appris à l'école. JavaScript applique\nla même idée à tous ses opérateurs, y compris `&&`, `===`, `typeof` ou `=`, avec des\nrègles moins intuitives. L'opérateur ternaire, lui, est la version expression d'un\n`if` : il produit une valeur. Bien utilisé, il rend le code plus direct ; imbriqué, il le\nrend illisible.\n\n## Concept\n\nL'**opérateur ternaire** `condition ? siVrai : siFaux` est une **expression** : il\nproduit une valeur, là où `if` est une instruction qui n'en produit pas.\n\n```js\nconst libelle = stock > 0 ? 'En stock' : 'Rupture';\n```\n\nLa **précédence** décide quel opérateur s'applique en premier. Du plus prioritaire au\nmoins prioritaire, pour les plus courants :\n\n| Priorité | Opérateurs |\n| --- | --- |\n| 1 | `( )` groupement, `.` et `[ ]` accès, `( )` appel |\n| 2 | `++` `--` suffixes |\n| 3 | `!` `typeof` `+` `-` unaires, `++` `--` préfixes |\n| 4 | `**` |\n| 5 | `*` `/` `%` |\n| 6 | `+` `-` |\n| 7 | `<` `>` `<=` `>=` `in` `instanceof` |\n| 8 | `==` `!=` `===` `!==` |\n| 9 | `&&` |\n| 10 | `\\|\\|` `??` |\n| 11 | `? :` ternaire |\n| 12 | `=` `+=` et les autres affectations |\n\nL'**associativité** décide de l'ordre entre opérateurs de même priorité. La plupart sont\névalués de gauche à droite (`10 - 4 - 3` vaut `3`). Deux exceptions à connaître : `**` et\nl'affectation, évalués de droite à gauche.\n\n## Exemple\n\n```js\nconsole.log(2 + 3 * 4); // 14\nconsole.log((2 + 3) * 4); // 20\nconsole.log(10 - 4 - 3); // 3 : (10 - 4) - 3\nconsole.log(2 ** 3 ** 2); // 512 : 2 ** (3 ** 2)\n\nlet a;\nlet b;\na = b = 5; // a = (b = 5) : les deux valent 5\n\nconst valeur = 'Ada';\nconsole.log(typeof valeur === 'string'); // true : typeof s'applique avant ===\n\nconst age = 20;\nconst tarif = age < 26 ? 'jeune' : 'plein';\nconsole.log(`Tarif ${tarif}`); // Tarif jeune\n```\n\n## Comment ça fonctionne\n\nLe moteur construit un arbre à partir de l'expression : l'opérateur le moins prioritaire\nse retrouve à la racine, les plus prioritaires dans les feuilles. `2 + 3 * 4` devient une\naddition dont l'opérande de droite est la multiplication.\n\nCertaines combinaisons sont volontairement interdites pour éviter une ambiguïté :\n\n```js\n-2 ** 2; // SyntaxError : faut-il lire (-2) ** 2 ou -(2 ** 2) ?\n(-2) ** 2; // 4\n-(2 ** 2); // -4\n```\n\nLa précédence explique aussi des bugs discrets :\n\n```js\nconst estVide = !liste.length === 0; // (!liste.length) === 0 : toujours false\nconst estVideCorrige = liste.length === 0;\n```\n\nLe ternaire a une priorité très basse : dans `prix + estMembre ? 5 : 0`, c'est\n`prix + estMembre` qui sert de condition. Il faut écrire `prix + (estMembre ? 5 : 0)`.\n\n## Erreurs fréquentes\n\n**Imbriquer des ternaires.** Au-delà d'un niveau, le code devient une devinette.\nPréfère une suite de `if`, ou une table de correspondance.\n\n**Utiliser un ternaire pour ses effets de bord.** `estValide ? envoyer() : afficherErreur()`\nexécute des actions sans produire de valeur utile : c'est le rôle d'un `if`.\n\n**Oublier la priorité basse du ternaire dans une addition ou une concaténation.**\nEntoure le ternaire de parenthèses.\n\n**Appliquer `!` au mauvais opérande.** `!a === b` compare `!a` à `b`. Écris `a !== b` ou\n`!(a === b)`.\n\n**Compter sur sa mémoire de la table de priorité.** Dès qu'un doute existe, des\nparenthèses rendent l'intention évidente pour tout le monde.\n\n## À retenir\n\n- Le ternaire est une expression : il sert à produire une valeur, pas à exécuter des\n  actions.\n- `*` avant `+`, `===` avant `&&`, `&&` avant `||`, affectation en dernier.\n- `**` et `=` s'évaluent de droite à gauche ; les autres de gauche à droite.\n- `-2 ** 2` est une erreur de syntaxe.\n- En cas de doute, des parenthèses.\n\n## Exercices\n\n1. Prévois la valeur de `2 + 3 * 4 ** 2`, `(2 + 3) * 4`, `10 - 4 - 3` et `2 ** 3 ** 2`.\n\n   :::indice\n   `**` passe avant `*`, qui passe avant `+`. Et `**` s'évalue de droite à gauche.\n   :::\n\n   :::solution\n   - `2 + 3 * 4 ** 2` : `4 ** 2` vaut `16`, `3 * 16` vaut `48`, puis `50`.\n   - `(2 + 3) * 4` : `20`, les parenthèses passent en premier.\n   - `10 - 4 - 3` : `3`, soit `(10 - 4) - 3`.\n   - `2 ** 3 ** 2` : `2 ** 9`, soit `512`.\n   :::\n\n2. Remplace ce `if` / `else`, qui ne sert qu'à choisir une valeur, par une expression\n   ternaire.\n\n   ```js\n   let libelle;\n   if (stock > 0) {\n     libelle = 'En stock';\n   } else {\n     libelle = 'Rupture';\n   }\n   ```\n\n   :::indice\n   Le ternaire produit directement la valeur : la variable peut alors devenir une\n   constante.\n   :::\n\n   :::solution\n   ```js\n   const libelle = stock > 0 ? 'En stock' : 'Rupture';\n   ```\n\n   On gagne en concision, et `libelle` devient une constante : elle ne pourra plus être\n   réaffectée par erreur plus loin.\n   :::\n\n3. Ce ternaire imbriqué est difficile à lire. Réécris-le clairement.\n\n   ```js\n   const tarif = age < 12 ? 'enfant' : age < 26 ? 'jeune' : age >= 65 ? 'senior' : 'plein';\n   ```\n\n   :::indice\n   Une suite de `if` / `else if` exprime la même logique, une condition par ligne.\n   :::\n\n   :::solution\n   ```js\n   let tarif;\n   if (age < 12) {\n     tarif = 'enfant';\n   } else if (age < 26) {\n     tarif = 'jeune';\n   } else if (age >= 65) {\n     tarif = 'senior';\n   } else {\n     tarif = 'plein';\n   }\n   ```\n\n   Chaque cas se lit sur sa ligne, et l'ordre des conditions devient visible : c'est lui\n   qui garantit qu'un enfant n'est pas classé « jeune ».\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `-2 ** 2` est-il une erreur de syntaxe en JavaScript ?\n\n  :::indice\n  Écris les deux façons possibles de lire cette expression, et calcule-les.\n  :::\n\n  :::reponse\n  L'expression est ambiguë : `(-2) ** 2` vaut `4`, `-(2 ** 2)` vaut `-4`, et les\n  mathématiques comme les autres langages ne s'accordent pas sur la lecture attendue. Plutôt\n  que de choisir une règle que la moitié des développeurs lirait mal, la spécification\n  interdit un opérateur unaire directement devant la base de `**`. Il faut écrire les\n  parenthèses.\n  :::\n\n- Quand préférer un ternaire à un `if` ?\n\n  :::indice\n  Qu'est-ce qu'un ternaire produit, et qu'est-ce qu'un `if` ne produit pas ?\n  :::\n\n  :::reponse\n  Quand il s'agit de choisir entre deux valeurs : initialiser une constante, passer un\n  argument, construire une chaîne. Le ternaire est une expression, il s'utilise là où une\n  valeur est attendue. On garde `if` pour exécuter des actions, pour plus de deux cas, ou\n  dès que le ternaire deviendrait imbriqué.\n  :::\n\n- Que signifie l'associativité d'un opérateur ? Donne un exemple.\n\n  :::indice\n  Que se passe-t-il quand plusieurs opérateurs de même priorité se suivent ?\n  :::\n\n  :::reponse\n  L'associativité décide de l'ordre d'évaluation entre des opérateurs de même priorité. La\n  soustraction est associative à gauche : `10 - 4 - 3` se lit `(10 - 4) - 3` et vaut `3`.\n  La puissance et l'affectation sont associatives à droite : `2 ** 3 ** 2` se lit\n  `2 ** (3 ** 2)` et vaut `512`, et `a = b = 5` affecte d'abord `b`, puis `a`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-erreurs-portee",
+      "title": "Diagnostiquer les erreurs de portée",
+      "slug": "erreurs-de-portee",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "portee",
+      "order": 3,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-hoisting"
+      ],
+      "skills": [
+        "scope-errors"
+      ],
+      "tags": [
+        "javascript",
+        "portee"
+      ],
+      "contentPath": "javascript/portee/erreurs-de-portee/lesson.md",
+      "contentVersion": "911f97f912b5",
+      "body": "\n## Objectifs\n\n- Lire un message d'erreur de portée et remonter à sa cause en une lecture.\n- Distinguer une variable non déclarée d'une variable valant `undefined`.\n- Reconnaître le masquage (*shadowing*) et les globales accidentelles.\n\n## Introduction\n\nLes erreurs de portée sont parmi les plus fréquentes, et leurs messages sont plus précis\nqu'il n'y paraît : chaque formulation désigne une cause unique. Savoir les lire transforme\nun débogage tâtonnant en diagnostic direct — et c'est une question d'entretien classique,\nparce qu'elle révèle immédiatement la compréhension du modèle.\n\n## Concept\n\n| Message | Cause | Correction |\n| --- | --- | --- |\n| `x is not defined` | le nom n'existe dans aucune portée accessible | déclarer, importer, corriger l'orthographe |\n| `Cannot access 'x' before initialization` | lecture dans la zone morte d'un `let` / `const` | déplacer l'usage après la déclaration |\n| `Assignment to constant variable` | réaffectation d'un `const` | utiliser `let`, ou modifier le contenu de l'objet |\n| `x is not a function` | le nom existe mais ne contient pas de fonction | vérifier ce que la variable contient vraiment |\n| `Identifier 'x' has already been declared` | deux `let` / `const` du même nom dans la portée | renommer, ou supprimer le doublon |\n\nLe **masquage** n'est pas une erreur : une variable intérieure du même nom cache celle de\nl'extérieur, dans sa portée seulement.\n\n## Exemple\n\n```js\nfunction total(prix) {\n  const taux = 0.2;\n  {\n    const taux = 0.05; // masque le taux extérieur, dans ce bloc uniquement\n    console.log(prix * (1 + taux)); // 105 pour prix = 100\n  }\n  return prix * (1 + taux); // 120 : le taux extérieur est intact\n}\nconsole.log(total(100)); // 105 affiché, puis 120 renvoyé\n\nfunction compteur() {\n  resultat = 0; // aucune déclaration : globale accidentelle en mode non strict\n  return resultat;\n}\n\nconsole.log(typeof inexistant); // 'undefined'\n// console.log(inexistant); // ReferenceError: inexistant is not defined\n\nconst utilisateur = { nom: 'Ada' };\n// utilisateur = {}; // TypeError: Assignment to constant variable\nutilisateur.nom = 'Grace'; // autorisé : le contenu n'est pas figé\nconsole.log(utilisateur.nom); // 'Grace'\n```\n\n## Comment ça fonctionne\n\nTrois questions suffisent à diagnostiquer presque toutes les erreurs de portée : **où le\nnom est-il déclaré ?**, **dans quelle portée le lis-tu ?**, et **à quel moment** ?\n\n`is not defined` répond à la première : le nom n'existe dans aucune portée de la chaîne.\nC'est souvent une faute de frappe, un import oublié, ou une variable déclarée dans un bloc\nvoisin. `Cannot access 'x' before initialization` répond à la troisième : le nom existe bien\ndans cette portée, mais la ligne de déclaration n'a pas encore été exécutée.\n\nLa confusion classique oppose `undefined` et `is not defined`. `undefined` est une\n**valeur** : la variable existe et ne contient rien d'utile. `is not defined` est une\n**erreur** : la variable n'existe pas. `typeof` renvoie `'undefined'` dans les deux cas pour\nune variable jamais déclarée, ce qui masque parfois la vraie cause.\n\nLe masquage est un outil légitime : un paramètre nommé comme une variable extérieure évite\nd'inventer un nom laid. Il devient un problème quand il est involontaire — une variable de\nboucle qui cache une variable d'état, par exemple : le code extérieur ne change pas, et on\ncherche l'erreur au mauvais endroit. L'indice est qu'une modification « n'a aucun effet ».\n\nLes **globales accidentelles** viennent d'une affectation sans déclaration. En mode non\nstrict, `resultat = 0` crée silencieusement une variable globale, partagée par tout le\nprogramme : deux fonctions peuvent alors s'écraser mutuellement. Le mode strict — actif\nd'office dans les modules ES et les classes — en fait une `ReferenceError`. C'est une des\nmeilleures raisons de travailler en modules.\n\n## Erreurs fréquentes\n\n**Chercher la cause au point de l'erreur.** Le message indique où le nom manque, pas où il\naurait dû être déclaré.\n\n**Confondre `undefined` et `is not defined`.** L'un est une valeur, l'autre une absence.\n\n**Masquer sans le vouloir.** Deux variables du même nom dans deux portées imbriquées : la\nmodification de l'une ne touche pas l'autre.\n\n**Oublier le mode strict.** Sans lui, une faute de frappe dans une affectation crée une\nglobale au lieu d'échouer.\n\n## À retenir\n\n- `is not defined` : le nom n'existe nulle part dans la chaîne de portée.\n- `Cannot access … before initialization` : zone morte, la déclaration est plus bas.\n- `Assignment to constant variable` : `const` interdit la réaffectation, pas la mutation.\n- Le masquage est local et volontaire ; involontaire, il fait chercher au mauvais endroit.\n- Le mode strict transforme les globales accidentelles en erreurs.\n\n## Exercices\n\n1. Diagnostique ces trois erreurs : nomme la cause et propose la correction.\n\n   ```js\n   // a)\n   console.log(nom);\n   let nom = 'Ada';\n\n   // b)\n   const total = 10;\n   total = 20;\n\n   // c)\n   const outils = { nom: 'clé' };\n   outils.utiliser();\n   ```\n\n   :::indice\n   Chaque message correspond à une seule cause : lecture trop tôt, réaffectation, ou valeur\n   qui n'est pas ce qu'on croit.\n   :::\n\n   :::solution\n   **a)** `Cannot access 'nom' before initialization` : lecture dans la zone morte. Déplace le\n   `console.log` après la déclaration.\n\n   **b)** `Assignment to constant variable` : `const` interdit de réaffecter la liaison.\n   Utilise `let` si la valeur doit changer.\n\n   **c)** `outils.utiliser is not a function` : la propriété n'existe pas, donc vaut\n   `undefined`, et on tente de l'appeler. Vérifie le nom de la méthode, ou son existence avec\n   `outils.utiliser?.()`.\n   :::\n\n2. Corrige cette fonction, qui crée une variable globale sans le vouloir.\n\n   ```js\n   function calculer(prix) {\n     resultat = prix * 1.2;\n     return resultat;\n   }\n   ```\n\n   :::indice\n   Que manque-t-il devant `resultat` ?\n   :::\n\n   :::solution\n   ```js\n   function calculer(prix) {\n     const resultat = prix * 1.2;\n     return resultat;\n   }\n   ```\n\n   Sans déclaration, `resultat` devient une globale partagée par tout le programme en mode non\n   strict : deux appels concurrents ou deux fonctions du même nom s'écraseraient. En mode\n   strict — donc dans tout module ES —, la version d'origine lève\n   `ReferenceError: resultat is not defined`.\n   :::\n\n3. Explique pourquoi cette fonction renvoie toujours `0`.\n\n   ```js\n   let compteur = 0;\n   function incrementer() {\n     let compteur = compteur + 1; // ?\n     return compteur;\n   }\n   ```\n\n   :::indice\n   À quelle variable `compteur` se réfère-t-il à droite du `=` ?\n   :::\n\n   :::solution\n   Elle ne renvoie rien du tout : elle lève\n   `ReferenceError: Cannot access 'compteur' before initialization`. Le `let` intérieur masque\n   le `compteur` extérieur dans toute la fonction, y compris à droite du `=`, où il est encore\n   en zone morte.\n\n   ```js\n   let compteur = 0;\n   function incrementer() {\n     compteur += 1; // agit sur la variable extérieure\n     return compteur;\n   }\n   console.log(incrementer(), incrementer()); // 1 2\n   ```\n\n   Si l'on voulait vraiment une variable locale, il faudrait un autre nom : le masquage\n   involontaire est ici la cause de l'erreur.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `undefined` et `is not defined` ?\n\n  :::indice\n  L'un est une valeur, l'autre interrompt le programme.\n  :::\n\n  :::reponse\n  `undefined` est une valeur : la variable ou la propriété existe, mais ne contient rien\n  d'utile — paramètre non fourni, propriété absente, `var` lue avant son affectation.\n  `is not defined` est une `ReferenceError` : le nom n'existe dans aucune portée accessible,\n  et l'exécution s'arrête. Le piège est que `typeof` renvoie `'undefined'` dans les deux cas\n  pour un nom jamais déclaré.\n  :::\n\n- Qu'est-ce que le masquage, et quand devient-il gênant ?\n\n  :::indice\n  Que se passe-t-il quand deux portées imbriquées déclarent le même nom ?\n  :::\n\n  :::reponse\n  Le masquage, c'est une déclaration intérieure qui cache une variable extérieure du même nom,\n  dans sa portée seulement. C'est normal et utile — un paramètre `utilisateur` dans une\n  fonction qui manipule un `utilisateur` global. Il devient gênant quand il est involontaire :\n  on croit modifier la variable extérieure alors qu'on écrit dans une locale, et le symptôme\n  est une modification « sans effet ». Des noms distincts et des portées courtes l'évitent.\n  :::\n\n- En quoi le mode strict aide-t-il sur les erreurs de portée ?\n\n  :::indice\n  Que devient une affectation à une variable non déclarée ?\n  :::\n\n  :::reponse\n  Il transforme plusieurs erreurs silencieuses en erreurs immédiates : une affectation à une\n  variable non déclarée lève `ReferenceError` au lieu de créer une globale, les doublons de\n  paramètres sont interdits, et `this` vaut `undefined` plutôt que l'objet global dans une\n  fonction appelée seule. Les modules ES et les corps de classe sont en mode strict d'office :\n  écrire du JavaScript moderne suffit à en bénéficier.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-hoisting",
+      "title": "Hoisting et zone morte temporelle",
+      "slug": "hoisting-et-tdz",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "portee",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-portees"
+      ],
+      "skills": [
+        "hoisting-tdz"
+      ],
+      "tags": [
+        "javascript",
+        "portee"
+      ],
+      "contentPath": "javascript/portee/hoisting-et-tdz/lesson.md",
+      "contentVersion": "6bbcee06ada3",
+      "body": "\n## Objectifs\n\n- Expliquer ce que le moteur fait avant d'exécuter la première ligne d'une portée.\n- Distinguer le comportement de `var`, de `let`, de `const` et des déclarations de fonction.\n- Reconnaître une erreur de zone morte temporelle et savoir quoi corriger.\n\n## Introduction\n\n`console.log(x)` avant `var x = 1` affiche `undefined`. La même chose avec `let x = 1` lève\nune erreur. Et une fonction déclarée en bas de fichier s'appelle depuis le haut sans\nproblème. Ces trois comportements viennent du même mécanisme : le moteur **prépare** chaque\nportée avant de l'exécuter. Ce chapitre décrit cette préparation, appelée hoisting.\n\n## Concept\n\nL'exécution d'une portée se fait en deux temps :\n\n1. **Création** : le moteur enregistre toutes les déclarations qu'elle contient.\n2. **Exécution** : il déroule les instructions ligne à ligne.\n\nCe que vaut chaque déclaration pendant la phase de création :\n\n| Déclaration | Enregistrée | Utilisable avant sa ligne |\n| --- | --- | --- |\n| `function nom() {}` | avec son corps | oui |\n| `var x` | avec la valeur `undefined` | oui, mais vaut `undefined` |\n| `let x` / `const x` | sans valeur, en zone morte | non : `ReferenceError` |\n| `class X {}` | sans valeur, en zone morte | non : `ReferenceError` |\n| `const f = function () {}` | selon la variable, donc en zone morte | non |\n\nLa **zone morte temporelle** est l'intervalle entre le début de la portée et la ligne de\ndéclaration, pendant lequel toute lecture du nom échoue.\n\n## Exemple\n\n```js\nconsole.log(compteur); // undefined : déclaré, pas encore affecté\nvar compteur = 1;\nconsole.log(compteur); // 1\n\n// console.log(total); // ReferenceError: Cannot access 'total' before initialization\nlet total = 10;\nconsole.log(total); // 10\n\nconsole.log(saluer()); // 'Bonjour' : la déclaration est hoistée avec son corps\nfunction saluer() {\n  return 'Bonjour';\n}\n\n// console.log(direAurevoir()); // ReferenceError\nconst direAurevoir = () => 'Au revoir';\n\nconsole.log(typeof jamaisDeclare); // 'undefined' : aucune erreur\n// console.log(typeof enZoneMorte); // ReferenceError, malgré le typeof\nlet enZoneMorte = 1;\n```\n\n## Comment ça fonctionne\n\nLe terme « hoisting » — hissage — décrit une illusion utile : tout se passe comme si les\ndéclarations étaient remontées en haut de leur portée. En réalité, rien ne bouge : le moteur\nparcourt la portée avant de l'exécuter et enregistre les noms qu'elle déclare. Seules les\n**déclarations** sont traitées à ce moment, jamais les **affectations**.\n\nD'où le comportement de `var` : le nom existe dès le début de la fonction avec la valeur\n`undefined`, et ne reçoit sa vraie valeur qu'à sa ligne. Le code semble fonctionner mais\nmanipule `undefined`, ce qui produit des bugs silencieux.\n\n`let` et `const` sont aussi enregistrés pendant la phase de création, mais **sans valeur** :\ntoute lecture avant leur ligne lève `ReferenceError: Cannot access 'x' before\ninitialization`. C'est un choix délibéré : transformer une erreur silencieuse en erreur\nbruyante, au plus près de la cause. Les classes suivent la même règle.\n\nUn détail qui tombe souvent en entretien : `typeof` protège d'une variable **jamais\ndéclarée**, et renvoie `'undefined'` sans erreur ; mais il ne protège pas d'une variable en\nzone morte, qui lève quand même. La zone morte n'est donc pas un simple « pas encore\ndéfini », c'est un état d'erreur.\n\nLes déclarations de fonction, elles, sont hoistées **avec leur corps**, ce qui permet\nd'appeler une fonction définie plus bas — pratique pour placer les détails après l'essentiel.\nUne expression de fonction, `const f = () => {}`, suit la règle de sa variable et n'offre pas\ncette liberté.\n\nEn mode strict, une déclaration de fonction à l'intérieur d'un bloc reste limitée à ce bloc.\nDans l'ancien mode non strict, son comportement variait selon les moteurs : c'est une\nconstruction à éviter.\n\n## Erreurs fréquentes\n\n**Compter sur le hoisting pour lire une variable avant sa ligne.** Avec `var`, elle vaut\n`undefined` ; avec `let`, c'est une erreur.\n\n**Croire que `typeof` protège toujours.** Il ne protège pas de la zone morte.\n\n**Redéclarer avec `var`.** `var x` deux fois passe silencieusement ; `let x` deux fois est\nune erreur de syntaxe, ce qui est préférable.\n\n**Déclarer une fonction dans un `if`.** Préfère une expression affectée à une `const`.\n\n## À retenir\n\n- Deux phases : création, où les déclarations sont enregistrées, puis exécution.\n- `var` : hoistée à `undefined`. `let` / `const` / `class` : en zone morte.\n- Les déclarations de fonction sont hoistées avec leur corps, pas les expressions.\n- `typeof` ne protège pas d'une variable en zone morte.\n- Déclare avant d'utiliser : le hoisting explique le passé, il ne s'exploite pas.\n\n## Exercices\n\n1. Prédis l'affichage, puis explique chaque ligne.\n\n   ```js\n   console.log(a);\n   var a = 1;\n   console.log(b);\n   let b = 2;\n   ```\n\n   :::indice\n   Les deux déclarations sont enregistrées avant l'exécution, mais pas dans le même état.\n   :::\n\n   :::solution\n   La première ligne affiche `undefined` : `var a` est enregistrée avec cette valeur dès la\n   phase de création, et ne reçoit `1` qu'à sa ligne. La troisième lève\n   `ReferenceError: Cannot access 'b' before initialization` : `let b` est enregistrée sans\n   valeur et reste en zone morte jusqu'à sa déclaration. L'exécution s'arrête donc là.\n\n   ```js\n   var a = 1;\n   let b = 2;\n   console.log(a, b); // 1 2 : déclarer avant d'utiliser évite la question\n   ```\n   :::\n\n2. Explique pourquoi le premier appel fonctionne et pas le second.\n\n   ```js\n   console.log(carreDeclare(3));\n   console.log(carreExpression(3));\n   function carreDeclare(n) { return n * n; }\n   const carreExpression = (n) => n * n;\n   ```\n\n   :::indice\n   Qu'est-ce qui est hoisté avec son corps, et qu'est-ce qui suit sa variable ?\n   :::\n\n   :::solution\n   `carreDeclare` est une déclaration de fonction : elle est enregistrée avec son corps dès la\n   phase de création, donc appelable avant sa ligne. `carreExpression` est une `const` qui\n   reçoit une fonction : elle reste en zone morte jusqu'à sa ligne, et l'appel lève\n   `ReferenceError: Cannot access 'carreExpression' before initialization`.\n   :::\n\n3. Montre que `typeof` ne protège pas d'une variable en zone morte.\n\n   :::indice\n   Compare une variable jamais déclarée et une variable déclarée plus bas avec `let`.\n   :::\n\n   :::solution\n   ```js\n   console.log(typeof jamaisDeclare); // 'undefined' : aucune erreur\n\n   function test() {\n     console.log(typeof enZoneMorte); // ReferenceError\n     let enZoneMorte = 1;\n   }\n   ```\n\n   `typeof` ne fait exception que pour les noms totalement inconnus. Dès qu'un nom est déclaré\n   dans la portée, la zone morte s'applique, `typeof` compris.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que le hoisting, exactement ?\n\n  :::indice\n  Qu'est-ce qui est traité avant l'exécution : les déclarations, les affectations, ou les\n  deux ?\n  :::\n\n  :::reponse\n  C'est le fait que le moteur enregistre toutes les **déclarations** d'une portée avant de\n  l'exécuter. Rien n'est déplacé dans le code : la phase de création crée les liaisons, la\n  phase d'exécution déroule les instructions. Les affectations ne sont jamais hoistées, ce qui\n  explique qu'une `var` lue trop tôt vaille `undefined`, et qu'une fonction déclarée en bas de\n  fichier soit appelable en haut.\n  :::\n\n- Qu'est-ce que la zone morte temporelle, et à quoi sert-elle ?\n\n  :::indice\n  Que se passe-t-il entre le début de la portée et la ligne du `let` ?\n  :::\n\n  :::reponse\n  C'est l'intervalle entre l'entrée dans la portée et la ligne de déclaration d'un `let`,\n  d'un `const` ou d'une classe : la liaison existe mais n'a pas de valeur, et toute lecture\n  lève une `ReferenceError`. Son but est de rendre bruyante une erreur qui, avec `var`, serait\n  silencieuse : au lieu d'obtenir `undefined` et de le découvrir trois fonctions plus loin, on\n  échoue précisément à la ligne fautive.\n  :::\n\n- Les déclarations de fonction et les expressions se comportent-elles pareil ?\n\n  :::indice\n  Essaie d'appeler chacune avant sa ligne.\n  :::\n\n  :::reponse\n  Non. Une déclaration est hoistée avec son corps : elle est utilisable partout dans sa\n  portée, y compris avant sa ligne. Une expression — fonction anonyme ou fléchée affectée à\n  une variable — suit les règles de cette variable : avec `const` ou `let`, elle est en zone\n  morte jusqu'à sa ligne. C'est pourquoi un fichier écrit avec des `const` impose de déclarer\n  avant d'utiliser, ce qui se lit mieux.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-portees",
+      "title": "Portées et chaîne de portée",
+      "slug": "portees-et-chaine-de-portee",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "portee",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-functions"
+      ],
+      "skills": [
+        "scope-chain"
+      ],
+      "tags": [
+        "javascript",
+        "portee"
+      ],
+      "contentPath": "javascript/portee/portees-et-chaine-de-portee/lesson.md",
+      "contentVersion": "21af970bbb0d",
+      "body": "\n## Objectifs\n\n- Distinguer portée globale, portée de fonction et portée de bloc.\n- Suivre la chaîne de portée que le moteur remonte pour résoudre un nom.\n- Comprendre pourquoi la portée dépend de l'endroit où le code est **écrit**.\n\n## Introduction\n\n« Pourquoi cette variable est-elle `undefined` ici alors qu'elle existe deux lignes plus\nhaut ? » Presque toutes les questions de ce genre se répondent avec une seule notion : la\n**portée**, c'est-à-dire la zone du code où un nom est visible. C'est aussi le socle des\nclosures, du hoisting et de la moitié des erreurs qu'on rencontre au quotidien.\n\n## Concept\n\n| Portée | Créée par | Visible depuis |\n| --- | --- | --- |\n| Globale | le niveau supérieur d'un script | partout |\n| Module | le niveau supérieur d'un module ES | ce module seulement |\n| Fonction | chaque appel de fonction | la fonction et ce qu'elle contient |\n| Bloc | une paire d'accolades, pour `let` et `const` | ce bloc et ce qu'il contient |\n\nDeux règles gouvernent tout le reste :\n\n1. Une portée intérieure voit les portées extérieures ; l'inverse est faux.\n2. La portée est **lexicale** : elle dépend de l'endroit où la fonction est écrite, pas de\n   l'endroit d'où elle est appelée.\n\n## Exemple\n\n```js\nconst application = 'Atelier'; // portée du module\n\nfunction afficherEntete() {\n  const titre = 'Bienvenue'; // portée de la fonction\n\n  function ligne() {\n    return `${titre} — ${application}`; // voit les deux portées extérieures\n  }\n\n  return ligne();\n}\n\nconsole.log(afficherEntete()); // 'Bienvenue — Atelier'\n// console.log(titre); // ReferenceError : titre n'existe pas ici\n\nif (true) {\n  let bloc = 'visible dans le bloc';\n  var fonction = 'visible dans toute la fonction';\n  console.log(bloc); // 'visible dans le bloc'\n}\n// console.log(bloc); // ReferenceError\nconsole.log(fonction); // 'visible dans toute la fonction' : var ignore les blocs\n\nconst message = 'extérieur';\nfunction lire() {\n  return message; // résolu là où lire est écrite\n}\nfunction appeler() {\n  const message = 'intérieur';\n  return lire(); // 'extérieur', et non 'intérieur'\n}\nconsole.log(appeler()); // 'extérieur'\n```\n\n## Comment ça fonctionne\n\nChaque appel de fonction crée un **environnement** : une table des variables déclarées dans\ncette fonction, et un lien vers l'environnement où la fonction a été **écrite**. Quand le\nmoteur rencontre un nom, il le cherche dans l'environnement courant ; s'il ne le trouve pas,\nil suit le lien vers l'environnement parent, et ainsi de suite jusqu'au niveau supérieur.\nCette suite de liens est la **chaîne de portée**. Si le nom n'existe nulle part, c'est\n`ReferenceError: x is not defined`.\n\nComme le lien pointe vers le lieu d'**écriture** et non d'appel, la portée est dite\nlexicale : c'est visible dans l'exemple, où `lire` renvoie `'extérieur'` même appelée depuis\nune fonction qui possède un `message` local. Certains langages font l'inverse — portée\ndynamique — et JavaScript ne le fait pas, ce qui rend le code prévisible à la lecture.\n\n`let` et `const` sont limités au **bloc** : toute paire d'accolades, y compris celle d'un\n`if` ou d'une boucle, crée une portée. `var` ignore les blocs et appartient à la fonction\nentière, ce qui explique qu'une variable déclarée dans un `if` reste visible après lui.\nC'est la principale raison pour laquelle `var` n'est plus utilisé.\n\nAu niveau supérieur, un script classique déclare des variables globales ; un **module ES**,\nlui, a sa propre portée : ses variables ne polluent pas l'espace global, ce qui évite les\ncollisions entre fichiers.\n\nUne portée intérieure peut déclarer un nom déjà pris à l'extérieur : c'est le masquage, vu\nen détail au chapitre suivant. Elle ne peut pas, en revanche, rendre visible un nom vers\nl'extérieur — sauf en le renvoyant, ce qui mène tout droit aux closures.\n\n## Erreurs fréquentes\n\n**Déclarer avec `var` dans un bloc en attendant qu'il y reste.** `var` appartient à la\nfonction : utilise `let` ou `const`.\n\n**Affecter sans déclarer.** `compteur = 0` crée une globale en mode non strict, et lève une\n`ReferenceError` en mode strict. Déclare toujours.\n\n**Croire qu'une fonction voit les variables de son appelant.** La portée suit le lieu\nd'écriture, pas d'appel.\n\n**Tout déclarer au niveau supérieur « au cas où ».** Chaque nom global est une collision\npotentielle : garde les variables au plus près de leur usage.\n\n## À retenir\n\n- Portées : globale ou module, fonction, bloc ; l'intérieur voit l'extérieur.\n- La chaîne de portée est remontée jusqu'à trouver le nom, sinon `ReferenceError`.\n- La portée est lexicale : elle dépend d'où le code est écrit.\n- `let` et `const` sont limités au bloc, `var` à la fonction.\n- Un module ES a sa propre portée, il ne pollue pas l'espace global.\n\n## Exercices\n\n1. Dis, pour chaque `console.log`, s'il affiche une valeur ou lève une erreur, et pourquoi.\n\n   ```js\n   const a = 1;\n   function externe() {\n     const b = 2;\n     function interne() {\n       const c = 3;\n       console.log(a, b, c);\n     }\n     interne();\n     console.log(c);\n   }\n   externe();\n   console.log(b);\n   ```\n\n   :::indice\n   Une portée intérieure voit l'extérieur ; l'inverse n'est jamais vrai.\n   :::\n\n   :::solution\n   `console.log(a, b, c)` affiche `1 2 3` : `interne` voit sa propre variable et remonte la\n   chaîne pour les deux autres. `console.log(c)` lève `ReferenceError: c is not defined`,\n   car `c` appartient à `interne`. `console.log(b)` échoue de même, `b` appartenant à\n   `externe`.\n   :::\n\n2. Corrige ce code pour que la variable de configuration reste confinée au bloc.\n\n   ```js\n   if (process.env.NODE_ENV === 'production') {\n     var niveau = 'error';\n   }\n   console.log(niveau);\n   ```\n\n   :::indice\n   Quelle déclaration respecte les accolades ?\n   :::\n\n   :::solution\n   ```js\n   const niveau = process.env.NODE_ENV === 'production' ? 'error' : 'debug';\n   console.log(niveau);\n   ```\n\n   Avec `var`, la variable appartient à la fonction entière et vaut `undefined` hors\n   production. Avec `let` dans le bloc, elle ne serait plus visible après : il faut donc\n   déclarer à l'extérieur, et le ternaire dit clairement les deux cas.\n   :::\n\n3. Écris une fonction `creerCompteur()` dont la variable interne n'est pas accessible de\n   l'extérieur, mais qui incrémente à chaque appel de la fonction renvoyée.\n\n   :::indice\n   Déclare la variable dans la fonction externe, et renvoie une fonction qui la modifie.\n   :::\n\n   :::solution\n   ```js\n   function creerCompteur() {\n     let valeur = 0;\n     return () => {\n       valeur += 1;\n       return valeur;\n     };\n   }\n\n   const compter = creerCompteur();\n   console.log(compter(), compter(), compter()); // 1 2 3\n   // console.log(valeur); // ReferenceError : inaccessible de l'extérieur\n   ```\n\n   La fonction renvoyée garde accès à la portée où elle a été écrite, même après le retour de\n   `creerCompteur` : c'est une closure, sujet du module 13.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la chaîne de portée ?\n\n  :::indice\n  Que fait le moteur quand il ne trouve pas un nom dans la portée courante ?\n  :::\n\n  :::reponse\n  C'est la suite d'environnements que le moteur remonte pour résoudre un nom : d'abord la\n  portée courante, puis celle qui la contient lexicalement, jusqu'au niveau supérieur. Le\n  premier environnement qui contient le nom l'emporte ; si aucun ne le contient, c'est\n  `ReferenceError`. Cette chaîne est construite à partir de l'endroit où le code est écrit, et\n  elle ne change jamais d'un appel à l'autre.\n  :::\n\n- Portée lexicale ou dynamique : quelle différence ?\n\n  :::indice\n  Une fonction voit-elle les variables de celle qui l'appelle ?\n  :::\n\n  :::reponse\n  En portée lexicale — celle de JavaScript —, une fonction résout ses noms là où elle est\n  **écrite** : elle ne voit jamais les variables locales de son appelant. En portée dynamique,\n  elle les verrait, et son comportement dépendrait du chemin d'appel. Le choix lexical rend le\n  code lisible statiquement : on sait ce qu'une fonction voit en regardant son fichier, sans\n  chercher qui l'appelle.\n  :::\n\n- Pourquoi `var` pose-t-il problème dans un bloc ?\n\n  :::indice\n  À quelle portée `var` appartient-il ?\n  :::\n\n  :::reponse\n  `var` est lié à la **fonction**, pas au bloc : une variable déclarée dans un `if` ou une\n  boucle reste visible après, et vaut `undefined` si la branche n'a pas été prise. Combiné au\n  hoisting, cela produit des variables qui existent avant leur ligne et survivent à leur bloc.\n  `let` et `const`, limités au bloc, expriment exactement la durée de vie voulue — et c'est\n  aussi ce qui corrige le piège des closures dans les boucles.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -2899,6 +3468,200 @@
       "contentVersion": "e348fa7837f2"
     },
     {
+      "id": "javascript-factory-functions-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-factory-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `c.valeur` avec `function creer() { let valeur = 0; return { lire: () => valeur }; } const c = creer();` ?\n",
+          "answer": "undefined",
+          "explanation": "`valeur` vit dans la portée de la fabrique et n'est exposée par aucune propriété : elle n'est accessible que par les fonctions renvoyées.\n",
+          "skills": [
+            "factory-functions"
+          ]
+        },
+        {
+          "id": "js-factory-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Deux objets créés par la même factory partagent le même état interne.\n",
+          "answer": false,
+          "explanation": "Chaque appel crée une nouvelle portée, donc un état indépendant. Pour un état partagé, il faut appeler la fabrique une seule fois et réutiliser l'objet renvoyé.\n",
+          "skills": [
+            "factory-functions"
+          ]
+        },
+        {
+          "id": "js-factory-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle écriture protège réellement un état interne ?\n",
+          "options": [
+            "Une variable de la fabrique, exposée seulement par des méthodes",
+            "Une propriété nommée _valeur sur l'objet renvoyé",
+            "Une propriété non énumérable",
+            "Un commentaire indiquant que la propriété est privée"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Seule la closure rend l'accès impossible. Le tiret bas est une convention, et une propriété non énumérable reste lisible dès qu'on connaît son nom.\n",
+          "skills": [
+            "factory-functions"
+          ]
+        },
+        {
+          "id": "js-factory-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Avec une factory, chaque objet créé possède ses propres copies des méthodes.\n",
+          "answer": true,
+          "explanation": "Les fonctions sont recréées à chaque appel, attachées à leur propre environnement. C'est le coût du motif ; une classe partage ses méthodes via le prototype.\n",
+          "skills": [
+            "factory-functions"
+          ]
+        }
+      ],
+      "chapterId": "javascript-factory-functions",
+      "technology": "javascript",
+      "contentPath": "javascript/closures/factory-functions/quiz.yaml",
+      "contentVersion": "e8e55f3cedd4"
+    },
+    {
+      "id": "javascript-memoization-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-memo-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Combien de fois la fonction d'origine est-elle appelée par `const f = memoize(lent); f(2); f(2); f(3);` ?\n",
+          "answer": "2",
+          "explanation": "Le premier `f(2)` calcule et met en cache, le second lit le cache, et `f(3)` calcule une nouvelle entrée : deux appels réels.\n",
+          "skills": [
+            "memoization"
+          ]
+        },
+        {
+          "id": "js-memo-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "On peut mémoïser sans risque une fonction qui lit l'heure courante.\n",
+          "answer": false,
+          "explanation": "Le résultat ne dépend pas seulement des arguments : le cache servirait indéfiniment la première valeur. La mémoïsation suppose une fonction pure.\n",
+          "skills": [
+            "memoization"
+          ]
+        },
+        {
+          "id": "js-memo-q3",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "Pourquoi tester `cache.has(cle)` plutôt que `cache.get(cle) !== undefined` ?\n",
+          "options": [
+            "Pour ne pas recalculer un résultat qui vaut légitimement undefined",
+            "Parce que get est plus lent que has",
+            "Parce que get supprime l'entrée du cache",
+            "Parce que has accepte des clés objets"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une fonction peut renvoyer `undefined` ou toute autre valeur falsy : seul `has` distingue « absent du cache » de « présent, avec cette valeur ».\n",
+          "skills": [
+            "memoization"
+          ]
+        },
+        {
+          "id": "js-memo-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel cache convient le mieux quand la clé est un objet dont la durée de vie est gérée ailleurs ?\n",
+          "options": [
+            "Une WeakMap",
+            "Un objet littéral",
+            "Un tableau de paires",
+            "Une Map"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une `WeakMap` accepte les objets comme clés sans les retenir en mémoire : l'entrée disparaît quand l'objet n'est plus utilisé ailleurs, ce qui évite la fuite.\n",
+          "skills": [
+            "memoization"
+          ]
+        }
+      ],
+      "chapterId": "javascript-memoization",
+      "technology": "javascript",
+      "contentPath": "javascript/closures/memoization/quiz.yaml",
+      "contentVersion": "c721549a1585"
+    },
+    {
+      "id": "javascript-pieges-closures-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-pieges-q1",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Qu'affiche `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i));` ? (réponds avec les trois valeurs séparées par des espaces)\n",
+          "answer": "3 3 3",
+          "explanation": "`var` ne crée qu'une seule liaison partagée par les trois fonctions, et les callbacks s'exécutent après la boucle, quand `i` vaut 3.\n",
+          "skills": [
+            "closure-pitfalls"
+          ]
+        },
+        {
+          "id": "js-pieges-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche le même code avec `let i` au lieu de `var i` ? (réponds avec les trois valeurs séparées par des espaces)\n",
+          "answer": "0 1 2",
+          "explanation": "Une boucle `let` crée une liaison par itération : chaque fonction capture la sienne, avec la valeur du tour correspondant.\n",
+          "skills": [
+            "closure-pitfalls"
+          ]
+        },
+        {
+          "id": "js-pieges-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une closure capture une copie de la valeur de la variable au moment de sa création.\n",
+          "answer": false,
+          "explanation": "Elle capture la liaison et lit sa valeur à l'exécution : si la variable change entre-temps, la closure voit la nouvelle valeur.\n",
+          "skills": [
+            "closure-pitfalls"
+          ]
+        },
+        {
+          "id": "js-pieges-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle situation provoque le plus souvent une fuite mémoire liée aux closures ?\n",
+          "options": [
+            "Un écouteur d'événement jamais retiré",
+            "Une fonction fléchée dans un map",
+            "Une fonction déclarée dans un bloc",
+            "Un paramètre par défaut qui crée un tableau"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'écouteur reste référencé par l'élément ou la cible, et maintient en vie tout l'environnement capturé. On le retire explicitement, ou via un `AbortController`.\n",
+          "skills": [
+            "closure-pitfalls"
+          ]
+        }
+      ],
+      "chapterId": "javascript-pieges-closures",
+      "technology": "javascript",
+      "contentPath": "javascript/closures/pieges-des-closures/quiz.yaml",
+      "contentVersion": "2de3a927d87b"
+    },
+    {
       "id": "javascript-guard-clauses-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -3176,6 +3939,76 @@
       "contentVersion": "7fcf37535747"
     },
     {
+      "id": "javascript-fonctions-pures-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-pures-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Laquelle de ces fonctions est pure ?\n",
+          "options": [
+            "(a, b) => a + b",
+            "(liste) => liste.push(1)",
+            "() => Date.now()",
+            "(x) => { compteur += x; return compteur; }"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Seule la première renvoie toujours la même sortie pour les mêmes entrées sans rien modifier. Les autres mutent un argument, lisent l'horloge ou modifient une variable extérieure.\n",
+          "skills": [
+            "pure-functions"
+          ]
+        },
+        {
+          "id": "js-pures-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une fonction qui modifie une propriété de l'objet reçu en argument peut être pure.\n",
+          "answer": false,
+          "explanation": "Modifier un argument est un effet observable par l'appelant : la fonction est impure. La version pure renvoie un nouvel objet, par exemple avec `{ ...objet, champ: valeur }`.\n",
+          "skills": [
+            "pure-functions"
+          ]
+        },
+        {
+          "id": "js-pures-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Comment rendre testable une fonction qui utilise `Math.random()` en son cœur ?\n",
+          "options": [
+            "En passant la source aléatoire en paramètre",
+            "En ajoutant un console.log avant l'appel",
+            "En remplaçant Math.random par Date.now",
+            "En enveloppant l'appel dans un try/catch"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une dépendance cachée devient un paramètre, éventuellement avec une valeur par défaut pour la production. Le test fournit alors une valeur fixe et la fonction redevient prévisible.\n",
+          "skills": [
+            "pure-functions"
+          ]
+        },
+        {
+          "id": "js-pures-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Un programme utile peut être entièrement composé de fonctions pures.\n",
+          "answer": false,
+          "explanation": "Sans effet de bord, un programme ne pourrait ni afficher, ni enregistrer, ni répondre. L'objectif est de garder un noyau pur et de repousser les effets aux bords du programme.\n",
+          "skills": [
+            "pure-functions"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fonctions-pures",
+      "technology": "javascript",
+      "contentPath": "javascript/fonctions/fonctions-pures/quiz.yaml",
+      "contentVersion": "18e4cd64019a"
+    },
+    {
       "id": "javascript-functions-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -3246,6 +4079,316 @@
       "technology": "javascript",
       "contentPath": "javascript/fonctions/functions/quiz.yaml",
       "contentVersion": "13fef22086ec"
+    },
+    {
+      "id": "javascript-fonctions-parametres-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-parametres-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que renvoie `f(2)` avec `function f(a, b = a + 1) { return b; }` ?\n",
+          "answer": "3",
+          "explanation": "La valeur par défaut est évaluée à l'appel et peut utiliser les paramètres déclarés avant elle : `b` vaut `a + 1`, donc 3.\n",
+          "skills": [
+            "functions-parameters"
+          ]
+        },
+        {
+          "id": "js-parametres-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Passer `null` à un paramètre déclenche sa valeur par défaut.\n",
+          "answer": false,
+          "explanation": "Seul `undefined` — argument absent ou explicitement `undefined` — déclenche le défaut. `null` est une valeur comme une autre et sera utilisée telle quelle.\n",
+          "skills": [
+            "functions-parameters"
+          ]
+        },
+        {
+          "id": "js-parametres-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que vaut `(function (a, b = 1, c) {}).length` ?\n",
+          "options": [
+            "1",
+            "3",
+            "2",
+            "0"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`length` compte les paramètres situés avant le premier paramètre à valeur par défaut ou de reste : ici, seul `a` est compté.\n",
+          "skills": [
+            "functions-parameters"
+          ]
+        },
+        {
+          "id": "js-parametres-q4",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `o.x` après `function f(o) { o.x = 1; } const o = {}; f(o);` ?\n",
+          "answer": "1",
+          "explanation": "L'argument est une référence copiée : la fonction et l'appelant désignent le même objet, donc la propriété ajoutée est visible depuis l'extérieur.\n",
+          "skills": [
+            "functions-parameters"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fonctions-parametres",
+      "technology": "javascript",
+      "contentPath": "javascript/fonctions/parametres-et-arguments/quiz.yaml",
+      "contentVersion": "a0471786e89e"
+    },
+    {
+      "id": "javascript-callbacks-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-callbacks-q1",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Que vaut `['1', '7', '11'].map(parseInt)[1]` ?\n",
+          "answer": "NaN",
+          "explanation": "`map` passe l'index comme second argument, et `parseInt` le prend pour une base : `parseInt('7', 1)` est invalide et donne `NaN`. Écris `map((n) => parseInt(n, 10))`.\n",
+          "skills": [
+            "callbacks"
+          ]
+        },
+        {
+          "id": "js-callbacks-q2",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "Comment exécuter `afficher` dans une seconde ?\n",
+          "options": [
+            "setTimeout(afficher, 1000)",
+            "setTimeout(afficher(), 1000)",
+            "setTimeout('afficher', 1000)",
+            "setTimeout(afficher, '1s')"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Il faut passer la fonction, pas son résultat : avec les parenthèses, `afficher` est appelée tout de suite et c'est sa valeur de retour, souvent `undefined`, qui est programmée.\n",
+          "skills": [
+            "callbacks"
+          ]
+        },
+        {
+          "id": "js-callbacks-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un callback est toujours exécuté de façon asynchrone.\n",
+          "answer": false,
+          "explanation": "Les callbacks de `map`, `filter` ou `sort` sont appelés immédiatement et dans l'ordre. Seuls ceux confiés à `setTimeout`, au réseau ou aux événements sont différés.\n",
+          "skills": [
+            "callbacks"
+          ]
+        },
+        {
+          "id": "js-callbacks-q4",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que renvoie `appliquer(3)` avec `const appliquer = (n) => [(x) => x + 1, (x) => x * 2].reduce((v, f) => f(v), n);` ?\n",
+          "answer": "8",
+          "explanation": "Les fonctions sont appliquées dans l'ordre : `3 + 1` vaut 4, puis `4 * 2` vaut 8. C'est le principe de la composition, détaillé au chapitre suivant.\n",
+          "skills": [
+            "higher-order-functions"
+          ]
+        }
+      ],
+      "chapterId": "javascript-callbacks",
+      "technology": "javascript",
+      "contentPath": "javascript/fonctions-avancees/callbacks-et-higher-order/quiz.yaml",
+      "contentVersion": "14e33f652073"
+    },
+    {
+      "id": "javascript-currying-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-currying-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que vaut `m(2)(3)` avec `const m = (a) => (b) => a * b;` ?\n",
+          "answer": "6",
+          "explanation": "Le premier appel renvoie une fonction qui retient `a`, le second lui fournit `b` : le résultat est 6.\n",
+          "skills": [
+            "currying-composition"
+          ]
+        },
+        {
+          "id": "js-currying-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Avec `pipe(f, g)(x)`, dans quel ordre les fonctions sont-elles appliquées ?\n",
+          "options": [
+            "f d'abord, puis g sur son résultat",
+            "g d'abord, puis f sur son résultat",
+            "Les deux sur x, puis les résultats sont additionnés",
+            "L'ordre dépend du nombre d'arguments"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`pipe` suit l'ordre de lecture : `pipe(f, g)(x)` vaut `g(f(x))`. C'est `compose` qui applique de droite à gauche.\n",
+          "skills": [
+            "currying-composition"
+          ]
+        },
+        {
+          "id": "js-currying-q3",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Que renvoie `pipe((n) => n + 1, (n) => n * 3)(2)` avec `const pipe = (...fs) => (v) => fs.reduce((r, f) => f(r), v);` ?\n",
+          "answer": "9",
+          "explanation": "`2 + 1` vaut 3, puis `3 * 3` vaut 9. Avec `compose`, l'ordre inverse donnerait 7.\n",
+          "skills": [
+            "currying-composition"
+          ]
+        },
+        {
+          "id": "js-currying-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une fonction curryfiée retient ses arguments grâce à une closure.\n",
+          "answer": true,
+          "explanation": "La fonction renvoyée garde accès à l'environnement où les premiers arguments ont été reçus : c'est exactement le mécanisme des closures, détaillé au module 13.\n",
+          "skills": [
+            "currying-composition"
+          ]
+        }
+      ],
+      "chapterId": "javascript-currying",
+      "technology": "javascript",
+      "contentPath": "javascript/fonctions-avancees/currying-et-composition/quiz.yaml",
+      "contentVersion": "0c924da8d8a7"
+    },
+    {
+      "id": "javascript-fonctions-flechees-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-flechees-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que vaut `f()` avec `const f = () => { nom: 'Ada' };` ?\n",
+          "answer": "undefined",
+          "explanation": "L'accolade ouvre un corps de fonction, pas un objet : le corps ne contient aucun `return`. Pour renvoyer l'objet, il faut écrire `() => ({ nom: 'Ada' })`.\n",
+          "skills": [
+            "arrow-functions"
+          ]
+        },
+        {
+          "id": "js-flechees-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `typeof f()` avec `const f = () => ({ a: 1 });` ?\n",
+          "answer": "object",
+          "explanation": "Les parenthèses forcent la lecture en objet littéral : la fonction renvoie bien `{ a: 1 }`, dont le `typeof` vaut `'object'`.\n",
+          "skills": [
+            "arrow-functions"
+          ]
+        },
+        {
+          "id": "js-flechees-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une fonction fléchée peut être appelée avec `new`.\n",
+          "answer": false,
+          "explanation": "Une fléchée n'a pas de `prototype` et ne peut pas servir de constructeur : `new f()` lève une `TypeError`. Il faut une fonction classique ou une classe.\n",
+          "skills": [
+            "arrow-functions"
+          ]
+        },
+        {
+          "id": "js-flechees-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle forme peut être appelée avant la ligne où elle est écrite ?\n",
+          "options": [
+            "function double(n) { return n * 2; }",
+            "const double = (n) => n * 2;",
+            "const double = function (n) { return n * 2; };",
+            "let double = (n) => n * 2;"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Seule la déclaration de fonction est hoistée entièrement. Les expressions suivent la zone morte temporelle de `const` et `let`, et lèvent une `ReferenceError`.\n",
+          "skills": [
+            "arrow-functions"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fonctions-flechees",
+      "technology": "javascript",
+      "contentPath": "javascript/fonctions-avancees/expressions-et-fonctions-flechees/quiz.yaml",
+      "contentVersion": "9da28641bd57"
+    },
+    {
+      "id": "javascript-rest-spread-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-rest-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que renvoie `f(1, 2, 3)` avec `function f(...n) { return n.length; }` ?\n",
+          "answer": "3",
+          "explanation": "Le paramètre de reste rassemble tous les arguments dans un vrai tableau : il en contient trois.\n",
+          "skills": [
+            "rest-spread-arguments"
+          ]
+        },
+        {
+          "id": "js-rest-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `Math.max([1, 5, 3])` ?\n",
+          "answer": "NaN",
+          "explanation": "`Math.max` attend des nombres séparés : un tableau est converti en chaîne puis en `NaN`. Il faut écrire `Math.max(...[1, 5, 3])`, qui vaut 5.\n",
+          "skills": [
+            "rest-spread-arguments"
+          ]
+        },
+        {
+          "id": "js-rest-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un paramètre de reste peut être placé n'importe où dans la liste des paramètres.\n",
+          "answer": false,
+          "explanation": "Il doit être unique et en dernière position : `function f(...a, b)` est une erreur de syntaxe, puisque rien ne pourrait rester après lui.\n",
+          "skills": [
+            "rest-spread-arguments"
+          ]
+        },
+        {
+          "id": "js-rest-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi préférer `...args` à l'objet `arguments` ?\n",
+          "options": [
+            "C'est un vrai tableau et il apparaît dans la signature",
+            "Il est plus rapide à l'exécution",
+            "Il accepte des arguments nommés",
+            "Il fonctionne uniquement en mode strict"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`...args` dispose des méthodes de tableau, rend la fonction lisible depuis sa signature, et fonctionne dans les fonctions fléchées, où `arguments` n'existe pas.\n",
+          "skills": [
+            "rest-spread-arguments"
+          ]
+        }
+      ],
+      "chapterId": "javascript-rest-spread",
+      "technology": "javascript",
+      "contentPath": "javascript/fonctions-avancees/rest-et-spread/quiz.yaml",
+      "contentVersion": "af9247d8751b"
     },
     {
       "id": "javascript-introduction-quiz",
@@ -4437,6 +5580,208 @@
       "technology": "javascript",
       "contentPath": "javascript/operateurs/ternaire-et-precedence/quiz.yaml",
       "contentVersion": "593d900cd422"
+    },
+    {
+      "id": "javascript-erreurs-portee-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-erreurs-portee-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que signifie `Cannot access 'x' before initialization` ?\n",
+          "options": [
+            "x est déclarée plus bas dans la portée et lue trop tôt",
+            "x n'existe dans aucune portée",
+            "x est une constante réaffectée",
+            "x contient undefined"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le nom existe bien dans la portée, mais sa ligne de déclaration n'a pas encore été exécutée : c'est la zone morte d'un `let`, d'un `const` ou d'une classe.\n",
+          "skills": [
+            "scope-errors"
+          ]
+        },
+        {
+          "id": "js-erreurs-portee-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`const utilisateur = {}` interdit de modifier les propriétés de l'objet.\n",
+          "answer": false,
+          "explanation": "`const` fige la liaison, pas le contenu : `utilisateur.nom = 'Ada'` est autorisé, seul `utilisateur = {}` lève `Assignment to constant variable`. Pour figer le contenu, `Object.freeze`.\n",
+          "skills": [
+            "scope-errors"
+          ]
+        },
+        {
+          "id": "js-erreurs-portee-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "En mode strict, que produit `resultat = 10` sans déclaration préalable ?\n",
+          "options": [
+            "Une ReferenceError",
+            "Une variable globale",
+            "Une variable locale à la fonction",
+            "Une SyntaxError"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le mode strict — actif d'office dans les modules ES — refuse les affectations à des variables non déclarées, au lieu de créer silencieusement une globale.\n",
+          "skills": [
+            "scope-errors"
+          ]
+        },
+        {
+          "id": "js-erreurs-portee-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`typeof inexistant` lève une erreur si la variable n'a jamais été déclarée.\n",
+          "answer": false,
+          "explanation": "C'est l'exception historique de `typeof` : il renvoie `'undefined'` pour un nom inconnu. En revanche, il lève bien une erreur sur une variable en zone morte.\n",
+          "skills": [
+            "scope-errors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-erreurs-portee",
+      "technology": "javascript",
+      "contentPath": "javascript/portee/erreurs-de-portee/quiz.yaml",
+      "contentVersion": "f48194862187"
+    },
+    {
+      "id": "javascript-hoisting-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-hoisting-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Qu'affiche `console.log(x); var x = 1;` ?\n",
+          "answer": "undefined",
+          "explanation": "`var x` est enregistrée avec la valeur `undefined` dès la phase de création ; seule l'affectation attend sa ligne.\n",
+          "skills": [
+            "hoisting-tdz"
+          ]
+        },
+        {
+          "id": "js-hoisting-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que produit `console.log(y); let y = 1;` ?\n",
+          "options": [
+            "Une ReferenceError : accès avant initialisation",
+            "undefined",
+            "1",
+            "null"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`let` est enregistrée sans valeur : elle reste en zone morte temporelle jusqu'à sa ligne, et toute lecture avant lève une `ReferenceError`.\n",
+          "skills": [
+            "hoisting-tdz"
+          ]
+        },
+        {
+          "id": "js-hoisting-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "`typeof` protège de toute erreur, y compris sur une variable en zone morte.\n",
+          "answer": false,
+          "explanation": "`typeof` ne renvoie `'undefined'` sans erreur que pour un nom jamais déclaré. Sur une variable en zone morte, il lève une `ReferenceError` comme une lecture normale.\n",
+          "skills": [
+            "hoisting-tdz"
+          ]
+        },
+        {
+          "id": "js-hoisting-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Qu'est-ce qui est hoisté avec son corps, donc appelable avant sa ligne ?\n",
+          "options": [
+            "Une déclaration de fonction",
+            "Une fonction fléchée dans une const",
+            "Une expression de fonction dans une let",
+            "Une classe"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Seule la déclaration `function nom() {}` est enregistrée avec son corps. Les expressions suivent leur variable, et les classes sont en zone morte.\n",
+          "skills": [
+            "hoisting-tdz"
+          ]
+        }
+      ],
+      "chapterId": "javascript-hoisting",
+      "technology": "javascript",
+      "contentPath": "javascript/portee/hoisting-et-tdz/quiz.yaml",
+      "contentVersion": "33f56d3eb00a"
+    },
+    {
+      "id": "javascript-portees-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-portees-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que vaut `appeler()` avec `const m = 'A'; const lire = () => m; function appeler() { const m = 'B'; return lire(); }` ?\n",
+          "answer": "A",
+          "explanation": "La portée est lexicale : `lire` résout `m` là où elle est écrite, pas là où elle est appelée. La variable locale de `appeler` n'a aucun effet sur elle.\n",
+          "skills": [
+            "scope-chain"
+          ]
+        },
+        {
+          "id": "js-portees-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une variable déclarée avec `var` dans un bloc `if` est visible après ce bloc.\n",
+          "answer": true,
+          "explanation": "`var` est lié à la fonction, pas au bloc : la variable survit au `if` et vaut `undefined` si la branche n'a pas été exécutée. `let` et `const` restent dans le bloc.\n",
+          "skills": [
+            "scope-chain"
+          ]
+        },
+        {
+          "id": "js-portees-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que fait le moteur quand un nom est introuvable dans la portée courante ?\n",
+          "options": [
+            "Il remonte la chaîne de portée, puis lève une ReferenceError",
+            "Il renvoie undefined",
+            "Il crée la variable automatiquement",
+            "Il regarde dans la fonction appelante"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "La recherche remonte les portées englobantes du lieu d'écriture. Si le nom n'existe nulle part, c'est `ReferenceError: x is not defined`.\n",
+          "skills": [
+            "scope-chain"
+          ]
+        },
+        {
+          "id": "js-portees-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Les variables déclarées au niveau supérieur d'un module ES sont globales.\n",
+          "answer": false,
+          "explanation": "Un module a sa propre portée : ses variables ne sont visibles que dans le module, sauf s'il les exporte. C'est ce qui évite les collisions entre fichiers.\n",
+          "skills": [
+            "scope-chain"
+          ]
+        }
+      ],
+      "chapterId": "javascript-portees",
+      "technology": "javascript",
+      "contentPath": "javascript/portee/portees-et-chaine-de-portee/quiz.yaml",
+      "contentVersion": "63860ae20e95"
     },
     {
       "id": "javascript-tableaux-ajouter-retirer-quiz",

@@ -1,0 +1,57 @@
+id: javascript-pieges-closures-quiz
+kind: QUIZ
+questions:
+  - id: js-pieges-q1
+    type: predict_output
+    difficulty: 4
+    question: >
+      Qu'affiche `for (var i = 0; i < 3; i++) setTimeout(() => console.log(i));` ?
+      (réponds avec les trois valeurs séparées par des espaces)
+    answer: '3 3 3'
+    explanation: >
+      `var` ne crée qu'une seule liaison partagée par les trois fonctions, et les callbacks
+      s'exécutent après la boucle, quand `i` vaut 3.
+    skills:
+      - closure-pitfalls
+
+  - id: js-pieges-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche le même code avec `let i` au lieu de `var i` ?
+      (réponds avec les trois valeurs séparées par des espaces)
+    answer: '0 1 2'
+    explanation: >
+      Une boucle `let` crée une liaison par itération : chaque fonction capture la sienne,
+      avec la valeur du tour correspondant.
+    skills:
+      - closure-pitfalls
+
+  - id: js-pieges-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Une closure capture une copie de la valeur de la variable au moment de sa création.
+    answer: false
+    explanation: >
+      Elle capture la liaison et lit sa valeur à l'exécution : si la variable change
+      entre-temps, la closure voit la nouvelle valeur.
+    skills:
+      - closure-pitfalls
+
+  - id: js-pieges-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle situation provoque le plus souvent une fuite mémoire liée aux closures ?
+    options:
+      - "Un écouteur d'événement jamais retiré"
+      - "Une fonction fléchée dans un map"
+      - "Une fonction déclarée dans un bloc"
+      - "Un paramètre par défaut qui crée un tableau"
+    answer: [0]
+    explanation: >
+      L'écouteur reste référencé par l'élément ou la cible, et maintient en vie tout
+      l'environnement capturé. On le retire explicitement, ou via un `AbortController`.
+    skills:
+      - closure-pitfalls
