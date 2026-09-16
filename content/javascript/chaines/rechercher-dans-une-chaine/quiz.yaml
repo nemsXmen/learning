@@ -1,0 +1,60 @@
+id: javascript-chaines-rechercher-quiz
+kind: QUIZ
+questions:
+  - id: js-recherche-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `'JavaScript'.indexOf('Java')` ?
+    answer: '0'
+    explanation: >
+      `Java` commence au tout premier caractère : `indexOf` renvoie l'index `0`. C'est aussi
+      pourquoi `indexOf` ne doit jamais servir de condition directe, puisque `0` est falsy.
+    skills:
+      - strings-search
+
+  - id: js-recherche-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      `'Bonjour'.includes('bonjour')` vaut `true`.
+    answer: false
+    explanation: >
+      Les recherches sont sensibles à la casse. Il faut normaliser les deux textes, par
+      exemple avec `toLowerCase()`, avant de chercher.
+    skills:
+      - strings-search
+
+  - id: js-recherche-q3
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que renvoie `indexOf` quand la valeur cherchée est absente ?
+    options:
+      - "-1"
+      - "0"
+      - "undefined"
+      - "null"
+    answer: [0]
+    explanation: >
+      `indexOf` renvoie `-1` quand il ne trouve rien. Cette valeur est truthy : pour tester la
+      présence, on compare `!== -1` ou on utilise `includes`.
+    skills:
+      - strings-search
+
+  - id: js-recherche-q4
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles méthodes renvoient un booléen ?
+    options:
+      - "includes"
+      - "startsWith"
+      - "indexOf"
+      - "endsWith"
+    answer: [0, 1, 3]
+    explanation: >
+      `includes`, `startsWith` et `endsWith` répondent par `true` ou `false`. `indexOf` renvoie
+      une position, ou `-1`.
+    skills:
+      - strings-search

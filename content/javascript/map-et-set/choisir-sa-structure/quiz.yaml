@@ -1,0 +1,62 @@
+id: javascript-choisir-structure-quiz
+kind: QUIZ
+questions:
+  - id: js-structure-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle structure choisir pour retrouver un élément par son identifiant parmi plusieurs
+      milliers, avec des ajouts et des suppressions fréquents ?
+    options:
+      - "Une Map"
+      - "Un tableau parcouru avec find"
+      - "Un Set"
+      - "Un tableau trié"
+    answer: [0]
+    explanation: >
+      Les clés sont des données, la recherche doit être immédiate et les suppressions propres :
+      c'est exactement le rôle d'une `Map`. Un `find` répété coûterait un parcours complet à
+      chaque appel.
+    skills:
+      - data-structure-choice
+
+  - id: js-structure-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Un `Set` conserve l'ordre d'insertion de ses valeurs.
+    answer: true
+    explanation: >
+      `Set` et `Map` itèrent dans l'ordre d'insertion. C'est ce qui rend
+      `[...new Set(tableau)]` sûr pour dédoublonner sans perdre l'ordre d'apparition.
+    skills:
+      - data-structure-choice
+
+  - id: js-structure-q3
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que renvoie `JSON.stringify(new Set([1, 2]))` ?
+    answer: '{}'
+    explanation: >
+      JSON ne connaît ni `Set` ni `Map` : leurs entrées étant internes, la sérialisation donne
+      un objet vide. Il faut convertir avant, avec `[...ensemble]`.
+    skills:
+      - data-structure-choice
+
+  - id: js-structure-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel est le coût de `n` recherches par `find` dans un tableau de `n` éléments ?
+    options:
+      - "Proportionnel à n × n"
+      - "Proportionnel à n"
+      - "Constant"
+      - "Proportionnel à log n"
+    answer: [0]
+    explanation: >
+      Chaque `find` parcourt le tableau, donc `n` recherches coûtent `n × n` comparaisons.
+      Construire une `Map` une seule fois ramène l'ensemble à un coût proportionnel à `n`.
+    skills:
+      - data-structure-choice

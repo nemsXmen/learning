@@ -1,0 +1,55 @@
+id: javascript-objets-creer-quiz
+kind: QUIZ
+questions:
+  - id: js-objets-creer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Comment lire la propriété dont le nom est contenu dans la variable `champ` ?
+    options:
+      - "objet[champ]"
+      - "objet.champ"
+      - "objet->champ"
+      - "objet.get(champ)"
+    answer: [0]
+    explanation: >
+      Les crochets évaluent l'expression qu'ils contiennent. `objet.champ` chercherait une
+      propriété nommée littéralement `'champ'`.
+    skills:
+      - objects-basics
+
+  - id: js-objets-creer-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `({ nom: 'Ada' }).telephone?.mobile` ?
+    answer: 'undefined'
+    explanation: >
+      `telephone` vaut `undefined` : le chaînage optionnel `?.` arrête l'évaluation et renvoie
+      `undefined` au lieu de lever une `TypeError`.
+    skills:
+      - objects-basics
+
+  - id: js-objets-creer-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `'toString' in {}` vaut `false`.
+    answer: false
+    explanation: >
+      `in` regarde aussi la chaîne de prototypes, et `toString` y est présent : le résultat est
+      `true`. Pour ne tester que les propriétés propres, on utilise `Object.hasOwn`.
+    skills:
+      - objects-basics
+
+  - id: js-objets-creer-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `Object.keys(objet).length` après `const objet = { a: 1 }; delete objet.a;` ?
+    answer: '0'
+    explanation: >
+      `delete` retire réellement la propriété de l'objet : il ne reste aucune clé. Affecter
+      `undefined` aurait laissé la clé en place.
+    skills:
+      - objects-basics

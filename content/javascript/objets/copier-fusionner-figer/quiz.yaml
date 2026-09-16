@@ -1,0 +1,55 @@
+id: javascript-objets-copies-quiz
+kind: QUIZ
+questions:
+  - id: js-objets-copies-q1
+    type: true_false
+    difficulty: 1
+    question: >
+      `{ a: 1 } === { a: 1 }` vaut `true`.
+    answer: false
+    explanation: >
+      `===` compare les références pour les objets. Ces deux littéraux créent deux objets
+      distincts, donc le résultat est `false`.
+    skills:
+      - objects-copies
+
+  - id: js-objets-copies-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `o.n.a` après `const o = Object.freeze({ n: { a: 1 } }); o.n.a = 2;` ?
+    answer: '2'
+    explanation: >
+      `Object.freeze` est superficiel : il protège les propriétés de `o`, mais pas celles de
+      l'objet imbriqué `n`, qui reste modifiable.
+    skills:
+      - objects-copies
+
+  - id: js-objets-copies-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle copie conserve une propriété `Date` sous forme d'objet `Date` ?
+    options:
+      - "structuredClone(objet)"
+      - "JSON.parse(JSON.stringify(objet))"
+      - "Object.freeze(objet)"
+      - "Object.keys(objet)"
+    answer: [0]
+    explanation: >
+      `structuredClone` copie en profondeur en préservant les dates, les `Map`, les `Set` et
+      les cycles. L'aller-retour JSON transforme une date en chaîne de caractères.
+    skills:
+      - objects-copies
+
+  - id: js-objets-copies-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Après `const copie = { ...objet }`, modifier `copie.options.theme` laisse `objet` intact.
+    answer: false
+    explanation: >
+      Le spread ne copie que le premier niveau : `copie.options` et `objet.options` sont le
+      même objet. Il faut recopier aussi ce niveau, ou utiliser `structuredClone`.
+    skills:
+      - objects-copies

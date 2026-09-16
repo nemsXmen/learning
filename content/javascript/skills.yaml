@@ -100,6 +100,97 @@ skills:
     importance: 3
     requires: [loop-control, iteration-for-of-in]
 
+  # Partie 2 — Data Structures
+  - id: strings-basics
+    name: Créer et assembler des chaînes
+    importance: 4
+    requires: [js-primitive-types]
+
+  - id: strings-search
+    name: Chercher dans une chaîne
+    importance: 3
+    requires: [strings-basics]
+
+  - id: strings-transform
+    name: Transformer une chaîne
+    importance: 4
+    requires: [strings-basics]
+
+  - id: strings-split-replace
+    name: Découper et remplacer dans une chaîne
+    importance: 4
+    requires: [strings-transform]
+
+  - id: arrays-basics
+    name: Créer et lire un tableau
+    importance: 5
+    requires: [references-mutability, loops]
+
+  - id: arrays-mutation
+    name: Ajouter et retirer des éléments
+    importance: 4
+    requires: [arrays-basics]
+
+  - id: arrays-search
+    name: Chercher dans un tableau
+    importance: 4
+    requires: [arrays-basics]
+
+  - id: arrays-transform
+    name: map, filter et reduce
+    importance: 5
+    requires: [arrays-search]
+
+  - id: arrays-sort-flatten
+    name: Trier et aplatir un tableau
+    importance: 3
+    requires: [arrays-transform]
+
+  - id: arrays-immutability
+    name: Immutabilité et destructuring des tableaux
+    importance: 4
+    requires: [arrays-mutation]
+
+  - id: objects-basics
+    name: Créer et manipuler un objet
+    importance: 5
+    requires: [references-mutability]
+
+  - id: objects-modern-syntax
+    name: Syntaxe moderne des objets
+    importance: 4
+    requires: [objects-basics]
+
+  - id: objects-iteration
+    name: Parcourir un objet
+    importance: 4
+    requires: [objects-basics, iteration-for-of-in]
+
+  - id: objects-copies
+    name: Copier, fusionner et figer un objet
+    importance: 4
+    requires: [objects-modern-syntax]
+
+  - id: set-collection
+    name: Set
+    importance: 3
+    requires: [arrays-basics]
+
+  - id: map-collection
+    name: Map
+    importance: 4
+    requires: [objects-basics]
+
+  - id: weak-collections
+    name: WeakMap et WeakSet
+    importance: 2
+    requires: [map-collection, set-collection]
+
+  - id: data-structure-choice
+    name: Choisir sa structure de données
+    importance: 4
+    requires: [map-collection, set-collection, arrays-search]
+
   # Partie 3 — Functions
   - id: functions
     name: Fonctions

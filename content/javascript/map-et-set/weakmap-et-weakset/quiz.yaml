@@ -1,0 +1,62 @@
+id: javascript-weak-collections-quiz
+kind: QUIZ
+questions:
+  - id: js-weak-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      Une `WeakMap` expose une propriété `size`.
+    answer: false
+    explanation: >
+      Le nombre d'entrées dépendrait du passage du ramasse-miettes, qui n'est pas prévisible.
+      La spécification retire donc `size`, l'itération et `clear`.
+    skills:
+      - weak-collections
+
+  - id: js-weak-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle valeur une `WeakMap` accepte-t-elle comme clé ?
+    options:
+      - "Un objet"
+      - "Une chaîne de caractères"
+      - "Un nombre"
+      - "Le booléen true"
+    answer: [0]
+    explanation: >
+      Seuls les objets — et les symboles non enregistrés — peuvent servir de clés : une valeur
+      primitive n'a pas d'identité propre et ne peut pas être libérée. Une clé primitive lève
+      une `TypeError`.
+    skills:
+      - weak-collections
+
+  - id: js-weak-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      On peut parcourir un `WeakSet` avec `for...of`.
+    answer: false
+    explanation: >
+      Un `WeakSet` n'est pas itérable, pour la même raison qu'une `WeakMap` : le parcours
+      révélerait le travail du ramasse-miettes. Il n'expose que `add`, `has` et `delete`.
+    skills:
+      - weak-collections
+
+  - id: js-weak-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel problème une `WeakMap` résout-elle par rapport à une `Map` ?
+    options:
+      - "La fuite mémoire due aux clés retenues indéfiniment"
+      - "La lenteur des appels à get"
+      - "L'absence d'ordre d'insertion"
+      - "L'impossibilité de sérialiser en JSON"
+    answer: [0]
+    explanation: >
+      Une `Map` garde ses clés en vie tant qu'elle existe. La `WeakMap` n'empêche pas la
+      libération des objets devenus inutiles ailleurs, ce qui évite d'accumuler des entrées
+      mortes.
+    skills:
+      - weak-collections

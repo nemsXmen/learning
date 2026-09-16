@@ -1,0 +1,56 @@
+id: javascript-tableaux-trier-quiz
+kind: QUIZ
+questions:
+  - id: js-trier-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `[10, 9, 1].sort().join(',')` ?
+    answer: '1,10,9'
+    explanation: >
+      Sans fonction de comparaison, `sort` compare les éléments comme des chaînes : `'1'`,
+      puis `'10'`, puis `'9'`. Pour un tri numérique, il faut `(a, b) => a - b`.
+    skills:
+      - arrays-sort-flatten
+
+  - id: js-trier-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      `tableau.sort()` renvoie un nouveau tableau et laisse l'original intact.
+    answer: false
+    explanation: >
+      `sort` trie le tableau sur place et renvoie ce même tableau. Pour obtenir une copie
+      triée, on utilise `toSorted` ou `[...tableau].sort()`.
+    skills:
+      - arrays-sort-flatten
+
+  - id: js-trier-q3
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `[[1, 2], [3, [4]]].flat().length` ?
+    answer: '4'
+    explanation: >
+      `flat()` n'aplatit qu'un niveau : le résultat est `[1, 2, 3, [4]]`, dont le dernier
+      élément reste un tableau. Sa longueur vaut 4.
+    skills:
+      - arrays-sort-flatten
+
+  - id: js-trier-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quel comparateur trie des nombres par ordre croissant ?
+    options:
+      - "(a, b) => a - b"
+      - "(a, b) => b - a"
+      - "(a, b) => a > b"
+      - "(a, b) => a < b"
+    answer: [0]
+    explanation: >
+      `a - b` est négatif quand `a` est plus petit, ce qui le place avant `b`. `b - a` trie par
+      ordre décroissant. Une comparaison booléenne ne renvoie jamais de nombre négatif et
+      donne un tri incorrect.
+    skills:
+      - arrays-sort-flatten

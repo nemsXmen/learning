@@ -1,0 +1,57 @@
+id: javascript-objets-parcourir-quiz
+kind: QUIZ
+questions:
+  - id: js-objets-parcourir-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `Object.keys({ b: 1, 2: 'x', a: 3, 1: 'y' })[0]` ?
+    answer: '1'
+    explanation: >
+      Les clés qui ressemblent à des entiers positifs sont parcourues en premier, en ordre
+      croissant : l'ordre complet est `['1', '2', 'b', 'a']`.
+    skills:
+      - objects-iteration
+
+  - id: js-objets-parcourir-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `Object.fromEntries([['a', 1], ['b', 2]]).b` ?
+    answer: '2'
+    explanation: >
+      `Object.fromEntries` reconstruit un objet à partir d'un itérable de paires
+      `[cle, valeur]` : on obtient `{ a: 1, b: 2 }`.
+    skills:
+      - objects-iteration
+
+  - id: js-objets-parcourir-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `for...in` ne parcourt que les propriétés propres de l'objet.
+    answer: false
+    explanation: >
+      `for...in` parcourt aussi les propriétés énumérables héritées via la chaîne de
+      prototypes. Pour n'obtenir que les propriétés propres, on utilise `Object.keys` ou un
+      filtre `Object.hasOwn`.
+    skills:
+      - objects-iteration
+
+  - id: js-objets-parcourir-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle expression double toutes les valeurs de `{ a: 1, b: 2 }` ?
+    options:
+      - "Object.fromEntries(Object.entries(o).map(([c, v]) => [c, v * 2]))"
+      - "o.map((v) => v * 2)"
+      - "Object.values(o).map((v) => v * 2)"
+      - "Object.keys(o).map((c) => o[c] * 2)"
+    answer: [0]
+    explanation: >
+      Les objets n'ont pas de `map` : il faut passer par les entrées puis reconstruire l'objet.
+      Les deux dernières propositions fonctionnent, mais renvoient un tableau de valeurs, pas
+      un objet.
+    skills:
+      - objects-iteration

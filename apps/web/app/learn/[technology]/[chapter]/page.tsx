@@ -114,7 +114,7 @@ export default async function ChapterPage({ params }: PageProps) {
             {progress ? (
               <ProgressBar
                 value={progress.progressPercent}
-                label={`Lecture de ${chapter.title}`}
+                label="Progression de lecture"
                 showValue
                 className="max-w-xs"
               />

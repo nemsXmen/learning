@@ -1,0 +1,55 @@
+id: javascript-tableaux-transformer-quiz
+kind: QUIZ
+questions:
+  - id: js-map-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `[1, 2, 3].map((n) => n * 2).length` ?
+    answer: '3'
+    explanation: >
+      `map` produit toujours un tableau de même longueur que l'original : `[2, 4, 6]`, de
+      longueur 3.
+    skills:
+      - arrays-transform
+
+  - id: js-map-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `[1, 2, 3, 4].filter((n) => n % 2 === 0).reduce((a, b) => a + b, 0)` ?
+    answer: '6'
+    explanation: >
+      `filter` garde les nombres pairs, `[2, 4]`, puis `reduce` les additionne à partir de 0 :
+      le résultat vaut 6.
+    skills:
+      - arrays-transform
+
+  - id: js-map-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que renvoie `[1, 2, 3].map((n) => { n * 2; })` ?
+    options:
+      - "[undefined, undefined, undefined]"
+      - "[2, 4, 6]"
+      - "undefined"
+      - "[1, 2, 3]"
+    answer: [0]
+    explanation: >
+      Avec des accolades, la fonction fléchée n'a pas de `return` implicite : elle renvoie
+      `undefined` pour chaque élément. Il faut écrire `(n) => n * 2` ou ajouter `return`.
+    skills:
+      - arrays-transform
+
+  - id: js-map-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      `[].reduce((a, b) => a + b)` renvoie `0`.
+    answer: false
+    explanation: >
+      Sans valeur initiale, `reduce` sur un tableau vide lève une `TypeError`, faute d'élément
+      à prendre comme accumulateur. Avec `reduce((a, b) => a + b, 0)`, le résultat vaudrait `0`.
+    skills:
+      - arrays-transform

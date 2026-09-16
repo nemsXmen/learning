@@ -152,7 +152,7 @@ function Continue({ view }: { view: DashboardView }) {
       </h2>
       <ProgressBar
         value={view.continue.progressPercent}
-        label={`Lecture de ${view.continue.title}`}
+        label="Progression de lecture"
         showValue
       />
     </Card>

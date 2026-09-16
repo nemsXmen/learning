@@ -1,0 +1,56 @@
+id: javascript-tableaux-creer-quiz
+kind: QUIZ
+questions:
+  - id: js-tableaux-creer-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `[10, 20, 30].at(-1)` ?
+    answer: '30'
+    explanation: >
+      `at` accepte un index négatif, compté depuis la fin : `at(-1)` renvoie le dernier
+      élément, `30`.
+    skills:
+      - arrays-basics
+
+  - id: js-tableaux-creer-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      `typeof [1, 2]` vaut `'array'`.
+    answer: false
+    explanation: >
+      Un tableau est un objet : `typeof` renvoie `'object'`. Pour reconnaître un tableau, on
+      utilise `Array.isArray`.
+    skills:
+      - arrays-basics
+
+  - id: js-tableaux-creer-q3
+    type: predict_output
+    difficulty: 2
+    question: >
+      Après `const t = []; t[4] = 'x';`, que vaut `t.length` ?
+    answer: '5'
+    explanation: >
+      `length` vaut toujours le plus grand index plus un. Écrire à l'index 4 d'un tableau vide
+      donne une longueur de 5, avec quatre emplacements vides avant `'x'`.
+    skills:
+      - arrays-basics
+
+  - id: js-tableaux-creer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que produit `new Array(3)` ?
+    options:
+      - "Un tableau de longueur 3 dont les emplacements sont vides"
+      - "Le tableau [3]"
+      - "Le tableau [0, 0, 0]"
+      - "Une TypeError"
+    answer: [0]
+    explanation: >
+      Avec un seul argument numérique, le constructeur crée un tableau de cette longueur
+      rempli de trous. Pour obtenir `[3]`, on écrit `Array.of(3)` ; pour `[0, 0, 0]`,
+      `Array.from({ length: 3 }, () => 0)`.
+    skills:
+      - arrays-basics

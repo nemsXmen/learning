@@ -1,0 +1,57 @@
+id: javascript-chaines-decouper-quiz
+kind: QUIZ
+questions:
+  - id: js-decouper-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `'a-b-c'.replace('-', '+')` ?
+    answer: 'a+b-c'
+    explanation: >
+      Avec une chaîne comme motif, `replace` ne remplace que la première occurrence. Pour tout
+      remplacer, on utilise `replaceAll('-', '+')`.
+    skills:
+      - strings-split-replace
+
+  - id: js-decouper-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `'a,b,,c'.split(',').length` ?
+    answer: '4'
+    explanation: >
+      `split` conserve les morceaux vides : entre les deux virgules consécutives se trouve une
+      chaîne vide. Le résultat est `['a', 'b', '', 'c']`, de longueur 4.
+    skills:
+      - strings-split-replace
+
+  - id: js-decouper-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `texte.replaceAll(/x/, 'y')` fonctionne sans le drapeau `g`.
+    answer: false
+    explanation: >
+      `replaceAll` exige le drapeau `g` quand le motif est une expression régulière ; sans lui,
+      il lève une `TypeError`. Avec une simple chaîne comme motif, aucun drapeau n'est
+      nécessaire.
+    skills:
+      - strings-split-replace
+
+  - id: js-decouper-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel code transforme `'a b c'` en `'a-b-c'` ?
+    options:
+      - "'a b c'.split(' ').join('-')"
+      - "'a b c'.join('-')"
+      - "'a b c'.split('-').join(' ')"
+      - "'a b c'.replace(' ', '-')"
+    answer: [0]
+    explanation: >
+      `split(' ')` donne `['a', 'b', 'c']` et `join('-')` les rassemble avec des tirets. Une
+      chaîne n'a pas de méthode `join`, et `replace` avec une chaîne ne remplacerait que le
+      premier espace.
+    skills:
+      - strings-split-replace

@@ -1,0 +1,60 @@
+id: javascript-tableaux-ajouter-retirer-quiz
+kind: QUIZ
+questions:
+  - id: js-mutation-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que renvoie `[1, 2].push(3)` ?
+    answer: '3'
+    explanation: >
+      `push` modifie le tableau et renvoie sa nouvelle longueur, ici 3 — pas le tableau.
+    skills:
+      - arrays-mutation
+
+  - id: js-mutation-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Après `const t = ['a', 'b', 'c', 'd']; t.splice(1, 2);`, que contient `t` ?
+    options:
+      - "['a', 'd']"
+      - "['b', 'c']"
+      - "['a', 'b', 'c', 'd']"
+      - "['a', 'c', 'd']"
+    answer: [0]
+    explanation: >
+      `splice(1, 2)` retire deux éléments à partir de l'index 1, soit `'b'` et `'c'`, et
+      modifie le tableau : il reste `['a', 'd']`. C'est la valeur de retour de `splice` qui
+      vaut `['b', 'c']`.
+    skills:
+      - arrays-mutation
+
+  - id: js-mutation-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      `pop` retire et renvoie le premier élément du tableau.
+    answer: false
+    explanation: >
+      `pop` agit à la fin : il retire et renvoie le dernier élément. C'est `shift` qui retire
+      le premier.
+    skills:
+      - arrays-mutation
+
+  - id: js-mutation-q4
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles méthodes modifient le tableau d'origine ?
+    options:
+      - "push"
+      - "slice"
+      - "splice"
+      - "shift"
+    answer: [0, 2, 3]
+    explanation: >
+      `push`, `splice` et `shift` modifient le tableau sur place. `slice` renvoie une copie
+      partielle sans toucher à l'original.
+    skills:
+      - arrays-mutation

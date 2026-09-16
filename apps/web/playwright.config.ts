@@ -35,6 +35,13 @@ export default defineConfig({
     { name: 'setup', testMatch: /auth\.setup\.ts/ },
     {
       name: 'a11y',
+      testIgnore: /screenshots[.]spec[.]ts/,
+      use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup'],
+    },
+    {
+      name: 'screenshots',
+      testMatch: /screenshots[.]spec[.]ts/,
       use: { ...devices['Desktop Chrome'] },
       dependencies: ['setup'],
     },

@@ -46,9 +46,10 @@ export function ProgressBar({
   return (
     <div className={cn('flex flex-col gap-2', className)}>
       {showValue ? (
-        <div className="flex items-center justify-between text-[13px]">
-          <span className="text-text-muted">{label}</span>
-          <span className="font-semibold text-text">{percent} %</span>
+        <div className="flex items-baseline justify-between gap-3 text-[13px]">
+          <span className="min-w-0 text-text-muted">{label}</span>
+          {/* Never wrapped: a long label used to push « 0 » and « % » onto two lines. */}
+          <span className="shrink-0 whitespace-nowrap font-semibold text-text">{percent} %</span>
         </div>
       ) : null}
       {/*

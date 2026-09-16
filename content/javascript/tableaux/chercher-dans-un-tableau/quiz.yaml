@@ -1,0 +1,55 @@
+id: javascript-tableaux-chercher-quiz
+kind: QUIZ
+questions:
+  - id: js-tableaux-chercher-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `[NaN].includes(NaN)` ?
+    answer: 'true'
+    explanation: >
+      `includes` utilise l'algorithme SameValueZero, qui considère `NaN` égal à lui-même.
+      `indexOf`, qui utilise `===`, ne le trouve pas.
+    skills:
+      - arrays-search
+
+  - id: js-tableaux-chercher-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `[NaN].indexOf(NaN)` ?
+    answer: '-1'
+    explanation: >
+      `indexOf` compare avec `===`, et `NaN` n'est égal à aucune valeur, pas même à lui-même :
+      il ne trouve rien et renvoie `-1`.
+    skills:
+      - arrays-search
+
+  - id: js-tableaux-chercher-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `[].every((x) => x > 0)` vaut `false`.
+    answer: false
+    explanation: >
+      Sur un tableau vide, `every` renvoie `true` : aucun élément ne contredit la condition.
+      `some`, lui, renvoie `false`.
+    skills:
+      - arrays-search
+
+  - id: js-tableaux-chercher-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que renvoie `find` quand aucun élément ne correspond ?
+    options:
+      - "undefined"
+      - "-1"
+      - "null"
+      - "Un tableau vide"
+    answer: [0]
+    explanation: >
+      `find` renvoie l'élément trouvé, ou `undefined`. C'est `findIndex` qui renvoie `-1`, et
+      `filter` qui renvoie un tableau, éventuellement vide.
+    skills:
+      - arrays-search

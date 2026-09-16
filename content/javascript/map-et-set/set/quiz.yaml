@@ -1,0 +1,55 @@
+id: javascript-set-quiz
+kind: QUIZ
+questions:
+  - id: js-set-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Que vaut `new Set([1, 1, 2]).size` ?
+    answer: '2'
+    explanation: >
+      Un `Set` ne garde chaque valeur qu'une fois : le second `1` est ignoré, il reste deux
+      valeurs.
+    skills:
+      - set-collection
+
+  - id: js-set-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `new Set([NaN, NaN]).size` ?
+    answer: '1'
+    explanation: >
+      L'unicité d'un `Set` repose sur SameValueZero, qui considère `NaN` égal à lui-même :
+      une seule valeur est conservée, alors que `NaN === NaN` vaut `false`.
+    skills:
+      - set-collection
+
+  - id: js-set-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Un `Set` ne peut pas contenir deux objets ayant exactement le même contenu.
+    answer: false
+    explanation: >
+      Les objets sont comparés par référence : `new Set([{ id: 1 }, { id: 1 }])` contient deux
+      valeurs distinctes. Pour dédoublonner sur un critère, on indexe par une clé dans une `Map`.
+    skills:
+      - set-collection
+
+  - id: js-set-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Comment obtenir un tableau à partir d'un `Set` nommé `ensemble` ?
+    options:
+      - "[...ensemble]"
+      - "ensemble.toArray()"
+      - "ensemble.map((v) => v)"
+      - "Array(ensemble)"
+    answer: [0]
+    explanation: >
+      Un `Set` est itérable : le spread, comme `Array.from(ensemble)`, produit un tableau. Il
+      n'a ni `toArray` ni `map`.
+    skills:
+      - set-collection

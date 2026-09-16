@@ -1,0 +1,56 @@
+id: javascript-map-quiz
+kind: QUIZ
+questions:
+  - id: js-map-collection-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `m.size` après `const m = new Map(); m.set('1', 'a').set(1, 'b');` ?
+    answer: '2'
+    explanation: >
+      Une `Map` compare ses clés sans conversion de type : la chaîne `'1'` et le nombre `1`
+      sont deux clés distinctes. Sur un objet, les deux auraient désigné la même propriété.
+    skills:
+      - map-collection
+
+  - id: js-map-collection-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `new Map([['a', 1], ['a', 2]]).get('a')` ?
+    answer: '2'
+    explanation: >
+      Les entrées sont insérées dans l'ordre : la seconde écrase la valeur de la clé `'a'`.
+      La `Map` ne contient qu'une entrée.
+    skills:
+      - map-collection
+
+  - id: js-map-collection-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `JSON.stringify(new Map([['a', 1]]))` renvoie `'{"a":1}'`.
+    answer: false
+    explanation: >
+      Une `Map` ne se sérialise pas : le résultat est `'{}'`. Il faut convertir avant, avec
+      `Object.fromEntries(carte)` ou `[...carte]`.
+    skills:
+      - map-collection
+
+  - id: js-map-collection-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que fait `carte['x'] = 1` sur une `Map` ?
+    options:
+      - "Ajoute une propriété à l'objet Map ; size reste inchangé"
+      - "Ajoute une entrée, comme set('x', 1)"
+      - "Lève une TypeError"
+      - "Remplace tout le contenu de la Map"
+    answer: [0]
+    explanation: >
+      Les crochets écrivent une propriété ordinaire sur l'objet, sans toucher au stockage
+      interne : `get('x')` renvoie `undefined` et `size` ne bouge pas. Seul `set` ajoute une
+      entrée.
+    skills:
+      - map-collection

@@ -1,0 +1,56 @@
+id: javascript-objets-syntaxe-moderne-quiz
+kind: QUIZ
+questions:
+  - id: js-objets-moderne-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `a` après `const { a = 5 } = { a: undefined };` ?
+    answer: '5'
+    explanation: >
+      Une valeur par défaut s'applique quand la valeur extraite vaut `undefined` : `a` reçoit
+      donc 5. Avec `{ a: null }`, la valeur par défaut ne s'appliquerait pas.
+    skills:
+      - objects-modern-syntax
+
+  - id: js-objets-moderne-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `({ ...{ a: 1, b: 2 }, a: 3 }).a` ?
+    answer: '3'
+    explanation: >
+      En cas de clé répétée, la dernière écriture gagne : le `a: 3` placé après le spread
+      écrase la valeur copiée.
+    skills:
+      - objects-modern-syntax
+
+  - id: js-objets-moderne-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `const { motDePasse, ...reste } = compte` retire la propriété `motDePasse` de `compte`.
+    answer: false
+    explanation: >
+      Le destructuring ne modifie jamais l'objet source : il crée des variables. `compte` garde
+      sa propriété, et `reste` est un nouvel objet qui ne la contient pas.
+    skills:
+      - objects-modern-syntax
+
+  - id: js-objets-moderne-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle écriture applique des valeurs par défaut sans écraser les options fournies ?
+    options:
+      - "{ ...PAR_DEFAUT, ...options }"
+      - "{ ...options, ...PAR_DEFAUT }"
+      - "Object.assign(PAR_DEFAUT, options)"
+      - "{ PAR_DEFAUT, options }"
+    answer: [0]
+    explanation: >
+      La dernière source gagne : les options doivent venir après les valeurs par défaut.
+      `Object.assign(PAR_DEFAUT, options)` donnerait le bon résultat mais modifierait l'objet
+      de valeurs par défaut, partagé par tout le programme.
+    skills:
+      - objects-modern-syntax

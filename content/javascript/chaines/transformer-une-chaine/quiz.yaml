@@ -1,0 +1,55 @@
+id: javascript-chaines-transformer-quiz
+kind: QUIZ
+questions:
+  - id: js-transformer-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `'JavaScript'.slice(-6)` ?
+    answer: 'Script'
+    explanation: >
+      Un index négatif compte depuis la fin : `slice(-6)` renvoie les six derniers caractères,
+      `'Script'`.
+    skills:
+      - strings-transform
+
+  - id: js-transformer-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que vaut `'abcdef'.substring(4, 1)` ?
+    answer: 'bcd'
+    explanation: >
+      Quand le début dépasse la fin, `substring` inverse les bornes : l'appel équivaut à
+      `substring(1, 4)`, soit `'bcd'`. `slice(4, 1)` renverrait une chaîne vide.
+    skills:
+      - strings-transform
+
+  - id: js-transformer-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      Après `nom.toUpperCase();`, la variable `nom` contient la version en majuscules.
+    answer: false
+    explanation: >
+      Les chaînes sont immuables : `toUpperCase` renvoie une nouvelle chaîne sans toucher à
+      `nom`. Il faut écrire `nom = nom.toUpperCase()`.
+    skills:
+      - strings-transform
+
+  - id: js-transformer-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que vaut `'  bonjour  '.trim().length` ?
+    options:
+      - "7"
+      - "11"
+      - "9"
+      - "5"
+    answer: [0]
+    explanation: >
+      `trim` retire les espaces aux deux extrémités : il reste `'bonjour'`, qui compte sept
+      caractères.
+    skills:
+      - strings-transform
