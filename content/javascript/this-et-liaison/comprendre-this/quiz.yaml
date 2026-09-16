@@ -1,0 +1,61 @@
+id: javascript-this-quiz
+kind: QUIZ
+questions:
+  - id: js-this-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `const o = { n: 1, f() { return this.n; } }; const autre = { n: 2, f: o.f };`,
+      que renvoie `autre.f()` ?
+    answer: '2'
+    explanation: >
+      `this` dépend de l'appel, pas de l'objet où la fonction a été écrite : dans
+      `autre.f()`, l'objet devant le point est `autre`.
+    skills:
+      - this-binding
+
+  - id: js-this-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans un module ES, que vaut `this` dans l'appel seul `f()` d'une fonction classique ?
+    options:
+      - "undefined"
+      - "L'objet global"
+      - "La fonction f elle-même"
+      - "Le module"
+    answer: [0]
+    explanation: >
+      Les modules sont en mode strict : un appel seul laisse `this` à `undefined`. En mode
+      non strict, il serait remplacé par l'objet global.
+    skills:
+      - this-binding
+
+  - id: js-this-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Pour une fonction classique, `this` est fixé par l'endroit où la fonction est écrite.
+    answer: false
+    explanation: >
+      C'est la forme de l'appel qui le fixe : méthode, appel seul, `new`, ou liaison
+      explicite. Seules les fonctions fléchées tirent leur `this` du lieu d'écriture.
+    skills:
+      - this-binding
+
+  - id: js-this-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle règle de liaison est prioritaire sur toutes les autres ?
+    options:
+      - "L'appel avec new"
+      - "call, apply ou bind"
+      - "L'appel de méthode objet.methode()"
+      - "L'appel seul"
+    answer: [0]
+    explanation: >
+      L'ordre est : `new`, puis liaison explicite, puis méthode, puis appel seul. Même une
+      fonction liée par `bind` utilise le nouvel objet quand elle est appelée avec `new`.
+    skills:
+      - this-binding

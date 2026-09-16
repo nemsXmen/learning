@@ -1,0 +1,54 @@
+id: javascript-call-apply-bind-quiz
+kind: QUIZ
+questions:
+  - id: js-bind-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `function f() { return this.x; }`, que renvoie `f.call({ x: 3 })` ?
+    answer: '3'
+    explanation: >
+      `call` exécute la fonction immédiatement en fixant `this` à son premier argument.
+    skills:
+      - explicit-binding
+
+  - id: js-bind-q2
+    type: predict_output
+    difficulty: 4
+    question: >
+      Avec la même fonction `f`, que renvoie `f.bind({ x: 1 }).call({ x: 2 })` ?
+    answer: '1'
+    explanation: >
+      Une fonction liée par `bind` l'est définitivement : `call` ne peut plus changer son
+      `this`. Seul `new` passerait outre.
+    skills:
+      - explicit-binding
+
+  - id: js-bind-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle méthode exécute tout de suite la fonction, avec ses arguments dans un tableau ?
+    options:
+      - "apply"
+      - "call"
+      - "bind"
+      - "map"
+    answer: [0]
+    explanation: >
+      `apply(objet, [a, b])` prend un tableau ; `call(objet, a, b)` des arguments séparés ;
+      `bind` n'exécute rien et renvoie une nouvelle fonction.
+    skills:
+      - explicit-binding
+
+  - id: js-bind-q4
+    type: true_false
+    difficulty: 1
+    question: >
+      `bind` exécute la fonction immédiatement.
+    answer: false
+    explanation: >
+      `bind` renvoie une nouvelle fonction, liée à l'objet fourni, qu'il faut appeler
+      ensuite. C'est ce qui le rend utile pour les callbacks.
+    skills:
+      - explicit-binding

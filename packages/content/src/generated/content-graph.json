@@ -276,6 +276,15 @@
       "contentVersion": "8f62552d7a92"
     },
     {
+      "slug": "prototypes",
+      "title": "Prototypes",
+      "order": 16,
+      "part": "runtime",
+      "technology": "javascript",
+      "contentPath": "javascript/prototypes/module.yaml",
+      "contentVersion": "157c48060ada"
+    },
+    {
       "slug": "tableaux",
       "title": "Tableaux",
       "order": 7,
@@ -283,6 +292,15 @@
       "technology": "javascript",
       "contentPath": "javascript/tableaux/module.yaml",
       "contentVersion": "2a3cde3c8703"
+    },
+    {
+      "slug": "this-et-liaison",
+      "title": "this et la liaison",
+      "order": 15,
+      "part": "runtime",
+      "technology": "javascript",
+      "contentPath": "javascript/this-et-liaison/module.yaml",
+      "contentVersion": "4ba73f719a17"
     },
     {
       "slug": "variables-et-valeurs",
@@ -816,12 +834,88 @@
       "technology": "javascript"
     },
     {
+      "id": "execution-phases",
+      "name": "Phases de création et d'exécution",
+      "importance": 3,
+      "requires": [
+        "execution-context",
+        "hoisting-tdz"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "this-binding",
+      "name": "Règles de liaison de this",
+      "importance": 5,
+      "requires": [
+        "execution-context"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "explicit-binding",
+      "name": "call, apply et bind",
+      "importance": 4,
+      "requires": [
+        "this-binding"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "this-arrow-callbacks",
+      "name": "this dans les fléchées et les callbacks",
+      "importance": 4,
+      "requires": [
+        "explicit-binding",
+        "arrow-functions"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "prototype-chain",
+      "name": "Chaîne de prototypes et recherche de propriété",
+      "importance": 5,
+      "requires": [
+        "this-binding",
+        "objects-basics"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "prototype-property",
+      "name": "prototype, __proto__ et instanceof",
+      "importance": 4,
+      "requires": [
+        "prototype-chain"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "constructor-functions",
+      "name": "Constructor functions et Object.create",
+      "importance": 4,
+      "requires": [
+        "prototype-property"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "prototypal-inheritance",
+      "name": "Héritage prototypal",
+      "importance": 4,
+      "requires": [
+        "constructor-functions"
+      ],
+      "technology": "javascript"
+    },
+    {
       "id": "classes-basics",
       "name": "Classes et constructeur",
       "importance": 5,
       "requires": [
         "objects-basics",
-        "factory-functions"
+        "factory-functions",
+        "constructor-functions"
       ],
       "technology": "javascript"
     },
@@ -1171,7 +1265,8 @@
       "xp": 80,
       "prerequisites": [
         "javascript-objets-creer",
-        "javascript-factory-functions"
+        "javascript-factory-functions",
+        "javascript-object-create"
       ],
       "skills": [
         "classes-basics"
@@ -1181,7 +1276,7 @@
         "classes"
       ],
       "contentPath": "javascript/classes/classes-bases/lesson.md",
-      "contentVersion": "21892ff06338",
+      "contentVersion": "8ee93879440d",
       "body": "\n## Objectifs\n\n- Déclarer une classe avec `class` et son `constructor`.\n- Créer des instances avec `new`, et comprendre ce que fait cet opérateur.\n- Reconnaître ce qu'une classe apporte face à un objet littéral répété.\n\n## Introduction\n\nDès qu'une application manipule plusieurs objets de même forme — des utilisateurs, des\ncommandes, des tâches —, écrire chaque objet à la main devient répétitif et fragile : il\nsuffit d'oublier une propriété pour qu'une fonction plante trois fichiers plus loin. Une\nclasse est un moule : elle décrit une fois la forme et les opérations, et produit ensuite\nautant d'objets qu'on veut, tous cohérents.\n\n`class` est arrivé avec ES2015. Ce n'est pas un nouveau modèle d'objets — JavaScript n'a\nqu'un seul modèle —, c'est une syntaxe plus lisible pour ce qu'on écrivait déjà avec des\nfonctions constructrices. Cette syntaxe est aujourd'hui celle qu'on croise dans la plupart\ndes bases de code, et celle que les autres langages rendent immédiatement familière.\n\n## Concept\n\nUne classe déclare un nom et un corps. Le corps contient un `constructor`, exécuté à chaque\ncréation d'instance, et des méthodes.\n\n| Élément | Rôle |\n| --- | --- |\n| `class Nom { … }` | déclare le moule |\n| `constructor(args)` | initialise une instance, reçoit les arguments de `new` |\n| `this` | l'instance en cours de construction ou d'utilisation |\n| `new Nom(args)` | crée une instance et renvoie l'objet |\n\nTrois règles à retenir dès maintenant :\n\n- Une classe s'appelle **obligatoirement** avec `new`. `Personne('Ana')` lève une\n  `TypeError`.\n- Le corps d'une classe est toujours en **mode strict**, même dans un fichier qui ne l'est\n  pas.\n- Une déclaration de classe n'est pas utilisable avant sa ligne : contrairement à\n  `function`, elle reste dans la zone morte temporelle.\n\n## Exemple\n\n```js\nclass Tache {\n  constructor(titre, echeance) {\n    this.titre = titre;\n    this.echeance = echeance;\n    this.terminee = false;\n  }\n\n  terminer() {\n    this.terminee = true;\n    return this;\n  }\n\n  resume() {\n    const etat = this.terminee ? 'faite' : 'à faire';\n    return `${this.titre} (${etat}, ${this.echeance})`;\n  }\n}\n\nconst tache = new Tache('Écrire le rapport', '2026-10-02');\nconsole.log(tache.resume()); // 'Écrire le rapport (à faire, 2026-10-02)'\n\ntache.terminer();\nconsole.log(tache.resume()); // 'Écrire le rapport (faite, 2026-10-02)'\n\nconst autre = new Tache('Relire', '2026-10-05');\nconsole.log(autre.terminee); // false : état indépendant\n\nconsole.log(tache instanceof Tache); // true\nconsole.log(typeof Tache); // 'function'\n```\n\n## Comment ça fonctionne\n\n`new Tache('Écrire le rapport', '2026-10-02')` fait quatre choses, dans cet ordre : il crée\nun objet vide, il lie ce nouvel objet à `this`, il exécute le `constructor` avec les\narguments reçus, puis il renvoie l'objet. On n'écrit donc jamais `return this` dans un\nconstructeur : c'est déjà son comportement.\n\nLes propriétés affectées dans le constructeur — `this.titre`, `this.terminee` — appartiennent\nà **chaque instance** : deux tâches ont deux titres. Les méthodes, elles, ne sont pas copiées\ndans chaque objet ; elles sont définies une seule fois et partagées par toutes les instances.\nC'est la différence de coût avec une fabrique, où chaque objet renvoyé embarque ses propres\nfonctions.\n\n```js\nconst a = new Tache('A', '2026-01-01');\nconst b = new Tache('B', '2026-01-02');\nconsole.log(a.terminer === b.terminer); // true : une seule fonction partagée\nconsole.log(a.titre === b.titre); // false : un état par instance\n```\n\nLe mot-clé `this`, à l'intérieur d'une méthode, désigne l'objet sur lequel la méthode est\nappelée. `tache.resume()` met `tache` dans `this`. Ce point mérite d'être gardé en tête :\nsi la méthode est détachée de son objet — passée en callback, par exemple —, `this` n'est\nplus celui qu'on croit. On y reviendra ; en attendant, appelle tes méthodes sur leur objet.\n\nUne classe peut aussi s'écrire comme une expression, utile pour la créer dans une fonction\nou la passer en argument :\n\n```js\nconst Point = class {\n  constructor(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n};\nconsole.log(new Point(1, 2).x); // 1\n```\n\nEnfin, `typeof Tache` vaut `'function'`. Une classe est une fonction particulière, marquée\ncomme non appelable sans `new`. C'est la confirmation que la syntaxe recouvre un mécanisme\nplus ancien, pas un type inédit.\n\n## Erreurs fréquentes\n\n**Oublier `new`.** `const t = Tache('titre')` lève `TypeError: Class constructor Tache cannot\nbe invoked without 'new'`. C'est une amélioration par rapport aux fonctions constructrices,\nqui polluaient silencieusement l'objet global.\n\n**Mettre une virgule entre les méthodes.** Un corps de classe n'est pas un objet littéral :\nles méthodes se suivent sans séparateur, et une virgule est une erreur de syntaxe.\n\n**Écrire `return quelqueChose` dans le constructeur.** Renvoyer un objet remplace l'instance\net casse `instanceof` ; renvoyer une primitive est simplement ignoré. Dans les deux cas, le\nlecteur est induit en erreur.\n\n**Utiliser la classe avant sa déclaration.** `new Tache()` placé au-dessus de `class Tache`\nlève une `ReferenceError`. Le hoisting des `function` ne s'applique pas ici.\n\n**Faire d'une classe un simple sac de fonctions.** Une classe sans état, dont toutes les\nméthodes sont statiques, n'apporte rien qu'un module ne fasse déjà.\n\n## À retenir\n\n- `class` déclare un moule ; `constructor` initialise chaque instance.\n- `new` crée l'objet, le lie à `this`, exécute le constructeur et renvoie l'objet.\n- Les propriétés sont propres à l'instance, les méthodes sont partagées.\n- Appeler une classe sans `new` lève une `TypeError`.\n- Le corps d'une classe est en mode strict et n'est pas hoisté.\n\n## Exercices\n\n1. Écris une classe `Livre` avec `titre`, `auteur` et `pages`, et une méthode `description()`\n   qui renvoie `\"Titre — Auteur (320 pages)\"`. Crée deux livres et affiche leur description.\n\n   :::indice\n   Les trois valeurs arrivent en arguments du constructeur et se rangent dans `this`.\n   :::\n\n   :::solution\n   ```js\n   class Livre {\n     constructor(titre, auteur, pages) {\n       this.titre = titre;\n       this.auteur = auteur;\n       this.pages = pages;\n     }\n\n     description() {\n       return `${this.titre} — ${this.auteur} (${this.pages} pages)`;\n     }\n   }\n\n   const un = new Livre('Le Horla', 'Maupassant', 120);\n   const deux = new Livre('Bouvard et Pécuchet', 'Flaubert', 320);\n   console.log(un.description()); // 'Le Horla — Maupassant (120 pages)'\n   console.log(deux.description()); // 'Bouvard et Pécuchet — Flaubert (320 pages)'\n   ```\n   :::\n\n2. Écris une classe `Compteur` avec une valeur de départ par défaut à `0`, une méthode\n   `incrementer()` et une méthode `reinitialiser()`. Fais en sorte que `incrementer()` puisse\n   s'enchaîner : `compteur.incrementer().incrementer()`.\n\n   :::indice\n   Une valeur par défaut se déclare dans la signature du constructeur.\n   :::\n\n   :::indice\n   Pour enchaîner les appels, chaque méthode doit renvoyer l'instance elle-même.\n   :::\n\n   :::solution\n   ```js\n   class Compteur {\n     constructor(depart = 0) {\n       this.valeur = depart;\n     }\n\n     incrementer() {\n       this.valeur += 1;\n       return this;\n     }\n\n     reinitialiser() {\n       this.valeur = 0;\n       return this;\n     }\n   }\n\n   const compteur = new Compteur(5);\n   compteur.incrementer().incrementer();\n   console.log(compteur.valeur); // 7\n   console.log(compteur.reinitialiser().valeur); // 0\n   ```\n   :::\n\n3. Ce code produit deux tâches identiques alors qu'on en attend deux différentes. Trouve le\n   problème et corrige-le.\n\n   ```js\n   class Tache {\n     constructor(titre) {\n       titre = titre;\n     }\n   }\n\n   const a = new Tache('A');\n   console.log(a.titre); // undefined\n   ```\n\n   :::indice\n   Regarde ce que la ligne du constructeur affecte réellement, et à quoi.\n   :::\n\n   :::solution\n   ```js\n   class Tache {\n     constructor(titre) {\n       this.titre = titre; // sans `this.`, on réaffecte le paramètre à lui-même\n     }\n   }\n\n   const a = new Tache('A');\n   const b = new Tache('B');\n   console.log(a.titre, b.titre); // 'A' 'B'\n   ```\n\n   `titre = titre` réaffecte le paramètre local : l'instruction est légale, sans effet, et\n   l'instance ne reçoit aucune propriété.\n   :::\n\n## Questions d'entretien\n\n- Que fait exactement l'opérateur `new` ?\n\n  :::indice\n  Décompose l'opération en étapes, depuis l'objet vide jusqu'à la valeur renvoyée.\n  :::\n\n  :::reponse\n  `new` crée un objet vide, lie cet objet à `this`, exécute le constructeur avec les\n  arguments fournis, puis renvoie l'objet — sans qu'on ait à écrire `return`. Le nouvel\n  objet est aussi relié à la classe, ce qui rend `instanceof` fiable et donne accès aux\n  méthodes partagées. Si le constructeur renvoie explicitement un objet, c'est cet objet qui\n  sort à la place, ce qui casse `instanceof` ; renvoyer une primitive est ignoré.\n  :::\n\n- Une classe JavaScript est-elle un nouveau type d'entité dans le langage ?\n\n  :::indice\n  Que vaut `typeof MaClasse` ?\n  :::\n\n  :::reponse\n  Non. `typeof MaClasse` vaut `'function'` : une classe est une fonction, avec des règles\n  supplémentaires — appel obligatoire avec `new`, corps en mode strict, pas de hoisting\n  utilisable. La syntaxe `class` donne une écriture claire et un vocabulaire commun avec les\n  autres langages, mais le modèle d'objets sous-jacent de JavaScript n'a pas changé.\n  :::\n\n- Une classe stocke-t-elle ses méthodes dans chaque instance ?\n\n  :::indice\n  Compare `a.methode === b.methode` pour deux instances.\n  :::\n\n  :::reponse\n  Non. Les propriétés affectées dans le constructeur appartiennent à chaque instance, mais\n  les méthodes sont définies une seule fois et partagées : pour deux instances `a` et `b`,\n  `a.methode === b.methode` vaut `true`. C'est la différence de coût mémoire avec une factory\n  function, dont chaque objet renvoyé porte ses propres fonctions. À l'échelle de quelques\n  milliers d'objets, l'écart est sans importance ; il compte sur des volumes très élevés.\n  :::\n",
       "sections": [
         "Objectifs",
@@ -1546,6 +1641,79 @@
       "contentPath": "javascript/execution-context/contexte-execution-et-pile-appels/lesson.md",
       "contentVersion": "71414875b6cb",
       "body": "\n## Objectifs\n\n- Décrire ce qu'est un contexte d'exécution et ce qu'il contient.\n- Suivre l'empilement et le dépilement des contextes dans la pile d'appels.\n- Lire une trace d'erreur et reconnaître un débordement de pile.\n\n## Introduction\n\nJusqu'ici, le code a été lu comme un texte : des portées imbriquées, des noms visibles ou\nnon. Le moteur, lui, ne lit pas un texte : il **empile des contextes**. Chaque appel de\nfonction crée une petite structure qui sait quelles variables existent, quel est son `this`\net où revenir une fois terminée. Comprendre cette structure explique d'un coup la trace\nd'une erreur, l'ordre des `console.log`, et le fameux `Maximum call stack size exceeded`.\n\n## Concept\n\nUn **contexte d'exécution** est l'ensemble des informations dont le moteur a besoin pour\nexécuter un morceau de code. Il en existe trois sortes :\n\n| Contexte | Créé quand | Détruit quand |\n| --- | --- | --- |\n| Global | le script ou le module démarre | le programme se termine |\n| De fonction | une fonction est appelée | la fonction retourne |\n| `eval` | `eval()` est appelé | l'évaluation se termine |\n\nChaque contexte contient trois choses :\n\n1. Un **environnement lexical** : les noms déclarés ici, plus un lien vers le contexte\n   englobant lexicalement — c'est la chaîne de portée, vue au module 12.\n2. Un **environnement de variables** : la partie réservée aux déclarations `var`.\n3. Une valeur de **`this`**, déterminée par la manière dont la fonction a été appelée.\n\nCes contextes sont rangés dans une **pile d'appels** : le dernier créé est le premier\nretiré. Le moteur n'exécute jamais que le contexte au sommet. Un seul thread, une seule\npile : c'est ce qui fait que JavaScript ne fait qu'une chose à la fois.\n\n## Exemple\n\n```js\nfunction troisieme() {\n  console.log('sommet de la pile');\n  return 3;\n}\n\nfunction deuxieme() {\n  return troisieme() + 2;\n}\n\nfunction premiere() {\n  return deuxieme() + 1;\n}\n\nconsole.log(premiere()); // 'sommet de la pile' puis 6\n```\n\nAu moment où `troisieme` s'exécute, la pile contient, de bas en haut :\n\n```text\ntroisieme        <- en cours d'exécution\ndeuxieme\npremiere\nglobal\n```\n\nChaque `return` retire le contexte du sommet et rend la main à celui d'en dessous. Quand\n`premiere` retourne, la pile ne contient plus que le contexte global.\n\n```js\nfunction niveau(n) {\n  if (n === 0) throw new Error('arrivé au fond');\n  return niveau(n - 1);\n}\n\ntry {\n  niveau(3);\n} catch (erreur) {\n  console.log(erreur.message); // 'arrivé au fond'\n  // erreur.stack liste : niveau, niveau, niveau, niveau, puis l'appelant\n}\n```\n\n## Comment ça fonctionne\n\nAu démarrage, le moteur crée le contexte global et le place au bas de la pile. Dans un\nnavigateur, son `this` vaut `window` ; dans un module ES, il vaut `undefined`. Puis il\nexécute les instructions.\n\nChaque fois qu'un appel de fonction est rencontré, un nouveau contexte est **empilé** :\nses paramètres sont liés aux arguments reçus, ses déclarations enregistrées, son `this`\nfixé. L'exécution de l'appelant est suspendue exactement à cette ligne. Quand la fonction\natteint un `return` — ou sa dernière ligne, ce qui revient à `return undefined` —, son\ncontexte est **dépilé** : ses variables locales deviennent inaccessibles et l'appelant\nreprend là où il s'était arrêté. La valeur renvoyée est le seul lien qui subsiste — sauf si\nune fonction interne a été renvoyée, auquel cas son environnement survit : c'est la closure.\n\nLa propriété `stack` d'une erreur est une photographie de la pile au moment où l'erreur a\nété créée. Elle se lit de haut en bas : la ligne du haut est la fonction qui a échoué, les\nsuivantes sont ses appelants. C'est la première chose à regarder devant une erreur, avant\nmême le message.\n\nLa pile a une taille limitée, de l'ordre de quelques milliers de contextes selon le moteur.\nUne récursion sans condition d'arrêt l'épuise et lève `RangeError: Maximum call stack size\nexceeded`. Ce n'est pas une fuite de mémoire : c'est simplement trop d'appels imbriqués en\nmême temps.\n\n```js\nfunction sansFin() {\n  return sansFin();\n}\n// sansFin(); // RangeError: Maximum call stack size exceeded\n```\n\nEnfin, la pile explique pourquoi une fonction longue **bloque** la page : tant que son\ncontexte est au sommet, rien d'autre ne s'exécute, ni un clic, ni un rendu. Les tâches\nasynchrones ne s'exécutent que lorsque la pile est vide — c'est le sujet de la partie\nconsacrée à l'event loop.\n\n## Erreurs fréquentes\n\n**Confondre pile d'appels et chaîne de portée.** La pile dit **qui a appelé qui** et change\nà chaque exécution ; la chaîne de portée dit **où le code est écrit** et ne change jamais.\nUne fonction ne voit pas les variables de son appelant, même s'il est juste en dessous\nd'elle dans la pile.\n\n**Lire une trace d'erreur à l'envers.** La ligne du haut est la plus proche du problème ;\ncelles du bas ne sont que le chemin qui y a mené.\n\n**Oublier la condition d'arrêt d'une récursion.** Toute fonction récursive doit avoir un cas\nde base atteint avec certitude, sinon la pile déborde.\n\n**Croire qu'une fonction asynchrone s'exécute « en parallèle ».** Elle attend que la pile\nsoit vide. Une boucle de calcul de dix secondes gèle tout le reste.\n\n**Compter sur les variables locales après le retour.** Le contexte est dépilé : ce qui n'a\npas été renvoyé, ou capturé par une closure, disparaît.\n\n## À retenir\n\n- Un contexte d'exécution contient un environnement lexical, un environnement de variables\n  et un `this`.\n- Chaque appel empile un contexte ; chaque `return` le dépile.\n- Le moteur n'exécute que le contexte au sommet : un seul thread, une seule pile.\n- La propriété `stack` d'une erreur se lit de haut en bas.\n- Une récursion sans cas de base lève `RangeError: Maximum call stack size exceeded`.\n\n## Exercices\n\n1. Donne l'ordre exact des affichages de ce code, et décris la pile au moment où\n   `console.log('c')` s'exécute.\n\n   ```js\n   function c() {\n     console.log('c');\n   }\n   function b() {\n     console.log('b avant');\n     c();\n     console.log('b après');\n   }\n   function a() {\n     console.log('a avant');\n     b();\n     console.log('a après');\n   }\n   a();\n   ```\n\n   :::indice\n   Un appel suspend l'appelant à la ligne exacte où il se trouve.\n   :::\n\n   :::solution\n   L'ordre est : `a avant`, `b avant`, `c`, `b après`, `a après`.\n\n   Au moment de `console.log('c')`, la pile contient, de bas en haut : global, `a`, `b`,\n   `c`. Chaque appelant est suspendu sur sa ligne d'appel et ne reprend qu'une fois le\n   contexte supérieur dépilé.\n   :::\n\n2. Cette fonction déborde la pile. Corrige-la pour qu'elle calcule la somme des entiers de\n   `n` à 1.\n\n   ```js\n   function somme(n) {\n     return n + somme(n - 1);\n   }\n   ```\n\n   :::indice\n   Il manque le cas où la récursion doit s'arrêter.\n   :::\n\n   :::indice\n   Que doit renvoyer `somme(0)` pour que l'addition reste juste ?\n   :::\n\n   :::solution\n   ```js\n   function somme(n) {\n     if (n <= 0) return 0;\n     return n + somme(n - 1);\n   }\n\n   console.log(somme(4)); // 10\n   ```\n\n   Sans le cas de base, `somme` s'appelle avec `-1`, `-2`, et ainsi de suite : chaque appel\n   empile un contexte jusqu'à `RangeError`. Pour de très grands `n`, une boucle évite le\n   problème entièrement, puisqu'elle n'empile rien.\n   :::\n\n3. Écris une fonction `profondeurMax()` qui mesure combien d'appels imbriqués la pile\n   supporte dans ton environnement, sans faire planter le programme.\n\n   :::indice\n   Une récursion qui compte, et un `try` / `catch` autour du premier appel.\n   :::\n\n   :::indice\n   L'erreur attendue est une `RangeError` : attrape-la au niveau de l'appel initial.\n   :::\n\n   :::solution\n   ```js\n   function profondeurMax() {\n     let profondeur = 0;\n\n     function descendre() {\n       profondeur += 1;\n       descendre();\n     }\n\n     try {\n       descendre();\n     } catch (erreur) {\n       // RangeError : la pile est pleine\n     }\n\n     return profondeur;\n   }\n\n   console.log(profondeurMax()); // par exemple 11034 — dépend du moteur\n   ```\n\n   Le nombre varie d'un moteur à l'autre et d'une exécution à l'autre : il dépend de la\n   taille de la pile et de la place que prend chaque contexte. C'est pourquoi aucun code de\n   production ne doit s'appuyer sur une profondeur précise.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la pile d'appels, et pourquoi n'y en a-t-il qu'une ?\n\n  :::indice\n  Combien de choses JavaScript peut-il exécuter à un instant donné ?\n  :::\n\n  :::reponse\n  C'est la structure qui empile les contextes d'exécution : chaque appel en ajoute un au\n  sommet, chaque retour le retire. Le moteur n'exécute que le contexte du sommet. Il n'y en a\n  qu'une parce que JavaScript s'exécute sur un seul thread : à un instant donné, une seule\n  fonction est en cours. C'est ce qui rend le modèle simple à raisonner — pas de verrou, pas\n  de condition de course sur les variables — et ce qui impose que tout travail long soit\n  découpé ou déporté, faute de quoi il bloque l'interface.\n  :::\n\n- Quelle différence entre la pile d'appels et la chaîne de portée ?\n\n  :::indice\n  L'une dépend de l'exécution, l'autre de l'écriture.\n  :::\n\n  :::reponse\n  La pile décrit l'**exécution** : qui a appelé qui, et dans quel ordre les contextes seront\n  dépilés. Elle change à chaque exécution du programme. La chaîne de portée décrit\n  l'**écriture** : quels environnements une fonction peut consulter pour résoudre un nom,\n  déterminé une fois pour toutes par l'endroit où elle est définie. Une fonction peut donc être\n  au sommet de la pile juste au-dessus de son appelant sans voir aucune de ses variables\n  locales.\n  :::\n\n- Que signifie `Maximum call stack size exceeded`, et comment le corriger ?\n\n  :::indice\n  Quelle ressource est épuisée, et par quoi ?\n  :::\n\n  :::reponse\n  La pile a atteint sa taille limite : trop de contextes sont empilés simultanément. Dans la\n  quasi-totalité des cas, la cause est une récursion sans cas de base, ou dont le cas de base\n  n'est jamais atteint — un décrément qui saute la valeur d'arrêt, par exemple. Plus rarement,\n  c'est une récursion correcte mais trop profonde pour le volume de données. On corrige en\n  ajoutant ou en réparant le cas de base, puis, si la profondeur reste un problème, en\n  réécrivant l'algorithme sous forme de boucle avec une pile explicite, ce qui n'empile plus\n  de contextes.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-environnement-lexical",
+      "title": "Environnement lexical et environnement de variables",
+      "slug": "environnement-lexical",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "execution-context",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-phases-execution"
+      ],
+      "skills": [
+        "lexical-environment"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/execution-context/environnement-lexical/lesson.md",
+      "contentVersion": "6dacea62aabf",
+      "body": "\n## Objectifs\n\n- Décrire un environnement : une table de liaisons et un lien vers l'extérieur.\n- Distinguer l'environnement lexical, qui suit les blocs, de l'environnement de variables,\n  qui couvre toute la fonction.\n- Expliquer comment une fonction retrouve, à l'appel, l'environnement où elle a été écrite.\n\n## Introduction\n\n« Portée lexicale », « chaîne de portée », « closure » : ces notions ont été présentées\ncomme des règles. Elles reposent toutes sur une seule structure interne du moteur,\nl'**environnement**. Comprendre cette structure, c'est pouvoir dessiner ce que voit\nn'importe quelle ligne de code, et expliquer les closures sans formule magique. C'est aussi\nle vocabulaire exact de la spécification, qu'on retrouve dans les messages d'erreur et les\ndébogueurs.\n\n## Concept\n\nUn **environnement** est fait de deux choses :\n\n| Élément | Rôle |\n| --- | --- |\n| Un registre de liaisons | les noms déclarés à ce niveau et leurs valeurs |\n| Un lien extérieur | une référence vers l'environnement qui l'englobe, ou `null` au sommet |\n\nUn contexte d'exécution en tient deux :\n\n| Environnement | Contient | Change pendant l'exécution ? |\n| --- | --- | --- |\n| Environnement de variables | les `var` et les déclarations de fonction | non, il couvre toute la fonction |\n| Environnement lexical | les `let`, `const`, `class`, et l'accès au reste | oui, un nouveau à chaque bloc |\n\nEnfin, chaque **objet fonction** garde une référence interne, notée `[[Environment]]` dans\nla spécification : l'environnement lexical en vigueur **au moment où la fonction a été\ncréée**. C'est cette référence, et elle seule, qui rend la portée lexicale et les closures\npossibles.\n\n## Exemple\n\n```js\nconst niveau = 'module';\n\nfunction traiter(liste) {\n  var total = 0; // environnement de variables de traiter\n\n  for (const element of liste) {\n    // nouvel environnement lexical pour ce tour de boucle\n    const double = element * 2;\n    total += double;\n  }\n\n  if (total > 10) {\n    let message = 'élevé'; // environnement du bloc if\n    var trace = message; // remonte dans l'environnement de variables\n  }\n\n  console.log(total, trace, niveau); // 12 'élevé' 'module'\n  // console.log(message); // ReferenceError : l'environnement du bloc est quitté\n}\n\ntraiter([1, 2, 3]);\n\nfunction fabriquer() {\n  const secret = 'dedans';\n  return () => secret; // [[Environment]] = environnement de fabriquer\n}\nconst lire = fabriquer();\nconsole.log(lire()); // 'dedans' : fabriquer a terminé, son environnement survit\n```\n\n## Comment ça fonctionne\n\nQuand un **bloc** commence — `if`, boucle, accolades seules —, le moteur crée un nouvel\nenvironnement dont le lien extérieur pointe vers l'environnement lexical courant, puis en\nfait l'environnement lexical courant. À la sortie du bloc, il rétablit le précédent. Les\n`let` et `const` du bloc vivent donc dans un environnement qui disparaît avec lui. Les `var`,\nelles, ont été enregistrées dans l'**environnement de variables** de la fonction pendant la\nphase de création : elles survivent au bloc.\n\nPour résoudre un nom, le moteur interroge l'environnement lexical courant, puis suit les\nliens extérieurs. La chaîne de portée **est** cette suite de liens.\n\nLe point décisif est la création des fonctions. Au moment où une fonction est **définie**,\nson objet reçoit `[[Environment]]`, la référence vers l'environnement lexical courant. Au\nmoment où elle est **appelée**, le nouvel environnement de l'appel a pour lien extérieur\ncette référence — et non l'environnement de l'appelant. C'est la définition exacte de la\nportée lexicale.\n\nC'est aussi la définition d'une closure : tant qu'une fonction est référencée, son\n`[[Environment]]` l'est aussi, et le ramasse-miettes ne peut pas libérer cet environnement.\nDans l'exemple, `fabriquer` a terminé, mais `lire` maintient en vie l'environnement où\n`secret` est lié. La référence porte sur l'environnement, pas sur une copie des valeurs :\nsi la liaison change, la closure voit la nouvelle valeur.\n\nAu niveau global d'un script, l'environnement a deux registres : un registre **objet**, qui\ncorrespond aux propriétés de l'objet global et reçoit les `var` et déclarations de\nfonction, et un registre **déclaratif** pour `let`, `const` et `class`. C'est pourquoi\n`var x` au sommet d'un script crée `window.x`, et `let y` non. Un module ES n'a qu'un\nenvironnement de module, sans lien avec l'objet global.\n\n## Erreurs fréquentes\n\n**Croire qu'une closure copie les valeurs.** Elle référence l'environnement : les\nmodifications restent visibles.\n\n**Penser que l'appelant fournit l'environnement extérieur.** C'est la définition qui le\nfournit, via `[[Environment]]`.\n\n**Confondre les deux environnements.** Les `var` vivent au niveau de la fonction, les `let`\nau niveau du bloc.\n\n**Chercher une variable `let` globale sur `window`.** Elle vit dans le registre déclaratif,\npas sur l'objet global.\n\n## À retenir\n\n- Environnement = registre de liaisons + lien vers l'extérieur.\n- L'environnement lexical change à chaque bloc ; l'environnement de variables couvre la\n  fonction.\n- Chaque fonction garde `[[Environment]]`, l'environnement de sa **définition**.\n- La chaîne de portée est la suite des liens extérieurs.\n- Une closure maintient un environnement en vie, elle ne copie pas ses valeurs.\n\n## Exercices\n\n1. Dessine la chaîne d'environnements visible depuis la ligne marquée, du plus proche au\n   plus lointain, en listant les noms liés à chaque niveau.\n\n   ```js\n   const appli = 'Atelier';\n   function afficher(utilisateur) {\n     var titre = 'Profil';\n     if (utilisateur) {\n       const nom = utilisateur.nom;\n       // ← ici\n     }\n   }\n   ```\n\n   :::indice\n   Pars du bloc `if`, puis remonte : la fonction, puis le niveau supérieur.\n   :::\n\n   :::solution\n   1. Environnement du bloc `if` : `nom`.\n   2. Environnement de la fonction `afficher` : `utilisateur` et `titre` (la `var` appartient\n      à l'environnement de variables de la fonction).\n   3. Dans un module ES : l'environnement du module, avec `appli` et `afficher`, puis\n      l'environnement global, avec les objets natifs comme `console`. Dans un script\n      classique, ces deux niveaux n'en font qu'un : `appli` et `afficher` sont liés\n      directement dans l'environnement global.\n\n   Chaque niveau pointe vers le suivant par son lien extérieur ; la résolution de `appli`\n   depuis la ligne marquée remonte deux niveaux avant de la trouver.\n   :::\n\n2. Explique pourquoi, dans un script classique, ce code affiche `1` puis `undefined`.\n\n   ```js\n   var a = 1;\n   let b = 2;\n   console.log(window.a);\n   console.log(window.b);\n   ```\n\n   :::indice\n   L'environnement global d'un script a deux registres distincts.\n   :::\n\n   :::solution\n   Le registre **objet** de l'environnement global correspond aux propriétés de `window` : il\n   reçoit les `var` et les déclarations de fonction, donc `window.a` vaut 1. Le registre\n   **déclaratif** reçoit `let`, `const` et `class` : `b` y est liée, mais n'est pas une\n   propriété de `window`, qui renvoie donc `undefined`. Dans un module ES, les deux lignes\n   afficheraient `undefined`, car un module a son propre environnement.\n   :::\n\n3. Montre que deux appels d'une même fabrique produisent deux environnements indépendants,\n   et que chaque closure voit les modifications de son propre environnement.\n\n   :::indice\n   Crée deux compteurs, incrémente-en un seul, et lis les deux.\n   :::\n\n   :::solution\n   ```js\n   function creerCompteur() {\n     let valeur = 0;\n     return {\n       incrementer: () => (valeur += 1),\n       lire: () => valeur,\n     };\n   }\n\n   const a = creerCompteur();\n   const b = creerCompteur();\n   a.incrementer();\n   a.incrementer();\n\n   console.log(a.lire(), b.lire()); // 2 0\n   ```\n\n   Chaque appel crée un environnement avec sa propre liaison `valeur`. Les deux fonctions\n   d'un même compteur partagent le même `[[Environment]]` : `lire` voit ce qu'`incrementer`\n   a modifié, ce qui prouve qu'il s'agit d'une référence et non d'une copie.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre environnement lexical et environnement de variables ?\n\n  :::indice\n  Lequel change quand on entre dans un bloc ?\n  :::\n\n  :::reponse\n  L'environnement de variables d'un contexte contient les `var` et les déclarations de\n  fonction ; il est fixé à la création et couvre toute la fonction. L'environnement lexical\n  est l'environnement **courant** : il commence égal au précédent, puis un nouvel\n  environnement est empilé à chaque bloc pour ses `let`, `const` et `class`, et retiré à la\n  sortie. C'est la raison pour laquelle une `var` déclarée dans un `if` survit au bloc, et\n  pas un `let`.\n  :::\n\n- Qu'est-ce que `[[Environment]]`, et quel rapport avec les closures ?\n\n  :::indice\n  Quand cette référence est-elle fixée, et qu'est-ce qu'elle empêche ?\n  :::\n\n  :::reponse\n  C'est une référence interne portée par chaque objet fonction, fixée à sa **définition** :\n  elle pointe vers l'environnement lexical où la fonction a été écrite. À chaque appel, le\n  nouvel environnement prend cette référence comme lien extérieur, ce qui donne la portée\n  lexicale. Tant que la fonction est référencée, cet environnement ne peut pas être libéré :\n  c'est exactement ce qu'on appelle une closure.\n  :::\n\n- Pourquoi une `var` globale devient-elle une propriété de `window`, et pas un `let` ?\n\n  :::indice\n  L'environnement global d'un script n'est pas un registre unique.\n  :::\n\n  :::reponse\n  L'environnement global d'un script combine un registre objet, adossé à l'objet global, et un\n  registre déclaratif. Les `var` et les déclarations de fonction vont dans le registre objet,\n  pour des raisons de compatibilité historique : elles deviennent des propriétés de `window`.\n  `let`, `const` et `class` vont dans le registre déclaratif et ne polluent pas l'objet global.\n  Dans un module ES, il n'y a qu'un environnement de module, et rien n'est ajouté à `window`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-phases-execution",
+      "title": "Les deux phases : création et exécution",
+      "slug": "phases-creation-execution",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "execution-context",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-contexte-execution",
+        "javascript-hoisting"
+      ],
+      "skills": [
+        "execution-phases"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/execution-context/phases-creation-execution/lesson.md",
+      "contentVersion": "d9aca3c70760",
+      "body": "\n## Objectifs\n\n- Décrire ce que le moteur prépare dans un contexte avant d'en exécuter la première ligne.\n- Prédire l'état exact des paramètres, des variables et des fonctions à l'entrée d'une\n  fonction.\n- Résoudre les conflits de noms entre paramètre, `var` et déclaration de fonction.\n\n## Introduction\n\nLe chapitre précédent a montré qu'un appel empile un contexte d'exécution. Ce contexte ne\nnaît pas prêt à l'emploi : le moteur le **construit** d'abord, puis l'**exécute**. Le\nhoisting, vu au module Portée, n'est que la partie visible de cette construction. Ici, on\nregarde la construction en entier — ce qui permet de prédire des comportements qui\nsemblent arbitraires tant qu'on ne connaît pas l'ordre des opérations.\n\n## Concept\n\nTout contexte — global ou de fonction — passe par deux phases.\n\n**Phase de création**, avant la première instruction :\n\n| Étape | Effet |\n| --- | --- |\n| 1. Environnement | un nouvel environnement est créé, relié à l'environnement extérieur |\n| 2. Paramètres | chaque paramètre reçoit l'argument correspondant, ou `undefined` |\n| 3. Déclarations de fonction | chaque nom est lié à la fonction complète |\n| 4. `var` | chaque nom **non encore lié** reçoit `undefined` |\n| 5. `let`, `const`, `class` | chaque nom est enregistré **sans valeur** (zone morte) |\n| 6. `this` | la valeur est fixée selon la manière dont la fonction est appelée |\n\n**Phase d'exécution** : les instructions s'exécutent ligne à ligne, les affectations\nremplacent les valeurs préparées, les appels créent de nouveaux contextes.\n\n## Exemple\n\n```js\nfunction commander(produit) {\n  // Entrée dans la fonction : la phase de création est déjà terminée.\n  console.log(produit); // 'clavier' : paramètre lié à l'argument\n  console.log(typeof calculer); // 'function' : déclaration liée avec son corps\n  console.log(remise); // undefined : var enregistrée sans valeur utile\n  // console.log(total); // ReferenceError : let en zone morte\n\n  var remise = 0.1;\n  let total = calculer(100, remise);\n  console.log(total); // 90\n\n  function calculer(prix, taux) {\n    return prix * (1 - taux);\n  }\n}\n\ncommander('clavier');\n\nfunction conflit() {\n  console.log(typeof valeur); // 'function' : la fonction a été liée en premier\n  var valeur = 42;\n  function valeur() {}\n  console.log(typeof valeur); // 'number' : l'affectation a remplacé la fonction\n}\nconflit();\n```\n\n## Comment ça fonctionne\n\nL'ordre de la phase de création explique les cas qui surprennent. Les **paramètres** sont\nliés en premier, puis les **déclarations de fonction**, puis les **`var`**. Une `var` ne\nréinitialise jamais un nom déjà lié : dans `function f(a) { var a; }`, le `var a` ne fait\nrien, et `a` garde l'argument reçu. Une déclaration de fonction, elle, **remplace** un\nparamètre ou une `var` du même nom au moment de la création — mais une affectation\nultérieure, pendant l'exécution, la remplacera à son tour. C'est ce que montre la fonction\n`conflit` de l'exemple.\n\n`let`, `const` et `class` sont bien enregistrés pendant la création : dire qu'ils « ne sont\npas hoistés » est inexact. Ils sont enregistrés **sans valeur**, et c'est cet état qui\nproduit la zone morte temporelle. La différence avec `var` n'est pas l'existence de la\nliaison, mais son initialisation.\n\nLa valeur de `this` est fixée à la création, à partir de **l'appel** : méthode, fonction\nseule, `new`, `call`. Le module suivant y est consacré. Une fonction fléchée fait exception :\nelle ne reçoit pas de `this` propre et n'a pas d'objet `arguments`.\n\nLe contexte **global** suit les mêmes étapes, avec une particularité dans un script\nclassique : les `var` et les déclarations de fonction du niveau supérieur deviennent des\npropriétés de l'objet global (`window` dans un navigateur), alors que `let` et `const` n'en\ndeviennent pas. Dans un module ES, rien ne devient propriété globale.\n\nEnfin, il faut distinguer **définir** une fonction et l'**appeler**. Écrire la fonction crée\nun objet fonction, une seule fois. Chaque appel déclenche une nouvelle phase de création,\navec des liaisons neuves : deux appels ne partagent rien, sauf ce qu'ils lisent dans les\nenvironnements extérieurs.\n\n## Erreurs fréquentes\n\n**Croire que le moteur déplace le code.** Rien ne bouge : il enregistre les déclarations\navant d'exécuter.\n\n**Dire que `let` n'est pas hoisté.** Il est enregistré, sans valeur ; d'où la zone morte.\n\n**Donner le même nom à une `var` et à une fonction.** L'état dépend de la ligne où l'on se\ntrouve : renomme l'une des deux.\n\n**Attendre qu'un `var` réinitialise un paramètre.** Il ne fait rien si le nom est déjà lié.\n\n**Confondre définition et appel.** La création du contexte a lieu à chaque appel, pas à la\ndéfinition.\n\n## À retenir\n\n- Chaque contexte est d'abord créé, puis exécuté.\n- Création : environnement, paramètres, fonctions, `var` à `undefined`, `let`/`const` en\n  zone morte, `this`.\n- Une `var` ne réinitialise pas un nom déjà lié ; une déclaration de fonction le remplace.\n- `let` et `const` sont enregistrés, mais pas initialisés.\n- Chaque appel reprend une phase de création complète, avec des liaisons neuves.\n\n## Exercices\n\n1. Donne la valeur de chaque `console.log` à l'entrée de la fonction, en justifiant par la\n   phase de création.\n\n   ```js\n   function inscrire(nom) {\n     console.log(nom);\n     console.log(role);\n     console.log(typeof valider);\n     var role = 'membre';\n     function valider() { return true; }\n   }\n   inscrire('Ada');\n   ```\n\n   :::indice\n   Suis l'ordre : paramètres, déclarations de fonction, puis `var`.\n   :::\n\n   :::solution\n   - `nom` affiche `'Ada'` : les paramètres sont liés aux arguments en premier.\n   - `role` affiche `undefined` : la `var` est enregistrée avec cette valeur, l'affectation\n     n'a lieu qu'à sa ligne.\n   - `typeof valider` affiche `'function'` : la déclaration est liée avec son corps pendant\n     la création.\n   :::\n\n2. Prédis les deux affichages, puis explique-les.\n\n   ```js\n   function test() {\n     console.log(typeof x);\n     var x = 'texte';\n     function x() {}\n     console.log(typeof x);\n   }\n   test();\n   ```\n\n   :::indice\n   Pendant la création, qui l'emporte entre la déclaration de fonction et la `var` ? Et\n   pendant l'exécution ?\n   :::\n\n   :::solution\n   Le premier affiche `'function'` : à la création, la déclaration de fonction lie `x` à la\n   fonction, et la `var x` ne réinitialise pas un nom déjà lié. Le second affiche\n   `'string'` : pendant l'exécution, l'affectation `x = 'texte'` remplace la fonction. La\n   ligne `function x() {}` ne fait rien à l'exécution, son travail a été fait à la création.\n   :::\n\n3. Que renvoie `f(5)` ? Explique pourquoi la `var` ne change rien.\n\n   ```js\n   function f(n) {\n     var n;\n     return n;\n   }\n   ```\n\n   :::indice\n   Une `var` réinitialise-t-elle un nom déjà lié ?\n   :::\n\n   :::solution\n   `f(5)` renvoie `5`. Le paramètre `n` est lié à 5 dès le début de la création ; la\n   déclaration `var n` trouve un nom déjà lié et ne le touche pas. Il n'y a pas d'affectation,\n   donc rien ne change à l'exécution. Avec `var n = 0`, en revanche, l'affectation\n   s'appliquerait et la fonction renverrait 0.\n   :::\n\n## Questions d'entretien\n\n- Que fait le moteur pendant la phase de création d'un contexte ?\n\n  :::indice\n  Pense à l'environnement, aux différentes déclarations, et à `this`.\n  :::\n\n  :::reponse\n  Il crée un environnement relié à l'environnement extérieur, lie les paramètres aux\n  arguments, lie les déclarations de fonction avec leur corps, enregistre les `var` avec\n  `undefined` si le nom n'est pas déjà pris, enregistre `let`, `const` et `class` sans valeur\n  — d'où la zone morte —, et fixe `this` selon la forme de l'appel. Aucune instruction n'est\n  exécutée : c'est la phase suivante qui déroule le code et effectue les affectations.\n  :::\n\n- `let` et `const` sont-ils hoistés ?\n\n  :::indice\n  La liaison existe-t-elle avant la ligne de déclaration ?\n  :::\n\n  :::reponse\n  Oui, au sens où leurs liaisons sont créées pendant la phase de création, comme celles de\n  `var`. La différence est qu'elles ne sont pas **initialisées** : toute lecture avant la ligne\n  de déclaration lève une `ReferenceError`. La preuve est le masquage : un `let x` dans une\n  fonction empêche de lire un `x` extérieur dès le début de la fonction, ce qui ne serait pas\n  le cas si la liaison n'existait pas encore.\n  :::\n\n- Quelle différence entre définir une fonction et l'appeler, du point de vue du moteur ?\n\n  :::indice\n  Qu'est-ce qui est créé une seule fois, et qu'est-ce qui est créé à chaque fois ?\n  :::\n\n  :::reponse\n  Définir une fonction crée un **objet fonction**, une seule fois, qui mémorise\n  l'environnement où il a été défini. L'appeler crée un **contexte d'exécution** neuf, avec sa\n  propre phase de création : nouvelles liaisons pour les paramètres et les variables locales,\n  nouvelle valeur de `this`. Deux appels de la même fonction ne partagent donc aucune variable\n  locale, seulement ce qu'ils lisent dans les environnements extérieurs.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -2564,6 +2732,151 @@
       ]
     },
     {
+      "id": "javascript-chaine-prototypes",
+      "title": "La chaîne de prototypes et la recherche de propriété",
+      "slug": "chaine-de-prototypes",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "prototypes",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-this",
+        "javascript-objets-creer"
+      ],
+      "skills": [
+        "prototype-chain"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/prototypes/chaine-de-prototypes/lesson.md",
+      "contentVersion": "f859f14a0bef",
+      "body": "\n## Objectifs\n\n- Décrire le lien de prototype que possède chaque objet, et la chaîne qu'il forme.\n- Suivre la recherche d'une propriété à travers cette chaîne, jusqu'à `null`.\n- Distinguer lecture et écriture : une écriture crée une propriété propre qui masque celle\n  du prototype.\n\n## Introduction\n\n`[1, 2].map` existe, alors que ce tableau ne contient que deux nombres. `{}.toString()`\nfonctionne, alors que l'objet est vide. Ces méthodes ne sont pas copiées dans chaque\nvaleur : elles sont **trouvées ailleurs**, en suivant un lien caché. Ce lien, le prototype,\nest le mécanisme d'héritage de JavaScript — y compris sous la syntaxe `class`.\n\n## Concept\n\nChaque objet possède un lien interne, noté `[[Prototype]]` dans la spécification, vers un\nautre objet ou vers `null`. En suivant ces liens de proche en proche, on obtient la\n**chaîne de prototypes**.\n\n| Valeur | Sa chaîne |\n| --- | --- |\n| `{}` | `Object.prototype` → `null` |\n| `[1, 2]` | `Array.prototype` → `Object.prototype` → `null` |\n| `function () {}` | `Function.prototype` → `Object.prototype` → `null` |\n| `Object.create(animal)` | `animal` → `Object.prototype` → `null` |\n\nLes règles d'accès :\n\n| Opération | Comportement |\n| --- | --- |\n| Lire `objet.p` | cherche `p` dans l'objet, puis dans chaque prototype ; `undefined` si rien |\n| Écrire `objet.p = v` | crée ou modifie la propriété **propre** `p`, sans toucher aux prototypes |\n| `Object.hasOwn(objet, 'p')` | vrai seulement pour une propriété propre |\n| `'p' in objet` | vrai si `p` existe n'importe où dans la chaîne |\n\n## Exemple\n\n```js\nconst animal = {\n  pattes: 4,\n  respirer() {\n    return `${this.nom} respire`;\n  },\n};\n\n// Object.create crée un objet dont le prototype est animal (détaillé au chapitre 3).\nconst chien = Object.create(animal);\nchien.nom = 'Rex';\n\nconsole.log(chien.respirer()); // 'Rex respire' : méthode trouvée sur animal\nconsole.log(chien.pattes); // 4 : propriété héritée\nconsole.log(Object.hasOwn(chien, 'pattes'), 'pattes' in chien); // false true\n\nchien.pattes = 3; // crée une propriété propre qui masque celle d'animal\nconsole.log(chien.pattes, animal.pattes); // 3 4\n\nconsole.log(Object.getPrototypeOf(chien) === animal); // true\nconsole.log(Object.getPrototypeOf(animal) === Object.prototype); // true\nconsole.log(Object.getPrototypeOf(Object.prototype)); // null\n\nconsole.log(Object.getPrototypeOf([1, 2]) === Array.prototype); // true\nconsole.log(chien.inexistante); // undefined : fin de chaîne atteinte\n```\n\n## Comment ça fonctionne\n\nPour lire `chien.respirer`, le moteur regarde d'abord les propriétés **propres** de `chien`.\nIl n'y trouve pas `respirer` ; il suit alors le lien `[[Prototype]]` vers `animal`, où la\nméthode existe, et s'arrête. S'il avait atteint `null` sans rien trouver, la lecture aurait\nrenvoyé `undefined`. Rien n'est copié : `chien` ne contient que `nom`, et c'est la recherche\nqui donne l'illusion qu'il possède tout le reste.\n\nDans la méthode héritée, `this` vaut `chien`, pas `animal`. La règle de la méthode s'applique\nà l'appel `chien.respirer()` : peu importe où la fonction a été trouvée, l'objet devant le\npoint est `chien`. C'est ce qui permet à une seule fonction, rangée sur le prototype, de\nservir toutes les instances avec leurs propres données.\n\nL'**écriture** ne suit pas la chaîne. `chien.pattes = 3` crée une propriété propre sur\n`chien`, qui **masque** désormais celle d'`animal` pour toute lecture sur `chien`, sans\nmodifier `animal`. Deux exceptions existent : si la chaîne contient un **accesseur** `set`\npour ce nom, il est appelé au lieu de créer une propriété ; et si la propriété héritée est\nnon modifiable, l'écriture échoue — silencieusement en mode non strict, avec une `TypeError`\nen mode strict.\n\nLe piège le plus courant vient de là. Une valeur **modifiable** placée sur un prototype —\nun tableau, un objet — est **partagée** par tous les objets qui en héritent :\n`chien.jouets.push('balle')` ne fait aucune écriture sur `chien`, il lit `jouets` sur le\nprototype et modifie ce tableau commun. Les données propres à chaque objet doivent donc être\ncréées sur l'objet lui-même, et le prototype réservé aux méthodes et aux constantes.\n\nEnfin, `for...in` parcourt aussi les propriétés énumérables héritées, alors que\n`Object.keys` s'en tient aux propriétés propres, comme vu dans la partie Data Structures.\n\n## Erreurs fréquentes\n\n**Placer un tableau ou un objet modifiable sur un prototype.** Tous les héritiers partagent\nla même instance.\n\n**Croire qu'une écriture modifie le prototype.** Elle crée une propriété propre qui masque la\nvaleur héritée.\n\n**Tester l'existence avec `in` quand on veut une propriété propre.** Utilise `Object.hasOwn`.\n\n**Modifier `Object.prototype` ou `Array.prototype`.** Toutes les valeurs du programme — et\ndes bibliothèques — sont touchées.\n\n## À retenir\n\n- Chaque objet a un lien `[[Prototype]]` ; ces liens forment une chaîne qui finit par `null`.\n- Lecture : l'objet, puis chaque prototype, jusqu'à trouver ou atteindre `null`.\n- Écriture : propriété propre, qui masque la valeur héritée.\n- Dans une méthode héritée, `this` reste l'objet sur lequel on l'appelle.\n- Pas de valeur modifiable partagée sur un prototype : méthodes et constantes seulement.\n\n## Exercices\n\n1. Pour chaque ligne, dis où la propriété est trouvée, ou pourquoi elle ne l'est pas.\n\n   ```js\n   const vehicule = { roues: 4, demarrer() { return 'vroum'; } };\n   const moto = Object.create(vehicule);\n   moto.roues = 2;\n\n   moto.roues;\n   moto.demarrer();\n   moto.toString;\n   moto.voler;\n   ```\n\n   :::indice\n   Pars de l'objet, puis remonte : `vehicule`, puis `Object.prototype`, puis `null`.\n   :::\n\n   :::solution\n   - `moto.roues` vaut `2` : propriété propre de `moto`, qui masque celle de `vehicule`.\n   - `moto.demarrer()` renvoie `'vroum'` : méthode trouvée sur `vehicule`.\n   - `moto.toString` est une fonction : trouvée sur `Object.prototype`, deux niveaux plus haut.\n   - `moto.voler` vaut `undefined` : la chaîne est parcourue jusqu'à `null` sans résultat.\n   :::\n\n2. Tous les chiens partagent le même tableau de jouets. Explique pourquoi, puis corrige.\n\n   ```js\n   const chienBase = { jouets: [], ajouterJouet(j) { this.jouets.push(j); } };\n   const rex = Object.create(chienBase);\n   const medor = Object.create(chienBase);\n   rex.ajouterJouet('balle');\n   console.log(medor.jouets); // ['balle']\n   ```\n\n   :::indice\n   `this.jouets.push(...)` écrit-il une propriété sur `rex`, ou lit-il un tableau existant ?\n   :::\n\n   :::solution\n   `push` ne fait aucune écriture de propriété sur `rex` : `this.jouets` est **lu**, trouvé sur\n   `chienBase`, puis ce tableau unique est modifié. Les données propres doivent être créées\n   sur chaque objet.\n\n   ```js\n   const chienBase = { ajouterJouet(j) { this.jouets.push(j); } };\n\n   function creerChien() {\n     const chien = Object.create(chienBase);\n     chien.jouets = []; // propriété propre, un tableau par chien\n     return chien;\n   }\n\n   const rex = creerChien();\n   const medor = creerChien();\n   rex.ajouterJouet('balle');\n   console.log(rex.jouets, medor.jouets); // ['balle'] []\n   ```\n   :::\n\n3. Écris `chaine(objet)` qui renvoie la liste des prototypes d'un objet, du plus proche au\n   plus lointain, sans inclure `null`.\n\n   :::indice\n   Boucle avec `Object.getPrototypeOf` tant que le résultat n'est pas `null`.\n   :::\n\n   :::solution\n   ```js\n   function chaine(objet) {\n     const prototypes = [];\n     let courant = Object.getPrototypeOf(objet);\n     while (courant !== null) {\n       prototypes.push(courant);\n       courant = Object.getPrototypeOf(courant);\n     }\n     return prototypes;\n   }\n\n   const liste = chaine([1, 2]);\n   console.log(liste.length); // 2\n   console.log(liste[0] === Array.prototype, liste[1] === Object.prototype); // true true\n   ```\n   :::\n\n## Questions d'entretien\n\n- Comment fonctionne la recherche d'une propriété en JavaScript ?\n\n  :::indice\n  Que se passe-t-il quand la propriété n'est pas sur l'objet lui-même ?\n  :::\n\n  :::reponse\n  Le moteur cherche d'abord parmi les propriétés propres de l'objet. S'il ne trouve pas, il\n  suit le lien `[[Prototype]]` et recommence sur le prototype, et ainsi de suite jusqu'à\n  trouver la propriété ou atteindre `null`, auquel cas la lecture renvoie `undefined`. Rien\n  n'est copié : c'est une délégation. Une méthode trouvée plus haut s'exécute avec `this`\n  égal à l'objet de départ, ce qui permet de partager les méthodes entre toutes les instances.\n  :::\n\n- Quelle différence entre `Object.hasOwn(objet, 'p')` et `'p' in objet` ?\n\n  :::indice\n  L'un regarde seulement l'objet, l'autre toute la chaîne.\n  :::\n\n  :::reponse\n  `Object.hasOwn` ne renvoie `true` que si `p` est une propriété propre de l'objet. `in`\n  renvoie `true` si `p` existe n'importe où dans la chaîne de prototypes, y compris sur\n  `Object.prototype` : `'toString' in {}` vaut `true`. Pour valider des données ou parcourir\n  un dictionnaire, on veut presque toujours les propriétés propres.\n  :::\n\n- Pourquoi ne faut-il pas placer un tableau sur un prototype ?\n\n  :::indice\n  Ajouter un élément au tableau crée-t-il une propriété sur l'objet héritier ?\n  :::\n\n  :::reponse\n  Parce qu'il est partagé par tous les objets qui héritent du prototype. Modifier le tableau\n  avec `push` n'écrit aucune propriété sur l'héritier : la lecture trouve le tableau du\n  prototype, et c'est ce tableau commun qui change, visible depuis toutes les instances. Seule\n  une affectation, `objet.tableau = []`, créerait une propriété propre. Le prototype doit\n  contenir le comportement partagé — méthodes, constantes — et chaque objet ses propres\n  données.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-object-create",
+      "title": "Constructor functions et Object.create",
+      "slug": "constructeurs-et-object-create",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "prototypes",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-prototype-proto"
+      ],
+      "skills": [
+        "constructor-functions"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/prototypes/constructeurs-et-object-create/lesson.md",
+      "contentVersion": "13b7caa379aa",
+      "body": "\n## Objectifs\n\n- Décrire précisément les quatre étapes de `new`.\n- Écrire une fonction constructeur avec des méthodes partagées sur son prototype.\n- Créer un objet avec un prototype choisi, sans constructeur, grâce à `Object.create`.\n\n## Introduction\n\nAvant `class`, les objets « typés » de JavaScript se fabriquaient avec des fonctions\nconstructeurs et `new`. On en croise encore partout : dans le code existant, dans les\nbibliothèques, et sous la syntaxe `class` elle-même, qui produit exactement ce mécanisme.\n`Object.create` offre une seconde voie, plus directe : relier un objet à un prototype sans\npasser par un constructeur.\n\n## Concept\n\n`new Constructeur(arguments)` réalise quatre étapes :\n\n| Étape | Effet |\n| --- | --- |\n| 1 | crée un objet vide |\n| 2 | lui donne `Constructeur.prototype` comme `[[Prototype]]` |\n| 3 | appelle `Constructeur` avec `this` égal à ce nouvel objet |\n| 4 | renvoie l'objet — sauf si le constructeur renvoie lui-même un **objet** |\n\n`Object.create` fait les étapes 1 et 2, et rien d'autre :\n\n| Écriture | Résultat |\n| --- | --- |\n| `Object.create(proto)` | un objet vide dont le prototype est `proto` |\n| `Object.create(proto, descripteurs)` | idem, avec des propriétés définies par descripteurs |\n| `Object.create(null)` | un objet sans aucun prototype |\n\nPar convention, un constructeur porte un nom en majuscule, et ses méthodes sont rangées sur\nson `prototype`, pas dans le constructeur.\n\n## Exemple\n\n```js\nfunction Compte(titulaire, solde = 0) {\n  this.titulaire = titulaire; // données propres à chaque instance\n  this.solde = solde;\n}\n\nCompte.prototype.deposer = function (montant) {\n  this.solde += montant; // méthode partagée par toutes les instances\n  return this.solde;\n};\n\nconst compteAda = new Compte('Ada', 100);\nconst compteGrace = new Compte('Grace');\nconsole.log(compteAda.deposer(50), compteGrace.deposer(10)); // 150 10\nconsole.log(compteAda.deposer === compteGrace.deposer); // true : une seule fonction\n\nfunction construire(Constructeur, ...args) {\n  const objet = Object.create(Constructeur.prototype); // étapes 1 et 2\n  const resultat = Constructeur.apply(objet, args); // étape 3\n  return resultat !== null && typeof resultat === 'object' ? resultat : objet; // étape 4\n}\nconst compteLinus = construire(Compte, 'Linus', 5);\nconsole.log(compteLinus.deposer(5), compteLinus instanceof Compte); // 10 true\n\nconst modeleSalutation = {\n  saluer() {\n    return `Bonjour ${this.nom}`;\n  },\n};\nconst ada = Object.create(modeleSalutation);\nada.nom = 'Ada';\nconsole.log(ada.saluer()); // 'Bonjour Ada'\n\nconst registre = Object.create(null);\nregistre.toString = 'une clé comme une autre';\nconsole.log(Object.keys(registre), 'hasOwnProperty' in registre); // ['toString'] false\n```\n\n## Comment ça fonctionne\n\nLa fonction `construire` de l'exemple reproduit `new` étape par étape, et c'est la meilleure\ndescription de ce qu'il fait. `Object.create(Constructeur.prototype)` produit l'objet relié au\nbon prototype ; `apply` exécute le constructeur avec cet objet comme `this` ; enfin, le\nrésultat est renvoyé.\n\nLa quatrième étape a une subtilité : si le constructeur renvoie explicitement un **objet**,\nc'est lui que `new` renvoie, et l'objet préparé est abandonné. Une valeur **primitive**\nrenvoyée est ignorée. Ce comportement sert rarement, mais il explique certains motifs de\ncache ou de singleton rencontrés dans du code ancien.\n\nLes **méthodes** vont sur le prototype, les **données** dans le constructeur. Une méthode\ndéfinie dans le constructeur — `this.deposer = function () {}` — serait recréée pour chaque\ninstance : même comportement, mais une fonction par objet au lieu d'une seule. Sur le\nprototype, elle est partagée, et `this` lui fournit les données de l'instance appelante. Pour\nla même raison, une méthode de prototype ne doit pas être une fonction fléchée : elle n'aurait\npas le `this` de l'instance.\n\n**Oublier `new`** est l'erreur typique des constructeurs. `Compte('Ada')` devient un appel\nseul : en mode strict, `this` vaut `undefined` et `this.titulaire = …` lève une `TypeError` ;\nen mode non strict, les propriétés atterrissent sur l'objet global. Un constructeur peut s'en\nprotéger en testant `new.target`, qui vaut `undefined` quand la fonction n'est pas appelée\navec `new`. Les classes, elles, refusent d'office d'être appelées sans `new`.\n\n`Object.create` permet la **délégation pure** : un objet modèle contient les comportements, et\nd'autres objets y délèguent sans constructeur ni `prototype`. Son second argument accepte des\ndescripteurs de propriétés, abordés dans la partie Advanced.\n\nEnfin, `Object.create(null)` produit un objet sans aucune propriété héritée : ni `toString`,\nni `hasOwnProperty`, ni `__proto__`. C'est un dictionnaire dont toutes les clés sont sûres.\nPour ce besoin, une `Map` reste en général plus pratique.\n\n## Erreurs fréquentes\n\n**Appeler un constructeur sans `new`.** `TypeError` en mode strict, pollution de l'objet\nglobal sinon.\n\n**Définir les méthodes dans le constructeur.** Chaque instance porte ses propres copies.\n\n**Écrire une méthode de prototype en fonction fléchée.** Elle ne reçoit pas le `this` de\nl'instance.\n\n**Renvoyer un objet depuis un constructeur sans le vouloir.** Il remplace l'instance créée par\n`new`.\n\n**Appeler une méthode héritée d'`Object.prototype` sur un objet créé par `Object.create(null)`.**\nElle n'existe pas : utilise `Object.hasOwn(objet, cle)`.\n\n## À retenir\n\n- `new` : objet vide, relié à `Constructeur.prototype`, constructeur appelé avec ce `this`,\n  objet renvoyé.\n- Un objet renvoyé par le constructeur remplace l'instance ; une primitive est ignorée.\n- Données dans le constructeur, méthodes sur le prototype.\n- `Object.create(proto)` relie sans constructeur ; `Object.create(null)` ne relie à rien.\n- `new.target` permet de détecter un oubli de `new`.\n\n## Exercices\n\n1. Écris un constructeur `Minuteur(duree)` avec une méthode partagée `restant(ecoule)` qui\n   renvoie le temps restant, jamais négatif. Vérifie que deux minuteurs partagent la méthode.\n\n   :::indice\n   La durée est une donnée d'instance ; la méthode va sur `Minuteur.prototype`.\n   :::\n\n   :::solution\n   ```js\n   function Minuteur(duree) {\n     this.duree = duree;\n   }\n\n   Minuteur.prototype.restant = function (ecoule) {\n     return Math.max(0, this.duree - ecoule);\n   };\n\n   const court = new Minuteur(30);\n   const long = new Minuteur(120);\n   console.log(court.restant(45), long.restant(45)); // 0 75\n   console.log(court.restant === long.restant); // true\n   ```\n   :::\n\n2. Protège ce constructeur contre un appel sans `new`, de façon qu'il fonctionne dans les\n   deux cas.\n\n   ```js\n   function Utilisateur(nom) {\n     this.nom = nom;\n   }\n   ```\n\n   :::indice\n   `new.target` vaut `undefined` quand la fonction n'est pas appelée avec `new`.\n   :::\n\n   :::solution\n   ```js\n   function Utilisateur(nom) {\n     if (!new.target) {\n       return new Utilisateur(nom);\n     }\n     this.nom = nom;\n   }\n\n   const a = new Utilisateur('Ada');\n   const b = Utilisateur('Grace');\n   console.log(a.nom, b.nom, b instanceof Utilisateur); // 'Ada' 'Grace' true\n   ```\n\n   Une autre option est de lever une erreur explicite. Une classe règle la question\n   d'office, en refusant tout appel sans `new`.\n   :::\n\n3. Sans constructeur ni classe, crée un modèle `forme` avec une méthode `decrire()`, puis deux\n   objets qui y délèguent avec leurs propres dimensions.\n\n   :::indice\n   `Object.create(modele)` crée un objet relié au modèle ; ajoute ensuite ses propriétés\n   propres.\n   :::\n\n   :::solution\n   ```js\n   const forme = {\n     decrire() {\n       return `${this.nom} de ${this.largeur} × ${this.hauteur}`;\n     },\n   };\n\n   function creerForme(nom, largeur, hauteur) {\n     const objet = Object.create(forme);\n     Object.assign(objet, { nom, largeur, hauteur });\n     return objet;\n   }\n\n   console.log(creerForme('Carré', 2, 2).decrire()); // 'Carré de 2 × 2'\n   console.log(creerForme('Bandeau', 10, 1).decrire()); // 'Bandeau de 10 × 1'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Que fait exactement `new` ?\n\n  :::indice\n  Quatre étapes, dont une qui dépend de ce que renvoie le constructeur.\n  :::\n\n  :::reponse\n  Il crée un objet vide, lui donne `Constructeur.prototype` comme prototype, appelle le\n  constructeur avec `this` égal à cet objet, puis renvoie l'objet. Si le constructeur renvoie\n  explicitement un objet, c'est cet objet qui est renvoyé à la place ; une valeur primitive\n  renvoyée est ignorée. Une fonction fléchée ne peut pas être appelée avec `new`, faute de\n  propriété `prototype`.\n  :::\n\n- Quelle différence entre `Object.create(proto)` et `new Constructeur()` ?\n\n  :::indice\n  Lequel des deux exécute du code d'initialisation ?\n  :::\n\n  :::reponse\n  Les deux créent un objet relié à un prototype, mais `Object.create` s'arrête là : aucun\n  constructeur n'est exécuté, aucune propriété n'est initialisée, et le prototype peut être\n  n'importe quel objet, ou `null`. `new` suppose une fonction dotée d'une propriété\n  `prototype` et exécute son code d'initialisation. `Object.create` convient à la délégation\n  directe entre objets, `new` — ou une classe — à la fabrication d'instances d'un type.\n  :::\n\n- À quoi sert `Object.create(null)` ?\n\n  :::indice\n  Qu'hérite normalement un objet littéral vide ?\n  :::\n\n  :::reponse\n  À créer un objet sans aucune propriété héritée. Un littéral vide hérite d'`Object.prototype`\n  — `toString`, `hasOwnProperty`, l'accesseur `__proto__` —, ce qui pose problème quand les\n  clés viennent de données externes : une clé `\"__proto__\"` ou `\"toString\"` peut entrer en\n  collision. Un objet sans prototype est un dictionnaire sûr. En code moderne, une `Map`\n  remplit ce rôle plus clairement et n'a pas ces pièges.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-heritage-prototypal",
+      "title": "Héritage prototypal en pratique, et prototypes face aux classes",
+      "slug": "heritage-prototypal",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "prototypes",
+      "order": 4,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-object-create"
+      ],
+      "skills": [
+        "prototypal-inheritance"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/prototypes/heritage-prototypal/lesson.md",
+      "contentVersion": "3e4125c67de4",
+      "body": "\n## Objectifs\n\n- Faire hériter un constructeur d'un autre, en reliant correctement les deux prototypes.\n- Appeler la version parente d'une méthode redéfinie.\n- Montrer que `class` et `extends` produisent la même chaîne, et connaître ce qui les distingue\n  réellement.\n\n## Introduction\n\nLe chapitre précédent reliait un objet à un prototype. L'héritage consiste à relier deux\n**prototypes** entre eux : les instances d'un chien trouvent les méthodes des chiens, puis,\nun niveau plus haut, celles des animaux. C'est ce que `class Chien extends Animal` fait en\ncoulisses. Le construire une fois à la main permet de comprendre ce que produit la syntaxe\nmoderne — et de lire le code écrit avant elle.\n\n## Concept\n\nPour que `Chien` hérite d'`Animal`, trois liens sont nécessaires :\n\n| Lien | Écriture | Rôle |\n| --- | --- | --- |\n| Données du parent | `Animal.call(this, nom)` dans `Chien` | initialiser les propriétés héritées |\n| Méthodes du parent | `Chien.prototype = Object.create(Animal.prototype)` | chaîne des instances |\n| Constructeur | `Chien.prototype.constructor = Chien` | rétablir la propriété écrasée |\n\nLa chaîne obtenue pour une instance :\n\n```text\nrex → Chien.prototype → Animal.prototype → Object.prototype → null\n```\n\nAvec `class`, `extends` pose ces liens, et `super(...)` remplace `Animal.call(this, ...)`.\nIl ajoute un lien de plus : `Object.getPrototypeOf(Chien) === Animal`, ce qui fait hériter\naussi les méthodes **statiques**.\n\n## Exemple\n\n```js\nfunction Animal(nom) {\n  this.nom = nom;\n}\nAnimal.prototype.decrire = function () {\n  return `${this.nom} est un animal`;\n};\n\nfunction Chien(nom, race) {\n  Animal.call(this, nom); // données du parent\n  this.race = race;\n}\nChien.prototype = Object.create(Animal.prototype); // méthodes du parent\nChien.prototype.constructor = Chien;\nChien.prototype.decrire = function () {\n  const base = Animal.prototype.decrire.call(this); // version parente\n  return `${base}, un ${this.race}`;\n};\n\nconst rex = new Chien('Rex', 'berger');\nconsole.log(rex.decrire()); // 'Rex est un animal, un berger'\nconsole.log(rex instanceof Chien, rex instanceof Animal); // true true\n\nclass AnimalClasse {\n  constructor(nom) {\n    this.nom = nom;\n  }\n  decrire() {\n    return `${this.nom} est un animal`;\n  }\n}\nclass ChienClasse extends AnimalClasse {\n  constructor(nom, race) {\n    super(nom);\n    this.race = race;\n  }\n  decrire() {\n    return `${super.decrire()}, un ${this.race}`;\n  }\n}\n\nconst medor = new ChienClasse('Médor', 'caniche');\nconsole.log(medor.decrire()); // 'Médor est un animal, un caniche'\nconsole.log(\n  Object.getPrototypeOf(ChienClasse.prototype) === AnimalClasse.prototype, // true\n  Object.getPrototypeOf(ChienClasse) === AnimalClasse, // true : héritage des statiques\n);\nconsole.log(Object.keys(Chien.prototype), Object.keys(ChienClasse.prototype)); // ['constructor', 'decrire'] []\n```\n\n## Comment ça fonctionne\n\nChacun des trois liens répond à un besoin distinct. `Animal.call(this, nom)` exécute le\nconstructeur parent **sur l'instance en cours**, pour qu'elle reçoive `nom` comme propriété\npropre. `Object.create(Animal.prototype)` crée un nouveau prototype pour `Chien`, dont le\nprototype est celui d'`Animal` : les méthodes des animaux deviennent accessibles un niveau\nplus haut. Comme ce nouvel objet remplace le `Chien.prototype` d'origine, sa propriété\n`constructor` a disparu, d'où la troisième ligne.\n\nRedéfinir `decrire` sur `Chien.prototype` **masque** la version d'`Animal` pour les chiens.\nPour réutiliser la version parente, on l'appelle explicitement sur l'instance :\n`Animal.prototype.decrire.call(this)`. Dans une classe, `super.decrire()` fait la même chose ;\nle moteur retrouve le parent grâce à une référence interne vers l'objet qui contient la méthode,\net non grâce à `this`.\n\nLa syntaxe `class` produit bien la même chaîne pour les instances, comme le montre l'exemple.\nElle n'est pourtant pas qu'un raccourci d'écriture :\n\n| Différence | Constructeur et prototype | Classe |\n| --- | --- | --- |\n| Appel sans `new` | autorisé, source de bugs | `TypeError` |\n| Mode strict | selon le fichier | toujours |\n| Méthodes énumérables | oui, si affectées | non |\n| Hoisting | la déclaration de fonction est hoistée | zone morte temporelle |\n| Héritage des statiques | à faire soi-même | automatique |\n| Champs privés `#` | impossibles | disponibles |\n| Hériter d'un type natif comme `Array` | peu fiable | pris en charge |\n\nLe code moderne utilise donc `class`. Savoir lire la version à la main reste utile pour le\ncode existant, pour comprendre ce que montre un débogueur, et pour les rares cas de délégation\ndirecte avec `Object.create`.\n\nUne chaîne d'héritage profonde a un coût réel, surtout en lisibilité : pour savoir d'où vient\nune méthode, il faut remonter plusieurs niveaux. Au-delà de deux, la composition est souvent\npréférable, comme le détaille la partie Object-Oriented.\n\n## Erreurs fréquentes\n\n**Écrire `Chien.prototype = Animal.prototype`.** Les deux constructeurs partagent alors le\nmême objet : ajouter une méthode aux chiens l'ajoute aux animaux.\n\n**Oublier `Animal.call(this, …)`.** Les instances n'ont pas les propriétés du parent.\n\n**Oublier de rétablir `constructor`.** `rex.constructor` renvoie `Animal`.\n\n**Relier les prototypes après avoir ajouté des méthodes.** L'affectation de\n`Chien.prototype` efface les méthodes déjà posées.\n\n**Empiler les niveaux d'héritage.** Au-delà de deux niveaux, préfère la composition.\n\n## À retenir\n\n- Héritage à la main : `Parent.call(this)`, `Object.create(Parent.prototype)`, `constructor`.\n- La méthode parente s'appelle avec `Parent.prototype.methode.call(this)`, ou `super`.\n- `class … extends` produit la même chaîne, plus l'héritage des méthodes statiques.\n- Les classes ajoutent des garanties : `new` obligatoire, mode strict, méthodes non\n  énumérables, champs privés.\n- Jamais `Enfant.prototype = Parent.prototype` : un seul objet pour deux types.\n\n## Exercices\n\n1. Fais hériter `Salarie(nom, poste)` de `Personne(nom)` sans `class`, de sorte que\n   `presenter()` de `Salarie` réutilise celle de `Personne`.\n\n   ```js\n   function Personne(nom) { this.nom = nom; }\n   Personne.prototype.presenter = function () { return `Je suis ${this.nom}`; };\n   ```\n\n   :::indice\n   Trois liens : les données du parent, la chaîne des prototypes, le constructeur.\n   :::\n\n   :::indice\n   Pour la version parente de la méthode, appelle-la sur `this` avec `call`.\n   :::\n\n   :::solution\n   ```js\n   function Salarie(nom, poste) {\n     Personne.call(this, nom);\n     this.poste = poste;\n   }\n   Salarie.prototype = Object.create(Personne.prototype);\n   Salarie.prototype.constructor = Salarie;\n   Salarie.prototype.presenter = function () {\n     return `${Personne.prototype.presenter.call(this)}, ${this.poste}`;\n   };\n\n   const ada = new Salarie('Ada', 'ingénieure');\n   console.log(ada.presenter()); // 'Je suis Ada, ingénieure'\n   console.log(ada instanceof Personne, ada.constructor === Salarie); // true true\n   ```\n   :::\n\n2. Explique pourquoi `new Oiseau().voler` existe désormais sur tous les animaux, et corrige.\n\n   ```js\n   function Animal() {}\n   function Oiseau() {}\n   Oiseau.prototype = Animal.prototype;\n   Oiseau.prototype.voler = function () { return 'je vole'; };\n   console.log(typeof new Animal().voler); // 'function'\n   ```\n\n   :::indice\n   Combien d'objets prototype existe-t-il après l'affectation ?\n   :::\n\n   :::solution\n   L'affectation ne crée pas de nouveau prototype : `Oiseau.prototype` et `Animal.prototype`\n   désignent le **même** objet, donc toute méthode ajoutée aux oiseaux l'est aussi aux animaux.\n   Il faut un objet distinct qui délègue au prototype parent.\n\n   ```js\n   function Animal() {}\n   function Oiseau() {}\n   Oiseau.prototype = Object.create(Animal.prototype);\n   Oiseau.prototype.constructor = Oiseau;\n   Oiseau.prototype.voler = function () { return 'je vole'; };\n\n   console.log(typeof new Animal().voler, new Oiseau().voler()); // 'undefined' 'je vole'\n   ```\n   :::\n\n3. Réécris la solution de l'exercice 1 avec `class`, puis vérifie que la chaîne de prototypes\n   des instances est de même forme.\n\n   :::indice\n   `extends` relie les prototypes, `super(nom)` remplace l'appel au constructeur parent, et\n   `super.presenter()` la version parente de la méthode.\n   :::\n\n   :::solution\n   ```js\n   class PersonneClasse {\n     constructor(nom) {\n       this.nom = nom;\n     }\n     presenter() {\n       return `Je suis ${this.nom}`;\n     }\n   }\n\n   class SalarieClasse extends PersonneClasse {\n     constructor(nom, poste) {\n       super(nom);\n       this.poste = poste;\n     }\n     presenter() {\n       return `${super.presenter()}, ${this.poste}`;\n     }\n   }\n\n   const grace = new SalarieClasse('Grace', 'architecte');\n   console.log(grace.presenter()); // 'Je suis Grace, architecte'\n   console.log(Object.getPrototypeOf(Object.getPrototypeOf(grace)) === PersonneClasse.prototype); // true\n   ```\n\n   Même forme de chaîne, deux lignes de câblage en moins, et une erreur immédiate en cas\n   d'oubli de `new` ou de `super`.\n   :::\n\n## Questions d'entretien\n\n- Les classes JavaScript ne sont-elles que du sucre syntaxique ?\n\n  :::indice\n  La chaîne produite est-elle différente ? Et le comportement autour ?\n  :::\n\n  :::reponse\n  Pour la chaîne de prototypes, oui : une classe produit un constructeur et un objet\n  `prototype` reliés exactement comme on le ferait à la main. Mais la syntaxe apporte des\n  garanties qu'on ne peut pas reproduire simplement : appel sans `new` interdit, mode strict,\n  méthodes non énumérables, zone morte temporelle, héritage des statiques, `super`, champs\n  privés et héritage fiable des types natifs comme `Array` ou `Error`. « Surtout du sucre,\n  avec des garde-fous » est la réponse exacte.\n  :::\n\n- Comment appeler la version parente d'une méthode redéfinie ?\n\n  :::indice\n  Deux écritures : avec et sans classe.\n  :::\n\n  :::reponse\n  Sans classe, on récupère la méthode sur le prototype parent et on l'exécute sur l'instance\n  courante : `Parent.prototype.methode.call(this, …arguments)`. Dans une classe, on écrit\n  `super.methode(…)`. Dans les deux cas, `this` reste l'instance enfant, si bien que la méthode\n  parente travaille avec les données de l'objet réel.\n  :::\n\n- Pourquoi préférer la composition à une chaîne d'héritage profonde ?\n\n  :::indice\n  Pense à la lecture du code et à l'évolution des classes parentes.\n  :::\n\n  :::reponse\n  Chaque niveau d'héritage couple l'enfant aux détails du parent : une modification en haut de\n  la chaîne se répercute sur tous les descendants, et pour savoir d'où vient une méthode il faut\n  remonter plusieurs définitions. La composition assemble des objets aux responsabilités\n  étroites, qu'on remplace indépendamment. L'héritage reste pertinent pour une relation « est\n  un » stable et peu profonde — un ou deux niveaux.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-prototype-proto",
+      "title": "prototype, __proto__ et Object.getPrototypeOf",
+      "slug": "prototype-et-proto",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "prototypes",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-chaine-prototypes"
+      ],
+      "skills": [
+        "prototype-property"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/prototypes/prototype-et-proto/lesson.md",
+      "contentVersion": "81761f7cab53",
+      "body": "\n## Objectifs\n\n- Distinguer trois notions aux noms trompeurs : `[[Prototype]]`, `__proto__` et `.prototype`.\n- Lire et modifier le prototype d'un objet avec les fonctions recommandées.\n- Expliquer ce que vérifie réellement `instanceof`.\n\n## Introduction\n\nLe vocabulaire des prototypes est un piège à lui seul : « le prototype de `Voiture` » peut\ndésigner deux objets différents selon qu'on parle du lien de la fonction ou de sa propriété\n`prototype`. Ce chapitre ne présente aucun mécanisme nouveau ; il met des noms précis sur\nles trois notions que le chapitre précédent a utilisées, pour ne plus jamais les confondre.\n\n## Concept\n\n| Notion | Ce que c'est | Qui la possède |\n| --- | --- | --- |\n| `[[Prototype]]` | le lien interne vers l'objet suivant de la chaîne | tout objet |\n| `__proto__` | un accesseur historique qui lit ou écrit `[[Prototype]]` | les objets qui héritent d'`Object.prototype` |\n| `.prototype` | un objet ordinaire, qui deviendra le `[[Prototype]]` des instances créées avec `new` | les fonctions classiques et les classes |\n\nLes outils recommandés pour manipuler le lien :\n\n| Besoin | Écriture |\n| --- | --- |\n| Lire le prototype | `Object.getPrototypeOf(objet)` |\n| Créer un objet avec un prototype donné | `Object.create(prototype)` |\n| Changer le prototype d'un objet existant | `Object.setPrototypeOf(objet, prototype)` — à éviter |\n| Tester la présence d'un prototype dans la chaîne | `prototype.isPrototypeOf(objet)` |\n\n## Exemple\n\n```js\nfunction Voiture(marque) {\n  this.marque = marque;\n}\nVoiture.prototype.rouler = function () {\n  return `${this.marque} roule`;\n};\n\nconst clio = new Voiture('Renault');\nconsole.log(clio.rouler()); // 'Renault roule'\n\nconsole.log(Object.getPrototypeOf(clio) === Voiture.prototype); // true\nconsole.log(clio.__proto__ === Voiture.prototype); // true, mais déconseillé\n\n// Voiture.prototype n'est PAS le prototype de la fonction Voiture :\nconsole.log(Object.getPrototypeOf(Voiture) === Function.prototype); // true\nconsole.log(Object.getPrototypeOf(Voiture) === Voiture.prototype); // false\n\nconsole.log(Voiture.prototype.constructor === Voiture); // true\nconsole.log(clio.constructor === Voiture, Object.hasOwn(clio, 'constructor')); // true false\n\nconsole.log(clio instanceof Voiture); // true\nconsole.log(Voiture.prototype.isPrototypeOf(clio)); // true\n\nconst fleche = () => {};\nconsole.log(fleche.prototype); // undefined : une fléchée ne construit rien\n\nconst dictionnaire = Object.create(null);\nconsole.log(Object.getPrototypeOf(dictionnaire), dictionnaire.__proto__); // null undefined\n```\n\n## Comment ça fonctionne\n\n`[[Prototype]]` est le seul lien réellement utilisé par la recherche de propriété. Les deux\nautres noms n'en sont que des voies d'accès.\n\n`__proto__` n'est pas une propriété de chaque objet : c'est un **accesseur** défini sur\n`Object.prototype`, que les objets trouvent en remontant leur chaîne. Il lit ou modifie\n`[[Prototype]]`. Il a été standardisé tardivement pour compatibilité et reste déconseillé :\nun objet créé par `Object.create(null)` ne l'a pas, et une clé `\"__proto__\"` venant de données\nexternes peut altérer une chaîne par accident. `Object.getPrototypeOf` fonctionne dans tous\nles cas.\n\n`.prototype` est une propriété ordinaire que possèdent les fonctions classiques et les\nclasses. Elle ne sert **qu'à `new`** : quand on écrit `new Voiture()`, le nouvel objet reçoit\n`Voiture.prototype` comme `[[Prototype]]`. Le prototype **de la fonction** `Voiture`, lui,\nest `Function.prototype`, d'où viennent `call`, `apply` et `bind`. Les fonctions fléchées et\nles méthodes abrégées n'ont pas de propriété `prototype`, puisqu'elles ne peuvent pas être\nappelées avec `new`.\n\nChaque `.prototype` créé automatiquement contient une propriété `constructor` qui pointe vers\nla fonction. Les instances la trouvent par héritage : `clio.constructor` vaut `Voiture`, sans\nêtre une propriété propre. Si l'on **remplace** entièrement `Voiture.prototype` par un nouvel\nobjet, cette propriété disparaît, et il faut la rétablir soi-même.\n\n`objet instanceof F` ne regarde pas comment l'objet a été créé : il remonte la chaîne de\n`objet` et renvoie `true` s'il y rencontre `F.prototype`. Changer `F.prototype` après coup\npeut donc faire mentir `instanceof` sur les instances existantes.\n\nEnfin, `Object.setPrototypeOf` modifie la chaîne d'un objet déjà créé. C'est permis, mais les\nmoteurs optimisent les objets en supposant que leur forme et leur chaîne restent stables : un\nchangement de prototype à chaud peut ralentir durablement tout le code qui manipule cet objet.\nOn préfère fixer le prototype à la création, avec `Object.create` ou une classe.\n\n## Erreurs fréquentes\n\n**Confondre `F.prototype` et le prototype de `F`.** Le premier sert aux instances, le second\nest `Function.prototype`.\n\n**Utiliser `__proto__` dans du code applicatif.** Préfère `Object.getPrototypeOf` et\n`Object.create`.\n\n**Remplacer `F.prototype` sans rétablir `constructor`.** `instance.constructor` pointe alors\nvers `Object`.\n\n**Changer le prototype d'objets déjà utilisés.** `setPrototypeOf` dégrade les optimisations\ndu moteur.\n\n## À retenir\n\n- `[[Prototype]]` : le lien interne. `__proto__` : un accesseur historique vers ce lien.\n- `.prototype` : la propriété d'une fonction qui devient le prototype des instances de `new`.\n- Le prototype d'une fonction est `Function.prototype`, pas sa propriété `prototype`.\n- `instanceof` cherche `F.prototype` dans la chaîne de l'objet.\n- Lire : `Object.getPrototypeOf`. Créer : `Object.create`. Éviter : `setPrototypeOf`.\n\n## Exercices\n\n1. Dis si chaque expression vaut `true` ou `false`, et justifie.\n\n   ```js\n   function Livre(titre) { this.titre = titre; }\n   const livre = new Livre('Dune');\n\n   Object.getPrototypeOf(livre) === Livre.prototype;\n   Object.getPrototypeOf(Livre) === Livre.prototype;\n   Object.hasOwn(livre, 'constructor');\n   livre instanceof Object;\n   ```\n\n   :::indice\n   Distingue la chaîne de l'instance et celle de la fonction.\n   :::\n\n   :::solution\n   - `true` : `new` donne à l'instance `Livre.prototype` comme prototype.\n   - `false` : le prototype de la fonction `Livre` est `Function.prototype`.\n   - `false` : `constructor` est défini sur `Livre.prototype`, l'instance l'hérite.\n   - `true` : `Object.prototype` figure plus haut dans la chaîne de `livre`.\n   :::\n\n2. Écris `estInstanceDe(objet, Constructeur)` qui reproduit `instanceof` sans l'utiliser.\n\n   :::indice\n   Remonte la chaîne de l'objet et compare chaque maillon à `Constructeur.prototype`.\n   :::\n\n   :::solution\n   ```js\n   function estInstanceDe(objet, Constructeur) {\n     let courant = Object.getPrototypeOf(objet);\n     while (courant !== null) {\n       if (courant === Constructeur.prototype) {\n         return true;\n       }\n       courant = Object.getPrototypeOf(courant);\n     }\n     return false;\n   }\n\n   console.log(estInstanceDe([], Array), estInstanceDe([], Object)); // true true\n   console.log(estInstanceDe({}, Array)); // false\n   ```\n\n   Le vrai `instanceof` gère en plus les valeurs primitives, qui donnent toujours `false`, et\n   la méthode `Symbol.hasInstance` qu'une classe peut redéfinir.\n   :::\n\n3. Après ce remplacement, `new Point(1, 2).constructor` vaut `Object`. Explique, puis corrige\n   sans perdre les méthodes.\n\n   ```js\n   function Point(x, y) { this.x = x; this.y = y; }\n   Point.prototype = {\n     distance() { return Math.hypot(this.x, this.y); },\n   };\n   ```\n\n   :::indice\n   Le nouvel objet affecté à `Point.prototype` contient-il une propriété `constructor` ?\n   :::\n\n   :::solution\n   Le littéral remplace l'objet créé automatiquement, qui contenait `constructor`. La lecture\n   de `constructor` remonte donc jusqu'à `Object.prototype.constructor`, qui vaut `Object`.\n\n   ```js\n   function Point(x, y) { this.x = x; this.y = y; }\n   Point.prototype = {\n     constructor: Point,\n     distance() { return Math.hypot(this.x, this.y); },\n   };\n\n   const p = new Point(3, 4);\n   console.log(p.constructor === Point, p.distance()); // true 5\n   ```\n\n   Ajouter les méthodes une à une, `Point.prototype.distance = function () {}`, évite\n   entièrement le problème.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `prototype` et `__proto__` ?\n\n  :::indice\n  L'un appartient aux fonctions, l'autre donne accès au lien de n'importe quel objet.\n  :::\n\n  :::reponse\n  `__proto__` est un accesseur historique, hérité d'`Object.prototype`, qui lit ou écrit le\n  lien `[[Prototype]]` de l'objet sur lequel on l'utilise. `prototype` est une propriété\n  ordinaire des fonctions classiques et des classes : c'est l'objet qui deviendra le\n  `[[Prototype]]` des instances créées avec `new`. Ainsi `instance.__proto__ ===\n  Constructeur.prototype`. En code moderne, on remplace `__proto__` par\n  `Object.getPrototypeOf` et `Object.create`.\n  :::\n\n- Comment fonctionne `instanceof` ?\n\n  :::indice\n  Regarde-t-il la fonction qui a créé l'objet ?\n  :::\n\n  :::reponse\n  `objet instanceof F` remonte la chaîne de prototypes de `objet` et renvoie `true` dès qu'il\n  y trouve `F.prototype`. Il ne sait rien de la création réelle de l'objet : un objet fabriqué\n  avec `Object.create(F.prototype)` passe le test, et remplacer `F.prototype` fait échouer le\n  test pour les instances existantes. Une classe peut personnaliser ce comportement avec la\n  méthode statique `Symbol.hasInstance`.\n  :::\n\n- Pourquoi éviter `Object.setPrototypeOf` ?\n\n  :::indice\n  Pense à ce que les moteurs supposent sur la forme des objets.\n  :::\n\n  :::reponse\n  Les moteurs optimisent l'accès aux propriétés en supposant que la forme d'un objet et sa\n  chaîne de prototypes restent stables. Changer le prototype d'un objet déjà utilisé invalide\n  ces hypothèses et peut ralentir tout le code qui le manipule, bien au-delà de l'instruction\n  elle-même. On fixe donc le prototype à la création, avec `Object.create` ou une classe, et\n  l'on réserve `setPrototypeOf` aux outils et aux cas exceptionnels.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-tableaux-ajouter-retirer",
       "title": "Ajouter et retirer : push, pop, shift, unshift et splice",
       "slug": "ajouter-et-retirer",
@@ -2767,6 +3080,115 @@
       "contentPath": "javascript/tableaux/trier-et-aplatir/lesson.md",
       "contentVersion": "c72653951e47",
       "body": "\n## Objectifs\n\n- Trier correctement des nombres, des chaînes et des objets avec une fonction de\n  comparaison.\n- Inverser, extraire et concaténer des tableaux, en sachant lesquelles de ces opérations\n  modifient l'original.\n- Aplatir des tableaux imbriqués avec `flat` et `flatMap`, et convertir d'autres\n  collections avec `Array.from`.\n\n## Introduction\n\n`[10, 9, 1].sort()` renvoie `[1, 10, 9]`. Ce résultat, qui a fait douter plus d'un\ndéveloppeur de sa santé mentale, résume le piège de ce chapitre : le tri par défaut ne\ntrie pas des nombres comme des nombres. Trier, inverser ou aplatir des données est\npourtant indispensable pour afficher un classement, une liste alphabétique ou tous les\ntags d'une collection d'articles.\n\n## Concept\n\n| Méthode | Effet | Modifie l'original ? |\n| --- | --- | --- |\n| `sort(comparer)` | trie | oui |\n| `toSorted(comparer)` | renvoie une copie triée | non |\n| `reverse()` | inverse l'ordre | oui |\n| `toReversed()` | renvoie une copie inversée | non |\n| `slice(debut, fin)` | extrait une portion | non |\n| `concat(...tableaux)` | assemble des tableaux | non |\n| `flat(profondeur)` | aplatit les sous-tableaux | non |\n| `flatMap(fonction)` | `map`, puis `flat` d'un niveau | non |\n| `Array.from(iterable)` | crée un tableau à partir d'une chaîne, d'un `Set`, d'une `NodeList`… | — |\n\nUne **fonction de comparaison** reçoit deux éléments `a` et `b` et renvoie :\n\n- un nombre **négatif** pour placer `a` avant `b` ;\n- un nombre **positif** pour placer `b` avant `a` ;\n- `0` pour garder leur ordre relatif.\n\nPour des nombres, `(a, b) => a - b` trie par ordre croissant, `(a, b) => b - a` par ordre\ndécroissant.\n\n## Exemple\n\n```js\nconst scores = [10, 9, 1, 100];\nconsole.log([...scores].sort()); // [1, 10, 100, 9] : ordre des chaînes\nconsole.log(scores.toSorted((a, b) => a - b)); // [1, 9, 10, 100]\nconsole.log(scores); // [10, 9, 1, 100] : intact\n\nconst produits = [\n  { nom: 'Souris', prix: 19 },\n  { nom: 'Clavier', prix: 49 },\n  { nom: 'Écran', prix: 199 },\n  { nom: 'Câble', prix: 19 },\n];\nconst parPrix = produits.toSorted((a, b) => b.prix - a.prix || a.nom.localeCompare(b.nom, 'fr'));\nconsole.log(parPrix.map((p) => p.nom)); // ['Écran', 'Clavier', 'Câble', 'Souris']\n\nconst articles = [{ tags: ['js', 'css'] }, { tags: ['js', 'node'] }];\nconst tousLesTags = articles.flatMap((article) => article.tags);\nconsole.log(tousLesTags); // ['js', 'css', 'js', 'node']\n\nconsole.log([1, [2, [3, [4]]]].flat(Infinity)); // [1, 2, 3, 4]\nconsole.log(Array.from(new Set(tousLesTags))); // ['js', 'css', 'node']\n```\n\n## Comment ça fonctionne\n\nSans fonction de comparaison, `sort` **convertit chaque élément en chaîne** et compare les\nchaînes par codes de caractères. `'10'` passe avant `'9'`, car `'1'` est avant `'9'`. Pour\ndes nombres, la fonction de comparaison est donc obligatoire.\n\nLa comparaison `a - b` fonctionne parce que son signe dit exactement lequel est le plus\npetit. Une comparaison qui renvoie un booléen, comme `(a, b) => a > b`, ne renvoie jamais\nde nombre négatif : le tri obtenu dépend du moteur et peut être faux.\n\nDepuis ES2019, `sort` est **stable** : deux éléments considérés égaux gardent leur ordre\nd'origine. On peut donc trier d'abord par nom, puis par prix, sans perdre l'ordre des noms\nà prix égal — ou combiner les deux critères avec `||`, comme dans l'exemple.\n\n`sort` et `reverse` **modifient le tableau et le renvoient**. `const tri = liste.sort()`\ndonne l'impression d'obtenir une copie, mais `tri` et `liste` sont le même tableau. Les\nméthodes `toSorted` et `toReversed`, arrivées avec ES2023, renvoient une copie ; avant elles,\non écrivait `[...liste].sort(...)`.\n\n`flat()` n'aplatit qu'un niveau par défaut ; `flat(Infinity)` aplatit tout. `flatMap` est\néquivalent à `map(...).flat(1)`, en un seul parcours.\n\n## Erreurs fréquentes\n\n**Trier des nombres sans fonction de comparaison.** L'ordre obtenu est celui des chaînes.\n\n**Écrire une comparaison qui renvoie un booléen.** Renvoie un nombre : `a - b`, ou\n`a.localeCompare(b)` pour des chaînes.\n\n**Trier un tableau partagé avec `sort`.** L'original est modifié, par exemple dans l'état\nd'une interface. Utilise `toSorted`, ou trie une copie.\n\n**Trier des mots accentués avec `<` ou le tri par défaut.** `'Écran'` passe après `'Souris'`.\nUtilise `localeCompare(b, 'fr')`.\n\n**Attendre de `flatMap` qu'il aplatisse plusieurs niveaux.** Il n'en aplatit qu'un.\n\n## À retenir\n\n- Sans comparateur, `sort` compare des chaînes : `[10, 9, 1]` devient `[1, 10, 9]`.\n- Comparateur : négatif, `a` avant ; positif, `b` avant. Nombres : `a - b`.\n- `sort` et `reverse` modifient ; `toSorted` et `toReversed` renvoient une copie.\n- `localeCompare` pour trier du texte ; `||` pour enchaîner plusieurs critères.\n- `flat(profondeur)`, `flatMap` pour un niveau, `Array.from` pour convertir.\n\n## Exercices\n\n1. Trie `[10, 9, 1, 100]` par ordre croissant sans modifier le tableau d'origine.\n\n   :::indice\n   Il faut une fonction de comparaison numérique, et une méthode qui renvoie une copie.\n   :::\n\n   :::solution\n   ```js\n   const nombres = [10, 9, 1, 100];\n\n   const tries = nombres.toSorted((a, b) => a - b);\n   console.log(tries); // [1, 9, 10, 100]\n   console.log(nombres); // [10, 9, 1, 100]\n\n   const triesAvantEs2023 = [...nombres].sort((a, b) => a - b);\n   ```\n   :::\n\n2. Trie des produits `{ nom, prix }` du plus cher au moins cher, et par ordre alphabétique\n   quand deux produits ont le même prix.\n\n   :::indice\n   Le premier critère est le prix, en ordre décroissant : `b.prix - a.prix`.\n   :::\n\n   :::indice\n   Quand la différence de prix vaut `0`, `||` passe au second critère.\n   :::\n\n   :::solution\n   ```js\n   const produits = [\n     { nom: 'Souris', prix: 19 },\n     { nom: 'Clavier', prix: 49 },\n     { nom: 'Câble', prix: 19 },\n   ];\n\n   const tries = produits.toSorted(\n     (a, b) => b.prix - a.prix || a.nom.localeCompare(b.nom, 'fr'),\n   );\n\n   console.log(tries.map((produit) => produit.nom)); // ['Clavier', 'Câble', 'Souris']\n   ```\n   :::\n\n3. À partir de `[{ tags: ['js', 'css'] }, { tags: ['js', 'node'] }]`, obtiens la liste des\n   tags sans doublons : `['js', 'css', 'node']`.\n\n   :::indice\n   Chaque article fournit un tableau de tags : une méthode transforme et aplatit en même\n   temps.\n   :::\n\n   :::indice\n   Pour retirer les doublons, un `Set` ne garde que des valeurs uniques.\n   :::\n\n   :::solution\n   ```js\n   const articles = [{ tags: ['js', 'css'] }, { tags: ['js', 'node'] }];\n\n   const tags = Array.from(new Set(articles.flatMap((article) => article.tags)));\n   console.log(tags); // ['js', 'css', 'node']\n   ```\n\n   Le `Set` conserve l'ordre de première apparition, et `Array.from` le reconvertit en\n   tableau.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `[10, 9, 1].sort()` donne-t-il `[1, 10, 9]` ?\n\n  :::indice\n  Sans fonction de comparaison, comment `sort` compare-t-il deux éléments ?\n  :::\n\n  :::reponse\n  Sans fonction de comparaison, `sort` convertit les éléments en chaînes et les compare par\n  codes UTF-16. `'10'` est placé avant `'9'`, car le premier caractère `'1'` est avant `'9'`.\n  Pour trier des nombres, on passe `(a, b) => a - b`. Le comportement par défaut vient de ce\n  que `sort` doit fonctionner sur des tableaux de n'importe quel type.\n  :::\n\n- Quelle différence entre `sort` et `toSorted` ?\n\n  :::indice\n  Que devient le tableau d'origine dans chaque cas ?\n  :::\n\n  :::reponse\n  `sort` trie le tableau sur place et renvoie ce même tableau : toutes les références voient\n  l'ordre changer. `toSorted`, ajouté avec ES2023, renvoie un nouveau tableau trié et laisse\n  l'original intact. C'est important dès que le tableau est partagé, par exemple dans l'état\n  d'une application React. Avant ES2023, on triait une copie : `[...tableau].sort()`.\n  :::\n\n- Que fait `flatMap`, et quand l'utiliser ?\n\n  :::indice\n  Compare-le à l'enchaînement de deux autres méthodes.\n  :::\n\n  :::reponse\n  `flatMap` applique une fonction à chaque élément, comme `map`, puis aplatit le résultat\n  d'un niveau, comme `flat(1)`, en un seul parcours. On l'utilise quand chaque élément produit\n  plusieurs valeurs — les tags de chaque article, les mots de chaque phrase — ou zéro : une\n  fonction qui renvoie `[]` retire l'élément, ce qui combine filtre et transformation.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-call-apply-bind",
+      "title": "call, apply et bind : la liaison explicite",
+      "slug": "call-apply-bind",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "this-et-liaison",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-this"
+      ],
+      "skills": [
+        "explicit-binding"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/this-et-liaison/call-apply-bind/lesson.md",
+      "contentVersion": "70d7559392a0",
+      "body": "\n## Objectifs\n\n- Appeler une fonction avec un `this` choisi grâce à `call` et `apply`.\n- Créer une fonction liée de façon permanente avec `bind`, et fixer au passage des arguments.\n- Emprunter la méthode d'un objet pour l'appliquer à un autre.\n\n## Introduction\n\nLe chapitre précédent a montré que `this` dépend de l'appel. Parfois, on veut décider\nsoi-même : appliquer une méthode à un objet qui ne la possède pas, ou transmettre une\nméthode en callback sans perdre son objet. Les fonctions ont pour cela trois méthodes,\n`call`, `apply` et `bind`. Elles forment la deuxième règle de liaison, prioritaire sur la\nrègle de la méthode.\n\n## Concept\n\n| Méthode | Appelle immédiatement ? | Arguments | Renvoie |\n| --- | --- | --- | --- |\n| `f.call(objet, a, b)` | oui | séparés | le résultat de `f` |\n| `f.apply(objet, [a, b])` | oui | dans un tableau | le résultat de `f` |\n| `f.bind(objet, a)` | non | fixés d'avance, complétés plus tard | une **nouvelle fonction** |\n\nMoyen mnémotechnique : **a**pply prend un **a**rray, **c**all prend des arguments séparés\npar des **c**ommas.\n\nUne fonction produite par `bind` est liée **définitivement** : ni `call`, ni `apply`, ni un\nsecond `bind` ne peuvent changer son `this`. Seul `new` passe outre.\n\n## Exemple\n\n```js\nfunction presenter(salutation, ponctuation) {\n  return `${salutation}, je suis ${this.nom}${ponctuation}`;\n}\n\nconst ada = { nom: 'Ada' };\nconst grace = { nom: 'Grace' };\n\nconsole.log(presenter.call(ada, 'Bonjour', '.')); // 'Bonjour, je suis Ada.'\nconsole.log(presenter.apply(grace, ['Salut', ' !'])); // 'Salut, je suis Grace !'\n\nconst adaSalue = presenter.bind(ada, 'Hello');\nconsole.log(adaSalue('?')); // 'Hello, je suis Ada?'\nconsole.log(adaSalue.call(grace, '!')); // 'Hello, je suis Ada!' : liaison définitive\n\nconst compteur = {\n  valeur: 0,\n  incrementer() {\n    this.valeur += 1;\n  },\n};\nconst incrementerLie = compteur.incrementer.bind(compteur);\n[1, 2, 3].forEach(() => incrementerLie());\nconsole.log(compteur.valeur); // 3\n\nconst semblableTableau = { 0: 'a', 1: 'b', length: 2 };\nconsole.log(Array.prototype.map.call(semblableTableau, (x) => x.toUpperCase())); // ['A', 'B']\n```\n\n## Comment ça fonctionne\n\n`call` et `apply` exécutent la fonction **immédiatement**, en fixant `this` au premier\nargument. Ils ne diffèrent que par la façon de passer les autres arguments. Depuis\nl'arrivée du spread, `f.apply(objet, tableau)` s'écrit aussi `f.call(objet, ...tableau)` :\n`apply` reste utile surtout dans du code ancien.\n\n`bind` n'exécute rien. Il renvoie une **fonction liée** : une nouvelle fonction qui, à chaque\nappel, invoque l'originale avec le `this` et les arguments fixés. Les arguments passés à\n`bind` sont placés **avant** ceux de l'appel, ce qui en fait aussi un outil d'application\npartielle : `presenter.bind(ada, 'Hello')` fixe le `this` et le premier argument.\n\nLa liaison de `bind` est définitive. Une fonction liée ignore le `this` qu'on tente de lui\nimposer ensuite avec `call`, `apply` ou un second `bind` ; seuls ses arguments\nsupplémentaires sont pris en compte. La seule exception est `new` : une fonction liée\nappelée avec `new` construit un nouvel objet et ignore le `this` lié.\n\nL'**emprunt de méthode** repose sur le fait que la plupart des méthodes natives ne vérifient\npas le type de `this`, seulement la présence des propriétés dont elles ont besoin.\n`Array.prototype.map` a besoin d'un `length` et de clés numériques : un objet semblable à un\ntableau suffit. C'était la façon historique de convertir `arguments` en tableau, avant\n`Array.from` et le paramètre de reste.\n\nSi le premier argument vaut `null` ou `undefined`, la fonction reçoit ce `this` tel quel en\nmode strict. En mode non strict, il serait remplacé par l'objet global.\n\n`bind` crée une nouvelle fonction à chaque appel. `element.removeEventListener('click',\nf.bind(this))` ne retire donc rien : il faut conserver la référence de la fonction liée pour\npouvoir la retirer.\n\n## Erreurs fréquentes\n\n**Confondre `bind` et `call`.** `bind` ne lance pas la fonction : il faut appeler ce qu'il\nrenvoie.\n\n**Tenter de relier une fonction déjà liée.** Le second `this` est ignoré.\n\n**Lier à nouveau à chaque ajout d'écouteur.** Chaque `bind` produit une fonction différente,\nimpossible à retirer ensuite.\n\n**Passer les arguments d'`apply` séparément.** `apply` attend un tableau en second argument.\n\n## À retenir\n\n- `call(objet, a, b)` et `apply(objet, [a, b])` exécutent tout de suite.\n- `bind(objet, a)` renvoie une nouvelle fonction, liée définitivement.\n- Les arguments de `bind` sont placés avant ceux de l'appel.\n- Une fonction liée ignore les `call`, `apply` et `bind` suivants, mais pas `new`.\n- Conserve la référence d'une fonction liée pour pouvoir retirer un écouteur.\n\n## Exercices\n\n1. Sans modifier `ada` ni `grace`, fais afficher à `presenter` le nom de chacune, une fois\n   avec `call` et une fois avec `apply`.\n\n   ```js\n   function presenter(salutation) {\n     return `${salutation}, je suis ${this.nom}`;\n   }\n   const ada = { nom: 'Ada' };\n   const grace = { nom: 'Grace' };\n   ```\n\n   :::indice\n   Le premier argument de `call` et d'`apply` devient `this` ; seule la forme des autres\n   arguments change.\n   :::\n\n   :::solution\n   ```js\n   console.log(presenter.call(ada, 'Bonjour')); // 'Bonjour, je suis Ada'\n   console.log(presenter.apply(grace, ['Salut'])); // 'Salut, je suis Grace'\n   ```\n   :::\n\n2. Écris une fonction `journaliser(niveau, message)` qui renvoie `[niveau] message`, puis\n   fabrique `erreur` avec `bind`, sans utiliser `this`.\n\n   :::indice\n   Quand la fonction n'utilise pas `this`, le premier argument de `bind` peut être `null`.\n   :::\n\n   :::solution\n   ```js\n   function journaliser(niveau, message) {\n     return `[${niveau}] ${message}`;\n   }\n\n   const erreur = journaliser.bind(null, 'erreur');\n   console.log(erreur('connexion perdue')); // '[erreur] connexion perdue'\n   ```\n\n   Les arguments passés à `bind` sont placés avant ceux de l'appel : c'est de l'application\n   partielle.\n   :::\n\n3. Prédis les trois affichages, puis explique le dernier.\n\n   ```js\n   function lireX() {\n     return this.x;\n   }\n   const lie = lireX.bind({ x: 1 });\n   console.log(lireX.call({ x: 2 }));\n   console.log(lie());\n   console.log(lie.call({ x: 3 }));\n   ```\n\n   :::indice\n   Une fonction produite par `bind` accepte-t-elle un nouveau `this` ?\n   :::\n\n   :::solution\n   Les affichages sont `2`, `1` et `1`. Le premier appel fixe `this` à `{ x: 2 }`. `lie` est\n   liée à `{ x: 1 }`. Le dernier `call` tente d'imposer `{ x: 3 }`, mais une fonction liée\n   ignore tout nouveau `this` : elle appelle toujours `lireX` avec l'objet fixé par `bind`.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `call`, `apply` et `bind` ?\n\n  :::indice\n  Deux questions : la fonction est-elle exécutée tout de suite, et comment passe-t-on les\n  arguments ?\n  :::\n\n  :::reponse\n  `call` et `apply` exécutent immédiatement la fonction avec le `this` fourni ; `call` reçoit\n  les arguments séparément, `apply` dans un tableau. `bind` n'exécute rien : il renvoie une\n  nouvelle fonction dont le `this` et éventuellement les premiers arguments sont fixés\n  définitivement. On utilise `bind` quand la fonction sera appelée plus tard par quelqu'un\n  d'autre, typiquement en callback.\n  :::\n\n- Peut-on changer le `this` d'une fonction liée ?\n\n  :::indice\n  Essaie `call`, un second `bind`, puis `new`.\n  :::\n\n  :::reponse\n  Non avec `call`, `apply` ou un second `bind` : la fonction liée ignore le `this` proposé et\n  utilise celui fixé à l'origine, seuls les arguments supplémentaires sont pris en compte. La\n  seule exception est `new` : appelée comme constructeur, une fonction liée crée un nouvel\n  objet et l'utilise comme `this`. En pratique, lier une fonction est une décision définitive.\n  :::\n\n- Qu'est-ce que l'emprunt de méthode ?\n\n  :::indice\n  Que vérifie réellement une méthode native comme `map` sur son `this` ?\n  :::\n\n  :::reponse\n  C'est le fait d'appliquer à un objet une méthode qu'il ne possède pas, avec `call` ou\n  `apply`. Cela fonctionne parce que beaucoup de méthodes natives ne vérifient pas le type de\n  `this`, seulement les propriétés dont elles ont besoin : `Array.prototype.map.call(objet, f)`\n  marche sur tout objet doté d'un `length` et de clés numériques. C'était la conversion\n  classique d'`arguments` ou d'une `NodeList` en tableau, remplacée aujourd'hui par\n  `Array.from` et le spread.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-this",
+      "title": "Comprendre this",
+      "slug": "comprendre-this",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "this-et-liaison",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-phases-execution"
+      ],
+      "skills": [
+        "this-binding"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/this-et-liaison/comprendre-this/lesson.md",
+      "contentVersion": "d04bd37c1a90",
+      "body": "\n## Objectifs\n\n- Déterminer la valeur de `this` à partir de la forme de l'appel, et non de l'endroit où la\n  fonction est écrite.\n- Appliquer les quatre règles de liaison d'une fonction classique.\n- Expliquer et corriger la perte de `this` quand une méthode est détachée de son objet.\n\n## Introduction\n\n`this` est probablement le mot-clé le plus mal compris de JavaScript, parce qu'il\ncontredit l'intuition construite par la portée lexicale. Une variable se résout là où la\nfonction est **écrite** ; `this`, lui, dépend de la façon dont la fonction est **appelée**.\nLa même fonction peut donc voir trois `this` différents en trois appels. Une fois les règles\nconnues, il n'y a plus de mystère — seulement quatre cas à reconnaître.\n\n## Concept\n\nPour une fonction classique — déclaration, expression ou méthode, mais pas une fonction\nfléchée —, `this` est fixé au moment de l'appel, selon cette priorité :\n\n| Forme de l'appel | Valeur de `this` |\n| --- | --- |\n| `new Fonction()` | le nouvel objet en cours de construction |\n| `fonction.call(objet)`, `apply`, ou fonction issue de `bind` | l'objet fourni explicitement |\n| `objet.methode()` | l'objet situé avant le point |\n| `fonction()` seule | `undefined` en mode strict, l'objet global sinon |\n\nLe mode strict est actif d'office dans les modules ES et les classes : dans du code moderne,\nun appel seul donne donc `undefined`.\n\n## Exemple\n\n```js\n// Dans un module ES : mode strict.\nconst compteur = {\n  valeur: 0,\n  incrementer() {\n    this.valeur += 1;\n    return this.valeur;\n  },\n};\n\nconsole.log(compteur.incrementer()); // 1 : this = compteur\n\nconst autre = { valeur: 10, incrementer: compteur.incrementer };\nconsole.log(autre.incrementer()); // 11 : même fonction, this = autre\n\nconst detachee = compteur.incrementer;\n// detachee(); // TypeError: Cannot read properties of undefined (reading 'valeur')\n\nfunction Utilisateur(nom) {\n  this.nom = nom; // this = le nouvel objet\n}\nconst ada = new Utilisateur('Ada');\nconsole.log(ada.nom); // 'Ada'\n\nconst panier = {\n  articles: ['clavier', 'souris'],\n  lister() {\n    function formater(article) {\n      return `${this?.prefixe ?? '?'} ${article}`; // appel seul : this = undefined\n    }\n    return this.articles.map(formater);\n  },\n  prefixe: '-',\n};\nconsole.log(panier.lister()); // ['? clavier', '? souris']\n```\n\n## Comment ça fonctionne\n\n`this` est fixé pendant la phase de création du contexte, à partir de la **forme de\nl'appel**. Le moteur ne regarde ni l'endroit où la fonction est écrite, ni l'objet dans\nlequel elle a été définie : `compteur.incrementer` et `autre.incrementer` sont la même\nfonction, et chacune de ces deux formes d'appel lui donne un `this` différent.\n\nLa règle de la méthode ne s'applique qu'au moment exact de l'appel `objet.methode()`.\nDès qu'on range la fonction dans une variable — `const detachee = compteur.incrementer` —,\nl'appel devient `detachee()`, sans objet devant le point : c'est un appel seul. En mode\nstrict, `this` vaut alors `undefined`, et la première lecture de `this.valeur` lève une\n`TypeError`. En mode non strict, `this` vaudrait l'objet global, et le code modifierait\nsilencieusement une propriété globale — c'est l'une des raisons d'être du mode strict.\n\nLe même phénomène se produit dès qu'on **passe** une méthode :\n`setTimeout(compteur.incrementer)` ou `bouton.addEventListener('click', compteur.incrementer)`\ntransmettent la fonction seule, et c'est l'appelant qui décide du `this` : `setTimeout`\nfournit l'objet global dans un navigateur et un objet `Timeout` dans Node, un écouteur\nfournit l'élément écouté. Dans aucun cas ce n'est `compteur`. C'est le cas le plus courant\nde `this` perdu.\n\nUne fonction classique **imbriquée** dans une méthode ne reçoit pas le `this` de la\nméthode : elle est appelée seule, par `map` dans l'exemple, et obtient son propre `this`,\n`undefined`. Deux solutions : une fonction fléchée, qui hérite du `this` extérieur, ou une\nliaison explicite, vue au chapitre suivant.\n\nQuand plusieurs règles semblent s'appliquer, la priorité est : `new`, puis liaison\nexplicite, puis méthode, puis appel seul.\n\n## Erreurs fréquentes\n\n**Croire que `this` désigne l'objet où la fonction est écrite.** Il dépend de l'appel.\n\n**Détacher une méthode.** `const f = objet.methode; f()` perd l'objet : lie-la, ou appelle-la\ndepuis une fonction fléchée.\n\n**Passer une méthode en callback.** `setTimeout(objet.methode, 100)` exécute la méthode sans\nson objet.\n\n**Attendre le `this` de la méthode dans une fonction classique imbriquée.** Elle a le sien.\n\n**Compter sur l'objet global en mode non strict.** Le code fonctionne par accident et casse\ndès qu'il passe en module.\n\n## À retenir\n\n- `this` dépend de la forme de l'appel, pas du lieu d'écriture.\n- Priorité : `new` > `call` / `apply` / `bind` > `objet.methode()` > appel seul.\n- Appel seul : `undefined` en mode strict, donc dans les modules et les classes.\n- Détacher ou passer une méthode fait perdre son objet.\n- Une fonction classique imbriquée ne voit pas le `this` de la méthode englobante.\n\n## Exercices\n\n1. Dans un module ES, donne la valeur de `this` pour chacun de ces quatre appels.\n\n   ```js\n   function qui() { return this; }\n   const objet = { nom: 'objet', qui };\n\n   qui();\n   objet.qui();\n   new qui();\n   qui.call(objet);\n   ```\n\n   :::indice\n   Reconnais la forme de chaque appel, puis applique la règle correspondante.\n   :::\n\n   :::solution\n   - `qui()` : appel seul en mode strict, `this` vaut `undefined`.\n   - `objet.qui()` : appel de méthode, `this` vaut `objet`.\n   - `new qui()` : `this` est le nouvel objet vide en construction ; comme la fonction\n     renvoie un objet — `this` lui-même —, c'est lui que `new` renvoie.\n   - `qui.call(objet)` : liaison explicite, `this` vaut `objet`.\n   :::\n\n2. Ce code affiche `NaN` au lieu d'incrémenter le compteur. Explique pourquoi, puis\n   corrige-le de deux façons.\n\n   ```js\n   const compteur = {\n     valeur: 0,\n     incrementer() {\n       this.valeur += 1;\n       console.log(this.valeur);\n     },\n   };\n   setTimeout(compteur.incrementer, 0);\n   ```\n\n   :::indice\n   Qu'est-ce que `setTimeout` reçoit exactement, et comment l'appelle-t-il ?\n   :::\n\n   :::indice\n   Il faut soit fixer le `this`, soit conserver la forme `compteur.incrementer()`.\n   :::\n\n   :::solution\n   `setTimeout` reçoit la fonction seule, sans `compteur`. Il l'appelle avec son propre\n   `this` : l'objet global `window` dans un navigateur, quel que soit le mode, et un objet\n   `Timeout` dans Node. Dans les deux cas, `this.valeur` vaut `undefined`, et\n   `undefined + 1` donne `NaN` — sans aucune erreur, ce qui rend le bug discret.\n\n   ```js\n   setTimeout(() => compteur.incrementer(), 0); // la forme méthode est conservée\n   setTimeout(compteur.incrementer.bind(compteur), 0); // this fixé définitivement\n   ```\n   :::\n\n3. Corrige `lister` pour que chaque article soit préfixé par `this.prefixe`.\n\n   ```js\n   const panier = {\n     prefixe: '-',\n     articles: ['clavier', 'souris'],\n     lister() {\n       return this.articles.map(function (article) {\n         return `${this.prefixe} ${article}`;\n       });\n     },\n   };\n   ```\n\n   :::indice\n   La fonction passée à `map` est une fonction classique appelée seule : elle a son propre\n   `this`.\n   :::\n\n   :::solution\n   ```js\n   const panier = {\n     prefixe: '-',\n     articles: ['clavier', 'souris'],\n     lister() {\n       return this.articles.map((article) => `${this.prefixe} ${article}`);\n     },\n   };\n\n   console.log(panier.lister()); // ['- clavier', '- souris']\n   ```\n\n   La fonction fléchée n'a pas de `this` propre : elle utilise celui de `lister`, qui vaut\n   `panier` lors de l'appel `panier.lister()`.\n   :::\n\n## Questions d'entretien\n\n- Comment la valeur de `this` est-elle déterminée ?\n\n  :::indice\n  Ce n'est pas le lieu d'écriture qui compte. Il y a quatre formes d'appel.\n  :::\n\n  :::reponse\n  Pour une fonction classique, par la forme de l'appel, selon cette priorité : `new` lie\n  `this` au nouvel objet ; `call`, `apply` et `bind` le lient à l'objet fourni ;\n  `objet.methode()` le lie à l'objet devant le point ; un appel seul donne `undefined` en\n  mode strict et l'objet global sinon. Les fonctions fléchées font exception : elles n'ont\n  pas de `this` propre et utilisent celui de l'environnement où elles sont écrites.\n  :::\n\n- Pourquoi une méthode perd-elle son `this` quand on la passe en callback ?\n\n  :::indice\n  Qu'est-ce qui est transmis : la méthode, ou la méthode et son objet ?\n  :::\n\n  :::reponse\n  Parce que `objet.methode` sans parenthèses produit la fonction seule : le lien avec\n  `objet` n'existe que dans la forme d'appel `objet.methode()`. Le code qui reçoit la\n  fonction l'appelle comme il l'entend : seule, et `this` vaut `undefined` en mode strict,\n  ou avec un `this` de son choix, comme `window` pour `setTimeout` dans un navigateur.\n  Jamais avec l'objet d'origine. On corrige en enveloppant l'appel dans une fonction fléchée, en liant la\n  méthode avec `bind`, ou en déclarant la méthode comme champ fléché dans une classe.\n  :::\n\n- Que change le mode strict pour `this` ?\n\n  :::indice\n  Que vaut `this` dans un appel seul, avec et sans mode strict ?\n  :::\n\n  :::reponse\n  Dans un appel seul, le mode non strict remplace un `this` absent par l'objet global, si\n  bien qu'une méthode détachée modifie silencieusement des propriétés globales. Le mode\n  strict laisse `this` à `undefined`, ce qui fait échouer immédiatement la première lecture\n  de propriété. Comme les modules ES et les classes sont en mode strict d'office, le code\n  moderne a ce comportement par défaut, et les pertes de `this` se voient tout de suite.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-this-fleches",
+      "title": "this dans les fonctions fléchées et les callbacks",
+      "slug": "this-fleches-et-callbacks",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "this-et-liaison",
+      "order": 3,
+      "estimatedMinutes": 25,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-call-apply-bind",
+        "javascript-fonctions-flechees"
+      ],
+      "skills": [
+        "this-arrow-callbacks"
+      ],
+      "tags": [
+        "javascript",
+        "runtime"
+      ],
+      "contentPath": "javascript/this-et-liaison/this-fleches-et-callbacks/lesson.md",
+      "contentVersion": "e2249777b3c3",
+      "body": "\n## Objectifs\n\n- Expliquer d'où une fonction fléchée tire son `this`, et pourquoi on ne peut pas le changer.\n- Garder le bon `this` dans un `setTimeout`, une méthode de tableau ou un écouteur\n  d'événement.\n- Choisir entre fonction fléchée, `bind` et champ de classe selon la situation.\n\n## Introduction\n\nLes callbacks sont l'endroit où `this` se perd le plus souvent : on passe une méthode à\n`setTimeout` ou à `addEventListener`, et elle s'exécute sans son objet. Les fonctions\nfléchées ont été conçues en grande partie pour régler ce problème. Mais elles ne suivent\npas les quatre règles du chapitre précédent — ce qui les rend précieuses dans un callback\net piégeuses comme méthode d'objet.\n\n## Concept\n\nUne fonction fléchée **n'a pas de `this` propre**. Elle utilise celui de l'environnement où\nelle est **écrite**, exactement comme une variable ordinaire.\n\n| Situation | Fonction classique | Fonction fléchée |\n| --- | --- | --- |\n| `objet.methode()` | `this` = objet | `this` extérieur |\n| Callback de `setTimeout` | `window` (navigateur), `Timeout` (Node) | `this` extérieur |\n| `call`, `apply`, `bind` | `this` fourni | ignoré |\n| `new` | nouvel objet | `TypeError` |\n| Écouteur `addEventListener` | l'élément écouté | `this` extérieur |\n\nConséquence pratique : une fléchée écrite **dans une méthode** récupère le `this` de la\nméthode, et c'est le bon réflexe pour un callback. Une fléchée écrite **comme méthode** d'un\nobjet littéral récupère le `this` du module, soit `undefined`.\n\n## Exemple\n\n```js\n// Dans un module ES : this vaut undefined au niveau supérieur.\nconst minuteur = {\n  secondes: 0,\n  demarrerCasse() {\n    setTimeout(function () {\n      // this n'est pas minuteur ici : window dans un navigateur, Timeout dans Node\n      console.log('classique', this?.secondes); // 'classique' undefined\n    }, 0);\n  },\n  demarrer() {\n    setTimeout(() => {\n      this.secondes += 1; // this = minuteur, hérité de demarrer\n      console.log('fléchée', this.secondes); // 'fléchée' 1\n    }, 0);\n  },\n  mauvaiseMethode: () => typeof this, // this du module\n};\n\nminuteur.demarrerCasse();\nminuteur.demarrer();\nconsole.log(minuteur.mauvaiseMethode()); // 'undefined'\n\nconst fleche = () => this;\nconsole.log(fleche.call({ nom: 'ignoré' })); // undefined : call n'y change rien\n\nclass Bouton {\n  clics = 0;\n  gererClic = () => {\n    this.clics += 1; // champ fléché : lié à l'instance\n    return this.clics;\n  };\n}\nconst bouton = new Bouton();\nconst gestionnaire = bouton.gererClic; // détaché\nconsole.log(gestionnaire(), gestionnaire()); // 1 2\n```\n\n## Comment ça fonctionne\n\nPendant la phase de création, une fonction classique reçoit un `this` calculé à partir de\nl'appel. Une fonction fléchée n'en reçoit pas : quand elle lit `this`, le moteur le cherche\ndans les environnements extérieurs, jusqu'à trouver celui d'une fonction classique ou du\nniveau supérieur. Son `this` est donc fixé par l'endroit où elle est **écrite**, et `call`,\n`apply` ou `bind` n'ont rien à modifier.\n\nDans `demarrer`, la fléchée est créée pendant l'appel `minuteur.demarrer()`, où `this` vaut\n`minuteur` : c'est ce `this` qu'elle utilise, même exécutée plus tard par `setTimeout`. La\nfonction classique de `demarrerCasse` est appelée par le minuteur avec son propre `this` —\n`window` dans un navigateur, un objet `Timeout` dans Node — qui n'a pas de propriété\n`secondes`. Note au passage l'ordre des affichages de l'exemple : les deux\ncallbacks de `setTimeout` s'exécutent après tout le code synchrone.\n\nLes méthodes de tableau acceptent un second argument, `thisArg`, qui fixe le `this` d'un\ncallback classique : `liste.map(function (x) { return this.facteur * x; }, objet)`. Avec une\nfléchée, ce paramètre est ignoré ; c'est rarement un problème, puisque la fléchée voit déjà\nle bon `this`.\n\nPour un **écouteur d'événement**, une fonction classique reçoit comme `this` l'élément\nauquel l'écouteur est attaché, soit `event.currentTarget`. Une fléchée reçoit le `this`\nextérieur. Si l'élément est nécessaire, `event.currentTarget` est plus explicite que `this`\ndans les deux cas.\n\nDans une **classe**, un champ initialisé avec une fléchée, `gererClic = () => {}`, est créé\npour chaque instance au moment de sa construction : son `this` est l'instance, même une fois\nla fonction détachée. Le coût est une fonction par instance au lieu d'une méthode partagée\nsur le prototype. Lier dans le constructeur avec `bind` a le même coût ; l'alternative est\nde garder une méthode classique et d'envelopper à l'endroit de l'usage.\n\n## Erreurs fréquentes\n\n**Écrire une méthode d'objet littéral en fléchée.** Elle prend le `this` du module, pas de\nl'objet.\n\n**Espérer changer le `this` d'une fléchée avec `bind`.** L'appel est ignoré sans erreur.\n\n**Utiliser `this` dans un écouteur fléché pour désigner l'élément.** Utilise\n`event.currentTarget`.\n\n**Transformer toutes les méthodes de classe en champs fléchés.** Chaque instance porte alors\nses propres fonctions ; réserve ce motif aux méthodes réellement passées en callback.\n\n## À retenir\n\n- Une fléchée n'a pas de `this` : elle utilise celui de l'environnement où elle est écrite.\n- `call`, `apply`, `bind` et `thisArg` n'ont aucun effet sur une fléchée.\n- Dans une méthode, une fléchée garde le `this` de la méthode pour ses callbacks.\n- Comme méthode d'objet littéral, une fléchée perd l'objet.\n- Écouteur d'événement : `event.currentTarget` plutôt que `this`.\n\n## Exercices\n\n1. Corrige `demarrer` pour que le callback incrémente bien `secondes` chaque seconde.\n\n   ```js\n   const chrono = {\n     secondes: 0,\n     demarrer() {\n       setInterval(function () {\n         this.secondes += 1;\n       }, 1000);\n     },\n   };\n   ```\n\n   :::indice\n   Le callback est une fonction classique appelée par le minuteur, sans `chrono`. Quelle\n   forme de fonction hérite du `this` de `demarrer` ?\n   :::\n\n   :::solution\n   ```js\n   const chrono = {\n     secondes: 0,\n     demarrer() {\n       return setInterval(() => {\n         this.secondes += 1;\n       }, 1000);\n     },\n   };\n   ```\n\n   La fléchée est créée pendant l'appel `chrono.demarrer()` et utilise son `this`. Renvoyer\n   l'identifiant de l'intervalle permet de l'arrêter plus tard avec `clearInterval`.\n   :::\n\n2. Explique pourquoi `utilisateur.saluer()` renvoie `'Bonjour undefined'`, et corrige.\n\n   ```js\n   const utilisateur = {\n     nom: 'Ada',\n     saluer: () => `Bonjour ${this?.nom}`,\n   };\n   ```\n\n   :::indice\n   Où la fonction fléchée est-elle écrite, et quel est le `this` de cet endroit ?\n   :::\n\n   :::solution\n   La fléchée est écrite au niveau supérieur du module, dans un littéral d'objet — qui ne crée\n   pas de portée. Son `this` est celui du module, `undefined`, donc `this?.nom` vaut\n   `undefined`. Une méthode doit être une fonction classique :\n\n   ```js\n   const utilisateur = {\n     nom: 'Ada',\n     saluer() {\n       return `Bonjour ${this.nom}`;\n     },\n   };\n   console.log(utilisateur.saluer()); // 'Bonjour Ada'\n   ```\n   :::\n\n3. Cette classe perd son `this` quand `valider` est passée en callback. Propose deux\n   corrections et donne le coût de chacune.\n\n   ```js\n   class Formulaire {\n     erreurs = [];\n     valider(champ) {\n       if (!champ) this.erreurs.push('champ vide');\n     }\n   }\n   const formulaire = new Formulaire();\n   ['', 'ok'].forEach(formulaire.valider);\n   ```\n\n   :::indice\n   On peut fixer le `this` au niveau de l'instance, ou seulement à l'endroit de l'usage.\n   :::\n\n   :::solution\n   ```js\n   // 1. À l'usage : aucune fonction supplémentaire par instance.\n   ['', 'ok'].forEach((champ) => formulaire.valider(champ));\n\n   // 2. Dans la classe : un champ fléché, lié à chaque instance.\n   class FormulaireLie {\n     erreurs = [];\n     valider = (champ) => {\n       if (!champ) this.erreurs.push('champ vide');\n     };\n   }\n   const lie = new FormulaireLie();\n   ['', 'ok'].forEach(lie.valider);\n   console.log(lie.erreurs); // ['champ vide']\n   ```\n\n   La première solution laisse la méthode sur le prototype, partagée par toutes les\n   instances. La seconde crée une fonction par instance, mais permet de passer\n   `lie.valider` partout sans précaution.\n   :::\n\n## Questions d'entretien\n\n- Comment une fonction fléchée détermine-t-elle `this` ?\n\n  :::indice\n  En reçoit-elle un pendant sa phase de création ?\n  :::\n\n  :::reponse\n  Elle n'en reçoit pas. Quand elle lit `this`, le moteur le cherche dans les environnements\n  extérieurs, comme une variable, jusqu'à la première fonction classique ou le niveau\n  supérieur. Son `this` est donc déterminé par l'endroit où elle est écrite, une fois pour\n  toutes : `call`, `apply`, `bind` et le paramètre `thisArg` des méthodes de tableau n'ont\n  aucun effet, et elle ne peut pas être appelée avec `new`.\n  :::\n\n- Pourquoi ne pas écrire les méthodes d'un objet littéral en fonctions fléchées ?\n\n  :::indice\n  Un littéral d'objet crée-t-il une portée ?\n  :::\n\n  :::reponse\n  Parce qu'un littéral d'objet ne crée pas de portée : une fléchée écrite comme propriété\n  prend le `this` de l'endroit où l'objet est construit — le module, soit `undefined`, ou\n  la fonction englobante. Elle ne peut donc jamais désigner l'objet. Les méthodes doivent\n  être des fonctions classiques ; les fléchées servent à l'intérieur de ces méthodes, pour\n  les callbacks qui doivent garder leur `this`.\n  :::\n\n- Que vaut `this` dans un écouteur d'événement ?\n\n  :::indice\n  La réponse change selon la forme de la fonction passée à `addEventListener`.\n  :::\n\n  :::reponse\n  Avec une fonction classique, `this` vaut l'élément auquel l'écouteur est attaché,\n  c'est-à-dire `event.currentTarget`. Avec une fonction fléchée, `this` vaut celui de\n  l'environnement où elle est écrite, souvent l'instance d'un composant. Pour désigner\n  l'élément sans ambiguïté, on lit `event.currentTarget`, et l'on réserve `this` à l'objet\n  qui gère l'événement.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -4295,6 +4717,138 @@
       "technology": "javascript",
       "contentPath": "javascript/execution-context/contexte-execution-et-pile-appels/quiz.yaml",
       "contentVersion": "8a18fa758b7c"
+    },
+    {
+      "id": "javascript-environnement-lexical-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-env-lexical-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Vers quel environnement pointe le lien extérieur de l'environnement créé par un appel de fonction ?\n",
+          "options": [
+            "L'environnement où la fonction a été définie",
+            "L'environnement de la fonction appelante",
+            "Toujours l'environnement global",
+            "L'environnement du dernier bloc exécuté"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "La référence `[[Environment]]` est fixée à la définition. C'est ce qui fait la portée lexicale : l'appelant n'a aucune influence sur ce que voit la fonction.\n",
+          "skills": [
+            "lexical-environment"
+          ]
+        },
+        {
+          "id": "js-env-lexical-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une closure conserve une copie des valeurs des variables au moment de sa création.\n",
+          "answer": false,
+          "explanation": "Elle conserve une référence vers l'environnement : si une liaison change ensuite, la closure lit la nouvelle valeur.\n",
+          "skills": [
+            "lexical-environment"
+          ]
+        },
+        {
+          "id": "js-env-lexical-q3",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Dans un script classique (pas un module), que vaut `window.b` après `let b = 2;` au niveau supérieur ?\n",
+          "answer": "undefined",
+          "explanation": "`let`, `const` et `class` vont dans le registre déclaratif de l'environnement global, qui n'est pas adossé à `window`. Une `var` au même endroit serait devenue `window.b`.\n",
+          "skills": [
+            "lexical-environment"
+          ]
+        },
+        {
+          "id": "js-env-lexical-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans quel environnement une `var` déclarée à l'intérieur d'un bloc `if` est-elle liée ?\n",
+          "options": [
+            "L'environnement de variables de la fonction",
+            "L'environnement du bloc if",
+            "L'environnement global, dans tous les cas",
+            "Aucun : elle lève une erreur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les `var` sont enregistrées dans l'environnement de variables de la fonction pendant la phase de création, et survivent donc au bloc. Seuls `let`, `const` et `class` vivent dans l'environnement du bloc.\n",
+          "skills": [
+            "lexical-environment"
+          ]
+        }
+      ],
+      "chapterId": "javascript-environnement-lexical",
+      "technology": "javascript",
+      "contentPath": "javascript/execution-context/environnement-lexical/quiz.yaml",
+      "contentVersion": "0aea4120163d"
+    },
+    {
+      "id": "javascript-phases-execution-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-phases-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que renvoie `f(5)` avec `function f(n) { var n; return n; }` ?\n",
+          "answer": "5",
+          "explanation": "Le paramètre est lié à 5 en premier ; la déclaration `var n` trouve un nom déjà lié et ne le réinitialise pas. Aucune affectation n'a lieu ensuite.\n",
+          "skills": [
+            "execution-phases"
+          ]
+        },
+        {
+          "id": "js-phases-q2",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Qu'affiche le premier `console.log` de `function t() { console.log(typeof x); var x = 1; function x() {} }` ?\n",
+          "answer": "function",
+          "explanation": "Pendant la création, la déclaration de fonction lie `x` à la fonction et la `var` ne la réinitialise pas. L'affectation `x = 1` n'intervient qu'ensuite, à l'exécution.\n",
+          "skills": [
+            "execution-phases"
+          ]
+        },
+        {
+          "id": "js-phases-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Les liaisons `let` et `const` n'existent pas avant leur ligne de déclaration.\n",
+          "answer": false,
+          "explanation": "Elles sont créées pendant la phase de création, mais sans valeur : c'est précisément cet état non initialisé qui produit la zone morte temporelle.\n",
+          "skills": [
+            "execution-phases"
+          ]
+        },
+        {
+          "id": "js-phases-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quand un contexte d'exécution de fonction est-il créé ?\n",
+          "options": [
+            "À chaque appel de la fonction",
+            "Une seule fois, quand la fonction est définie",
+            "Au chargement du fichier, pour toutes les fonctions",
+            "Uniquement au premier appel"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Définir la fonction crée un objet fonction, une fois. Chaque appel crée un nouveau contexte, avec sa propre phase de création et des liaisons neuves.\n",
+          "skills": [
+            "execution-phases"
+          ]
+        }
+      ],
+      "chapterId": "javascript-phases-execution",
+      "technology": "javascript",
+      "contentPath": "javascript/execution-context/phases-creation-execution/quiz.yaml",
+      "contentVersion": "775062c1c0f7"
     },
     {
       "id": "javascript-fonctions-pures-quiz",
@@ -6142,6 +6696,288 @@
       "contentVersion": "63860ae20e95"
     },
     {
+      "id": "javascript-chaine-prototypes-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-chaine-proto-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `const a = { n: 1 }; const b = Object.create(a); b.n = 2;`, que vaut `a.n` ?\n",
+          "answer": "1",
+          "explanation": "Une écriture crée une propriété propre sur `b`, qui masque celle de `a` sans la modifier.\n",
+          "skills": [
+            "prototype-chain"
+          ]
+        },
+        {
+          "id": "js-chaine-proto-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "`objet.liste.push(x)` crée une propriété propre `liste` quand `liste` est héritée.\n",
+          "answer": false,
+          "explanation": "`push` ne fait aucune écriture de propriété sur l'objet : `liste` est lue sur le prototype, et c'est ce tableau partagé qui est modifié.\n",
+          "skills": [
+            "prototype-chain"
+          ]
+        },
+        {
+          "id": "js-chaine-proto-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Où se termine toute chaîne de prototypes ?\n",
+          "options": [
+            "null",
+            "Object.prototype",
+            "undefined",
+            "Function.prototype"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "La plupart des chaînes passent par `Object.prototype`, dont le prototype est `null`. Un objet créé avec `Object.create(null)` a directement `null`.\n",
+          "skills": [
+            "prototype-chain"
+          ]
+        },
+        {
+          "id": "js-chaine-proto-q4",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `Object.hasOwn(Object.create({ x: 1 }), 'x')` ?\n",
+          "answer": "false",
+          "explanation": "`x` est accessible par la chaîne, mais ce n'est pas une propriété propre de l'objet créé. `'x' in objet` vaudrait `true`.\n",
+          "skills": [
+            "prototype-chain"
+          ]
+        }
+      ],
+      "chapterId": "javascript-chaine-prototypes",
+      "technology": "javascript",
+      "contentPath": "javascript/prototypes/chaine-de-prototypes/quiz.yaml",
+      "contentVersion": "ab55a2446d1b"
+    },
+    {
+      "id": "javascript-object-create-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-constructeurs-q1",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Avec `function F() { this.x = 1; return { y: 2 }; }`, que vaut `new F().x` ?\n",
+          "answer": "undefined",
+          "explanation": "Le constructeur renvoie explicitement un objet : `new` renvoie cet objet, qui n'a pas de propriété `x`, et abandonne l'instance préparée.\n",
+          "skills": [
+            "constructor-functions"
+          ]
+        },
+        {
+          "id": "js-constructeurs-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`Object.create(proto)` exécute un constructeur pour initialiser l'objet.\n",
+          "answer": false,
+          "explanation": "`Object.create` se contente de créer un objet relié à `proto`. Aucun code d'initialisation n'est exécuté.\n",
+          "skills": [
+            "constructor-functions"
+          ]
+        },
+        {
+          "id": "js-constructeurs-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Où ranger les méthodes d'un constructeur pour qu'elles soient partagées ?\n",
+          "options": [
+            "Sur Constructeur.prototype",
+            "Dans le constructeur, avec this.methode = function () {}",
+            "Sur chaque instance après sa création",
+            "Sur Object.prototype"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Sur le prototype, une seule fonction sert toutes les instances. Dans le constructeur, chaque instance recevrait sa propre copie.\n",
+          "skills": [
+            "constructor-functions"
+          ]
+        },
+        {
+          "id": "js-constructeurs-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que vaut `new.target` dans une fonction appelée sans `new` ?\n",
+          "options": [
+            "undefined",
+            "La fonction elle-même",
+            "null",
+            "L'objet global"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`new.target` désigne le constructeur appelé avec `new`, et vaut `undefined` sinon : c'est ce qui permet de détecter un oubli de `new`.\n",
+          "skills": [
+            "constructor-functions"
+          ]
+        }
+      ],
+      "chapterId": "javascript-object-create",
+      "technology": "javascript",
+      "contentPath": "javascript/prototypes/constructeurs-et-object-create/quiz.yaml",
+      "contentVersion": "d6695fd1b066"
+    },
+    {
+      "id": "javascript-heritage-prototypal-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-heritage-proto-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle ligne relie correctement les prototypes pour que Chien hérite d'Animal ?\n",
+          "options": [
+            "Chien.prototype = Object.create(Animal.prototype)",
+            "Chien.prototype = Animal.prototype",
+            "Chien.prototype = new Object(Animal)",
+            "Chien.prototype = Animal"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Il faut un nouvel objet qui délègue au prototype parent. Affecter directement `Animal.prototype` ferait partager un seul objet entre les deux types.\n",
+          "skills": [
+            "prototypal-inheritance"
+          ]
+        },
+        {
+          "id": "js-heritage-proto-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Avec `class B extends A`, les méthodes statiques de A sont accessibles depuis B.\n",
+          "answer": true,
+          "explanation": "`extends` relie aussi les constructeurs : `Object.getPrototypeOf(B) === A`, ce qui fait hériter les méthodes statiques.\n",
+          "skills": [
+            "prototypal-inheritance"
+          ]
+        },
+        {
+          "id": "js-heritage-proto-q3",
+          "type": "multiple_answer",
+          "difficulty": 4,
+          "question": "Quelles différences une classe apporte-t-elle par rapport à un constructeur écrit à la main ?\n",
+          "options": [
+            "Un appel sans new lève une TypeError",
+            "Le corps est toujours en mode strict",
+            "Les méthodes ne sont pas énumérables",
+            "La chaîne de prototypes des instances est d'une forme différente"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "La chaîne produite est la même ; ce sont les garanties autour qui changent : `new` obligatoire, mode strict, méthodes non énumérables, entre autres.\n",
+          "skills": [
+            "prototypal-inheritance"
+          ]
+        },
+        {
+          "id": "js-heritage-proto-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Sans classe, comment appeler la version parente de `decrire` depuis la méthode enfant ?\n",
+          "options": [
+            "Animal.prototype.decrire.call(this)",
+            "Animal.decrire(this)",
+            "super.decrire()",
+            "this.prototype.decrire()"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "On récupère la méthode sur le prototype parent et on l'exécute sur l'instance courante. `super` n'est disponible que dans les classes et les méthodes d'objet littéral.\n",
+          "skills": [
+            "prototypal-inheritance"
+          ]
+        }
+      ],
+      "chapterId": "javascript-heritage-prototypal",
+      "technology": "javascript",
+      "contentPath": "javascript/prototypes/heritage-prototypal/quiz.yaml",
+      "contentVersion": "1e34d1e12c5d"
+    },
+    {
+      "id": "javascript-prototype-proto-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-proto-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Avec `function F() {}`, que vaut `Object.getPrototypeOf(F) === F.prototype` ?\n",
+          "answer": "false",
+          "explanation": "`F.prototype` sert aux instances créées par `new F()`. Le prototype de la fonction `F` elle-même est `Function.prototype`.\n",
+          "skills": [
+            "prototype-property"
+          ]
+        },
+        {
+          "id": "js-proto-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que vérifie `objet instanceof F` ?\n",
+          "options": [
+            "Que F.prototype figure dans la chaîne de prototypes d'objet",
+            "Que l'objet a été créé par un appel new F()",
+            "Que l'objet possède une propriété constructor égale à F",
+            "Que F est le prototype direct de l'objet"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`instanceof` remonte la chaîne et cherche `F.prototype`. Un objet créé avec `Object.create(F.prototype)` passe donc le test sans jamais avoir appelé `F`.\n",
+          "skills": [
+            "prototype-property"
+          ]
+        },
+        {
+          "id": "js-proto-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une fonction fléchée possède une propriété `prototype`.\n",
+          "answer": false,
+          "explanation": "Une fléchée ne peut pas être appelée avec `new` : elle n'a pas de propriété `prototype`.\n",
+          "skills": [
+            "prototype-property"
+          ]
+        },
+        {
+          "id": "js-proto-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle écriture est recommandée pour lire le prototype d'un objet ?\n",
+          "options": [
+            "Object.getPrototypeOf(objet)",
+            "objet.__proto__",
+            "objet.prototype",
+            "objet.constructor"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`__proto__` est un accesseur historique absent des objets sans prototype, et `objet.prototype` n'existe que sur les fonctions. `Object.getPrototypeOf` fonctionne dans tous les cas.\n",
+          "skills": [
+            "prototype-property"
+          ]
+        }
+      ],
+      "chapterId": "javascript-prototype-proto",
+      "technology": "javascript",
+      "contentPath": "javascript/prototypes/prototype-et-proto/quiz.yaml",
+      "contentVersion": "a7efad8d1d84"
+    },
+    {
       "id": "javascript-tableaux-ajouter-retirer-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -6531,6 +7367,208 @@
       "technology": "javascript",
       "contentPath": "javascript/tableaux/trier-et-aplatir/quiz.yaml",
       "contentVersion": "51bdc7b05bc2"
+    },
+    {
+      "id": "javascript-call-apply-bind-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-bind-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `function f() { return this.x; }`, que renvoie `f.call({ x: 3 })` ?\n",
+          "answer": "3",
+          "explanation": "`call` exécute la fonction immédiatement en fixant `this` à son premier argument.\n",
+          "skills": [
+            "explicit-binding"
+          ]
+        },
+        {
+          "id": "js-bind-q2",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Avec la même fonction `f`, que renvoie `f.bind({ x: 1 }).call({ x: 2 })` ?\n",
+          "answer": "1",
+          "explanation": "Une fonction liée par `bind` l'est définitivement : `call` ne peut plus changer son `this`. Seul `new` passerait outre.\n",
+          "skills": [
+            "explicit-binding"
+          ]
+        },
+        {
+          "id": "js-bind-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle méthode exécute tout de suite la fonction, avec ses arguments dans un tableau ?\n",
+          "options": [
+            "apply",
+            "call",
+            "bind",
+            "map"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`apply(objet, [a, b])` prend un tableau ; `call(objet, a, b)` des arguments séparés ; `bind` n'exécute rien et renvoie une nouvelle fonction.\n",
+          "skills": [
+            "explicit-binding"
+          ]
+        },
+        {
+          "id": "js-bind-q4",
+          "type": "true_false",
+          "difficulty": 1,
+          "question": "`bind` exécute la fonction immédiatement.\n",
+          "answer": false,
+          "explanation": "`bind` renvoie une nouvelle fonction, liée à l'objet fourni, qu'il faut appeler ensuite. C'est ce qui le rend utile pour les callbacks.\n",
+          "skills": [
+            "explicit-binding"
+          ]
+        }
+      ],
+      "chapterId": "javascript-call-apply-bind",
+      "technology": "javascript",
+      "contentPath": "javascript/this-et-liaison/call-apply-bind/quiz.yaml",
+      "contentVersion": "c71b1565ddaa"
+    },
+    {
+      "id": "javascript-this-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-this-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Avec `const o = { n: 1, f() { return this.n; } }; const autre = { n: 2, f: o.f };`, que renvoie `autre.f()` ?\n",
+          "answer": "2",
+          "explanation": "`this` dépend de l'appel, pas de l'objet où la fonction a été écrite : dans `autre.f()`, l'objet devant le point est `autre`.\n",
+          "skills": [
+            "this-binding"
+          ]
+        },
+        {
+          "id": "js-this-q2",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Dans un module ES, que vaut `this` dans l'appel seul `f()` d'une fonction classique ?\n",
+          "options": [
+            "undefined",
+            "L'objet global",
+            "La fonction f elle-même",
+            "Le module"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les modules sont en mode strict : un appel seul laisse `this` à `undefined`. En mode non strict, il serait remplacé par l'objet global.\n",
+          "skills": [
+            "this-binding"
+          ]
+        },
+        {
+          "id": "js-this-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Pour une fonction classique, `this` est fixé par l'endroit où la fonction est écrite.\n",
+          "answer": false,
+          "explanation": "C'est la forme de l'appel qui le fixe : méthode, appel seul, `new`, ou liaison explicite. Seules les fonctions fléchées tirent leur `this` du lieu d'écriture.\n",
+          "skills": [
+            "this-binding"
+          ]
+        },
+        {
+          "id": "js-this-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle règle de liaison est prioritaire sur toutes les autres ?\n",
+          "options": [
+            "L'appel avec new",
+            "call, apply ou bind",
+            "L'appel de méthode objet.methode()",
+            "L'appel seul"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'ordre est : `new`, puis liaison explicite, puis méthode, puis appel seul. Même une fonction liée par `bind` utilise le nouvel objet quand elle est appelée avec `new`.\n",
+          "skills": [
+            "this-binding"
+          ]
+        }
+      ],
+      "chapterId": "javascript-this",
+      "technology": "javascript",
+      "contentPath": "javascript/this-et-liaison/comprendre-this/quiz.yaml",
+      "contentVersion": "9cf7429c3c7c"
+    },
+    {
+      "id": "javascript-this-fleches-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-this-fleches-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Dans un module ES, que renvoie `o.f()` avec `const o = { f: () => typeof this };` ?\n",
+          "answer": "undefined",
+          "explanation": "Un littéral d'objet ne crée pas de portée : la fléchée prend le `this` du module, qui vaut `undefined`. `typeof undefined` renvoie la chaîne `'undefined'`.\n",
+          "skills": [
+            "this-arrow-callbacks"
+          ]
+        },
+        {
+          "id": "js-this-fleches-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "`bind` permet de changer le `this` d'une fonction fléchée.\n",
+          "answer": false,
+          "explanation": "Une fléchée n'a pas de `this` propre : elle utilise celui de son environnement d'écriture, et `call`, `apply` ou `bind` sont ignorés sans erreur.\n",
+          "skills": [
+            "this-arrow-callbacks"
+          ]
+        },
+        {
+          "id": "js-this-fleches-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans un écouteur `addEventListener` écrit en fonction classique, que vaut `this` ?\n",
+          "options": [
+            "L'élément auquel l'écouteur est attaché",
+            "undefined",
+            "L'objet global",
+            "L'objet événement"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une fonction classique reçoit l'élément écouté, soit `event.currentTarget`. Une fléchée recevrait le `this` de son environnement d'écriture.\n",
+          "skills": [
+            "this-arrow-callbacks"
+          ]
+        },
+        {
+          "id": "js-this-fleches-q4",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "Dans un navigateur, que vaut `this` dans une fonction classique passée à `setTimeout` ?\n",
+          "options": [
+            "L'objet global window",
+            "undefined, en mode strict",
+            "L'objet qui possédait la méthode",
+            "La fonction elle-même"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le minuteur appelle le callback avec l'objet global comme `this`, quel que soit le mode. Dans Node, c'est un objet `Timeout`. Dans aucun cas l'objet d'origine n'est conservé.\n",
+          "skills": [
+            "this-arrow-callbacks"
+          ]
+        }
+      ],
+      "chapterId": "javascript-this-fleches",
+      "technology": "javascript",
+      "contentPath": "javascript/this-et-liaison/this-fleches-et-callbacks/quiz.yaml",
+      "contentVersion": "5c1565db1d9a"
     },
     {
       "id": "javascript-primitives-references-quiz",

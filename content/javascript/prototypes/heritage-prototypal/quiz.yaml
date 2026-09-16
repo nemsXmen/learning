@@ -1,0 +1,66 @@
+id: javascript-heritage-prototypal-quiz
+kind: QUIZ
+questions:
+  - id: js-heritage-proto-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle ligne relie correctement les prototypes pour que Chien hérite d'Animal ?
+    options:
+      - "Chien.prototype = Object.create(Animal.prototype)"
+      - "Chien.prototype = Animal.prototype"
+      - "Chien.prototype = new Object(Animal)"
+      - "Chien.prototype = Animal"
+    answer: [0]
+    explanation: >
+      Il faut un nouvel objet qui délègue au prototype parent. Affecter directement
+      `Animal.prototype` ferait partager un seul objet entre les deux types.
+    skills:
+      - prototypal-inheritance
+
+  - id: js-heritage-proto-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Avec `class B extends A`, les méthodes statiques de A sont accessibles depuis B.
+    answer: true
+    explanation: >
+      `extends` relie aussi les constructeurs : `Object.getPrototypeOf(B) === A`, ce qui fait
+      hériter les méthodes statiques.
+    skills:
+      - prototypal-inheritance
+
+  - id: js-heritage-proto-q3
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Quelles différences une classe apporte-t-elle par rapport à un constructeur écrit à la
+      main ?
+    options:
+      - "Un appel sans new lève une TypeError"
+      - "Le corps est toujours en mode strict"
+      - "Les méthodes ne sont pas énumérables"
+      - "La chaîne de prototypes des instances est d'une forme différente"
+    answer: [0, 1, 2]
+    explanation: >
+      La chaîne produite est la même ; ce sont les garanties autour qui changent : `new`
+      obligatoire, mode strict, méthodes non énumérables, entre autres.
+    skills:
+      - prototypal-inheritance
+
+  - id: js-heritage-proto-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Sans classe, comment appeler la version parente de `decrire` depuis la méthode enfant ?
+    options:
+      - "Animal.prototype.decrire.call(this)"
+      - "Animal.decrire(this)"
+      - "super.decrire()"
+      - "this.prototype.decrire()"
+    answer: [0]
+    explanation: >
+      On récupère la méthode sur le prototype parent et on l'exécute sur l'instance courante.
+      `super` n'est disponible que dans les classes et les méthodes d'objet littéral.
+    skills:
+      - prototypal-inheritance

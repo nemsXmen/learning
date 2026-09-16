@@ -1,0 +1,60 @@
+id: javascript-this-fleches-quiz
+kind: QUIZ
+questions:
+  - id: js-this-fleches-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Dans un module ES, que renvoie `o.f()` avec `const o = { f: () => typeof this };` ?
+    answer: 'undefined'
+    explanation: >
+      Un littéral d'objet ne crée pas de portée : la fléchée prend le `this` du module, qui
+      vaut `undefined`. `typeof undefined` renvoie la chaîne `'undefined'`.
+    skills:
+      - this-arrow-callbacks
+
+  - id: js-this-fleches-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      `bind` permet de changer le `this` d'une fonction fléchée.
+    answer: false
+    explanation: >
+      Une fléchée n'a pas de `this` propre : elle utilise celui de son environnement
+      d'écriture, et `call`, `apply` ou `bind` sont ignorés sans erreur.
+    skills:
+      - this-arrow-callbacks
+
+  - id: js-this-fleches-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans un écouteur `addEventListener` écrit en fonction classique, que vaut `this` ?
+    options:
+      - "L'élément auquel l'écouteur est attaché"
+      - "undefined"
+      - "L'objet global"
+      - "L'objet événement"
+    answer: [0]
+    explanation: >
+      Une fonction classique reçoit l'élément écouté, soit `event.currentTarget`. Une
+      fléchée recevrait le `this` de son environnement d'écriture.
+    skills:
+      - this-arrow-callbacks
+
+  - id: js-this-fleches-q4
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Dans un navigateur, que vaut `this` dans une fonction classique passée à `setTimeout` ?
+    options:
+      - "L'objet global window"
+      - "undefined, en mode strict"
+      - "L'objet qui possédait la méthode"
+      - "La fonction elle-même"
+    answer: [0]
+    explanation: >
+      Le minuteur appelle le callback avec l'objet global comme `this`, quel que soit le mode.
+      Dans Node, c'est un objet `Timeout`. Dans aucun cas l'objet d'origine n'est conservé.
+    skills:
+      - this-arrow-callbacks

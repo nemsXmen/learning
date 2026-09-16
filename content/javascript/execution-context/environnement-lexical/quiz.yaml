@@ -1,0 +1,63 @@
+id: javascript-environnement-lexical-quiz
+kind: QUIZ
+questions:
+  - id: js-env-lexical-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Vers quel environnement pointe le lien extérieur de l'environnement créé par un appel
+      de fonction ?
+    options:
+      - "L'environnement où la fonction a été définie"
+      - "L'environnement de la fonction appelante"
+      - "Toujours l'environnement global"
+      - "L'environnement du dernier bloc exécuté"
+    answer: [0]
+    explanation: >
+      La référence `[[Environment]]` est fixée à la définition. C'est ce qui fait la portée
+      lexicale : l'appelant n'a aucune influence sur ce que voit la fonction.
+    skills:
+      - lexical-environment
+
+  - id: js-env-lexical-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Une closure conserve une copie des valeurs des variables au moment de sa création.
+    answer: false
+    explanation: >
+      Elle conserve une référence vers l'environnement : si une liaison change ensuite, la
+      closure lit la nouvelle valeur.
+    skills:
+      - lexical-environment
+
+  - id: js-env-lexical-q3
+    type: predict_output
+    difficulty: 4
+    question: >
+      Dans un script classique (pas un module), que vaut `window.b` après `let b = 2;` au
+      niveau supérieur ?
+    answer: 'undefined'
+    explanation: >
+      `let`, `const` et `class` vont dans le registre déclaratif de l'environnement global,
+      qui n'est pas adossé à `window`. Une `var` au même endroit serait devenue `window.b`.
+    skills:
+      - lexical-environment
+
+  - id: js-env-lexical-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans quel environnement une `var` déclarée à l'intérieur d'un bloc `if` est-elle liée ?
+    options:
+      - "L'environnement de variables de la fonction"
+      - "L'environnement du bloc if"
+      - "L'environnement global, dans tous les cas"
+      - "Aucun : elle lève une erreur"
+    answer: [0]
+    explanation: >
+      Les `var` sont enregistrées dans l'environnement de variables de la fonction pendant la
+      phase de création, et survivent donc au bloc. Seuls `let`, `const` et `class` vivent
+      dans l'environnement du bloc.
+    skills:
+      - lexical-environment

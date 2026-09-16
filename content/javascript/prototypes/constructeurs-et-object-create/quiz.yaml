@@ -1,0 +1,60 @@
+id: javascript-object-create-quiz
+kind: QUIZ
+questions:
+  - id: js-constructeurs-q1
+    type: predict_output
+    difficulty: 4
+    question: >
+      Avec `function F() { this.x = 1; return { y: 2 }; }`, que vaut `new F().x` ?
+    answer: 'undefined'
+    explanation: >
+      Le constructeur renvoie explicitement un objet : `new` renvoie cet objet, qui n'a pas
+      de propriété `x`, et abandonne l'instance préparée.
+    skills:
+      - constructor-functions
+
+  - id: js-constructeurs-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      `Object.create(proto)` exécute un constructeur pour initialiser l'objet.
+    answer: false
+    explanation: >
+      `Object.create` se contente de créer un objet relié à `proto`. Aucun code
+      d'initialisation n'est exécuté.
+    skills:
+      - constructor-functions
+
+  - id: js-constructeurs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Où ranger les méthodes d'un constructeur pour qu'elles soient partagées ?
+    options:
+      - "Sur Constructeur.prototype"
+      - "Dans le constructeur, avec this.methode = function () {}"
+      - "Sur chaque instance après sa création"
+      - "Sur Object.prototype"
+    answer: [0]
+    explanation: >
+      Sur le prototype, une seule fonction sert toutes les instances. Dans le constructeur,
+      chaque instance recevrait sa propre copie.
+    skills:
+      - constructor-functions
+
+  - id: js-constructeurs-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que vaut `new.target` dans une fonction appelée sans `new` ?
+    options:
+      - "undefined"
+      - "La fonction elle-même"
+      - "null"
+      - "L'objet global"
+    answer: [0]
+    explanation: >
+      `new.target` désigne le constructeur appelé avec `new`, et vaut `undefined` sinon :
+      c'est ce qui permet de détecter un oubli de `new`.
+    skills:
+      - constructor-functions

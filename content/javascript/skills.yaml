@@ -283,11 +283,51 @@ skills:
     importance: 4
     requires: [scope-chain]
 
+  - id: execution-phases
+    name: Phases de création et d'exécution
+    importance: 3
+    requires: [execution-context, hoisting-tdz]
+
+  - id: this-binding
+    name: Règles de liaison de this
+    importance: 5
+    requires: [execution-context]
+
+  - id: explicit-binding
+    name: call, apply et bind
+    importance: 4
+    requires: [this-binding]
+
+  - id: this-arrow-callbacks
+    name: this dans les fléchées et les callbacks
+    importance: 4
+    requires: [explicit-binding, arrow-functions]
+
+  - id: prototype-chain
+    name: Chaîne de prototypes et recherche de propriété
+    importance: 5
+    requires: [this-binding, objects-basics]
+
+  - id: prototype-property
+    name: prototype, __proto__ et instanceof
+    importance: 4
+    requires: [prototype-chain]
+
+  - id: constructor-functions
+    name: Constructor functions et Object.create
+    importance: 4
+    requires: [prototype-property]
+
+  - id: prototypal-inheritance
+    name: Héritage prototypal
+    importance: 4
+    requires: [constructor-functions]
+
   # Partie 5 — Object-Oriented JavaScript
   - id: classes-basics
     name: Classes et constructeur
     importance: 5
-    requires: [objects-basics, factory-functions]
+    requires: [objects-basics, factory-functions, constructor-functions]
 
   # Partie 7 — Error Handling & Debugging
   - id: error-types

@@ -12,6 +12,7 @@ xp: 80
 prerequisites:
   - javascript-objets-creer
   - javascript-factory-functions
+  - javascript-object-create
 skills:
   - classes-basics
 tags:

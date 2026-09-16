@@ -1,0 +1,55 @@
+id: javascript-chaine-prototypes-quiz
+kind: QUIZ
+questions:
+  - id: js-chaine-proto-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Avec `const a = { n: 1 }; const b = Object.create(a); b.n = 2;`, que vaut `a.n` ?
+    answer: '1'
+    explanation: >
+      Une écriture crée une propriété propre sur `b`, qui masque celle de `a` sans la
+      modifier.
+    skills:
+      - prototype-chain
+
+  - id: js-chaine-proto-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      `objet.liste.push(x)` crée une propriété propre `liste` quand `liste` est héritée.
+    answer: false
+    explanation: >
+      `push` ne fait aucune écriture de propriété sur l'objet : `liste` est lue sur le
+      prototype, et c'est ce tableau partagé qui est modifié.
+    skills:
+      - prototype-chain
+
+  - id: js-chaine-proto-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Où se termine toute chaîne de prototypes ?
+    options:
+      - "null"
+      - "Object.prototype"
+      - "undefined"
+      - "Function.prototype"
+    answer: [0]
+    explanation: >
+      La plupart des chaînes passent par `Object.prototype`, dont le prototype est `null`.
+      Un objet créé avec `Object.create(null)` a directement `null`.
+    skills:
+      - prototype-chain
+
+  - id: js-chaine-proto-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `Object.hasOwn(Object.create({ x: 1 }), 'x')` ?
+    answer: 'false'
+    explanation: >
+      `x` est accessible par la chaîne, mais ce n'est pas une propriété propre de l'objet
+      créé. `'x' in objet` vaudrait `true`.
+    skills:
+      - prototype-chain

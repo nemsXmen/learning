@@ -1,0 +1,60 @@
+id: javascript-prototype-proto-quiz
+kind: QUIZ
+questions:
+  - id: js-proto-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Avec `function F() {}`, que vaut `Object.getPrototypeOf(F) === F.prototype` ?
+    answer: 'false'
+    explanation: >
+      `F.prototype` sert aux instances créées par `new F()`. Le prototype de la fonction `F`
+      elle-même est `Function.prototype`.
+    skills:
+      - prototype-property
+
+  - id: js-proto-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que vérifie `objet instanceof F` ?
+    options:
+      - "Que F.prototype figure dans la chaîne de prototypes d'objet"
+      - "Que l'objet a été créé par un appel new F()"
+      - "Que l'objet possède une propriété constructor égale à F"
+      - "Que F est le prototype direct de l'objet"
+    answer: [0]
+    explanation: >
+      `instanceof` remonte la chaîne et cherche `F.prototype`. Un objet créé avec
+      `Object.create(F.prototype)` passe donc le test sans jamais avoir appelé `F`.
+    skills:
+      - prototype-property
+
+  - id: js-proto-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Une fonction fléchée possède une propriété `prototype`.
+    answer: false
+    explanation: >
+      Une fléchée ne peut pas être appelée avec `new` : elle n'a pas de propriété `prototype`.
+    skills:
+      - prototype-property
+
+  - id: js-proto-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture est recommandée pour lire le prototype d'un objet ?
+    options:
+      - "Object.getPrototypeOf(objet)"
+      - "objet.__proto__"
+      - "objet.prototype"
+      - "objet.constructor"
+    answer: [0]
+    explanation: >
+      `__proto__` est un accesseur historique absent des objets sans prototype, et
+      `objet.prototype` n'existe que sur les fonctions. `Object.getPrototypeOf` fonctionne
+      dans tous les cas.
+    skills:
+      - prototype-property

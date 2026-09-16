@@ -1,0 +1,56 @@
+id: javascript-phases-execution-quiz
+kind: QUIZ
+questions:
+  - id: js-phases-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que renvoie `f(5)` avec `function f(n) { var n; return n; }` ?
+    answer: '5'
+    explanation: >
+      Le paramètre est lié à 5 en premier ; la déclaration `var n` trouve un nom déjà lié et
+      ne le réinitialise pas. Aucune affectation n'a lieu ensuite.
+    skills:
+      - execution-phases
+
+  - id: js-phases-q2
+    type: predict_output
+    difficulty: 4
+    question: >
+      Qu'affiche le premier `console.log` de
+      `function t() { console.log(typeof x); var x = 1; function x() {} }` ?
+    answer: 'function'
+    explanation: >
+      Pendant la création, la déclaration de fonction lie `x` à la fonction et la `var` ne
+      la réinitialise pas. L'affectation `x = 1` n'intervient qu'ensuite, à l'exécution.
+    skills:
+      - execution-phases
+
+  - id: js-phases-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Les liaisons `let` et `const` n'existent pas avant leur ligne de déclaration.
+    answer: false
+    explanation: >
+      Elles sont créées pendant la phase de création, mais sans valeur : c'est précisément
+      cet état non initialisé qui produit la zone morte temporelle.
+    skills:
+      - execution-phases
+
+  - id: js-phases-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quand un contexte d'exécution de fonction est-il créé ?
+    options:
+      - "À chaque appel de la fonction"
+      - "Une seule fois, quand la fonction est définie"
+      - "Au chargement du fichier, pour toutes les fonctions"
+      - "Uniquement au premier appel"
+    answer: [0]
+    explanation: >
+      Définir la fonction crée un objet fonction, une fois. Chaque appel crée un nouveau
+      contexte, avec sa propre phase de création et des liaisons neuves.
+    skills:
+      - execution-phases
