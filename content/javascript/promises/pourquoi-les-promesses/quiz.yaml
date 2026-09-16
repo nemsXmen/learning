@@ -1,0 +1,54 @@
+id: javascript-promesses-etats-quiz
+kind: QUIZ
+questions:
+  - id: js-promesses-etats-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quels sont les trois états d'une promesse ?
+    options:
+      - "En attente, tenue, rompue"
+      - "Créée, lancée, terminée"
+      - "Synchrone, asynchrone, annulée"
+      - "Ouverte, fermée, expirée"
+    answer: [0]
+    explanation: >
+      Une promesse est en attente (pending), puis tenue (fulfilled) ou rompue (rejected).
+    skills:
+      - promise-states
+
+  - id: js-promesses-etats-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une promesse tenue peut ensuite devenir rompue.
+    answer: false
+    explanation: >
+      Une promesse ne change d'état qu'une fois : réglée, elle le reste.
+    skills:
+      - promise-states
+
+  - id: js-promesses-etats-q3
+    type: predict_output
+    difficulty: 3
+    question: >
+      Ordre d'affichage de `Promise.resolve('A').then(console.log); console.log('B');` ?
+      (réponds sous la forme X Y)
+    answer: 'B A'
+    explanation: >
+      La réaction est une microtâche : elle s'exécute après le code synchrone, même si la
+      promesse est déjà tenue.
+    skills:
+      - promise-states
+
+  - id: js-promesses-etats-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Ignorer une promesse annule l'opération qu'elle représente.
+    answer: false
+    explanation: >
+      Une promesse représente seulement l'issue ; le travail continue. L'annulation demande un
+      mécanisme explicite comme AbortController.
+    skills:
+      - promise-states

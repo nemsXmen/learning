@@ -1,0 +1,47 @@
+id: javascript-then-catch-quiz
+kind: QUIZ
+questions:
+  - id: js-then-catch-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `Promise.resolve(3).then((x) => { x * 2; }).then(console.log)` ?
+    answer: 'undefined'
+    explanation: >
+      Le callback à accolades ne renvoie rien : la promesse suivante est tenue avec undefined.
+    skills:
+      - promise-chaining
+
+  - id: js-then-catch-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `Promise.reject(new Error('x')).catch(() => 5).then(console.log)` ?
+    answer: '5'
+    explanation: >
+      Un catch qui renvoie une valeur récupère l'erreur : la chaîne repart en succès avec 5.
+    skills:
+      - promise-chaining
+
+  - id: js-then-catch-q3
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `Promise.resolve('v').finally(() => 'autre').then(console.log)` ?
+    answer: 'v'
+    explanation: >
+      La valeur renvoyée par finally est ignorée : la valeur précédente traverse.
+    skills:
+      - promise-chaining
+
+  - id: js-then-catch-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans `then(f, g)`, `g` rattrape une erreur levée par `f`.
+    answer: false
+    explanation: >
+      `g` ne couvre que la promesse précédente. Pour rattraper les erreurs de f, on écrit
+      `then(f).catch(g)`.
+    skills:
+      - promise-chaining

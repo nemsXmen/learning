@@ -1,0 +1,59 @@
+id: javascript-minuteurs-quiz
+kind: QUIZ
+questions:
+  - id: js-minuteurs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment empêcher l'exécution d'un `setTimeout` déjà programmé ?
+    options:
+      - "clearTimeout avec l'identifiant renvoyé"
+      - "Réaffecter la fonction à null"
+      - "Appeler setTimeout une seconde fois avec 0"
+      - "C'est impossible une fois programmé"
+    answer: [0]
+    explanation: >
+      `setTimeout` renvoie un identifiant ; `clearTimeout(id)` annule l'exécution si elle n'a
+      pas encore eu lieu.
+    skills:
+      - timers
+
+  - id: js-minuteurs-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pour relancer une requête lente toutes les 5 secondes sans chevauchement, que choisir ?
+    options:
+      - "Un setTimeout récursif, programmé à la fin de chaque requête"
+      - "setInterval(requete, 5000)"
+      - "queueMicrotask(requete) en boucle"
+      - "Une boucle while avec Date.now()"
+    answer: [0]
+    explanation: >
+      `setInterval` ne tient pas compte de la durée de la requête. Le `setTimeout` récursif ne
+      programme la suivante qu'une fois la précédente terminée.
+    skills:
+      - timers
+
+  - id: js-minuteurs-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Un intervalle jamais arrêté retient son callback et ce qu'il capture.
+    answer: true
+    explanation: >
+      Tant qu'un minuteur est actif, son callback reste référencé, avec son environnement :
+      c'est une fuite mémoire et un travail inutile.
+    skills:
+      - timers
+
+  - id: js-minuteurs-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Qu'affiche `setTimeout((a, b) => console.log(a + b), 0, 2, 3)` ?
+    answer: '5'
+    explanation: >
+      Les arguments qui suivent le délai sont transmis au callback lors de son exécution.
+    skills:
+      - timers

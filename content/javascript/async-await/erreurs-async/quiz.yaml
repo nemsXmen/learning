@@ -1,0 +1,60 @@
+id: javascript-async-erreurs-quiz
+kind: QUIZ
+questions:
+  - id: js-async-erreurs-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      Un bloc `try` rattrape la rupture d'une promesse qu'on n'attend pas avec await.
+    answer: false
+    explanation: >
+      La rupture arrive après la sortie du try : sans await, rien n'est levé pendant son
+      exécution.
+    skills:
+      - async-errors
+
+  - id: js-async-erreurs-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans un `try`, quelle écriture permet au `catch` de voir l'échec de `p` ?
+    options:
+      - "return await p"
+      - "return p"
+      - "p.then()"
+      - "void p"
+    answer: [0]
+    explanation: >
+      Avec return await, la fonction attend le règlement dans le try, où la rupture est levée.
+      return p renvoie la promesse avant qu'elle soit réglée.
+    skills:
+      - async-errors
+
+  - id: js-async-erreurs-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Le bloc `finally` s'exécute même si l'await du bloc `try` lève une erreur.
+    answer: true
+    explanation: >
+      finally s'exécute après le succès comme après l'échec, ce qui en fait l'endroit du
+      nettoyage.
+    skills:
+      - async-errors
+
+  - id: js-async-erreurs-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que se passe-t-il pour les erreurs d'un callback async passé à `forEach` ?
+    options:
+      - "forEach ne les attend pas : elles ne remontent pas à l'appelant"
+      - "forEach les rassemble et les lève à la fin"
+      - "forEach s'arrête à la première erreur"
+      - "forEach les convertit en undefined"
+    answer: [0]
+    explanation: >
+      forEach ignore les promesses renvoyées par son callback : rien n'est attendu, et leurs
+      ruptures deviennent des rejets non gérés.
+    skills:
+      - async-errors

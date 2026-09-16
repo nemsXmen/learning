@@ -1,0 +1,55 @@
+id: javascript-async-await-quiz
+kind: QUIZ
+questions:
+  - id: js-async-await-q1
+    type: true_false
+    difficulty: 1
+    question: >
+      Une fonction async qui contient `return 42` renvoie directement le nombre 42.
+    answer: false
+    explanation: >
+      Une fonction async renvoie toujours une promesse, ici tenue avec 42.
+    skills:
+      - async-await
+
+  - id: js-async-await-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Ordre d'affichage de `async function f() { console.log('A'); await null; console.log('C'); }
+      f(); console.log('B');` ? (réponds sous la forme X Y Z)
+    answer: 'A B C'
+    explanation: >
+      La fonction s'exécute de façon synchrone jusqu'au premier await, puis rend la main ; sa
+      reprise est une microtâche.
+    skills:
+      - async-await
+
+  - id: js-async-await-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Où `await` est-il autorisé ?
+    options:
+      - "Dans une fonction async ou au niveau supérieur d'un module ES"
+      - "Dans n'importe quelle fonction"
+      - "Uniquement dans une boucle for"
+      - "Uniquement dans un bloc try"
+    answer: [0]
+    explanation: >
+      Hors d'une fonction async, await est une erreur de syntaxe, sauf au niveau supérieur d'un
+      module ES.
+    skills:
+      - async-await
+
+  - id: js-async-await-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Pendant qu'une fonction attend avec await, les autres callbacks du programme peuvent
+      s'exécuter.
+    answer: true
+    explanation: >
+      Seule la fonction est suspendue ; la boucle d'événements continue de traiter le reste.
+    skills:
+      - async-await

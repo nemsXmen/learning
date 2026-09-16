@@ -1,0 +1,63 @@
+id: javascript-event-loop-quiz
+kind: QUIZ
+questions:
+  - id: js-event-loop-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Ordre d'affichage de `setTimeout(() => console.log('T'), 0);
+      Promise.resolve().then(() => console.log('P')); console.log('S');` ?
+      (réponds sous la forme X Y Z)
+    answer: 'S P T'
+    explanation: >
+      D'abord le code synchrone, puis toutes les microtâches, dont la suite de la promesse,
+      puis la macrotâche du minuteur.
+    skills:
+      - event-loop
+
+  - id: js-event-loop-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquelles de ces opérations programment une microtâche ?
+    options:
+      - "promesse.then(f)"
+      - "queueMicrotask(f)"
+      - "setTimeout(f, 0)"
+      - "setInterval(f, 10)"
+    answer: [0, 1]
+    explanation: >
+      Les suites de promesses et `queueMicrotask` sont des microtâches ; les minuteurs
+      programment des macrotâches.
+    skills:
+      - event-loop
+
+  - id: js-event-loop-q3
+    type: true_false
+    difficulty: 4
+    question: >
+      Une microtâche ajoutée pendant le vidage de la file des microtâches attend la macrotâche
+      suivante.
+    answer: false
+    explanation: >
+      Le vidage est complet : les microtâches ajoutées en route sont exécutées dans le même
+      vidage, avant toute macrotâche.
+    skills:
+      - event-loop
+
+  - id: js-event-loop-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi une chaîne infinie de `then` gèle-t-elle une page ?
+    options:
+      - "La file des microtâches ne se vide jamais, donc ni rendu ni événement ne passent"
+      - "Les promesses consomment toute la mémoire immédiatement"
+      - "Le navigateur interdit plus de mille promesses"
+      - "Chaque then crée un nouveau fil d'exécution"
+    answer: [0]
+    explanation: >
+      Le rendu et les événements n'interviennent qu'entre deux macrotâches, et on n'y arrive
+      jamais tant que des microtâches s'ajoutent.
+    skills:
+      - event-loop

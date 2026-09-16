@@ -1,0 +1,62 @@
+id: javascript-parallele-quiz
+kind: QUIZ
+questions:
+  - id: js-parallele-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Trois requêtes indépendantes de 100 ms sont écrites avec trois await successifs. Combien de
+      temps prend la fonction, environ ?
+    options:
+      - "300 ms"
+      - "100 ms"
+      - "0 ms"
+      - "Cela dépend de l'ordre d'écriture"
+    answer: [0]
+    explanation: >
+      Chaque requête ne démarre qu'après la fin de la précédente. Avec Promise.all, la durée
+      serait d'environ 100 ms.
+    skills:
+      - async-parallel
+
+  - id: js-parallele-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une opération asynchrone démarre au moment de l'await, et non à l'appel de sa fonction.
+    answer: false
+    explanation: >
+      Elle démarre à l'appel ; await n'en attend que l'issue. Paralléliser, c'est appeler toutes
+      les fonctions avant d'attendre.
+    skills:
+      - async-parallel
+
+  - id: js-parallele-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle écriture traite un tableau en parallèle et attend la fin de tous les traitements ?
+    options:
+      - "await Promise.all(liste.map(async (x) => traiter(x)))"
+      - "liste.forEach(async (x) => await traiter(x))"
+      - "for (const x of liste) await traiter(x)"
+      - "await liste.map(traiter)"
+    answer: [0]
+    explanation: >
+      forEach n'attend rien, for...of avec await est séquentiel, et await sur un tableau de
+      promesses n'attend pas ses éléments.
+    skills:
+      - async-parallel
+
+  - id: js-parallele-q4
+    type: true_false
+    difficulty: 4
+    question: >
+      Lancer deux promesses dans des variables puis les attendre l'une après l'autre peut produire
+      un rejet non géré, même si un try entoure les await.
+    answer: true
+    explanation: >
+      Si la seconde est rompue pendant qu'on attend la première, aucun gestionnaire n'y est encore
+      attaché. Promise.all attache ses gestionnaires immédiatement.
+    skills:
+      - async-parallel

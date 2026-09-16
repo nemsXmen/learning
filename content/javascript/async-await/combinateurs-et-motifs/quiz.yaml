@@ -1,0 +1,63 @@
+id: javascript-combinateurs-quiz
+kind: QUIZ
+questions:
+  - id: js-combinateurs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel combinateur choisir pour connaître l'issue de chaque envoi, succès ou échec ?
+    options:
+      - "Promise.allSettled"
+      - "Promise.all"
+      - "Promise.race"
+      - "Promise.any"
+    answer: [0]
+    explanation: >
+      allSettled attend que toutes soient réglées et décrit chaque issue, sans jamais se rompre.
+    skills:
+      - async-patterns
+
+  - id: js-combinateurs-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Avec quelle erreur Promise.any se rompt-il quand toutes les promesses échouent ?
+    options:
+      - "AggregateError"
+      - "La première erreur reçue"
+      - "La dernière erreur reçue"
+      - "RangeError"
+    answer: [0]
+    explanation: >
+      any se rompt avec une AggregateError, dont la propriété errors contient toutes les raisons.
+    skills:
+      - async-patterns
+
+  - id: js-combinateurs-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Quand une opération perd une course avec Promise.race, elle est interrompue.
+    answer: false
+    explanation: >
+      race ne décide que du résultat attendu ; l'opération perdante continue. L'interruption
+      demande un AbortSignal.
+    skills:
+      - async-patterns
+
+  - id: js-combinateurs-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi doubler le délai entre deux nouvelles tentatives ?
+    options:
+      - "Pour laisser au service le temps de se rétablir sans l'accabler"
+      - "Pour que la tentative suivante réussisse forcément"
+      - "Parce que setTimeout l'impose"
+      - "Pour transformer l'erreur en succès"
+    answer: [0]
+    explanation: >
+      Des tentatives rapprochées aggravent une surcharge. Une attente croissante, avec un peu
+      d'aléa, espace la charge.
+    skills:
+      - async-patterns

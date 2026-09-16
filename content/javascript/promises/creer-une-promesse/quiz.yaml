@@ -1,0 +1,57 @@
+id: javascript-creer-promesse-quiz
+kind: QUIZ
+questions:
+  - id: js-creer-promesse-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Ordre d'affichage de `console.log('1'); new Promise(() => console.log('2'));
+      console.log('3');` ? (réponds sous la forme X Y Z)
+    answer: '1 2 3'
+    explanation: >
+      L'exécuteur s'exécute immédiatement et de façon synchrone, pendant l'appel au
+      constructeur.
+    skills:
+      - promise-creation
+
+  - id: js-creer-promesse-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Quelle valeur reçoit le `then` de
+      `new Promise((resolve) => { resolve('a'); resolve('b'); })` ?
+    answer: 'a'
+    explanation: >
+      Seul le premier appel à resolve ou reject règle la promesse ; les suivants sont ignorés.
+    skills:
+      - promise-creation
+
+  - id: js-creer-promesse-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Une erreur levée dans un callback de setTimeout, à l'intérieur de l'exécuteur, rompt
+      automatiquement la promesse.
+    answer: false
+    explanation: >
+      Seules les erreurs synchrones de l'exécuteur sont converties en rejet. Une erreur
+      asynchrone doit être transmise avec reject.
+    skills:
+      - promise-creation
+
+  - id: js-creer-promesse-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans quel cas `new Promise` est-il justifié ?
+    options:
+      - "Pour envelopper une API à callbacks ou un minuteur"
+      - "Pour envelopper le résultat de fetch"
+      - "Pour transformer la valeur d'une promesse existante"
+      - "Pour rendre un calcul synchrone plus rapide"
+    answer: [0]
+    explanation: >
+      Une promesse existante se renvoie ou s'enchaîne avec then. Le constructeur sert aux
+      opérations qui ne fournissent pas encore de promesse.
+    skills:
+      - promise-creation

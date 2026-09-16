@@ -379,6 +379,62 @@ skills:
     importance: 4
     requires: [creational-patterns, callbacks]
 
+  # Partie 6 — Asynchronous JavaScript
+  - id: async-model
+    name: Modèle asynchrone
+    importance: 5
+    requires: [callbacks, execution-context]
+
+  - id: event-loop
+    name: Event loop, microtâches et macrotâches
+    importance: 5
+    requires: [async-model]
+
+  - id: timers
+    name: Minuteurs
+    importance: 3
+    requires: [event-loop]
+
+  - id: promise-states
+    name: Promesses et leurs états
+    importance: 5
+    requires: [event-loop]
+
+  - id: promise-creation
+    name: Créer une promesse
+    importance: 4
+    requires: [promise-states]
+
+  - id: promise-chaining
+    name: then, catch, finally et chaînage
+    importance: 5
+    requires: [promise-creation]
+
+  - id: promise-errors
+    name: Erreurs et composition de promesses
+    importance: 5
+    requires: [promise-chaining]
+
+  - id: async-await
+    name: async et await
+    importance: 5
+    requires: [promise-chaining]
+
+  - id: async-errors
+    name: Erreurs avec async et await
+    importance: 5
+    requires: [async-await, promise-errors]
+
+  - id: async-parallel
+    name: Séquentiel et parallèle
+    importance: 5
+    requires: [async-errors]
+
+  - id: async-patterns
+    name: Combinateurs et motifs asynchrones
+    importance: 4
+    requires: [async-parallel]
+
   # Partie 7 — Error Handling & Debugging
   - id: error-types
     name: Familles d'erreurs

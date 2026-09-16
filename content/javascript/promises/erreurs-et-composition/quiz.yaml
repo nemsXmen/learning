@@ -1,0 +1,60 @@
+id: javascript-promesses-erreurs-quiz
+kind: QUIZ
+questions:
+  - id: js-promesses-erreurs-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Combien de messages affiche
+      `Promise.reject(new Error('x')).then(() => console.log('a')).then(() => console.log('b')).catch(() => console.log('c'))` ?
+    answer: '1'
+    explanation: >
+      La rupture saute les deux then jusqu'au catch : seul 'c' est affiché.
+    skills:
+      - promise-errors
+
+  - id: js-promesses-erreurs-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Promise.all reçoit des promesses tenues avec 3, 1 et 2, qui arrivent dans l'ordre 1, 2, 3.
+      Avec quel tableau est-il tenu ?
+    options:
+      - "[3, 1, 2]"
+      - "[1, 2, 3]"
+      - "[3, 2, 1]"
+      - "Le tableau dépend du temps de chaque promesse"
+    answer: [0]
+    explanation: >
+      Les valeurs suivent l'ordre du tableau d'entrée, pas l'ordre d'arrivée.
+    skills:
+      - promise-errors
+
+  - id: js-promesses-erreurs-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Quand Promise.all se rompt, les autres opérations en cours sont annulées.
+    answer: false
+    explanation: >
+      Une promesse ne s'annule pas : les autres opérations continuent, leurs résultats sont
+      simplement ignorés.
+    skills:
+      - promise-errors
+
+  - id: js-promesses-erreurs-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que fait par défaut Node.js (version 15 et plus) face à un rejet non géré ?
+    options:
+      - "Il arrête le processus"
+      - "Il ignore silencieusement le rejet"
+      - "Il réessaie l'opération"
+      - "Il transforme le rejet en valeur undefined"
+    answer: [0]
+    explanation: >
+      Un rejet non géré arrête le processus : chaque chaîne doit se terminer par un catch ou
+      être renvoyée à un appelant.
+    skills:
+      - promise-errors

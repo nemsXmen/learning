@@ -150,6 +150,24 @@
   ],
   "modules": [
     {
+      "slug": "async-await",
+      "title": "Async / await",
+      "order": 22,
+      "part": "asynchronous",
+      "technology": "javascript",
+      "contentPath": "javascript/async-await/module.yaml",
+      "contentVersion": "073f55b18023"
+    },
+    {
+      "slug": "asynchronisme",
+      "title": "Asynchronisme et event loop",
+      "order": 20,
+      "part": "asynchronous",
+      "technology": "javascript",
+      "contentPath": "javascript/asynchronisme/module.yaml",
+      "contentVersion": "eca578121b07"
+    },
+    {
       "slug": "boucles",
       "title": "Boucles",
       "order": 5,
@@ -292,6 +310,15 @@
       "technology": "javascript",
       "contentPath": "javascript/portee/module.yaml",
       "contentVersion": "8f62552d7a92"
+    },
+    {
+      "slug": "promises",
+      "title": "Promises",
+      "order": 21,
+      "part": "asynchronous",
+      "technology": "javascript",
+      "contentPath": "javascript/promises/module.yaml",
+      "contentVersion": "e2c27042886a"
     },
     {
       "slug": "prototypes",
@@ -1032,6 +1059,107 @@
       "technology": "javascript"
     },
     {
+      "id": "async-model",
+      "name": "Modèle asynchrone",
+      "importance": 5,
+      "requires": [
+        "callbacks",
+        "execution-context"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "event-loop",
+      "name": "Event loop, microtâches et macrotâches",
+      "importance": 5,
+      "requires": [
+        "async-model"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "timers",
+      "name": "Minuteurs",
+      "importance": 3,
+      "requires": [
+        "event-loop"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "promise-states",
+      "name": "Promesses et leurs états",
+      "importance": 5,
+      "requires": [
+        "event-loop"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "promise-creation",
+      "name": "Créer une promesse",
+      "importance": 4,
+      "requires": [
+        "promise-states"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "promise-chaining",
+      "name": "then, catch, finally et chaînage",
+      "importance": 5,
+      "requires": [
+        "promise-creation"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "promise-errors",
+      "name": "Erreurs et composition de promesses",
+      "importance": 5,
+      "requires": [
+        "promise-chaining"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "async-await",
+      "name": "async et await",
+      "importance": 5,
+      "requires": [
+        "promise-chaining"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "async-errors",
+      "name": "Erreurs avec async et await",
+      "importance": 5,
+      "requires": [
+        "async-await",
+        "promise-errors"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "async-parallel",
+      "name": "Séquentiel et parallèle",
+      "importance": 5,
+      "requires": [
+        "async-errors"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "async-patterns",
+      "name": "Combinateurs et motifs asynchrones",
+      "importance": 4,
+      "requires": [
+        "async-parallel"
+      ],
+      "technology": "javascript"
+    },
+    {
       "id": "error-types",
       "name": "Familles d'erreurs",
       "importance": 4,
@@ -1074,6 +1202,260 @@
     }
   ],
   "chapters": [
+    {
+      "id": "javascript-async-await",
+      "title": "async et await : lire l'asynchrone comme du synchrone",
+      "slug": "async-et-await",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "async-await",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-then-catch"
+      ],
+      "skills": [
+        "async-await"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/async-await/async-et-await/lesson.md",
+      "contentVersion": "219fc2ac8733",
+      "body": "\n## Objectifs\n\n- Écrire une fonction `async` et comprendre qu'elle renvoie toujours une promesse.\n- Utiliser `await` pour attendre une promesse sans bloquer le programme.\n- Réécrire une chaîne de `then` en code linéaire, et savoir ce qui se passe sous le capot.\n\n## Introduction\n\nLes promesses ont remplacé l'imbrication par des chaînes, mais une chaîne reste une suite de\ncallbacks : une variable obtenue à la première étape n'est pas visible à la troisième sans\ncontorsion. `async` et `await`, arrivés avec ES2017, permettent d'écrire le même enchaînement\nligne après ligne, avec des variables ordinaires et des `if` ordinaires. Ce n'est pas un nouveau\nmécanisme : c'est une écriture des promesses.\n\n## Concept\n\n| Écriture | Effet |\n| --- | --- |\n| `async function f() {}` | `f` renvoie **toujours** une promesse |\n| `return valeur` dans `f` | la promesse renvoyée est tenue avec `valeur` |\n| `throw erreur` dans `f` | la promesse renvoyée est rompue avec `erreur` |\n| `await promesse` | suspend **la fonction** jusqu'au règlement, puis donne la valeur ou lève l'erreur |\n| `await valeur` | une valeur ordinaire est traitée comme une promesse déjà tenue |\n\n`await` n'est utilisable que dans une fonction `async`, ou au niveau supérieur d'un module ES.\nLes fonctions fléchées et les méthodes peuvent aussi être `async`.\n\n## Exemple\n\n```js\nconst attendre = (ms, valeur) => new Promise((resolve) => setTimeout(() => resolve(valeur), ms));\nconst trouverClient = (id) => attendre(10, { id, nom: 'Ada' });\nconst trouverCommandes = (client) => attendre(10, [{ total: 30 }, { total: 12 }]);\n\n// Avec then : la variable client n'est plus visible à la dernière étape.\nfunction resumeAvecThen(id) {\n  return trouverClient(id)\n    .then((client) => trouverCommandes(client).then((commandes) => ({ client, commandes })))\n    .then(({ client, commandes }) => `${client.nom} : ${commandes.length} commandes`);\n}\n\n// Avec async / await : une lecture linéaire, des variables ordinaires.\nasync function resume(id) {\n  const client = await trouverClient(id);\n  const commandes = await trouverCommandes(client);\n  return `${client.nom} : ${commandes.length} commandes`;\n}\n\nconsole.log(resume(1) instanceof Promise); // true : une fonction async renvoie une promesse\nconsole.log(await resume(1)); // 'Ada : 2 commandes' (await au niveau supérieur d'un module)\nconsole.log(await resumeAvecThen(1)); // 'Ada : 2 commandes'\n\nasync function demonstration() {\n  console.log('B : début de la fonction');\n  await null;\n  console.log('D : reprise après await');\n}\nconsole.log('A');\ndemonstration();\nconsole.log('C : le programme continue pendant la suspension');\n```\n\n## Comment ça fonctionne\n\nUne fonction `async` enveloppe son résultat dans une promesse : `return x` équivaut à tenir la\npromesse avec `x`, et une exception non rattrapée la rompt. L'appelant reçoit donc toujours une\npromesse, même si la fonction ne contient aucun `await`.\n\nQuand l'exécution atteint `await p`, la fonction est **suspendue** : son contexte d'exécution est\nmis de côté, et elle rend la main à son appelant, qui continue immédiatement — d'où l'affichage de\n`C` avant `D`. Quand `p` se règle, la **reprise** de la fonction est programmée en microtâche.\nRien n'est bloqué : pendant l'attente, la boucle d'événements traite les autres callbacks. `await`\nsuspend une fonction, jamais le programme.\n\nSous le capot, chaque `await` correspond à un `then` : la suite de la fonction joue le rôle du\ncallback. Les règles des promesses s'appliquent donc à l'identique — reprise en microtâche, valeur\ntenue renvoyée par `await`, rupture levée comme exception. Même `await 42` provoque une suspension :\nla valeur est enveloppée dans une promesse tenue, et la suite attend une microtâche.\n\nLe gain de lisibilité est réel : les variables des étapes précédentes restent visibles, les\nconditions et les boucles s'écrivent normalement, et la pile d'appels d'une erreur ressemble à\ncelle d'un code synchrone. Le coût est une tentation : écrire des `await` les uns après les autres\nmême quand les opérations sont indépendantes, ce qui les rend séquentielles sans raison. Le\nchapitre 3 de ce module y est consacré.\n\nAu niveau supérieur d'un **module ES**, `await` est autorisé directement. Le chargement du module\nattend alors la promesse, ainsi que celui des modules qui l'importent : à réserver à\nl'initialisation, comme la lecture d'une configuration.\n\n## Erreurs fréquentes\n\n**Oublier `await`.** La variable contient une promesse, pas la valeur : `client.nom` vaut\n`undefined`.\n\n**Croire qu'une fonction `async` renvoie directement sa valeur.** Elle renvoie une promesse.\n\n**Utiliser `await` dans une fonction qui n'est pas `async`.** C'est une erreur de syntaxe.\n\n**Enchaîner des `await` pour des opérations indépendantes.** Elles s'exécutent l'une après l'autre.\n\n**Penser que `await` bloque le programme.** Seule la fonction est suspendue.\n\n## À retenir\n\n- Une fonction `async` renvoie toujours une promesse.\n- `await` suspend la fonction jusqu'au règlement, puis donne la valeur ou lève l'erreur.\n- La reprise se fait en microtâche ; le reste du programme continue pendant l'attente.\n- `async` / `await` est une écriture des promesses, avec les mêmes règles.\n- `await` au niveau supérieur n'existe que dans les modules ES.\n\n## Exercices\n\n1. Réécris cette fonction avec `async` et `await`, sans changer ce qu'elle renvoie.\n\n   ```js\n   function nomDuPremierAuteur(idArticle) {\n     return chargerArticle(idArticle)\n       .then((article) => chargerAuteur(article.auteurs[0]))\n       .then((auteur) => auteur.nom.toUpperCase());\n   }\n   ```\n\n   :::indice\n   Chaque `then` devient un `await` suivi d'une affectation.\n   :::\n\n   :::solution\n   ```js\n   const chargerArticle = (id) => Promise.resolve({ id, auteurs: [7, 8] });\n   const chargerAuteur = (id) => Promise.resolve({ id, nom: 'Grace' });\n\n   async function nomDuPremierAuteur(idArticle) {\n     const article = await chargerArticle(idArticle);\n     const auteur = await chargerAuteur(article.auteurs[0]);\n     return auteur.nom.toUpperCase();\n   }\n\n   console.log(await nomDuPremierAuteur(1)); // 'GRACE'\n   ```\n   :::\n\n2. Donne l'ordre des affichages sous la forme `1 2 3 4`, et explique la position de `3`.\n\n   ```js\n   async function tache() {\n     console.log('1');\n     await null;\n     console.log('3');\n   }\n   tache();\n   console.log('2');\n   setTimeout(() => console.log('4'), 0);\n   ```\n\n   :::indice\n   Jusqu'au premier `await`, la fonction s'exécute de façon synchrone. Sa reprise est une\n   microtâche.\n   :::\n\n   :::solution\n   L'ordre est `1 2 3 4`. La fonction affiche `1` de façon synchrone, puis se suspend sur `await` et\n   rend la main : `2` s'affiche. Sa reprise est une microtâche, exécutée dès la fin du code\n   synchrone, avant la macrotâche du minuteur : `3`, puis `4`.\n   :::\n\n3. Écris une fonction `async` `premierDisponible(ids, estDisponible)` qui teste les identifiants un\n   par un, dans l'ordre, et renvoie le premier disponible, ou `null`. `estDisponible(id)` renvoie une\n   promesse de booléen.\n\n   :::indice\n   Une boucle `for...of` avec `await` à l'intérieur attend chaque test avant le suivant, et `return`\n   interrompt la boucle.\n   :::\n\n   :::solution\n   ```js\n   async function premierDisponible(ids, estDisponible) {\n     for (const id of ids) {\n       if (await estDisponible(id)) {\n         return id;\n       }\n     }\n     return null;\n   }\n\n   const testes = [];\n   const estDisponible = async (id) => {\n     testes.push(id);\n     return id === 'b';\n   };\n\n   console.log(await premierDisponible(['a', 'b', 'c'], estDisponible), testes); // 'b' ['a', 'b']\n   ```\n\n   La boucle s'arrête dès le résultat trouvé : `c` n'est jamais testé. C'est un cas où l'exécution\n   séquentielle est voulue.\n   :::\n\n## Questions d'entretien\n\n- Que renvoie une fonction `async` ?\n\n  :::indice\n  Même si elle contient `return 42` et aucun `await`.\n  :::\n\n  :::reponse\n  Toujours une promesse. Une valeur renvoyée tient cette promesse, une exception non rattrapée la\n  rompt, et une promesse renvoyée est adoptée. L'appelant doit donc utiliser `await` ou `then` pour\n  obtenir le résultat, même si la fonction ne fait rien d'asynchrone.\n  :::\n\n- `await` bloque-t-il le programme ?\n\n  :::indice\n  Qu'est-ce qui est suspendu : la fonction, ou la boucle d'événements ?\n  :::\n\n  :::reponse\n  Non. `await` suspend uniquement la fonction `async` en cours : elle rend la main à son appelant,\n  et la boucle d'événements continue de traiter minuteurs, événements et autres callbacks. Quand la\n  promesse se règle, la reprise de la fonction est programmée en microtâche. Un calcul synchrone\n  long, lui, bloque tout, qu'il soit dans une fonction `async` ou non.\n  :::\n\n- Quel rapport entre `async` / `await` et les promesses ?\n\n  :::indice\n  À quoi correspond chaque `await` ?\n  :::\n\n  :::reponse\n  C'est une écriture des promesses, pas un mécanisme différent. Une fonction `async` renvoie une\n  promesse, et chaque `await` équivaut à attacher la suite de la fonction comme callback de `then`.\n  Les règles sont donc les mêmes : reprise en microtâche, rejet transformé en exception, possibilité\n  de mélanger les deux styles. On peut attendre n'importe quelle promesse, et appeler `then` sur le\n  résultat d'une fonction `async`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-combinateurs",
+      "title": "allSettled, race, any et les motifs asynchrones professionnels",
+      "slug": "combinateurs-et-motifs",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "async-await",
+      "order": 4,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-parallele"
+      ],
+      "skills": [
+        "async-patterns"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/async-await/combinateurs-et-motifs/lesson.md",
+      "contentVersion": "99e5f3a91327",
+      "body": "\n## Objectifs\n\n- Choisir le bon combinateur selon qu'on veut tous les résultats, le premier, ou le premier succès.\n- Imposer un délai maximal à une opération avec `Promise.race`.\n- Écrire une nouvelle tentative avec attente croissante, et limiter le nombre d'opérations simultanées.\n\n## Introduction\n\n`Promise.all` couvre le cas où tout doit réussir. Les applications réelles ont d'autres exigences :\nenvoyer des notifications par plusieurs canaux et rapporter chaque échec, interroger deux serveurs\nmiroirs et garder le premier qui répond, abandonner une requête trop lente, réessayer une opération\ninstable sans saturer le serveur. Ce chapitre rassemble les combinateurs restants et les motifs\nqu'on retrouve dans tout code de production.\n\n## Concept\n\n| Combinateur | Tenu quand | Rompu quand | Usage typique |\n| --- | --- | --- | --- |\n| `Promise.all` | toutes sont tenues | la première est rompue | tout est nécessaire |\n| `Promise.allSettled` | toutes sont réglées | jamais | rapporter chaque succès et chaque échec |\n| `Promise.race` | la première réglée est tenue | la première réglée est rompue | délai maximal |\n| `Promise.any` | la première est tenue | toutes sont rompues (`AggregateError`) | premier succès parmi des sources équivalentes |\n\n`allSettled` renvoie un tableau d'objets `{ status: 'fulfilled', value }` ou\n`{ status: 'rejected', reason }`, dans l'ordre des entrées.\n\n## Exemple\n\n```js\nconst operation = (nom, ms, echoue = false) =>\n  new Promise((resolve, reject) =>\n    setTimeout(() => (echoue ? reject(new Error(`${nom} a échoué`)) : resolve(nom)), ms),\n  );\n\nconst bilans = await Promise.allSettled([\n  operation('email', 10),\n  operation('sms', 20, true),\n  operation('push', 5),\n]);\nconsole.log(bilans.map((b) => (b.status === 'fulfilled' ? b.value : `échec : ${b.reason.message}`)));\n// ['email', 'échec : sms a échoué', 'push']\n\nconsole.log(await Promise.race([operation('lent', 50), operation('rapide', 10)])); // 'rapide'\nconsole.log(await Promise.any([operation('miroir A', 30, true), operation('miroir B', 20)])); // 'miroir B'\n\nfunction avecDelaiMax(promesse, ms) {\n  let minuteur;\n  const limite = new Promise((_, reject) => {\n    minuteur = setTimeout(() => reject(new Error(`Délai de ${ms} ms dépassé`)), ms);\n  });\n  return Promise.race([promesse, limite]).finally(() => clearTimeout(minuteur));\n}\n\nconsole.log(await avecDelaiMax(operation('rapide', 10), 100)); // 'rapide'\nconsole.log(await avecDelaiMax(operation('lente', 200), 50).catch((e) => e.message));\n// 'Délai de 50 ms dépassé'\n```\n\n## Comment ça fonctionne\n\n`allSettled` ne se rompt jamais : il attend que chaque promesse soit réglée et décrit chaque issue.\nC'est l'outil des opérations **indépendantes dont on veut un bilan** — envoyer une notification par\ntrois canaux et savoir lesquels ont échoué, sans qu'un échec empêche de connaître les autres résultats.\n\n`race` se règle comme la **première** promesse réglée, qu'elle soit tenue ou rompue. Son usage\nprincipal est le délai maximal : on met l'opération en course avec une promesse qui se rompt après\nun délai. Deux détails comptent. Il faut **annuler le minuteur** une fois la course terminée, sinon il\nreste actif et retient son callback — d'où le `finally`. Et `race` ne stoppe pas l'opération perdante :\nune requête trop lente continue de s'exécuter en arrière-plan. Pour l'interrompre réellement, on passe\nun `AbortSignal`, comme `AbortSignal.timeout(ms)` avec `fetch`, présenté dans la partie HTTP.\n\n`any` ignore les ruptures tant qu'il reste une chance de succès, et se tient avec la **première valeur\nréussie**. Il ne se rompt que si toutes échouent, avec une `AggregateError` dont la propriété `errors`\nliste les raisons. C'est le bon choix pour des sources équivalentes, comme des serveurs miroirs.\n\nDeux motifs complètent la boîte à outils. La **nouvelle tentative avec attente croissante** relance une\nopération qui a échoué, en doublant le délai à chaque essai — 100 ms, 200 ms, 400 ms — pour ne pas\nbombarder un service déjà en difficulté ; on ne réessaie que les erreurs passagères, jamais une requête\ninvalide. La **limitation de concurrence** exécute une longue liste de tâches avec, au plus, `n`\nopérations en cours : un petit nombre de « travailleurs » prennent chacun la tâche suivante dès qu'ils\nont fini la leur.\n\nTous ces motifs reposent sur la même idée : une promesse représente une issue, et les combinateurs\ndécident laquelle attendre. L'annulation, elle, demande un mécanisme explicite.\n\n## Erreurs fréquentes\n\n**Utiliser `Promise.all` quand on veut un bilan.** Il s'arrête au premier échec : prends `allSettled`.\n\n**Oublier d'annuler le minuteur d'un délai maximal.** Il reste actif après la course.\n\n**Croire que `race` interrompt l'opération perdante.** Elle continue : utilise un `AbortSignal`.\n\n**Réessayer sans attente croissante.** Les tentatives rapprochées aggravent la surcharge.\n\n**Réessayer toutes les erreurs.** Une requête invalide échouera toujours.\n\n## À retenir\n\n- `all` : tout doit réussir. `allSettled` : le bilan de chacune. `race` : la première réglée.\n  `any` : le premier succès.\n- Délai maximal : `race` avec une promesse qui se rompt, puis `clearTimeout`.\n- Aucun combinateur n'annule le travail en cours : il faut un `AbortSignal`.\n- Nouvelle tentative : délai croissant, erreurs passagères seulement.\n- Limiter la concurrence : `n` travailleurs qui piochent dans une file de tâches.\n\n## Exercices\n\n1. Envoie un message par trois canaux indépendants, puis renvoie\n   `{ reussis: [...], echecs: [...] }` avec le nom des canaux, sans qu'un échec interrompe les autres.\n\n   :::indice\n   `allSettled` garde l'ordre des entrées : associe chaque bilan au canal de même index.\n   :::\n\n   :::solution\n   ```js\n   const envoyer = (canal, echoue) =>\n     new Promise((resolve, reject) => setTimeout(() => (echoue ? reject(new Error(canal)) : resolve(canal)), 10));\n\n   async function diffuser(canaux) {\n     const bilans = await Promise.allSettled(canaux.map(({ nom, echoue }) => envoyer(nom, echoue)));\n     const reussis = [];\n     const echecs = [];\n     bilans.forEach((bilan, index) => {\n       (bilan.status === 'fulfilled' ? reussis : echecs).push(canaux[index].nom);\n     });\n     return { reussis, echecs };\n   }\n\n   console.log(await diffuser([{ nom: 'email' }, { nom: 'sms', echoue: true }, { nom: 'push' }]));\n   // { reussis: ['email', 'push'], echecs: ['sms'] }\n   ```\n   :::\n\n2. Écris `reessayer(operation, { tentatives, delaiInitial })` : elle appelle `operation()`, et en cas\n   d'échec attend `delaiInitial`, puis le double, et ainsi de suite, jusqu'à `tentatives` essais au\n   total. Elle relève la dernière erreur si tout échoue.\n\n   :::indice\n   Une boucle `for` avec un `try` / `catch` ; le délai d'attente vaut `delaiInitial * 2 ** index`.\n   :::\n\n   :::solution\n   ```js\n   const attendre = (ms) => new Promise((resolve) => setTimeout(resolve, ms));\n\n   async function reessayer(operation, { tentatives = 3, delaiInitial = 100 } = {}) {\n     let derniereErreur;\n     for (let index = 0; index < tentatives; index++) {\n       try {\n         return await operation();\n       } catch (erreur) {\n         derniereErreur = erreur;\n         if (index < tentatives - 1) {\n           await attendre(delaiInitial * 2 ** index);\n         }\n       }\n     }\n     throw derniereErreur;\n   }\n\n   let appels = 0;\n   const instable = async () => {\n     appels += 1;\n     if (appels < 3) throw new Error('service indisponible');\n     return 'réponse';\n   };\n\n   console.log(await reessayer(instable, { tentatives: 4, delaiInitial: 10 }), appels); // 'réponse' 3\n   ```\n\n   Attentes successives : 10 ms, puis 20 ms. En production, on ajoute un peu d'aléa au délai pour que\n   de nombreux clients ne réessaient pas tous au même instant.\n   :::\n\n3. Écris `executerAvecLimite(taches, limite)` : `taches` est un tableau de fonctions qui renvoient une\n   promesse. Au plus `limite` tâches doivent être en cours à la fois, et le résultat doit être le\n   tableau des valeurs dans l'ordre des tâches.\n\n   :::indice\n   Crée `limite` travailleurs asynchrones. Chacun prend l'index suivant dans une variable partagée, exécute\n   la tâche, range le résultat, et recommence tant qu'il reste des tâches.\n   :::\n\n   :::solution\n   ```js\n   async function executerAvecLimite(taches, limite) {\n     const resultats = new Array(taches.length);\n     let prochain = 0;\n\n     async function travailleur() {\n       while (prochain < taches.length) {\n         const index = prochain++;\n         resultats[index] = await taches[index]();\n       }\n     }\n\n     await Promise.all(Array.from({ length: Math.min(limite, taches.length) }, travailleur));\n     return resultats;\n   }\n\n   let enCours = 0;\n   let maximum = 0;\n   const tache = (valeur) => async () => {\n     enCours += 1;\n     maximum = Math.max(maximum, enCours);\n     await new Promise((resolve) => setTimeout(resolve, 10));\n     enCours -= 1;\n     return valeur;\n   };\n\n   const valeurs = await executerAvecLimite([1, 2, 3, 4, 5, 6].map(tache), 2);\n   console.log(valeurs, maximum); // [1, 2, 3, 4, 5, 6] 2\n   ```\n\n   Il n'y a pas de conflit sur `prochain++` : l'incrément est synchrone, et un seul travailleur\n   s'exécute à la fois entre deux `await`.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `Promise.all`, `allSettled`, `race` et `any` ?\n\n  :::indice\n  Pour chacun : quand est-il tenu, quand est-il rompu ?\n  :::\n\n  :::reponse\n  `all` est tenu quand toutes sont tenues et rompu à la première rupture. `allSettled` attend que toutes\n  soient réglées et n'est jamais rompu : il décrit chaque issue. `race` se règle comme la première\n  promesse réglée, succès ou échec. `any` est tenu par la première réussite et n'est rompu, avec une\n  `AggregateError`, que si toutes échouent. Aucun d'eux n'annule les opérations qui restent en cours.\n  :::\n\n- Comment imposer un délai maximal à une opération asynchrone ?\n\n  :::indice\n  Une course entre deux promesses, et un nettoyage.\n  :::\n\n  :::reponse\n  On met l'opération en course, avec `Promise.race`, contre une promesse qui se rompt après le délai, et\n  l'on annule le minuteur dans un `finally` pour ne pas le laisser actif. Cette technique libère\n  l'appelant mais n'arrête pas l'opération, qui continue en arrière-plan. Pour interrompre réellement une\n  requête, on lui passe un `AbortSignal`, par exemple `AbortSignal.timeout(ms)` avec `fetch`.\n  :::\n\n- Pourquoi réessayer avec une attente croissante plutôt qu'immédiatement ?\n\n  :::indice\n  Pense à un service déjà surchargé, et à des milliers de clients.\n  :::\n\n  :::reponse\n  Parce qu'un échec vient souvent d'une surcharge ou d'une coupure passagère : réessayer immédiatement\n  ajoute de la charge au pire moment et échoue pour la même raison. Doubler l'attente à chaque essai\n  laisse au service le temps de se rétablir, et ajouter un peu d'aléa évite que tous les clients\n  réessaient en même temps. On limite le nombre d'essais, et on ne réessaie que les erreurs\n  passagères : une requête invalide échouera toujours.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-async-erreurs",
+      "title": "Gérer les erreurs avec try, catch et finally",
+      "slug": "erreurs-async",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "async-await",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-async-await",
+        "javascript-promesses-erreurs"
+      ],
+      "skills": [
+        "async-errors"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/async-await/erreurs-async/lesson.md",
+      "contentVersion": "657772165807",
+      "body": "\n## Objectifs\n\n- Rattraper une promesse rompue avec `try` / `catch` autour d'un `await`.\n- Éviter les deux pièges classiques : l'`await` oublié et le `return` sans `await` dans un `try`.\n- Décider à quel niveau une erreur asynchrone doit être traitée.\n\n## Introduction\n\nAvec `await`, une promesse rompue **lève une exception** à l'endroit de l'attente. On retrouve donc\nl'outil le plus familier pour gérer les erreurs : `try`, `catch`, `finally`. Mais la ressemblance\navec le code synchrone a ses limites. Une promesse qu'on n'attend pas échappe au `try` qui\nl'entoure, et ces erreurs silencieuses sont parmi les plus difficiles à diagnostiquer.\n\n## Concept\n\n| Écriture | Ce qui est rattrapé |\n| --- | --- |\n| `try { await p; } catch (e) {}` | la rupture de `p` |\n| `try { p; } catch (e) {}` sans `await` | rien : la rupture arrive après la fin du `try` |\n| `try { return await p; } catch (e) {}` | la rupture de `p` |\n| `try { return p; } catch (e) {}` | rien : la promesse sort de la fonction avant d'être réglée |\n| `finally { … }` | s'exécute après le succès ou l'échec de l'`await` |\n\nUne fonction `async` qui ne rattrape pas une erreur la **transmet** : la promesse qu'elle renvoie\nest rompue, et c'est à son appelant de la gérer.\n\n## Exemple\n\n```js\nconst charger = (nom, echoue) =>\n  new Promise((resolve, reject) =>\n    setTimeout(() => (echoue ? reject(new Error(`${nom} indisponible`)) : resolve(`${nom} chargé`)), 10),\n  );\n\nasync function afficherProfil(echoue) {\n  const etat = { chargement: true };\n  try {\n    const profil = await charger('profil', echoue);\n    return profil;\n  } catch (erreur) {\n    return `affichage de secours (${erreur.message})`;\n  } finally {\n    etat.chargement = false; // exécuté dans les deux cas\n    console.log('chargement terminé :', !etat.chargement);\n  }\n}\n\nconsole.log(await afficherProfil(false)); // 'profil chargé'\nconsole.log(await afficherProfil(true)); // 'affichage de secours (profil indisponible)'\n\nasync function sansAwait() {\n  try {\n    return charger('stock', true); // la promesse sort du try avant d'être rompue\n  } catch {\n    return 'rattrapé';\n  }\n}\n\nasync function avecAwait() {\n  try {\n    return await charger('stock', true); // la rupture est levée ici, dans le try\n  } catch {\n    return 'rattrapé';\n  }\n}\n\nconsole.log(await avecAwait()); // 'rattrapé'\nconsole.log(await sansAwait().catch((erreur) => `échappé : ${erreur.message}`)); // 'échappé : stock indisponible'\n```\n\n## Comment ça fonctionne\n\n`await p` sur une promesse rompue **lève** la raison du rejet à cet endroit précis, comme un `throw`.\nLe `try` englobant la rattrape, et le `finally` s'exécute ensuite, que l'attente ait réussi ou non.\nUn seul bloc peut ainsi couvrir plusieurs `await` successifs.\n\nUn `try` ne protège que ce qui échoue **pendant** son exécution. Sans `await`, une promesse rompue\nne lève rien dans le bloc : elle se règle plus tard, après la sortie du `try`. C'est le cas de\n`return charger(...)` dans `sansAwait` : la fonction renvoie la promesse immédiatement, le `try` se\ntermine, et la rupture remonte à l'appelant sans passer par le `catch`. Écrire `return await` dans un\n`try` corrige ce comportement. Hors d'un `try`, `return p` et `return await p` sont équivalents.\n\nL'**`await` oublié** produit une promesse **flottante** : personne ne l'attend et personne ne gère son\néchec. Le code suivant s'exécute trop tôt, et si la promesse est rompue, elle devient un rejet non\ngéré — qui arrête un processus Node.js. Les outils de lint signalent ce cas, avec des règles comme\n`no-floating-promises` de TypeScript ESLint.\n\nLa question la plus importante reste **où** gérer une erreur. Un `catch` n'a sa place que là où l'on\npeut faire quelque chose d'utile : afficher une solution de repli, réessayer, relever l'erreur avec\nun contexte. Rattraper une erreur pour l'afficher dans la console puis continuer comme si de rien\nn'était produit un état incohérent. Dans les autres cas, on laisse l'erreur remonter jusqu'à la\ncouche qui sait la traiter — le gestionnaire de requêtes d'un serveur, le composant qui affiche un\nmessage à l'utilisateur.\n\nEnfin, les méthodes de tableau comme `forEach` n'attendent pas un callback `async` : les promesses\nqu'il renvoie sont ignorées, et leurs erreurs ne remontent nulle part. Le chapitre suivant montre les\nbonnes écritures.\n\n## Erreurs fréquentes\n\n**Oublier `await` dans un `try`.** L'erreur n'est pas rattrapée et devient un rejet non géré.\n\n**Écrire `return promesse` dans un `try`.** Utilise `return await promesse` pour que le `catch` la voie.\n\n**Rattraper une erreur sans rien en faire.** Soit tu la traites, soit tu la laisses remonter.\n\n**Passer un callback `async` à `forEach`.** Rien n'est attendu, et les erreurs sont perdues.\n\n**Envelopper chaque `await` dans son propre `try`.** Un bloc par opération logique suffit.\n\n## À retenir\n\n- `await` sur une promesse rompue lève l'erreur, rattrapable par `try` / `catch`.\n- Un `try` ne voit que ce qui échoue pendant son exécution : il faut `await`.\n- Dans un `try`, `return await p`, et non `return p`.\n- Une promesse flottante, jamais attendue, perd son erreur.\n- On gère une erreur là où l'on peut agir ; sinon on la laisse remonter.\n\n## Exercices\n\n1. Écris une fonction `async` `chargerParametres(obtenirTexte)` qui attend le texte renvoyé par\n   `obtenirTexte()`, l'analyse en JSON, et renvoie `{ theme: 'clair' }` par défaut si le JSON est\n   invalide ou si `obtenirTexte` échoue.\n\n   :::indice\n   Un seul `try` peut couvrir l'attente et l'analyse : `JSON.parse` lève une `SyntaxError`, une\n   promesse rompue lève sa raison.\n   :::\n\n   :::solution\n   ```js\n   const PAR_DEFAUT = { theme: 'clair' };\n\n   async function chargerParametres(obtenirTexte) {\n     try {\n       const texte = await obtenirTexte();\n       return JSON.parse(texte);\n     } catch {\n       return PAR_DEFAUT;\n     }\n   }\n\n   console.log(await chargerParametres(async () => '{\"theme\":\"sombre\"}')); // { theme: 'sombre' }\n   console.log(await chargerParametres(async () => '{invalide')); // { theme: 'clair' }\n   console.log(await chargerParametres(async () => { throw new Error('réseau'); })); // { theme: 'clair' }\n   ```\n   :::\n\n2. Ce code affiche `Commande enregistrée` même quand l'enregistrement échoue, puis le processus\n   s'arrête sur un rejet non géré. Trouve le défaut et corrige.\n\n   ```js\n   async function valider(commande) {\n     try {\n       enregistrer(commande);\n       console.log('Commande enregistrée');\n     } catch (erreur) {\n       console.log('Échec :', erreur.message);\n     }\n   }\n   ```\n\n   :::indice\n   `enregistrer` renvoie une promesse. Le `try` peut-il voir une rupture qui arrive après sa fin ?\n   :::\n\n   :::solution\n   Il manque `await` : `enregistrer` renvoie une promesse flottante, le message de succès s'affiche\n   immédiatement, et la rupture arrive après la sortie du `try`, sans gestionnaire.\n\n   ```js\n   const enregistrer = async (commande) => {\n     if (!commande.articles.length) throw new Error('commande vide');\n   };\n\n   async function valider(commande) {\n     try {\n       await enregistrer(commande);\n       console.log('Commande enregistrée');\n     } catch (erreur) {\n       console.log('Échec :', erreur.message);\n     }\n   }\n\n   await valider({ articles: [] }); // 'Échec : commande vide'\n   await valider({ articles: ['clavier'] }); // 'Commande enregistrée'\n   ```\n   :::\n\n3. `chargerTout` doit relever une erreur explicite qui garde la cause d'origine, et toujours fermer la\n   connexion, en cas de succès comme d'échec.\n\n   ```js\n   async function chargerTout(connexion) {\n     const donnees = await connexion.lire();\n     connexion.fermer();\n     return donnees;\n   }\n   ```\n\n   :::indice\n   `finally` pour la fermeture, et `throw new Error(message, { cause })` dans le `catch`.\n   :::\n\n   :::solution\n   ```js\n   async function chargerTout(connexion) {\n     try {\n       return await connexion.lire();\n     } catch (erreur) {\n       throw new Error('Chargement des données impossible', { cause: erreur });\n     } finally {\n       connexion.fermer();\n     }\n   }\n\n   const journal = [];\n   const connexion = (echoue) => ({\n     lire: async () => { if (echoue) throw new Error('délai dépassé'); return ['a']; },\n     fermer: () => journal.push('fermée'),\n   });\n\n   console.log(await chargerTout(connexion(false))); // ['a']\n   await chargerTout(connexion(true)).catch((e) => console.log(e.message, '|', e.cause.message));\n   // 'Chargement des données impossible | délai dépassé'\n   console.log(journal); // ['fermée', 'fermée']\n   ```\n\n   Sans `return await`, le `catch` ne verrait pas l'échec de `lire`, et la fermeture aurait lieu avant\n   la fin de la lecture.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `return promesse` dans un `try` est-il différent de `return await promesse` ?\n\n  :::indice\n  À quel moment la promesse se règle-t-elle, par rapport à la sortie du `try` ?\n  :::\n\n  :::reponse\n  Avec `return promesse`, la fonction renvoie la promesse encore en attente et quitte le `try`\n  immédiatement ; si la promesse est rompue ensuite, le `catch` et le `finally` de la fonction ne le\n  voient pas, et la rupture remonte à l'appelant. Avec `return await promesse`, la fonction attend le\n  règlement à l'intérieur du `try` : une rupture y est levée et rattrapée, et le `finally` s'exécute\n  après la fin réelle de l'opération.\n  :::\n\n- Qu'est-ce qu'une promesse flottante, et pourquoi est-ce dangereux ?\n\n  :::indice\n  Qui attend cette promesse, et qui gère son échec ?\n  :::\n\n  :::reponse\n  C'est une promesse créée sans être attendue ni renvoyée, souvent à cause d'un `await` oublié. Le\n  code suivant s'exécute avant la fin de l'opération, et si elle échoue, personne ne gère l'erreur :\n  elle devient un rejet non géré, qui arrête un processus Node.js. Les linters la détectent avec des\n  règles comme `no-floating-promises`. Quand on lance volontairement une tâche sans l'attendre, on y\n  attache au moins un `catch`.\n  :::\n\n- À quel niveau faut-il gérer une erreur asynchrone ?\n\n  :::indice\n  Qui peut réellement faire quelque chose d'utile avec l'erreur ?\n  :::\n\n  :::reponse\n  Au niveau qui peut agir : proposer une solution de repli, réessayer, informer l'utilisateur, ou\n  répondre avec le bon code HTTP. Les couches intermédiaires laissent l'erreur remonter, en la\n  relevant éventuellement avec un contexte et sa cause. Rattraper une erreur pour la journaliser puis\n  continuer comme si tout allait bien laisse le programme dans un état incohérent, et masque la vraie\n  cause au moment du diagnostic.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-parallele",
+      "title": "Séquentiel contre parallèle, et Promise.all",
+      "slug": "sequentiel-et-parallele",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "async-await",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-async-erreurs"
+      ],
+      "skills": [
+        "async-parallel"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/async-await/sequentiel-et-parallele/lesson.md",
+      "contentVersion": "96ec4cb38090",
+      "body": "\n## Objectifs\n\n- Repérer les `await` successifs qui rendent séquentielles des opérations indépendantes.\n- Lancer des opérations ensemble et attendre leurs résultats avec `Promise.all`.\n- Traiter un tableau en parallèle avec `map`, ou en séquence avec `for...of`, selon le besoin.\n\n## Introduction\n\n`async` / `await` rend le code si lisible qu'on en oublie ce qu'il fait. Trois `await` à la suite\nattendent la fin de chaque opération avant de lancer la suivante : trois requêtes de 100 ms prennent\nalors 300 ms, alors qu'elles pourraient en prendre 100. C'est le défaut de performance le plus courant\ndu JavaScript asynchrone, et l'un des plus simples à corriger — à condition de savoir quand les\nopérations sont vraiment indépendantes.\n\n## Concept\n\n| Situation | Écriture | Durée pour trois opérations de 100 ms |\n| --- | --- | --- |\n| Chaque étape dépend de la précédente | `await` successifs | environ 300 ms, et c'est nécessaire |\n| Opérations indépendantes | `await Promise.all([a(), b(), c()])` | environ 100 ms |\n| Tableau traité en parallèle | `await Promise.all(liste.map(async (x) => …))` | la durée de la plus longue |\n| Tableau traité dans l'ordre | `for (const x of liste) await traiter(x)` | la somme des durées |\n\nUne opération démarre **au moment où la fonction qui la lance est appelée**, pas au moment de\nl'`await`. Paralléliser, c'est donc appeler toutes les fonctions d'abord, puis attendre les résultats.\n\n## Exemple\n\n```js\nconst attendre = (ms, valeur) => new Promise((resolve) => setTimeout(() => resolve(valeur), ms));\nconst chargerProfil = () => attendre(100, 'profil');\nconst chargerNotifications = () => attendre(100, 'notifications');\nconst chargerPreferences = () => attendre(100, 'préférences');\nconst arrondi = (debut) => Math.round((Date.now() - debut) / 100) * 100;\n\nasync function sequentiel() {\n  const debut = Date.now();\n  const profil = await chargerProfil();\n  const notifications = await chargerNotifications(); // ne démarre qu'après le profil\n  const preferences = await chargerPreferences();\n  return { duree: arrondi(debut), valeurs: [profil, notifications, preferences] };\n}\n\nasync function parallele() {\n  const debut = Date.now();\n  const [profil, notifications, preferences] = await Promise.all([\n    chargerProfil(),\n    chargerNotifications(),\n    chargerPreferences(),\n  ]);\n  return { duree: arrondi(debut), valeurs: [profil, notifications, preferences] };\n}\n\nconsole.log((await sequentiel()).duree); // 300\nconsole.log((await parallele()).duree); // 100\n\nconst ids = [1, 2, 3];\nconst utilisateurs = await Promise.all(ids.map(async (id) => attendre(50, { id })));\nconsole.log(utilisateurs.map((u) => u.id)); // [1, 2, 3] : dans l'ordre des ids\n```\n\n## Comment ça fonctionne\n\nAppeler `chargerProfil()` **démarre** la requête et renvoie une promesse ; `await` ne fait qu'attendre\nson issue. Dans la version séquentielle, chaque appel est placé après l'`await` précédent : la\ndeuxième requête ne peut pas démarrer avant la fin de la première. Dans la version parallèle, les\ntrois appels ont lieu dans le tableau passé à `Promise.all`, donc au même moment, et l'`await`\nattend que les trois soient tenues. Le parallélisme vient de l'environnement, qui gère plusieurs\nattentes à la fois ; le fil JavaScript, lui, reste unique.\n\nOn pourrait aussi lancer les opérations dans des variables, puis les attendre une à une :\n`const a = chargerProfil(); const b = chargerNotifications(); return [await a, await b];`. Les\nopérations sont bien simultanées, mais ce motif a un défaut sérieux : si `b` est rompue pendant qu'on\nattend `a`, aucun gestionnaire n'est encore attaché à `b`. Node.js signale alors un rejet non géré, qui\npeut arrêter le processus, même si un `try` finit par rattraper l'erreur. `Promise.all` attache ses\ngestionnaires à toutes les promesses immédiatement : c'est l'écriture à préférer.\n\nSur un tableau, `map` avec un callback `async` produit un tableau de promesses, que `Promise.all`\nattend. `forEach`, en revanche, ignore les promesses renvoyées : le code qui suit s'exécute avant la\nfin du travail, et les erreurs sont perdues. Quand l'ordre compte, ou que chaque élément doit attendre\nle précédent, une boucle `for...of` avec `await` est l'écriture correcte.\n\nLe parallélisme a une limite : lancer dix mille requêtes à la fois sature le serveur, la mémoire ou\nles quotas d'une API. `Promise.all` n'impose aucune borne. Le chapitre suivant montre comment limiter\nle nombre d'opérations simultanées.\n\nEnfin, `Promise.all` échoue dès la première rupture. Si l'on a besoin des résultats qui ont réussi\nmalgré l'échec d'une partie, c'est `Promise.allSettled` qu'il faut.\n\n## Erreurs fréquentes\n\n**Enchaîner des `await` pour des opérations indépendantes.** Lance-les ensemble avec `Promise.all`.\n\n**Passer un callback `async` à `forEach`.** Rien n'est attendu : utilise `map` et `Promise.all`, ou\n`for...of`.\n\n**Lancer puis attendre une à une.** Une rupture précoce devient un rejet non géré.\n\n**Paralléliser des étapes dépendantes.** Si une étape a besoin du résultat d'une autre, elle doit\nl'attendre.\n\n**Lancer des milliers d'opérations à la fois.** Limite la concurrence.\n\n## À retenir\n\n- Une opération démarre à l'appel de sa fonction ; `await` n'en attend que l'issue.\n- Opérations indépendantes : `await Promise.all([...])`.\n- Tableau en parallèle : `Promise.all(liste.map(async …))` ; dans l'ordre : `for...of` avec `await`.\n- Jamais de callback `async` dans `forEach`.\n- Le parallélisme sans limite sature les ressources : borne-le.\n\n## Exercices\n\n1. Cette fonction met environ 300 ms. Réécris-la pour qu'elle en mette environ 100, sans changer ce\n   qu'elle renvoie.\n\n   ```js\n   async function tableauDeBord() {\n     const ventes = await chargerVentes(); // 100 ms\n     const stock = await chargerStock(); // 100 ms\n     const avis = await chargerAvis(); // 100 ms\n     return { ventes, stock, avis };\n   }\n   ```\n\n   :::indice\n   Aucune de ces fonctions n'utilise le résultat d'une autre.\n   :::\n\n   :::solution\n   ```js\n   const attendre = (ms, v) => new Promise((resolve) => setTimeout(() => resolve(v), ms));\n   const chargerVentes = () => attendre(100, 42);\n   const chargerStock = () => attendre(100, 7);\n   const chargerAvis = () => attendre(100, 4.5);\n\n   async function tableauDeBord() {\n     const [ventes, stock, avis] = await Promise.all([chargerVentes(), chargerStock(), chargerAvis()]);\n     return { ventes, stock, avis };\n   }\n\n   const debut = Date.now();\n   console.log(await tableauDeBord(), Date.now() - debut < 200); // { ventes: 42, stock: 7, avis: 4.5 } true\n   ```\n   :::\n\n2. Ce code affiche `0 utilisateurs activés` alors que les trois activations réussissent. Explique pourquoi\n   et corrige.\n\n   ```js\n   async function activerTous(ids) {\n     let actives = 0;\n     ids.forEach(async (id) => {\n       await activer(id);\n       actives += 1;\n     });\n     console.log(`${actives} utilisateurs activés`);\n   }\n   ```\n\n   :::indice\n   `forEach` attend-il les promesses renvoyées par son callback ?\n   :::\n\n   :::solution\n   `forEach` lance les trois callbacks, ignore les promesses qu'ils renvoient et rend la main\n   immédiatement : le `console.log` s'exécute avant la moindre activation.\n\n   ```js\n   const activer = (id) => new Promise((resolve) => setTimeout(() => resolve(id), 10));\n\n   async function activerTous(ids) {\n     const resultats = await Promise.all(ids.map((id) => activer(id)));\n     console.log(`${resultats.length} utilisateurs activés`);\n   }\n\n   await activerTous([1, 2, 3]); // '3 utilisateurs activés'\n   ```\n   :::\n\n3. Des mouvements de stock doivent être appliqués **dans l'ordre**, chacun après la fin du précédent,\n   car un retrait ne peut dépasser le stock disponible. Écris `appliquer(mouvements, enregistrer)`.\n\n   :::indice\n   Ici la séquence est voulue : une boucle `for...of` avec `await`.\n   :::\n\n   :::solution\n   ```js\n   async function appliquer(mouvements, enregistrer) {\n     let stock = 0;\n     for (const mouvement of mouvements) {\n       if (stock + mouvement < 0) {\n         throw new Error(`Mouvement ${mouvement} refusé : stock ${stock}`);\n       }\n       stock += mouvement;\n       await enregistrer(stock);\n     }\n     return stock;\n   }\n\n   const historique = [];\n   const enregistrer = (valeur) => new Promise((resolve) => setTimeout(() => resolve(historique.push(valeur)), 5));\n\n   console.log(await appliquer([10, -3, 5], enregistrer), historique); // 12 [10, 7, 12]\n   await appliquer([2, -5], enregistrer).catch((e) => console.log(e.message)); // 'Mouvement -5 refusé : stock 2'\n   ```\n\n   En parallèle, l'ordre des enregistrements ne serait pas garanti, et la règle métier n'aurait plus de\n   sens.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi trois `await` successifs peuvent-ils être un problème de performance ?\n\n  :::indice\n  Quand chaque opération démarre-t-elle ?\n  :::\n\n  :::reponse\n  Parce que chaque opération n'est lancée qu'après la fin de la précédente : trois requêtes\n  indépendantes de 100 ms prennent 300 ms au lieu de 100. Ce n'est un problème que si les opérations ne\n  dépendent pas les unes des autres. Dans ce cas, on les lance ensemble et on attend leurs résultats\n  avec `Promise.all`, qui renvoie les valeurs dans l'ordre fourni.\n  :::\n\n- Comment traiter un tableau d'éléments de façon asynchrone ?\n\n  :::indice\n  Deux écritures selon que l'ordre compte, et une à éviter.\n  :::\n\n  :::reponse\n  En parallèle, avec `await Promise.all(liste.map(async (element) => …))`, qui lance tout et attend\n  l'ensemble. En séquence, quand l'ordre compte ou que chaque étape dépend de la précédente, avec une\n  boucle `for...of` contenant un `await`. Jamais avec `forEach`, qui n'attend pas les promesses de son\n  callback : le code suivant s'exécute trop tôt et les erreurs sont perdues.\n  :::\n\n- Pourquoi préférer `Promise.all` à « lancer puis attendre une à une » ?\n\n  :::indice\n  Que se passe-t-il si la seconde promesse est rompue pendant qu'on attend la première ?\n  :::\n\n  :::reponse\n  Les deux écritures lancent les opérations en même temps, mais attendre une à une laisse les autres\n  promesses sans gestionnaire pendant l'attente. Si l'une est rompue à ce moment-là, l'environnement la\n  considère comme un rejet non géré — ce qui peut arrêter un processus Node.js — même si un `try` la\n  rattrape plus tard. `Promise.all` attache ses gestionnaires à toutes les promesses immédiatement et\n  échoue proprement à la première erreur.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-event-loop",
+      "title": "L'event loop : microtâches et macrotâches",
+      "slug": "event-loop",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "asynchronisme",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-sync-async"
+      ],
+      "skills": [
+        "event-loop"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/asynchronisme/event-loop/lesson.md",
+      "contentVersion": "bd9b25df5f90",
+      "body": "\n## Objectifs\n\n- Distinguer les macrotâches des microtâches, et savoir d'où vient chacune.\n- Prédire l'ordre exact d'exécution d'un code qui mélange synchrone, promesses et minuteurs.\n- Comprendre pourquoi une chaîne infinie de microtâches peut geler une page.\n\n## Introduction\n\n`setTimeout(f, 0)` et `Promise.resolve().then(g)` semblent tous deux « exécuter plus tard ».\nPourtant `g` passe toujours avant `f`, quel que soit l'ordre dans lequel on les écrit. Ce n'est\npas un détail d'implémentation : c'est la règle centrale de la boucle d'événements, et c'est\nelle que testent la plupart des questions d'entretien sur l'asynchrone.\n\n## Concept\n\nLa boucle d'événements gère deux files :\n\n| File | Contenu | Exemples |\n| --- | --- | --- |\n| Macrotâches (tâches) | les callbacks déclenchés par l'environnement | `setTimeout`, `setInterval`, événements, réponses d'entrées-sorties |\n| Microtâches | les suites de promesses et les micro-callbacks | `then`, `catch`, `finally`, `await`, `queueMicrotask` |\n\nL'algorithme, répété indéfiniment :\n\n1. exécuter **une** macrotâche — au démarrage, le script principal lui-même ;\n2. exécuter **toutes** les microtâches en attente, y compris celles ajoutées pendant ce\n   vidage ;\n3. dans un navigateur, mettre à jour l'affichage si nécessaire ;\n4. recommencer avec la macrotâche suivante.\n\nConséquence : entre deux macrotâches, la file des microtâches est **toujours vidée entièrement**.\n\n## Exemple\n\n```js\nconsole.log('1 synchrone');\n\nsetTimeout(() => console.log('5 macrotâche'), 0);\n\nPromise.resolve().then(() => console.log('3 microtâche (then)'));\nqueueMicrotask(() => console.log('4 microtâche (queueMicrotask)'));\n\nconsole.log('2 synchrone');\n// 1, 2, 3, 4, 5\n\nsetTimeout(() => {\n  console.log('T1');\n  Promise.resolve().then(() => console.log('T1 → sa microtâche'));\n}, 10);\nsetTimeout(() => console.log('T2'), 10);\n// T1, T1 → sa microtâche, T2 : la microtâche passe avant la macrotâche suivante\n\nPromise.resolve().then(() => {\n  console.log('M1');\n  queueMicrotask(() => console.log('M1 → M2'));\n});\n// M1 puis M1 → M2, avant tout minuteur : la file est vidée même si elle se remplit\n```\n\n## Comment ça fonctionne\n\nLe script principal est lui-même une macrotâche. Pendant son exécution, `setTimeout` programme\nune **macrotâche** pour plus tard, tandis que `Promise.resolve().then(...)` et\n`queueMicrotask(...)` ajoutent des **microtâches**. Quand le script se termine, la boucle ne\npasse pas directement au minuteur : elle vide d'abord toute la file des microtâches. D'où\nl'ordre 1, 2, 3, 4, puis 5.\n\nLe vidage est **complet** : une microtâche qui en ajoute une autre la fait exécuter dans le même\nvidage. C'est ce que montre `M1 → M2`, exécutée avant tout minuteur, même programmé bien avant.\nLe même principe s'applique à chaque macrotâche : après `T1`, sa microtâche passe avant `T2`,\nbien que les deux minuteurs soient prêts au même moment.\n\nCe vidage complet a un revers : une microtâche qui se reprogramme indéfiniment **affame** la\nboucle. Aucune macrotâche ne passe plus, aucun clic n'est traité, et dans un navigateur l'écran\nne se redessine jamais, puisque le rendu n'a lieu qu'entre deux macrotâches. Une boucle infinie\nde `then` gèle une page aussi sûrement qu'un `while (true)`.\n\nPourquoi deux files ? Les microtâches servent à terminer un travail **le plus tôt possible**, sans\nlaisser d'autres événements s'intercaler : la suite d'une promesse s'exécute dès que le code\ncourant rend la main, dans un état cohérent. Les macrotâches, elles, représentent des événements\nindépendants, entre lesquels l'environnement peut respirer — dessiner, traiter une entrée.\n\nDeux précisions pour l'environnement. Dans un navigateur, l'étape de rendu s'intercale entre les\nmacrotâches, environ 60 fois par seconde, et `requestAnimationFrame` s'exécute juste avant elle.\nDans Node.js, la boucle est découpée en phases — minuteurs, entrées-sorties, `setImmediate` —\net `process.nextTick` a sa propre file, prioritaire sur les promesses. La règle essentielle reste\nla même partout : **toutes les microtâches passent avant la macrotâche suivante**. La partie\nExpert revient en détail sur la boucle de Node.js.\n\n## Erreurs fréquentes\n\n**Croire que l'ordre d'écriture décide.** Un `then` écrit après un `setTimeout(f, 0)` s'exécute\navant lui.\n\n**Supposer qu'un minuteur passe entre deux suites de promesses.** Toutes les microtâches\nd'abord.\n\n**Programmer des microtâches en boucle.** La page gèle ; pour céder la main, utilise une\nmacrotâche comme `setTimeout`.\n\n**Utiliser `queueMicrotask` pour « laisser respirer » l'interface.** Il ne laisse passer ni\nrendu ni événement.\n\n## À retenir\n\n- Macrotâches : minuteurs, événements, entrées-sorties. Microtâches : promesses,\n  `queueMicrotask`.\n- Après chaque macrotâche, toutes les microtâches sont exécutées, même celles ajoutées en route.\n- `then` passe avant `setTimeout(f, 0)`, quel que soit l'ordre d'écriture.\n- Une chaîne infinie de microtâches bloque le rendu et les événements.\n- Pour rendre la main à l'environnement, il faut une macrotâche.\n\n## Exercices\n\n1. Donne l'ordre des affichages sous la forme `A B C D`.\n\n   ```js\n   console.log('A');\n   setTimeout(() => console.log('B'), 0);\n   Promise.resolve().then(() => console.log('C'));\n   console.log('D');\n   ```\n\n   :::indice\n   D'abord tout le synchrone, puis toutes les microtâches, puis la première macrotâche.\n   :::\n\n   :::solution\n   L'ordre est `A D C B`. `A` et `D` sont synchrones. Quand le script se termine, la file des\n   microtâches est vidée : `C`. Vient ensuite la macrotâche du minuteur : `B`.\n   :::\n\n2. Donne l'ordre des affichages, puis justifie la place de `3`.\n\n   ```js\n   setTimeout(() => console.log('1'), 0);\n   Promise.resolve()\n     .then(() => {\n       console.log('2');\n       setTimeout(() => console.log('3'), 0);\n     })\n     .then(() => console.log('4'));\n   console.log('5');\n   ```\n\n   :::indice\n   Le second `then` est une microtâche ajoutée pendant le vidage : passe-t-elle avant le premier\n   minuteur ? Et le minuteur programmé dans le premier `then`, où se place-t-il dans la file ?\n   :::\n\n   :::solution\n   L'ordre est `5 2 4 1 3`. `5` est synchrone. Le vidage des microtâches exécute le premier\n   `then` (`2`), qui programme un minuteur et déclenche le second `then`, exécuté dans le même\n   vidage (`4`). Viennent ensuite les macrotâches dans l'ordre où elles ont été programmées : le\n   minuteur `1`, programmé au début, puis `3`, programmé pendant le premier `then`.\n   :::\n\n3. Cette fonction est censée faire un travail par étapes sans bloquer la page. Explique pourquoi\n   un minuteur programmé avant elle ne s'exécute qu'à la toute fin, puis corrige.\n\n   ```js\n   function etape() {\n     faireUnPeuDeTravail();\n     if (resteDuTravail()) {\n       Promise.resolve().then(etape);\n     }\n   }\n   ```\n\n   :::indice\n   Entre deux étapes, la boucle passe-t-elle à la macrotâche suivante ?\n   :::\n\n   :::solution\n   Chaque étape programme la suivante comme **microtâche**, et la file des microtâches est vidée\n   entièrement avant la macrotâche suivante : tant qu'il reste du travail, aucun minuteur, aucun\n   événement et aucun rendu ne peuvent passer. Pour rendre la main, chaque étape doit être une\n   macrotâche.\n\n   ```js\n   function etape() {\n     faireUnPeuDeTravail();\n     if (resteDuTravail()) {\n       setTimeout(etape, 0);\n     }\n   }\n   ```\n\n   Avec trois étapes et un minuteur programmé avant, la version à microtâches s'exécute dans\n   l'ordre `m1 m2 m3 minuteur` ; la version à `setTimeout`, dans l'ordre `t1 minuteur t2 t3`.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre microtâche et macrotâche ?\n\n  :::indice\n  Donne un exemple de chaque, puis la règle qui les ordonne.\n  :::\n\n  :::reponse\n  Les macrotâches sont les callbacks déclenchés par l'environnement : minuteurs, événements,\n  entrées-sorties ; le script principal en est une. Les microtâches sont les suites de promesses\n  — `then`, `catch`, `finally`, la reprise après `await` — et les callbacks de\n  `queueMicrotask`. La boucle exécute une macrotâche, puis vide **toute** la file des\n  microtâches, y compris celles ajoutées pendant ce vidage, avant de passer à la macrotâche\n  suivante.\n  :::\n\n- Pourquoi `Promise.resolve().then(f)` s'exécute-t-il avant `setTimeout(g, 0)` ?\n\n  :::indice\n  Dans quelle file chacun des deux callbacks est-il placé ?\n  :::\n\n  :::reponse\n  Parce que `f` est une microtâche et `g` une macrotâche. À la fin du code synchrone en cours,\n  la boucle vide la file des microtâches avant de prendre la macrotâche suivante : `f` passe donc\n  toujours en premier, quel que soit l'ordre d'écriture et même si le délai du minuteur est déjà\n  écoulé.\n  :::\n\n- Comment une boucle de promesses peut-elle geler une page ?\n\n  :::indice\n  À quel moment le navigateur redessine-t-il la page ?\n  :::\n\n  :::reponse\n  Le rendu et le traitement des événements n'ont lieu qu'entre deux macrotâches. Si chaque\n  microtâche en programme une nouvelle, la file des microtâches ne se vide jamais : la boucle ne\n  passe jamais à la macrotâche suivante, et la page ne se redessine plus ni ne répond aux clics.\n  Pour céder réellement la main, un travail découpé doit se reprogrammer avec une macrotâche,\n  comme `setTimeout`, ou s'exécuter dans un worker.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-minuteurs",
+      "title": "setTimeout, setInterval et leurs pièges",
+      "slug": "minuteurs",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "asynchronisme",
+      "order": 3,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-event-loop"
+      ],
+      "skills": [
+        "timers"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/asynchronisme/minuteurs/lesson.md",
+      "contentVersion": "e2a606bda37d",
+      "body": "\n## Objectifs\n\n- Programmer, répéter et annuler une exécution différée.\n- Choisir entre `setInterval` et un `setTimeout` récursif.\n- Éviter les minuteurs oubliés, les dérives et les appels qui se chevauchent.\n\n## Introduction\n\nRelancer une vérification toutes les dix secondes, afficher un message qui disparaît, attendre\navant de réessayer une requête : les minuteurs sont l'outil asynchrone le plus simple, et l'un\ndes plus souvent mal utilisés. Un intervalle jamais arrêté continue de tourner après la fermeture\nd'un composant ; un délai supposé exact dérive sous la charge. Ce chapitre fait le tour de ces\npièges.\n\n## Concept\n\n| Fonction | Effet | Renvoie |\n| --- | --- | --- |\n| `setTimeout(f, delai, ...args)` | exécute `f` une fois, après **au moins** `delai` ms | un identifiant |\n| `setInterval(f, delai, ...args)` | exécute `f` toutes les `delai` ms environ | un identifiant |\n| `clearTimeout(id)` | annule un `setTimeout` pas encore exécuté | `undefined` |\n| `clearInterval(id)` | arrête un intervalle | `undefined` |\n\nL'identifiant est un nombre dans un navigateur et un objet `Timeout` dans Node.js : on le\nconserve simplement pour pouvoir annuler.\n\nDeux façons de répéter :\n\n- **`setInterval`** programme les exécutions à cadence fixe, sans attendre la fin de la\n  précédente ;\n- **`setTimeout` récursif** programme l'exécution suivante **à la fin** de la courante : le\n  délai sépare deux fins et deux débuts, jamais deux exécutions qui se chevauchent.\n\n## Exemple\n\n```js\nconst annule = setTimeout(() => console.log('jamais affiché'), 50);\nclearTimeout(annule);\n\nlet ticks = 0;\nconst intervalle = setInterval(() => {\n  ticks += 1;\n  console.log(`tick ${ticks}`);\n  if (ticks === 3) {\n    clearInterval(intervalle); // sans cette ligne, l'intervalle tourne indéfiniment\n    demarrerSequence();\n  }\n}, 20);\n\n// setTimeout récursif : la suite n'est programmée qu'une fois l'étape terminée.\nfunction demarrerSequence() {\n  let tours = 0;\n  function tour() {\n    tours += 1;\n    console.log(`tour ${tours}`);\n    if (tours < 3) {\n      setTimeout(tour, 20);\n    }\n  }\n  setTimeout(tour, 20);\n}\n\nsetTimeout((prenom, salutation) => console.log(`${salutation} ${prenom}`), 0, 'Ada', 'Bonjour');\n// Affiche d'abord 'Bonjour Ada', puis tick 1, tick 2, tick 3, puis tour 1, tour 2, tour 3.\n```\n\n## Comment ça fonctionne\n\nLe délai d'un minuteur est la durée **minimale** avant que le callback soit placé dans la file des\nmacrotâches. Il s'exécute ensuite quand la pile est vide et que les tâches précédentes sont\npassées : un calcul bloquant, ou une longue file d'événements, le retarde d'autant. Les\nnavigateurs ajoutent leurs propres règles : un minuteur imbriqué sur plusieurs niveaux est\nramené à au moins 4 ms, et les onglets en arrière-plan ralentissent fortement leurs minuteurs,\nsouvent à une exécution par seconde ou moins, pour économiser la batterie. Un minuteur ne sert\ndonc pas à mesurer le temps : pour cela, on compare des horodatages avec `Date.now()` ou\n`performance.now()`.\n\n`setInterval` programme les exécutions à cadence fixe **sans se soucier de ce que fait le\ncallback**. Si ce callback lance une opération asynchrone plus longue que l'intervalle — une\nrequête réseau lente, par exemple —, l'appel suivant démarre avant la fin du précédent : les\nrequêtes se chevauchent et leurs réponses peuvent arriver dans le désordre. Le `setTimeout`\nrécursif n'a pas ce défaut : l'étape suivante n'est programmée qu'une fois l'étape courante\nterminée, ce qui garantit un écart entre deux exécutions et permet d'adapter le délai, par\nexemple pour espacer les tentatives après une erreur.\n\nUn minuteur **retient son callback**, et tout ce que ce callback capture, jusqu'à son exécution\nou son annulation. Un intervalle jamais arrêté vit donc aussi longtemps que la page ou le\nprocessus, avec son environnement : dans une application à composants, chaque montage qui crée\nun intervalle doit l'arrêter au démontage. Dans Node.js, un minuteur actif maintient même le\nprocessus en vie ; `timeout.unref()` indique qu'il ne doit pas l'empêcher de se terminer.\n\nLe délai accepté est limité à 2 147 483 647 ms, soit environ 24,8 jours. Au-delà, la valeur\ndéborde et le callback s'exécute presque immédiatement. Enfin, on ne passe jamais une chaîne de\ncaractères à `setTimeout` : elle serait évaluée comme du code, avec les mêmes risques qu'`eval`.\n\n## Erreurs fréquentes\n\n**Oublier d'arrêter un intervalle.** Il tourne indéfiniment et retient tout ce qu'il capture.\n\n**Utiliser `setInterval` pour une opération asynchrone.** Les appels se chevauchent : préfère un\n`setTimeout` récursif.\n\n**Mesurer une durée en comptant les ticks.** Les délais dérivent : compare des horodatages.\n\n**Perdre l'identifiant du minuteur.** Sans lui, impossible d'annuler.\n\n**Passer une méthode détachée en callback.** Elle perd son `this`, comme vu dans la partie Runtime.\n\n## À retenir\n\n- `setTimeout` : une fois, après au moins le délai ; `setInterval` : à cadence fixe.\n- Conserve l'identifiant pour `clearTimeout` ou `clearInterval`.\n- Pour répéter une opération asynchrone, préfère un `setTimeout` récursif.\n- Un minuteur actif retient son callback : arrête ce que tu démarres.\n- Les délais sont des minimums, ralentis en arrière-plan ; mesure le temps avec des horodatages.\n\n## Exercices\n\n1. Écris `afficherTemporairement(message, duree, afficher, masquer)` qui affiche un message puis\n   le masque après `duree` ms, et renvoie une fonction permettant de le fermer plus tôt sans que\n   le masquage automatique s'exécute ensuite.\n\n   :::indice\n   Conserve l'identifiant du minuteur : la fonction renvoyée l'annule et masque immédiatement.\n   :::\n\n   :::solution\n   ```js\n   function afficherTemporairement(message, duree, afficher, masquer) {\n     afficher(message);\n     const id = setTimeout(masquer, duree);\n     return () => {\n       clearTimeout(id);\n       masquer();\n     };\n   }\n\n   const journal = [];\n   const fermer = afficherTemporairement(\n     'Enregistré',\n     3000,\n     (m) => journal.push(`affiche ${m}`),\n     () => journal.push('masque'),\n   );\n   fermer();\n   setTimeout(() => console.log(journal), 3100); // ['affiche Enregistré', 'masque']\n   ```\n\n   Sans `clearTimeout`, le masquage s'exécuterait une seconde fois au bout de trois secondes.\n   :::\n\n2. Écris `interroger(verifier, delai, maxTentatives)` qui appelle `verifier(rappel)` jusqu'à ce que\n   le rappel reçoive `true`, en attendant `delai` ms entre la fin d'une vérification et le début de\n   la suivante, sans dépasser `maxTentatives`.\n\n   :::indice\n   Programme la tentative suivante **dans** le rappel, pas à intervalle fixe.\n   :::\n\n   :::solution\n   ```js\n   function interroger(verifier, delai, maxTentatives, quandFini) {\n     let tentatives = 0;\n\n     function essayer() {\n       tentatives += 1;\n       verifier((pret) => {\n         if (pret) return quandFini(true, tentatives);\n         if (tentatives >= maxTentatives) return quandFini(false, tentatives);\n         setTimeout(essayer, delai);\n       });\n     }\n\n     essayer();\n   }\n\n   let appels = 0;\n   const verifier = (rappel) => setTimeout(() => rappel(++appels === 3), 10);\n   interroger(verifier, 20, 5, (reussi, n) => console.log(reussi, n)); // true 3\n   ```\n\n   Une vérification lente ne peut jamais en chevaucher une autre, puisque la suivante n'est\n   programmée qu'à l'arrivée du résultat.\n   :::\n\n3. Ce code lance une requête simulée de 50 ms toutes les 20 ms. Mesure combien de requêtes sont en\n   cours en même temps, puis corrige pour qu'il n'y en ait jamais plus d'une.\n\n   ```js\n   let enCours = 0;\n   let maximum = 0;\n   function requete(fin) {\n     enCours += 1;\n     maximum = Math.max(maximum, enCours);\n     setTimeout(() => { enCours -= 1; fin(); }, 50);\n   }\n   const id = setInterval(() => requete(() => {}), 20);\n   ```\n\n   :::indice\n   `setInterval` ne sait pas que la requête précédente n'est pas finie. Qui devrait programmer la\n   requête suivante ?\n   :::\n\n   :::solution\n   Avec `setInterval`, une nouvelle requête démarre toutes les 20 ms alors que chacune dure 50 ms :\n   plusieurs requêtes se chevauchent — deux ou trois selon la précision des minuteurs. La version récursive ne programme la suivante qu'à la fin\n   de la précédente.\n\n   ```js\n   let enCours = 0;\n   let maximum = 0;\n   function requete(fin) {\n     enCours += 1;\n     maximum = Math.max(maximum, enCours);\n     setTimeout(() => { enCours -= 1; fin(); }, 50);\n   }\n\n   let restantes = 5;\n   function suivante() {\n     requete(() => {\n       restantes -= 1;\n       if (restantes > 0) setTimeout(suivante, 20);\n       else console.log('simultanées au maximum :', maximum); // 1\n     });\n   }\n   suivante();\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `setInterval` et un `setTimeout` récursif ?\n\n  :::indice\n  Pense à un callback qui lance une opération plus longue que l'intervalle.\n  :::\n\n  :::reponse\n  `setInterval` programme les exécutions à cadence fixe, sans attendre la fin du travail\n  précédent : avec une opération asynchrone lente, les appels se chevauchent. Un `setTimeout`\n  récursif ne programme l'exécution suivante qu'à la fin de la courante, ce qui garantit un écart\n  entre deux exécutions et permet d'ajuster le délai à chaque tour, par exemple pour espacer les\n  tentatives après une erreur.\n  :::\n\n- Le délai d'un `setTimeout` est-il garanti ?\n\n  :::indice\n  Que se passe-t-il si la pile est occupée au moment où le délai expire ?\n  :::\n\n  :::reponse\n  Non, c'est un minimum. À l'expiration, le callback est placé dans la file des macrotâches et\n  attend que la pile soit vide et que les tâches précédentes soient passées. Les navigateurs\n  ajoutent un délai minimal pour les minuteurs imbriqués et ralentissent ceux des onglets en\n  arrière-plan. Pour mesurer une durée, on compare des horodatages plutôt que de compter des ticks.\n  :::\n\n- Pourquoi un intervalle oublié est-il un problème ?\n\n  :::indice\n  Que retient un minuteur actif, et combien de temps ?\n  :::\n\n  :::reponse\n  Un intervalle actif continue de s'exécuter indéfiniment et retient son callback, avec tout ce\n  que ce callback capture : c'est à la fois du travail inutile et une fuite mémoire. Dans une\n  interface, un composant détruit continue d'agir, parfois sur des éléments qui n'existent plus ;\n  dans Node.js, l'intervalle empêche même le processus de se terminer. On conserve l'identifiant\n  et on arrête l'intervalle quand il n'a plus de raison d'être.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-sync-async",
+      "title": "Synchrone et asynchrone : un seul fil, beaucoup d'attentes",
+      "slug": "synchrone-et-asynchrone",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "asynchronisme",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-callbacks",
+        "javascript-contexte-execution"
+      ],
+      "skills": [
+        "async-model"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/asynchronisme/synchrone-et-asynchrone/lesson.md",
+      "contentVersion": "e0738195c064",
+      "body": "\n## Objectifs\n\n- Expliquer pourquoi un programme JavaScript n'exécute qu'une chose à la fois.\n- Décrire le trajet d'un callback asynchrone : API de l'environnement, file d'attente, pile\n  d'appels.\n- Reconnaître le code qui bloque, et ses conséquences sur une page ou un serveur.\n\n## Introduction\n\nUne page web attend des clics, des réponses réseau et des minuteurs ; un serveur Node.js\nattend des milliers de requêtes. Pourtant, le code JavaScript s'exécute sur **un seul fil**.\nIl ne fait jamais deux calculs en même temps, et il ne reste jamais planté à attendre. La\nréconciliation de ces deux faits s'appelle le modèle asynchrone, et c'est lui qui explique\npourquoi `setTimeout(f, 0)` ne s'exécute pas immédiatement.\n\n## Concept\n\n| Élément | Rôle |\n| --- | --- |\n| Pile d'appels | le code JavaScript en cours d'exécution, une fonction à la fois |\n| API de l'environnement | minuteurs, réseau, disque, événements : gérés **hors** du fil JavaScript |\n| File d'attente | les callbacks prêts, en attente que la pile soit vide |\n| Boucle d'événements | dès que la pile est vide, prend le prochain callback et l'exécute |\n\nLe trajet d'un callback asynchrone :\n\n1. le code demande une opération à l'environnement, en lui confiant un callback ;\n2. l'appel rend la main **immédiatement**, et le code continue ;\n3. quand l'opération est terminée, l'environnement place le callback dans une file ;\n4. quand la pile est **vide**, la boucle d'événements l'exécute.\n\n**Synchrone** : l'instruction suivante attend la fin de la précédente. **Asynchrone** : le\nrésultat arrive plus tard, dans un callback, pendant que le reste du code continue.\n\n## Exemple\n\n```js\nconsole.log('A');\nsetTimeout(() => console.log('C : minuteur de 0 ms'), 0);\nconsole.log('B');\n// Affiche A, B, puis C : le callback attend que la pile soit vide.\n\nconst debut = Date.now();\nsetTimeout(() => {\n  console.log(`minuteur de 10 ms exécuté après ${Date.now() - debut} ms`);\n}, 10);\n\n// Une boucle qui occupe le fil pendant 200 ms.\nconst fin = Date.now() + 200;\nwhile (Date.now() < fin) {}\nconsole.log('fin du calcul bloquant');\n// Le minuteur de 10 ms ne peut s'exécuter qu'après : il affiche environ 200 ms.\n```\n\n## Comment ça fonctionne\n\nJavaScript ne dispose que d'**une pile d'appels** : à tout instant, une seule fonction\ns'exécute. Ce qui ressemble à du parallélisme vient de l'**environnement** — le navigateur ou\nNode.js — qui, lui, sait gérer plusieurs attentes à la fois. Quand le code appelle\n`setTimeout`, lance une requête réseau ou pose un écouteur d'événement, il confie le travail et\nun callback à l'environnement, puis continue immédiatement. Le minuteur s'écoule, la réponse\narrive, l'utilisateur clique : l'environnement dépose alors le callback dans une file.\n\nLa **boucle d'événements** relie les deux mondes. Elle ne fait qu'une chose : quand la pile est\nvide, elle prend le prochain callback prêt et l'exécute jusqu'au bout. C'est pourquoi\n`setTimeout(f, 0)` ne s'exécute pas tout de suite : le délai est écoulé presque aussitôt, mais\n`f` attend que le code en cours — y compris le `console.log('B')` qui suit — soit terminé.\n\nLa conséquence directe est que **le code synchrone bloque tout**. Pendant la boucle de 200 ms\nde l'exemple, aucun callback ne peut s'exécuter : le minuteur de 10 ms attend, et dans un\nnavigateur la page ne répond plus aux clics et ne se redessine plus. Sur un serveur Node.js,\nc'est pire : un calcul de deux secondes dans une requête bloque **toutes** les autres requêtes\npendant deux secondes. Le délai d'un minuteur est donc un **minimum**, jamais une garantie.\n\nCe modèle a un avantage majeur : un callback n'est jamais interrompu au milieu par un autre. Il\nn'y a pas de verrou à poser sur une variable partagée, contrairement aux langages où plusieurs\nfils modifient la même mémoire en même temps. Le prix est la discipline : tout ce qui attend\ndoit être asynchrone, et tout ce qui calcule longtemps doit être découpé ou déplacé dans un\n*worker*.\n\nLe chapitre suivant affine ce schéma : il n'existe pas une file unique, mais deux catégories de\ntâches, dont l'ordre explique les comportements des promesses.\n\n## Erreurs fréquentes\n\n**Lire un résultat asynchrone sur la ligne suivante.** Il n'existe pas encore : utilise-le dans\nle callback.\n\n**Croire que `setTimeout(f, 0)` est immédiat.** `f` attend la fin du code en cours.\n\n**Lancer un calcul long sur le fil principal.** La page gèle, le serveur ne répond plus :\ndécoupe le travail ou utilise un worker.\n\n**Compter sur la précision d'un délai.** Le délai est un minimum, retardé par tout code bloquant.\n\n## À retenir\n\n- Une seule pile d'appels : une seule fonction JavaScript s'exécute à la fois.\n- L'environnement gère les attentes et place les callbacks prêts dans une file.\n- La boucle d'événements exécute un callback seulement quand la pile est vide.\n- Le code synchrone long bloque tout : page gelée, serveur figé.\n- Un délai de minuteur est un minimum, pas une promesse d'exactitude.\n\n## Exercices\n\n1. Donne l'ordre des affichages, et explique la place du deuxième message.\n\n   ```js\n   console.log('début');\n   setTimeout(() => console.log('minuteur'), 0);\n   console.log('fin');\n   ```\n\n   :::indice\n   Le callback du minuteur peut-il s'exécuter tant que le script principal n'est pas terminé ?\n   :::\n\n   :::solution\n   L'ordre est `début`, `fin`, `minuteur`. Le délai de 0 ms est écoulé presque tout de suite,\n   mais le callback attend dans la file que la pile soit vide, c'est-à-dire que le script ait\n   fini, `console.log('fin')` compris.\n   :::\n\n2. Ce code affiche `undefined`. Explique pourquoi et corrige-le pour afficher `42`.\n\n   ```js\n   let reponse;\n   setTimeout(() => {\n     reponse = 42;\n   }, 100);\n   console.log(reponse);\n   ```\n\n   :::indice\n   À quel moment l'affectation a-t-elle lieu par rapport au `console.log` ?\n   :::\n\n   :::solution\n   `setTimeout` rend la main immédiatement : le `console.log` s'exécute avant que le callback,\n   100 ms plus tard, n'affecte la valeur. Le résultat doit être utilisé **là où il arrive**.\n\n   ```js\n   function obtenirReponse(quandPrete) {\n     setTimeout(() => quandPrete(42), 100);\n   }\n\n   obtenirReponse((reponse) => console.log(reponse)); // 42, après 100 ms\n   ```\n   :::\n\n3. Traiter 100 000 éléments d'un coup gèle la page. Réécris `toutTraiter` pour traiter les\n   éléments par tranches de 1 000, en rendant la main entre deux tranches, puis appeler `quandFini`.\n\n   ```js\n   function toutTraiter(elements, traiter) {\n     for (const element of elements) traiter(element);\n   }\n   ```\n\n   :::indice\n   Traite une tranche, puis programme la suivante avec `setTimeout(…, 0)` : entre deux\n   tranches, la boucle d'événements peut exécuter d'autres callbacks.\n   :::\n\n   :::solution\n   ```js\n   function toutTraiter(elements, traiter, quandFini, taille = 1000) {\n     let index = 0;\n\n     function tranche() {\n       const limite = Math.min(index + taille, elements.length);\n       for (; index < limite; index++) {\n         traiter(elements[index]);\n       }\n       if (index < elements.length) {\n         setTimeout(tranche, 0);\n       } else {\n         quandFini();\n       }\n     }\n\n     tranche();\n   }\n\n   let somme = 0;\n   const nombres = Array.from({ length: 100_000 }, (_, i) => i);\n   toutTraiter(nombres, (n) => { somme += n; }, () => console.log(somme)); // 4999950000\n   ```\n\n   Le travail total est le même, mais la page reste réactive : clics et affichage s'intercalent\n   entre les tranches. Pour un calcul réellement lourd, un Web Worker l'exécute hors du fil\n   principal.\n   :::\n\n## Questions d'entretien\n\n- JavaScript est mono-thread : comment gère-t-il plusieurs opérations en même temps ?\n\n  :::indice\n  Qui attend réellement le réseau et les minuteurs ?\n  :::\n\n  :::reponse\n  Le code JavaScript s'exécute sur un seul fil, mais les attentes — minuteurs, réseau, disque,\n  événements — sont gérées par l'environnement, navigateur ou Node.js. Quand une opération se\n  termine, son callback est placé dans une file, et la boucle d'événements l'exécute dès que la\n  pile d'appels est vide. On obtient de la concurrence sans parallélisme : beaucoup d'attentes\n  simultanées, mais une seule exécution de code à la fois.\n  :::\n\n- Que signifie « bloquer la boucle d'événements », et quelles en sont les conséquences ?\n\n  :::indice\n  Que devient la file des callbacks pendant un calcul synchrone de plusieurs secondes ?\n  :::\n\n  :::reponse\n  C'est occuper la pile avec un calcul synchrone long. Tant qu'il dure, aucun callback ne peut\n  s'exécuter : dans un navigateur, la page ne répond plus et ne se redessine plus ; dans Node.js,\n  toutes les autres requêtes attendent. On l'évite en gardant les callbacks courts, en découpant\n  les gros traitements en tranches, ou en déplaçant le calcul dans un worker.\n  :::\n\n- `setTimeout(f, 0)` exécute-t-il `f` immédiatement ?\n\n  :::indice\n  Que signifie réellement le délai passé à `setTimeout` ?\n  :::\n\n  :::reponse\n  Non. Le délai est une durée **minimale** avant que `f` soit placé dans la file des tâches ;\n  `f` s'exécute ensuite quand la pile est vide et que les tâches précédentes sont passées. Avec\n  0, `f` s'exécute donc après tout le code synchrone en cours, et après les microtâches comme\n  les suites de promesses. Les navigateurs imposent en plus un délai minimal d'environ 4 ms aux\n  minuteurs profondément imbriqués.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
     {
       "id": "javascript-choisir-sa-boucle",
       "title": "Choisir sa boucle, éviter les boucles inutiles et mesurer leur coût",
@@ -3207,6 +3589,150 @@
       ]
     },
     {
+      "id": "javascript-creer-promesse",
+      "title": "Créer une promesse : new Promise, resolve et reject",
+      "slug": "creer-une-promesse",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "promises",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-promesses-etats"
+      ],
+      "skills": [
+        "promise-creation"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/promises/creer-une-promesse/lesson.md",
+      "contentVersion": "b32a662cf930",
+      "body": "\n## Objectifs\n\n- Construire une promesse avec `new Promise` et régler son état avec `resolve` ou `reject`.\n- Convertir une API à callbacks en fonction qui renvoie une promesse.\n- Reconnaître quand `new Promise` est inutile, et l'éviter.\n\n## Introduction\n\nLa plupart du temps, on consomme des promesses fournies par l'environnement : `fetch`, les API\nde fichiers de Node.js, les bibliothèques. Mais il reste beaucoup d'API à callbacks — minuteurs,\nanciens modules, événements — qu'on veut intégrer à un code moderne. Le constructeur `Promise`\nsert exactement à cela : **envelopper** une opération asynchrone qui ne renvoie pas encore de\npromesse.\n\n## Concept\n\n```js\nconst promesse = new Promise((resolve, reject) => {\n  // lancer l'opération, puis appeler resolve(valeur) ou reject(erreur)\n});\n```\n\n| Élément | Rôle |\n| --- | --- |\n| Exécuteur | la fonction passée au constructeur, **exécutée immédiatement et de façon synchrone** |\n| `resolve(valeur)` | tient la promesse avec cette valeur |\n| `reject(erreur)` | rompt la promesse avec cette raison, idéalement un objet `Error` |\n| Erreur levée dans l'exécuteur | rompt la promesse automatiquement |\n| `Promise.resolve(v)` / `Promise.reject(e)` | crée directement une promesse déjà réglée |\n\nSeul le **premier** appel à `resolve` ou `reject` compte ; les suivants sont ignorés.\n\n## Exemple\n\n```js\nfunction attendre(ms) {\n  return new Promise((resolve) => setTimeout(resolve, ms));\n}\n\nfunction lireConfiguration(nom, rappel) {\n  // API à callbacks « erreur d'abord », comme les anciennes API de Node.js.\n  setTimeout(() => {\n    if (nom === 'absente') rappel(new Error(`Fichier ${nom} introuvable`));\n    else rappel(null, { nom, langue: 'fr' });\n  }, 10);\n}\n\nfunction lireConfigurationPromise(nom) {\n  return new Promise((resolve, reject) => {\n    lireConfiguration(nom, (erreur, contenu) => {\n      if (erreur) reject(erreur);\n      else resolve(contenu);\n    });\n  });\n}\n\nconsole.log('avant');\nconst p = new Promise((resolve) => {\n  console.log('exécuteur'); // synchrone : s'affiche entre « avant » et « après »\n  resolve('premier');\n  resolve('second'); // ignoré\n});\nconsole.log('après');\np.then((valeur) => console.log(valeur)); // 'premier'\n\nattendre(20)\n  .then(() => lireConfigurationPromise('app'))\n  .then((config) => console.log(config.langue)); // 'fr'\n\nlireConfigurationPromise('absente').catch((erreur) => console.log(erreur.message));\n// 'Fichier absente introuvable'\n```\n\n## Comment ça fonctionne\n\nLe constructeur appelle l'exécuteur **tout de suite**, avant même de renvoyer la promesse. C'est\npourquoi `exécuteur` s'affiche entre `avant` et `après`. L'exécuteur lance l'opération — ici un\nminuteur ou une fonction à callbacks — et lui confie `resolve` et `reject`. La promesse reste en\nattente jusqu'à ce que l'un des deux soit appelé, éventuellement bien plus tard.\n\nUne fois la promesse réglée, les appels suivants à `resolve` ou `reject` sont **ignorés en silence**.\nC'est ce qui protège contre une API qui appellerait son callback deux fois. Si l'exécuteur **lève\nune erreur**, le constructeur la rattrape et rompt la promesse : l'appelant la reçoit dans son\n`catch` au lieu d'une exception non interceptée. Attention : ce filet ne couvre que le code\nsynchrone de l'exécuteur ; une erreur levée plus tard dans un callback de minuteur n'est pas\nrattrapée et doit être transmise avec `reject`.\n\nOn rompt une promesse avec un **objet `Error`**, pas une chaîne : il porte une pile d'appels, et\nle code qui gère l'erreur peut compter sur `erreur.message`.\n\n`resolve` accepte aussi une **autre promesse** : la nouvelle adopte alors son issue. C'est pourquoi\nenvelopper une promesse existante dans `new Promise` ne sert à rien. Si une fonction obtient déjà\nune promesse — de `fetch`, d'une bibliothèque —, elle la renvoie ou l'enchaîne avec `then`. Le\nmotif `new Promise((resolve) => autrePromesse.then(resolve))` perd en plus les erreurs, puisque\npersonne n'appelle `reject`.\n\nPour les API « erreur d'abord » de Node.js, la fonction `util.promisify` fait la conversion\nautomatiquement, et la plupart des modules ont désormais une version à promesses, comme\n`node:fs/promises`. L'écrire à la main reste utile pour comprendre, et pour les API qui ne suivent\npas cette convention.\n\n## Erreurs fréquentes\n\n**Envelopper une promesse existante dans `new Promise`.** Renvoie-la directement.\n\n**Oublier d'appeler `reject` dans un chemin d'erreur.** La promesse reste en attente pour toujours.\n\n**Lever une erreur dans un callback asynchrone de l'exécuteur.** Elle n'est pas convertie en rejet :\nappelle `reject`.\n\n**Rompre avec une chaîne de caractères.** Utilise un objet `Error`.\n\n**Supposer que l'exécuteur s'exécute plus tard.** Il est synchrone.\n\n## À retenir\n\n- `new Promise((resolve, reject) => …)` exécute l'exécuteur immédiatement.\n- Seul le premier `resolve` ou `reject` compte.\n- Une erreur synchrone dans l'exécuteur rompt la promesse ; une erreur asynchrone doit passer par\n  `reject`.\n- On rompt avec un objet `Error`.\n- On n'enveloppe jamais une promesse existante : on la renvoie ou on l'enchaîne.\n\n## Exercices\n\n1. Écris `attendre(ms)`, qui renvoie une promesse tenue après `ms` millisecondes, puis utilise-la pour\n   afficher `prêt` après 100 ms.\n\n   :::indice\n   `setTimeout` accepte directement `resolve` comme callback.\n   :::\n\n   :::solution\n   ```js\n   function attendre(ms) {\n     return new Promise((resolve) => setTimeout(resolve, ms));\n   }\n\n   attendre(100).then(() => console.log('prêt'));\n   ```\n   :::\n\n2. Écris `promisifier(fonction)`, qui transforme une fonction à callback « erreur d'abord » en\n   fonction qui renvoie une promesse, puis applique-la à `lireConfiguration` de l'exemple.\n\n   :::indice\n   La fonction renvoyée reçoit les arguments, crée une promesse, et appelle la fonction d'origine\n   en ajoutant un dernier argument : le callback qui règle la promesse.\n   :::\n\n   :::solution\n   ```js\n   function promisifier(fonction) {\n     return (...args) =>\n       new Promise((resolve, reject) => {\n         fonction(...args, (erreur, resultat) => {\n           if (erreur) reject(erreur);\n           else resolve(resultat);\n         });\n       });\n   }\n\n   const lireConfigurationP = promisifier(lireConfiguration);\n   lireConfigurationP('app').then((config) => console.log(config.nom)); // 'app'\n   ```\n\n   C'est ce que fait `util.promisify` dans Node.js.\n   :::\n\n3. Cette fonction perd les erreurs et contient un enveloppement inutile. Explique les deux défauts,\n   puis corrige.\n\n   ```js\n   function chargerProfil(id) {\n     return new Promise((resolve) => {\n       chargerUtilisateur(id).then((utilisateur) => resolve(utilisateur.profil));\n     });\n   }\n   ```\n\n   :::indice\n   Que devient la promesse externe si `chargerUtilisateur` est rompue ? Et que renvoie déjà\n   `chargerUtilisateur(id).then(…)` ?\n   :::\n\n   :::solution\n   Si `chargerUtilisateur` échoue, personne n'appelle `reject` : la promesse renvoyée reste **en\n   attente pour toujours**, et l'erreur disparaît. Et `then` renvoie déjà une promesse : le\n   constructeur n'apporte rien.\n\n   ```js\n   const chargerUtilisateur = (id) =>\n     id > 0 ? Promise.resolve({ profil: 'admin' }) : Promise.reject(new Error('Identifiant invalide'));\n\n   function chargerProfil(id) {\n     return chargerUtilisateur(id).then((utilisateur) => utilisateur.profil);\n   }\n\n   chargerProfil(1).then(console.log); // 'admin'\n   chargerProfil(0).catch((erreur) => console.log(erreur.message)); // 'Identifiant invalide'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quand l'exécuteur d'une promesse est-il exécuté ?\n\n  :::indice\n  Avant ou après que `new Promise` renvoie l'objet ?\n  :::\n\n  :::reponse\n  Immédiatement et de façon synchrone, pendant l'appel au constructeur. L'opération qu'il lance\n  peut être asynchrone, mais le corps de l'exécuteur, lui, s'exécute avant l'instruction qui suit\n  `new Promise`. Une erreur levée dans ce corps synchrone rompt la promesse ; une erreur levée plus\n  tard, dans un callback, doit être transmise avec `reject`.\n  :::\n\n- Que se passe-t-il si l'on appelle `resolve` puis `reject` ?\n\n  :::indice\n  Combien de fois une promesse peut-elle changer d'état ?\n  :::\n\n  :::reponse\n  Seul le premier appel compte : la promesse est tenue, et le `reject` suivant est ignoré sans\n  erreur. Ce comportement protège contre une API qui appellerait son callback plusieurs fois, mais\n  il masque aussi les bugs de logique : un chemin d'erreur atteint après un `resolve` ne se voit\n  pas. On structure donc l'exécuteur pour qu'un seul chemin règle la promesse.\n  :::\n\n- Pourquoi `new Promise` autour d'une promesse existante est-il un anti-pattern ?\n\n  :::indice\n  Pense aux erreurs, et à ce que renvoient déjà `then` et la fonction appelée.\n  :::\n\n  :::reponse\n  Parce qu'il n'apporte rien — la fonction renvoie déjà une promesse, que `then` sait transformer\n  — et qu'il perd facilement les erreurs : si l'on oublie de brancher `reject`, un échec laisse la\n  promesse externe en attente indéfiniment. On renvoie directement la promesse obtenue, ou son\n  `then`. `new Promise` se réserve à l'enveloppement d'une API qui ne renvoie pas de promesse,\n  comme un minuteur ou une fonction à callbacks.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-promesses-erreurs",
+      "title": "Propagation des erreurs et composition de promesses",
+      "slug": "erreurs-et-composition",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "promises",
+      "order": 4,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-then-catch"
+      ],
+      "skills": [
+        "promise-errors"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/promises/erreurs-et-composition/lesson.md",
+      "contentVersion": "8afc77b8cc53",
+      "body": "\n## Objectifs\n\n- Suivre le trajet d'une erreur dans une chaîne, et placer les `catch` au bon endroit.\n- Transformer une erreur en la relevant avec un contexte, sans perdre sa cause.\n- Composer plusieurs promesses, en séquence ou en parallèle avec `Promise.all`.\n\n## Introduction\n\nUne chaîne de promesses se comporte comme un bloc `try` : une erreur levée à n'importe quelle\nétape saute les étapes suivantes jusqu'au premier `catch`. C'est pratique, et dangereux quand on\nl'ignore : un `catch` placé trop tôt avale une erreur que la suite aurait dû voir, et une promesse\nrompue sans aucun `catch` peut arrêter un serveur. Ce chapitre décrit la propagation, puis la façon\nde combiner plusieurs promesses.\n\n## Concept\n\n| Situation | Comportement |\n| --- | --- |\n| Une étape lève ou renvoie une promesse rompue | les `then` suivants sont sautés jusqu'au prochain `catch` |\n| Un `catch` renvoie une valeur | la chaîne reprend normalement |\n| Un `catch` relève une erreur | la chaîne reste rompue, jusqu'au `catch` suivant |\n| Aucun `catch` ne traite le rejet | rejet non géré : avertissement en navigateur, arrêt du processus Node.js |\n\nPour combiner des promesses :\n\n| Besoin | Écriture |\n| --- | --- |\n| Étapes qui dépendent les unes des autres | une chaîne de `then` |\n| Opérations indépendantes, toutes nécessaires | `Promise.all([p1, p2, p3])` |\n\n`Promise.all` renvoie une promesse tenue avec le **tableau des valeurs, dans l'ordre des\npromesses fournies**, ou rompue dès la **première** erreur.\n\n## Exemple\n\n```js\nfunction etape(nom, echoue = false) {\n  return () => {\n    console.log(`→ ${nom}`);\n    if (echoue) throw new Error(`${nom} a échoué`);\n    return nom;\n  };\n}\n\nPromise.resolve()\n  .then(etape('valider'))\n  .then(etape('payer', true))\n  .then(etape('expédier')) // sautée : la chaîne est rompue\n  .catch((erreur) => {\n    console.log('capturée :', erreur.message);\n    throw new Error('commande annulée', { cause: erreur }); // relever avec un contexte\n  })\n  .catch((erreur) => console.log(erreur.message, '| cause :', erreur.cause.message))\n  .then(() => composer());\n\nfunction composer() {\n  const prix = (id) => new Promise((resolve) => setTimeout(() => resolve(id * 10), 10 * id));\n\n  Promise.all([prix(3), prix(1), prix(2)]).then((valeurs) => {\n    console.log('en parallèle :', valeurs); // [30, 10, 20] : ordre des entrées, pas d'arrivée\n  });\n}\n// → valider\n// → payer\n// capturée : payer a échoué\n// commande annulée | cause : payer a échoué\n// en parallèle : [ 30, 10, 20 ]\n```\n\n## Comment ça fonctionne\n\nUne promesse rompue se propage exactement comme une exception : chaque `then` qui ne prévoit pas\nde gestionnaire d'erreur transmet la rupture à la promesse qu'il crée, sans exécuter son callback.\nLa rupture descend ainsi la chaîne jusqu'au premier `catch`. C'est pourquoi un seul `catch` en fin\nde chaîne suffit à couvrir toutes les étapes — et pourquoi un `catch` placé **au milieu** change le\nsens de la suite : s'il ne relève pas l'erreur, les étapes suivantes s'exécutent comme si tout\nallait bien, avec la valeur qu'il a renvoyée, souvent `undefined`.\n\n**Relever** une erreur avec un contexte est la bonne pratique quand une couche du programme veut\ndonner du sens à un échec technique : « commande annulée » dit plus à l'utilisateur que « réseau\nindisponible ». L'option `{ cause }` du constructeur `Error`, depuis ES2022, conserve l'erreur\nd'origine pour le diagnostic.\n\nUne promesse rompue sans aucun gestionnaire devient un **rejet non géré**. Le navigateur affiche\nun avertissement et émet l'événement `unhandledrejection`. Node.js, depuis sa version 15, **arrête\nle processus** : un serveur entier peut tomber pour un `catch` oublié. On veille donc à ce que\nchaque chaîne se termine par un `catch`, ou soit renvoyée à un appelant qui s'en charge.\n\n`Promise.all` lance l'attente de toutes les promesses **en même temps**. Ses valeurs suivent l'ordre\ndu tableau d'entrée, quel que soit l'ordre d'arrivée. Il se rompt dès la **première** erreur, sans\nattendre les autres — qui continuent pourtant de s'exécuter, puisqu'une promesse ne s'annule pas.\nC'est le bon outil quand toutes les opérations sont nécessaires ; le module suivant présente\n`allSettled`, `race` et `any` pour les autres cas.\n\nPour des étapes qui doivent se suivre, dans un ordre imposé ou parce que chacune dépend de la\nprécédente, on enchaîne les `then`. Pour une liste d'étapes connue seulement à l'exécution, un\n`reduce` construit la chaîne. Le module Async / await montre une écriture plus lisible des deux cas.\n\n## Erreurs fréquentes\n\n**Placer un `catch` au milieu sans relever.** La suite s'exécute avec une valeur vide.\n\n**Laisser une chaîne sans `catch`.** Rejet non géré, et arrêt d'un processus Node.js.\n\n**Relever une nouvelle erreur sans `cause`.** L'erreur d'origine est perdue pour le diagnostic.\n\n**Croire que `Promise.all` annule les autres opérations en cas d'échec.** Elles continuent.\n\n**Exécuter en séquence des opérations indépendantes.** Elles pourraient attendre ensemble.\n\n## À retenir\n\n- Une rupture saute les `then` jusqu'au premier `catch`, comme une exception.\n- Un `catch` qui renvoie une valeur récupère ; qui relève, propage.\n- Toute chaîne doit se terminer par un `catch` ou être renvoyée à un appelant.\n- `Promise.all` : valeurs dans l'ordre d'entrée, rupture à la première erreur, sans annulation.\n- Séquence pour les étapes dépendantes, `Promise.all` pour les opérations indépendantes.\n\n## Exercices\n\n1. Ce code affiche `Total : undefined` au lieu de s'arrêter sur l'erreur. Explique pourquoi et\n   corrige.\n\n   ```js\n   chargerPanier()\n     .catch((erreur) => console.log('Échec :', erreur.message))\n     .then((panier) => calculerTotal(panier))\n     .then((total) => console.log('Total :', total));\n   ```\n\n   :::indice\n   Que renvoie le `catch`, et que devient la chaîne après lui ?\n   :::\n\n   :::solution\n   Le `catch` affiche l'erreur puis renvoie `undefined` : la chaîne repart en succès, et les étapes\n   suivantes s'exécutent avec un panier absent. Le `catch` doit venir à la fin.\n\n   ```js\n   const chargerPanier = () => Promise.reject(new Error('panier introuvable'));\n   const calculerTotal = (panier) => panier.reduce((s, p) => s + p, 0);\n\n   chargerPanier()\n     .then((panier) => calculerTotal(panier))\n     .then((total) => console.log('Total :', total))\n     .catch((erreur) => console.log('Échec :', erreur.message)); // 'Échec : panier introuvable'\n   ```\n   :::\n\n2. Charge trois ressources indépendantes en parallèle et affiche la somme de leurs tailles. Si l'une\n   échoue, affiche un seul message d'erreur.\n\n   :::indice\n   `Promise.all` attend les trois ensemble et renvoie leurs valeurs dans l'ordre fourni.\n   :::\n\n   :::solution\n   ```js\n   const charger = (nom, taille, echoue = false) =>\n     new Promise((resolve, reject) =>\n       setTimeout(() => (echoue ? reject(new Error(`${nom} indisponible`)) : resolve(taille)), 10),\n     );\n\n   Promise.all([charger('images', 120), charger('styles', 30), charger('scripts', 50)])\n     .then((tailles) => console.log('total :', tailles.reduce((s, t) => s + t, 0))) // 'total : 200'\n     .catch((erreur) => console.log('échec :', erreur.message));\n\n   Promise.all([charger('images', 120), charger('styles', 30, true)])\n     .then(() => console.log('jamais'))\n     .catch((erreur) => console.log('échec :', erreur.message)); // 'échec : styles indisponible'\n   ```\n   :::\n\n3. Écris `executerEnSerie(taches)` : `taches` est un tableau de fonctions qui renvoient chacune une\n   promesse. Elles doivent s'exécuter l'une après l'autre, et la fonction doit renvoyer une promesse\n   du tableau de leurs résultats.\n\n   :::indice\n   Pars d'une promesse tenue avec `[]`, et pour chaque tâche, enchaîne son exécution puis ajoute son\n   résultat au tableau.\n   :::\n\n   :::solution\n   ```js\n   function executerEnSerie(taches) {\n     return taches.reduce(\n       (chaine, tache) =>\n         chaine.then((resultats) => tache().then((resultat) => [...resultats, resultat])),\n       Promise.resolve([]),\n     );\n   }\n\n   const journal = [];\n   const tache = (nom, ms) => () =>\n     new Promise((resolve) => setTimeout(() => { journal.push(nom); resolve(nom); }, ms));\n\n   executerEnSerie([tache('a', 30), tache('b', 10), tache('c', 20)]).then((resultats) => {\n     console.log(resultats, journal); // ['a', 'b', 'c'] ['a', 'b', 'c']\n   });\n   ```\n\n   Chaque tâche ne démarre qu'à la fin de la précédente : l'ordre est respecté même si `b` est plus\n   rapide que `a`. Les tâches reçoivent des **fonctions**, pas des promesses, sinon elles auraient\n   toutes démarré dès la création du tableau.\n   :::\n\n## Questions d'entretien\n\n- Comment une erreur se propage-t-elle dans une chaîne de promesses ?\n\n  :::indice\n  Compare avec une exception dans un bloc `try`.\n  :::\n\n  :::reponse\n  Comme une exception : dès qu'une étape lève une erreur ou renvoie une promesse rompue, les `then`\n  suivants sont sautés jusqu'au premier `catch`. Si ce `catch` renvoie une valeur, la chaîne repart\n  en succès ; s'il relève une erreur, la rupture continue. Un seul `catch` final couvre donc toutes\n  les étapes, et un `catch` intermédiaire doit relever l'erreur s'il ne veut pas la masquer.\n  :::\n\n- Que se passe-t-il avec une promesse rompue que personne ne gère ?\n\n  :::indice\n  Les conséquences diffèrent entre un navigateur et Node.js.\n  :::\n\n  :::reponse\n  C'est un rejet non géré. Le navigateur affiche un avertissement dans la console et émet\n  l'événement `unhandledrejection`. Node.js, depuis sa version 15, arrête le processus par défaut,\n  ce qui peut faire tomber un serveur entier. Chaque chaîne doit donc se terminer par un `catch`, ou\n  être renvoyée à un appelant qui la gère, et une surveillance globale de `unhandledrejection` sert\n  de filet pour journaliser les oublis.\n  :::\n\n- Comment se comporte `Promise.all` quand une des promesses échoue ?\n\n  :::indice\n  Attend-il les autres ? Les annule-t-il ?\n  :::\n\n  :::reponse\n  Il se rompt immédiatement avec la première erreur, sans attendre les autres promesses. Celles-ci\n  ne sont pas annulées : les opérations continuent, mais leurs résultats sont ignorés. Quand on a\n  besoin de toutes les issues, succès et échecs, on utilise `Promise.allSettled`, et pour annuler\n  réellement des requêtes, un `AbortController`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-promesses-etats",
+      "title": "Pourquoi les promesses, et leurs trois états",
+      "slug": "pourquoi-les-promesses",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "promises",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-event-loop"
+      ],
+      "skills": [
+        "promise-states"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/promises/pourquoi-les-promesses/lesson.md",
+      "contentVersion": "ac8a6038164f",
+      "body": "\n## Objectifs\n\n- Expliquer les problèmes des callbacks imbriqués que les promesses résolvent.\n- Décrire les trois états d'une promesse et la règle qui les rend définitifs.\n- Consommer une promesse existante avec `then` et `catch`.\n\n## Introduction\n\nEnchaîner trois opérations asynchrones avec des callbacks produit une pyramide de fonctions\nimbriquées, où chaque niveau doit traiter ses propres erreurs. Pire : on confie son callback à\nune fonction tierce en espérant qu'elle l'appellera une fois, et une seule. Les **promesses**\nremplacent ce « rappelle-moi » par un objet qu'on reçoit tout de suite et qui représente le\nrésultat à venir. C'est la brique sur laquelle reposent `fetch`, `async` et `await`.\n\n## Concept\n\nUne promesse est un objet qui représente le résultat **futur** d'une opération asynchrone.\n\n| État | Signification | Réaction déclenchée |\n| --- | --- | --- |\n| *pending* (en attente) | l'opération n'est pas terminée | aucune pour l'instant |\n| *fulfilled* (tenue) | l'opération a réussi, avec une valeur | les callbacks de `then` |\n| *rejected* (rompue) | l'opération a échoué, avec une raison | les callbacks de `catch` |\n\nUne promesse tenue ou rompue est dite **réglée** (*settled*). Deux règles fondamentales :\n\n1. une promesse ne change d'état **qu'une seule fois** : réglée, elle le reste ;\n2. un callback de `then` s'exécute **toujours de façon asynchrone**, même si la promesse est\n   déjà réglée au moment où on l'attache.\n\n## Exemple\n\n```js\n// Opérations simulées, fondées sur des callbacks.\nfunction chargerUtilisateur(id, rappel) {\n  setTimeout(() => rappel(null, { id, nom: 'Ada' }), 10);\n}\nfunction chargerCommandes(utilisateur, rappel) {\n  setTimeout(() => rappel(null, [{ total: 30 }, { total: 12 }]), 10);\n}\n\n// Avec des callbacks : imbrication, et une erreur à gérer à chaque niveau.\nchargerUtilisateur(1, (erreur, utilisateur) => {\n  if (erreur) return console.error(erreur);\n  chargerCommandes(utilisateur, (erreur2, commandes) => {\n    if (erreur2) return console.error(erreur2);\n    console.log('callbacks :', commandes.length); // callbacks : 2\n  });\n});\n\n// Les mêmes opérations, sous forme de promesses.\nconst utilisateurPromis = (id) =>\n  new Promise((resolve) => setTimeout(() => resolve({ id, nom: 'Ada' }), 10));\nconst commandesPromises = () =>\n  new Promise((resolve) => setTimeout(() => resolve([{ total: 30 }, { total: 12 }]), 10));\n\nutilisateurPromis(1)\n  .then((utilisateur) => commandesPromises(utilisateur))\n  .then((commandes) => console.log('promesses :', commandes.length)) // promesses : 2\n  .catch((erreur) => console.error(erreur)); // un seul endroit pour toutes les erreurs\n\nconst promesse = utilisateurPromis(2);\nconsole.log(promesse); // Promise { <pending> } : l'objet existe avant le résultat\n```\n\n## Comment ça fonctionne\n\nLes callbacks imbriqués posent trois problèmes. La **lisibilité** : chaque étape ajoute un niveau\nd'indentation, et la logique se lit de gauche à droite au lieu de haut en bas. Les **erreurs** :\nchaque niveau doit tester la sienne, et une exception levée dans un callback échappe au `try`\nqui entoure l'appel initial. La **confiance** : en passant un callback, on confie à une autre\nfonction le soin de l'appeler une fois, ni zéro ni deux — c'est l'inversion de contrôle.\n\nUne promesse inverse cette relation. La fonction asynchrone **renvoie immédiatement** un objet ; le\ncode appelant y attache ses réactions quand il le souhaite. Comme la promesse ne se règle qu'une\nfois, un callback de `then` ne peut pas être appelé deux fois, et attacher un `then` après coup\nfonctionne : si la promesse est déjà tenue, le callback s'exécute quand même, avec la valeur.\n\nCe callback est toujours exécuté comme **microtâche**, jamais pendant l'appel à `then`. Cette\nrègle rend le comportement prévisible : le code qui suit `then` s'exécute toujours avant la\nréaction, que la promesse soit déjà réglée ou non. Le chapitre sur l'event loop a montré la\nconséquence sur l'ordre d'affichage.\n\n`then` renvoie une **nouvelle** promesse, ce qui permet d'enchaîner les étapes à plat, et un seul\n`catch` en fin de chaîne reçoit l'erreur de n'importe quelle étape. Le chapitre 3 de ce module\ndétaille ces règles de chaînage.\n\nEnfin, une promesse n'est **pas** l'opération elle-même : elle n'offre aucun moyen d'annuler le\ntravail en cours, ni de connaître son avancement. Elle représente seulement l'issue. L'annulation\npasse par d'autres outils, comme `AbortController`, présenté avec `fetch`.\n\n## Erreurs fréquentes\n\n**Imbriquer des `then` comme des callbacks.** Renvoie la promesse suivante et enchaîne à plat.\n\n**Oublier le `catch` final.** Une promesse rompue sans réaction devient un rejet non géré, qui\narrête un processus Node.js.\n\n**Lire l'état d'une promesse de façon synchrone.** Il n'existe pas d'accès direct : on réagit\navec `then`, `catch` ou `await`.\n\n**Croire qu'une promesse annule l'opération quand on l'ignore.** Le travail continue.\n\n## À retenir\n\n- Une promesse représente le résultat futur d'une opération asynchrone.\n- Trois états : en attente, tenue, rompue ; une fois réglée, elle ne change plus.\n- Les réactions de `then` et `catch` s'exécutent toujours en microtâche.\n- Les promesses remplacent l'imbrication par une chaîne, avec un seul point de gestion d'erreur.\n- Une promesse représente une issue : elle ne permet ni d'annuler ni de suivre l'avancement.\n\n## Exercices\n\n1. Pour chaque ligne, donne l'état final de la promesse.\n\n   ```js\n   const a = new Promise(() => {});\n   const b = Promise.resolve(42);\n   const c = new Promise((resolve, reject) => { reject(new Error('non')); resolve('oui'); });\n   const d = new Promise(() => { throw new Error('boum'); });\n   ```\n\n   :::indice\n   Une promesse change d'état une seule fois, et une erreur levée dans l'exécuteur compte comme un\n   rejet.\n   :::\n\n   :::solution\n   - `a` reste **en attente** pour toujours : rien ne la règle.\n   - `b` est **tenue** avec 42.\n   - `c` est **rompue** : le `reject` arrive en premier, le `resolve` suivant est ignoré.\n   - `d` est **rompue** avec l'erreur `boum`, levée dans l'exécuteur.\n   :::\n\n2. Donne l'ordre des affichages, et explique pourquoi la promesse déjà tenue n'affiche pas sa valeur en\n   premier.\n\n   ```js\n   const pret = Promise.resolve('valeur');\n   pret.then((v) => console.log(v));\n   console.log('après then');\n   ```\n\n   :::indice\n   Un callback de `then` peut-il s'exécuter pendant l'appel à `then` ?\n   :::\n\n   :::solution\n   L'ordre est `après then`, puis `valeur`. Même quand la promesse est déjà tenue, le callback est\n   placé en microtâche : il s'exécute après la fin du code synchrone en cours.\n   :::\n\n3. Réécris cette pyramide en une chaîne de promesses à plat, avec un seul `catch`. Les fonctions\n   `trouverClient`, `trouverPanier` et `calculerTotal` renvoient des promesses.\n\n   ```js\n   trouverClient(7).then((client) => {\n     trouverPanier(client).then((panier) => {\n       calculerTotal(panier).then((total) => {\n         console.log(total);\n       });\n     });\n   });\n   ```\n\n   :::indice\n   Dans un `then`, **renvoie** la promesse suivante au lieu d'attacher un `then` imbriqué.\n   :::\n\n   :::solution\n   ```js\n   const trouverClient = (id) => Promise.resolve({ id });\n   const trouverPanier = () => Promise.resolve([20, 22]);\n   const calculerTotal = (panier) => Promise.resolve(panier.reduce((s, p) => s + p, 0));\n\n   trouverClient(7)\n     .then((client) => trouverPanier(client))\n     .then((panier) => calculerTotal(panier))\n     .then((total) => console.log(total)) // 42\n     .catch((erreur) => console.error('Échec :', erreur.message));\n   ```\n\n   La version imbriquée n'avait aucune gestion d'erreur, et une erreur dans une étape interne\n   n'aurait jamais atteint un `catch` posé sur la chaîne extérieure.\n   :::\n\n## Questions d'entretien\n\n- Quels problèmes les promesses résolvent-elles par rapport aux callbacks ?\n\n  :::indice\n  Pense à l'imbrication, aux erreurs et à la confiance accordée à la fonction appelée.\n  :::\n\n  :::reponse\n  Elles remplacent l'imbrication par une chaîne plate, centralisent la gestion d'erreurs dans un\n  `catch` qui reçoit l'échec de n'importe quelle étape, et suppriment l'inversion de contrôle :\n  au lieu de confier un callback en espérant qu'il sera appelé une seule fois, on reçoit un objet\n  qui ne se règle qu'une fois et auquel on attache ses réactions quand on veut. Elles servent aussi\n  de base commune à `fetch`, `async` et `await`.\n  :::\n\n- Quels sont les états d'une promesse ?\n\n  :::indice\n  Trois états, et une règle sur leurs transitions.\n  :::\n\n  :::reponse\n  En attente (*pending*), tenue (*fulfilled*) avec une valeur, ou rompue (*rejected*) avec une\n  raison. Une promesse passe au plus une fois de l'attente à l'un des deux états réglés, et n'en\n  change plus ensuite. Il n'existe pas de lecture synchrone de l'état : on y réagit avec `then`,\n  `catch`, `finally` ou `await`.\n  :::\n\n- Un `then` attaché à une promesse déjà tenue s'exécute-t-il immédiatement ?\n\n  :::indice\n  Pense à la file dans laquelle la réaction est placée.\n  :::\n\n  :::reponse\n  Non. La réaction est toujours placée en microtâche : elle s'exécute après le code synchrone en\n  cours, même si la valeur est disponible depuis longtemps. Cette garantie rend le comportement\n  identique que la promesse soit déjà réglée ou non, et évite qu'un code se comporte parfois de\n  façon synchrone et parfois de façon asynchrone.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-then-catch",
+      "title": "then, catch, finally et le chaînage",
+      "slug": "then-catch-finally",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "promises",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-creer-promesse"
+      ],
+      "skills": [
+        "promise-chaining"
+      ],
+      "tags": [
+        "javascript",
+        "asynchrone"
+      ],
+      "contentPath": "javascript/promises/then-catch-finally/lesson.md",
+      "contentVersion": "111a05ecb08d",
+      "body": "\n## Objectifs\n\n- Prédire la valeur transmise d'un maillon à l'autre d'une chaîne de promesses.\n- Enchaîner des opérations asynchrones en renvoyant des promesses depuis `then`.\n- Utiliser `catch` pour récupérer d'une erreur et `finally` pour nettoyer.\n\n## Introduction\n\nLa force des promesses tient à une propriété : `then` **renvoie une nouvelle promesse**. Chaque\nmaillon transforme le résultat du précédent, et la chaîne se lit de haut en bas, comme du code\nsynchrone. Mais cette propriété a des règles précises — ce qu'on renvoie, ce qu'on oublie de\nrenvoyer, ce qu'on lève — et presque tous les bugs de promesses viennent d'une de ces règles\nmal appliquée.\n\n## Concept\n\n`promesse.then(f)` renvoie une **nouvelle** promesse, dont l'issue dépend de ce que fait `f` :\n\n| Dans `f` | La promesse renvoyée par `then` est |\n| --- | --- |\n| `return valeur` | tenue avec `valeur` |\n| rien (pas de `return`) | tenue avec `undefined` |\n| `return autrePromesse` | réglée comme `autrePromesse`, une fois celle-ci réglée |\n| `throw erreur` | rompue avec `erreur` |\n\nLes autres méthodes suivent la même logique :\n\n| Méthode | Appelée quand | Effet sur la chaîne |\n| --- | --- | --- |\n| `catch(g)` | la promesse précédente est rompue | la valeur renvoyée par `g` **tient** la suite : c'est une récupération |\n| `finally(h)` | dans tous les cas | `h` ne reçoit rien ; la valeur ou l'erreur précédente **traverse** |\n| `then(f, g)` | tenue ou rompue | `g` ne voit pas les erreurs levées par `f` |\n\n## Exemple\n\n```js\nconst attendre = (ms) => new Promise((resolve) => setTimeout(resolve, ms));\n\nPromise.resolve(2)\n  .then((n) => n * 10) // 20 : une valeur renvoyée tient la suite\n  .then((n) => attendre(10).then(() => n + 1)) // 21 : une promesse renvoyée est attendue\n  .then((n) => {\n    console.log('étape', n); // 'étape 21'\n  }) // pas de return : la suite reçoit undefined\n  .then((valeur) => console.log('reçu :', valeur)) // 'reçu : undefined'\n  .finally(() => console.log('chaîne 1 terminée'))\n  .then(() => demonstrationCatch());\n\nfunction demonstrationCatch() {\n  Promise.reject(new Error('réseau indisponible'))\n    .then(() => console.log('jamais exécuté')) // sauté : la promesse est rompue\n    .catch((erreur) => {\n      console.log('récupéré :', erreur.message); // 'récupéré : réseau indisponible'\n      return 'valeur de secours';\n    })\n    .then((valeur) => console.log('suite :', valeur)) // 'suite : valeur de secours'\n    .finally(() => console.log('nettoyage')); // exécuté, sans recevoir de valeur\n}\n```\n\n## Comment ça fonctionne\n\nChaque appel à `then`, `catch` ou `finally` crée une **nouvelle promesse**, en attente, liée à la\nprécédente. Quand la précédente se règle, le moteur exécute le callback correspondant en\nmicrotâche, puis règle la nouvelle promesse d'après ce que le callback a produit. C'est ce qui\npermet d'écrire la chaîne à plat : chaque maillon attend le précédent sans imbrication.\n\nLe cas décisif est celui du callback qui **renvoie une promesse**. La promesse créée par `then`\nne se règle pas avec l'objet promesse lui-même : elle **adopte** son issue, une fois celle-ci\nconnue. C'est l'aplatissement qui transforme une suite d'opérations asynchrones en une chaîne\nlisible. Il ne fonctionne que si le callback **renvoie** effectivement la promesse : une fonction\nfléchée avec accolades sans `return` lance l'opération mais n'attend rien, et la suite reçoit\n`undefined` avant la fin — l'erreur la plus répandue avec les promesses.\n\n`catch(g)` est un raccourci pour `then(undefined, g)`. Quand une promesse est rompue, les\ncallbacks de succès sont ignorés jusqu'au premier gestionnaire d'erreur. Si ce gestionnaire\n**renvoie** une valeur, la chaîne repart dans l'état tenu : c'est une récupération. S'il\n**relève** l'erreur, la chaîne reste rompue.\n\nLa forme `then(f, g)` n'est pas équivalente à `then(f).catch(g)` : dans la première, `g` ne voit\nque les erreurs de la promesse **précédente**, pas celles levées par `f`. On préfère presque\ntoujours la seconde.\n\n`finally(h)` sert au nettoyage : masquer un indicateur de chargement, fermer une connexion.\n`h` ne reçoit ni valeur ni erreur, et ce qu'il renvoie est ignoré : l'issue précédente traverse\ntelle quelle. Seule exception : si `h` lève une erreur ou renvoie une promesse rompue, cette\nnouvelle erreur remplace l'issue précédente.\n\n## Erreurs fréquentes\n\n**Oublier le `return` dans un `then`.** L'étape suivante n'attend pas et reçoit `undefined`.\n\n**Imbriquer au lieu d'enchaîner.** Renvoie la promesse ; ne rattache pas un `then` à l'intérieur.\n\n**Utiliser `then(f, g)` en pensant que `g` couvre `f`.** Mets un `catch` après.\n\n**Placer une logique de résultat dans `finally`.** Il ne reçoit pas la valeur : il nettoie.\n\n**Récupérer une erreur sans le vouloir.** Un `catch` qui ne relève pas remet la chaîne en succès.\n\n## À retenir\n\n- `then` renvoie une nouvelle promesse, réglée d'après ce que renvoie ou lève le callback.\n- Renvoyer une promesse dans `then` l'attend : c'est l'aplatissement de la chaîne.\n- Sans `return`, la suite reçoit `undefined` et n'attend rien.\n- `catch` qui renvoie une valeur récupère ; `catch` qui relève propage.\n- `finally` nettoie sans modifier l'issue, sauf s'il échoue lui-même.\n\n## Exercices\n\n1. Prédis ce qu'affiche ce code, puis corrige-le pour qu'il affiche `4`.\n\n   ```js\n   Promise.resolve(1)\n     .then((x) => x + 1)\n     .then((x) => {\n       x * 2;\n     })\n     .then((x) => console.log(x));\n   ```\n\n   :::indice\n   Que renvoie une fonction fléchée avec accolades et sans `return` ?\n   :::\n\n   :::solution\n   Il affiche `undefined` : le deuxième callback calcule `x * 2` mais ne renvoie rien.\n\n   ```js\n   Promise.resolve(1)\n     .then((x) => x + 1)\n     .then((x) => x * 2)\n     .then((x) => console.log(x)); // 4\n   ```\n   :::\n\n2. Montre sur un exemple que `then(f, g)` ne rattrape pas une erreur levée dans `f`, puis écris la\n   forme qui la rattrape.\n\n   :::indice\n   Fais lever une erreur dans `f`, et compare le gestionnaire passé en second argument avec un\n   `catch` placé après.\n   :::\n\n   :::solution\n   ```js\n   const f = () => {\n     throw new Error('erreur dans f');\n   };\n   const g = (erreur) => console.log('g a vu :', erreur.message);\n\n   Promise.resolve()\n     .then(f, g) // g n'est pas appelé : il ne couvre que la promesse précédente\n     .catch((erreur) => console.log('catch suivant :', erreur.message)); // 'catch suivant : erreur dans f'\n\n   Promise.resolve()\n     .then(f)\n     .catch(g); // 'g a vu : erreur dans f'\n   ```\n   :::\n\n3. Écris `chargerAvecIndicateur(charger, etat)` qui passe `etat.chargement` à `true`, lance\n   `charger()`, et remet `etat.chargement` à `false` dans tous les cas, succès ou échec, sans\n   modifier le résultat renvoyé à l'appelant.\n\n   :::indice\n   `finally` s'exécute dans les deux cas et laisse traverser la valeur ou l'erreur.\n   :::\n\n   :::solution\n   ```js\n   function chargerAvecIndicateur(charger, etat) {\n     etat.chargement = true;\n     return charger().finally(() => {\n       etat.chargement = false;\n     });\n   }\n\n   const etat = { chargement: false };\n   chargerAvecIndicateur(() => Promise.resolve('données'), etat)\n     .then((valeur) => console.log(valeur, etat.chargement)) // 'données' false\n     .then(() => chargerAvecIndicateur(() => Promise.reject(new Error('échec')), etat))\n     .catch((erreur) => console.log(erreur.message, etat.chargement)); // 'échec' false\n   ```\n   :::\n\n## Questions d'entretien\n\n- Que renvoie `then`, et comment la valeur de la promesse suivante est-elle déterminée ?\n\n  :::indice\n  Quatre cas selon ce que fait le callback.\n  :::\n\n  :::reponse\n  `then` renvoie toujours une nouvelle promesse. Si le callback renvoie une valeur, elle est tenue\n  avec cette valeur ; s'il ne renvoie rien, avec `undefined` ; s'il renvoie une promesse, elle\n  adopte son issue une fois réglée ; s'il lève une erreur, elle est rompue. C'est ce mécanisme qui\n  permet d'enchaîner des opérations asynchrones à plat.\n  :::\n\n- Quelle différence entre `then(f, g)` et `then(f).catch(g)` ?\n\n  :::indice\n  Qui rattrape une erreur levée par `f` ?\n  :::\n\n  :::reponse\n  Dans `then(f, g)`, `g` ne traite que les rejets de la promesse précédente : une erreur levée dans\n  `f` lui échappe et part vers la suite de la chaîne. Dans `then(f).catch(g)`, `g` est attaché à la\n  promesse renvoyée par `then`, et rattrape donc aussi les erreurs de `f`. La seconde forme est\n  celle qu'on veut presque toujours.\n  :::\n\n- À quoi sert `finally`, et que transmet-il ?\n\n  :::indice\n  Que reçoit son callback, et que devient ce qu'il renvoie ?\n  :::\n\n  :::reponse\n  `finally` exécute un nettoyage quel que soit le résultat : masquer un indicateur, libérer une\n  ressource. Son callback ne reçoit aucun argument, et sa valeur de retour est ignorée : la valeur\n  ou l'erreur précédente traverse jusqu'à la suite. Seul un échec du nettoyage lui-même — une erreur\n  levée ou une promesse rompue renvoyée — remplace l'issue précédente.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-chaine-prototypes",
       "title": "La chaîne de prototypes et la recherche de propriété",
       "slug": "chaine-de-prototypes",
@@ -3890,6 +4416,489 @@
     }
   ],
   "quizzes": [
+    {
+      "id": "javascript-async-await-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-async-await-q1",
+          "type": "true_false",
+          "difficulty": 1,
+          "question": "Une fonction async qui contient `return 42` renvoie directement le nombre 42.\n",
+          "answer": false,
+          "explanation": "Une fonction async renvoie toujours une promesse, ici tenue avec 42.\n",
+          "skills": [
+            "async-await"
+          ]
+        },
+        {
+          "id": "js-async-await-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Ordre d'affichage de `async function f() { console.log('A'); await null; console.log('C'); } f(); console.log('B');` ? (réponds sous la forme X Y Z)\n",
+          "answer": "A B C",
+          "explanation": "La fonction s'exécute de façon synchrone jusqu'au premier await, puis rend la main ; sa reprise est une microtâche.\n",
+          "skills": [
+            "async-await"
+          ]
+        },
+        {
+          "id": "js-async-await-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Où `await` est-il autorisé ?\n",
+          "options": [
+            "Dans une fonction async ou au niveau supérieur d'un module ES",
+            "Dans n'importe quelle fonction",
+            "Uniquement dans une boucle for",
+            "Uniquement dans un bloc try"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Hors d'une fonction async, await est une erreur de syntaxe, sauf au niveau supérieur d'un module ES.\n",
+          "skills": [
+            "async-await"
+          ]
+        },
+        {
+          "id": "js-async-await-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Pendant qu'une fonction attend avec await, les autres callbacks du programme peuvent s'exécuter.\n",
+          "answer": true,
+          "explanation": "Seule la fonction est suspendue ; la boucle d'événements continue de traiter le reste.\n",
+          "skills": [
+            "async-await"
+          ]
+        }
+      ],
+      "chapterId": "javascript-async-await",
+      "technology": "javascript",
+      "contentPath": "javascript/async-await/async-et-await/quiz.yaml",
+      "contentVersion": "15abdedae566"
+    },
+    {
+      "id": "javascript-combinateurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-combinateurs-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel combinateur choisir pour connaître l'issue de chaque envoi, succès ou échec ?\n",
+          "options": [
+            "Promise.allSettled",
+            "Promise.all",
+            "Promise.race",
+            "Promise.any"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "allSettled attend que toutes soient réglées et décrit chaque issue, sans jamais se rompre.\n",
+          "skills": [
+            "async-patterns"
+          ]
+        },
+        {
+          "id": "js-combinateurs-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Avec quelle erreur Promise.any se rompt-il quand toutes les promesses échouent ?\n",
+          "options": [
+            "AggregateError",
+            "La première erreur reçue",
+            "La dernière erreur reçue",
+            "RangeError"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "any se rompt avec une AggregateError, dont la propriété errors contient toutes les raisons.\n",
+          "skills": [
+            "async-patterns"
+          ]
+        },
+        {
+          "id": "js-combinateurs-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Quand une opération perd une course avec Promise.race, elle est interrompue.\n",
+          "answer": false,
+          "explanation": "race ne décide que du résultat attendu ; l'opération perdante continue. L'interruption demande un AbortSignal.\n",
+          "skills": [
+            "async-patterns"
+          ]
+        },
+        {
+          "id": "js-combinateurs-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi doubler le délai entre deux nouvelles tentatives ?\n",
+          "options": [
+            "Pour laisser au service le temps de se rétablir sans l'accabler",
+            "Pour que la tentative suivante réussisse forcément",
+            "Parce que setTimeout l'impose",
+            "Pour transformer l'erreur en succès"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Des tentatives rapprochées aggravent une surcharge. Une attente croissante, avec un peu d'aléa, espace la charge.\n",
+          "skills": [
+            "async-patterns"
+          ]
+        }
+      ],
+      "chapterId": "javascript-combinateurs",
+      "technology": "javascript",
+      "contentPath": "javascript/async-await/combinateurs-et-motifs/quiz.yaml",
+      "contentVersion": "49d5a45562db"
+    },
+    {
+      "id": "javascript-async-erreurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-async-erreurs-q1",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un bloc `try` rattrape la rupture d'une promesse qu'on n'attend pas avec await.\n",
+          "answer": false,
+          "explanation": "La rupture arrive après la sortie du try : sans await, rien n'est levé pendant son exécution.\n",
+          "skills": [
+            "async-errors"
+          ]
+        },
+        {
+          "id": "js-async-erreurs-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans un `try`, quelle écriture permet au `catch` de voir l'échec de `p` ?\n",
+          "options": [
+            "return await p",
+            "return p",
+            "p.then()",
+            "void p"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Avec return await, la fonction attend le règlement dans le try, où la rupture est levée. return p renvoie la promesse avant qu'elle soit réglée.\n",
+          "skills": [
+            "async-errors"
+          ]
+        },
+        {
+          "id": "js-async-erreurs-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Le bloc `finally` s'exécute même si l'await du bloc `try` lève une erreur.\n",
+          "answer": true,
+          "explanation": "finally s'exécute après le succès comme après l'échec, ce qui en fait l'endroit du nettoyage.\n",
+          "skills": [
+            "async-errors"
+          ]
+        },
+        {
+          "id": "js-async-erreurs-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que se passe-t-il pour les erreurs d'un callback async passé à `forEach` ?\n",
+          "options": [
+            "forEach ne les attend pas : elles ne remontent pas à l'appelant",
+            "forEach les rassemble et les lève à la fin",
+            "forEach s'arrête à la première erreur",
+            "forEach les convertit en undefined"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "forEach ignore les promesses renvoyées par son callback : rien n'est attendu, et leurs ruptures deviennent des rejets non gérés.\n",
+          "skills": [
+            "async-errors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-async-erreurs",
+      "technology": "javascript",
+      "contentPath": "javascript/async-await/erreurs-async/quiz.yaml",
+      "contentVersion": "b409c11557bd"
+    },
+    {
+      "id": "javascript-parallele-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-parallele-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Trois requêtes indépendantes de 100 ms sont écrites avec trois await successifs. Combien de temps prend la fonction, environ ?\n",
+          "options": [
+            "300 ms",
+            "100 ms",
+            "0 ms",
+            "Cela dépend de l'ordre d'écriture"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Chaque requête ne démarre qu'après la fin de la précédente. Avec Promise.all, la durée serait d'environ 100 ms.\n",
+          "skills": [
+            "async-parallel"
+          ]
+        },
+        {
+          "id": "js-parallele-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une opération asynchrone démarre au moment de l'await, et non à l'appel de sa fonction.\n",
+          "answer": false,
+          "explanation": "Elle démarre à l'appel ; await n'en attend que l'issue. Paralléliser, c'est appeler toutes les fonctions avant d'attendre.\n",
+          "skills": [
+            "async-parallel"
+          ]
+        },
+        {
+          "id": "js-parallele-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle écriture traite un tableau en parallèle et attend la fin de tous les traitements ?\n",
+          "options": [
+            "await Promise.all(liste.map(async (x) => traiter(x)))",
+            "liste.forEach(async (x) => await traiter(x))",
+            "for (const x of liste) await traiter(x)",
+            "await liste.map(traiter)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "forEach n'attend rien, for...of avec await est séquentiel, et await sur un tableau de promesses n'attend pas ses éléments.\n",
+          "skills": [
+            "async-parallel"
+          ]
+        },
+        {
+          "id": "js-parallele-q4",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "Lancer deux promesses dans des variables puis les attendre l'une après l'autre peut produire un rejet non géré, même si un try entoure les await.\n",
+          "answer": true,
+          "explanation": "Si la seconde est rompue pendant qu'on attend la première, aucun gestionnaire n'y est encore attaché. Promise.all attache ses gestionnaires immédiatement.\n",
+          "skills": [
+            "async-parallel"
+          ]
+        }
+      ],
+      "chapterId": "javascript-parallele",
+      "technology": "javascript",
+      "contentPath": "javascript/async-await/sequentiel-et-parallele/quiz.yaml",
+      "contentVersion": "4aef2d3226de"
+    },
+    {
+      "id": "javascript-event-loop-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-event-loop-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Ordre d'affichage de `setTimeout(() => console.log('T'), 0); Promise.resolve().then(() => console.log('P')); console.log('S');` ? (réponds sous la forme X Y Z)\n",
+          "answer": "S P T",
+          "explanation": "D'abord le code synchrone, puis toutes les microtâches, dont la suite de la promesse, puis la macrotâche du minuteur.\n",
+          "skills": [
+            "event-loop"
+          ]
+        },
+        {
+          "id": "js-event-loop-q2",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Lesquelles de ces opérations programment une microtâche ?\n",
+          "options": [
+            "promesse.then(f)",
+            "queueMicrotask(f)",
+            "setTimeout(f, 0)",
+            "setInterval(f, 10)"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "Les suites de promesses et `queueMicrotask` sont des microtâches ; les minuteurs programment des macrotâches.\n",
+          "skills": [
+            "event-loop"
+          ]
+        },
+        {
+          "id": "js-event-loop-q3",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "Une microtâche ajoutée pendant le vidage de la file des microtâches attend la macrotâche suivante.\n",
+          "answer": false,
+          "explanation": "Le vidage est complet : les microtâches ajoutées en route sont exécutées dans le même vidage, avant toute macrotâche.\n",
+          "skills": [
+            "event-loop"
+          ]
+        },
+        {
+          "id": "js-event-loop-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi une chaîne infinie de `then` gèle-t-elle une page ?\n",
+          "options": [
+            "La file des microtâches ne se vide jamais, donc ni rendu ni événement ne passent",
+            "Les promesses consomment toute la mémoire immédiatement",
+            "Le navigateur interdit plus de mille promesses",
+            "Chaque then crée un nouveau fil d'exécution"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le rendu et les événements n'interviennent qu'entre deux macrotâches, et on n'y arrive jamais tant que des microtâches s'ajoutent.\n",
+          "skills": [
+            "event-loop"
+          ]
+        }
+      ],
+      "chapterId": "javascript-event-loop",
+      "technology": "javascript",
+      "contentPath": "javascript/asynchronisme/event-loop/quiz.yaml",
+      "contentVersion": "83e244cee46b"
+    },
+    {
+      "id": "javascript-minuteurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-minuteurs-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment empêcher l'exécution d'un `setTimeout` déjà programmé ?\n",
+          "options": [
+            "clearTimeout avec l'identifiant renvoyé",
+            "Réaffecter la fonction à null",
+            "Appeler setTimeout une seconde fois avec 0",
+            "C'est impossible une fois programmé"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`setTimeout` renvoie un identifiant ; `clearTimeout(id)` annule l'exécution si elle n'a pas encore eu lieu.\n",
+          "skills": [
+            "timers"
+          ]
+        },
+        {
+          "id": "js-minuteurs-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pour relancer une requête lente toutes les 5 secondes sans chevauchement, que choisir ?\n",
+          "options": [
+            "Un setTimeout récursif, programmé à la fin de chaque requête",
+            "setInterval(requete, 5000)",
+            "queueMicrotask(requete) en boucle",
+            "Une boucle while avec Date.now()"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "`setInterval` ne tient pas compte de la durée de la requête. Le `setTimeout` récursif ne programme la suivante qu'une fois la précédente terminée.\n",
+          "skills": [
+            "timers"
+          ]
+        },
+        {
+          "id": "js-minuteurs-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Un intervalle jamais arrêté retient son callback et ce qu'il capture.\n",
+          "answer": true,
+          "explanation": "Tant qu'un minuteur est actif, son callback reste référencé, avec son environnement : c'est une fuite mémoire et un travail inutile.\n",
+          "skills": [
+            "timers"
+          ]
+        },
+        {
+          "id": "js-minuteurs-q4",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Qu'affiche `setTimeout((a, b) => console.log(a + b), 0, 2, 3)` ?\n",
+          "answer": "5",
+          "explanation": "Les arguments qui suivent le délai sont transmis au callback lors de son exécution.\n",
+          "skills": [
+            "timers"
+          ]
+        }
+      ],
+      "chapterId": "javascript-minuteurs",
+      "technology": "javascript",
+      "contentPath": "javascript/asynchronisme/minuteurs/quiz.yaml",
+      "contentVersion": "ad0bbad6c2ca"
+    },
+    {
+      "id": "javascript-sync-async-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-sync-async-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Dans quel ordre s'affichent les lettres de `console.log('a'); setTimeout(() => console.log('b'), 0); console.log('c');` ? (réponds sous la forme a b c)\n",
+          "answer": "a c b",
+          "explanation": "Le callback du minuteur attend que la pile soit vide, donc la fin du script, qui inclut l'affichage de `c`.\n",
+          "skills": [
+            "async-model"
+          ]
+        },
+        {
+          "id": "js-sync-async-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Pendant l'exécution d'une boucle synchrone de deux secondes, un clic peut déclencher son écouteur d'événement.\n",
+          "answer": false,
+          "explanation": "Une seule fonction s'exécute à la fois : le callback du clic attend dans la file que la boucle se termine et que la pile soit vide.\n",
+          "skills": [
+            "async-model"
+          ]
+        },
+        {
+          "id": "js-sync-async-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Qui gère réellement l'attente d'un minuteur ou d'une réponse réseau ?\n",
+          "options": [
+            "L'environnement : le navigateur ou Node.js",
+            "Un second fil JavaScript créé automatiquement",
+            "La pile d'appels, qui reste en pause",
+            "Le ramasse-miettes"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le code JavaScript confie l'attente à l'environnement et continue. Quand l'opération est terminée, l'environnement place le callback dans une file.\n",
+          "skills": [
+            "async-model"
+          ]
+        },
+        {
+          "id": "js-sync-async-q4",
+          "type": "true_false",
+          "difficulty": 1,
+          "question": "Le délai passé à `setTimeout` est une durée minimale, pas une garantie.\n",
+          "answer": true,
+          "explanation": "Une fois le délai écoulé, le callback attend encore que la pile soit vide et que les tâches précédentes soient passées.\n",
+          "skills": [
+            "async-model"
+          ]
+        }
+      ],
+      "chapterId": "javascript-sync-async",
+      "technology": "javascript",
+      "contentPath": "javascript/asynchronisme/synchrone-et-asynchrone/quiz.yaml",
+      "contentVersion": "c1a15230e163"
+    },
     {
       "id": "javascript-choisir-sa-boucle-quiz",
       "kind": "QUIZ",
@@ -7881,6 +8890,254 @@
       "technology": "javascript",
       "contentPath": "javascript/portee/portees-et-chaine-de-portee/quiz.yaml",
       "contentVersion": "63860ae20e95"
+    },
+    {
+      "id": "javascript-creer-promesse-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-creer-promesse-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Ordre d'affichage de `console.log('1'); new Promise(() => console.log('2')); console.log('3');` ? (réponds sous la forme X Y Z)\n",
+          "answer": "1 2 3",
+          "explanation": "L'exécuteur s'exécute immédiatement et de façon synchrone, pendant l'appel au constructeur.\n",
+          "skills": [
+            "promise-creation"
+          ]
+        },
+        {
+          "id": "js-creer-promesse-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Quelle valeur reçoit le `then` de `new Promise((resolve) => { resolve('a'); resolve('b'); })` ?\n",
+          "answer": "a",
+          "explanation": "Seul le premier appel à resolve ou reject règle la promesse ; les suivants sont ignorés.\n",
+          "skills": [
+            "promise-creation"
+          ]
+        },
+        {
+          "id": "js-creer-promesse-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une erreur levée dans un callback de setTimeout, à l'intérieur de l'exécuteur, rompt automatiquement la promesse.\n",
+          "answer": false,
+          "explanation": "Seules les erreurs synchrones de l'exécuteur sont converties en rejet. Une erreur asynchrone doit être transmise avec reject.\n",
+          "skills": [
+            "promise-creation"
+          ]
+        },
+        {
+          "id": "js-creer-promesse-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Dans quel cas `new Promise` est-il justifié ?\n",
+          "options": [
+            "Pour envelopper une API à callbacks ou un minuteur",
+            "Pour envelopper le résultat de fetch",
+            "Pour transformer la valeur d'une promesse existante",
+            "Pour rendre un calcul synchrone plus rapide"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une promesse existante se renvoie ou s'enchaîne avec then. Le constructeur sert aux opérations qui ne fournissent pas encore de promesse.\n",
+          "skills": [
+            "promise-creation"
+          ]
+        }
+      ],
+      "chapterId": "javascript-creer-promesse",
+      "technology": "javascript",
+      "contentPath": "javascript/promises/creer-une-promesse/quiz.yaml",
+      "contentVersion": "1175e62d75e0"
+    },
+    {
+      "id": "javascript-promesses-erreurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-promesses-erreurs-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Combien de messages affiche `Promise.reject(new Error('x')).then(() => console.log('a')).then(() => console.log('b')).catch(() => console.log('c'))` ?\n",
+          "answer": "1",
+          "explanation": "La rupture saute les deux then jusqu'au catch : seul 'c' est affiché.\n",
+          "skills": [
+            "promise-errors"
+          ]
+        },
+        {
+          "id": "js-promesses-erreurs-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Promise.all reçoit des promesses tenues avec 3, 1 et 2, qui arrivent dans l'ordre 1, 2, 3. Avec quel tableau est-il tenu ?\n",
+          "options": [
+            "[3, 1, 2]",
+            "[1, 2, 3]",
+            "[3, 2, 1]",
+            "Le tableau dépend du temps de chaque promesse"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les valeurs suivent l'ordre du tableau d'entrée, pas l'ordre d'arrivée.\n",
+          "skills": [
+            "promise-errors"
+          ]
+        },
+        {
+          "id": "js-promesses-erreurs-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Quand Promise.all se rompt, les autres opérations en cours sont annulées.\n",
+          "answer": false,
+          "explanation": "Une promesse ne s'annule pas : les autres opérations continuent, leurs résultats sont simplement ignorés.\n",
+          "skills": [
+            "promise-errors"
+          ]
+        },
+        {
+          "id": "js-promesses-erreurs-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que fait par défaut Node.js (version 15 et plus) face à un rejet non géré ?\n",
+          "options": [
+            "Il arrête le processus",
+            "Il ignore silencieusement le rejet",
+            "Il réessaie l'opération",
+            "Il transforme le rejet en valeur undefined"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un rejet non géré arrête le processus : chaque chaîne doit se terminer par un catch ou être renvoyée à un appelant.\n",
+          "skills": [
+            "promise-errors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-promesses-erreurs",
+      "technology": "javascript",
+      "contentPath": "javascript/promises/erreurs-et-composition/quiz.yaml",
+      "contentVersion": "b8152d32981e"
+    },
+    {
+      "id": "javascript-promesses-etats-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-promesses-etats-q1",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "Quels sont les trois états d'une promesse ?\n",
+          "options": [
+            "En attente, tenue, rompue",
+            "Créée, lancée, terminée",
+            "Synchrone, asynchrone, annulée",
+            "Ouverte, fermée, expirée"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une promesse est en attente (pending), puis tenue (fulfilled) ou rompue (rejected).\n",
+          "skills": [
+            "promise-states"
+          ]
+        },
+        {
+          "id": "js-promesses-etats-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une promesse tenue peut ensuite devenir rompue.\n",
+          "answer": false,
+          "explanation": "Une promesse ne change d'état qu'une fois : réglée, elle le reste.\n",
+          "skills": [
+            "promise-states"
+          ]
+        },
+        {
+          "id": "js-promesses-etats-q3",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Ordre d'affichage de `Promise.resolve('A').then(console.log); console.log('B');` ? (réponds sous la forme X Y)\n",
+          "answer": "B A",
+          "explanation": "La réaction est une microtâche : elle s'exécute après le code synchrone, même si la promesse est déjà tenue.\n",
+          "skills": [
+            "promise-states"
+          ]
+        },
+        {
+          "id": "js-promesses-etats-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Ignorer une promesse annule l'opération qu'elle représente.\n",
+          "answer": false,
+          "explanation": "Une promesse représente seulement l'issue ; le travail continue. L'annulation demande un mécanisme explicite comme AbortController.\n",
+          "skills": [
+            "promise-states"
+          ]
+        }
+      ],
+      "chapterId": "javascript-promesses-etats",
+      "technology": "javascript",
+      "contentPath": "javascript/promises/pourquoi-les-promesses/quiz.yaml",
+      "contentVersion": "bb8858a42719"
+    },
+    {
+      "id": "javascript-then-catch-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-then-catch-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche `Promise.resolve(3).then((x) => { x * 2; }).then(console.log)` ?\n",
+          "answer": "undefined",
+          "explanation": "Le callback à accolades ne renvoie rien : la promesse suivante est tenue avec undefined.\n",
+          "skills": [
+            "promise-chaining"
+          ]
+        },
+        {
+          "id": "js-then-catch-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche `Promise.reject(new Error('x')).catch(() => 5).then(console.log)` ?\n",
+          "answer": "5",
+          "explanation": "Un catch qui renvoie une valeur récupère l'erreur : la chaîne repart en succès avec 5.\n",
+          "skills": [
+            "promise-chaining"
+          ]
+        },
+        {
+          "id": "js-then-catch-q3",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche `Promise.resolve('v').finally(() => 'autre').then(console.log)` ?\n",
+          "answer": "v",
+          "explanation": "La valeur renvoyée par finally est ignorée : la valeur précédente traverse.\n",
+          "skills": [
+            "promise-chaining"
+          ]
+        },
+        {
+          "id": "js-then-catch-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Dans `then(f, g)`, `g` rattrape une erreur levée par `f`.\n",
+          "answer": false,
+          "explanation": "`g` ne couvre que la promesse précédente. Pour rattraper les erreurs de f, on écrit `then(f).catch(g)`.\n",
+          "skills": [
+            "promise-chaining"
+          ]
+        }
+      ],
+      "chapterId": "javascript-then-catch",
+      "technology": "javascript",
+      "contentPath": "javascript/promises/then-catch-finally/quiz.yaml",
+      "contentVersion": "faefaac0c85d"
     },
     {
       "id": "javascript-chaine-prototypes-quiz",

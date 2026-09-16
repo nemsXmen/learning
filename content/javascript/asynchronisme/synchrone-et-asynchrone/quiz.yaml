@@ -1,0 +1,58 @@
+id: javascript-sync-async-quiz
+kind: QUIZ
+questions:
+  - id: js-sync-async-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Dans quel ordre s'affichent les lettres de
+      `console.log('a'); setTimeout(() => console.log('b'), 0); console.log('c');` ?
+      (réponds sous la forme a b c)
+    answer: 'a c b'
+    explanation: >
+      Le callback du minuteur attend que la pile soit vide, donc la fin du script, qui inclut
+      l'affichage de `c`.
+    skills:
+      - async-model
+
+  - id: js-sync-async-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Pendant l'exécution d'une boucle synchrone de deux secondes, un clic peut déclencher son
+      écouteur d'événement.
+    answer: false
+    explanation: >
+      Une seule fonction s'exécute à la fois : le callback du clic attend dans la file que la
+      boucle se termine et que la pile soit vide.
+    skills:
+      - async-model
+
+  - id: js-sync-async-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Qui gère réellement l'attente d'un minuteur ou d'une réponse réseau ?
+    options:
+      - "L'environnement : le navigateur ou Node.js"
+      - "Un second fil JavaScript créé automatiquement"
+      - "La pile d'appels, qui reste en pause"
+      - "Le ramasse-miettes"
+    answer: [0]
+    explanation: >
+      Le code JavaScript confie l'attente à l'environnement et continue. Quand l'opération est
+      terminée, l'environnement place le callback dans une file.
+    skills:
+      - async-model
+
+  - id: js-sync-async-q4
+    type: true_false
+    difficulty: 1
+    question: >
+      Le délai passé à `setTimeout` est une durée minimale, pas une garantie.
+    answer: true
+    explanation: >
+      Une fois le délai écoulé, le callback attend encore que la pile soit vide et que les
+      tâches précédentes soient passées.
+    skills:
+      - async-model
