@@ -1,25 +1,25 @@
 ---
-id: typescript-module-54
-title: "Project: Type-safe SaaS"
-slug: module-54
+id: typescript-module-53
+title: "Project: Fullstack TypeScript"
+slug: fullstack-typescript
 technology: typescript
 level: expert
-module: module-54
+module: fullstack-typescript
 order: 1
 estimatedMinutes: 30
 difficulty: 5
-xp: 350
+xp: 345
 prerequisites: []
 skills:
-  - typescript-module-54
+  - typescript-module-53
 tags:
   - typescript
-  - module-54
+  - module-53
 ---
 
 ## Objectifs
 
-- Comprendre les notions essentielles de **Project: Type-safe SaaS**.
+- Comprendre les notions essentielles de **Project: Fullstack TypeScript**.
 - Savoir les appliquer dans un code TypeScript strict et lisible.
 - Identifier les compromis de conception avant de choisir une solution.
 
@@ -29,7 +29,7 @@ Ce module s'inscrit dans le parcours **TypeScript Zero to Hero**. Il relie les f
 
 ## Concept
 
-Project: Type-safe SaaS doit être abordé comme un contrat entre le code, le compilateur et les personnes qui le maintiennent. Commence par modéliser les données, préfère les types explicites aux hypothèses implicites et garde les frontières d'exécution sous contrôle.
+Project: Fullstack TypeScript doit être abordé comme un contrat entre le code, le compilateur et les personnes qui le maintiennent. Commence par modéliser les données, préfère les types explicites aux hypothèses implicites et garde les frontières d'exécution sous contrôle.
 
 ## Exemple
 
@@ -37,7 +37,7 @@ Project: Type-safe SaaS doit être abordé comme un contrat entre le code, le co
 // Décris d'abord la forme attendue, puis laisse TypeScript vérifier les usages.
 type ModuleExample = { title: string; ready: boolean };
 
-const example: ModuleExample = { title: 'Project: Type-safe SaaS', ready: true };
+const example: ModuleExample = { title: 'Project: Fullstack TypeScript', ready: true };
 console.log(example.title);
 ```
 
@@ -59,7 +59,7 @@ Le compilateur analyse les déclarations et les usages pour détecter les incoh�
 
 ## Exercices
 
-1. Crée une représentation typée de **Project: Type-safe SaaS**, puis écris une fonction qui refuse une donnée invalide.
+1. Crée une représentation typée de **Project: Fullstack TypeScript**, puis écris une fonction qui refuse une donnée invalide.
 
    :::indice
    Commence par lister les propriétés nécessaires et les cas limites avant d'écrire la fonction.
@@ -68,7 +68,7 @@ Le compilateur analyse les déclarations et les usages pour détecter les incoh�
    :::solution
    ```ts
    type Item = { name: string; valid: boolean };
-   const item: Item = { name: 'Project: Type-safe SaaS', valid: true };
+   const item: Item = { name: 'Project: Fullstack TypeScript', valid: true };
    ```
    :::
 

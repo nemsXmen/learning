@@ -1,25 +1,25 @@
 ---
-id: typescript-module-55
-title: "Final Project: TypeScript Hero"
-slug: module-55
+id: typescript-module-52
+title: "Project: Type-safe REST API"
+slug: rest-api-type-safe
 technology: typescript
 level: expert
-module: module-55
+module: api-rest-type-safe
 order: 1
 estimatedMinutes: 30
 difficulty: 5
-xp: 355
+xp: 340
 prerequisites: []
 skills:
-  - typescript-module-55
+  - typescript-module-52
 tags:
   - typescript
-  - module-55
+  - module-52
 ---
 
 ## Objectifs
 
-- Comprendre les notions essentielles de **Final Project: TypeScript Hero**.
+- Comprendre les notions essentielles de **Project: Type-safe REST API**.
 - Savoir les appliquer dans un code TypeScript strict et lisible.
 - Identifier les compromis de conception avant de choisir une solution.
 
@@ -29,7 +29,7 @@ Ce module s'inscrit dans le parcours **TypeScript Zero to Hero**. Il relie les f
 
 ## Concept
 
-Final Project: TypeScript Hero doit être abordé comme un contrat entre le code, le compilateur et les personnes qui le maintiennent. Commence par modéliser les données, préfère les types explicites aux hypothèses implicites et garde les frontières d'exécution sous contrôle.
+Project: Type-safe REST API doit être abordé comme un contrat entre le code, le compilateur et les personnes qui le maintiennent. Commence par modéliser les données, préfère les types explicites aux hypothèses implicites et garde les frontières d'exécution sous contrôle.
 
 ## Exemple
 
@@ -37,7 +37,7 @@ Final Project: TypeScript Hero doit être abordé comme un contrat entre le code
 // Décris d'abord la forme attendue, puis laisse TypeScript vérifier les usages.
 type ModuleExample = { title: string; ready: boolean };
 
-const example: ModuleExample = { title: 'Final Project: TypeScript Hero', ready: true };
+const example: ModuleExample = { title: 'Project: Type-safe REST API', ready: true };
 console.log(example.title);
 ```
 
@@ -59,7 +59,7 @@ Le compilateur analyse les déclarations et les usages pour détecter les incoh�
 
 ## Exercices
 
-1. Crée une représentation typée de **Final Project: TypeScript Hero**, puis écris une fonction qui refuse une donnée invalide.
+1. Crée une représentation typée de **Project: Type-safe REST API**, puis écris une fonction qui refuse une donnée invalide.
 
    :::indice
    Commence par lister les propriétés nécessaires et les cas limites avant d'écrire la fonction.
@@ -68,7 +68,7 @@ Le compilateur analyse les déclarations et les usages pour détecter les incoh�
    :::solution
    ```ts
    type Item = { name: string; valid: boolean };
-   const item: Item = { name: 'Final Project: TypeScript Hero', valid: true };
+   const item: Item = { name: 'Project: Type-safe REST API', valid: true };
    ```
    :::
 
