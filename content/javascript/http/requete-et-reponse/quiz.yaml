@@ -1,0 +1,61 @@
+id: javascript-http-requete-quiz
+kind: QUIZ
+questions:
+  - id: js-http-requete-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle méthode utiliser pour créer une nouvelle commande ?
+    options:
+      - "POST"
+      - "GET"
+      - "PUT"
+      - "DELETE"
+    answer: [0]
+    explanation: >
+      POST crée une ressource ou déclenche une action. GET lit, PUT remplace, DELETE supprime.
+    skills:
+      - http-basics
+
+  - id: js-http-requete-q2
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles méthodes sont idempotentes ?
+    options:
+      - "GET"
+      - "PUT"
+      - "DELETE"
+      - "POST"
+    answer: [0, 1, 2]
+    explanation: >
+      Répéter GET, PUT ou DELETE laisse le même état final ; répéter POST peut créer plusieurs ressources.
+    skills:
+      - http-basics
+
+  - id: js-http-requete-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Envoyer `{ prix: 45 }` avec PUT sur un produit conserve son nom.
+    answer: false
+    explanation: >
+      PUT remplace la ressource par la représentation envoyée : le nom absent disparaît. PATCH conserverait le nom.
+    skills:
+      - http-basics
+
+  - id: js-http-requete-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi ne faut-il jamais modifier des données en réponse à une requête GET ?
+    options:
+      - "Des robots, des préchargements ou des caches peuvent la déclencher sans intention de l'utilisateur"
+      - "GET ne peut pas contenir de paramètres"
+      - "Les navigateurs interdisent la lecture de la réponse"
+      - "GET est plus lent que POST"
+    answer: [0]
+    explanation: >
+      GET est une méthode sûre : tout le web suppose qu'elle ne modifie rien.
+    skills:
+      - http-basics

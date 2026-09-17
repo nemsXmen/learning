@@ -1,0 +1,57 @@
+id: javascript-http-codes-quiz
+kind: QUIZ
+questions:
+  - id: js-http-codes-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Un utilisateur connecté demande une page réservée aux administrateurs. Quel statut convient ?
+    options:
+      - "403"
+      - "401"
+      - "404"
+      - "500"
+    answer: [0]
+    explanation: >
+      Le serveur sait qui fait la demande, mais cette identité n'a pas les droits : 403. 401 signifie
+      « non authentifié ».
+    skills:
+      - http-status-headers
+
+  - id: js-http-codes-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      `response.ok` vaut `true` pour une réponse 204.
+    answer: true
+    explanation: >
+      ok vaut true pour tout statut de 200 à 299, y compris 201 et 204.
+    skills:
+      - http-status-headers
+
+  - id: js-http-codes-q3
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que renvoie `JSON.stringify({ a: undefined, b: NaN })` ?
+    answer: '{"b":null}'
+    explanation: >
+      undefined disparaît des objets, et NaN devient null.
+    skills:
+      - http-status-headers
+
+  - id: js-http-codes-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle famille de statuts rend une nouvelle tentative de la même requête utile ?
+    options:
+      - "5xx, erreurs du serveur souvent temporaires"
+      - "4xx, erreurs du client"
+      - "2xx, succès"
+      - "Aucune"
+    answer: [0]
+    explanation: >
+      Une erreur 4xx vient de la requête elle-même et se reproduira ; une erreur 5xx peut disparaître.
+    skills:
+      - http-status-headers

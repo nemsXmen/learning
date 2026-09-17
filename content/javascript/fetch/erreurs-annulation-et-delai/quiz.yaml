@@ -1,0 +1,62 @@
+id: javascript-fetch-erreurs-quiz
+kind: QUIZ
+questions:
+  - id: js-fetch-erreurs-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Avec quel nom d'erreur fetch est-il rompu quand AbortSignal.timeout(100) expire ?
+    options:
+      - "TimeoutError"
+      - "AbortError"
+      - "TypeError"
+      - "RangeError"
+    answer: [0]
+    explanation: >
+      AbortSignal.timeout produit une TimeoutError ; une annulation manuelle produit une AbortError.
+    skills:
+      - fetch-errors
+
+  - id: js-fetch-erreurs-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment se manifeste une coupure réseau pendant un fetch ?
+    options:
+      - "La promesse est rompue avec une TypeError"
+      - "La réponse arrive avec le statut 0 et ok à false"
+      - "La réponse arrive avec le statut 503"
+      - "La promesse reste en attente indéfiniment"
+    answer: [0]
+    explanation: >
+      Aucune réponse n'a pu être obtenue : fetch rompt sa promesse avec une TypeError.
+    skills:
+      - fetch-errors
+
+  - id: js-fetch-erreurs-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Annuler une requête avec AbortController ferme réellement la connexion, contrairement à Promise.race.
+    answer: true
+    explanation: >
+      Promise.race ne fait qu'ignorer la réponse ; l'annulation interrompt la requête et le téléchargement.
+    skills:
+      - fetch-errors
+
+  - id: js-fetch-erreurs-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans une recherche instantanée, comment empêcher une réponse ancienne d'écraser la plus récente ?
+    options:
+      - "Annuler la requête précédente avant d'en lancer une nouvelle"
+      - "Attendre une seconde avant chaque requête"
+      - "Utiliser Promise.all sur toutes les recherches"
+      - "Ajouter un en-tête Cache-Control"
+    answer: [0]
+    explanation: >
+      Les réponses ne reviennent pas forcément dans l'ordre ; annuler garantit qu'une seule réponse, la plus récente,
+      est affichée.
+    skills:
+      - fetch-errors

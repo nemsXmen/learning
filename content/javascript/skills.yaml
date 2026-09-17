@@ -547,3 +547,34 @@ skills:
     name: API de l'appareil et permissions
     importance: 3
     requires: [async-errors, browser-storage]
+
+  # Partie 10 — HTTP & APIs
+  - id: http-basics
+    name: Requêtes, réponses et méthodes HTTP
+    importance: 5
+    requires: [async-await]
+
+  - id: http-status-headers
+    name: Codes de statut, en-têtes et JSON
+    importance: 5
+    requires: [http-basics]
+
+  - id: http-auth-cors
+    name: Authentification et CORS
+    importance: 4
+    requires: [http-status-headers, browser-storage]
+
+  - id: fetch-basics
+    name: fetch, lire et envoyer des données
+    importance: 5
+    requires: [http-status-headers]
+
+  - id: fetch-errors
+    name: Erreurs, annulation et délai avec fetch
+    importance: 5
+    requires: [fetch-basics, async-patterns]
+
+  - id: fetch-resilience
+    name: Nouvelles tentatives et requêtes parallèles
+    importance: 4
+    requires: [fetch-errors]

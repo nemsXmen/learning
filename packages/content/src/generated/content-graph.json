@@ -276,6 +276,15 @@
       "contentVersion": "ec3c89092ced"
     },
     {
+      "slug": "fetch",
+      "title": "Fetch API",
+      "order": 31,
+      "part": "http-apis",
+      "technology": "javascript",
+      "contentPath": "javascript/fetch/module.yaml",
+      "contentVersion": "629e4f90db8d"
+    },
+    {
       "slug": "fonctions",
       "title": "Fonctions fondamentales",
       "order": 10,
@@ -301,6 +310,15 @@
       "technology": "javascript",
       "contentPath": "javascript/heritage/module.yaml",
       "contentVersion": "5a0b33aee358"
+    },
+    {
+      "slug": "http",
+      "title": "HTTP pour développeurs JavaScript",
+      "order": 30,
+      "part": "http-apis",
+      "technology": "javascript",
+      "contentPath": "javascript/http/module.yaml",
+      "contentVersion": "07777416d54e"
     },
     {
       "slug": "introduction",
@@ -1414,6 +1432,62 @@
       "requires": [
         "async-errors",
         "browser-storage"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "http-basics",
+      "name": "Requêtes, réponses et méthodes HTTP",
+      "importance": 5,
+      "requires": [
+        "async-await"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "http-status-headers",
+      "name": "Codes de statut, en-têtes et JSON",
+      "importance": 5,
+      "requires": [
+        "http-basics"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "http-auth-cors",
+      "name": "Authentification et CORS",
+      "importance": 4,
+      "requires": [
+        "http-status-headers",
+        "browser-storage"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "fetch-basics",
+      "name": "fetch, lire et envoyer des données",
+      "importance": 5,
+      "requires": [
+        "http-status-headers"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "fetch-errors",
+      "name": "Erreurs, annulation et délai avec fetch",
+      "importance": 5,
+      "requires": [
+        "fetch-basics",
+        "async-patterns"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "fetch-resilience",
+      "name": "Nouvelles tentatives et requêtes parallèles",
+      "importance": 4,
+      "requires": [
+        "fetch-errors"
       ],
       "technology": "javascript"
     },
@@ -3267,6 +3341,115 @@
       ]
     },
     {
+      "id": "javascript-fetch-erreurs",
+      "title": "Erreurs, annulation et délai maximal avec fetch",
+      "slug": "erreurs-annulation-et-delai",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "fetch",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-fetch",
+        "javascript-combinateurs"
+      ],
+      "skills": [
+        "fetch-errors"
+      ],
+      "tags": [
+        "javascript",
+        "http"
+      ],
+      "contentPath": "javascript/fetch/erreurs-annulation-et-delai/lesson.md",
+      "contentVersion": "c71c7c221aac",
+      "body": "\n## Objectifs\n\n- Distinguer les quatre issues d'échec d'une requête : réseau, statut HTTP, annulation, délai dépassé.\n- Annuler une requête avec `AbortController`, et imposer un délai avec `AbortSignal.timeout`.\n- Éviter qu'une réponse lente et obsolète écrase une réponse plus récente.\n\n## Introduction\n\nUne requête peut échouer de plusieurs façons, qui n'appellent pas la même réaction : un réseau coupé invite à\nréessayer, un `422` à corriger la saisie, une annulation volontaire à ne rien afficher du tout. Une requête peut\naussi ne jamais répondre, ou répondre trop tard, après qu'une requête plus récente a déjà affiché ses résultats. Ce\nchapitre traite ces situations, qui distinguent un client HTTP fiable d'un simple appel à `fetch`.\n\n## Concept\n\n| Issue | Comment elle se manifeste | Réaction typique |\n| --- | --- | --- |\n| Échec réseau | promesse rompue, `TypeError` | proposer de réessayer |\n| Statut d'erreur | réponse tenue, `ok` à `false` | selon le statut : corriger, se connecter, réessayer |\n| Annulation | promesse rompue, `AbortError` | ne rien afficher |\n| Délai dépassé | promesse rompue, `TimeoutError` | message et nouvelle tentative possible |\n\nLes outils d'annulation :\n\n| Outil | Rôle |\n| --- | --- |\n| `new AbortController()` | fournit un `signal` et une méthode `abort()` |\n| `fetch(adresse, { signal })` | la requête s'arrête quand le signal est annulé |\n| `AbortSignal.timeout(ms)` | un signal annulé automatiquement après `ms` |\n| `AbortSignal.any([s1, s2])` | un signal annulé dès que l'un des signaux l'est |\n\nAnnuler interrompt vraiment la requête : la connexion est fermée et le corps n'est pas téléchargé, contrairement à\n`Promise.race`, qui ne fait qu'ignorer la réponse.\n\n## Exemple\n\n```js\nconst API = 'https://api.boutique.exemple';\n\nclass ErreurHttp extends Error {\n  constructor(statut) {\n    super(`Erreur HTTP ${statut}`);\n    this.name = 'ErreurHttp';\n    this.statut = statut;\n  }\n}\n\nasync function charger(chemin, { signal } = {}) {\n  const reponse = await fetch(`${API}${chemin}`, {\n    signal: AbortSignal.any([signal ?? new AbortController().signal, AbortSignal.timeout(100)]),\n  });\n  if (!reponse.ok) throw new ErreurHttp(reponse.status);\n  return reponse.json();\n}\n\nfunction decrireEchec(erreur) {\n  if (erreur.name === 'TimeoutError') return 'délai dépassé';\n  if (erreur.name === 'AbortError') return 'annulée';\n  if (erreur instanceof ErreurHttp) return `statut ${erreur.statut}`;\n  if (erreur instanceof TypeError) return 'réseau indisponible';\n  return 'erreur inconnue';\n}\n\nfor (const chemin of ['/produits/1', '/produits/99', '/lent?ms=300']) {\n  try {\n    const donnees = await charger(chemin);\n    console.log(chemin, '→', donnees.nom);\n  } catch (erreur) {\n    console.log(chemin, '→', decrireEchec(erreur));\n  }\n}\n// '/produits/1 → Clavier', '/produits/99 → statut 404', '/lent?ms=300 → délai dépassé'\n\nconst annulation = new AbortController();\nconst enCours = charger('/lent?ms=80', { signal: annulation.signal });\nannulation.abort();\nconsole.log(await enCours.catch(decrireEchec)); // 'annulée'\n```\n\n## Comment ça fonctionne\n\nLes quatre issues se reconnaissent sans ambiguïté. Un **échec réseau** rompt la promesse de `fetch` avec une\n`TypeError`, dont le message varie selon l'environnement — « Failed to fetch » dans Chrome, « fetch failed » dans\nNode.js : on se fie au type, pas au texte. Un **statut d'erreur** donne une réponse tenue, que le code transforme en\nerreur explicite, comme `ErreurHttp`. Une **annulation** rompt la promesse avec une `DOMException` nommée `AbortError`,\net un **délai** dépassé avec `AbortSignal.timeout` produit une `TimeoutError`.\n\n`AbortController` sépare deux rôles : le **signal**, transmis à `fetch` et à tout ce qui doit réagir à l'annulation,\net la méthode **`abort()`**, gardée par le code qui décide d'annuler. Un même signal peut arrêter plusieurs requêtes à\nla fois — utile quand l'utilisateur quitte une page. Si l'on passe une raison à `abort(raison)`, la promesse est rompue\navec **cette raison** plutôt qu'avec une `AbortError` : pour savoir si une requête a été annulée, `signal.aborted` est\nalors plus fiable que le nom de l'erreur.\n\n`AbortSignal.any` combine plusieurs signaux : une annulation par l'utilisateur **et** un délai maximal, comme dans la\nfonction `charger`. Le signal combiné est annulé dès que l'un des deux l'est, et la raison conservée permet de savoir\nlequel.\n\nLe dernier piège est la **concurrence de réponses**. Dans une recherche instantanée, l'utilisateur tape « c », « cl »,\n« cla » : trois requêtes partent, et rien ne garantit qu'elles reviennent dans l'ordre. Si la réponse à « c » arrive en\ndernier, elle écrase les résultats de « cla », et l'interface affiche des résultats qui ne correspondent pas à la\nsaisie. La solution consiste à **annuler la requête précédente** avant d'en lancer une nouvelle : une seule réponse,\nla plus récente, peut alors être affichée.\n\nUne annulation n'est pas une panne : elle ne doit afficher aucun message d'erreur. On l'écarte donc explicitement dans\nle `catch`, avant de traiter les autres cas.\n\n## Erreurs fréquentes\n\n**Afficher un message d'erreur pour une annulation volontaire.** Ignore `AbortError`.\n\n**Se fier au texte d'une erreur réseau.** Il change selon le navigateur : teste le type.\n\n**Laisser des requêtes sans délai maximal.** Une requête peut rester en attente très longtemps.\n\n**Lancer une nouvelle recherche sans annuler la précédente.** Une réponse lente écrase une réponse récente.\n\n**Tester `name === 'AbortError'` après `abort(raison)`.** L'erreur est la raison : teste `signal.aborted`.\n\n## À retenir\n\n- Réseau : `TypeError` ; statut : réponse avec `ok` à `false` ; annulation : `AbortError` ; délai : `TimeoutError`.\n- `AbortController` fournit un `signal` pour `fetch` et `abort()` pour annuler.\n- `AbortSignal.timeout(ms)` impose un délai ; `AbortSignal.any` combine plusieurs signaux.\n- Annuler interrompt vraiment la requête, contrairement à `Promise.race`.\n- Annuler la requête précédente évite qu'une réponse obsolète écrase la plus récente.\n\n## Exercices\n\n1. Écris `rechercher(terme)` pour une recherche instantanée : chaque appel annule la requête précédente, seule la réponse\n   la plus récente est renvoyée, et une recherche annulée renvoie `null` sans erreur.\n\n   :::indice\n   Garde le contrôleur de la dernière requête dans une variable extérieure, et appelle son `abort()` au début de chaque\n   recherche.\n   :::\n\n   :::solution\n   ```js\n   let controleurRecherche = null;\n\n   async function rechercher(terme, delaiServeur) {\n     controleurRecherche?.abort();\n     const controleur = new AbortController();\n     controleurRecherche = controleur;\n     try {\n       const adresse = `${API}/recherche?q=${encodeURIComponent(terme)}&ms=${delaiServeur}`;\n       const reponse = await fetch(adresse, { signal: controleur.signal });\n       return await reponse.json();\n     } catch (erreur) {\n       if (controleur.signal.aborted) return null;\n       throw erreur;\n     }\n   }\n\n   const resultats = await Promise.all([rechercher('c', 80), rechercher('cl', 50), rechercher('cla', 10)]);\n   console.log(resultats.map((r) => r?.q ?? null)); // [null, null, 'cla']\n   ```\n\n   Même si la réponse à « c » est la plus lente, elle ne peut plus écraser celle de « cla » : sa requête a été annulée.\n   :::\n\n2. Écris `chargerAvecDelai(chemin, ms)` qui renvoie `{ ok: true, donnees }` en cas de succès, et sinon\n   `{ ok: false, message }` avec « Le serveur met trop de temps à répondre » pour un délai dépassé, « Connexion\n   impossible » pour une erreur réseau, et « Erreur 404 » par exemple pour un statut.\n\n   :::indice\n   `AbortSignal.timeout(ms)` pour le délai ; teste d'abord le nom `TimeoutError`, puis le type `TypeError`.\n   :::\n\n   :::solution\n   ```js\n   async function chargerAvecDelai(chemin, ms) {\n     try {\n       const reponse = await fetch(`${API}${chemin}`, { signal: AbortSignal.timeout(ms) });\n       if (!reponse.ok) return { ok: false, message: `Erreur ${reponse.status}` };\n       return { ok: true, donnees: await reponse.json() };\n     } catch (erreur) {\n       if (erreur.name === 'TimeoutError') return { ok: false, message: 'Le serveur met trop de temps à répondre' };\n       if (erreur instanceof TypeError) return { ok: false, message: 'Connexion impossible' };\n       throw erreur;\n     }\n   }\n\n   console.log(await chargerAvecDelai('/produits/1', 500)); // { ok: true, donnees: { id: 1, nom: 'Clavier', prix: 50 } }\n   console.log((await chargerAvecDelai('/lent?ms=300', 50)).message); // 'Le serveur met trop de temps à répondre'\n   console.log((await chargerAvecDelai('/produits/99', 500)).message); // 'Erreur 404'\n   ```\n\n   Le délai couvre aussi la lecture du corps : un serveur qui envoie ses en-têtes puis bloque est interrompu de la même façon.\n   :::\n\n3. Quand l'utilisateur quitte une page, toutes les requêtes qu'elle a lancées doivent s'arrêter. Écris\n   `creerChargeurDePage()`, qui renvoie une fonction `charger(chemin)` et une fonction `quitter()`, et vérifie que trois\n   requêtes en cours sont toutes interrompues.\n\n   :::indice\n   Un seul `AbortController` pour la page ; son signal est passé à chaque requête.\n   :::\n\n   :::solution\n   ```js\n   function creerChargeurDePage() {\n     const controleur = new AbortController();\n     return {\n       charger: (chemin) => fetch(`${API}${chemin}`, { signal: controleur.signal }).then((r) => r.json()),\n       quitter: () => controleur.abort(),\n     };\n   }\n\n   const page = creerChargeurDePage();\n   const requetes = ['/lent?ms=200', '/lent?ms=300', '/lent?ms=400'].map(page.charger);\n   page.quitter();\n\n   const bilans = await Promise.allSettled(requetes);\n   console.log(bilans.map((b) => b.reason?.name)); // ['AbortError', 'AbortError', 'AbortError']\n   ```\n   :::\n\n## Questions d'entretien\n\n- Comment distinguer les différentes causes d'échec d'une requête `fetch` ?\n\n  :::indice\n  Quatre cas : deux rompent la promesse avec un nom particulier, un avec un type, et un ne la rompt pas.\n  :::\n\n  :::reponse\n  Un statut d'erreur ne rompt pas la promesse : on le détecte avec `response.ok`. Un échec réseau rompt la promesse avec\n  une `TypeError`, au message variable selon l'environnement. Une annulation produit une `AbortError`, et un délai\n  imposé par `AbortSignal.timeout` une `TimeoutError`. On teste le nom ou le type plutôt que le message, et l'on ignore\n  les annulations volontaires au lieu d'afficher une erreur.\n  :::\n\n- Quelle différence entre annuler avec `AbortController` et utiliser `Promise.race` pour un délai ?\n\n  :::indice\n  Que devient la requête perdante dans chaque cas ?\n  :::\n\n  :::reponse\n  `Promise.race` ne fait qu'arrêter d'attendre : la requête continue, consomme de la bande passante et peut encore\n  produire des effets. `AbortController` interrompt réellement la requête : la connexion est fermée, le téléchargement du\n  corps s'arrête, et la promesse est rompue avec une `AbortError`. `AbortSignal.timeout` combine les deux besoins en une\n  ligne.\n  :::\n\n- Comment éviter qu'une réponse ancienne écrase une réponse récente dans une recherche instantanée ?\n\n  :::indice\n  Les réponses reviennent-elles forcément dans l'ordre des requêtes ?\n  :::\n\n  :::reponse\n  Les réponses ne reviennent pas forcément dans l'ordre : une requête pour « c » peut répondre après celle pour « cla ».\n  On annule donc la requête précédente avant chaque nouvelle recherche, avec un `AbortController` conservé entre les\n  appels, et l'on ignore les annulations. On peut aussi comparer un identifiant de requête et n'afficher que la plus\n  récente, mais l'annulation économise en plus le réseau et le serveur.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-fetch",
+      "title": "fetch : lire et envoyer des données",
+      "slug": "fetch-get-et-post",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "fetch",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-http-codes"
+      ],
+      "skills": [
+        "fetch-basics"
+      ],
+      "tags": [
+        "javascript",
+        "http"
+      ],
+      "contentPath": "javascript/fetch/fetch-get-et-post/lesson.md",
+      "contentVersion": "1e32daf7ca94",
+      "body": "\n## Objectifs\n\n- Envoyer des requêtes `GET` et `POST` avec `fetch`, et lire la réponse selon son format.\n- Traiter correctement les statuts d'erreur, que `fetch` ne signale pas par un rejet.\n- Écrire une petite fonction d'accès à une API qui centralise ces règles.\n\n## Introduction\n\n`fetch` est l'API standard pour faire des requêtes HTTP, dans les navigateurs comme dans Node.js. Son interface est\nsimple, mais deux de ses choix surprennent presque tous les débutants : une réponse `404` ou `500` **n'est pas une\nerreur** pour `fetch`, et le corps de la réponse doit être **lu à part**, de façon asynchrone. Ce chapitre montre\ncomment les apprivoiser, puis comment rassembler ces règles dans une fonction réutilisable.\n\n## Concept\n\n```js\nconst reponse = await fetch(adresse, { method, headers, body, signal, credentials });\n```\n\n| Propriété ou méthode de la réponse | Rôle |\n| --- | --- |\n| `reponse.ok` | `true` pour un statut de 200 à 299 |\n| `reponse.status` | le code de statut |\n| `reponse.headers.get(nom)` | lire un en-tête |\n| `await reponse.json()` | analyser le corps en JSON |\n| `await reponse.text()` | lire le corps en texte |\n| `await reponse.blob()` | lire le corps en données binaires, pour une image |\n\nLe corps à envoyer :\n\n| Données | `body` | `Content-Type` |\n| --- | --- | --- |\n| Objet JSON | `JSON.stringify(objet)` | à indiquer : `application/json` |\n| Formulaire, avec fichiers | `new FormData(formulaire)` | ajouté automatiquement |\n| Paires clé-valeur | `new URLSearchParams(objet)` | ajouté automatiquement |\n\nLa promesse de `fetch` n'est **rompue** qu'en cas d'échec réseau ou d'annulation. Un statut d'erreur donne une\nréponse **tenue**, avec `ok` à `false`.\n\n## Exemple\n\n```js\nconst API = 'https://api.boutique.exemple';\n\nasync function requete(chemin, { corps, ...options } = {}) {\n  const reponse = await fetch(`${API}${chemin}`, {\n    ...options,\n    headers: {\n      Accept: 'application/json',\n      ...(corps !== undefined && { 'Content-Type': 'application/json' }),\n      ...options.headers,\n    },\n    body: corps === undefined ? undefined : JSON.stringify(corps),\n  });\n\n  if (!reponse.ok) {\n    const details = await reponse.json().catch(() => null);\n    throw new Error(details?.erreur ?? `Erreur HTTP ${reponse.status}`);\n  }\n  return reponse.status === 204 ? null : reponse.json();\n}\n\nconst produits = await requete('/produits');\nconsole.log(produits.map((p) => p.nom)); // ['Clavier', 'Souris']\n\nconst cree = await requete('/produits', { method: 'POST', corps: { nom: 'Écran', prix: 199 } });\nconsole.log(cree.id, cree.nom); // 3 'Écran'\n\nconsole.log(await requete('/produits/3', { method: 'DELETE' })); // null : réponse 204 sans corps\n\ntry {\n  await requete('/produits/99');\n} catch (erreur) {\n  console.log(erreur.message); // 'produit 99 introuvable'\n}\n```\n\n## Comment ça fonctionne\n\n`fetch` renvoie une promesse tenue **dès que les en-têtes de la réponse sont reçus**, avant que le corps soit téléchargé.\nÀ ce moment, `status`, `ok` et `headers` sont disponibles, mais le contenu ne l'est pas encore : `json()`, `text()` et\n`blob()` renvoient une nouvelle promesse, tenue quand le corps a été reçu et analysé. D'où les deux `await`\nsuccessifs, et une règle souvent oubliée : le corps est un **flux** qui ne se lit **qu'une fois**. Un second appel à\n`json()` sur la même réponse lève une `TypeError`.\n\nLa promesse n'est rompue que si la requête n'a pas pu aboutir : réseau coupé, nom de domaine introuvable, requête\nbloquée, ou annulation. Une réponse `404` ou `500` est une réponse valide du point de vue du protocole : `fetch` la\nrenvoie normalement, avec `ok` à `false`. Le code doit donc **tester `ok` ou `status` après chaque requête** ; c'est\nla raison principale d'écrire une fonction d'accès commune, comme `requete` dans l'exemple, qui transforme les statuts\nd'erreur en exceptions et laisse le reste du code travailler avec des données.\n\n`json()` suppose un corps JSON valide. Une réponse `204` n'a pas de corps, et une erreur renvoyée par un serveur\nintermédiaire est souvent une page HTML : dans les deux cas, `json()` lève une `SyntaxError`. On vérifie donc le\nstatut avant de lire, et l'on protège la lecture du corps d'erreur, qui peut ne pas être du JSON.\n\nPour envoyer du JSON, deux choses sont nécessaires : sérialiser avec `JSON.stringify`, et déclarer\n`Content-Type: application/json`. Sans cet en-tête, la chaîne part en `text/plain`, et beaucoup de serveurs refusent\nou ignorent le corps. Avec `FormData` ou `URLSearchParams`, au contraire, il ne faut **pas** fixer `Content-Type` à la\nmain : le navigateur l'ajoute, et pour `FormData` il y inclut la délimitation des parties, sans laquelle le serveur ne\npeut pas lire les fichiers.\n\nEnfin, les options par défaut comptent : sans `method`, la requête est un `GET` ; `credentials` vaut `same-origin`,\nce qui envoie les cookies à la même origine seulement ; et une réponse de redirection est suivie automatiquement.\n\n## Erreurs fréquentes\n\n**Supposer qu'un statut d'erreur rompt la promesse.** Teste `response.ok`.\n\n**Lire le corps deux fois.** Stocke le résultat de `json()` dans une variable.\n\n**Appeler `json()` sur une réponse `204` ou une page d'erreur HTML.** Vérifie le statut et le type d'abord.\n\n**Oublier `Content-Type: application/json`.** Le serveur reçoit du texte brut.\n\n**Fixer `Content-Type` avec `FormData`.** La délimitation manque, et le serveur ne lit plus rien.\n\n## À retenir\n\n- `fetch` est tenue dès les en-têtes ; le corps se lit ensuite, une seule fois, avec `json()` ou `text()`.\n- Un statut d'erreur ne rompt pas la promesse : teste `ok` après chaque requête.\n- JSON : `JSON.stringify` et `Content-Type: application/json` ; `FormData` : pas de `Content-Type` manuel.\n- Une réponse `204` n'a pas de corps.\n- Une fonction d'accès commune centralise en-têtes, erreurs et lecture du corps.\n\n## Exercices\n\n1. Ce code affiche une liste vide au lieu d'un message d'erreur quand l'API renvoie `500`, puis plante sur `map`.\n   Explique pourquoi, et corrige.\n\n   ```js\n   async function afficherCommandes() {\n     const reponse = await fetch('/api/commandes');\n     const commandes = await reponse.json();\n     return commandes.map((c) => c.numero);\n   }\n   ```\n\n   :::indice\n   Que fait `fetch` d'un statut `500` ? Et que contient alors le corps ?\n   :::\n\n   :::solution\n   `fetch` ne rompt pas sa promesse pour un `500` : le code lit le corps d'erreur, par exemple `{ \"erreur\": \"…\" }`, puis\n   appelle `map` sur un objet, ce qui lève une `TypeError` sans rapport avec la vraie cause.\n\n   ```js\n   async function afficherCommandes(adresse) {\n     const reponse = await fetch(adresse);\n     if (!reponse.ok) {\n       throw new Error(`Chargement des commandes impossible (${reponse.status})`);\n     }\n     const commandes = await reponse.json();\n     return commandes.map((c) => c.numero);\n   }\n   ```\n\n   L'erreur levée décrit maintenant le vrai problème, et la couche d'interface peut afficher un message adapté.\n   :::\n\n2. Un formulaire d'envoi d'avatar contient un champ `nom` et un fichier. Écris l'appel qui l'envoie à `/avatars` en\n   `POST`, puis explique pourquoi ajouter `headers: { 'Content-Type': 'multipart/form-data' }` casserait l'envoi.\n\n   :::indice\n   `new FormData(formulaire)` ou `formData.append(nom, valeur)` ; regarde l'en-tête que le navigateur calcule seul.\n   :::\n\n   :::solution\n   ```js\n   const donnees = new FormData();\n   donnees.append('nom', 'Ada');\n   donnees.append('avatar', new File(['…'], 'ada.png', { type: 'image/png' }));\n\n   const requete = new Request('https://api.boutique.exemple/avatars', { method: 'POST', body: donnees });\n   console.log(requete.headers.get('content-type').startsWith('multipart/form-data; boundary=')); // true\n\n   // Dans la page : await fetch('/avatars', { method: 'POST', body: donnees });\n   ```\n\n   L'en-tête calculé contient une **délimitation** (`boundary`) qui sépare les parties du corps. En fixant\n   `Content-Type` à la main, on supprime cette délimitation : le serveur ne sait plus où commence chaque champ et ne peut\n   pas lire le fichier.\n   :::\n\n3. Ajoute à la fonction `requete` de l'exemple une option `parametres`, un objet transformé en chaîne de requête, et\n   utilise-la pour obtenir les produits à 30 € maximum.\n\n   :::indice\n   `new URLSearchParams(parametres).toString()` produit une chaîne correctement encodée.\n   :::\n\n   :::solution\n   ```js\n   async function requete(chemin, { corps, parametres, ...options } = {}) {\n     const requeteTexte = parametres ? `?${new URLSearchParams(parametres)}` : '';\n     const reponse = await fetch(`${API}${chemin}${requeteTexte}`, {\n       ...options,\n       headers: {\n         Accept: 'application/json',\n         ...(corps !== undefined && { 'Content-Type': 'application/json' }),\n         ...options.headers,\n       },\n       body: corps === undefined ? undefined : JSON.stringify(corps),\n     });\n     if (!reponse.ok) {\n       const details = await reponse.json().catch(() => null);\n       throw new Error(details?.erreur ?? `Erreur HTTP ${reponse.status}`);\n     }\n     return reponse.status === 204 ? null : reponse.json();\n   }\n\n   const abordables = await requete('/produits', { parametres: { prixMax: 30 } });\n   console.log(abordables.map((p) => p.nom)); // ['Souris']\n   ```\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `fetch` ne rompt-il pas sa promesse pour une réponse `404` ?\n\n  :::indice\n  Du point de vue du protocole, la requête a-t-elle échoué ?\n  :::\n\n  :::reponse\n  Parce qu'une réponse `404` ou `500` est une réponse HTTP valide : le serveur a bien reçu la requête et répondu. `fetch`\n  ne rompt sa promesse que lorsqu'aucune réponse n'a pu être obtenue — erreur réseau, requête bloquée ou annulée. C'est au\n  code de tester `response.ok` ou `response.status`, en général dans une fonction d'accès commune qui transforme les\n  statuts d'erreur en exceptions explicites.\n  :::\n\n- Pourquoi faut-il deux `await` pour obtenir les données d'une réponse ?\n\n  :::indice\n  Quand la promesse de `fetch` est-elle tenue ?\n  :::\n\n  :::reponse\n  La promesse de `fetch` est tenue dès que les en-têtes sont reçus, ce qui permet de lire le statut et de décider\n  quoi faire avant de télécharger un corps potentiellement volumineux. Le corps arrive ensuite sous forme de flux, et\n  `json()` ou `text()` renvoient une seconde promesse, tenue une fois le corps entièrement lu et analysé. Ce flux ne peut\n  être consommé qu'une fois.\n  :::\n\n- Comment envoyer du JSON, puis un formulaire avec un fichier ?\n\n  :::indice\n  Le `Content-Type` se fixe à la main dans un cas, et surtout pas dans l'autre.\n  :::\n\n  :::reponse\n  Pour du JSON, on sérialise l'objet avec `JSON.stringify` et l'on déclare `Content-Type: application/json`. Pour un\n  formulaire avec fichier, on passe un `FormData` comme `body` sans fixer `Content-Type` : l'environnement ajoute\n  `multipart/form-data` avec la délimitation des parties, indispensable au serveur. Il en va de même pour\n  `URLSearchParams`, envoyé en `application/x-www-form-urlencoded`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-fetch-paralleles",
+      "title": "Nouvelles tentatives et requêtes parallèles",
+      "slug": "nouvelles-tentatives-et-requetes-paralleles",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "fetch",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-fetch-erreurs"
+      ],
+      "skills": [
+        "fetch-resilience"
+      ],
+      "tags": [
+        "javascript",
+        "http"
+      ],
+      "contentPath": "javascript/fetch/nouvelles-tentatives-et-requetes-paralleles/lesson.md",
+      "contentVersion": "88b71d26e05e",
+      "body": "\n## Objectifs\n\n- Réessayer une requête seulement quand c'est utile et sans danger.\n- Respecter `Retry-After` et espacer les tentatives pour ne pas aggraver une surcharge.\n- Charger plusieurs ressources en parallèle et afficher ce qui a réussi malgré un échec partiel.\n\n## Introduction\n\nLe réseau est imparfait : un serveur redémarre, un équilibreur de charge renvoie `503` pendant quelques secondes,\nun quota de requêtes est atteint. Réessayer résout beaucoup de ces pannes passagères — à condition de le faire avec\ndiscernement. Et une page qui dépend de plusieurs API doit charger ses données en parallèle, sans tout perdre dès\nqu'une seule d'entre elles échoue. Ce chapitre applique à HTTP les motifs asynchrones de la partie 6.\n\n## Concept\n\n**Quand réessayer ?**\n\n| Situation | Réessayer ? |\n| --- | --- |\n| Erreur réseau, `TypeError` | oui, si la requête est idempotente |\n| `429 Too Many Requests` | oui, après le délai de `Retry-After` |\n| `502`, `503`, `504` | oui, avec une attente croissante |\n| `500` | avec prudence : l'erreur peut être permanente |\n| `400`, `401`, `403`, `404`, `422` | non : la requête elle-même doit changer |\n| Annulation par l'utilisateur | non |\n\n**Comment ?** Un nombre maximal de tentatives, une attente qui double entre deux essais, un peu d'aléa pour éviter\nque tous les clients réessaient ensemble, et `Retry-After` quand le serveur l'indique. On ne réessaie\nautomatiquement que les méthodes **idempotentes** — `GET`, `PUT`, `DELETE` —, sauf protection explicite par une clé\nd'idempotence.\n\n**En parallèle** : `Promise.all` quand tout est nécessaire, `Promise.allSettled` quand un résultat partiel reste utile.\n\n## Exemple\n\n```js\nconst API = 'https://api.boutique.exemple';\nconst attendre = (ms) => new Promise((resolve) => setTimeout(resolve, ms));\nconst STATUTS_TEMPORAIRES = new Set([429, 502, 503, 504]);\n\nasync function fetchAvecTentatives(chemin, { tentatives = 3, delaiBase = 50 } = {}) {\n  for (let essai = 1; ; essai++) {\n    let reponse;\n    try {\n      reponse = await fetch(`${API}${chemin}`);\n    } catch (erreur) {\n      if (!(erreur instanceof TypeError) || essai === tentatives) throw erreur;\n    }\n    if (reponse && !STATUTS_TEMPORAIRES.has(reponse.status)) return reponse;\n    if (essai === tentatives) return reponse;\n\n    const retryAfter = Number(reponse?.headers.get('retry-after'));\n    const attente = Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter * 1000 : delaiBase * 2 ** (essai - 1);\n    console.log(`essai ${essai} : statut ${reponse?.status ?? 'réseau'}, nouvel essai dans ${attente} ms`);\n    await attendre(attente);\n  }\n}\n\nconst reponse = await fetchAvecTentatives('/instable');\nconsole.log(reponse.status, await reponse.json()); // 200 { tentative: 3 }\n\nconst [produits, profil, produitAbsent] = await Promise.allSettled([\n  fetch(`${API}/produits`).then((r) => r.json()),\n  fetch(`${API}/profil`).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`profil : ${r.status}`)))),\n  fetch(`${API}/produits/99`).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`produit : ${r.status}`)))),\n]);\nconsole.log(produits.status, produits.value.length); // 'fulfilled' 2\nconsole.log(profil.status, profil.reason.message); // 'rejected' 'profil : 401'\nconsole.log(produitAbsent.reason.message); // 'produit : 404'\n```\n\n## Comment ça fonctionne\n\nUne nouvelle tentative ne sert que si la cause de l'échec peut **disparaître d'elle-même**. Une coupure réseau, un\nredémarrage de serveur ou une surcharge sont passagers ; une requête invalide, un droit manquant ou une ressource\nsupprimée ne le sont pas. La fonction de l'exemple ne réessaie donc que les erreurs réseau et les statuts `429`,\n`502`, `503` et `504`, et renvoie immédiatement toute autre réponse à l'appelant, qui la traitera normalement.\n\nL'**attente** entre deux essais est essentielle. Réessayer immédiatement, c'est ajouter de la charge à un serveur qui\npeine déjà ; si des milliers de clients le font en même temps, la panne s'aggrave. L'attente exponentielle — 50, 100,\n200 ms — laisse au service le temps de se rétablir, et un léger aléa ajouté au délai étale les tentatives des\ndifférents clients. Quand le serveur envoie `Retry-After`, il indique lui-même le délai à respecter, en secondes ou\nsous forme de date : on s'y conforme.\n\nLe **nombre de tentatives** doit rester borné, et la durée totale acceptable pour l'utilisateur : au-delà, mieux vaut\nafficher une erreur et proposer de réessayer manuellement. Une nouvelle tentative doit aussi respecter l'**annulation** :\nsi l'utilisateur a quitté la page, on arrête au lieu de réessayer.\n\nEnfin, réessayer une requête **non idempotente** est dangereux : un `POST` dont la réponse s'est perdue a peut-être\nété traité, et le renvoyer créerait un doublon. On ne le fait que si l'API accepte une **clé d'idempotence**, un\nidentifiant unique envoyé dans un en-tête qui permet au serveur de reconnaître une répétition.\n\nPour les **requêtes parallèles**, le choix du combinateur dépend du besoin. Un tableau de bord qui affiche plusieurs\nblocs indépendants utilise `Promise.allSettled` : les blocs qui ont réussi s'affichent, les autres montrent un message\nd'erreur local. Une page qui n'a de sens que si toutes les données sont là utilise `Promise.all`, qui échoue dès la\npremière erreur. Avec beaucoup de requêtes, on limite la concurrence, comme vu dans la partie Asynchronous, pour ne pas\nsaturer le navigateur ou le serveur.\n\n## Erreurs fréquentes\n\n**Réessayer un `400` ou un `404`.** La requête échouera toujours de la même façon.\n\n**Réessayer immédiatement et sans limite.** La surcharge s'aggrave ; espace et borne les tentatives.\n\n**Ignorer `Retry-After`.** Le serveur indique le délai à respecter.\n\n**Réessayer automatiquement un `POST`.** Le risque de doublon est réel sans clé d'idempotence.\n\n**Utiliser `Promise.all` pour des blocs indépendants.** Un seul échec vide tout l'écran : `allSettled`.\n\n## À retenir\n\n- On réessaie les erreurs passagères : réseau, `429`, `502`, `503`, `504` — jamais les `4xx` de la requête.\n- Tentatives bornées, attente exponentielle avec aléa, et respect de `Retry-After`.\n- Seules les requêtes idempotentes se réessaient sans précaution.\n- `allSettled` pour afficher un résultat partiel, `all` quand tout est nécessaire.\n- Avec beaucoup de requêtes, on limite la concurrence.\n\n## Exercices\n\n1. Écris `estTemporaire(reponseOuErreur)` qui renvoie `true` pour une `TypeError` réseau et pour les statuts `429`, `502`,\n   `503` et `504`, et `false` pour toute autre réponse ou erreur, y compris une annulation.\n\n   :::indice\n   Distingue d'abord une erreur d'une réponse, avec `instanceof Response`.\n   :::\n\n   :::solution\n   ```js\n   const TEMPORAIRES = new Set([429, 502, 503, 504]);\n\n   function estTemporaire(reponseOuErreur) {\n     if (reponseOuErreur instanceof Response) {\n       return TEMPORAIRES.has(reponseOuErreur.status);\n     }\n     return reponseOuErreur instanceof TypeError;\n   }\n\n   console.log(\n     estTemporaire(new Response(null, { status: 503 })),\n     estTemporaire(new Response(null, { status: 404 })),\n     estTemporaire(new TypeError('fetch failed')),\n     estTemporaire(new DOMException('annulée', 'AbortError')),\n   ); // true false true false\n   ```\n   :::\n\n2. `Retry-After` contient soit un nombre de secondes, soit une date HTTP. Écris `delaiRetryAfter(valeur, maintenant)` qui\n   renvoie le délai en millisecondes, jamais négatif, ou `null` si la valeur est absente ou illisible.\n\n   :::indice\n   `Number(valeur)` pour les secondes ; `Date.parse(valeur)` pour une date, comparée à `maintenant`.\n   :::\n\n   :::solution\n   ```js\n   function delaiRetryAfter(valeur, maintenant = Date.now()) {\n     if (!valeur) return null;\n     const secondes = Number(valeur);\n     if (Number.isFinite(secondes)) return Math.max(0, secondes * 1000);\n     const date = Date.parse(valeur);\n     return Number.isNaN(date) ? null : Math.max(0, date - maintenant);\n   }\n\n   const maintenant = Date.parse('Wed, 17 Sep 2026 10:00:00 GMT');\n   console.log(delaiRetryAfter('30', maintenant)); // 30000\n   console.log(delaiRetryAfter('Wed, 17 Sep 2026 10:00:05 GMT', maintenant)); // 5000\n   console.log(delaiRetryAfter('bientôt', maintenant), delaiRetryAfter(null, maintenant)); // null null\n   ```\n\n   L'instant présent est un paramètre : la fonction se teste sans dépendre de l'horloge.\n   :::\n\n3. Un tableau de bord affiche trois blocs indépendants : produits, profil et produit du jour. Écris\n   `chargerTableauDeBord()` qui charge les trois en parallèle et renvoie, pour chaque bloc, `{ ok: true, donnees }` ou\n   `{ ok: false, message }`, sans qu'un échec empêche l'affichage des autres.\n\n   :::indice\n   Une fonction `chargerJSON(chemin)` qui rompt sa promesse pour un statut d'erreur, puis `Promise.allSettled`.\n   :::\n\n   :::solution\n   ```js\n   async function chargerJSON(chemin) {\n     const reponse = await fetch(`${API}${chemin}`);\n     if (!reponse.ok) throw new Error(`${chemin} : ${reponse.status}`);\n     return reponse.json();\n   }\n\n   async function chargerTableauDeBord() {\n     const blocs = { produits: '/produits', profil: '/profil', produitDuJour: '/produits/99' };\n     const bilans = await Promise.allSettled(Object.values(blocs).map(chargerJSON));\n     return Object.fromEntries(\n       Object.keys(blocs).map((nom, i) => [\n         nom,\n         bilans[i].status === 'fulfilled'\n           ? { ok: true, donnees: bilans[i].value }\n           : { ok: false, message: bilans[i].reason.message },\n       ]),\n     );\n   }\n\n   const tableau = await chargerTableauDeBord();\n   console.log(tableau.produits.ok, tableau.profil.message, tableau.produitDuJour.message);\n   // true '/profil : 401' '/produits/99 : 404'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quelles requêtes faut-il réessayer automatiquement ?\n\n  :::indice\n  Pense à la nature de l'erreur et à la méthode HTTP.\n  :::\n\n  :::reponse\n  Celles dont l'échec est probablement passager — erreur réseau, `429`, `502`, `503`, `504` — et dont la répétition est\n  sans danger, c'est-à-dire les méthodes idempotentes comme `GET`, `PUT` et `DELETE`. On ne réessaie pas les erreurs\n  `4xx` qui viennent de la requête elle-même, ni une annulation volontaire, ni un `POST` sans clé d'idempotence, qui\n  risquerait de créer un doublon.\n  :::\n\n- Pourquoi espacer les nouvelles tentatives de façon exponentielle ?\n\n  :::indice\n  Imagine des milliers de clients qui réessaient tous immédiatement.\n  :::\n\n  :::reponse\n  Parce qu'un serveur en difficulté est souvent surchargé : des tentatives immédiates ajoutent de la charge au pire\n  moment et peuvent transformer une panne passagère en panne durable. Doubler l'attente à chaque essai laisse le temps au\n  service de se rétablir, et un léger aléa évite que tous les clients réessaient au même instant. Quand le serveur envoie\n  `Retry-After`, c'est ce délai qu'on respecte.\n  :::\n\n- Quand utiliser `Promise.allSettled` plutôt que `Promise.all` pour plusieurs requêtes ?\n\n  :::indice\n  Un échec doit-il empêcher d'afficher les autres résultats ?\n  :::\n\n  :::reponse\n  Quand les requêtes alimentent des parties indépendantes, comme les blocs d'un tableau de bord : `allSettled` attend\n  toutes les issues et permet d'afficher ce qui a réussi, avec un message local pour ce qui a échoué. `Promise.all`\n  convient quand les données ne valent rien les unes sans les autres : il échoue dès la première erreur, ce qui évite\n  d'afficher une page incohérente.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-fonctions-pures",
       "title": "Fonctions pures et effets de bord",
       "slug": "fonctions-pures",
@@ -3652,6 +3835,115 @@
       "contentPath": "javascript/heritage/polymorphisme/lesson.md",
       "contentVersion": "e08e57be97b0",
       "body": "\n## Objectifs\n\n- Redéfinir une méthode héritée sans casser le contrat du parent.\n- Remplacer un `switch` sur le type d'un objet par un appel polymorphe.\n- Reconnaître le typage par comportement (*duck typing*), propre à JavaScript.\n\n## Introduction\n\nUn programme qui calcule des frais de livraison écrit souvent\n`if (colis.type === 'express') … else if (colis.type === 'standard') …`, et ce test se\nrecopie dans chaque fonction qui dépend du type. Chaque nouveau mode de livraison oblige alors\nà modifier tous ces endroits. Le **polymorphisme** inverse la logique : chaque objet sait\nrépondre au même message à sa façon, et le code appelant n'a plus besoin de connaître les\ntypes.\n\n## Concept\n\n| Notion | Définition |\n| --- | --- |\n| Redéfinition | une sous-classe fournit sa propre version d'une méthode héritée |\n| Polymorphisme | le même appel produit un comportement adapté à chaque objet |\n| Contrat | ce qu'une méthode promet : paramètres acceptés, type renvoyé, erreurs possibles |\n| Duck typing | un objet convient s'il possède les méthodes attendues, quel que soit son type |\n\nLa règle qui rend le polymorphisme sûr — le **principe de substitution** — tient en une\nphrase : partout où le code attend le parent, une instance de la sous-classe doit pouvoir\nêtre utilisée sans surprise.\n\n## Exemple\n\n```js\n// Avant : le type est testé à chaque usage.\nfunction fraisAvecSwitch(colis) {\n  switch (colis.type) {\n    case 'standard':\n      return 5;\n    case 'express':\n      return 5 + colis.poids * 2;\n    default:\n      throw new Error(`Type inconnu : ${colis.type}`);\n  }\n}\nconsole.log(fraisAvecSwitch({ type: 'express', poids: 3 })); // 11\n\n// Après : chaque type porte sa propre règle.\nclass Livraison {\n  constructor(poids) {\n    this.poids = poids;\n  }\n  frais() {\n    return 5;\n  }\n  resume() {\n    return `${this.constructor.name} : ${this.frais()} €`;\n  }\n}\n\nclass LivraisonExpress extends Livraison {\n  frais() {\n    return super.frais() + this.poids * 2;\n  }\n}\n\nclass RetraitMagasin extends Livraison {\n  frais() {\n    return 0;\n  }\n}\n\nconst envois = [new Livraison(3), new LivraisonExpress(3), new RetraitMagasin(3)];\nconsole.log(envois.map((envoi) => envoi.resume()));\n// ['Livraison : 5 €', 'LivraisonExpress : 11 €', 'RetraitMagasin : 0 €']\n\n// Duck typing : aucun héritage, mais le même comportement suffit.\nconst coursier = { poids: 1, frais: () => 12, resume() { return `Coursier : ${this.frais()} €`; } };\nconsole.log([...envois, coursier].reduce((total, envoi) => total + envoi.frais(), 0)); // 28\n```\n\n## Comment ça fonctionne\n\nQuand `resume()` appelle `this.frais()`, le moteur cherche `frais` en partant de l'**instance\nréelle**, pas de la classe où `resume` est écrite. Pour une `LivraisonExpress`, la recherche\ntrouve d'abord `LivraisonExpress.prototype.frais` et s'arrête : c'est la **répartition\ndynamique**, qui découle directement de la chaîne de prototypes. `resume` est écrite une\nseule fois, dans le parent, et chaque sous-classe n'a qu'à fournir la partie qui varie. Ce\nmotif porte un nom : la *méthode patron* (*template method*).\n\nLe gain apparaît quand on ajoute un cas. Avec le `switch`, un nouveau mode de livraison impose\nde retrouver et de modifier chaque fonction qui teste le type. Avec le polymorphisme, on\najoute une classe, et aucun code existant ne change.\n\nJavaScript ne vérifie pas les types : un objet convient dès qu'il répond aux méthodes\nappelées. Le coursier de l'exemple n'hérite de rien, et pourtant il s'intègre au calcul.\nL'héritage n'est donc pas une condition du polymorphisme en JavaScript ; il sert à partager\ndu code, pas à « autoriser » un objet. TypeScript formalise ce comportement avec des\ninterfaces vérifiées à la compilation.\n\nLe polymorphisme n'est sûr que si chaque redéfinition **respecte le contrat** du parent. Une\nsous-classe qui lève une erreur là où le parent renvoyait un nombre, ou qui renvoie une chaîne\nau lieu d'un nombre, casse tout code écrit pour le parent — même si chaque classe prise seule\nsemble correcte.\n\nUn piège propre à JavaScript : appeler une méthode redéfinissable **depuis le constructeur du\nparent**. Le constructeur parent s'exécute pendant `super()`, avant l'installation des champs\nde l'enfant. La méthode redéfinie s'exécute donc avec des champs encore à `undefined`. On\névite d'appeler des méthodes redéfinissables dans un constructeur.\n\nEnfin, `this.constructor.name` convient à un exemple, mais pas à une logique métier : un outil\nde minification renomme les classes en production.\n\n## Erreurs fréquentes\n\n**Tester le type avec `switch` ou `instanceof` dans tout le code.** Déplace la règle dans une\nméthode de chaque type.\n\n**Changer le contrat dans une redéfinition.** Type de retour, erreurs levées et paramètres\ndoivent rester compatibles.\n\n**Appeler une méthode redéfinissable dans le constructeur parent.** Les champs de l'enfant ne\nsont pas encore initialisés.\n\n**Créer une hiérarchie de classes pour un seul comportement variable.** Une fonction passée en\nparamètre, ou un objet stratégie, suffit souvent.\n\n## À retenir\n\n- Redéfinir une méthode remplace la version parente pour les instances de la sous-classe.\n- `this.methode()` part toujours de l'instance réelle : c'est la répartition dynamique.\n- Le polymorphisme remplace les tests de type répétés, et rend l'ajout d'un cas local.\n- En JavaScript, il suffit qu'un objet ait les bonnes méthodes : pas besoin d'héritage.\n- Une redéfinition respecte le contrat du parent, et n'est pas appelée depuis son constructeur.\n\n## Exercices\n\n1. Remplace ce `switch` par des classes qui portent chacune leur règle de réduction.\n\n   ```js\n   function reduction(client, montant) {\n     switch (client.statut) {\n       case 'standard': return 0;\n       case 'fidele': return montant * 0.05;\n       case 'premium': return montant * 0.1;\n     }\n   }\n   ```\n\n   :::indice\n   Une classe de base `Client` avec `reduction(montant)` qui renvoie `0`, puis une\n   redéfinition par statut.\n   :::\n\n   :::solution\n   ```js\n   class Client {\n     reduction(montant) {\n       return 0;\n     }\n   }\n\n   class ClientFidele extends Client {\n     reduction(montant) {\n       return montant * 0.05;\n     }\n   }\n\n   class ClientPremium extends Client {\n     reduction(montant) {\n       return montant * 0.1;\n     }\n   }\n\n   const clients = [new Client(), new ClientFidele(), new ClientPremium()];\n   console.log(clients.map((client) => client.reduction(200))); // [0, 10, 20]\n   ```\n\n   Ajouter un statut revient maintenant à ajouter une classe : aucune fonction existante n'est\n   modifiée.\n   :::\n\n2. Sans héritage, ajoute à la liste `clients` de l'exercice précédent un client partenaire\n   dont la réduction est fixe, de 15 €, et vérifie que le calcul fonctionne toujours.\n\n   :::indice\n   Le code appelant n'utilise qu'une méthode : un objet littéral qui la possède suffit.\n   :::\n\n   :::solution\n   ```js\n   const partenaire = {\n     reduction: () => 15,\n   };\n\n   console.log([...clients, partenaire].map((client) => client.reduction(200))); // [0, 10, 20, 15]\n   ```\n\n   C'est le typage par comportement : l'objet convient parce qu'il répond à `reduction`, pas\n   parce qu'il descend de `Client`.\n   :::\n\n3. Ce code affiche `undefined` au lieu de `[journal] prêt`. Explique pourquoi et corrige.\n\n   ```js\n   class Composant {\n     constructor() {\n       this.afficher();\n     }\n     afficher() {}\n   }\n\n   class Journal extends Composant {\n     prefixe = '[journal]';\n     afficher() {\n       console.log(this.prefixe && `${this.prefixe} prêt`);\n     }\n   }\n\n   new Journal();\n   ```\n\n   :::indice\n   À quel moment le champ `prefixe` est-il installé, par rapport à l'exécution du constructeur\n   de `Composant` ?\n   :::\n\n   :::solution\n   `new Journal()` exécute d'abord le constructeur de `Composant`, pendant `super()`. Celui-ci\n   appelle `afficher`, qui est la version redéfinie de `Journal`. Or les champs de `Journal` ne\n   sont installés qu'**après** le retour de `super()` : `this.prefixe` vaut encore `undefined`.\n\n   ```js\n   class Composant {\n     demarrer() {\n       this.afficher();\n       return this;\n     }\n     afficher() {}\n   }\n\n   class Journal extends Composant {\n     prefixe = '[journal]';\n     afficher() {\n       console.log(`${this.prefixe} prêt`);\n     }\n   }\n\n   new Journal().demarrer(); // '[journal] prêt'\n   ```\n\n   Le constructeur se contente d'initialiser ; le comportement redéfinissable est déclenché\n   ensuite, une fois l'objet complet.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que le polymorphisme, et qu'apporte-t-il ?\n\n  :::indice\n  Pense à ce qui se passe quand on ajoute un nouveau type.\n  :::\n\n  :::reponse\n  C'est la capacité d'objets différents à répondre au même appel, chacun à sa manière. Le code\n  appelant écrit `envoi.frais()` sans connaître le type exact. Son intérêt principal est\n  l'extension : ajouter un cas consiste à ajouter une classe ou un objet, sans modifier les\n  fonctions existantes, là où un `switch` sur le type obligerait à retoucher chaque endroit\n  qui teste ce type.\n  :::\n\n- Qu'est-ce que le duck typing en JavaScript ?\n\n  :::indice\n  « Si ça marche comme un canard et que ça cancane comme un canard… »\n  :::\n\n  :::reponse\n  C'est le fait de juger un objet sur ce qu'il sait faire plutôt que sur son type déclaré : un\n  objet convient s'il possède les méthodes appelées. JavaScript ne vérifie aucun type à\n  l'exécution, donc un objet littéral peut remplacer une instance de classe dès qu'il expose la\n  même interface. Cela rend l'héritage facultatif pour le polymorphisme. TypeScript en garde\n  l'esprit avec un typage structurel, vérifié à la compilation.\n  :::\n\n- Pourquoi éviter d'appeler une méthode redéfinissable dans un constructeur ?\n\n  :::indice\n  Que vaut un champ de la sous-classe pendant l'exécution du constructeur parent ?\n  :::\n\n  :::reponse\n  Parce que le constructeur parent s'exécute pendant `super()`, avant que les champs de la\n  sous-classe soient installés. Si le parent appelle une méthode redéfinie, celle-ci travaille\n  sur un objet incomplet, avec des champs à `undefined`, et produit des bugs difficiles à\n  relier à leur cause. Un constructeur doit se limiter à initialiser l'état ; le comportement\n  se déclenche ensuite, par une méthode appelée sur l'objet terminé.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-http-cors",
+      "title": "Authentification et CORS",
+      "slug": "authentification-et-cors",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "http",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-http-codes",
+        "javascript-stockage"
+      ],
+      "skills": [
+        "http-auth-cors"
+      ],
+      "tags": [
+        "javascript",
+        "http"
+      ],
+      "contentPath": "javascript/http/authentification-et-cors/lesson.md",
+      "contentVersion": "7735264ce46c",
+      "body": "\n## Objectifs\n\n- Distinguer l'authentification par cookie de session et par jeton dans l'en-tête `Authorization`.\n- Expliquer la politique de même origine, et ce que CORS autorise.\n- Comprendre la requête de pré-vérification, et pourquoi une erreur CORS se corrige côté serveur.\n\n## Introduction\n\n« Blocked by CORS policy » est l'un des messages d'erreur les plus recherchés par les développeurs web. Il apparaît\ndès qu'une application appelle une API située sur un autre domaine, et pousse souvent à des contournements\ndangereux. Il est étroitement lié à l'authentification : c'est précisément pour protéger les sessions des\nutilisateurs que le navigateur impose ces règles. Comprendre les deux ensemble permet de configurer correctement un\nfront-end et son API.\n\n## Concept\n\nDeux façons de prouver son identité :\n\n| Mécanisme | Transport | Envoi | Point d'attention |\n| --- | --- | --- | --- |\n| Cookie de session | cookie `HttpOnly`, `Secure`, `SameSite` | **automatique** par le navigateur | protection contre CSRF |\n| Jeton porteur (*Bearer*) | en-tête `Authorization: Bearer <jeton>` | **explicite** par le code | stockage du jeton |\n\nUne **origine** est la combinaison protocole, domaine et port : `https://app.exemple` et `https://api.exemple` sont\ndeux origines différentes. La **politique de même origine** empêche le JavaScript d'une page de **lire** la réponse\nd'une requête vers une autre origine, sauf si le serveur l'autorise par des en-têtes **CORS** :\n\n| En-tête de réponse | Rôle |\n| --- | --- |\n| `Access-Control-Allow-Origin` | origine autorisée à lire la réponse |\n| `Access-Control-Allow-Methods` | méthodes autorisées, pour la pré-vérification |\n| `Access-Control-Allow-Headers` | en-têtes autorisés, comme `Authorization` ou `Content-Type` |\n| `Access-Control-Allow-Credentials` | autorise l'envoi de cookies, avec une origine précise |\n\nUne requête qui n'est pas « simple » — méthode `PUT` ou `DELETE`, en-tête `Authorization`, `Content-Type` en JSON —\ndéclenche d'abord une **pré-vérification** : une requête `OPTIONS` à laquelle le serveur doit répondre avec ces en-têtes.\n\n## Exemple\n\n```js\nimport http from 'node:http';\n\nconst ORIGINE_AUTORISEE = 'https://app.boutique.exemple';\n\n// Côté serveur : l'API déclare quelle origine peut lire ses réponses.\nconst serveur = http.createServer((requete, reponse) => {\n  reponse.setHeader('Access-Control-Allow-Origin', ORIGINE_AUTORISEE);\n  reponse.setHeader('Vary', 'Origin');\n  if (requete.method === 'OPTIONS') {\n    reponse.writeHead(204, {\n      'Access-Control-Allow-Methods': 'GET, POST, DELETE',\n      'Access-Control-Allow-Headers': 'Authorization, Content-Type',\n      'Access-Control-Max-Age': '600',\n    });\n    return reponse.end();\n  }\n  if (requete.headers.authorization !== 'Bearer jeton-valide') {\n    reponse.writeHead(401, { 'Content-Type': 'application/json' });\n    return reponse.end(JSON.stringify({ erreur: 'authentification requise' }));\n  }\n  reponse.writeHead(200, { 'Content-Type': 'application/json' });\n  reponse.end(JSON.stringify({ nom: 'Ada' }));\n});\nawait new Promise((resolve) => serveur.listen(0, resolve));\nconst API = `http://localhost:${serveur.address().port}`;\n\n// Ce qu'envoie le navigateur avant une requête DELETE avec en-tête Authorization :\nconst preverification = await fetch(`${API}/commandes/7`, {\n  method: 'OPTIONS',\n  headers: {\n    Origin: ORIGINE_AUTORISEE,\n    'Access-Control-Request-Method': 'DELETE',\n    'Access-Control-Request-Headers': 'authorization',\n  },\n});\nconsole.log(preverification.status, preverification.headers.get('access-control-allow-methods'));\n// 204 'GET, POST, DELETE'\n\n// La requête authentifiée elle-même, avec un jeton porteur :\nconst profil = await fetch(`${API}/profil`, { headers: { Authorization: 'Bearer jeton-valide' } });\nconsole.log(profil.status, (await profil.json()).nom, profil.headers.get('access-control-allow-origin'));\n// 200 'Ada' 'https://app.boutique.exemple'\n\nserveur.close();\n```\n\n## Comment ça fonctionne\n\nLa **politique de même origine** est une protection du navigateur. Sans elle, une page malveillante visitée par un\nutilisateur connecté à sa banque pourrait appeler l'API de la banque — le navigateur y joindrait les cookies de\nsession — et **lire** la réponse. Le navigateur envoie bien certaines requêtes vers d'autres origines, mais il refuse\nde transmettre la réponse au JavaScript si le serveur ne l'a pas explicitement autorisé.\n\n**CORS** est ce mécanisme d'autorisation. Le serveur indique, par `Access-Control-Allow-Origin`, quelle origine peut\nlire ses réponses. Pour une requête **simple** — `GET`, `HEAD` ou `POST` avec un corps de formulaire, sans en-tête\nparticulier —, le navigateur envoie la requête puis vérifie l'en-tête de la réponse. Pour les autres — `PUT`, `DELETE`,\nun corps JSON, un en-tête `Authorization` —, il envoie d'abord une requête `OPTIONS` de **pré-vérification** avec\n`Origin`, la méthode et les en-têtes prévus ; la vraie requête ne part que si le serveur les autorise.\n`Access-Control-Max-Age` permet au navigateur de mémoriser cette autorisation.\n\nUne conséquence essentielle : **une erreur CORS se corrige côté serveur**. Le code du client ne peut pas s'octroyer\nl'accès, et c'est voulu. Les contournements — désactiver la sécurité du navigateur, passer par un proxy public — ne\nrèglent rien en production. On configure l'API pour qu'elle autorise précisément l'origine du front-end, ou l'on sert\nles deux sous la même origine. En développement, le serveur de développement du front-end sert souvent de proxy vers\nl'API pour éviter la question. Enfin, CORS ne concerne que les navigateurs : `curl` ou un serveur Node.js n'appliquent\npas ces règles, ce qui explique qu'une requête « marche dans Postman » et échoue dans la page.\n\nPour l'**authentification**, un **cookie de session** est envoyé automatiquement par le navigateur. Avec une API sur\nune autre origine, cela exige `fetch(…, { credentials: 'include' })` côté client, et côté serveur\n`Access-Control-Allow-Credentials: true` avec une origine **précise** — le joker `*` est interdit dans ce cas. Cet envoi\nautomatique expose aux attaques **CSRF**, que l'attribut `SameSite` et des jetons anti-CSRF limitent. Un **jeton\nporteur** dans `Authorization` n'est jamais envoyé automatiquement, ce qui protège de CSRF, mais le code doit le\nstocker : dans une variable en mémoire plutôt que dans `localStorage`, exposé aux failles XSS.\n\n## Erreurs fréquentes\n\n**Chercher à corriger une erreur CORS dans le code du client.** Elle se règle dans les en-têtes du serveur.\n\n**Répondre `Access-Control-Allow-Origin: *` avec des cookies.** Le navigateur le refuse : indique l'origine exacte.\n\n**Oublier de répondre à la requête `OPTIONS`.** La vraie requête ne part jamais.\n\n**Oublier `credentials: 'include'` pour une API sur une autre origine.** Les cookies ne sont pas envoyés.\n\n**Stocker un jeton porteur dans `localStorage`.** Une faille XSS suffit à le voler.\n\n## À retenir\n\n- Origine : protocole, domaine et port ; le navigateur protège la lecture des réponses entre origines.\n- CORS : le serveur autorise une origine avec `Access-Control-Allow-Origin` et les en-têtes associés.\n- Les requêtes non simples sont précédées d'une pré-vérification `OPTIONS`.\n- Une erreur CORS se corrige côté serveur ; CORS ne concerne que les navigateurs.\n- Cookie de session : automatique, à protéger contre CSRF ; jeton porteur : explicite, à protéger contre XSS.\n\n## Exercices\n\n1. Un front-end servi sur `https://app.exemple` appelle `DELETE https://api.exemple/commandes/7` avec un en-tête\n   `Authorization`. Décris les deux requêtes que le navigateur envoie, et les en-têtes que l'API doit renvoyer pour\n   que la suppression aboutisse et que la réponse soit lisible.\n\n   :::indice\n   La méthode et l'en-tête rendent la requête « non simple » : quelle requête part en premier ?\n   :::\n\n   :::solution\n   1. Une pré-vérification `OPTIONS /commandes/7` avec `Origin: https://app.exemple`,\n      `Access-Control-Request-Method: DELETE` et `Access-Control-Request-Headers: authorization`. L'API doit répondre avec\n      `Access-Control-Allow-Origin: https://app.exemple`, `Access-Control-Allow-Methods` contenant `DELETE`, et\n      `Access-Control-Allow-Headers` contenant `Authorization`.\n   2. La requête `DELETE /commandes/7`, avec l'en-tête `Authorization`. Sa réponse doit aussi contenir\n      `Access-Control-Allow-Origin: https://app.exemple`, sinon le JavaScript ne pourra pas lire le résultat.\n\n   Si la pré-vérification échoue, la suppression n'est jamais envoyée.\n   :::\n\n2. Écris `appliquerCors(requete, reponse, originesAutorisees)` pour un serveur Node.js : l'origine de la requête n'est\n   autorisée que si elle figure dans la liste, la pré-vérification `OPTIONS` reçoit une réponse `204` complète, et la\n   fonction renvoie `true` quand la requête a été entièrement traitée.\n\n   :::indice\n   Lis `requete.headers.origin`, renvoie cette origine exacte si elle est autorisée, et ajoute `Vary: Origin`, car la\n   réponse dépend de l'origine.\n   :::\n\n   :::solution\n   ```js\n   function appliquerCors(requete, reponse, originesAutorisees) {\n     const origine = requete.headers.origin;\n     if (origine && originesAutorisees.includes(origine)) {\n       reponse.setHeader('Access-Control-Allow-Origin', origine);\n       reponse.setHeader('Access-Control-Allow-Credentials', 'true');\n     }\n     reponse.setHeader('Vary', 'Origin');\n\n     if (requete.method === 'OPTIONS') {\n       reponse.writeHead(204, {\n         'Access-Control-Allow-Methods': 'GET, POST, PATCH, DELETE',\n         'Access-Control-Allow-Headers': 'Authorization, Content-Type',\n       });\n       reponse.end();\n       return true;\n     }\n     return false;\n   }\n\n   function reponseFactice() {\n     return {\n       entetes: {},\n       statut: 200,\n       setHeader(nom, valeur) { this.entetes[nom] = valeur; },\n       writeHead(statut, entetes) { this.statut = statut; Object.assign(this.entetes, entetes); },\n       end() {},\n     };\n   }\n\n   const autorisee = reponseFactice();\n   appliquerCors({ method: 'OPTIONS', headers: { origin: 'https://app.exemple' } }, autorisee, ['https://app.exemple']);\n   console.log(autorisee.statut, autorisee.entetes['Access-Control-Allow-Origin']); // 204 'https://app.exemple'\n\n   const refusee = reponseFactice();\n   appliquerCors({ method: 'GET', headers: { origin: 'https://pirate.exemple' } }, refusee, ['https://app.exemple']);\n   console.log(refusee.entetes['Access-Control-Allow-Origin']); // undefined : le navigateur bloquera la lecture\n   ```\n   :::\n\n3. Une application sur `https://app.exemple` utilise une session par cookie auprès de `https://api.exemple`. Le cookie\n   n'est jamais envoyé. Écris l'appel `fetch` correct, puis liste ce que le serveur doit renvoyer et les attributs du\n   cookie.\n\n   :::indice\n   Côté client, une option de `fetch` ; côté serveur, un en-tête qui autorise les identifiants et une origine précise.\n   :::\n\n   :::solution\n   ```js\n   const reponse = await fetch('https://api.exemple/profil', { credentials: 'include' });\n   ```\n\n   Côté serveur :\n\n   - `Access-Control-Allow-Origin: https://app.exemple` — une origine précise, jamais `*` ;\n   - `Access-Control-Allow-Credentials: true` ;\n   - un cookie posé avec `HttpOnly; Secure; SameSite=None` s'il doit voyager entre deux sites différents, ou\n     `SameSite=Lax` si l'API et l'application partagent le même site, par exemple deux sous-domaines de `exemple`.\n\n   Avec `SameSite=None`, le cookie redevient exposé aux requêtes intersites : l'API doit alors se protéger contre CSRF,\n   par exemple avec un jeton anti-CSRF.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que CORS, et pourquoi existe-t-il ?\n\n  :::indice\n  Que pourrait faire une page malveillante avec les cookies d'un utilisateur, sans la politique de même origine ?\n  :::\n\n  :::reponse\n  La politique de même origine empêche le JavaScript d'une page de lire les réponses d'une autre origine, pour qu'un\n  site malveillant ne puisse pas lire les données d'un service où l'utilisateur est connecté. CORS est le mécanisme par\n  lequel un serveur assouplit cette règle pour des origines précises, avec des en-têtes comme\n  `Access-Control-Allow-Origin`. C'est le navigateur qui l'applique : une erreur CORS se corrige donc dans la\n  configuration du serveur.\n  :::\n\n- Qu'est-ce qu'une requête de pré-vérification ?\n\n  :::indice\n  Quelle requête le navigateur envoie-t-il avant un `DELETE` vers une autre origine ?\n  :::\n\n  :::reponse\n  C'est une requête `OPTIONS` envoyée automatiquement avant une requête « non simple » vers une autre origine — méthode\n  comme `PUT` ou `DELETE`, en-tête comme `Authorization`, corps JSON. Elle annonce l'origine, la méthode et les en-têtes\n  prévus, et la vraie requête ne part que si le serveur les autorise dans sa réponse. `Access-Control-Max-Age` permet de\n  mettre ce résultat en cache pour éviter une pré-vérification à chaque appel.\n  :::\n\n- Cookie de session ou jeton porteur : quels risques pour chacun ?\n\n  :::indice\n  L'un est envoyé automatiquement, l'autre doit être stocké par le code.\n  :::\n\n  :::reponse\n  Un cookie de session `HttpOnly` est hors de portée du JavaScript, donc protégé contre le vol par XSS, mais il est envoyé\n  automatiquement, ce qui expose aux attaques CSRF : on les limite avec `SameSite` et des jetons anti-CSRF. Un jeton\n  porteur n'est jamais envoyé automatiquement, donc sans risque CSRF, mais le code doit le conserver : s'il est accessible\n  au JavaScript, une faille XSS permet de le voler. On le garde en mémoire, avec une durée de vie courte.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-http-codes",
+      "title": "Codes de statut, en-têtes et JSON",
+      "slug": "codes-en-tetes-et-json",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "http",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-http-requete"
+      ],
+      "skills": [
+        "http-status-headers"
+      ],
+      "tags": [
+        "javascript",
+        "http"
+      ],
+      "contentPath": "javascript/http/codes-en-tetes-et-json/lesson.md",
+      "contentVersion": "61a101889201",
+      "body": "\n## Objectifs\n\n- Interpréter un code de statut à partir de sa famille, et connaître les codes les plus courants.\n- Lire et envoyer les en-têtes essentiels : `Content-Type`, `Accept`, `Authorization`, `Location`, `Cache-Control`.\n- Échanger des données en JSON en respectant ses règles et ses limites.\n\n## Introduction\n\nLe code de statut est la première chose qu'un client doit lire : il dit si la requête a réussi, et sinon à qui\nrevient la faute. Les en-têtes, eux, décrivent le message — son format, son auteur, sa durée de validité. Un client\nqui les ignore affiche « Une erreur est survenue » pour tout, et une API qui les choisit mal oblige ses clients à\ndeviner. Ce chapitre donne le vocabulaire commun.\n\n## Concept\n\n| Famille | Sens | Codes courants |\n| --- | --- | --- |\n| `2xx` | succès | `200` OK, `201` créé, `204` succès sans contenu |\n| `3xx` | redirection | `301` déplacé définitivement, `302` temporairement, `304` non modifié |\n| `4xx` | erreur du **client** | `400` requête invalide, `401` non authentifié, `403` interdit, `404` introuvable, `409` conflit, `415` format non pris en charge, `422` données invalides, `429` trop de requêtes |\n| `5xx` | erreur du **serveur** | `500` erreur interne, `502` passerelle, `503` indisponible, `504` délai de passerelle |\n\n| En-tête | Sens | Exemple |\n| --- | --- | --- |\n| `Content-Type` | format du corps envoyé | `application/json` |\n| `Accept` | formats que le client accepte en réponse | `application/json` |\n| `Authorization` | preuve d'identité | `Bearer eyJhbGciOi…` |\n| `Location` | adresse de la ressource créée ou de la redirection | `/produits/3` |\n| `Cache-Control` | durée et conditions de mise en cache | `max-age=60` |\n| `Retry-After` | délai avant de réessayer, avec `429` ou `503` | `30` |\n\n**JSON** ne connaît que les objets, tableaux, chaînes entre guillemets doubles, nombres, booléens et `null`.\n\n## Exemple\n\n```js\nconst API = 'https://api.boutique.exemple';\n\nfunction decrire(reponse) {\n  if (reponse.ok) return `succès ${reponse.status}`;\n  if (reponse.status >= 500) return `erreur serveur ${reponse.status} : réessayer plus tard`;\n  if (reponse.status === 401) return 'authentification requise';\n  if (reponse.status === 403) return 'accès refusé';\n  if (reponse.status === 404) return 'ressource introuvable';\n  return `requête à corriger ${reponse.status}`;\n}\n\nconst trouve = await fetch(`${API}/produits/1`, { headers: { Accept: 'application/json' } });\nconsole.log(decrire(trouve), trouve.headers.get('cache-control')); // 'succès 200' 'max-age=60'\n\nconst absent = await fetch(`${API}/produits/99`);\nconsole.log(decrire(absent), (await absent.json()).erreur); // 'ressource introuvable' 'produit 99 introuvable'\n\nconst sansFormat = await fetch(`${API}/produits`, { method: 'POST', body: JSON.stringify({ nom: 'Écran' }) });\nconsole.log(sansFormat.status); // 415 : sans Content-Type, le corps part en text/plain\n\nconst invalide = await fetch(`${API}/produits`, {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ prix: 199 }),\n});\nconsole.log(invalide.status, await invalide.json()); // 422 { erreur: 'nom requis' }\n\nconst anonyme = await fetch(`${API}/profil`);\nconsole.log(decrire(anonyme), anonyme.headers.get('www-authenticate')); // 'authentification requise' 'Bearer'\n\nconsole.log(JSON.stringify({ date: new Date(0), inconnu: undefined, total: NaN }));\n// '{\"date\":\"1970-01-01T00:00:00.000Z\",\"total\":null}'\n```\n\n## Comment ça fonctionne\n\nLe premier chiffre du statut suffit à orienter le traitement. Un `2xx` signale un succès ; un `4xx` indique que\nla **requête** doit changer — la réessayer telle quelle ne sert à rien ; un `5xx` indique un problème du **serveur**,\nsouvent temporaire, qu'une nouvelle tentative peut résoudre. `response.ok` vaut `true` pour tout statut de 200 à 299.\n\nCertains codes se confondent facilement. `401 Unauthorized` signifie en réalité « non **authentifié** » : le serveur\nne sait pas qui fait la demande, et l'en-tête `WWW-Authenticate` indique comment s'identifier. `403 Forbidden`\nsignifie « authentifié, mais pas autorisé ». `400` signale une requête mal formée — JSON illisible —, alors que\n`422` signale des données bien formées mais invalides — un champ obligatoire manquant. `409 Conflict` indique un\nconflit avec l'état actuel, comme un email déjà utilisé. `429` demande de ralentir, souvent avec `Retry-After`.\n\nLes **en-têtes** ne sont pas sensibles à la casse : `response.headers.get('content-type')` fonctionne quelle que soit\nl'écriture du serveur. `Content-Type` décrit le corps **envoyé** : sans lui, une chaîne JSON part en `text/plain`, et\nune API stricte répond `415`. `Accept` décrit ce que le client veut **recevoir**. Côté réponse, `Location` accompagne\nun `201` avec l'adresse de la ressource créée, et `Cache-Control` indique combien de temps une réponse peut être\nréutilisée sans redemander.\n\n**JSON** est un sous-ensemble strict de la syntaxe des objets JavaScript : clés et chaînes entre guillemets doubles,\npas de virgule finale, pas de commentaire. `JSON.stringify` applique des conversions silencieuses qu'il faut\nconnaître : une `Date` devient une chaîne ISO, qu'il faudra reconvertir à la lecture ; `undefined` et les fonctions\ndisparaissent des objets ; `NaN` et `Infinity` deviennent `null` ; une `Map` devient `{}`. Les grands entiers au-delà\nde `Number.MAX_SAFE_INTEGER` perdent en précision, ce qui explique que beaucoup d'API envoient les identifiants sous\nforme de chaînes.\n\nEnfin, un corps d'erreur utile suit une forme stable — un code lisible par programme et un message —, ce qui permet\nau client d'afficher un retour précis au lieu d'un message générique.\n\n## Erreurs fréquentes\n\n**Traiter tout statut autre que 200 comme une panne.** `201` et `204` sont des succès : teste `response.ok`.\n\n**Confondre `401` et `403`.** L'un demande de s'authentifier, l'autre signale un manque de droits.\n\n**Oublier `Content-Type: application/json`.** Le corps part en texte brut.\n\n**Réessayer une requête qui a reçu un `4xx`.** Elle échouera de la même façon.\n\n**Relire une date JSON comme un objet `Date`.** C'est une chaîne : convertis-la.\n\n## À retenir\n\n- `2xx` succès, `4xx` erreur du client, `5xx` erreur du serveur ; `response.ok` couvre 200 à 299.\n- `401` : non authentifié ; `403` : non autorisé ; `422` : données invalides ; `429` : trop de requêtes.\n- `Content-Type` décrit le corps envoyé, `Accept` ce qu'on veut recevoir.\n- `Location`, `Cache-Control` et `Retry-After` guident le client.\n- JSON perd les `undefined`, convertit les dates en chaînes et `NaN` en `null`.\n\n## Exercices\n\n1. Écris `messageUtilisateur(statut)` qui renvoie un message adapté pour 400 et 422 (« Vérifiez les informations\n   saisies »), 401 (« Veuillez vous connecter »), 403 (« Vous n'avez pas accès à cette page »), 404, 429, toute erreur\n   5xx (« Service momentanément indisponible »), et un message générique sinon.\n\n   :::indice\n   Traite d'abord la famille 5xx avec une comparaison, puis les codes précis avec un objet de correspondance.\n   :::\n\n   :::solution\n   ```js\n   const MESSAGES = {\n     400: 'Vérifiez les informations saisies',\n     401: 'Veuillez vous connecter',\n     403: \"Vous n'avez pas accès à cette page\",\n     404: 'Cette page est introuvable',\n     422: 'Vérifiez les informations saisies',\n     429: 'Trop de tentatives, réessayez dans un instant',\n   };\n\n   function messageUtilisateur(statut) {\n     if (statut >= 500) return 'Service momentanément indisponible';\n     return MESSAGES[statut] ?? 'Une erreur est survenue';\n   }\n\n   console.log([401, 422, 503, 418].map(messageUtilisateur));\n   // ['Veuillez vous connecter', 'Vérifiez les informations saisies', 'Service momentanément indisponible', 'Une erreur est survenue']\n   ```\n   :::\n\n2. Une API renvoie `{\"id\":7,\"creeLe\":\"2026-09-17T10:00:00.000Z\"}`. Écris `lireCommande(texte)` qui analyse ce JSON\n   en transformant automatiquement toute propriété dont le nom finit par `Le` en objet `Date`.\n\n   :::indice\n   `JSON.parse` accepte un second argument, une fonction appelée pour chaque paire clé-valeur.\n   :::\n\n   :::solution\n   ```js\n   function lireCommande(texte) {\n     return JSON.parse(texte, (cle, valeur) =>\n       cle.endsWith('Le') && typeof valeur === 'string' ? new Date(valeur) : valeur,\n     );\n   }\n\n   const commande = lireCommande('{\"id\":7,\"creeLe\":\"2026-09-17T10:00:00.000Z\"}');\n   console.log(commande.creeLe instanceof Date, commande.creeLe.getUTCFullYear()); // true 2026\n   ```\n\n   Sans cette conversion, `commande.creeLe` serait une chaîne, et un calcul comme `creeLe.getTime()` échouerait.\n   :::\n\n3. Écris `lireErreur(reponse)` qui renvoie le message d'une réponse en échec : le champ `erreur` si le corps est du\n   JSON, sinon un message générique qui cite le statut — certaines erreurs `502` sont des pages HTML renvoyées par un\n   serveur intermédiaire.\n\n   :::indice\n   Lis l'en-tête `Content-Type` avant d'appeler `json()`, et protège l'analyse.\n   :::\n\n   :::solution\n   ```js\n   async function lireErreur(reponse) {\n     const type = reponse.headers.get('content-type') ?? '';\n     if (type.includes('application/json')) {\n       try {\n         const corps = await reponse.json();\n         if (corps.erreur) return corps.erreur;\n       } catch {\n         // corps annoncé en JSON mais illisible : on passe au message générique\n       }\n     }\n     return `Erreur ${reponse.status}`;\n   }\n\n   const erreurJSON = new Response(JSON.stringify({ erreur: 'nom requis' }), {\n     status: 422,\n     headers: { 'Content-Type': 'application/json' },\n   });\n   const pageHTML = new Response('<h1>Bad Gateway</h1>', { status: 502, headers: { 'Content-Type': 'text/html' } });\n\n   console.log(await lireErreur(erreurJSON), await lireErreur(pageHTML)); // 'nom requis' 'Erreur 502'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `401` et `403` ?\n\n  :::indice\n  Le serveur sait-il qui fait la demande ?\n  :::\n\n  :::reponse\n  `401` signifie que la requête n'est pas authentifiée : le serveur ne sait pas qui la fait, ou l'identification est\n  invalide, et l'en-tête `WWW-Authenticate` indique comment s'authentifier. `403` signifie que le serveur sait qui fait\n  la demande, mais que cette identité n'a pas le droit d'accéder à la ressource ; se reconnecter n'y changera rien. Côté\n  interface, le premier mène à l'écran de connexion, le second à un message d'accès refusé.\n  :::\n\n- À quoi servent `Content-Type` et `Accept` ?\n\n  :::indice\n  L'un concerne ce qu'on envoie, l'autre ce qu'on attend.\n  :::\n\n  :::reponse\n  `Content-Type` décrit le format du corps du message qui le contient : sur une requête, le format envoyé au serveur ;\n  sur une réponse, le format renvoyé. `Accept` est envoyé par le client pour indiquer les formats qu'il sait traiter en\n  réponse. Un serveur peut refuser un corps dans un format inattendu avec `415`, et répondre `406` s'il ne peut produire\n  aucun des formats acceptés.\n  :::\n\n- Quelles données JSON ne peut-il pas représenter fidèlement ?\n\n  :::indice\n  Pense aux dates, à `undefined`, aux collections et aux très grands nombres.\n  :::\n\n  :::reponse\n  Les dates deviennent des chaînes ISO, qu'il faut reconvertir ; `undefined` et les fonctions disparaissent des objets\n  et deviennent `null` dans les tableaux ; `NaN` et `Infinity` deviennent `null` ; `Map` et `Set` deviennent des objets\n  vides ; les entiers au-delà de `Number.MAX_SAFE_INTEGER` perdent en précision, et `BigInt` lève même une erreur. On\n  convertit explicitement ces valeurs, et l'on transmet les grands identifiants sous forme de chaînes.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-http-requete",
+      "title": "Requête et réponse HTTP, et les méthodes",
+      "slug": "requete-et-reponse",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "http",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 2,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-async-await"
+      ],
+      "skills": [
+        "http-basics"
+      ],
+      "tags": [
+        "javascript",
+        "http"
+      ],
+      "contentPath": "javascript/http/requete-et-reponse/lesson.md",
+      "contentVersion": "f4246e16fe43",
+      "body": "\n## Objectifs\n\n- Décrire les éléments d'une requête et d'une réponse HTTP.\n- Choisir la bonne méthode — `GET`, `POST`, `PUT`, `PATCH`, `DELETE` — selon l'intention.\n- Comprendre les notions de méthode sûre et de méthode idempotente, et leurs conséquences.\n\n## Introduction\n\nChaque chargement de page, chaque appel `fetch`, chaque envoi de formulaire est un échange HTTP : le client\nenvoie une **requête**, le serveur renvoie une **réponse**. Un développeur JavaScript manipule ces échanges en\npermanence, souvent à travers des bibliothèques qui les cachent. Comprendre leur structure permet de lire l'onglet\nRéseau, de concevoir une API cohérente, et de savoir quelles requêtes peuvent être rejouées sans danger.\n\n## Concept\n\nUne **requête** comporte :\n\n| Élément | Exemple |\n| --- | --- |\n| Méthode | `POST` |\n| Adresse | `https://api.boutique.exemple/produits?categorie=claviers` |\n| En-têtes | `Content-Type: application/json`, `Authorization: Bearer …` |\n| Corps (facultatif) | `{\"nom\": \"Souris\", \"prix\": 20}` |\n\nUne **réponse** comporte un **code de statut** (`201`), des **en-têtes** (`Location: /produits/3`) et un **corps**.\n\nLes méthodes expriment l'intention :\n\n| Méthode | Intention | Sûre | Idempotente |\n| --- | --- | --- | --- |\n| `GET` | lire une ressource | oui | oui |\n| `POST` | créer, ou déclencher une action | non | non |\n| `PUT` | remplacer entièrement une ressource | non | oui |\n| `PATCH` | modifier une partie d'une ressource | non | pas nécessairement |\n| `DELETE` | supprimer une ressource | non | oui |\n\n**Sûre** : ne modifie rien côté serveur. **Idempotente** : l'envoyer une ou dix fois produit le même état final.\n\n## Exemple\n\n```js\nconst API = 'https://api.boutique.exemple';\n\nconst lecture = await fetch(`${API}/produits?prixMax=30`); // GET par défaut\nconsole.log(lecture.status, lecture.headers.get('content-type')); // 200 'application/json'\nconsole.log(await lecture.json()); // [{ id: 2, nom: 'Souris', prix: 20 }]\n\nconst creation = await fetch(`${API}/produits`, {\n  method: 'POST',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ nom: 'Écran', prix: 199 }),\n});\nconsole.log(creation.status, creation.headers.get('location')); // 201 '/produits/3'\n\nconst modification = await fetch(`${API}/produits/3`, {\n  method: 'PATCH',\n  headers: { 'Content-Type': 'application/json' },\n  body: JSON.stringify({ prix: 179 }),\n});\nconsole.log((await modification.json()).prix); // 179 : seul le prix a changé\n\nconst suppression = await fetch(`${API}/produits/3`, { method: 'DELETE' });\nconsole.log(suppression.status); // 204 : succès, sans corps\n\nconst deuxiemeSuppression = await fetch(`${API}/produits/3`, { method: 'DELETE' });\nconsole.log(deuxiemeSuppression.status); // 404 : la ressource n'existe plus, l'état final est le même\n```\n\n## Comment ça fonctionne\n\nHTTP est un protocole **sans état** : chaque requête est indépendante, et le serveur ne se souvient pas de la\nprécédente. Tout ce dont il a besoin — qui fait la demande, dans quelle langue, avec quel format — voyage donc dans\nchaque requête, en général dans les en-têtes. Les cookies et les jetons d'authentification existent précisément\npour recréer une continuité par-dessus ce protocole.\n\nLa **méthode** indique l'intention, et elle a des conséquences concrètes. Une méthode **sûre** comme `GET` peut\nêtre appelée par un navigateur qui précharge des liens, par un robot d'indexation ou par un cache, sans risque de\nmodifier quoi que ce soit : une API qui supprime des données sur un `GET` finira par les perdre. Une méthode\n**idempotente** peut être rejouée sans effet supplémentaire : si une connexion coupe au milieu d'un `PUT` ou d'un\n`DELETE`, le client peut réessayer. Un `POST`, lui, n'est pas idempotent : l'envoyer deux fois peut créer deux\ncommandes. C'est pourquoi les navigateurs demandent confirmation avant de renvoyer un formulaire, et pourquoi les\nnouvelles tentatives automatiques ne concernent normalement que les méthodes idempotentes.\n\n`PUT` et `PATCH` ne se confondent pas. `PUT` envoie la **représentation complète** : une propriété absente du corps\nest supprimée ou remise à sa valeur par défaut. `PATCH` envoie seulement les **champs à modifier**. Utiliser `PUT`\navec un objet partiel efface donc des données.\n\nL'**adresse** identifie la ressource : `/produits/3` désigne le produit 3, et la méthode dit ce qu'on en fait. Les\nparamètres de requête, après `?`, servent à filtrer, trier ou paginer une collection. Le **corps** transporte les\ndonnées envoyées ; son format est annoncé par l'en-tête `Content-Type`. Un `GET` n'a pas de corps.\n\nEnfin, une réponse n'a pas toujours de corps : `204 No Content` signale un succès sans contenu, typique d'une\nsuppression. Le chapitre suivant détaille les codes de statut et les en-têtes.\n\n## Erreurs fréquentes\n\n**Modifier des données sur un `GET`.** Robots, préchargements et caches le déclencheront.\n\n**Envoyer un objet partiel avec `PUT`.** Les champs absents peuvent être effacés : utilise `PATCH`.\n\n**Réessayer automatiquement un `POST`.** Le risque est de créer deux fois la même ressource.\n\n**Mettre dans l'adresse des données sensibles.** Elles apparaissent dans l'historique et les journaux : utilise le\ncorps ou les en-têtes.\n\n**Oublier que HTTP est sans état.** Chaque requête doit porter son authentification.\n\n## À retenir\n\n- Requête : méthode, adresse, en-têtes, corps ; réponse : statut, en-têtes, corps.\n- `GET` lit, `POST` crée, `PUT` remplace, `PATCH` modifie en partie, `DELETE` supprime.\n- Sûre : ne modifie rien. Idempotente : la répéter ne change pas l'état final.\n- HTTP est sans état : chaque requête porte tout ce dont le serveur a besoin.\n- Seules les requêtes idempotentes se réessaient sans précaution.\n\n## Exercices\n\n1. Pour chaque opération d'une application de réservation, donne la méthode et l'adresse : lister les séances d'un\n   film, réserver une place, modifier le nombre de places d'une réservation, annuler une réservation, remplacer\n   entièrement le profil de l'utilisateur.\n\n   :::indice\n   L'adresse désigne la ressource, la méthode l'intention. Distingue création, modification partielle et remplacement.\n   :::\n\n   :::solution\n   | Opération | Méthode et adresse |\n   | --- | --- |\n   | Lister les séances d'un film | `GET /films/42/seances` |\n   | Réserver une place | `POST /reservations` |\n   | Modifier le nombre de places | `PATCH /reservations/7` |\n   | Annuler une réservation | `DELETE /reservations/7` |\n   | Remplacer entièrement le profil | `PUT /utilisateurs/moi` |\n\n   La réservation est un `POST` : l'envoyer deux fois réserverait deux places, ce qui justifie de désactiver le bouton\n   pendant l'envoi.\n   :::\n\n2. Le produit 1 vaut `{ id: 1, nom: 'Clavier', prix: 50 }`. Prédis son contenu après chacune de ces requêtes, envoyées\n   sur deux copies indépendantes du produit, puis explique la différence.\n\n   ```js\n   await fetch(`${API}/produits/1`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prix: 45 }) });\n   await fetch(`${API}/produits/1`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prix: 45 }) });\n   ```\n\n   :::indice\n   `PATCH` fusionne les champs envoyés ; `PUT` remplace la ressource par ce qui est envoyé.\n   :::\n\n   :::solution\n   Après le `PATCH` : `{ id: 1, nom: 'Clavier', prix: 45 }` — seul le prix change. Après le `PUT` :\n   `{ id: 1, prix: 45 }` — la ressource est **remplacée** par le corps envoyé, et le nom a disparu. Avec `PUT`, le client\n   doit envoyer la représentation complète :\n\n   ```js\n   const produit = await (await fetch(`${API}/produits/1`)).json();\n   await fetch(`${API}/produits/1`, {\n     method: 'PUT',\n     headers: { 'Content-Type': 'application/json' },\n     body: JSON.stringify({ ...produit, prix: 45 }),\n   });\n   ```\n   :::\n\n3. Un double clic sur « Commander » crée deux commandes. Explique pourquoi c'est possible, puis écris `commander` pour\n   que le bouton ne puisse pas relancer la requête tant que la première n'est pas terminée.\n\n   :::indice\n   Quelle méthode crée la commande, et est-elle idempotente ? Pendant l'envoi, que peut-on faire du bouton ?\n   :::\n\n   :::solution\n   La création passe par `POST`, qui n'est pas idempotent : deux envois créent deux commandes. On empêche le second\n   envoi pendant que le premier est en cours, et l'on réactive le bouton quoi qu'il arrive.\n\n   ```js\n   async function commander(bouton, envoyer) {\n     if (bouton.disabled) return null;\n     bouton.disabled = true;\n     try {\n       return await envoyer();\n     } finally {\n       bouton.disabled = false;\n     }\n   }\n\n   let appels = 0;\n   const envoyer = () => new Promise((resolve) => setTimeout(() => resolve(++appels), 20));\n   const bouton = { disabled: false };\n   const [premier, second] = await Promise.all([commander(bouton, envoyer), commander(bouton, envoyer)]);\n   console.log(premier, second, appels); // 1 null 1\n   ```\n\n   Côté serveur, une **clé d'idempotence** envoyée dans un en-tête permet en plus de reconnaître et d'ignorer un doublon,\n   par exemple après une coupure réseau : c'est ce que font les API de paiement.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'une méthode idempotente, et pourquoi est-ce important ?\n\n  :::indice\n  Pense à une requête dont la réponse s'est perdue en route.\n  :::\n\n  :::reponse\n  Une méthode est idempotente si l'envoyer une ou plusieurs fois produit le même état final côté serveur : c'est le cas\n  de `GET`, `PUT` et `DELETE`, mais pas de `POST`. C'est important parce qu'un client ne sait pas toujours si sa requête\n  a abouti — délai dépassé, connexion coupée. Une requête idempotente peut être réessayée sans risque ; une requête non\n  idempotente demande une protection, comme une clé d'idempotence, pour ne pas créer de doublon.\n  :::\n\n- Quelle différence entre `PUT` et `PATCH` ?\n\n  :::indice\n  Que devient un champ absent du corps de la requête ?\n  :::\n\n  :::reponse\n  `PUT` remplace la ressource entière par la représentation envoyée : un champ absent est supprimé ou réinitialisé.\n  `PATCH` applique une modification partielle : seuls les champs envoyés changent. Utiliser `PUT` avec un objet partiel\n  efface donc des données. `PUT` est idempotent ; `PATCH` peut ne pas l'être, par exemple s'il incrémente un compteur.\n  :::\n\n- Que signifie « HTTP est sans état » ?\n\n  :::indice\n  Le serveur se souvient-il de la requête précédente du même client ?\n  :::\n\n  :::reponse\n  Chaque requête est traitée indépendamment : le serveur ne conserve pas de contexte entre deux échanges au niveau du\n  protocole. Toute information nécessaire — identité, préférences, format attendu — doit donc être transmise à chaque\n  requête, généralement dans les en-têtes. Les sessions reposent sur des cookies ou des jetons envoyés à chaque fois ;\n  ce sont eux qui recréent une continuité par-dessus HTTP.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -8913,6 +9205,233 @@
       "contentVersion": "775062c1c0f7"
     },
     {
+      "id": "javascript-fetch-erreurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-fetch-erreurs-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Avec quel nom d'erreur fetch est-il rompu quand AbortSignal.timeout(100) expire ?\n",
+          "options": [
+            "TimeoutError",
+            "AbortError",
+            "TypeError",
+            "RangeError"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "AbortSignal.timeout produit une TimeoutError ; une annulation manuelle produit une AbortError.\n",
+          "skills": [
+            "fetch-errors"
+          ]
+        },
+        {
+          "id": "js-fetch-erreurs-q2",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment se manifeste une coupure réseau pendant un fetch ?\n",
+          "options": [
+            "La promesse est rompue avec une TypeError",
+            "La réponse arrive avec le statut 0 et ok à false",
+            "La réponse arrive avec le statut 503",
+            "La promesse reste en attente indéfiniment"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Aucune réponse n'a pu être obtenue : fetch rompt sa promesse avec une TypeError.\n",
+          "skills": [
+            "fetch-errors"
+          ]
+        },
+        {
+          "id": "js-fetch-erreurs-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Annuler une requête avec AbortController ferme réellement la connexion, contrairement à Promise.race.\n",
+          "answer": true,
+          "explanation": "Promise.race ne fait qu'ignorer la réponse ; l'annulation interrompt la requête et le téléchargement.\n",
+          "skills": [
+            "fetch-errors"
+          ]
+        },
+        {
+          "id": "js-fetch-erreurs-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans une recherche instantanée, comment empêcher une réponse ancienne d'écraser la plus récente ?\n",
+          "options": [
+            "Annuler la requête précédente avant d'en lancer une nouvelle",
+            "Attendre une seconde avant chaque requête",
+            "Utiliser Promise.all sur toutes les recherches",
+            "Ajouter un en-tête Cache-Control"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les réponses ne reviennent pas forcément dans l'ordre ; annuler garantit qu'une seule réponse, la plus récente, est affichée.\n",
+          "skills": [
+            "fetch-errors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fetch-erreurs",
+      "technology": "javascript",
+      "contentPath": "javascript/fetch/erreurs-annulation-et-delai/quiz.yaml",
+      "contentVersion": "354eccb1063c"
+    },
+    {
+      "id": "javascript-fetch-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-fetch-q1",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "La promesse renvoyée par fetch est rompue quand le serveur répond 500.\n",
+          "answer": false,
+          "explanation": "Une réponse 500 est une réponse valide : la promesse est tenue, avec ok à false.\n",
+          "skills": [
+            "fetch-basics"
+          ]
+        },
+        {
+          "id": "js-fetch-q2",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que se passe-t-il si l'on appelle deux fois `reponse.json()` sur la même réponse ?\n",
+          "options": [
+            "Le second appel lève une TypeError : le corps ne se lit qu'une fois",
+            "Le second appel renvoie le même objet",
+            "Le second appel relance la requête",
+            "Le second appel renvoie undefined"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le corps est un flux consommé par la première lecture.\n",
+          "skills": [
+            "fetch-basics"
+          ]
+        },
+        {
+          "id": "js-fetch-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Pour envoyer un objet en JSON, que faut-il ?\n",
+          "options": [
+            "body: JSON.stringify(objet) et l'en-tête Content-Type: application/json",
+            "body: objet, sans rien d'autre",
+            "body: new FormData(objet)",
+            "method: 'JSON'"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "fetch n'envoie pas un objet tel quel, et sans Content-Type la chaîne part en text/plain.\n",
+          "skills": [
+            "fetch-basics"
+          ]
+        },
+        {
+          "id": "js-fetch-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Avec un corps FormData, il faut fixer soi-même Content-Type à multipart/form-data.\n",
+          "answer": false,
+          "explanation": "L'environnement ajoute l'en-tête avec la délimitation des parties ; le fixer à la main la supprime.\n",
+          "skills": [
+            "fetch-basics"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fetch",
+      "technology": "javascript",
+      "contentPath": "javascript/fetch/fetch-get-et-post/quiz.yaml",
+      "contentVersion": "e5294afbb25e"
+    },
+    {
+      "id": "javascript-fetch-paralleles-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-fetch-paralleles-q1",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quels statuts justifient une nouvelle tentative automatique d'un GET ?\n",
+          "options": [
+            "503",
+            "429",
+            "404",
+            "422"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "503 et 429 signalent une indisponibilité passagère ; 404 et 422 se reproduiront à l'identique.\n",
+          "skills": [
+            "fetch-resilience"
+          ]
+        },
+        {
+          "id": "js-fetch-paralleles-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "On peut réessayer automatiquement un POST de création sans aucun risque.\n",
+          "answer": false,
+          "explanation": "POST n'est pas idempotent : si la première requête a été traitée, la répétition crée un doublon, sauf clé d'idempotence.\n",
+          "skills": [
+            "fetch-resilience"
+          ]
+        },
+        {
+          "id": "js-fetch-paralleles-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que signifie l'en-tête `Retry-After: 30` sur une réponse 429 ?\n",
+          "options": [
+            "Attendre 30 secondes avant de réessayer",
+            "Réessayer 30 fois",
+            "La réponse est valable 30 secondes",
+            "Le serveur répondra dans 30 millisecondes"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Retry-After indique le délai en secondes, ou une date, avant une nouvelle tentative.\n",
+          "skills": [
+            "fetch-resilience"
+          ]
+        },
+        {
+          "id": "js-fetch-paralleles-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Trois blocs indépendants d'un tableau de bord se chargent en parallèle. Quel combinateur choisir ?\n",
+          "options": [
+            "Promise.allSettled",
+            "Promise.all",
+            "Promise.race",
+            "Promise.any"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "allSettled permet d'afficher les blocs réussis malgré l'échec d'un autre.\n",
+          "skills": [
+            "fetch-resilience"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fetch-paralleles",
+      "technology": "javascript",
+      "contentPath": "javascript/fetch/nouvelles-tentatives-et-requetes-paralleles/quiz.yaml",
+      "contentVersion": "2c3cbbe1f8b0"
+    },
+    {
       "id": "javascript-fonctions-pures-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -9643,6 +10162,226 @@
       "technology": "javascript",
       "contentPath": "javascript/heritage/polymorphisme/quiz.yaml",
       "contentVersion": "6ade0aaaf110"
+    },
+    {
+      "id": "javascript-http-cors-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-http-cors-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Où se corrige une erreur « blocked by CORS policy » ?\n",
+          "options": [
+            "Dans les en-têtes renvoyés par le serveur",
+            "Dans les options de fetch côté client",
+            "En désactivant le mode strict",
+            "En changeant de navigateur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "C'est le serveur qui autorise une origine à lire ses réponses ; le client ne peut pas s'octroyer cet accès.\n",
+          "skills": [
+            "http-auth-cors"
+          ]
+        },
+        {
+          "id": "js-http-cors-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une requête DELETE vers une autre origine est précédée d'une requête OPTIONS.\n",
+          "answer": true,
+          "explanation": "DELETE n'est pas une méthode simple : le navigateur envoie une pré-vérification avant la vraie requête.\n",
+          "skills": [
+            "http-auth-cors"
+          ]
+        },
+        {
+          "id": "js-http-cors-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pour envoyer des cookies à une API d'une autre origine, que faut-il côté serveur ?\n",
+          "options": [
+            "Access-Control-Allow-Credentials: true avec une origine précise",
+            "Access-Control-Allow-Origin: * seulement",
+            "Aucun en-tête : les cookies partent toujours",
+            "Content-Type: application/json"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Avec des identifiants, le joker * est refusé : il faut l'origine exacte et Allow-Credentials. Le client doit aussi utiliser credentials: 'include'.\n",
+          "skills": [
+            "http-auth-cors"
+          ]
+        },
+        {
+          "id": "js-http-cors-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une requête faite depuis un serveur Node.js est soumise aux règles CORS.\n",
+          "answer": false,
+          "explanation": "CORS est appliqué par les navigateurs. C'est pourquoi une requête peut fonctionner avec curl et échouer dans une page.\n",
+          "skills": [
+            "http-auth-cors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-http-cors",
+      "technology": "javascript",
+      "contentPath": "javascript/http/authentification-et-cors/quiz.yaml",
+      "contentVersion": "7c3ac395479e"
+    },
+    {
+      "id": "javascript-http-codes-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-http-codes-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Un utilisateur connecté demande une page réservée aux administrateurs. Quel statut convient ?\n",
+          "options": [
+            "403",
+            "401",
+            "404",
+            "500"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le serveur sait qui fait la demande, mais cette identité n'a pas les droits : 403. 401 signifie « non authentifié ».\n",
+          "skills": [
+            "http-status-headers"
+          ]
+        },
+        {
+          "id": "js-http-codes-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`response.ok` vaut `true` pour une réponse 204.\n",
+          "answer": true,
+          "explanation": "ok vaut true pour tout statut de 200 à 299, y compris 201 et 204.\n",
+          "skills": [
+            "http-status-headers"
+          ]
+        },
+        {
+          "id": "js-http-codes-q3",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que renvoie `JSON.stringify({ a: undefined, b: NaN })` ?\n",
+          "answer": "{\"b\":null}",
+          "explanation": "undefined disparaît des objets, et NaN devient null.\n",
+          "skills": [
+            "http-status-headers"
+          ]
+        },
+        {
+          "id": "js-http-codes-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle famille de statuts rend une nouvelle tentative de la même requête utile ?\n",
+          "options": [
+            "5xx, erreurs du serveur souvent temporaires",
+            "4xx, erreurs du client",
+            "2xx, succès",
+            "Aucune"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une erreur 4xx vient de la requête elle-même et se reproduira ; une erreur 5xx peut disparaître.\n",
+          "skills": [
+            "http-status-headers"
+          ]
+        }
+      ],
+      "chapterId": "javascript-http-codes",
+      "technology": "javascript",
+      "contentPath": "javascript/http/codes-en-tetes-et-json/quiz.yaml",
+      "contentVersion": "977f734339ce"
+    },
+    {
+      "id": "javascript-http-requete-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-http-requete-q1",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "Quelle méthode utiliser pour créer une nouvelle commande ?\n",
+          "options": [
+            "POST",
+            "GET",
+            "PUT",
+            "DELETE"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "POST crée une ressource ou déclenche une action. GET lit, PUT remplace, DELETE supprime.\n",
+          "skills": [
+            "http-basics"
+          ]
+        },
+        {
+          "id": "js-http-requete-q2",
+          "type": "multiple_answer",
+          "difficulty": 2,
+          "question": "Quelles méthodes sont idempotentes ?\n",
+          "options": [
+            "GET",
+            "PUT",
+            "DELETE",
+            "POST"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Répéter GET, PUT ou DELETE laisse le même état final ; répéter POST peut créer plusieurs ressources.\n",
+          "skills": [
+            "http-basics"
+          ]
+        },
+        {
+          "id": "js-http-requete-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Envoyer `{ prix: 45 }` avec PUT sur un produit conserve son nom.\n",
+          "answer": false,
+          "explanation": "PUT remplace la ressource par la représentation envoyée : le nom absent disparaît. PATCH conserverait le nom.\n",
+          "skills": [
+            "http-basics"
+          ]
+        },
+        {
+          "id": "js-http-requete-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Pourquoi ne faut-il jamais modifier des données en réponse à une requête GET ?\n",
+          "options": [
+            "Des robots, des préchargements ou des caches peuvent la déclencher sans intention de l'utilisateur",
+            "GET ne peut pas contenir de paramètres",
+            "Les navigateurs interdisent la lecture de la réponse",
+            "GET est plus lent que POST"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "GET est une méthode sûre : tout le web suppose qu'elle ne modifie rien.\n",
+          "skills": [
+            "http-basics"
+          ]
+        }
+      ],
+      "chapterId": "javascript-http-requete",
+      "technology": "javascript",
+      "contentPath": "javascript/http/requete-et-reponse/quiz.yaml",
+      "contentVersion": "92ddefc98590"
     },
     {
       "id": "javascript-introduction-quiz",

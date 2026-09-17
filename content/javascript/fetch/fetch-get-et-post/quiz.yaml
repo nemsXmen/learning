@@ -1,0 +1,56 @@
+id: javascript-fetch-quiz
+kind: QUIZ
+questions:
+  - id: js-fetch-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      La promesse renvoyée par fetch est rompue quand le serveur répond 500.
+    answer: false
+    explanation: >
+      Une réponse 500 est une réponse valide : la promesse est tenue, avec ok à false.
+    skills:
+      - fetch-basics
+
+  - id: js-fetch-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il si l'on appelle deux fois `reponse.json()` sur la même réponse ?
+    options:
+      - "Le second appel lève une TypeError : le corps ne se lit qu'une fois"
+      - "Le second appel renvoie le même objet"
+      - "Le second appel relance la requête"
+      - "Le second appel renvoie undefined"
+    answer: [0]
+    explanation: >
+      Le corps est un flux consommé par la première lecture.
+    skills:
+      - fetch-basics
+
+  - id: js-fetch-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pour envoyer un objet en JSON, que faut-il ?
+    options:
+      - "body: JSON.stringify(objet) et l'en-tête Content-Type: application/json"
+      - "body: objet, sans rien d'autre"
+      - "body: new FormData(objet)"
+      - "method: 'JSON'"
+    answer: [0]
+    explanation: >
+      fetch n'envoie pas un objet tel quel, et sans Content-Type la chaîne part en text/plain.
+    skills:
+      - fetch-basics
+
+  - id: js-fetch-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Avec un corps FormData, il faut fixer soi-même Content-Type à multipart/form-data.
+    answer: false
+    explanation: >
+      L'environnement ajoute l'en-tête avec la délimitation des parties ; le fixer à la main la supprime.
+    skills:
+      - fetch-basics

@@ -1,0 +1,62 @@
+id: javascript-fetch-paralleles-quiz
+kind: QUIZ
+questions:
+  - id: js-fetch-paralleles-q1
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels statuts justifient une nouvelle tentative automatique d'un GET ?
+    options:
+      - "503"
+      - "429"
+      - "404"
+      - "422"
+    answer: [0, 1]
+    explanation: >
+      503 et 429 signalent une indisponibilité passagère ; 404 et 422 se reproduiront à l'identique.
+    skills:
+      - fetch-resilience
+
+  - id: js-fetch-paralleles-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      On peut réessayer automatiquement un POST de création sans aucun risque.
+    answer: false
+    explanation: >
+      POST n'est pas idempotent : si la première requête a été traitée, la répétition crée un doublon, sauf clé
+      d'idempotence.
+    skills:
+      - fetch-resilience
+
+  - id: js-fetch-paralleles-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que signifie l'en-tête `Retry-After: 30` sur une réponse 429 ?
+    options:
+      - "Attendre 30 secondes avant de réessayer"
+      - "Réessayer 30 fois"
+      - "La réponse est valable 30 secondes"
+      - "Le serveur répondra dans 30 millisecondes"
+    answer: [0]
+    explanation: >
+      Retry-After indique le délai en secondes, ou une date, avant une nouvelle tentative.
+    skills:
+      - fetch-resilience
+
+  - id: js-fetch-paralleles-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Trois blocs indépendants d'un tableau de bord se chargent en parallèle. Quel combinateur choisir ?
+    options:
+      - "Promise.allSettled"
+      - "Promise.all"
+      - "Promise.race"
+      - "Promise.any"
+    answer: [0]
+    explanation: >
+      allSettled permet d'afficher les blocs réussis malgré l'échec d'un autre.
+    skills:
+      - fetch-resilience

@@ -1,0 +1,58 @@
+id: javascript-http-cors-quiz
+kind: QUIZ
+questions:
+  - id: js-http-cors-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Où se corrige une erreur « blocked by CORS policy » ?
+    options:
+      - "Dans les en-têtes renvoyés par le serveur"
+      - "Dans les options de fetch côté client"
+      - "En désactivant le mode strict"
+      - "En changeant de navigateur"
+    answer: [0]
+    explanation: >
+      C'est le serveur qui autorise une origine à lire ses réponses ; le client ne peut pas s'octroyer cet accès.
+    skills:
+      - http-auth-cors
+
+  - id: js-http-cors-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Une requête DELETE vers une autre origine est précédée d'une requête OPTIONS.
+    answer: true
+    explanation: >
+      DELETE n'est pas une méthode simple : le navigateur envoie une pré-vérification avant la vraie requête.
+    skills:
+      - http-auth-cors
+
+  - id: js-http-cors-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pour envoyer des cookies à une API d'une autre origine, que faut-il côté serveur ?
+    options:
+      - "Access-Control-Allow-Credentials: true avec une origine précise"
+      - "Access-Control-Allow-Origin: * seulement"
+      - "Aucun en-tête : les cookies partent toujours"
+      - "Content-Type: application/json"
+    answer: [0]
+    explanation: >
+      Avec des identifiants, le joker * est refusé : il faut l'origine exacte et Allow-Credentials. Le client doit
+      aussi utiliser credentials: 'include'.
+    skills:
+      - http-auth-cors
+
+  - id: js-http-cors-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Une requête faite depuis un serveur Node.js est soumise aux règles CORS.
+    answer: false
+    explanation: >
+      CORS est appliqué par les navigateurs. C'est pourquoi une requête peut fonctionner avec curl et échouer dans
+      une page.
+    skills:
+      - http-auth-cors
