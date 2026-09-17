@@ -1,0 +1,63 @@
+id: javascript-modules-cycles-quiz
+kind: QUIZ
+questions:
+  - id: js-modules-cycles-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      A importe B, B importe A, et B lit une `const` de A au niveau supérieur. A est le point d'entrée. Que se
+      passe-t-il ?
+    options:
+      - "Une ReferenceError : la constante est encore en zone morte"
+      - "B lit undefined"
+      - "Le moteur évalue A deux fois"
+      - "Tout fonctionne normalement"
+    answer: [0]
+    explanation: >
+      B est évalué avant la fin de A : la liaison existe mais n'est pas initialisée.
+    skills:
+      - module-boundaries
+
+  - id: js-modules-cycles-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans un cycle, une déclaration de fonction exportée peut être appelée avant la fin de l'évaluation de
+      son module.
+    answer: true
+    explanation: >
+      Les déclarations de fonction sont hoistées avec leur corps, contrairement aux const et let.
+    skills:
+      - module-boundaries
+
+  - id: js-modules-cycles-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle est la façon la plus courante de casser un cycle dû à une constante partagée ?
+    options:
+      - "Extraire la constante dans un troisième module"
+      - "Inverser l'ordre des imports"
+      - "Transformer la constante en variable globale"
+      - "Dupliquer la constante dans les deux modules"
+    answer: [0]
+    explanation: >
+      Les deux modules dépendent alors du nouveau module, et plus l'un de l'autre.
+    skills:
+      - module-boundaries
+
+  - id: js-modules-cycles-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans un paquet, quel mécanisme empêche d'importer ses fichiers internes ?
+    options:
+      - "Le champ exports du package.json"
+      - "Le champ main du package.json"
+      - "Un commentaire @private"
+      - "Le mode strict"
+    answer: [0]
+    explanation: >
+      Le champ exports liste les chemins importables ; les autres sont refusés par Node.js et les outils.
+    skills:
+      - module-boundaries

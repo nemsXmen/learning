@@ -1,0 +1,59 @@
+id: javascript-reexport-quiz
+kind: QUIZ
+questions:
+  - id: js-reexport-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      `export * from './bouton.js'` réexporte l'export par défaut de bouton.js.
+    answer: false
+    explanation: >
+      export * ne réexporte que les exports nommés ; un défaut se réexporte avec
+      export { default as Nom } from.
+    skills:
+      - module-reexports
+
+  - id: js-reexport-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un fichier barrel réexporte trois modules. Un autre fichier n'en importe qu'un seul nom. Quels modules
+      sont évalués ?
+    options:
+      - "Les trois modules réexportés"
+      - "Seulement le module qui contient le nom importé"
+      - "Aucun, jusqu'au premier appel"
+      - "Seulement le fichier barrel"
+    answer: [0]
+    explanation: >
+      Charger le barrel oblige à charger et évaluer tout ce qu'il réexporte : c'est son coût caché.
+    skills:
+      - module-reexports
+
+  - id: js-reexport-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que renvoie `import('./module.js')` ?
+    options:
+      - "Une promesse de l'objet espace de noms du module"
+      - "L'export par défaut du module"
+      - "Le code source du module"
+      - "undefined, le module étant chargé en arrière-plan"
+    answer: [0]
+    explanation: >
+      import() renvoie une promesse ; une fois tenue, elle donne l'espace de noms, avec le défaut sous
+      .default.
+    skills:
+      - module-reexports
+
+  - id: js-reexport-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Un module chargé avec import() est rechargé à chaque appel.
+    answer: false
+    explanation: >
+      Le module est évalué une fois puis mis en cache, comme un module importé statiquement.
+    skills:
+      - module-reexports

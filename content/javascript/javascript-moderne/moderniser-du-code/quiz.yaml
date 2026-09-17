@@ -1,0 +1,58 @@
+id: javascript-motifs-modernes-quiz
+kind: QUIZ
+questions:
+  - id: js-motifs-modernes-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Avec `const a = 0;`, que vaut `a && a.b` ?
+    answer: '0'
+    explanation: >
+      && renvoie son premier opérande falsy : ici 0. a?.b aurait renvoyé undefined, puisque 0 n'est ni
+      null ni undefined et n'a pas de propriété b.
+    skills:
+      - modern-patterns
+
+  - id: js-motifs-modernes-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Remplacer `x = x || 10` par `x ??= 10` ne change jamais le comportement.
+    answer: false
+    explanation: >
+      Avec ||, les valeurs 0, '' et false sont remplacées ; avec ??=, seules null et undefined le sont.
+    skills:
+      - modern-patterns
+
+  - id: js-motifs-modernes-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle démarche limite le risque de régression pendant une modernisation ?
+    options:
+      - "Figer le comportement par des tests, puis transformer une écriture à la fois"
+      - "Réécrire tout le fichier d'un coup puis tester"
+      - "Moderniser sans tests, la syntaxe récente étant plus sûre"
+      - "Remplacer toutes les boucles par reduce"
+    answer: [0]
+    explanation: >
+      Des étapes courtes vérifiées entre chaque transformation permettent de localiser immédiatement une
+      régression.
+    skills:
+      - modern-patterns
+
+  - id: js-motifs-modernes-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel remplacement peut casser une méthode d'objet ?
+    options:
+      - "Transformer une function qui utilise this en fonction fléchée"
+      - "Remplacer une concaténation par un gabarit"
+      - "Remplacer var par const pour une valeur jamais réaffectée"
+      - "Remplacer obj.hasOwnProperty(k) par Object.hasOwn(obj, k)"
+    answer: [0]
+    explanation: >
+      Une fonction fléchée n'a pas de this propre : la méthode ne désigne plus son objet.
+    skills:
+      - modern-patterns

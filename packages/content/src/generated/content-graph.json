@@ -231,6 +231,15 @@
       "contentVersion": "e3284616b77c"
     },
     {
+      "slug": "es-modules",
+      "title": "ES Modules",
+      "order": 25,
+      "part": "modules-modern",
+      "technology": "javascript",
+      "contentPath": "javascript/es-modules/module.yaml",
+      "contentVersion": "2cd8a172f885"
+    },
+    {
       "slug": "execution-context",
       "title": "Contexte d'exécution",
       "order": 14,
@@ -274,6 +283,15 @@
       "technology": "javascript",
       "contentPath": "javascript/introduction/module.yaml",
       "contentVersion": "b7403665e944"
+    },
+    {
+      "slug": "javascript-moderne",
+      "title": "JavaScript moderne",
+      "order": 26,
+      "part": "modules-modern",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-moderne/module.yaml",
+      "contentVersion": "f97cd2e8dad8"
     },
     {
       "slug": "map-et-set",
@@ -1238,6 +1256,53 @@
       "importance": 5,
       "requires": [
         "network-performance-debugging"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "es-modules",
+      "name": "Modules ES, export et import",
+      "importance": 5,
+      "requires": [
+        "scope-chain"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "module-reexports",
+      "name": "Réexports, barrels et import dynamique",
+      "importance": 3,
+      "requires": [
+        "es-modules"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "module-boundaries",
+      "name": "Dépendances circulaires et frontières de modules",
+      "importance": 4,
+      "requires": [
+        "module-reexports",
+        "hoisting-tdz"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "modern-syntax",
+      "name": "Gabarits, affectations logiques et ajouts récents",
+      "importance": 4,
+      "requires": [
+        "objects-modern-syntax"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "modern-patterns",
+      "name": "Moderniser du code JavaScript",
+      "importance": 4,
+      "requires": [
+        "modern-syntax",
+        "async-await"
       ],
       "technology": "javascript"
     },
@@ -2546,6 +2611,115 @@
       ]
     },
     {
+      "id": "javascript-modules-cycles",
+      "title": "Dépendances circulaires et frontières de modules",
+      "slug": "dependances-circulaires-et-frontieres",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "es-modules",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-reexport",
+        "javascript-hoisting"
+      ],
+      "skills": [
+        "module-boundaries"
+      ],
+      "tags": [
+        "javascript",
+        "modules"
+      ],
+      "contentPath": "javascript/es-modules/dependances-circulaires-et-frontieres/lesson.md",
+      "contentVersion": "c2bf2c425f40",
+      "body": "\n## Objectifs\n\n- Expliquer pourquoi une dépendance circulaire peut lever `Cannot access … before initialization`.\n- Casser un cycle en déplaçant le code partagé ou en inversant une dépendance.\n- Définir la frontière publique d'un module et protéger ses détails internes.\n\n## Introduction\n\nDeux modules qui s'importent mutuellement fonctionnent parfois très bien, et parfois lèvent une erreur\nincompréhensible au démarrage — ou pire, seulement après une réorganisation anodine des imports. Ces\n**dépendances circulaires** sont un symptôme : deux modules qui ont besoin l'un de l'autre ne sont pas\nvraiment séparés. Ce chapitre explique le mécanisme, puis la conception qui évite le problème.\n\n## Concept\n\n| Situation | Résultat |\n| --- | --- |\n| A importe B, B importe A, et B utilise une `const` de A **pendant son évaluation** | `ReferenceError` : zone morte |\n| Même cycle, mais B n'utilise A **que dans des fonctions appelées plus tard** | fonctionne |\n| Même cycle, B utilise une **déclaration de fonction** de A pendant son évaluation | fonctionne : elle est hoistée |\n\nTrois façons de casser un cycle :\n\n1. **extraire** ce que les deux modules partagent dans un troisième module ;\n2. **inverser** la dépendance : passer la fonction en paramètre plutôt que l'importer ;\n3. **fusionner** les deux modules s'ils forment en réalité une seule responsabilité.\n\nLa **frontière** d'un module est l'ensemble de ce qu'il exporte. Tout le reste est interne et peut changer\nsans prévenir personne.\n\n## Exemple\n\n```js\n// commande.js\nimport { calculerRemise } from './client.js';\nexport const TVA = 0.2;\nexport function total(commande) {\n  return commande.montant * (1 + TVA) - calculerRemise(commande.client);\n}\n\n// client.js\nimport { TVA } from './commande.js';\nexport function calculerRemise(client) {\n  return client.fidele ? 5 : 0;\n}\nconsole.log(TVA); // ReferenceError si commande.js est chargé en premier :\n// client.js est évalué avant la fin de commande.js, et TVA est encore en zone morte.\n\n// Correction : extraire la constante partagée.\n// taxes.js\nexport const TVA = 0.2;\n\n// commande.js\nimport { TVA } from './taxes.js';\nimport { calculerRemise } from './client.js';\n\n// client.js ne dépend plus de commande.js.\nimport { TVA } from './taxes.js';\n```\n\n## Comment ça fonctionne\n\nLe moteur évalue les modules en profondeur, en suivant les imports. Quand `commande.js` est le point\nd'entrée, il rencontre `import … from './client.js'` et évalue **d'abord** `client.js`. Celui-ci importe\n`commande.js`, déjà en cours de chargement : le moteur ne recommence pas, et relie simplement les liaisons.\nMais `commande.js` n'a pas encore exécuté `export const TVA = 0.2` : la liaison existe, en **zone morte**.\nLire `TVA` pendant l'évaluation de `client.js` lève donc\n`ReferenceError: Cannot access 'TVA' before initialization`.\n\nLes deux cas qui fonctionnent découlent du même mécanisme. Si `client.js` n'utilise `TVA` que **dans une\nfonction** appelée plus tard, la lecture a lieu une fois les deux modules évalués. Et une **déclaration de\nfonction** exportée est hoistée avec son corps : elle est utilisable même avant l'exécution du module qui\nla déclare. C'est ce qui rend les cycles si trompeurs : un code fonctionne, puis une constante ajoutée ou\nun ordre d'import modifié le casse, sans rapport apparent avec la modification.\n\nPlutôt que de jouer avec l'ordre, on supprime le cycle. **Extraire** la partie commune — ici la constante —\ndans un module dont les deux dépendent est la solution la plus fréquente. **Inverser** la dépendance\nconsiste à passer une fonction en paramètre, ou à émettre un événement, pour qu'un module n'ait plus besoin\nd'importer l'autre. Si deux modules s'appellent sans cesse, ils forment peut-être une seule responsabilité,\net les **fusionner** est plus honnête. Des outils comme `madge` ou la règle `import/no-cycle` d'ESLint\ndétectent les cycles automatiquement.\n\nUne **frontière** bien définie limite ces problèmes à la source. Un dossier comme `paiement/` expose une\npetite interface publique dans son `index.js` — les fonctions et les erreurs que le reste de l'application\npeut utiliser — et garde ses fichiers internes privés. Les autres modules n'importent jamais un fichier\ninterne directement. Dans un paquet, le champ `\"exports\"` du `package.json` rend cette règle obligatoire :\nles chemins non listés ne peuvent tout simplement pas être importés.\n\n## Erreurs fréquentes\n\n**Corriger un cycle en réordonnant les imports.** Le problème revient à la prochaine modification.\n\n**Lire une constante d'un module du cycle au niveau supérieur.** Elle peut être en zone morte.\n\n**Importer les fichiers internes d'un autre dossier.** Passe par sa frontière publique.\n\n**Faire dépendre les modules de bas niveau des modules de haut niveau.** Les dépendances doivent aller\ndans un seul sens.\n\n**Ignorer un cycle parce que « ça marche ».** Détecte-les automatiquement dans l'intégration continue.\n\n## À retenir\n\n- Dans un cycle, un module peut être évalué avant la fin de celui qu'il importe.\n- Lire une `const` pas encore initialisée lève `Cannot access … before initialization`.\n- On casse un cycle en extrayant, en inversant la dépendance ou en fusionnant.\n- La frontière d'un module, c'est ce qu'il exporte ; le reste est interne.\n- Les outils et le champ `\"exports\"` font respecter les frontières automatiquement.\n\n## Exercices\n\n1. Au démarrage, on obtient `ReferenceError: Cannot access 'ROLES' before initialization`. Explique la cause et\n   corrige sans changer l'ordre des imports.\n\n   ```js\n   // utilisateur.js\n   import { peut } from './droits.js';\n   export const ROLES = ['lecteur', 'editeur', 'admin'];\n   export function creerUtilisateur(nom, role) { return { nom, role, peutEditer: peut(role, 'editer') }; }\n\n   // droits.js\n   import { ROLES } from './utilisateur.js';\n   const niveau = Object.fromEntries(ROLES.map((role, i) => [role, i]));\n   export function peut(role, action) { return action === 'editer' ? niveau[role] >= 1 : true; }\n   ```\n\n   :::indice\n   `droits.js` lit `ROLES` au niveau supérieur, pendant son évaluation. Qui a vraiment besoin de `ROLES` ?\n   :::\n\n   :::solution\n   `utilisateur.js` importe `droits.js`, qui est évalué en premier et lit `ROLES` pour construire `niveau`. À\n   ce moment, `utilisateur.js` n'a pas encore exécuté sa déclaration : `ROLES` est en zone morte. On extrait la\n   donnée partagée.\n\n   ```js\n   // roles.js\n   export const ROLES = ['lecteur', 'editeur', 'admin'];\n\n   // droits.js\n   import { ROLES } from './roles.js';\n   const niveau = Object.fromEntries(ROLES.map((role, i) => [role, i]));\n   export function peut(role, action) { return action === 'editer' ? niveau[role] >= 1 : true; }\n\n   // utilisateur.js\n   import { peut } from './droits.js';\n   export { ROLES } from './roles.js';\n   export function creerUtilisateur(nom, role) { return { nom, role, peutEditer: peut(role, 'editer') }; }\n   ```\n\n   `droits.js` ne dépend plus de `utilisateur.js` : le cycle a disparu, et `utilisateur.js` peut continuer à\n   exposer `ROLES` pour ses importateurs.\n   :::\n\n2. `journal.js` importe `alerter` depuis `alertes.js`, qui importe `journaliser` depuis `journal.js`. Casse le\n   cycle en **inversant** la dépendance, sans créer de troisième module.\n\n   ```js\n   // journal.js\n   import { alerter } from './alertes.js';\n   export function journaliser(message) {\n     if (message.startsWith('CRITIQUE')) alerter(message);\n     return `[journal] ${message}`;\n   }\n\n   // alertes.js\n   import { journaliser } from './journal.js';\n   export function alerter(message) {\n     journaliser(`alerte envoyée pour : ${message}`);\n   }\n   ```\n\n   :::indice\n   `journal.js` n'a pas besoin de connaître `alertes.js` : il peut recevoir la fonction d'alerte.\n   :::\n\n   :::solution\n   ```js\n   // journal.js : ne dépend plus de personne\n   export function creerJournal({ surCritique = () => {} } = {}) {\n     const lignes = [];\n     function journaliser(message) {\n       if (message.startsWith('CRITIQUE')) surCritique(message);\n       lignes.push(`[journal] ${message}`);\n     }\n     return { journaliser, lignes };\n   }\n\n   // alertes.js : dépend de journal.js, jamais l'inverse\n   import { creerJournal } from './journal.js';\n   const journal = creerJournal({\n     surCritique: (message) => journal.journaliser(`alerte envoyée pour : ${message}`),\n   });\n\n   journal.journaliser('CRITIQUE disque plein');\n   console.log(journal.lignes);\n   // ['[journal] alerte envoyée pour : CRITIQUE disque plein', '[journal] CRITIQUE disque plein']\n   ```\n\n   Les dépendances vont maintenant dans un seul sens : le journal ignore l'existence des alertes.\n   :::\n\n3. Le dossier `paiement/` contient `stripe.js`, `montants.js` et `erreurs.js`. Le reste de l'application ne doit\n   utiliser que `payer` et `ErreurPaiement`. Écris la frontière publique, et indique comment la faire respecter.\n\n   :::indice\n   Un `index.js` qui ne réexporte que l'interface publique, et une règle qui interdit d'importer les autres\n   fichiers.\n   :::\n\n   :::solution\n   ```js\n   // paiement/index.js : la seule porte d'entrée\n   export { payer } from './stripe.js';\n   export { ErreurPaiement } from './erreurs.js';\n   // montants.js reste interne : il n'est pas réexporté.\n\n   // commande.js\n   import { payer, ErreurPaiement } from './paiement/index.js';\n   ```\n\n   Pour la faire respecter : dans un paquet, le champ `\"exports\"` du `package.json` n'autorise que les chemins\n   listés, comme `{ \"exports\": { \".\": \"./index.js\" } }`. Dans une application, une règle de lint comme\n   `no-restricted-imports` interdit les chemins `paiement/*` autres que `index.js`. Le dossier peut alors\n   renommer ou découper ses fichiers internes sans casser personne.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi une dépendance circulaire peut-elle lever `Cannot access … before initialization` ?\n\n  :::indice\n  Dans quel ordre les modules du cycle sont-ils évalués ?\n  :::\n\n  :::reponse\n  Parce que le moteur évalue les modules en profondeur : si A importe B et que B importe A, B est évalué avant la\n  fin de l'évaluation de A. Les liaisons de A existent déjà, mais ses `const` et `let` ne sont pas encore\n  initialisées. Si B les lit pendant sa propre évaluation, il tombe dans leur zone morte. Les lectures faites\n  plus tard, dans des fonctions, fonctionnent, ce qui rend le problème intermittent et sensible à l'ordre des\n  imports.\n  :::\n\n- Comment casser une dépendance circulaire ?\n\n  :::indice\n  Trois approches, selon la nature de ce qui est partagé.\n  :::\n\n  :::reponse\n  En extrayant ce que les deux modules partagent dans un troisième module dont ils dépendent tous deux ; en\n  inversant une dépendance, par exemple en passant une fonction en paramètre ou en émettant un événement plutôt\n  qu'en important directement ; ou en fusionnant les deux modules s'ils forment en réalité une seule\n  responsabilité. Réordonner les imports ne fait que masquer le problème jusqu'à la prochaine modification.\n  :::\n\n- Qu'est-ce qu'une frontière de module, et pourquoi la protéger ?\n\n  :::indice\n  Qu'est-ce qui peut changer librement, et qu'est-ce qui engage les autres modules ?\n  :::\n\n  :::reponse\n  C'est l'ensemble de ce qu'un module ou un dossier expose aux autres, en général par un `index.js` qui ne\n  réexporte que l'interface publique. Tout le reste est interne et peut être renommé, découpé ou réécrit sans\n  impact. Si d'autres parties importent directement des fichiers internes, chaque réorganisation casse du code\n  ailleurs. On la protège avec le champ `\"exports\"` d'un paquet ou des règles de lint qui interdisent ces\n  imports.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-es-modules",
+      "title": "Pourquoi les modules : export et import",
+      "slug": "export-et-import",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "es-modules",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-portees"
+      ],
+      "skills": [
+        "es-modules"
+      ],
+      "tags": [
+        "javascript",
+        "modules"
+      ],
+      "contentPath": "javascript/es-modules/export-et-import/lesson.md",
+      "contentVersion": "44bdcf3f2274",
+      "body": "\n## Objectifs\n\n- Découper un programme en fichiers qui exposent explicitement ce qu'ils partagent.\n- Écrire des exports nommés et un export par défaut, et les importer, avec ou sans renommage.\n- Comprendre les propriétés d'un module : portée propre, mode strict, évaluation unique, liaisons vivantes.\n\n## Introduction\n\nUn programme d'une certaine taille ne tient pas dans un fichier. Pendant des années, JavaScript n'a eu\naucun système de modules : les scripts partageaient l'espace global, et l'ordre des balises `<script>`\ndécidait de ce qui fonctionnait. Les **modules ES**, standardisés en 2015 et disponibles partout\naujourd'hui, règlent la question : chaque fichier a sa propre portée, et ne partage que ce qu'il\n**exporte** explicitement.\n\n## Concept\n\n| Écriture | Rôle |\n| --- | --- |\n| `export const TAUX = 0.2;` | export nommé d'une déclaration |\n| `export { calculer, TAUX };` | export nommé d'éléments déjà déclarés |\n| `export default function formater() {}` | export par défaut : un seul par module |\n| `import { calculer } from './prix.js';` | import nommé : le nom doit correspondre |\n| `import { calculer as calculerPrix } from './prix.js';` | import renommé |\n| `import formater from './format.js';` | import du défaut : le nom est libre |\n| `import * as Prix from './prix.js';` | tous les exports, dans un objet espace de noms |\n\nPropriétés d'un module :\n\n- **portée propre** : ses variables ne sont pas globales ;\n- **mode strict** d'office ;\n- **évaluation unique** : importé dix fois, il ne s'exécute qu'une fois ;\n- **liaisons vivantes** : un import reflète la valeur actuelle de l'export, et ne peut pas être réaffecté.\n\nDans Node.js, un fichier est un module ES s'il porte l'extension `.mjs`, ou si le `package.json` contient\n`\"type\": \"module\"`. Dans un navigateur : `<script type=\"module\">`.\n\n## Exemple\n\n```js\n// compteur.js\nexport let valeur = 0;\n\nexport function incrementer() {\n  valeur += 1;\n}\n\nexport default function reinitialiser() {\n  valeur = 0;\n}\n\n// principal.js\nimport reinitialiser, { valeur, incrementer } from './compteur.js';\nimport * as Compteur from './compteur.js';\n\nincrementer();\nincrementer();\nconsole.log(valeur, Compteur.valeur); // 2 2 : l'import suit la valeur actuelle\n\ntry {\n  valeur = 10; // un import ne peut pas être réaffecté\n} catch (erreur) {\n  console.log(erreur.name); // 'TypeError'\n}\n\nreinitialiser();\nconsole.log(valeur); // 0\n```\n\n## Comment ça fonctionne\n\nUn module est chargé en trois temps. Le moteur **analyse** d'abord chaque fichier et lit ses `import` et\n`export`, sans rien exécuter : c'est pourquoi `import` et `export` doivent apparaître au niveau supérieur,\navec des chemins écrits en toutes lettres. Il **relie** ensuite les imports aux exports correspondants —\nun nom importé qui n'existe pas est une erreur avant toute exécution. Il **évalue** enfin chaque module,\nune seule fois, dans l'ordre des dépendances. Tous les fichiers qui importent `compteur.js` partagent\ndonc la même instance : le module est un singleton naturel.\n\nUn import n'est pas une copie de la valeur, mais une **liaison vivante** vers la variable exportée.\nQuand `incrementer` modifie `valeur` dans son module, les modules qui l'importent voient la nouvelle valeur.\nEn revanche, seul le module qui déclare la variable peut la modifier : l'import est en lecture seule, et\nl'affecter lève une `TypeError`. Pour modifier un état, le module exporte une fonction qui le fait.\n\nExports **nommés** ou **par défaut** ? Les exports nommés imposent un nom identique à l'import, ce qui\npermet aux éditeurs de proposer l'import automatiquement et rend les recherches dans le code fiables.\nL'export par défaut laisse l'appelant choisir le nom, ce qui produit souvent des noms différents pour la\nmême chose selon les fichiers. Beaucoup d'équipes privilégient donc les exports nommés, et réservent le\ndéfaut aux cas où un fichier expose une seule chose évidente, comme un composant.\n\nLes chemins relatifs doivent inclure l'**extension** : `'./compteur.js'`, et non `'./compteur'`. Node.js\net les navigateurs résolvent les chemins exactement comme écrits ; ce sont les outils de build qui, souvent,\najoutent l'extension manquante. Un nom sans chemin, comme `'lodash'`, désigne un paquet installé.\n\nNode.js connaît aussi l'ancien système **CommonJS** : `require` et `module.exports`. Il reste courant dans\nle code existant. Un module ES peut importer un module CommonJS ; l'inverse est plus limité. Pour du code\nnouveau, on écrit des modules ES.\n\n## Erreurs fréquentes\n\n**Oublier l'extension dans un chemin relatif.** Node.js répond `ERR_MODULE_NOT_FOUND`.\n\n**Réaffecter une variable importée.** Exporte une fonction qui modifie l'état.\n\n**Importer un export nommé sans accolades.** `import calculer from` lit l'export par défaut.\n\n**Placer un `import` dans une condition.** C'est une erreur de syntaxe : utilise `import()`, vu au\nchapitre suivant.\n\n**Compter sur des variables globales entre modules.** Chaque module a sa propre portée.\n\n## À retenir\n\n- Un module a sa portée, est en mode strict, et n'est évalué qu'une fois.\n- Exports nommés entre accolades ; un seul export par défaut, importé sans accolades.\n- Un import est une liaison vivante, en lecture seule.\n- Chemins relatifs avec extension dans Node.js et les navigateurs.\n- Node.js : `.mjs` ou `\"type\": \"module\"` ; navigateur : `<script type=\"module\">`.\n\n## Exercices\n\n1. Ce fichier unique mélange le calcul des prix et l'affichage d'un panier. Découpe-le en deux modules :\n   `prix.js`, qui exporte `TVA` et `prixTTC`, et `panier.js`, qui les importe.\n\n   ```js\n   const TVA = 0.2;\n   function prixTTC(prixHT) {\n     return Math.round(prixHT * (1 + TVA) * 100) / 100;\n   }\n   console.log(`Clavier : ${prixTTC(50)} €`);\n   ```\n\n   :::indice\n   `prix.js` utilise des exports nommés ; `panier.js` les importe entre accolades, avec l'extension dans\n   le chemin.\n   :::\n\n   :::solution\n   ```js\n   // prix.js\n   export const TVA = 0.2;\n\n   export function prixTTC(prixHT) {\n     return Math.round(prixHT * (1 + TVA) * 100) / 100;\n   }\n\n   // panier.js\n   import { prixTTC } from './prix.js';\n\n   console.log(`Clavier : ${prixTTC(50)} €`); // 'Clavier : 60 €'\n   ```\n   :::\n\n2. Ce code échoue avant même de s'exécuter. Lis le message, explique-le, et propose deux corrections.\n\n   ```js\n   // prix.js exporte : export function prixTTC(prixHT) { … }\n   import prixTTC from './prix.js';\n   ```\n\n   :::indice\n   Sans accolades, quel export l'instruction cherche-t-elle ?\n   :::\n\n   :::solution\n   L'erreur est `SyntaxError: The requested module './prix.js' does not provide an export named 'default'`.\n   Sans accolades, `import prixTTC` demande l'export **par défaut**, et `prix.js` n'en a pas. La liaison des\n   modules échoue avant toute exécution.\n\n   ```js\n   // Correction 1 : importer l'export nommé.\n   import { prixTTC } from './prix.js';\n\n   // Correction 2 : renommer à l'import si le nom local doit différer.\n   import { prixTTC as calculerTTC } from './prix.js';\n   ```\n\n   Ajouter un `export default` dans `prix.js` fonctionnerait aussi, mais multiplierait les façons d'importer\n   la même fonction.\n   :::\n\n3. `config.js` affiche un message quand il est évalué, puis exporte un objet. Deux modules l'importent. Combien\n   de fois le message apparaît-il, et une modification de l'objet faite dans l'un est-elle visible dans\n   l'autre ?\n\n   ```js\n   // config.js\n   console.log('configuration chargée');\n   export const configuration = { langue: 'fr' };\n   ```\n\n   :::indice\n   Un module est-il évalué une fois par import, ou une fois en tout ?\n   :::\n\n   :::solution\n   Le message n'apparaît **qu'une fois** : un module est évalué une seule fois, et tous les imports partagent\n   le même résultat. Les deux modules reçoivent donc le **même objet**, et une modification faite par l'un est\n   visible par l'autre :\n\n   ```js\n   // a.js\n   import { configuration } from './config.js';\n   configuration.langue = 'en';\n\n   // b.js\n   import './a.js';\n   import { configuration } from './config.js';\n   console.log(configuration.langue); // 'en'\n   ```\n\n   C'est pratique pour une configuration partagée, et dangereux pour un état modifiable : pour l'éviter, on\n   exporte un objet figé avec `Object.freeze`, ou des fonctions qui contrôlent les modifications.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre un export nommé et un export par défaut ?\n\n  :::indice\n  Qui choisit le nom à l'import ?\n  :::\n\n  :::reponse\n  Un module peut avoir plusieurs exports nommés, importés entre accolades sous leur nom exact, éventuellement\n  renommés avec `as`. Il ne peut avoir qu'un export par défaut, importé sans accolades sous le nom que choisit\n  l'appelant. Les exports nommés rendent le code plus cohérent et plus facile à outiller — import automatique,\n  recherche, refactorisation — ; le défaut convient à un module qui expose une seule chose évidente.\n  :::\n\n- Qu'est-ce qu'une liaison vivante ?\n\n  :::indice\n  Un import est-il une copie de la valeur au moment de l'import ?\n  :::\n\n  :::reponse\n  Un import n'est pas une copie : c'est une référence vers la variable exportée. Si le module qui l'exporte\n  modifie la variable, les modules qui l'importent voient la nouvelle valeur. La liaison est en lecture\n  seule du côté de l'importateur : réaffecter un import lève une `TypeError`. Seul le module d'origine peut\n  modifier la variable, en général par une fonction qu'il exporte.\n  :::\n\n- Qu'apportent les modules ES par rapport aux scripts classiques ?\n\n  :::indice\n  Pense à l'espace global, au mode strict et à l'ordre de chargement.\n  :::\n\n  :::reponse\n  Chaque module a sa propre portée : plus de collisions dans l'espace global. Les dépendances sont\n  déclarées explicitement par `import`, donc l'ordre de chargement est calculé par le moteur au lieu de\n  dépendre de l'ordre des balises `<script>`. Les modules sont en mode strict, évalués une seule fois, et\n  leur structure statique permet aux outils de détecter les imports invalides et d'éliminer le code inutilisé.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-reexport",
+      "title": "Réexports, fichiers barrel et import dynamique",
+      "slug": "reexport-barrels-et-import-dynamique",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "es-modules",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-es-modules"
+      ],
+      "skills": [
+        "module-reexports"
+      ],
+      "tags": [
+        "javascript",
+        "modules"
+      ],
+      "contentPath": "javascript/es-modules/reexport-barrels-et-import-dynamique/lesson.md",
+      "contentVersion": "d85ec5746b0b",
+      "body": "\n## Objectifs\n\n- Réexporter les éléments d'autres modules pour offrir un point d'entrée unique.\n- Connaître le coût caché des fichiers barrel.\n- Charger un module à la demande avec `import()`.\n\n## Introduction\n\nQuand un dossier contient dix modules, les importer un à un depuis le reste de l'application devient\nfastidieux, et expose l'organisation interne du dossier. Les **réexports** permettent de publier une\nfaçade : un fichier qui rassemble ce que le dossier offre. À l'inverse, certains modules lourds ne\ndevraient être chargés que si l'utilisateur en a besoin : c'est le rôle de l'**import dynamique**.\n\n## Concept\n\n| Écriture | Effet |\n| --- | --- |\n| `export { formaterDate } from './dates.js';` | réexporte un export nommé |\n| `export { default as Bouton } from './bouton.js';` | réexporte un défaut sous un nom |\n| `export * from './prix.js';` | réexporte tous les exports nommés, **sans** le défaut |\n| `export * as Prix from './prix.js';` | réexporte tout, rangé dans un espace de noms |\n| `const module = await import('./lourd.js');` | charge un module à l'exécution, renvoie une promesse |\n\nUn **fichier barrel** — souvent `index.js` — ne contient que des réexports : il sert de point d'entrée\nunique à un dossier.\n\n## Exemple\n\n```js\n// outils/dates.js\nexport const formaterDate = (date) => date.toISOString().slice(0, 10);\n\n// outils/graphiques.js — un module volumineux\nexport const dessiner = () => 'graphique';\n\n// outils/index.js — le fichier barrel\nexport { formaterDate } from './dates.js';\nexport { dessiner } from './graphiques.js';\nexport * as Prix from './prix.js';\n\n// rapport.js\nimport { formaterDate, Prix } from './outils/index.js';\nconsole.log(formaterDate(new Date('2026-09-17T10:00:00Z')), Prix.prixTTC(10)); // '2026-09-17' 12\n// Attention : graphiques.js a quand même été chargé et évalué.\n\n// tableau-de-bord.js — le module lourd, chargé seulement quand on en a besoin\nexport async function afficherGraphique(utilisateurVeutUnGraphique) {\n  if (!utilisateurVeutUnGraphique) {\n    return 'aucun graphique';\n  }\n  const { dessiner } = await import('./outils/graphiques.js');\n  return dessiner();\n}\n```\n\n## Comment ça fonctionne\n\nUn réexport établit une liaison directe entre le module qui importe et le module d'origine : le fichier\nbarrel ne crée ni copie ni variable, il sert d'aiguillage. L'appelant écrit\n`import { formaterDate } from './outils/index.js'` sans savoir dans quel fichier se trouve la fonction,\net le dossier peut se réorganiser sans casser ses importateurs.\n\n`export * from` réexporte tous les exports **nommés**, mais pas l'export par défaut : un module ne peut\navoir qu'un défaut, et le moteur ne choisit pas lequel garder. On réexporte donc un défaut explicitement,\nsous un nom : `export { default as Bouton } from './bouton.js'`. Si deux `export *` exposent le même nom,\nce nom devient ambigu et n'est pas exporté.\n\nLe fichier barrel a un **coût caché**. Importer un seul nom depuis `index.js` oblige à charger et évaluer\n**tous** les modules qu'il réexporte : dans l'exemple, `graphiques.js` est évalué alors que `rapport.js`\nn'en a pas besoin. Dans un navigateur sans outil de build, ou en test, cela ralentit le démarrage. Les\noutils de build éliminent souvent le code inutilisé, mais seulement si les modules n'ont pas d'effet de\nbord à leur évaluation. Les barrels favorisent aussi les **dépendances circulaires**, sujet du chapitre\nsuivant. On les réserve donc à la frontière publique d'un dossier, et on les évite à l'intérieur.\n\n`import()` est une expression, pas une déclaration : on peut l'écrire dans une condition, une fonction,\nun gestionnaire de clic. Elle renvoie une **promesse** de l'objet espace de noms du module ; l'export par\ndéfaut se trouve sous `.default`. Le module n'est téléchargé et évalué qu'au premier appel, puis mis en\ncache : un second `import()` renvoie le même module. Les outils de build découpent automatiquement le code\nautour de ces imports, ce qui allège le chargement initial d'une application — c'est le principe du\n*code splitting*, détaillé dans la partie Performance.\n\n## Erreurs fréquentes\n\n**Attendre le défaut d'un `export *`.** Réexporte-le explicitement avec `default as`.\n\n**Importer depuis un barrel à l'intérieur de son propre dossier.** C'est un raccourci vers un cycle ;\nimporte le fichier voisin directement.\n\n**Créer un barrel pour chaque dossier.** Chacun ajoute des évaluations inutiles.\n\n**Oublier `await` sur `import()`.** On obtient une promesse, pas le module.\n\n**Chercher le défaut directement sur le résultat d'`import()`.** Il est sous `.default`.\n\n## À retenir\n\n- `export { x } from`, `export * from`, `export * as Nom from` : réexporter sans copier.\n- `export *` n'inclut pas le défaut.\n- Un barrel évalue tous les modules qu'il réexporte : à réserver aux frontières publiques.\n- `import()` charge à la demande, renvoie une promesse, et le défaut est sous `.default`.\n- Un module chargé dynamiquement est mis en cache comme les autres.\n\n## Exercices\n\n1. Le dossier `validation/` contient `email.js`, qui exporte `estEmailValide`, et `mot-de-passe.js`, qui\n   exporte par défaut `verifierMotDePasse`. Écris `validation/index.js` pour que le reste de l'application\n   écrive `import { estEmailValide, verifierMotDePasse } from './validation/index.js'`.\n\n   :::indice\n   Un export nommé se réexporte tel quel ; un défaut doit recevoir un nom.\n   :::\n\n   :::solution\n   ```js\n   // validation/index.js\n   export { estEmailValide } from './email.js';\n   export { default as verifierMotDePasse } from './mot-de-passe.js';\n   ```\n\n   `export * from './mot-de-passe.js'` n'aurait rien exposé : le module n'a qu'un export par défaut.\n   :::\n\n2. `boutons/index.js` contient `export * from './bouton.js';`, mais `import { Bouton } from './boutons/index.js'`\n   échoue alors que `bouton.js` contient `export default class Bouton {}`. Explique et corrige.\n\n   :::indice\n   Que réexporte exactement `export *` ?\n   :::\n\n   :::solution\n   `export *` ne réexporte que les exports **nommés**. `bouton.js` n'a qu'un export par défaut : le barrel\n   n'expose donc rien, et l'import nommé `Bouton` ne trouve aucun export de ce nom.\n\n   ```js\n   // boutons/index.js\n   export { default as Bouton } from './bouton.js';\n   ```\n\n   Une autre option est de passer `bouton.js` à un export nommé, `export class Bouton {}`, et de garder\n   `export *`.\n   :::\n\n3. L'export PDF s'appuie sur un module volumineux, utilisé par peu d'utilisateurs. Écris\n   `exporterEnPDF(donnees)` pour qu'il ne soit chargé qu'au premier export, et vérifie qu'un second appel ne le\n   recharge pas.\n\n   :::indice\n   `await import('./pdf.js')` dans la fonction ; le moteur met le module en cache après le premier chargement.\n   :::\n\n   :::solution\n   ```js\n   // pdf.js\n   console.log('module PDF chargé');\n   export default function genererPDF(donnees) {\n     return `PDF de ${donnees.length} lignes`;\n   }\n\n   // export.js\n   export async function exporterEnPDF(donnees) {\n     const { default: genererPDF } = await import('./pdf.js');\n     return genererPDF(donnees);\n   }\n\n   // bouton-export.js\n   import { exporterEnPDF } from './export.js';\n   console.log(await exporterEnPDF([1, 2])); // 'module PDF chargé', puis 'PDF de 2 lignes'\n   console.log(await exporterEnPDF([1])); // 'PDF de 1 lignes' : pas de second chargement\n   ```\n\n   Le défaut est récupéré par déstructuration sous le nom `default`, renommé en `genererPDF`.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'un fichier barrel, et quels sont ses inconvénients ?\n\n  :::indice\n  Pense à ce qui est évalué quand on importe un seul nom.\n  :::\n\n  :::reponse\n  C'est un fichier, souvent `index.js`, qui ne fait que réexporter le contenu d'un dossier pour offrir un point\n  d'entrée unique. Il simplifie les imports et cache l'organisation interne. Mais importer un seul nom oblige à\n  évaluer tous les modules réexportés, ce qui alourdit le démarrage et les tests, et les barrels favorisent les\n  dépendances circulaires quand un fichier du dossier importe son propre barrel. On les réserve à la frontière\n  publique d'un ensemble de modules.\n  :::\n\n- Pourquoi `export *` n'inclut-il pas l'export par défaut ?\n\n  :::indice\n  Combien d'exports par défaut un module peut-il avoir ?\n  :::\n\n  :::reponse\n  Parce qu'un module n'a qu'un seul export par défaut : si `export *` l'incluait, réexporter deux modules\n  produirait deux défauts en conflit, sans règle pour choisir. Le défaut doit donc être réexporté explicitement,\n  avec un nom : `export { default as Bouton } from './bouton.js'`. Pour la même raison, deux `export *` qui\n  exposent le même nom le rendent ambigu, et ce nom n'est pas exporté.\n  :::\n\n- Quand utiliser `import()` plutôt qu'un `import` statique ?\n\n  :::indice\n  Pense au moment du chargement et aux conditions.\n  :::\n\n  :::reponse\n  Quand un module n'est nécessaire que dans certains cas — une fonctionnalité rarement utilisée, un module lourd,\n  un choix qui dépend de l'environnement ou de l'utilisateur. `import()` s'écrit n'importe où, renvoie une\n  promesse, et ne charge le module qu'au premier appel, puis le garde en cache. Les outils de build en profitent\n  pour découper l'application en morceaux chargés à la demande. Pour les dépendances toujours nécessaires, les\n  imports statiques restent préférables : ils sont vérifiés avant l'exécution.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-contexte-execution",
       "title": "Contexte d'exécution et pile d'appels",
       "slug": "contexte-execution-et-pile-appels",
@@ -3216,6 +3390,80 @@
       "contentPath": "javascript/introduction/syntaxe-instructions-expressions/lesson.md",
       "contentVersion": "89376b1c4af4",
       "body": "\n## Objectifs\n\n- Distinguer une expression, qui produit une valeur, d'une instruction, qui effectue une\n  action.\n- Savoir où placer les points-virgules, et quand leur absence change le sens du code.\n- Écrire des commentaires utiles et respecter les conventions de nommage courantes.\n\n## Introduction\n\nUn programme JavaScript est une suite de phrases que le moteur lit de haut en bas. Comme\ndans une langue, il y a une grammaire : certaines phrases **produisent une valeur**,\nd'autres **font quelque chose**. Confondre les deux mène à des erreurs de syntaxe\ndéroutantes, et ignorer la façon dont JavaScript ajoute des points-virgules à ta place\nmène à des bugs silencieux.\n\n## Concept\n\nUne **expression** produit une valeur. On peut la placer partout où une valeur est\nattendue : à droite d'un `=`, dans les parenthèses d'un appel, dans `${ }` d'un template\nliteral.\n\n```js\n2 + 3            // 5\nprix * quantite  // un nombre\nnom              // la valeur de la variable\nestMajeur(age)   // la valeur renvoyée\ntotal = 10       // une affectation est aussi une expression : elle vaut 10\n```\n\nUne **instruction** effectue une action et ne produit pas de valeur utilisable :\n\n```js\nlet total = 0;               // déclaration\nif (total > 3) { total = 3 } // condition\nfor (;;) { break }           // boucle\nreturn total;                // retour de fonction\n```\n\nUne expression suivie d'un point-virgule forme une **instruction-expression** :\n`total += 5;` ou `console.log(total);`.\n\n| Élément | Rôle | Exemples |\n| --- | --- | --- |\n| Expression | produit une valeur | `a + b`, `appel()`, `x = 1` |\n| Instruction | effectue une action | `let`, `if`, `for`, `return` |\n| Bloc `{ }` | regroupe des instructions | corps d'un `if` ou d'une boucle |\n| Commentaire | ignoré par le moteur | `// ligne`, `/* bloc */` |\n\nLes conventions de nommage attendues dans un code professionnel :\n\n- `camelCase` pour les variables et les fonctions : `prixTotal`, `calculerRemise` ;\n- `PascalCase` pour les classes : `Utilisateur`, `PanierService` ;\n- `MAJUSCULES_AVEC_TIRETS_BAS` pour les constantes de configuration : `TAUX_TVA` ;\n- des noms qui disent **ce que la valeur représente** : `utilisateursActifs` plutôt que\n  `liste2`.\n\n## Exemple\n\n```js\n/**\n * Prix TTC d'un article. La TVA est passée en paramètre, car elle dépend\n * du pays de livraison.\n */\nconst TAUX_TVA = 0.2;\n\nconst prixHT = 50;\nconst prixTTC = prixHT * (1 + TAUX_TVA); // expression à droite du =\n\n// L'affichage attend une expression : on peut y mettre un calcul\nconsole.log(`Prix TTC : ${prixTTC.toFixed(2)} €`); // Prix TTC : 60.00 €\n\nif (prixTTC > 55) {\n  // Seuil fixé par le service commercial, pas une règle technique\n  console.log('Livraison offerte');\n}\n```\n\n## Comment ça fonctionne\n\nAvant d'exécuter quoi que ce soit, le moteur **analyse** tout le texte du fichier et en\nconstruit un arbre syntaxique. Une phrase mal formée à la ligne 200 empêche donc\nl'exécution de la ligne 1 : c'est une `SyntaxError`, levée avant le moindre effet.\n\nLes points-virgules sont en partie **insérés automatiquement** (*Automatic Semicolon\nInsertion*, ASI). Quand une ligne se termine et que la suivante ne peut pas prolonger la\nphrase, le moteur ajoute un `;`. Cette règle a deux pièges célèbres :\n\n```js\nfunction creerUtilisateur(nom) {\n  return      // un ; est inséré ici\n  {\n    nom: nom,\n  };\n}\nconsole.log(creerUtilisateur('Ada')); // undefined\n```\n\n```js\nconst total = 10\n[1, 2].forEach((n) => console.log(n)) // TypeError\n```\n\nDans le second cas, aucune insertion n'a lieu : le moteur lit\n`10[1, 2].forEach(...)`, soit « la propriété `2` du nombre `10` », qui vaut `undefined`.\nÉcrire ses points-virgules, ou laisser un outil comme Prettier les ajouter, supprime ces\nambiguïtés.\n\n## Erreurs fréquentes\n\n**Aller à la ligne juste après `return`.** Le moteur insère un point-virgule et la\nfonction renvoie `undefined`. Ouvre l'accolade ou commence l'expression sur la même\nligne que `return`.\n\n**Commencer une ligne par `(` ou `[` sans point-virgule à la ligne précédente.** Les\ndeux lignes sont lues comme une seule expression.\n\n**Écrire `=` au lieu de `===` dans une condition.** `if (age = 18)` affecte 18 et la\ncondition est toujours vraie, puisque l'affectation vaut 18.\n\n**Commenter ce que le code dit déjà.** `// ajoute 1 à i` au-dessus de `i += 1`\nn'apporte rien. Un bon commentaire explique **pourquoi**.\n\n## À retenir\n\n- Une expression produit une valeur ; une instruction effectue une action.\n- Une erreur de syntaxe empêche l'exécution de tout le fichier.\n- Ne jamais aller à la ligne juste après `return`.\n- `camelCase` pour les variables et fonctions, `PascalCase` pour les classes.\n- Un commentaire explique le pourquoi, pas le quoi.\n\n## Exercices\n\n1. Pour chaque ligne, dis s'il s'agit d'une expression, d'une instruction ou d'une\n   instruction-expression : `3 * 4`, `let total = 0;`, `total += 5;`,\n   `if (total > 3) {}`, `console.log(total)`.\n\n   :::indice\n   Essaie mentalement de placer chaque morceau dans `${ }` d'un template literal : seule\n   une expression y a sa place.\n   :::\n\n   :::solution\n   - `3 * 4` : une expression, qui vaut `12`.\n   - `let total = 0;` : une instruction de déclaration.\n   - `total += 5;` : une instruction-expression — l'affectation est une expression,\n     suivie d'un point-virgule.\n   - `if (total > 3) {}` : une instruction.\n   - `console.log(total)` : une expression (un appel), qui devient une\n     instruction-expression quand elle est seule sur sa ligne.\n   :::\n\n2. Cette fonction renvoie `undefined` au lieu d'un objet. Corrige-la.\n\n   ```js\n   function creerProduit(nom) {\n     return\n     {\n       nom: nom,\n     };\n   }\n   ```\n\n   :::indice\n   Regarde ce que le moteur insère à la fin de la ligne qui contient seulement `return`.\n   :::\n\n   :::solution\n   ```js\n   function creerProduit(nom) {\n     return {\n       nom: nom,\n     };\n   }\n   ```\n\n   Le moteur ajoutait un point-virgule après `return`, qui renvoyait donc `undefined`.\n   L'accolade ouvrante sur la même ligne indique que l'expression continue.\n   :::\n\n3. Ce code lit un fichier CSV dont la première ligne contient les noms de colonnes.\n   Réécris le commentaire pour qu'il soit utile.\n\n   ```js\n   // ajoute 1 à i\n   i += 1;\n   ```\n\n   :::indice\n   Le code dit déjà ce qu'il fait. Le commentaire doit dire ce que le code ne peut pas\n   dire tout seul.\n   :::\n\n   :::solution\n   ```js\n   // La première ligne du CSV contient les noms de colonnes, pas des données.\n   i += 1;\n   ```\n\n   Un lecteur comprend désormais pourquoi on saute une ligne, et saura qu'il faut modifier\n   ce code si le format du fichier change.\n   :::\n\n## Questions d'entretien\n\n- Quelle est la différence entre une expression et une instruction ?\n\n  :::indice\n  Laquelle des deux peut-on passer en argument à une fonction ?\n  :::\n\n  :::reponse\n  Une expression produit une valeur : `a + b`, un appel de fonction, une affectation. On\n  peut l'utiliser partout où une valeur est attendue. Une instruction effectue une action\n  sans produire de valeur : `let`, `if`, `for`, `return`. Une expression suivie d'un\n  point-virgule forme une instruction-expression. C'est pour cela qu'on ne peut pas écrire\n  `console.log(let x = 1)`, mais qu'on peut écrire `console.log(x = 1)`.\n  :::\n\n- Qu'est-ce que l'insertion automatique de points-virgules, et quand pose-t-elle\n  problème ?\n\n  :::indice\n  Pense à ce qui se passe après un `return` seul sur sa ligne, et à une ligne qui\n  commence par un crochet.\n  :::\n\n  :::reponse\n  Quand une fin de ligne rend la phrase complète, le moteur insère un point-virgule. Le\n  piège le plus connu : un `return` suivi d'un retour à la ligne renvoie `undefined`. À\n  l'inverse, aucune insertion n'a lieu quand la ligne suivante commence par `(` ou `[` :\n  les deux lignes sont alors lues comme une seule expression. Écrire les points-virgules,\n  ou confier le formatage à Prettier, élimine ces cas.\n  :::\n\n- Quelles conventions de nommage attend-on dans un code JavaScript professionnel ?\n\n  :::indice\n  Il y a une convention pour les variables, une pour les classes et une pour les\n  constantes de configuration.\n  :::\n\n  :::reponse\n  `camelCase` pour les variables et les fonctions, `PascalCase` pour les classes et\n  `MAJUSCULES_AVEC_TIRETS_BAS` pour les constantes de configuration. Au-delà de la casse,\n  un nom doit dire ce que la valeur représente (`utilisateursActifs` plutôt que `data2`),\n  et un booléen se lit comme une question (`estConnecte`, `aDesDroits`). Ces règles sont\n  généralement vérifiées par ESLint.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-syntaxe-moderne",
+      "title": "Gabarits, affectations logiques et autres ajouts récents",
+      "slug": "gabarits-et-affectations-logiques",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "javascript-moderne",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 2,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-objets-syntaxe-moderne",
+        "javascript-nullish-optional-chaining"
+      ],
+      "skills": [
+        "modern-syntax"
+      ],
+      "tags": [
+        "javascript",
+        "moderne"
+      ],
+      "contentPath": "javascript/javascript-moderne/gabarits-et-affectations-logiques/lesson.md",
+      "contentVersion": "bd189548056f",
+      "body": "\n## Objectifs\n\n- Utiliser les gabarits de chaînes avancés : multiligne, gabarits balisés et `String.raw`.\n- Choisir entre `||=`, `&&=` et `??=` selon la valeur qu'on veut remplacer.\n- Reconnaître les ajouts récents du langage : séparateurs numériques, appel optionnel, `at`,\n  `findLast` et `Object.groupBy`.\n\n## Introduction\n\nLe destructuring, le spread, `?.` et `??` ont été présentés au fil du parcours, là où ils servaient.\nIl reste une série d'ajouts plus discrets, arrivés entre ES2015 et ES2024, qu'on croise dans tout code\nrécent et qui remplacent des écritures plus longues et plus fragiles. Ce chapitre les regroupe, avec la\nrègle d'usage de chacun.\n\n## Concept\n\n| Écriture | Équivalent ancien | Remarque |\n| --- | --- | --- |\n| `` `Total : ${total} €` `` | `'Total : ' + total + ' €'` | expressions et retours à la ligne autorisés |\n| `` balise`texte ${valeur}` `` | — | une fonction reçoit les morceaux et les valeurs |\n| `` String.raw`C:\\dossier` `` | — | les antislashs restent littéraux |\n| `a \\|\\|= b` | `a = a \\|\\| b` | remplace toute valeur **falsy**, y compris `0` et `''` |\n| `a ??= b` | `a = a ?? b` | remplace seulement `null` et `undefined` |\n| `a &&= b` | `a = a && b` | remplace seulement une valeur **truthy** |\n| `1_000_000` | `1000000` | séparateur de lecture, sans effet sur la valeur |\n| `objet.methode?.()` | `objet.methode && objet.methode()` | n'appelle que si la méthode existe |\n| `liste.at(-1)` | `liste[liste.length - 1]` | index négatif depuis la fin |\n| `liste.findLast(f)` | parcours à l'envers | dernier élément qui correspond |\n| `Object.groupBy(liste, f)` | `reduce` manuel | regroupe par clé calculée (ES2024) |\n\n## Exemple\n\n```js\nconst nom = 'Ada';\nconst message = `Bonjour ${nom},\nvotre commande de ${2 * 21} € est confirmée.`;\nconsole.log(message.split('\\n').length); // 2 : le retour à la ligne fait partie de la chaîne\n\nfunction surligner(morceaux, ...valeurs) {\n  return morceaux.reduce((texte, morceau, i) => `${texte}${morceau}${i < valeurs.length ? `[${valeurs[i]}]` : ''}`, '');\n}\nconsole.log(surligner`Bonjour ${nom}, total ${40 + 2} €`); // 'Bonjour [Ada], total [42] €'\n\nconst reglages = { theme: '', volume: 0, langue: null };\nreglages.theme ||= 'clair'; // '' est falsy : remplacé\nreglages.volume ??= 50; // 0 n'est ni null ni undefined : conservé\nreglages.langue ??= 'fr'; // null : remplacé\nconsole.log(reglages); // { theme: 'clair', volume: 0, langue: 'fr' }\n\nconst budget = 1_500_000;\nconsole.log(budget === 1500000); // true\n\nconst service = { demarrer: () => 'démarré' };\nconsole.log(service.demarrer?.(), service.arreter?.()); // 'démarré' undefined\n\nconst ventes = [\n  { region: 'nord', montant: 10 },\n  { region: 'sud', montant: 5 },\n  { region: 'nord', montant: 3 },\n];\nconst parRegion = Object.groupBy(ventes, (vente) => vente.region);\nconsole.log(parRegion.nord.length, ventes.at(-1).montant); // 2 3\nconsole.log(ventes.findLast((vente) => vente.region === 'nord').montant); // 3\n```\n\n## Comment ça fonctionne\n\nUn **gabarit** évalue chaque expression `${…}` et la convertit en chaîne, et conserve tels quels les\nretours à la ligne écrits dans le code. Un **gabarit balisé** va plus loin : la fonction placée devant\nreçoit d'abord un tableau des morceaux de texte fixes, puis les valeurs des expressions en arguments\nséparés, et renvoie ce qu'elle veut. C'est le mécanisme utilisé par les bibliothèques qui échappent\nautomatiquement le HTML ou construisent des requêtes SQL paramétrées : les valeurs ne sont jamais\ncollées brutes dans le texte. `String.raw` est une balise fournie par le langage, qui renvoie le texte\navec ses antislashs intacts — utile pour des chemins Windows ou des expressions régulières.\n\nLes **affectations logiques** combinent un opérateur logique et une affectation, avec le même\ncourt-circuit : `a ||= f()` n'appelle pas `f` si `a` est déjà truthy, et n'effectue même pas\nl'affectation. Le choix de l'opérateur est une question de sens. `||=` remplace toute valeur falsy : un\nvolume à `0` ou un titre vide serait écrasé, ce qui est souvent un bug. `??=` ne remplace que l'absence\nde valeur, `null` ou `undefined` : c'est le bon choix pour appliquer une valeur par défaut. `&&=` ne\nmodifie qu'une valeur déjà présente, par exemple pour transformer un champ seulement s'il existe.\n\nLes **séparateurs numériques** `_` ne servent qu'à la lecture : `1_500_000` et `1500000` sont le même\nnombre. Ils sont interdits en début ou en fin de nombre, et à côté du point décimal.\n\nL'**appel optionnel** `?.()` complète `?.` : si la méthode vaut `null` ou `undefined`, l'expression\ns'arrête et renvoie `undefined` sans lever d'erreur. Attention : si la propriété existe mais n'est pas une\nfonction, l'appel lève toujours une `TypeError`.\n\nEnfin, les méthodes récentes remplacent des écritures manuelles. `at(-1)` lit depuis la fin, `findLast`\net `findLastIndex` cherchent en partant de la fin, et `Object.groupBy`, arrivé avec ES2024, regroupe les\néléments d'une liste dans un objet dont les clés sont calculées par une fonction. Cet objet n'a pas de\nprototype : on le parcourt avec `Object.entries`, pas avec des méthodes héritées. Sa variante `Map.groupBy`\nproduit une `Map`, pour des clés qui ne sont pas des chaînes.\n\n## Erreurs fréquentes\n\n**Utiliser `||=` pour une valeur par défaut numérique.** `0` est remplacé : utilise `??=`.\n\n**Concaténer des valeurs dans du HTML avec un gabarit simple.** Les valeurs ne sont pas échappées.\n\n**Croire que `?.()` protège d'une propriété qui n'est pas une fonction.** Seuls `null` et `undefined`\nsont court-circuités.\n\n**Appeler une méthode héritée sur le résultat d'`Object.groupBy`.** L'objet n'a pas de prototype.\n\n**Abuser des nouveautés.** Une écriture courte n'est utile que si elle reste lisible.\n\n## À retenir\n\n- Les gabarits acceptent expressions et retours à la ligne ; une balise transforme le résultat.\n- `??=` pour une valeur par défaut, `||=` remplace aussi `0` et `''`, `&&=` modifie une valeur présente.\n- `1_000_000` améliore la lecture sans changer la valeur.\n- `objet.methode?.()` n'appelle que si la méthode existe.\n- `at`, `findLast` et `Object.groupBy` remplacent des calculs manuels.\n\n## Exercices\n\n1. Cette fonction applique des valeurs par défaut, mais efface un volume réglé à `0` et une signature\n   volontairement vide. Corrige-la avec les bons opérateurs.\n\n   ```js\n   function preparer(reglages) {\n     reglages.volume ||= 50;\n     reglages.signature ||= 'Cordialement';\n     reglages.langue ||= 'fr';\n     return reglages;\n   }\n   ```\n\n   :::indice\n   Quelles valeurs doivent être conservées même si elles sont falsy ?\n   :::\n\n   :::solution\n   ```js\n   function preparer(reglages) {\n     reglages.volume ??= 50;\n     reglages.signature ??= 'Cordialement';\n     reglages.langue ??= 'fr';\n     return reglages;\n   }\n\n   console.log(preparer({ volume: 0, signature: '' }));\n   // { volume: 0, signature: '', langue: 'fr' }\n   ```\n\n   `??=` ne remplace que `null` et `undefined` : un réglage volontaire à `0` ou à une chaîne vide est\n   respecté.\n   :::\n\n2. Écris une balise `echapper` qui insère les valeurs dans un gabarit HTML en remplaçant `<`, `>` et `&` par\n   leurs entités, sans toucher au texte fixe du gabarit.\n\n   :::indice\n   La balise reçoit les morceaux fixes et les valeurs ; seules les valeurs doivent être transformées.\n   :::\n\n   :::solution\n   ```js\n   const entites = { '&': '&amp;', '<': '&lt;', '>': '&gt;' };\n   const echapperTexte = (valeur) => String(valeur).replace(/[&<>]/g, (c) => entites[c]);\n\n   function echapper(morceaux, ...valeurs) {\n     return morceaux.reduce(\n       (html, morceau, i) => html + morceau + (i < valeurs.length ? echapperTexte(valeurs[i]) : ''),\n       '',\n     );\n   }\n\n   const pseudo = '<img src=x onerror=alert(1)>';\n   console.log(echapper`<p>Bonjour ${pseudo}</p>`);\n   // '<p>Bonjour &lt;img src=x onerror=alert(1)&gt;</p>'\n   ```\n\n   Le balisage écrit par le développeur reste intact ; seule la donnée venue de l'extérieur est neutralisée.\n   La partie Security revient sur ces attaques.\n   :::\n\n3. Réécris cette fonction avec `Object.groupBy`, puis calcule le total par catégorie.\n\n   ```js\n   function parCategorie(depenses) {\n     const groupes = {};\n     for (const depense of depenses) {\n       if (!groupes[depense.categorie]) groupes[depense.categorie] = [];\n       groupes[depense.categorie].push(depense);\n     }\n     return groupes;\n   }\n   ```\n\n   :::indice\n   `Object.groupBy(liste, (element) => cle)`, puis `Object.entries` pour parcourir le résultat.\n   :::\n\n   :::solution\n   ```js\n   const depenses = [\n     { categorie: 'transport', montant: 12 },\n     { categorie: 'repas', montant: 18 },\n     { categorie: 'transport', montant: 30 },\n   ];\n\n   const groupes = Object.groupBy(depenses, (depense) => depense.categorie);\n   const totaux = Object.fromEntries(\n     Object.entries(groupes).map(([categorie, liste]) => [\n       categorie,\n       liste.reduce((somme, { montant }) => somme + montant, 0),\n     ]),\n   );\n\n   console.log(totaux); // { transport: 42, repas: 18 }\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `||=` et `??=` ?\n\n  :::indice\n  Que devient une valeur `0` avec chacun ?\n  :::\n\n  :::reponse\n  `a ||= b` affecte `b` si `a` est falsy : `0`, `''`, `false`, `NaN`, `null` ou `undefined`. `a ??= b` n'affecte\n  `b` que si `a` vaut `null` ou `undefined`. Pour appliquer une valeur par défaut, `??=` est presque toujours le\n  bon choix, car il respecte les valeurs volontairement nulles ou vides. Les deux court-circuitent : `b` n'est\n  pas évalué si l'affectation n'a pas lieu.\n  :::\n\n- À quoi sert un gabarit balisé ?\n\n  :::indice\n  Que reçoit la fonction placée devant le gabarit ?\n  :::\n\n  :::reponse\n  La fonction reçoit séparément les morceaux de texte fixes et les valeurs interpolées, et construit le résultat\n  comme elle l'entend. Cela permet de traiter les valeurs sans toucher au texte écrit par le développeur :\n  échapper du HTML, paramétrer une requête SQL, traduire, ou mettre en forme. `String.raw` est une balise\n  fournie par le langage, qui conserve les antislashs tels qu'écrits.\n  :::\n\n- Que fait `objet.methode?.()` si `methode` vaut `42` ?\n\n  :::indice\n  Que court-circuite exactement l'opérateur optionnel ?\n  :::\n\n  :::reponse\n  Il lève une `TypeError`, car `42` n'est pas une fonction. L'appel optionnel ne court-circuite que si la\n  méthode vaut `null` ou `undefined` ; dans ce cas il renvoie `undefined` sans appeler. Il protège contre une\n  méthode absente, pas contre une valeur du mauvais type.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-motifs-modernes",
+      "title": "Moderniser du code JavaScript sans le rendre illisible",
+      "slug": "moderniser-du-code",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "javascript-moderne",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-syntaxe-moderne",
+        "javascript-async-await"
+      ],
+      "skills": [
+        "modern-patterns"
+      ],
+      "tags": [
+        "javascript",
+        "moderne"
+      ],
+      "contentPath": "javascript/javascript-moderne/moderniser-du-code/lesson.md",
+      "contentVersion": "f3ec20f77f89",
+      "body": "\n## Objectifs\n\n- Reconnaître les écritures anciennes et leur équivalent moderne.\n- Moderniser un code existant par petites étapes sûres, sans changer son comportement.\n- Distinguer une modernisation utile d'une compression qui nuit à la lecture.\n\n## Introduction\n\nUne grande partie du JavaScript qu'on maintient a été écrite avant 2015 : `var`, `function` partout,\nconcaténations, `arguments`, callbacks imbriqués. Réécrire ce code avec la syntaxe moderne le rend plus\ncourt et élimine des classes entières de bugs — mais une modernisation brutale peut aussi changer un\ncomportement sans qu'on s'en aperçoive, ou produire des lignes denses que personne ne veut relire. Ce\nchapitre fait la synthèse de la partie : quoi moderniser, comment, et où s'arrêter.\n\n## Concept\n\n| Écriture ancienne | Écriture moderne | Précaution |\n| --- | --- | --- |\n| `var x` | `const x`, ou `let x` si réaffecté | portée de bloc : vérifier les usages hors du bloc |\n| `function (x) { return x * 2; }` en callback | `(x) => x * 2` | pas de `this` propre |\n| `'Bonjour ' + nom + ' !'` | `` `Bonjour ${nom} !` `` | aucune |\n| `arguments` | `...args` | `arguments` n'existe pas dans une fléchée |\n| `x = x \\|\\| 10` pour un défaut | paramètre par défaut, ou `??` | `0` et `''` ne sont plus remplacés |\n| `a && a.b && a.b.c` | `a?.b?.c` | renvoie `undefined` au lieu de `false` ou `0` |\n| `Object.assign({}, a, b)` | `{ ...a, ...b }` | aucune |\n| boucle `for` qui construit un tableau | `map`, `filter` | garder la boucle si elle s'arrête tôt |\n| `obj.hasOwnProperty(k)` | `Object.hasOwn(obj, k)` | aucune |\n| callbacks imbriqués | `async` / `await` | gestion d'erreurs à revoir |\n\nLa règle de conduite : **une transformation à la fois, tests verts entre chaque**.\n\n## Exemple\n\n```js\n// Avant : écrit en 2013.\nvar TVA_ANCIENNE = 0.2;\nfunction resumeAncien(commande) {\n  var lignes = [];\n  for (var i = 0; i < commande.articles.length; i++) {\n    var article = commande.articles[i];\n    if (article.quantite > 0) {\n      lignes.push(article.nom + ' x' + article.quantite);\n    }\n  }\n  var client = commande.client && commande.client.nom ? commande.client.nom : 'Anonyme';\n  var total = 0;\n  for (var j = 0; j < commande.articles.length; j++) {\n    total = total + commande.articles[j].prix * commande.articles[j].quantite;\n  }\n  return client + ' : ' + lignes.join(', ') + ' (' + (total * (1 + TVA_ANCIENNE)).toFixed(2) + ' €)';\n}\n\n// Après : même comportement, intentions lisibles.\nconst TVA = 0.2;\nfunction resume({ articles, client }) {\n  const lignes = articles\n    .filter((article) => article.quantite > 0)\n    .map(({ nom, quantite }) => `${nom} x${quantite}`);\n  const total = articles.reduce((somme, { prix, quantite }) => somme + prix * quantite, 0);\n  return `${client?.nom || 'Anonyme'} : ${lignes.join(', ')} (${(total * (1 + TVA)).toFixed(2)} €)`;\n}\n\nconst commande = {\n  client: { nom: 'Ada' },\n  articles: [\n    { nom: 'clavier', prix: 50, quantite: 1 },\n    { nom: 'souris', prix: 20, quantite: 0 },\n  ],\n};\nconsole.log(resumeAncien(commande)); // 'Ada : clavier x1 (60.00 €)'\nconsole.log(resume(commande) === resumeAncien(commande)); // true\nconsole.log(resume({ articles: [] }) === resumeAncien({ articles: [] })); // true\n```\n\n## Comment ça fonctionne\n\nModerniser, c'est **refactoriser** : changer la forme du code sans changer ce qu'il fait. Le danger\nvient des transformations qui semblent équivalentes et ne le sont pas tout à fait. Remplacer\n`x = x || 10` par un paramètre par défaut ou par `??` change le traitement de `0` et de `''`, qui ne\nsont plus remplacés. Remplacer `a && a.b` par `a?.b` renvoie `undefined` là où l'ancien code renvoyait\n`false`, `0` ou `null`. Remplacer une `function` par une fléchée supprime son `this` propre et son objet\n`arguments`. Dans l'exemple, le nom du client garde `||` et non `??` : un nom vide doit toujours\nafficher « Anonyme », comme avant.\n\nD'où la méthode : **vérifier le comportement avant de toucher au code**. Si des tests existent, ils\ntournent entre chaque transformation. S'il n'y en a pas, on écrit d'abord quelques cas de comparaison,\ncomme les deux `console.log` de l'exemple qui confrontent l'ancienne et la nouvelle version, y compris\nsur un cas limite — ici une commande sans client et sans articles. On transforme ensuite **une écriture\nà la fois** : si un test casse, on sait laquelle en est responsable.\n\nToute modernisation n'est pas un progrès. Une chaîne de méthodes de tableaux se lit bien quand chaque\nétape a un sens ; un `reduce` qui fait trois choses à la fois est plus obscur que la boucle qu'il\nremplace. Les ternaires imbriqués, les destructurings sur quatre niveaux ou les chaînes de `?.` qui\nmasquent une donnée anormale compriment le code sans l'éclaircir. Le critère est la lecture : quelqu'un\nqui découvre la fonction comprend-il plus vite ce qu'elle fait ?\n\nEnfin, certaines transformations se font **automatiquement et sans risque** : un linter comme ESLint\nsignale `var`, propose `const`, remplace la concaténation par un gabarit, et des outils de migration\ntransforment des bases de code entières. On les laisse faire le mécanique, et on réserve l'attention\nhumaine aux transformations qui changent la sémantique, comme le passage aux promesses.\n\n## Erreurs fréquentes\n\n**Remplacer `||` par `??` partout.** Le traitement de `0`, `''` et `false` change.\n\n**Tout moderniser d'un seul commit.** Une régression devient impossible à localiser.\n\n**Transformer une méthode utilisant `this` en fonction fléchée.** Elle perd son objet.\n\n**Remplacer une boucle qui s'arrête tôt par `map` ou `forEach`.** On perd l'arrêt anticipé.\n\n**Moderniser sans filet.** Écris d'abord des cas qui figent le comportement actuel.\n\n## À retenir\n\n- Moderniser, c'est refactoriser : même comportement, forme plus claire.\n- Certaines équivalences sont trompeuses : `||` et `??`, `&&` et `?.`, `function` et fléchée.\n- Figer le comportement par des tests, puis transformer une écriture à la fois.\n- Une écriture courte n'est utile que si elle se lit plus vite.\n- Laisser le mécanique aux outils, garder l'attention pour ce qui change la sémantique.\n\n## Exercices\n\n1. Modernise cette fonction. Elle doit continuer à renvoyer `0` pour une liste vide et à ignorer les prix\n   négatifs.\n\n   ```js\n   function totalPositif() {\n     var total = 0;\n     for (var i = 0; i < arguments.length; i++) {\n       if (arguments[i] > 0) {\n         total = total + arguments[i];\n       }\n     }\n     return total;\n   }\n   ```\n\n   :::indice\n   `arguments` devient un paramètre de reste ; la boucle devient `filter` puis `reduce` avec une valeur\n   initiale.\n   :::\n\n   :::solution\n   ```js\n   const totalPositif = (...prix) =>\n     prix.filter((montant) => montant > 0).reduce((total, montant) => total + montant, 0);\n\n   console.log(totalPositif(10, -5, 20)); // 30\n   console.log(totalPositif()); // 0 : la valeur initiale de reduce couvre le cas vide\n   ```\n\n   Sans la valeur initiale `0`, `reduce` lèverait une erreur sur une liste vide : l'ancien comportement\n   serait cassé.\n   :::\n\n2. Réécris cette fonction à callbacks avec `async` / `await`, en supposant que `chargerUtilisateur` et\n   `chargerCommandes` existent désormais en version à promesses. Une erreur de l'une ou l'autre doit remonter à\n   l'appelant.\n\n   ```js\n   function recapitulatif(id, rappel) {\n     chargerUtilisateur(id, function (erreur, utilisateur) {\n       if (erreur) return rappel(erreur);\n       chargerCommandes(utilisateur.id, function (erreur2, commandes) {\n         if (erreur2) return rappel(erreur2);\n         rappel(null, utilisateur.nom + ' a ' + commandes.length + ' commandes');\n       });\n     });\n   }\n   ```\n\n   :::indice\n   Chaque callback devient un `await`, et le premier argument d'erreur devient une exception qui remonte\n   seule.\n   :::\n\n   :::solution\n   ```js\n   const chargerUtilisateur = async (id) => {\n     if (id <= 0) throw new Error('Utilisateur introuvable');\n     return { id, nom: 'Ada' };\n   };\n   const chargerCommandes = async () => [{ total: 30 }, { total: 12 }];\n\n   async function recapitulatif(id) {\n     const utilisateur = await chargerUtilisateur(id);\n     const commandes = await chargerCommandes(utilisateur.id);\n     return `${utilisateur.nom} a ${commandes.length} commandes`;\n   }\n\n   console.log(await recapitulatif(1)); // 'Ada a 2 commandes'\n   console.log(await recapitulatif(0).catch((erreur) => erreur.message)); // 'Utilisateur introuvable'\n   ```\n\n   Les tests `if (erreur) return rappel(erreur)` disparaissent : une promesse rompue lève une exception qui\n   remonte jusqu'à l'appelant sans code supplémentaire.\n   :::\n\n3. Une modernisation a introduit un bug : les commandes d'un article gratuit affichent désormais un prix de\n   `0 €` au lieu de « Gratuit ». Écris un test de comparaison qui le révèle, puis corrige la version moderne.\n\n   ```js\n   function libelleAncien(article) {\n     var prix = article.prix || 'Gratuit';\n     return article.nom + ' : ' + prix + (prix === 'Gratuit' ? '' : ' €');\n   }\n\n   const libelle = ({ nom, prix }) => `${nom} : ${prix ?? 'Gratuit'}${prix == null ? '' : ' €'}`;\n   ```\n\n   :::indice\n   Compare les deux versions sur `prix: 0`, `prix: undefined` et un prix normal.\n   :::\n\n   :::solution\n   ```js\n   function libelleAncien(article) {\n     var prix = article.prix || 'Gratuit';\n     return article.nom + ' : ' + prix + (prix === 'Gratuit' ? '' : ' €');\n   }\n\n   const cas = [{ nom: 'guide', prix: 0 }, { nom: 'carte' }, { nom: 'livre', prix: 12 }];\n\n   const libelleCasse = ({ nom, prix }) => `${nom} : ${prix ?? 'Gratuit'}${prix == null ? '' : ' €'}`;\n   console.log(cas.map((a) => libelleCasse(a) === libelleAncien(a))); // [false, true, true]\n\n   const libelle = ({ nom, prix }) => (prix ? `${nom} : ${prix} €` : `${nom} : Gratuit`);\n   console.log(cas.map((a) => libelle(a) === libelleAncien(a))); // [true, true, true]\n   ```\n\n   L'ancien code traitait `0` comme « pas de prix » : remplacer `||` par `??` a changé ce comportement. Si la\n   règle métier voulait vraiment afficher `0 €`, c'est une modification de fonctionnalité, à décider et à tester\n   explicitement — pas un effet de bord d'une modernisation.\n   :::\n\n## Questions d'entretien\n\n- Comment moderniser un ancien code sans introduire de régression ?\n\n  :::indice\n  Que faut-il avoir avant de toucher au code, et quelle taille doit avoir chaque étape ?\n  :::\n\n  :::reponse\n  D'abord figer le comportement actuel par des tests, ou au moins par des cas de comparaison entre l'ancienne et\n  la nouvelle version, en incluant les cas limites. Ensuite transformer une écriture à la fois, en relançant les\n  tests entre chaque étape, pour localiser immédiatement une régression. On laisse les transformations\n  mécaniques aux outils, et on examine avec soin celles qui changent la sémantique : `||` et `??`, `&&` et `?.`,\n  `function` et fonction fléchée, callbacks et promesses.\n  :::\n\n- `a && a.b` et `a?.b` sont-ils équivalents ?\n\n  :::indice\n  Que renvoie chacun quand `a` vaut `0` ou `false` ?\n  :::\n\n  :::reponse\n  Pas exactement. `a?.b` renvoie `undefined` dès que `a` vaut `null` ou `undefined`, et lit `b` dans tous les\n  autres cas. `a && a.b` renvoie `a` lui-même quand `a` est falsy : `0`, `''` ou `false`. Dans un test booléen le\n  résultat est souvent le même, mais si la valeur est affichée, comparée ou sérialisée, la différence peut\n  changer le comportement.\n  :::\n\n- Une écriture moderne est-elle toujours préférable ?\n\n  :::indice\n  Quel est le critère qui compte vraiment ?\n  :::\n\n  :::reponse\n  Non. Le critère est la lisibilité et la justesse, pas l'âge de la syntaxe. `const`, les gabarits, `?.` ou\n  `async` / `await` rendent en général le code plus clair. Mais un `reduce` complexe, des ternaires imbriqués ou\n  une ligne qui enchaîne six opérateurs peuvent être plus obscurs que la boucle qu'ils remplacent, et une boucle\n  `for` reste le bon choix quand il faut s'arrêter tôt.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -7177,6 +7425,224 @@
       "contentVersion": "4d551be0bb9e"
     },
     {
+      "id": "javascript-modules-cycles-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-modules-cycles-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "A importe B, B importe A, et B lit une `const` de A au niveau supérieur. A est le point d'entrée. Que se passe-t-il ?\n",
+          "options": [
+            "Une ReferenceError : la constante est encore en zone morte",
+            "B lit undefined",
+            "Le moteur évalue A deux fois",
+            "Tout fonctionne normalement"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "B est évalué avant la fin de A : la liaison existe mais n'est pas initialisée.\n",
+          "skills": [
+            "module-boundaries"
+          ]
+        },
+        {
+          "id": "js-modules-cycles-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Dans un cycle, une déclaration de fonction exportée peut être appelée avant la fin de l'évaluation de son module.\n",
+          "answer": true,
+          "explanation": "Les déclarations de fonction sont hoistées avec leur corps, contrairement aux const et let.\n",
+          "skills": [
+            "module-boundaries"
+          ]
+        },
+        {
+          "id": "js-modules-cycles-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle est la façon la plus courante de casser un cycle dû à une constante partagée ?\n",
+          "options": [
+            "Extraire la constante dans un troisième module",
+            "Inverser l'ordre des imports",
+            "Transformer la constante en variable globale",
+            "Dupliquer la constante dans les deux modules"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les deux modules dépendent alors du nouveau module, et plus l'un de l'autre.\n",
+          "skills": [
+            "module-boundaries"
+          ]
+        },
+        {
+          "id": "js-modules-cycles-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans un paquet, quel mécanisme empêche d'importer ses fichiers internes ?\n",
+          "options": [
+            "Le champ exports du package.json",
+            "Le champ main du package.json",
+            "Un commentaire @private",
+            "Le mode strict"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le champ exports liste les chemins importables ; les autres sont refusés par Node.js et les outils.\n",
+          "skills": [
+            "module-boundaries"
+          ]
+        }
+      ],
+      "chapterId": "javascript-modules-cycles",
+      "technology": "javascript",
+      "contentPath": "javascript/es-modules/dependances-circulaires-et-frontieres/quiz.yaml",
+      "contentVersion": "c63f673c32b4"
+    },
+    {
+      "id": "javascript-es-modules-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-es-modules-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment importer la fonction exportée par `export function prixTTC() {}` ?\n",
+          "options": [
+            "import { prixTTC } from './prix.js';",
+            "import prixTTC from './prix.js';",
+            "import * from './prix.js';",
+            "require('./prix.js').default;"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un export nommé s'importe entre accolades, sous son nom exact. Sans accolades, on demande l'export par défaut.\n",
+          "skills": [
+            "es-modules"
+          ]
+        },
+        {
+          "id": "js-es-modules-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un module importé par dix fichiers est évalué dix fois.\n",
+          "answer": false,
+          "explanation": "Un module n'est évalué qu'une fois ; tous les imports partagent ses exports.\n",
+          "skills": [
+            "es-modules"
+          ]
+        },
+        {
+          "id": "js-es-modules-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que produit `valeur = 10` quand `valeur` est une variable importée ?\n",
+          "options": [
+            "Une TypeError",
+            "La variable du module d'origine vaut 10",
+            "Une copie locale vaut 10",
+            "Rien, l'affectation est ignorée"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un import est une liaison en lecture seule : seul le module qui déclare la variable peut la modifier.\n",
+          "skills": [
+            "es-modules"
+          ]
+        },
+        {
+          "id": "js-es-modules-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Dans Node.js, `import { f } from './outils'` trouve automatiquement le fichier `outils.js`.\n",
+          "answer": false,
+          "explanation": "Node.js résout les chemins relatifs tels qu'écrits : l'extension est obligatoire, sinon ERR_MODULE_NOT_FOUND.\n",
+          "skills": [
+            "es-modules"
+          ]
+        }
+      ],
+      "chapterId": "javascript-es-modules",
+      "technology": "javascript",
+      "contentPath": "javascript/es-modules/export-et-import/quiz.yaml",
+      "contentVersion": "679c2e51a44f"
+    },
+    {
+      "id": "javascript-reexport-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-reexport-q1",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`export * from './bouton.js'` réexporte l'export par défaut de bouton.js.\n",
+          "answer": false,
+          "explanation": "export * ne réexporte que les exports nommés ; un défaut se réexporte avec export { default as Nom } from.\n",
+          "skills": [
+            "module-reexports"
+          ]
+        },
+        {
+          "id": "js-reexport-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Un fichier barrel réexporte trois modules. Un autre fichier n'en importe qu'un seul nom. Quels modules sont évalués ?\n",
+          "options": [
+            "Les trois modules réexportés",
+            "Seulement le module qui contient le nom importé",
+            "Aucun, jusqu'au premier appel",
+            "Seulement le fichier barrel"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Charger le barrel oblige à charger et évaluer tout ce qu'il réexporte : c'est son coût caché.\n",
+          "skills": [
+            "module-reexports"
+          ]
+        },
+        {
+          "id": "js-reexport-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que renvoie `import('./module.js')` ?\n",
+          "options": [
+            "Une promesse de l'objet espace de noms du module",
+            "L'export par défaut du module",
+            "Le code source du module",
+            "undefined, le module étant chargé en arrière-plan"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "import() renvoie une promesse ; une fois tenue, elle donne l'espace de noms, avec le défaut sous .default.\n",
+          "skills": [
+            "module-reexports"
+          ]
+        },
+        {
+          "id": "js-reexport-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un module chargé avec import() est rechargé à chaque appel.\n",
+          "answer": false,
+          "explanation": "Le module est évalué une fois puis mis en cache, comme un module importé statiquement.\n",
+          "skills": [
+            "module-reexports"
+          ]
+        }
+      ],
+      "chapterId": "javascript-reexport",
+      "technology": "javascript",
+      "contentPath": "javascript/es-modules/reexport-barrels-et-import-dynamique/quiz.yaml",
+      "contentVersion": "01c69e65df81"
+    },
+    {
       "id": "javascript-contexte-execution-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -8459,6 +8925,138 @@
       "technology": "javascript",
       "contentPath": "javascript/introduction/syntaxe-instructions-expressions/quiz.yaml",
       "contentVersion": "2936e1921050"
+    },
+    {
+      "id": "javascript-syntaxe-moderne-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-syntaxe-moderne-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `v` après `let v = 0; v ||= 5;` ?\n",
+          "answer": "5",
+          "explanation": "0 est falsy : ||= le remplace. Avec ??=, v serait resté à 0.\n",
+          "skills": [
+            "modern-syntax"
+          ]
+        },
+        {
+          "id": "js-syntaxe-moderne-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `v` après `let v = 0; v ??= 5;` ?\n",
+          "answer": "0",
+          "explanation": "??= ne remplace que null et undefined : la valeur 0 est conservée.\n",
+          "skills": [
+            "modern-syntax"
+          ]
+        },
+        {
+          "id": "js-syntaxe-moderne-q3",
+          "type": "true_false",
+          "difficulty": 1,
+          "question": "`1_000_000 === 1000000` vaut `true`.\n",
+          "answer": true,
+          "explanation": "Les séparateurs numériques améliorent seulement la lecture ; la valeur est identique.\n",
+          "skills": [
+            "modern-syntax"
+          ]
+        },
+        {
+          "id": "js-syntaxe-moderne-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que produit `objet.lancer?.()` quand `objet.lancer` vaut la chaîne `'oui'` ?\n",
+          "options": [
+            "Une TypeError",
+            "undefined",
+            "'oui'",
+            "null"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'appel optionnel ne court-circuite que null et undefined. Une valeur présente qui n'est pas une fonction lève une TypeError.\n",
+          "skills": [
+            "modern-syntax"
+          ]
+        }
+      ],
+      "chapterId": "javascript-syntaxe-moderne",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-moderne/gabarits-et-affectations-logiques/quiz.yaml",
+      "contentVersion": "7e7e940258db"
+    },
+    {
+      "id": "javascript-motifs-modernes-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-motifs-modernes-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Avec `const a = 0;`, que vaut `a && a.b` ?\n",
+          "answer": "0",
+          "explanation": "&& renvoie son premier opérande falsy : ici 0. a?.b aurait renvoyé undefined, puisque 0 n'est ni null ni undefined et n'a pas de propriété b.\n",
+          "skills": [
+            "modern-patterns"
+          ]
+        },
+        {
+          "id": "js-motifs-modernes-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Remplacer `x = x || 10` par `x ??= 10` ne change jamais le comportement.\n",
+          "answer": false,
+          "explanation": "Avec ||, les valeurs 0, '' et false sont remplacées ; avec ??=, seules null et undefined le sont.\n",
+          "skills": [
+            "modern-patterns"
+          ]
+        },
+        {
+          "id": "js-motifs-modernes-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle démarche limite le risque de régression pendant une modernisation ?\n",
+          "options": [
+            "Figer le comportement par des tests, puis transformer une écriture à la fois",
+            "Réécrire tout le fichier d'un coup puis tester",
+            "Moderniser sans tests, la syntaxe récente étant plus sûre",
+            "Remplacer toutes les boucles par reduce"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Des étapes courtes vérifiées entre chaque transformation permettent de localiser immédiatement une régression.\n",
+          "skills": [
+            "modern-patterns"
+          ]
+        },
+        {
+          "id": "js-motifs-modernes-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel remplacement peut casser une méthode d'objet ?\n",
+          "options": [
+            "Transformer une function qui utilise this en fonction fléchée",
+            "Remplacer une concaténation par un gabarit",
+            "Remplacer var par const pour une valeur jamais réaffectée",
+            "Remplacer obj.hasOwnProperty(k) par Object.hasOwn(obj, k)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une fonction fléchée n'a pas de this propre : la méthode ne désigne plus son objet.\n",
+          "skills": [
+            "modern-patterns"
+          ]
+        }
+      ],
+      "chapterId": "javascript-motifs-modernes",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-moderne/moderniser-du-code/quiz.yaml",
+      "contentVersion": "dba6d10bb3eb"
     },
     {
       "id": "javascript-choisir-structure-quiz",

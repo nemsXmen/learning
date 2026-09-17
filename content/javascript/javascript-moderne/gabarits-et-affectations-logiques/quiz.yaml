@@ -1,0 +1,52 @@
+id: javascript-syntaxe-moderne-quiz
+kind: QUIZ
+questions:
+  - id: js-syntaxe-moderne-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `v` après `let v = 0; v ||= 5;` ?
+    answer: '5'
+    explanation: >
+      0 est falsy : ||= le remplace. Avec ??=, v serait resté à 0.
+    skills:
+      - modern-syntax
+
+  - id: js-syntaxe-moderne-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `v` après `let v = 0; v ??= 5;` ?
+    answer: '0'
+    explanation: >
+      ??= ne remplace que null et undefined : la valeur 0 est conservée.
+    skills:
+      - modern-syntax
+
+  - id: js-syntaxe-moderne-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      `1_000_000 === 1000000` vaut `true`.
+    answer: true
+    explanation: >
+      Les séparateurs numériques améliorent seulement la lecture ; la valeur est identique.
+    skills:
+      - modern-syntax
+
+  - id: js-syntaxe-moderne-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que produit `objet.lancer?.()` quand `objet.lancer` vaut la chaîne `'oui'` ?
+    options:
+      - "Une TypeError"
+      - "undefined"
+      - "'oui'"
+      - "null"
+    answer: [0]
+    explanation: >
+      L'appel optionnel ne court-circuite que null et undefined. Une valeur présente qui n'est pas une
+      fonction lève une TypeError.
+    skills:
+      - modern-syntax

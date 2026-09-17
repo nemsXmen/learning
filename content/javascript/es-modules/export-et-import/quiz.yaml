@@ -1,0 +1,59 @@
+id: javascript-es-modules-quiz
+kind: QUIZ
+questions:
+  - id: js-es-modules-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment importer la fonction exportée par `export function prixTTC() {}` ?
+    options:
+      - "import { prixTTC } from './prix.js';"
+      - "import prixTTC from './prix.js';"
+      - "import * from './prix.js';"
+      - "require('./prix.js').default;"
+    answer: [0]
+    explanation: >
+      Un export nommé s'importe entre accolades, sous son nom exact. Sans accolades, on demande
+      l'export par défaut.
+    skills:
+      - es-modules
+
+  - id: js-es-modules-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Un module importé par dix fichiers est évalué dix fois.
+    answer: false
+    explanation: >
+      Un module n'est évalué qu'une fois ; tous les imports partagent ses exports.
+    skills:
+      - es-modules
+
+  - id: js-es-modules-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que produit `valeur = 10` quand `valeur` est une variable importée ?
+    options:
+      - "Une TypeError"
+      - "La variable du module d'origine vaut 10"
+      - "Une copie locale vaut 10"
+      - "Rien, l'affectation est ignorée"
+    answer: [0]
+    explanation: >
+      Un import est une liaison en lecture seule : seul le module qui déclare la variable peut la
+      modifier.
+    skills:
+      - es-modules
+
+  - id: js-es-modules-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Dans Node.js, `import { f } from './outils'` trouve automatiquement le fichier `outils.js`.
+    answer: false
+    explanation: >
+      Node.js résout les chemins relatifs tels qu'écrits : l'extension est obligatoire, sinon
+      ERR_MODULE_NOT_FOUND.
+    skills:
+      - es-modules

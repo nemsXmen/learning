@@ -475,3 +475,29 @@ skills:
     name: Méthode de débogage
     importance: 5
     requires: [network-performance-debugging]
+
+  # Partie 8 — Modules & Modern JavaScript
+  - id: es-modules
+    name: Modules ES, export et import
+    importance: 5
+    requires: [scope-chain]
+
+  - id: module-reexports
+    name: Réexports, barrels et import dynamique
+    importance: 3
+    requires: [es-modules]
+
+  - id: module-boundaries
+    name: Dépendances circulaires et frontières de modules
+    importance: 4
+    requires: [module-reexports, hoisting-tdz]
+
+  - id: modern-syntax
+    name: Gabarits, affectations logiques et ajouts récents
+    importance: 4
+    requires: [objects-modern-syntax]
+
+  - id: modern-patterns
+    name: Moderniser du code JavaScript
+    importance: 4
+    requires: [modern-syntax, async-await]
