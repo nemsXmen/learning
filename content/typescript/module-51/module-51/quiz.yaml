@@ -1,0 +1,29 @@
+id: typescript-module-51-quiz
+kind: QUIZ
+questions:
+  - id: ts-module-51-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi faut-il valider une donnée reçue d'une API même si elle est annotée en TypeScript ?
+    options:
+      - Les annotations sont effacées à l'exécution
+      - TypeScript transforme automatiquement la donnée en objet sûr
+      - Les types TypeScript ne fonctionnent que dans les fichiers JavaScript
+      - Le compilateur valide les réponses reçues après le déploiement
+    answer: [0]
+    explanation: >
+      Les types TypeScript n'existent plus au runtime. Les données externes doivent donc être validées par un schéma ou un type guard.
+    skills:
+      - typescript-module-51
+
+  - id: ts-module-51-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Ajouter `any` est toujours la meilleure façon de corriger une erreur de compilation.
+    answer: false
+    explanation: >
+      `any` masque les erreurs et affaiblit le contrat. Il vaut mieux comprendre la donnée et utiliser un type précis ou `unknown` avec validation.
+    skills:
+      - typescript-module-51

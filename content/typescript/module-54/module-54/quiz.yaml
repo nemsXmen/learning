@@ -1,0 +1,29 @@
+id: typescript-module-54-quiz
+kind: QUIZ
+questions:
+  - id: ts-module-54-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi préférer une union discriminée pour modéliser plusieurs états ?
+    options:
+      - Elle relie chaque valeur discriminante aux propriétés disponibles
+      - Elle rend toutes les propriétés optionnelles
+      - Elle évite toute vérification à l'exécution
+      - Elle remplace les interfaces dans tous les cas
+    answer: [0]
+    explanation: >
+      Une propriété discriminante permet au compilateur de réduire précisément l'union et de sécuriser l'accès aux champs associés.
+    skills:
+      - typescript-module-54
+
+  - id: ts-module-54-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Le type `never` peut être utilisé dans un contrôle exhaustif pour détecter un cas d'union oublié.
+    answer: true
+    explanation: >
+      Affecter la valeur restante à `never` fait échouer la compilation si un nouveau cas n'est pas traité.
+    skills:
+      - typescript-module-54

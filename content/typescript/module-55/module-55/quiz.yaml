@@ -1,0 +1,34 @@
+id: typescript-module-55-quiz
+kind: QUIZ
+questions:
+  - id: ts-module-55-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle pratique améliore le plus la fiabilité d'un projet TypeScript en production ?
+    options:
+      - Garder les frontières externes validées et le compilateur en mode strict
+      - Remplacer les types complexes par `any`
+      - Compiler sans vérifier les erreurs
+      - Faire confiance aux annotations des données reçues
+    answer: [0]
+    explanation: >
+      Le mode strict sécurise le code statique et la validation des frontières protège les données réelles au runtime.
+    skills:
+      - typescript-module-55
+
+  - id: ts-module-55-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques sont adaptées à un code TypeScript maintenable ?
+    options:
+      - Modéliser explicitement les contrats importants
+      - Valider les entrées externes
+      - Utiliser `any` pour éviter toutes les erreurs
+      - Tester les cas limites
+    answer: [0, 1, 3]
+    explanation: >
+      Des contrats explicites, une validation aux frontières et des tests de cas limites renforcent la fiabilité sans masquer les problèmes.
+    skills:
+      - typescript-module-55

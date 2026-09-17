@@ -1,0 +1,29 @@
+id: typescript-module-53-quiz
+kind: QUIZ
+questions:
+  - id: ts-module-53-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel choix protège le mieux une fonction qui reçoit une erreur inconnue dans un `catch` ?
+    options:
+      - Utiliser `unknown` puis vérifier la forme de l'erreur
+      - Transformer immédiatement l'erreur en `any`
+      - Ignorer l'erreur pour continuer l'exécution
+      - Déclarer toutes les erreurs comme des chaînes
+    answer: [0]
+    explanation: >
+      `unknown` force une vérification explicite avant l'accès aux propriétés de la valeur capturée.
+    skills:
+      - typescript-module-53
+
+  - id: ts-module-53-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Quel est le type de retour attendu pour une fonction qui lève toujours une exception ?
+    answer: 'never'
+    explanation: >
+      Une fonction qui ne termine jamais normalement possède le type de retour `never`.
+    skills:
+      - typescript-module-53

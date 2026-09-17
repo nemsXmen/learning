@@ -1,0 +1,29 @@
+id: typescript-module-52-quiz
+kind: QUIZ
+questions:
+  - id: ts-module-52-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel est le rôle principal d'un type guard ?
+    options:
+      - Réduire un type large vers un type plus précis après une vérification
+      - Convertir automatiquement une chaîne en nombre
+      - Désactiver le mode strict du compilateur
+      - Remplacer tous les tests unitaires
+    answer: [0]
+    explanation: >
+      Un type guard vérifie une condition et permet à TypeScript de déduire un type plus précis dans la branche concernée.
+    skills:
+      - typescript-module-52
+
+  - id: ts-module-52-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une assertion de type vérifie la valeur au runtime.
+    answer: false
+    explanation: >
+      Une assertion influence uniquement le compilateur. Elle ne contrôle pas la donnée pendant l'exécution.
+    skills:
+      - typescript-module-52
