@@ -411,6 +411,15 @@
       "contentVersion": "8f62552d7a92"
     },
     {
+      "slug": "programmation-fonctionnelle",
+      "title": "JavaScript fonctionnel",
+      "order": 36,
+      "part": "functional",
+      "technology": "javascript",
+      "contentPath": "javascript/programmation-fonctionnelle/module.yaml",
+      "contentVersion": "41c1a75c869e"
+    },
+    {
       "slug": "promises",
       "title": "Promises",
       "order": 21,
@@ -454,6 +463,15 @@
       "technology": "javascript",
       "contentPath": "javascript/this-et-liaison/module.yaml",
       "contentVersion": "4ba73f719a17"
+    },
+    {
+      "slug": "transformation-de-donnees",
+      "title": "Transformation de données",
+      "order": 37,
+      "part": "functional",
+      "technology": "javascript",
+      "contentPath": "javascript/transformation-de-donnees/module.yaml",
+      "contentVersion": "0f0dd3cc68bd"
     },
     {
       "slug": "variables-et-valeurs",
@@ -1609,6 +1627,56 @@
       "requires": [
         "memory-model",
         "closure-pitfalls"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "referential-transparency",
+      "name": "Transparence référentielle et style déclaratif",
+      "importance": 3,
+      "requires": [
+        "pure-functions",
+        "arrays-immutability"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "functional-patterns",
+      "name": "Motifs fonctionnels professionnels",
+      "importance": 3,
+      "requires": [
+        "referential-transparency",
+        "currying-composition"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "data-grouping",
+      "name": "Regrouper, indexer et agréger",
+      "importance": 4,
+      "requires": [
+        "arrays-transform",
+        "map-collection"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "data-pipelines",
+      "name": "Pipelines de transformation de données",
+      "importance": 4,
+      "requires": [
+        "data-grouping",
+        "arrays-sort-flatten"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "data-transformation-efficiency",
+      "name": "Éviter les transformations inutiles",
+      "importance": 3,
+      "requires": [
+        "data-pipelines",
+        "generators"
       ],
       "technology": "javascript"
     },
@@ -5270,6 +5338,81 @@
       ]
     },
     {
+      "id": "javascript-motifs-fonctionnels",
+      "title": "Motifs fonctionnels professionnels",
+      "slug": "motifs-fonctionnels",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "programmation-fonctionnelle",
+      "order": 2,
+      "estimatedMinutes": 35,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-transparence-referentielle",
+        "javascript-currying",
+        "javascript-async-await"
+      ],
+      "skills": [
+        "functional-patterns"
+      ],
+      "tags": [
+        "javascript",
+        "fonctionnel"
+      ],
+      "contentPath": "javascript/programmation-fonctionnelle/motifs-fonctionnels/lesson.md",
+      "contentVersion": "5ee11836bac3",
+      "body": "\n## Objectifs\n\n- Représenter un échec prévisible par une valeur de résultat plutôt que par une exception.\n- Construire un pipeline synchrone ou asynchrone, et l'observer avec `tap` sans le modifier.\n- Injecter les dépendances d'une fonction en paramètre pour la rendre testable.\n- Enrichir une fonction avec un décorateur (`once`, journalisation), et reconnaître la sur-abstraction.\n\n## Introduction\n\nLe chapitre sur le currying et la composition a posé les outils : fonctions qui renvoient des fonctions, application\npartielle, `pipe`. Dans un vrai projet, ces outils servent à résoudre des problèmes précis : enchaîner des étapes qui\npeuvent échouer, isoler les effets pour tester le reste, ajouter un comportement transversal sans toucher au code\nmétier. Ce chapitre présente les motifs qu'on retrouve dans les bases de code professionnelles, et les limites\nau-delà desquelles ils rendent le code plus obscur au lieu de le clarifier.\n\n## Concept\n\n| Motif | Forme | Usage |\n| --- | --- | --- |\n| Résultat explicite | `{ ok: true, valeur }` ou `{ ok: false, erreur }` | échecs attendus : validation, règle métier |\n| Chaînage de résultats | `chainer(f)` n'appelle `f` que sur un succès | enchaîner des étapes faillibles |\n| Pipeline asynchrone | `pipeAsync(f, g)` enchaîne des promesses | étapes qui lisent ou écrivent |\n| `tap` | exécute un effet et renvoie la valeur intacte | journaliser au milieu d'un pipeline |\n| Injection par paramètre | `creerService({ horloge, depot })` | remplacer les effets dans les tests |\n| Décorateur de fonction | `once(f)`, `avecJournal(f)` | comportement transversal réutilisable |\n\n## Exemple\n\n```js\nconst ok = (valeur) => ({ ok: true, valeur });\nconst echec = (erreur) => ({ ok: false, erreur });\nconst chainer = (etape) => (resultat) => (resultat.ok ? etape(resultat.valeur) : resultat);\nconst pipe = (...etapes) => (entree) => etapes.reduce((valeur, etape) => etape(valeur), entree);\nconst pipeAsync = (...etapes) => (entree) =>\n  etapes.reduce((promesse, etape) => promesse.then(etape), Promise.resolve(entree));\nconst tap = (effet) => (valeur) => {\n  effet(valeur);\n  return valeur;\n};\n\nconst verifierArticles = (commande) =>\n  commande.articles.length > 0 ? ok(commande) : echec('Le panier est vide');\nconst verifierTotal = (commande) =>\n  commande.total <= 1000 ? ok(commande) : echec('Le total dépasse le plafond');\n\nconst valider = pipe(ok, chainer(verifierArticles), chainer(verifierTotal));\n\nconsole.log(valider({ articles: [], total: 0 })); // { ok: false, erreur: 'Le panier est vide' }\nconsole.log(valider({ articles: ['stylo'], total: 5000 }).erreur); // 'Le total dépasse le plafond'\n\n// Les effets arrivent en paramètre : en test, on passe des versions factices.\nfunction creerServiceCommande({ depot, horloge, journal }) {\n  return async (commande) => {\n    const resultat = valider(commande);\n    if (!resultat.ok) return resultat;\n    const enregistrer = pipeAsync(\n      (valide) => ({ ...valide, creeeLe: horloge() }),\n      tap((datee) => journal(`commande du ${datee.creeeLe}`)),\n      depot.enregistrer,\n    );\n    return ok(await enregistrer(resultat.valeur));\n  };\n}\n\nconst lignes = [];\nconst passerCommande = creerServiceCommande({\n  depot: { enregistrer: async (commande) => ({ id: 42, ...commande }) },\n  horloge: () => '2026-09-17',\n  journal: (message) => lignes.push(message),\n});\n\nconsole.log(await passerCommande({ articles: ['stylo'], total: 12 }));\n// { ok: true, valeur: { id: 42, articles: [ 'stylo' ], total: 12, creeeLe: '2026-09-17' } }\nconsole.log(lignes); // [ 'commande du 2026-09-17' ]\n```\n\n## Comment ça fonctionne\n\nUne exception interrompt le flux et remonte jusqu'au premier `catch`, où qu'il soit. C'est adapté aux situations\n**imprévues** : réseau coupé, bug, donnée corrompue. Pour un échec **attendu** — un panier vide, un plafond dépassé —\nle **résultat explicite** est souvent plus clair : la fonction renvoie une valeur qui dit si elle a réussi, et\nl'appelant est obligé de regarder `ok` avant d'utiliser `valeur`. La signature de la fonction décrit alors tous ses\ncas de sortie, et le test n'a pas besoin de `try`.\n\n`chainer` évite de répéter `if (!resultat.ok) return resultat` à chaque étape : il transforme une étape qui attend une\nvaleur en une étape qui accepte un résultat, et qui laisse passer un échec sans rien faire. Dans `valider`, la\npremière vérification ratée court-circuite les suivantes, et son message traverse le pipeline jusqu'à la sortie.\n\n`pipeAsync` applique la même idée aux promesses : chaque étape reçoit la valeur résolue par la précédente, qu'elle\nrenvoie une valeur ou une promesse, puisque `then` aplatit les deux. Une étape qui rejette arrête la chaîne, et le\nrejet remonte jusqu'à l'`await` du service. `tap` sert à observer une valeur au milieu d'un pipeline — journaliser,\nmesurer, déboguer — sans avoir à casser la chaîne en variables intermédiaires.\n\nL'**injection par paramètre** est la version fonctionnelle de l'injection de dépendances. `creerServiceCommande`\nn'importe ni base de données, ni horloge système, ni journal : elle les reçoit. En production, on lui passe les vraies\nimplémentations ; en test, des fonctions factices dont on contrôle la sortie. La logique métier reste pure, les effets\nsont repoussés à la frontière, et aucune bibliothèque de simulation n'est nécessaire.\n\nUn **décorateur de fonction** prend une fonction et en renvoie une version enrichie avec la même signature :\nexécuter une seule fois, journaliser les appels, mesurer la durée, réessayer. Le comportement transversal est écrit\nune fois et appliqué partout, sans toucher au code décoré.\n\nCes motifs ont un coût : chaque couche d'indirection doit être comprise par le lecteur. Un pipeline de trois étapes\nnommées est plus lisible qu'une suite d'appels imbriqués ; un pipeline de quinze fonctions anonymes écrites sans\njamais nommer leurs arguments (le style « point-free ») ne l'est plus. On adopte un motif quand il supprime une\nrépétition réelle ou rend un effet testable, pas pour la beauté du geste.\n\n## Erreurs fréquentes\n\n**Utiliser des résultats explicites pour les erreurs imprévues.** Un bug ou une panne réseau restent des exceptions.\n\n**Oublier de tester `ok` avant de lire `valeur`.** Le résultat ne protège que si l'appelant le vérifie.\n\n**Passer une méthode qui utilise `this` comme étape.** `depot.enregistrer` détaché perd son `this` : passe\n`(commande) => depot.enregistrer(commande)` ou une méthode liée.\n\n**Importer les effets directement dans la logique métier.** Tu devras simuler des modules entiers pour tester.\n\n**Empiler les abstractions.** Nomme les étapes, et reviens à du code direct quand le motif n'apporte plus rien.\n\n## À retenir\n\n- Échec attendu : résultat `{ ok, valeur | erreur }` ; situation imprévue : exception.\n- `chainer` court-circuite un pipeline dès le premier échec.\n- `pipeAsync` enchaîne des étapes synchrones ou asynchrones avec `then`.\n- `tap` observe sans modifier.\n- Injecter les effets en paramètre rend la logique testable sans bibliothèque de simulation.\n\n## Exercices\n\n1. Écris le décorateur `once(fonction)` : la fonction renvoyée n'exécute `fonction` qu'au premier appel, puis renvoie\n   toujours le même résultat, en transmettant les arguments et `this`.\n\n   :::indice\n   Une closure garde un drapeau et le résultat. Utilise une fonction classique, pas une flèche, pour recevoir `this`.\n   :::\n\n   :::solution\n   ```js\n   function once(fonction) {\n     let appelee = false;\n     let resultat;\n     return function (...args) {\n       if (!appelee) {\n         appelee = true;\n         resultat = fonction.apply(this, args);\n       }\n       return resultat;\n     };\n   }\n\n   let connexions = 0;\n   const client = {\n     url: 'postgres://local',\n     connecter: once(function (delai) {\n       connexions += 1;\n       return `${this.url} (${delai} ms)`;\n     }),\n   };\n\n   console.log(client.connecter(100)); // 'postgres://local (100 ms)'\n   console.log(client.connecter(500)); // 'postgres://local (100 ms)'\n   console.log(connexions); // 1\n   ```\n   :::\n\n2. `chainer` s'arrête au premier échec. Pour un formulaire, on veut au contraire **toutes** les erreurs. Écris\n   `validerTout(valeur, validations)` qui renvoie `ok(valeur)` ou `echec(listeDesMessages)`.\n\n   :::indice\n   Applique chaque validation, garde les résultats en échec avec `filter`, puis extrais leurs messages.\n   :::\n\n   :::solution\n   ```js\n   const ok = (valeur) => ({ ok: true, valeur });\n   const echec = (erreur) => ({ ok: false, erreur });\n\n   function validerTout(valeur, validations) {\n     const erreurs = validations\n       .map((valider) => valider(valeur))\n       .filter((resultat) => !resultat.ok)\n       .map((resultat) => resultat.erreur);\n     return erreurs.length === 0 ? ok(valeur) : echec(erreurs);\n   }\n\n   const regles = [\n     (u) => (u.email.includes('@') ? ok(u) : echec('Email invalide')),\n     (u) => (u.motDePasse.length >= 12 ? ok(u) : echec('Mot de passe trop court')),\n     (u) => (u.nom.trim() !== '' ? ok(u) : echec('Nom obligatoire')),\n   ];\n\n   console.log(validerTout({ email: 'ada', motDePasse: 'court', nom: 'Ada' }, regles));\n   // { ok: false, erreur: [ 'Email invalide', 'Mot de passe trop court' ] }\n   console.log(validerTout({ email: 'ada@exemple.fr', motDePasse: 'une phrase longue', nom: 'Ada' }, regles).ok); // true\n   ```\n   :::\n\n3. Écris `creerRelance({ envoyer, horloge })` qui renvoie une fonction asynchrone `relancer(factures)` : elle envoie un\n   message pour chaque facture impayée dont l'échéance est passée, et renvoie le nombre de relances. Teste-la avec\n   `node:assert` et des dépendances factices.\n\n   :::indice\n   Compare les dates au format `AAAA-MM-JJ` comme des chaînes : l'ordre alphabétique est l'ordre chronologique.\n   :::\n\n   :::solution\n   ```js\n   import assert from 'node:assert/strict';\n\n   function creerRelance({ envoyer, horloge }) {\n     return async (factures) => {\n       const aujourdhui = horloge();\n       const enRetard = factures.filter((facture) => !facture.payee && facture.echeance < aujourdhui);\n       for (const facture of enRetard) {\n         await envoyer(facture.client, `Facture ${facture.id} en retard`);\n       }\n       return enRetard.length;\n     };\n   }\n\n   const envoyes = [];\n   const relancer = creerRelance({\n     envoyer: async (client, message) => envoyes.push([client, message]),\n     horloge: () => '2026-09-17',\n   });\n\n   const nombre = await relancer([\n     { id: 1, client: 'ada', echeance: '2026-09-01', payee: false },\n     { id: 2, client: 'alan', echeance: '2026-09-01', payee: true },\n     { id: 3, client: 'grace', echeance: '2026-10-01', payee: false },\n   ]);\n\n   assert.equal(nombre, 1);\n   assert.deepEqual(envoyes, [['ada', 'Facture 1 en retard']]);\n   console.log('tests réussis');\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quand renvoyer un objet résultat plutôt que lever une exception ?\n\n  :::indice\n  Distingue les échecs qui font partie du fonctionnement normal et ceux qui ne devraient pas arriver.\n  :::\n\n  :::reponse\n  Un résultat explicite convient aux échecs attendus, qui font partie du métier : validation, stock insuffisant, règle\n  non respectée. L'appelant voit tous les cas dans la valeur de retour et doit les traiter. Les exceptions restent\n  adaptées aux situations imprévues — bug, panne réseau, invariant violé — qui doivent remonter jusqu'à un gestionnaire\n  général. Mélanger les deux sans règle rend le code difficile à suivre : on choisit une convention par couche.\n  :::\n\n- Comment rendre testable une fonction qui dépend de la date du jour et d'une base de données ?\n\n  :::indice\n  D'où viennent ces dépendances aujourd'hui, et d'où pourraient-elles venir ?\n  :::\n\n  :::reponse\n  On les passe en paramètre au lieu de les importer ou de les appeler directement : une fabrique reçoit `horloge` et\n  `depot`, et renvoie la fonction métier. En production, on lui fournit `() => new Date()` et le vrai dépôt ; en test,\n  une horloge fixe et un dépôt en mémoire. Le test devient déterministe, rapide, et n'a besoin d'aucune bibliothèque de\n  simulation de modules.\n  :::\n\n- Qu'est-ce qui rend un code fonctionnel difficile à maintenir ?\n\n  :::indice\n  Pense à l'indirection et aux noms.\n  :::\n\n  :::reponse\n  L'excès d'abstraction : de longs pipelines de fonctions anonymes, un style point-free où plus aucun argument n'est\n  nommé, des utilitaires génériques maison que l'équipe ne connaît pas, et des piles d'appels de débogage remplies de\n  fonctions intermédiaires. Un bon code fonctionnel nomme ses étapes, reste proche du langage et des méthodes standard,\n  et n'introduit un motif que lorsqu'il supprime une répétition réelle ou isole un effet.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-transparence-referentielle",
+      "title": "Transparence référentielle, immutabilité et style déclaratif",
+      "slug": "transparence-et-style-declaratif",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "programmation-fonctionnelle",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-fonctions-pures",
+        "javascript-tableaux-immutabilite"
+      ],
+      "skills": [
+        "referential-transparency"
+      ],
+      "tags": [
+        "javascript",
+        "fonctionnel"
+      ],
+      "contentPath": "javascript/programmation-fonctionnelle/transparence-et-style-declaratif/lesson.md",
+      "contentVersion": "d67a0512895a",
+      "body": "\n## Objectifs\n\n- Reconnaître une expression référentiellement transparente, et ce qu'elle permet : substituer, mémoriser, tester.\n- Mettre à jour une structure imbriquée sans la modifier, en partageant les parties inchangées.\n- Passer d'un code impératif à un code déclaratif, et savoir quand la boucle reste le meilleur choix.\n\n## Introduction\n\nUne fonction pure renvoie toujours le même résultat pour les mêmes arguments, sans effet de bord. La **transparence\nréférentielle** en est la conséquence pratique : on peut remplacer un appel par son résultat sans changer le\nprogramme. Cette propriété, qui a l'air théorique, est ce qui rend un code facile à lire, à tester, à mettre en cache et\nà réorganiser. Elle ne tient que si les données ne changent pas sous nos pieds : d'où l'**immutabilité**, et un style\n**déclaratif** qui décrit le résultat voulu plutôt que les étapes pour l'obtenir.\n\n## Concept\n\n| Notion | Définition | Ce qu'elle apporte |\n| --- | --- | --- |\n| Transparence référentielle | un appel peut être remplacé par sa valeur | raisonner par substitution, mémoriser sans risque |\n| Immutabilité | on crée une nouvelle version au lieu de modifier | pas de modification à distance, comparaison par référence |\n| Partage structurel | la nouvelle version réutilise les parties inchangées | des copies peu coûteuses |\n| Style déclaratif | décrire le quoi : `filter`, `map`, `groupBy` | une intention lisible |\n| Style impératif | décrire le comment : boucles, compteurs, mutations | un contrôle fin, des sorties anticipées |\n\n## Exemple\n\n```js\n// Transparente : toTTC(100) peut être remplacé par 120 partout.\nconst toTTC = (prixHT) => Math.round(prixHT * 1.2 * 100) / 100;\n\n// Opaque : le résultat dépend d'un état extérieur qui change.\nlet remise = 0;\nconst prixRemise = (prix) => prix - remise;\nconsole.log(prixRemise(100)); // 100\nremise = 10;\nconsole.log(prixRemise(100)); // 90 : même appel, autre valeur\n\n// Mise à jour immuable d'un chemin, avec partage structurel.\nfunction mettreAJour(objet, [cle, ...reste], transformer) {\n  if (cle === undefined) return transformer(objet);\n  const copie = Array.isArray(objet) ? [...objet] : { ...objet };\n  copie[cle] = mettreAJour(objet[cle], reste, transformer);\n  return copie;\n}\n\nconst etat = {\n  utilisateur: { nom: 'Ada', preferences: { theme: 'clair' } },\n  panier: { articles: [{ id: 1, quantite: 1 }] },\n};\nconst suivant = mettreAJour(etat, ['panier', 'articles', 0, 'quantite'], (q) => q + 1);\n\nconsole.log(etat.panier.articles[0].quantite, suivant.panier.articles[0].quantite); // 1 2\nconsole.log(suivant.utilisateur === etat.utilisateur); // true : partie inchangée partagée\nconsole.log(suivant.panier === etat.panier); // false : chemin recopié\n\n// Impératif puis déclaratif : le même calcul.\nconst commandes = [\n  { client: 'ada', total: 120, payee: true },\n  { client: 'alan', total: 80, payee: false },\n  { client: 'ada', total: 40, payee: true },\n];\n\nlet chiffreImperatif = 0;\nfor (const commande of commandes) {\n  if (commande.payee) chiffreImperatif += toTTC(commande.total);\n}\n\nconst chiffreDeclaratif = commandes\n  .filter((commande) => commande.payee)\n  .map((commande) => toTTC(commande.total))\n  .reduce((somme, montant) => somme + montant, 0);\n\nconsole.log(chiffreImperatif, chiffreDeclaratif); // 192 192\n```\n\n## Comment ça fonctionne\n\nUne expression est **référentiellement transparente** quand la remplacer par sa valeur ne change rien au programme.\n`toTTC(100)` l'est : on peut écrire `120` à la place, mettre le résultat en cache, calculer l'appel plus tôt ou plus\ntard, ou ne pas le calculer si le résultat n'est pas utilisé. `prixRemise(100)` ne l'est pas : sa valeur dépend du\nmoment de l'appel, parce que la fonction lit une variable modifiable. Pour raisonner dessus, il faut connaître tout\nl'historique du programme. La transparence est donc ce qui permet de comprendre une fonction **en la lisant seule**.\n\nL'**immutabilité** protège cette propriété. Si une fonction reçoit un objet que quelqu'un d'autre modifie ensuite, le\nmême appel ne donne plus le même résultat. En créant une nouvelle version à chaque changement, chaque valeur reste\nvalable pour toujours : on peut la garder, la comparer, revenir en arrière.\n\nCopier toute la structure à chaque changement serait coûteux. `mettreAJour` ne recopie que le **chemin** qui mène à la\nmodification — l'état, le panier, le tableau d'articles, l'article — et réutilise tel quel tout le reste. C'est le\n**partage structurel** : `suivant.utilisateur` est le même objet que `etat.utilisateur`. Cette propriété a un intérêt\npratique majeur : pour savoir si une partie a changé, il suffit de comparer les références, sans parcourir le contenu.\nLes bibliothèques d'interface et de gestion d'état reposent sur cette comparaison.\n\nLe style **déclaratif** découle naturellement de ces deux idées : `filter`, `map` et `reduce` ne modifient pas le\ntableau d'origine et nomment l'intention de chaque étape. La boucle impérative calcule la même chose, mais le lecteur\ndoit reconstituer l'intention à partir des mutations de `chiffreImperatif`.\n\nLe déclaratif n'est pas une fin en soi. Une boucle reste préférable quand on veut s'arrêter tôt, quand plusieurs\nrésultats se calculent en une seule passe sur un très grand tableau, ou quand un `reduce` devient illisible. La\nmutation **locale** — un tableau créé dans la fonction, modifié puis renvoyé — ne casse pas la transparence : vue de\nl'extérieur, la fonction reste pure.\n\n## Erreurs fréquentes\n\n**Lire un état global dans une fonction « utilitaire ».** Passe la valeur en argument.\n\n**Copier superficiellement puis modifier un niveau imbriqué.** Recopie chaque niveau du chemin modifié.\n\n**Copier profondément toute la structure à chaque changement.** Tu perds le partage structurel et la comparaison par\nréférence.\n\n**Écrire un `reduce` pour tout.** Un `map`, un `filter` ou une boucle est souvent plus clair.\n\n**Croire qu'une mutation locale rend la fonction impure.** Seules les mutations visibles de l'extérieur comptent.\n\n## À retenir\n\n- Transparente : un appel peut être remplacé par sa valeur.\n- Une fonction qui lit un état modifiable perd cette propriété.\n- Mise à jour immuable : recopier le chemin modifié, partager le reste.\n- Le partage structurel permet de détecter un changement par comparaison de références.\n- Déclaratif pour exprimer l'intention ; boucle quand le contrôle ou la performance l'exigent.\n\n## Exercices\n\n1. Dis si chaque appel est référentiellement transparent, et justifie.\n\n   ```js\n   const carre = (n) => n * n;\n   const maintenant = () => Date.now();\n   const ajouter = (liste, element) => [...liste, element];\n   const empiler = (liste, element) => liste.push(element);\n   const aleatoire = (max) => Math.floor(Math.random() * max);\n   ```\n\n   :::indice\n   Pour chaque fonction : deux appels identiques donnent-ils toujours la même valeur, et l'appel change-t-il quelque\n   chose ailleurs ?\n   :::\n\n   :::solution\n   - `carre(3)` est transparent : il vaut toujours `9`.\n   - `maintenant()` ne l'est pas : la valeur dépend de l'instant de l'appel.\n   - `ajouter(liste, 4)` est transparent : il renvoie un nouveau tableau sans toucher à `liste`.\n   - `empiler(liste, 4)` ne l'est pas : il modifie `liste`, et renvoie une longueur qui change d'un appel à l'autre.\n   - `aleatoire(10)` ne l'est pas : deux appels identiques donnent des valeurs différentes.\n   :::\n\n2. Écris `supprimerArticle(etat, id)` qui renvoie un nouvel état sans l'article d'identifiant `id`, en partageant tout\n   ce qui n'a pas changé. Si l'article n'existe pas, renvoie `etat` lui-même.\n\n   :::indice\n   Renvoyer l'objet d'origine quand rien ne change permet à l'appelant de détecter l'absence de changement par\n   `===`.\n   :::\n\n   :::solution\n   ```js\n   function supprimerArticle(etat, id) {\n     const articles = etat.panier.articles;\n     if (!articles.some((article) => article.id === id)) return etat;\n     return {\n       ...etat,\n       panier: { ...etat.panier, articles: articles.filter((article) => article.id !== id) },\n     };\n   }\n\n   const etat = {\n     utilisateur: { nom: 'Ada' },\n     panier: { devise: 'EUR', articles: [{ id: 1 }, { id: 2 }] },\n   };\n\n   const apres = supprimerArticle(etat, 1);\n   console.log(apres.panier.articles, etat.panier.articles.length); // [ { id: 2 } ] 2\n   console.log(apres.utilisateur === etat.utilisateur); // true\n   console.log(supprimerArticle(etat, 99) === etat); // true : aucun changement\n   ```\n   :::\n\n3. Réécris cette fonction de façon déclarative. Puis, si l'on voulait seulement savoir s'il existe au moins un produit\n   en rupture, comment éviter de parcourir tout le tableau ?\n\n   ```js\n   function nomsEnRupture(produits) {\n     const resultat = [];\n     for (let i = 0; i < produits.length; i += 1) {\n       if (produits[i].stock === 0) resultat.push(produits[i].nom.toUpperCase());\n     }\n     resultat.sort();\n     return resultat;\n   }\n   ```\n\n   :::indice\n   `toSorted` trie sans modifier le tableau. Pour la seconde question, pense à la sortie anticipée.\n   :::\n\n   :::solution\n   ```js\n   const nomsEnRupture = (produits) =>\n     produits\n       .filter((produit) => produit.stock === 0)\n       .map((produit) => produit.nom.toUpperCase())\n       .toSorted();\n\n   const produits = [\n     { nom: 'stylo', stock: 0 },\n     { nom: 'agenda', stock: 4 },\n     { nom: 'cahier', stock: 0 },\n   ];\n   console.log(nomsEnRupture(produits)); // [ 'CAHIER', 'STYLO' ]\n   console.log(produits.some((produit) => produit.stock === 0)); // true\n   ```\n\n   Pour une simple existence, ni `filter` ni une boucle complète ne conviennent : `some` s'arrête au premier produit\n   trouvé, exactement comme une boucle avec `return true`, tout en restant déclaratif. La version `filter(...).length > 0`\n   parcourrait tout le tableau et créerait un tableau intermédiaire pour rien.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la transparence référentielle, et à quoi sert-elle concrètement ?\n\n  :::indice\n  Pense à la substitution, au cache et aux tests.\n  :::\n\n  :::reponse\n  Une expression est référentiellement transparente si on peut la remplacer par sa valeur sans changer le programme.\n  Concrètement, cela permet de comprendre une fonction sans connaître l'historique du programme, de la mémoriser sans\n  risque, de la tester avec de simples entrées et sorties, et de réorganiser ou paralléliser les calculs. Elle suppose\n  des fonctions pures et des données qui ne changent pas pendant qu'on les utilise.\n  :::\n\n- Qu'est-ce que le partage structurel, et pourquoi est-il important ?\n\n  :::indice\n  Que se passe-t-il pour les parties d'un état qui ne changent pas ?\n  :::\n\n  :::reponse\n  Lors d'une mise à jour immuable, on ne recopie que le chemin menant à la modification et on réutilise les autres\n  parties telles quelles. Les copies restent peu coûteuses, et surtout, une partie inchangée garde la même référence :\n  on détecte un changement avec `===`, sans comparer le contenu. C'est ce qui rend efficaces la mémorisation des\n  sélecteurs et le rendu conditionnel des bibliothèques d'interface.\n  :::\n\n- Le code déclaratif est-il toujours meilleur que le code impératif ?\n\n  :::indice\n  Pense à la lisibilité, à la sortie anticipée et au nombre de passes.\n  :::\n\n  :::reponse\n  Non. Le déclaratif exprime mieux l'intention et évite les mutations partagées, ce qui en fait un bon choix par défaut.\n  Mais une boucle est plus claire pour une logique à plusieurs états, et peut être plus efficace quand on veut\n  plusieurs résultats en une passe sur de gros volumes. Beaucoup de méthodes déclaratives savent d'ailleurs s'arrêter\n  tôt : `some`, `every`, `find`. Une mutation locale, invisible de l'extérieur, reste compatible avec une fonction pure.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-creer-promesse",
       "title": "Créer une promesse : new Promise, resolve et reject",
       "slug": "creer-une-promesse",
@@ -5944,6 +6087,118 @@
       "contentPath": "javascript/this-et-liaison/this-fleches-et-callbacks/lesson.md",
       "contentVersion": "e2249777b3c3",
       "body": "\n## Objectifs\n\n- Expliquer d'où une fonction fléchée tire son `this`, et pourquoi on ne peut pas le changer.\n- Garder le bon `this` dans un `setTimeout`, une méthode de tableau ou un écouteur\n  d'événement.\n- Choisir entre fonction fléchée, `bind` et champ de classe selon la situation.\n\n## Introduction\n\nLes callbacks sont l'endroit où `this` se perd le plus souvent : on passe une méthode à\n`setTimeout` ou à `addEventListener`, et elle s'exécute sans son objet. Les fonctions\nfléchées ont été conçues en grande partie pour régler ce problème. Mais elles ne suivent\npas les quatre règles du chapitre précédent — ce qui les rend précieuses dans un callback\net piégeuses comme méthode d'objet.\n\n## Concept\n\nUne fonction fléchée **n'a pas de `this` propre**. Elle utilise celui de l'environnement où\nelle est **écrite**, exactement comme une variable ordinaire.\n\n| Situation | Fonction classique | Fonction fléchée |\n| --- | --- | --- |\n| `objet.methode()` | `this` = objet | `this` extérieur |\n| Callback de `setTimeout` | `window` (navigateur), `Timeout` (Node) | `this` extérieur |\n| `call`, `apply`, `bind` | `this` fourni | ignoré |\n| `new` | nouvel objet | `TypeError` |\n| Écouteur `addEventListener` | l'élément écouté | `this` extérieur |\n\nConséquence pratique : une fléchée écrite **dans une méthode** récupère le `this` de la\nméthode, et c'est le bon réflexe pour un callback. Une fléchée écrite **comme méthode** d'un\nobjet littéral récupère le `this` du module, soit `undefined`.\n\n## Exemple\n\n```js\n// Dans un module ES : this vaut undefined au niveau supérieur.\nconst minuteur = {\n  secondes: 0,\n  demarrerCasse() {\n    setTimeout(function () {\n      // this n'est pas minuteur ici : window dans un navigateur, Timeout dans Node\n      console.log('classique', this?.secondes); // 'classique' undefined\n    }, 0);\n  },\n  demarrer() {\n    setTimeout(() => {\n      this.secondes += 1; // this = minuteur, hérité de demarrer\n      console.log('fléchée', this.secondes); // 'fléchée' 1\n    }, 0);\n  },\n  mauvaiseMethode: () => typeof this, // this du module\n};\n\nminuteur.demarrerCasse();\nminuteur.demarrer();\nconsole.log(minuteur.mauvaiseMethode()); // 'undefined'\n\nconst fleche = () => this;\nconsole.log(fleche.call({ nom: 'ignoré' })); // undefined : call n'y change rien\n\nclass Bouton {\n  clics = 0;\n  gererClic = () => {\n    this.clics += 1; // champ fléché : lié à l'instance\n    return this.clics;\n  };\n}\nconst bouton = new Bouton();\nconst gestionnaire = bouton.gererClic; // détaché\nconsole.log(gestionnaire(), gestionnaire()); // 1 2\n```\n\n## Comment ça fonctionne\n\nPendant la phase de création, une fonction classique reçoit un `this` calculé à partir de\nl'appel. Une fonction fléchée n'en reçoit pas : quand elle lit `this`, le moteur le cherche\ndans les environnements extérieurs, jusqu'à trouver celui d'une fonction classique ou du\nniveau supérieur. Son `this` est donc fixé par l'endroit où elle est **écrite**, et `call`,\n`apply` ou `bind` n'ont rien à modifier.\n\nDans `demarrer`, la fléchée est créée pendant l'appel `minuteur.demarrer()`, où `this` vaut\n`minuteur` : c'est ce `this` qu'elle utilise, même exécutée plus tard par `setTimeout`. La\nfonction classique de `demarrerCasse` est appelée par le minuteur avec son propre `this` —\n`window` dans un navigateur, un objet `Timeout` dans Node — qui n'a pas de propriété\n`secondes`. Note au passage l'ordre des affichages de l'exemple : les deux\ncallbacks de `setTimeout` s'exécutent après tout le code synchrone.\n\nLes méthodes de tableau acceptent un second argument, `thisArg`, qui fixe le `this` d'un\ncallback classique : `liste.map(function (x) { return this.facteur * x; }, objet)`. Avec une\nfléchée, ce paramètre est ignoré ; c'est rarement un problème, puisque la fléchée voit déjà\nle bon `this`.\n\nPour un **écouteur d'événement**, une fonction classique reçoit comme `this` l'élément\nauquel l'écouteur est attaché, soit `event.currentTarget`. Une fléchée reçoit le `this`\nextérieur. Si l'élément est nécessaire, `event.currentTarget` est plus explicite que `this`\ndans les deux cas.\n\nDans une **classe**, un champ initialisé avec une fléchée, `gererClic = () => {}`, est créé\npour chaque instance au moment de sa construction : son `this` est l'instance, même une fois\nla fonction détachée. Le coût est une fonction par instance au lieu d'une méthode partagée\nsur le prototype. Lier dans le constructeur avec `bind` a le même coût ; l'alternative est\nde garder une méthode classique et d'envelopper à l'endroit de l'usage.\n\n## Erreurs fréquentes\n\n**Écrire une méthode d'objet littéral en fléchée.** Elle prend le `this` du module, pas de\nl'objet.\n\n**Espérer changer le `this` d'une fléchée avec `bind`.** L'appel est ignoré sans erreur.\n\n**Utiliser `this` dans un écouteur fléché pour désigner l'élément.** Utilise\n`event.currentTarget`.\n\n**Transformer toutes les méthodes de classe en champs fléchés.** Chaque instance porte alors\nses propres fonctions ; réserve ce motif aux méthodes réellement passées en callback.\n\n## À retenir\n\n- Une fléchée n'a pas de `this` : elle utilise celui de l'environnement où elle est écrite.\n- `call`, `apply`, `bind` et `thisArg` n'ont aucun effet sur une fléchée.\n- Dans une méthode, une fléchée garde le `this` de la méthode pour ses callbacks.\n- Comme méthode d'objet littéral, une fléchée perd l'objet.\n- Écouteur d'événement : `event.currentTarget` plutôt que `this`.\n\n## Exercices\n\n1. Corrige `demarrer` pour que le callback incrémente bien `secondes` chaque seconde.\n\n   ```js\n   const chrono = {\n     secondes: 0,\n     demarrer() {\n       setInterval(function () {\n         this.secondes += 1;\n       }, 1000);\n     },\n   };\n   ```\n\n   :::indice\n   Le callback est une fonction classique appelée par le minuteur, sans `chrono`. Quelle\n   forme de fonction hérite du `this` de `demarrer` ?\n   :::\n\n   :::solution\n   ```js\n   const chrono = {\n     secondes: 0,\n     demarrer() {\n       return setInterval(() => {\n         this.secondes += 1;\n       }, 1000);\n     },\n   };\n   ```\n\n   La fléchée est créée pendant l'appel `chrono.demarrer()` et utilise son `this`. Renvoyer\n   l'identifiant de l'intervalle permet de l'arrêter plus tard avec `clearInterval`.\n   :::\n\n2. Explique pourquoi `utilisateur.saluer()` renvoie `'Bonjour undefined'`, et corrige.\n\n   ```js\n   const utilisateur = {\n     nom: 'Ada',\n     saluer: () => `Bonjour ${this?.nom}`,\n   };\n   ```\n\n   :::indice\n   Où la fonction fléchée est-elle écrite, et quel est le `this` de cet endroit ?\n   :::\n\n   :::solution\n   La fléchée est écrite au niveau supérieur du module, dans un littéral d'objet — qui ne crée\n   pas de portée. Son `this` est celui du module, `undefined`, donc `this?.nom` vaut\n   `undefined`. Une méthode doit être une fonction classique :\n\n   ```js\n   const utilisateur = {\n     nom: 'Ada',\n     saluer() {\n       return `Bonjour ${this.nom}`;\n     },\n   };\n   console.log(utilisateur.saluer()); // 'Bonjour Ada'\n   ```\n   :::\n\n3. Cette classe perd son `this` quand `valider` est passée en callback. Propose deux\n   corrections et donne le coût de chacune.\n\n   ```js\n   class Formulaire {\n     erreurs = [];\n     valider(champ) {\n       if (!champ) this.erreurs.push('champ vide');\n     }\n   }\n   const formulaire = new Formulaire();\n   ['', 'ok'].forEach(formulaire.valider);\n   ```\n\n   :::indice\n   On peut fixer le `this` au niveau de l'instance, ou seulement à l'endroit de l'usage.\n   :::\n\n   :::solution\n   ```js\n   // 1. À l'usage : aucune fonction supplémentaire par instance.\n   ['', 'ok'].forEach((champ) => formulaire.valider(champ));\n\n   // 2. Dans la classe : un champ fléché, lié à chaque instance.\n   class FormulaireLie {\n     erreurs = [];\n     valider = (champ) => {\n       if (!champ) this.erreurs.push('champ vide');\n     };\n   }\n   const lie = new FormulaireLie();\n   ['', 'ok'].forEach(lie.valider);\n   console.log(lie.erreurs); // ['champ vide']\n   ```\n\n   La première solution laisse la méthode sur le prototype, partagée par toutes les\n   instances. La seconde crée une fonction par instance, mais permet de passer\n   `lie.valider` partout sans précaution.\n   :::\n\n## Questions d'entretien\n\n- Comment une fonction fléchée détermine-t-elle `this` ?\n\n  :::indice\n  En reçoit-elle un pendant sa phase de création ?\n  :::\n\n  :::reponse\n  Elle n'en reçoit pas. Quand elle lit `this`, le moteur le cherche dans les environnements\n  extérieurs, comme une variable, jusqu'à la première fonction classique ou le niveau\n  supérieur. Son `this` est donc déterminé par l'endroit où elle est écrite, une fois pour\n  toutes : `call`, `apply`, `bind` et le paramètre `thisArg` des méthodes de tableau n'ont\n  aucun effet, et elle ne peut pas être appelée avec `new`.\n  :::\n\n- Pourquoi ne pas écrire les méthodes d'un objet littéral en fonctions fléchées ?\n\n  :::indice\n  Un littéral d'objet crée-t-il une portée ?\n  :::\n\n  :::reponse\n  Parce qu'un littéral d'objet ne crée pas de portée : une fléchée écrite comme propriété\n  prend le `this` de l'endroit où l'objet est construit — le module, soit `undefined`, ou\n  la fonction englobante. Elle ne peut donc jamais désigner l'objet. Les méthodes doivent\n  être des fonctions classiques ; les fléchées servent à l'intérieur de ces méthodes, pour\n  les callbacks qui doivent garder leur `this`.\n  :::\n\n- Que vaut `this` dans un écouteur d'événement ?\n\n  :::indice\n  La réponse change selon la forme de la fonction passée à `addEventListener`.\n  :::\n\n  :::reponse\n  Avec une fonction classique, `this` vaut l'élément auquel l'écouteur est attaché,\n  c'est-à-dire `event.currentTarget`. Avec une fonction fléchée, `this` vaut celui de\n  l'environnement où elle est écrite, souvent l'instance d'un composant. Pour désigner\n  l'élément sans ambiguïté, on lit `event.currentTarget`, et l'on réserve `this` à l'objet\n  qui gère l'événement.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-pipelines-donnees",
+      "title": "Pipelines de transformation de données",
+      "slug": "pipelines-de-transformation",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "transformation-de-donnees",
+      "order": 2,
+      "estimatedMinutes": 35,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-regrouper-indexer",
+        "javascript-tableaux-trier"
+      ],
+      "skills": [
+        "data-pipelines"
+      ],
+      "tags": [
+        "javascript",
+        "donnees"
+      ],
+      "contentPath": "javascript/transformation-de-donnees/pipelines-de-transformation/lesson.md",
+      "contentVersion": "31e545d01ac9",
+      "body": "\n## Objectifs\n\n- Découper une transformation en étapes nommées : nettoyer, aplatir, enrichir, agréger, présenter.\n- Utiliser `flatMap` pour les relations « un vers plusieurs » et pour filtrer en transformant.\n- Normaliser des données imbriquées en entités indexées par identifiant.\n- Tester chaque étape séparément, et placer la validation à l'entrée du pipeline.\n\n## Introduction\n\nEntre la réponse brute d'une API et ce qu'affiche un tableau de bord, il y a souvent une dizaine d'opérations : écarter\nles lignes invalides, convertir des chaînes en nombres, aplatir des commandes en lignes, joindre le catalogue, regrouper\npar catégorie, arrondir, trier. Écrites dans une seule fonction de quatre-vingts lignes, elles deviennent vite\nimpossibles à relire et à tester. Organisées en **pipeline** d'étapes pures et nommées, chacune fait une chose, se lit en\nune phrase et se teste avec trois lignes de données.\n\n## Concept\n\n| Étape | Rôle | Outils |\n| --- | --- | --- |\n| Valider et nettoyer | écarter ou corriger les entrées invalides, convertir les types | `flatMap`, `Number`, `trim` |\n| Aplatir | passer d'une commande à ses lignes | `flatMap` |\n| Enrichir | joindre des données d'une autre source | index `Map` |\n| Agréger | regrouper et calculer | `Map.groupBy`, `reduce` |\n| Présenter | arrondir, formater, trier pour l'affichage | `toSorted`, `Intl.NumberFormat` |\n| Normaliser | ranger des entités imbriquées par identifiant | `Object.fromEntries`, `Map` |\n\n## Exemple\n\n```js\nconst reponseApi = [\n  { id: 'A1', client: ' Ada ', lignes: [{ sku: 'LIV-1', qte: '2', prix: '12.50' }, { sku: 'JEU-7', qte: '1', prix: '30' }] },\n  { id: 'A2', client: 'Alan', lignes: [{ sku: 'LIV-1', qte: '1', prix: '12.50' }, { sku: 'XXX', qte: 'abc', prix: '5' }] },\n  { id: 'A3', client: '', lignes: [] },\n];\nconst catalogue = [\n  { sku: 'LIV-1', categorie: 'livres' },\n  { sku: 'JEU-7', categorie: 'jeux' },\n];\n\n// 1. Aplatir et nettoyer : une commande devient ses lignes valides.\nconst versLignes = (commandes) =>\n  commandes.flatMap((commande) =>\n    commande.lignes.flatMap((ligne) => {\n      const quantite = Number(ligne.qte);\n      const centimes = Math.round(Number(ligne.prix) * 100);\n      if (!Number.isInteger(quantite) || quantite <= 0 || !Number.isFinite(centimes)) return [];\n      return [{ commande: commande.id, client: commande.client.trim(), sku: ligne.sku, quantite, centimes }];\n    }),\n  );\n\n// 2. Enrichir avec le catalogue indexé.\nconst enrichir = (catalogue) => {\n  const parSku = new Map(catalogue.map((produit) => [produit.sku, produit]));\n  return (lignes) =>\n    lignes.map((ligne) => ({ ...ligne, categorie: parSku.get(ligne.sku)?.categorie ?? 'inconnue' }));\n};\n\n// 3. Agréger par catégorie.\nconst totalParCategorie = (lignes) =>\n  [...Map.groupBy(lignes, (ligne) => ligne.categorie)].map(([categorie, groupe]) => ({\n    categorie,\n    centimes: groupe.reduce((somme, ligne) => somme + ligne.quantite * ligne.centimes, 0),\n  }));\n\n// 4. Présenter.\nconst euros = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' });\nconst presenter = (totaux) =>\n  totaux\n    .toSorted((a, b) => b.centimes - a.centimes)\n    .map(({ categorie, centimes }) => `${categorie} : ${euros.format(centimes / 100)}`);\n\nconst pipe = (...etapes) => (entree) => etapes.reduce((valeur, etape) => etape(valeur), entree);\nconst rapport = pipe(versLignes, enrichir(catalogue), totalParCategorie, presenter);\n\nconsole.log(rapport(reponseApi)); // [ 'livres : 37,50 €', 'jeux : 30,00 €' ]\nconsole.log(versLignes(reponseApi).length); // 3 : la ligne 'abc' est écartée\n```\n\n## Comment ça fonctionne\n\nChaque étape du pipeline est une fonction pure qui prend un tableau et en renvoie un nouveau. Le pipeline se lit alors\ncomme une phrase : aplatir en lignes, enrichir avec le catalogue, totaliser par catégorie, présenter. Une étape qui a\nbesoin d'une donnée extérieure, comme `enrichir`, la reçoit par application partielle : `enrichir(catalogue)` construit\nl'index une seule fois et renvoie l'étape proprement dite.\n\n`flatMap` fait deux choses utiles. Il exprime les relations **un vers plusieurs** : une commande devient autant\nd'éléments qu'elle a de lignes. Et il permet de **filtrer en transformant** : renvoyer `[]` écarte l'élément,\nrenvoyer `[valeur]` le garde transformé. On évite ainsi un `map` qui produirait des `null` suivi d'un `filter` pour les\nretirer, et on ne calcule la conversion qu'une fois.\n\nLa **validation** est placée tout au début, à la frontière. Les données d'une API sont du texte non fiable : `qte`\npeut valoir `'abc'`, `prix` une chaîne avec virgule, `client` des espaces. Une fois passées par `versLignes`, les\nlignes respectent un format connu — quantité entière positive, montant en centimes entiers — et les étapes suivantes\nn'ont plus à se méfier. Travailler en **centimes entiers** évite que `0.1 + 0.2` fausse les totaux ; la conversion en\neuros n'arrive qu'à l'affichage. Dans un vrai projet, les lignes écartées sont aussi comptées ou journalisées : une\ndonnée perdue en silence est une donnée qu'on ne corrigera jamais.\n\nL'étape de **présentation** est séparée de l'agrégation. Les totaux restent des nombres qu'on peut tester, comparer,\nexporter ; seule la dernière étape fabrique du texte. `Intl.NumberFormat` gère le séparateur décimal, le symbole et\nl'espace insécable propres à chaque langue.\n\nQuand des données imbriquées doivent être **mises à jour** ou référencées depuis plusieurs endroits, on les\n**normalise** : on range chaque type d'entité dans un objet indexé par identifiant, et les relations deviennent des\nlistes d'identifiants. Modifier un client se fait alors à un seul endroit. C'est la forme qu'utilisent les caches de\ndonnées côté client et les gestionnaires d'état.\n\nEnfin, chaque étape se teste seule : trois lignes en entrée, le résultat attendu en sortie. Quand le rapport final est\nfaux, on vérifie les étapes une à une, ou on insère un `tap(console.log)` entre deux étapes, au lieu de déboguer une\nfonction monolithique.\n\n## Erreurs fréquentes\n\n**Valider au milieu du pipeline.** Chaque étape se remet à vérifier les types : valide une fois, à l'entrée.\n\n**Calculer des montants en décimal.** Additionne des centimes entiers, formate à la fin.\n\n**Mélanger agrégation et formatage.** Un total devenu `'37,50 €'` ne se compare plus.\n\n**Comparer une sortie de `Intl.NumberFormat` à une chaîne tapée à la main.** L'espace avant `€` est insécable :\ncompare les nombres, ou formate aussi la valeur attendue.\n\n**Écarter des données invalides en silence.** Compte-les ou journalise-les.\n\n## À retenir\n\n- Un pipeline = des étapes pures et nommées, enchaînées avec `pipe`.\n- `flatMap` aplatit les relations « un vers plusieurs » et filtre en transformant.\n- Valider et convertir à l'entrée ; les étapes suivantes font confiance au format.\n- Calculer en entiers, formater à la dernière étape.\n- Normaliser par identifiant les entités partagées ou modifiées.\n\n## Exercices\n\n1. Transforme un export texte en objets `{ nom, email }`. Chaque ligne a la forme `nom;email` ; écarte les lignes vides,\n   celles sans `@`, et retire les espaces superflus. Utilise un seul `flatMap`.\n\n   :::indice\n   Dans le `flatMap`, découpe la ligne avec `split(';')`, puis renvoie `[]` pour écarter ou `[objet]` pour garder.\n   :::\n\n   :::solution\n   ```js\n   const importer = (texte) =>\n     texte.split('\\n').flatMap((ligne) => {\n       const [nom = '', email = ''] = ligne.split(';').map((champ) => champ.trim());\n       return nom !== '' && email.includes('@') ? [{ nom, email: email.toLowerCase() }] : [];\n     });\n\n   const texte = ' Ada ; ADA@exemple.fr\\n\\nAlan;alan-sans-arobase\\nGrace;grace@exemple.fr ';\n   console.log(importer(texte));\n   // [ { nom: 'Ada', email: 'ada@exemple.fr' }, { nom: 'Grace', email: 'grace@exemple.fr' } ]\n   ```\n   :::\n\n2. Normalise une liste d'articles dont chaque élément contient son auteur complet : produis\n   `{ articles: { [id]: { id, titre, auteur: idAuteur } }, auteurs: { [id]: auteur } }`.\n\n   :::indice\n   Parcours les articles une fois : range l'auteur par son identifiant, et remplace-le dans l'article par cet\n   identifiant.\n   :::\n\n   :::solution\n   ```js\n   function normaliser(liste) {\n     const articles = {};\n     const auteurs = {};\n     for (const { auteur, ...article } of liste) {\n       auteurs[auteur.id] = auteur;\n       articles[article.id] = { ...article, auteur: auteur.id };\n     }\n     return { articles, auteurs };\n   }\n\n   const donnees = normaliser([\n     { id: 'a1', titre: 'Closures', auteur: { id: 'u1', nom: 'Ada' } },\n     { id: 'a2', titre: 'Promesses', auteur: { id: 'u1', nom: 'Ada' } },\n   ]);\n   console.log(donnees.articles.a2); // { id: 'a2', titre: 'Promesses', auteur: 'u1' }\n   console.log(Object.keys(donnees.auteurs)); // [ 'u1' ] : l'auteur n'est stocké qu'une fois\n   ```\n   :::\n\n3. Écris une étape `separerValides(lignes)` qui renvoie `{ valides, rejets }`, où chaque rejet garde la ligne et la\n   raison, puis teste-la avec `node:assert`.\n\n   :::indice\n   Une fonction `verifier(ligne)` qui renvoie la raison du rejet, ou `null`, garde la boucle lisible.\n   :::\n\n   :::solution\n   ```js\n   import assert from 'node:assert/strict';\n\n   function verifier(ligne) {\n     if (!Number.isInteger(ligne.quantite) || ligne.quantite <= 0) return 'quantité invalide';\n     if (!Number.isInteger(ligne.centimes) || ligne.centimes < 0) return 'prix invalide';\n     return null;\n   }\n\n   function separerValides(lignes) {\n     const valides = [];\n     const rejets = [];\n     for (const ligne of lignes) {\n       const raison = verifier(ligne);\n       if (raison === null) valides.push(ligne);\n       else rejets.push({ ligne, raison });\n     }\n     return { valides, rejets };\n   }\n\n   const { valides, rejets } = separerValides([\n     { sku: 'A', quantite: 2, centimes: 1250 },\n     { sku: 'B', quantite: 0, centimes: 500 },\n     { sku: 'C', quantite: 1, centimes: 12.5 },\n   ]);\n\n   assert.deepEqual(valides.map((ligne) => ligne.sku), ['A']);\n   assert.deepEqual(rejets.map((rejet) => rejet.raison), ['quantité invalide', 'prix invalide']);\n   console.log('tests réussis');\n   ```\n\n   La boucle avec deux tableaux locaux reste une fonction pure : les mutations ne sont pas visibles de l'extérieur.\n   :::\n\n## Questions d'entretien\n\n- Comment structures-tu la transformation des données brutes d'une API en données d'affichage ?\n\n  :::indice\n  Pense aux frontières : où valider, où calculer, où formater.\n  :::\n\n  :::reponse\n  En étapes pures et nommées. D'abord valider et convertir à l'entrée — types, champs manquants, valeurs aberrantes —\n  en comptant les rejets. Ensuite les transformations métier sur des données fiables : aplatir, enrichir par index,\n  agréger, en gardant des nombres. Enfin une étape de présentation qui formate et trie pour l'affichage. Chaque étape\n  se teste seule, et le pipeline se lit comme la description du traitement.\n  :::\n\n- Pourquoi normaliser des données côté client ?\n\n  :::indice\n  Que se passe-t-il quand le même auteur apparaît dans cinquante articles et qu'il change de nom ?\n  :::\n\n  :::reponse\n  Dans des données imbriquées, une même entité est dupliquée partout où elle apparaît : la mettre à jour oblige à\n  retrouver toutes ses copies, et on finit avec des versions incohérentes. Normaliser range chaque entité une seule\n  fois par identifiant, et les relations ne portent que des identifiants : une mise à jour se fait à un endroit, et les\n  recherches par identifiant sont directes. On dénormalise au moment d'afficher, avec un sélecteur.\n  :::\n\n- Quand utilises-tu `flatMap` plutôt que `map` suivi de `filter` ?\n\n  :::indice\n  Pense à ce que `flatMap` fait d'un tableau vide renvoyé par la fonction.\n  :::\n\n  :::reponse\n  Quand un élément peut produire zéro, un ou plusieurs résultats : une commande et ses lignes, une ligne de texte qui\n  peut être invalide. Renvoyer `[]` l'écarte, `[valeur]` le garde transformé, et plusieurs valeurs l'éclatent. C'est\n  plus direct qu'un `map` qui produit des `null` suivi d'un `filter`, et la conversion n'est calculée qu'une fois. Pour\n  une transformation un pour un, `map` reste plus lisible.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-regrouper-indexer",
+      "title": "Regrouper, indexer et agréger des données",
+      "slug": "regrouper-indexer-agreger",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "transformation-de-donnees",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-tableaux-transformer",
+        "javascript-map"
+      ],
+      "skills": [
+        "data-grouping"
+      ],
+      "tags": [
+        "javascript",
+        "donnees"
+      ],
+      "contentPath": "javascript/transformation-de-donnees/regrouper-indexer-agreger/lesson.md",
+      "contentVersion": "80206db7f538",
+      "body": "\n## Objectifs\n\n- Regrouper des éléments par clé avec `Object.groupBy` et `Map.groupBy`.\n- Indexer une liste par identifiant pour des recherches directes.\n- Agréger par groupe : compter, sommer, calculer une moyenne, un minimum et un maximum.\n- Choisir entre objet et `Map` pour le résultat.\n\n## Introduction\n\nLes données arrivent presque toujours sous forme de listes : commandes, événements, lignes d'un export. Les questions\nqu'on leur pose sont rarement « quel est le troisième élément ? », mais plutôt « combien par client ? », « quel total\npar mois ? », « quelle est la commande numéro 1042 ? ». Trois opérations y répondent : **regrouper** par clé,\n**indexer** par identifiant, **agréger** chaque groupe en quelques chiffres. Bien les maîtriser évite les boucles\nimbriquées et les `find` répétés qui rendent le code lent et confus.\n\n## Concept\n\n| Opération | Outil | Résultat |\n| --- | --- | --- |\n| Regrouper, clé textuelle | `Object.groupBy(liste, cle)` | `{ cle: [éléments] }`, objet sans prototype |\n| Regrouper, clé quelconque | `Map.groupBy(liste, cle)` | `Map` de clé vers tableau |\n| Indexer | `new Map(liste.map((e) => [e.id, e]))` | accès direct par identifiant |\n| Compter | `reduce` ou `Map` de compteurs | `{ cle: nombre }` |\n| Agréger un groupe | `reduce` sur chaque groupe | somme, moyenne, min, max |\n| Transformer un objet | `Object.entries`, `map`, `Object.fromEntries` | un nouvel objet de mêmes clés |\n\n## Exemple\n\n```js\nconst commandes = [\n  { id: 101, client: 'ada', mois: '2026-08', total: 120 },\n  { id: 102, client: 'alan', mois: '2026-08', total: 80 },\n  { id: 103, client: 'ada', mois: '2026-09', total: 40 },\n  { id: 104, client: 'grace', mois: '2026-09', total: 200 },\n  { id: 105, client: 'ada', mois: '2026-09', total: 60 },\n];\n\n// Regrouper\nconst parClient = Object.groupBy(commandes, (commande) => commande.client);\nconsole.log(Object.keys(parClient)); // [ 'ada', 'alan', 'grace' ]\nconsole.log(parClient.ada.map((commande) => commande.id)); // [ 101, 103, 105 ]\n\n// Indexer\nconst parId = new Map(commandes.map((commande) => [commande.id, commande]));\nconsole.log(parId.get(104).client); // 'grace'\n\n// Agréger chaque groupe\nfunction statistiques(liste) {\n  const totaux = liste.map((commande) => commande.total);\n  const somme = totaux.reduce((a, b) => a + b, 0);\n  return { nombre: liste.length, somme, moyenne: somme / liste.length, max: Math.max(...totaux) };\n}\n\nconst parMois = Object.fromEntries(\n  Object.entries(Object.groupBy(commandes, (commande) => commande.mois)).map(([mois, liste]) => [\n    mois,\n    statistiques(liste),\n  ]),\n);\nconsole.log(parMois);\n// {\n//   '2026-08': { nombre: 2, somme: 200, moyenne: 100, max: 120 },\n//   '2026-09': { nombre: 3, somme: 300, moyenne: 100, max: 200 }\n// }\n\n// Compter en une passe\nconst nombreParClient = commandes.reduce((compteurs, { client }) => {\n  compteurs.set(client, (compteurs.get(client) ?? 0) + 1);\n  return compteurs;\n}, new Map());\nconsole.log(nombreParClient); // Map(3) { 'ada' => 3, 'alan' => 1, 'grace' => 1 }\n\n// Map.groupBy : la clé peut être un booléen ou un objet\nconst parTranche = Map.groupBy(commandes, (commande) => commande.total >= 100);\nconsole.log(parTranche.get(true).length, parTranche.get(false).length); // 2 3\n```\n\n## Comment ça fonctionne\n\n`Object.groupBy(liste, cle)` appelle la fonction de clé sur chaque élément et range l'élément dans le tableau\ncorrespondant, en conservant l'ordre d'origine dans chaque groupe et l'ordre de première apparition des clés. La clé\nest convertie en chaîne, comme toute propriété d'objet : `1` et `'1'` tombent dans le même groupe. L'objet renvoyé n'a\n**pas de prototype** : `parClient.hasOwnProperty` n'existe pas, et une clé comme `'constructor'` ne rencontre aucune\npropriété héritée. `Map.groupBy` fait le même travail mais conserve les clés telles quelles, ce qui permet de grouper\npar booléen, par nombre ou par objet. Les deux fonctions datent d'ES2024 ; sur un environnement plus ancien, un\n`reduce` produit le même résultat.\n\n**Indexer** consiste à construire une fois une `Map` de l'identifiant vers l'élément. Chaque recherche devient\nensuite directe, alors qu'un `find` parcourt la liste à chaque appel. Dès qu'on cherche plusieurs éléments d'une même\nliste — par exemple pour relier des commandes à leurs clients —, l'index transforme un travail proportionnel au\nproduit des deux tailles en un travail proportionnel à leur somme. Si plusieurs éléments partagent un identifiant, le\ndernier écrase les précédents : c'est un regroupement qu'il faut alors, pas un index.\n\n**Agréger** revient à réduire chaque groupe à quelques valeurs. Le motif `Object.entries` → `map` →\n`Object.fromEntries` transforme les valeurs d'un objet en gardant ses clés. Pour un simple comptage, un `reduce` qui\nalimente une `Map` fait tout en une passe, sans créer les tableaux intermédiaires d'un regroupement.\n\nDeux pièges numériques guettent les agrégations. Une moyenne sur un groupe vide divise par zéro et donne `NaN`, et\n`Math.max()` sans argument vaut `-Infinity`. Et `Math.max(...totaux)` transmet chaque élément comme un argument : sur\nun tableau de plusieurs centaines de milliers d'éléments, la limite de la pile est dépassée et une `RangeError` est\nlevée. Pour de gros volumes, on calcule le maximum avec `reduce` ou une boucle.\n\nObjet ou `Map` ? Un objet se sérialise directement en JSON et se lit avec la notation pointée, ce qui convient à un\nrésultat destiné à une API ou un affichage. Une `Map` accepte toutes les clés, garde l'ordre d'insertion, donne sa\ntaille avec `size` et se prête mieux aux ajouts et suppressions fréquents.\n\n## Erreurs fréquentes\n\n**Chercher avec `find` dans une boucle.** Construis un index `Map` une fois.\n\n**Indexer par une clé qui n'est pas unique.** Les éléments en double s'écrasent : regroupe.\n\n**Grouper par objet avec `Object.groupBy`.** Toutes les clés deviennent `'[object Object]'` : utilise `Map.groupBy`.\n\n**Oublier les groupes vides dans une moyenne.** Gère le cas avant de diviser.\n\n**Utiliser `Math.max(...liste)` sur de très grands tableaux.** Passe par `reduce`.\n\n## À retenir\n\n- `Object.groupBy` pour des clés textuelles, `Map.groupBy` pour des clés quelconques.\n- Un index `Map` remplace les `find` répétés par des accès directs.\n- `Object.entries` → `map` → `Object.fromEntries` transforme les valeurs d'un objet.\n- Compter : un `reduce` sur une `Map`, en une passe.\n- Attention à `NaN`, à `-Infinity` et à l'étalement de très grands tableaux.\n\n## Exercices\n\n1. Relie chaque commande à son client et calcule le total dépensé par **nom** de client, sans `find` dans une boucle.\n\n   ```js\n   const clients = [\n     { id: 'c1', nom: 'Ada' },\n     { id: 'c2', nom: 'Alan' },\n   ];\n   const commandes = [\n     { clientId: 'c1', total: 30 },\n     { clientId: 'c2', total: 15 },\n     { clientId: 'c1', total: 20 },\n   ];\n   ```\n\n   :::indice\n   Construis d'abord un index des clients par `id`, puis accumule les totaux dans un objet.\n   :::\n\n   :::solution\n   ```js\n   const clients = [\n     { id: 'c1', nom: 'Ada' },\n     { id: 'c2', nom: 'Alan' },\n   ];\n   const commandes = [\n     { clientId: 'c1', total: 30 },\n     { clientId: 'c2', total: 15 },\n     { clientId: 'c1', total: 20 },\n   ];\n\n   const clientsParId = new Map(clients.map((client) => [client.id, client]));\n   const totalParNom = {};\n   for (const { clientId, total } of commandes) {\n     const nom = clientsParId.get(clientId)?.nom ?? 'inconnu';\n     totalParNom[nom] = (totalParNom[nom] ?? 0) + total;\n   }\n\n   console.log(totalParNom); // { Ada: 50, Alan: 15 }\n   ```\n   :::\n\n2. À partir de lignes de vente, renvoie les `n` produits les plus vendus en quantité, sous la forme\n   `[{ produit, quantite }]`, du plus vendu au moins vendu.\n\n   :::indice\n   Somme les quantités par produit dans une `Map`, convertis-la en tableau d'objets, trie avec `toSorted`, puis coupe\n   avec `slice`.\n   :::\n\n   :::solution\n   ```js\n   function meilleuresVentes(lignes, n) {\n     const quantites = new Map();\n     for (const { produit, quantite } of lignes) {\n       quantites.set(produit, (quantites.get(produit) ?? 0) + quantite);\n     }\n     return [...quantites]\n       .map(([produit, quantite]) => ({ produit, quantite }))\n       .toSorted((a, b) => b.quantite - a.quantite)\n       .slice(0, n);\n   }\n\n   const lignes = [\n     { produit: 'stylo', quantite: 3 },\n     { produit: 'cahier', quantite: 5 },\n     { produit: 'stylo', quantite: 4 },\n     { produit: 'gomme', quantite: 1 },\n   ];\n   console.log(meilleuresVentes(lignes, 2));\n   // [ { produit: 'stylo', quantite: 7 }, { produit: 'cahier', quantite: 5 } ]\n   ```\n   :::\n\n3. Écris `tableauCroise(ventes)` qui renvoie, pour chaque mois, le total par catégorie, avec `0` pour les catégories\n   sans vente ce mois-là.\n\n   :::indice\n   Récupère d'abord la liste de toutes les catégories avec un `Set`, puis construis chaque ligne en partant de zéros.\n   :::\n\n   :::solution\n   ```js\n   function tableauCroise(ventes) {\n     const categories = [...new Set(ventes.map((vente) => vente.categorie))];\n     const zeros = Object.fromEntries(categories.map((categorie) => [categorie, 0]));\n     const tableau = {};\n     for (const { mois, categorie, montant } of ventes) {\n       tableau[mois] ??= { ...zeros };\n       tableau[mois][categorie] += montant;\n     }\n     return tableau;\n   }\n\n   console.log(\n     tableauCroise([\n       { mois: '2026-08', categorie: 'livres', montant: 30 },\n       { mois: '2026-08', categorie: 'jeux', montant: 20 },\n       { mois: '2026-09', categorie: 'livres', montant: 10 },\n       { mois: '2026-08', categorie: 'livres', montant: 5 },\n     ]),\n   );\n   // { '2026-08': { livres: 35, jeux: 20 }, '2026-09': { livres: 10, jeux: 0 } }\n   ```\n   :::\n\n## Questions d'entretien\n\n- Tu dois associer 10 000 commandes à 10 000 clients. Comment t'y prends-tu, et pourquoi ?\n\n  :::indice\n  Compte le nombre de comparaisons avec un `find` par commande.\n  :::\n\n  :::reponse\n  Un `find` par commande parcourt en moyenne la moitié des clients : environ 50 millions de comparaisons. Je construis\n  d'abord une `Map` des clients par identifiant, en une passe, puis chaque commande récupère son client par un accès\n  direct : environ 20 000 opérations au total. Je gère aussi le cas d'un client absent de l'index plutôt que de laisser\n  une erreur sur `undefined`.\n  :::\n\n- Quelle différence entre `Object.groupBy` et `Map.groupBy` ?\n\n  :::indice\n  Regarde ce que devient la clé renvoyée par la fonction.\n  :::\n\n  :::reponse\n  `Object.groupBy` renvoie un objet sans prototype dont les clés sont converties en chaînes : adapté aux catégories\n  textuelles et au JSON. `Map.groupBy` renvoie une `Map` qui garde la clé telle quelle : booléen, nombre ou objet, sans\n  collision entre `1` et `'1'`. Les deux conservent l'ordre des éléments dans chaque groupe et datent d'ES2024.\n  :::\n\n- Quels pièges surveilles-tu quand tu calcules des statistiques par groupe ?\n\n  :::indice\n  Pense aux groupes vides, aux très grands tableaux et aux nombres décimaux.\n  :::\n\n  :::reponse\n  Un groupe vide donne une moyenne `NaN` et un maximum `-Infinity` : je le traite explicitement. `Math.max(...liste)`\n  lève une `RangeError` au-delà de quelques centaines de milliers d'éléments : j'utilise `reduce`. Les montants\n  décimaux accumulent des erreurs d'arrondi : je calcule en centimes entiers et j'arrondis à l'affichage. Enfin, je\n  vérifie que la clé de regroupement est normalisée — casse, espaces — pour ne pas créer deux groupes pour la même\n  valeur.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-transformations-inutiles",
+      "title": "Éviter les transformations inutiles",
+      "slug": "transformations-inutiles",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "transformation-de-donnees",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-pipelines-donnees",
+        "javascript-generateurs"
+      ],
+      "skills": [
+        "data-transformation-efficiency"
+      ],
+      "tags": [
+        "javascript",
+        "donnees",
+        "performance"
+      ],
+      "contentPath": "javascript/transformation-de-donnees/transformations-inutiles/lesson.md",
+      "contentVersion": "745a9a1df903",
+      "body": "\n## Objectifs\n\n- Repérer les passes, copies et recherches qui ne servent à rien dans une chaîne de transformations.\n- Remplacer une recherche répétée dans un tableau par un `Set` ou une `Map`.\n- Éviter le spread dans l'accumulateur d'un `reduce`.\n- S'arrêter tôt avec `find`, `some` ou les méthodes d'itérateurs paresseuses.\n\n## Introduction\n\nLes méthodes de tableau se lisent si bien qu'on les enchaîne sans compter : un `map` pour préparer, un `filter`, un\n`sort`, un `slice` pour n'en garder que dix. Sur cinquante éléments, aucune importance. Sur cent mille, ou dans une\nfonction appelée à chaque frappe au clavier, ces passes et ces copies deviennent le goulot d'étranglement de\nl'application. Le but n'est pas d'abandonner le style déclaratif, mais de reconnaître quelques motifs coûteux et leurs\nremplacements, tout aussi lisibles.\n\n## Concept\n\n| Motif coûteux | Pourquoi | Remplacement |\n| --- | --- | --- |\n| `a.filter((x) => b.includes(x))` | parcourt `b` pour chaque élément de `a` | `const s = new Set(b)` puis `s.has(x)` |\n| `reduce` avec `{ ...acc, [k]: v }` | recopie tout l'accumulateur à chaque tour | modifier l'accumulateur local, ou `Object.fromEntries` |\n| `filter(...)[0]`, `filter(...).length > 0` | parcourt tout et crée un tableau | `find`, `some` |\n| `map` puis `filter` puis `slice(0, 10)` | traite tout pour garder dix éléments | itérateurs paresseux avec `take` |\n| calcul coûteux dans un comparateur de `sort` | recalculé à chaque comparaison | précalculer la clé une fois |\n| `JSON.parse(JSON.stringify(x))` pour lire | copie profonde sans modification | ne pas copier ce qu'on ne modifie pas |\n\n## Exemple\n\nOn compte les appels plutôt que de chronométrer : le résultat est le même à chaque exécution.\n\n```js\nconst produits = Array.from({ length: 10_000 }, (_, i) => ({ id: i, prix: i % 97, nom: `produit-${i}` }));\n\n// 1. Arrêt anticipé : garder les 3 premiers produits chers.\nlet appelsTableau = 0;\nconst chersTableau = produits\n  .map((produit) => (appelsTableau++, { ...produit, ttc: produit.prix * 1.2 }))\n  .filter((produit) => produit.ttc > 100)\n  .slice(0, 3);\n\nlet appelsIterateur = 0;\nconst chersIterateur = produits\n  .values()\n  .map((produit) => (appelsIterateur++, { ...produit, ttc: produit.prix * 1.2 }))\n  .filter((produit) => produit.ttc > 100)\n  .take(3)\n  .toArray();\n\nconsole.log(chersTableau.map((p) => p.id).join(), chersIterateur.map((p) => p.id).join()); // 84,85,86 84,85,86\nconsole.log(appelsTableau, appelsIterateur); // 10000 87\n\n// 2. Recherche répétée : includes dans filter contre Set.\nconst favoris = Array.from({ length: 2_000 }, (_, i) => i * 5);\nlet comparaisons = 0;\nconst lentement = produits.filter((produit) =>\n  favoris.some((id) => (comparaisons++, id === produit.id)),\n);\nconst index = new Set(favoris);\nconst rapidement = produits.filter((produit) => index.has(produit.id));\nconsole.log(lentement.length, rapidement.length, comparaisons); // 2000 2000 18001000\n\n// 3. Spread dans reduce : chaque tour recopie tout l'objet.\nlet proprietesCopiees = 0;\nconst lentIndex = produits.slice(0, 1_000).reduce((acc, produit) => {\n  proprietesCopiees += Object.keys(acc).length;\n  return { ...acc, [produit.id]: produit.nom };\n}, {});\nconst rapideIndex = Object.fromEntries(produits.slice(0, 1_000).map((produit) => [produit.id, produit.nom]));\nconsole.log(Object.keys(lentIndex).length === Object.keys(rapideIndex).length, proprietesCopiees); // true 499500\n```\n\n## Comment ça fonctionne\n\nLes méthodes de tableau sont **gourmandes** : chaque `map` ou `filter` parcourt tout le tableau et en crée un nouveau\navant que l'étape suivante ne commence. Dans le premier cas, `map` transforme les 10 000 produits, `filter` en garde\nune partie dans un deuxième tableau, et `slice` n'en retient que trois. Les **méthodes d'itérateurs** sont\n**paresseuses** : `produits.values()` renvoie un itérateur, et `map`, `filter`, `take` construisent une chaîne qui\ntraite les éléments un par un, à la demande. `take(3)` arrête tout dès le troisième élément retenu : 87 appels au\nlieu de 10 000, et aucun tableau intermédiaire. Ces méthodes sont disponibles depuis Node.js 22 et dans les\nnavigateurs récents ; sur un environnement plus ancien, un générateur ou une boucle `for...of` avec `break` donne le\nmême arrêt anticipé.\n\nLa **recherche répétée** est le motif le plus coûteux, car le coût se multiplie : pour chaque produit, `some` parcourt\nles favoris jusqu'à trouver, ou jusqu'au bout. 10 000 produits et 2 000 favoris font 18 millions de comparaisons. Un\n`Set` construit une fois répond à `has` en temps constant en moyenne : 10 000 vérifications. Le même raisonnement vaut\npour `includes`, `indexOf` et `find` dans une boucle.\n\nLe **spread dans un `reduce`** a l'air immuable et élégant, mais chaque tour crée un nouvel objet en recopiant toutes\nles propriétés déjà accumulées : 0 + 1 + 2 + … + 999, soit près d'un demi-million de copies pour 1 000 éléments. Le\ncoût croît avec le carré de la taille. L'accumulateur d'un `reduce` est créé par la fonction elle-même : le modifier\ndirectement ne rend pas le code impur. `Object.fromEntries` ou une `Map` expriment d'ailleurs le résultat plus\nclairement.\n\nDans un **comparateur** de `sort`, la fonction est appelée de l'ordre de n × log₂(n) fois : plus de 100 000 appels pour\n10 000 éléments, chacun calculant deux clés. Si la clé est coûteuse — normalisation d'une chaîne, date à analyser —,\non la calcule une fois par élément, on trie les paires, puis on récupère les éléments.\n\nAvant d'optimiser, on **mesure**. Ces motifs ne comptent que sur des données volumineuses ou du code appelé très\nsouvent ; sur une liste de vingt éléments affichée une fois, la version la plus lisible est la bonne. Le chapitre sur la\nperformance reviendra sur la complexité et le profilage.\n\n## Erreurs fréquentes\n\n**Utiliser `includes` ou `find` dans une boucle sur deux grandes listes.** Construis un `Set` ou une `Map`.\n\n**Recopier l'accumulateur à chaque tour de `reduce`.** Modifie l'accumulateur local ou utilise `Object.fromEntries`.\n\n**Écrire `filter(...)[0]` au lieu de `find`.** Tu parcours tout et crées un tableau pour un seul élément.\n\n**Transformer toute une liste pour n'en afficher que dix.** Filtre avant de transformer, ou utilise `take`.\n\n**Optimiser sans mesurer.** Sur de petites données, la lisibilité prime.\n\n## À retenir\n\n- Les méthodes de tableau parcourent et copient tout ; les méthodes d'itérateurs s'arrêtent tôt.\n- `find`, `some`, `every` s'arrêtent dès que la réponse est connue.\n- Recherche répétée : un `Set` ou une `Map` construits une fois.\n- Pas de spread dans l'accumulateur d'un `reduce` sur de gros volumes.\n- Précalcule les clés coûteuses avant un tri, et mesure avant d'optimiser.\n\n## Exercices\n\n1. Réécris cette fonction pour qu'elle ne fasse plus de recherche répétée, sans changer son résultat.\n\n   ```js\n   const nonLus = (messages, idsLus) => messages.filter((message) => !idsLus.includes(message.id));\n   ```\n\n   :::indice\n   Construis la structure de recherche une fois, en dehors du `filter`.\n   :::\n\n   :::solution\n   ```js\n   const nonLus = (messages, idsLus) => {\n     const lus = new Set(idsLus);\n     return messages.filter((message) => !lus.has(message.id));\n   };\n\n   const messages = [{ id: 1 }, { id: 2 }, { id: 3 }];\n   console.log(nonLus(messages, [2, 3]).map((message) => message.id)); // [ 1 ]\n   ```\n\n   Le `Set` coûte une passe sur `idsLus`, puis chaque vérification est directe : le travail passe du produit des deux\n   tailles à leur somme.\n   :::\n\n2. Cette fonction trie des contacts par nom normalisé, en ignorant accents et casse. Réécris-la pour ne normaliser\n   chaque nom qu'une fois, et vérifie en comptant les appels à `normaliser`.\n\n   ```js\n   let appels = 0;\n   const normaliser = (texte) => (appels++, texte.normalize('NFD').replace(/\\p{Diacritic}/gu, '').toLowerCase());\n   const trier = (contacts) =>\n     contacts.toSorted((a, b) => normaliser(a.nom).localeCompare(normaliser(b.nom)));\n   ```\n\n   :::indice\n   Crée des paires `[cle, contact]`, trie les paires sur la clé, puis ne garde que les contacts.\n   :::\n\n   :::solution\n   ```js\n   let appels = 0;\n   const normaliser = (texte) => (appels++, texte.normalize('NFD').replace(/\\p{Diacritic}/gu, '').toLowerCase());\n\n   const trier = (contacts) =>\n     contacts\n       .map((contact) => [normaliser(contact.nom), contact])\n       .sort(([a], [b]) => a.localeCompare(b))\n       .map(([, contact]) => contact);\n\n   const contacts = ['Émile', 'alice', 'Zoé', 'éric', 'Bruno', 'andré', 'Chloé', 'david'].map((nom) => ({ nom }));\n   console.log(trier(contacts).map((contact) => contact.nom).join(', '));\n   // 'alice, andré, Bruno, Chloé, david, Émile, éric, Zoé'\n   console.log(appels); // 8 : une normalisation par contact\n   ```\n\n   Le `sort` en place est sans risque ici : il trie le tableau de paires créé par le premier `map`, pas l'original.\n   :::\n\n3. Écris `premiersValides(lignes, n, valider)` qui renvoie les `n` premières lignes valides en appelant `valider` le\n   moins possible, d'abord avec une boucle, puis avec les méthodes d'itérateurs.\n\n   :::indice\n   Dans la boucle, `break` dès que le résultat contient `n` éléments. Avec les itérateurs : `values()`, `filter`,\n   `take`, `toArray`.\n   :::\n\n   :::solution\n   ```js\n   function premiersValidesBoucle(lignes, n, valider) {\n     const resultat = [];\n     for (const ligne of lignes) {\n       if (resultat.length === n) break;\n       if (valider(ligne)) resultat.push(ligne);\n     }\n     return resultat;\n   }\n\n   const premiersValidesIterateur = (lignes, n, valider) => lignes.values().filter(valider).take(n).toArray();\n\n   let appels = 0;\n   const estPair = (nombre) => (appels++, nombre % 2 === 0);\n   const lignes = Array.from({ length: 1_000 }, (_, i) => i + 1);\n\n   console.log(premiersValidesBoucle(lignes, 3, estPair), appels); // [ 2, 4, 6 ] 6\n   appels = 0;\n   console.log(premiersValidesIterateur(lignes, 3, estPair), appels); // [ 2, 4, 6 ] 6\n   ```\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `liste.reduce((acc, x) => ({ ...acc, [x.id]: x }), {})` peut-il devenir très lent ?\n\n  :::indice\n  Compte les propriétés recopiées à chaque tour.\n  :::\n\n  :::reponse\n  Chaque tour crée un nouvel objet en recopiant toutes les propriétés déjà accumulées : 0, puis 1, puis 2… jusqu'à\n  n − 1. Le total croît avec le carré de la taille — un demi-million de copies pour 1 000 éléments, cinquante\n  millions pour 10 000 —, et chaque copie crée un objet que le ramasse-miettes devra libérer. L'accumulateur est créé\n  par le `reduce` : le modifier directement reste pur vu de l'extérieur. `Object.fromEntries(liste.map(...))` ou une\n  `Map` sont plus lisibles et linéaires.\n  :::\n\n- Quelle différence entre `tableau.map(f).filter(g).slice(0, 5)` et `tableau.values().map(f).filter(g).take(5)` ?\n\n  :::indice\n  Qui traite les éléments, et quand ?\n  :::\n\n  :::reponse\n  La version tableau est gourmande : `map` applique `f` à tous les éléments et crée un tableau complet, `filter` en crée\n  un deuxième, puis `slice` en garde cinq. La version itérateur est paresseuse : chaque élément traverse `f` puis `g`\n  un par un, et `take(5)` arrête tout dès le cinquième retenu, sans tableau intermédiaire. Le résultat est un itérateur,\n  qu'on convertit avec `toArray`. La différence compte quand le tableau est grand et qu'on en garde peu.\n  :::\n\n- Comment décides-tu qu'une transformation de données mérite d'être optimisée ?\n\n  :::indice\n  Pense à la taille des données, à la fréquence d'appel et à la mesure.\n  :::\n\n  :::reponse\n  Je regarde d'abord les ordres de grandeur : volume des données et fréquence d'exécution — une fois au chargement ou à\n  chaque frappe. Je repère les motifs qui multiplient le coût : recherche dans une boucle, spread dans un `reduce`,\n  calcul coûteux dans un comparateur. Puis je mesure avec le profileur ou `performance.now()` sur des données\n  réalistes. Si le gain est négligeable, je garde la version la plus lisible ; sinon je choisis le remplacement le plus\n  simple, souvent un `Set`, une `Map` ou un arrêt anticipé.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -13084,6 +13339,157 @@
       "contentVersion": "63860ae20e95"
     },
     {
+      "id": "javascript-motifs-fonctionnels-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-motifs-fonctionnels-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pour quel cas un résultat `{ ok: false, erreur }` est-il le plus adapté ?\n",
+          "options": [
+            "Un code promo expiré saisi par l'utilisateur",
+            "Une propriété lue sur undefined à cause d'un bug",
+            "La base de données injoignable",
+            "Une mémoire saturée"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un code promo expiré est un échec attendu du métier : l'appelant doit le traiter. Les bugs et les pannes d'infrastructure restent des exceptions.\n",
+          "skills": [
+            "functional-patterns"
+          ]
+        },
+        {
+          "id": "js-motifs-fonctionnels-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que contient `[1, 2].map(tap((v) => v * 10))`, avec `const tap = (f) => (v) => { f(v); return v; };` ?\n",
+          "options": [
+            "[1, 2]",
+            "[10, 20]",
+            "[undefined, undefined]",
+            "[1, 2, 10, 20]"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "tap exécute l'effet mais renvoie la valeur reçue, en ignorant ce que renvoie l'effet : le tableau est inchangé.\n",
+          "skills": [
+            "functional-patterns"
+          ]
+        },
+        {
+          "id": "js-motifs-fonctionnels-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Dans `pipeAsync`, une étape peut renvoyer une valeur ordinaire ou une promesse indifféremment.\n",
+          "answer": true,
+          "explanation": "Chaque étape est passée à then, qui résout aussi bien une valeur qu'une promesse avant d'appeler l'étape suivante.\n",
+          "skills": [
+            "functional-patterns"
+          ]
+        },
+        {
+          "id": "js-motifs-fonctionnels-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quels bénéfices apporte l'injection des dépendances en paramètre d'une fabrique ?\n",
+          "options": [
+            "Des tests déterministes avec une horloge fixe",
+            "Pas besoin de simuler des modules entiers",
+            "Des appels réseau plus rapides en production",
+            "La logique métier ne connaît pas les implémentations concrètes"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "Injecter les effets permet de les remplacer en test et découple la logique de ses implémentations. Cela ne change rien aux performances du réseau.\n",
+          "skills": [
+            "functional-patterns"
+          ]
+        }
+      ],
+      "chapterId": "javascript-motifs-fonctionnels",
+      "technology": "javascript",
+      "contentPath": "javascript/programmation-fonctionnelle/motifs-fonctionnels/quiz.yaml",
+      "contentVersion": "661111669237"
+    },
+    {
+      "id": "javascript-transparence-referentielle-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-transparence-q1",
+          "type": "multiple_answer",
+          "difficulty": 2,
+          "question": "Quels appels sont référentiellement transparents ?\n",
+          "options": [
+            "Math.max(2, 5)",
+            "Date.now()",
+            "[1, 2].concat(3)",
+            "tableau.push(3)"
+          ],
+          "answer": [
+            0,
+            2
+          ],
+          "explanation": "Math.max(2, 5) vaut toujours 5, et concat renvoie un nouveau tableau sans modifier l'original. Date.now dépend de l'instant, push modifie le tableau et renvoie une longueur variable.\n",
+          "skills": [
+            "referential-transparency"
+          ]
+        },
+        {
+          "id": "js-transparence-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche `const a = { x: { n: 1 }, y: { n: 2 } }; const b = { ...a, y: { ...a.y, n: 3 } }; console.log(a.x === b.x, a.y === b.y);` ?\n",
+          "answer": "true false",
+          "explanation": "Le spread partage x, qui n'a pas changé ; y est recopié parce qu'il est sur le chemin modifié. C'est le partage structurel.\n",
+          "skills": [
+            "referential-transparency"
+          ]
+        },
+        {
+          "id": "js-transparence-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une fonction qui crée un tableau local, le remplit avec push puis le renvoie est forcément impure.\n",
+          "answer": false,
+          "explanation": "La mutation porte sur un tableau créé par la fonction et invisible de l'extérieur avant le retour : vue de l'appelant, la fonction reste pure.\n",
+          "skills": [
+            "referential-transparency"
+          ]
+        },
+        {
+          "id": "js-transparence-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle écriture s'arrête au premier élément qui satisfait la condition ?\n",
+          "options": [
+            "produits.some((p) => p.stock === 0)",
+            "produits.filter((p) => p.stock === 0).length > 0",
+            "produits.map((p) => p.stock === 0).includes(true)",
+            "produits.reduce((trouve, p) => trouve || p.stock === 0, false)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "some s'arrête dès qu'un élément satisfait la condition. filter, map et reduce parcourent tout le tableau, et les deux premiers créent en plus un tableau intermédiaire.\n",
+          "skills": [
+            "referential-transparency"
+          ]
+        }
+      ],
+      "chapterId": "javascript-transparence-referentielle",
+      "technology": "javascript",
+      "contentPath": "javascript/programmation-fonctionnelle/transparence-et-style-declaratif/quiz.yaml",
+      "contentVersion": "938989445e35"
+    },
+    {
       "id": "javascript-creer-promesse-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -14345,6 +14751,221 @@
       "technology": "javascript",
       "contentPath": "javascript/this-et-liaison/this-fleches-et-callbacks/quiz.yaml",
       "contentVersion": "5c1565db1d9a"
+    },
+    {
+      "id": "javascript-pipelines-donnees-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-pipelines-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Qu'affiche `console.log([1, 2, 3].flatMap((n) => (n % 2 ? [n, n] : [])).length)` ?\n",
+          "answer": "4",
+          "explanation": "1 et 3 produisent chacun deux éléments, 2 produit un tableau vide qui est écarté : [1, 1, 3, 3] a quatre éléments.\n",
+          "skills": [
+            "data-pipelines"
+          ]
+        },
+        {
+          "id": "js-pipelines-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Où placer la validation des données reçues d'une API dans un pipeline ?\n",
+          "options": [
+            "Au début, avant toute transformation métier",
+            "Dans chaque étape, par précaution",
+            "À la fin, juste avant l'affichage",
+            "Nulle part si l'API est documentée"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Valider et convertir à l'entrée garantit un format connu : les étapes suivantes n'ont plus à se méfier, et les rejets sont comptés à un seul endroit.\n",
+          "skills": [
+            "data-pipelines"
+          ]
+        },
+        {
+          "id": "js-pipelines-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "`new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(5) === '5,00 €'` vaut `true`, avec un espace ordinaire.\n",
+          "answer": false,
+          "explanation": "Le formatage français sépare le montant du symbole par une espace insécable, pas par un espace ordinaire : la comparaison à une chaîne tapée à la main échoue.\n",
+          "skills": [
+            "data-pipelines"
+          ]
+        },
+        {
+          "id": "js-pipelines-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quels sont les avantages de données normalisées par identifiant ?\n",
+          "options": [
+            "Une entité n'est stockée qu'une fois",
+            "Une mise à jour se fait à un seul endroit",
+            "L'affichage n'a jamais besoin de recomposer les données",
+            "Les recherches par identifiant sont directes"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "La normalisation supprime les copies et rend les accès directs. En contrepartie, il faut recomposer les entités liées au moment de l'affichage.\n",
+          "skills": [
+            "data-pipelines"
+          ]
+        }
+      ],
+      "chapterId": "javascript-pipelines-donnees",
+      "technology": "javascript",
+      "contentPath": "javascript/transformation-de-donnees/pipelines-de-transformation/quiz.yaml",
+      "contentVersion": "35c107033f6d"
+    },
+    {
+      "id": "javascript-regrouper-indexer-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-regrouper-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle écriture permet de retrouver ensuite une commande par identifiant sans parcourir la liste ?\n",
+          "options": [
+            "new Map(commandes.map((c) => [c.id, c]))",
+            "commandes.find((c) => c.id === id)",
+            "commandes.filter((c) => c.id === id)[0]",
+            "Object.groupBy(commandes, (c) => c.client)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "La Map construite une fois donne un accès direct par identifiant. find et filter parcourent la liste à chaque recherche, et groupBy regroupe par client.\n",
+          "skills": [
+            "data-grouping"
+          ]
+        },
+        {
+          "id": "js-regrouper-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche `console.log(Object.groupBy([1, '1', 2], (x) => x)['1'].length)` ?\n",
+          "answer": "2",
+          "explanation": "Object.groupBy convertit la clé en chaîne : 1 et '1' tombent dans le même groupe '1'. Map.groupBy les aurait séparés.\n",
+          "skills": [
+            "data-grouping"
+          ]
+        },
+        {
+          "id": "js-regrouper-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "L'objet renvoyé par `Object.groupBy` hérite de `Object.prototype`.\n",
+          "answer": false,
+          "explanation": "Il est créé sans prototype : aucune propriété héritée comme hasOwnProperty ou constructor ne peut entrer en collision avec une clé de groupe.\n",
+          "skills": [
+            "data-grouping"
+          ]
+        },
+        {
+          "id": "js-regrouper-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles expressions posent problème pour agréger un groupe ?\n",
+          "options": [
+            "Math.max(...[]) sur un groupe vide",
+            "somme / liste.length avec une liste vide",
+            "Math.max(...liste) sur un million d'éléments",
+            "liste.reduce((a, b) => a + b, 0) sur une liste vide"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Math.max() sans argument vaut -Infinity, 0 / 0 vaut NaN, et étaler un million d'arguments lève une RangeError. Le reduce avec une valeur initiale renvoie simplement 0.\n",
+          "skills": [
+            "data-grouping"
+          ]
+        }
+      ],
+      "chapterId": "javascript-regrouper-indexer",
+      "technology": "javascript",
+      "contentPath": "javascript/transformation-de-donnees/regrouper-indexer-agreger/quiz.yaml",
+      "contentVersion": "0518380e39e3"
+    },
+    {
+      "id": "javascript-transformations-inutiles-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-transformations-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle écriture remplace le mieux `commandes.filter((c) => c.id === id)[0]` ?\n",
+          "options": [
+            "commandes.find((c) => c.id === id)",
+            "commandes.some((c) => c.id === id)",
+            "commandes.map((c) => c.id === id)[0]",
+            "commandes.includes(id)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "find renvoie le premier élément qui correspond et s'arrête aussitôt, sans créer de tableau. some renverrait un booléen.\n",
+          "skills": [
+            "data-transformation-efficiency"
+          ]
+        },
+        {
+          "id": "js-transformations-q2",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Qu'affiche `let n = 0; [1, 2, 3, 4, 5].values().map((x) => (n++, x * 2)).take(2).toArray(); console.log(n);` ?\n",
+          "answer": "2",
+          "explanation": "Les méthodes d'itérateurs sont paresseuses : take(2) cesse de demander des éléments après le deuxième, donc map n'est appelé que deux fois.\n",
+          "skills": [
+            "data-transformation-efficiency"
+          ]
+        },
+        {
+          "id": "js-transformations-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Modifier directement l'accumulateur d'un `reduce` initialisé avec `{}` rend la fonction qui l'appelle impure.\n",
+          "answer": false,
+          "explanation": "L'objet {} est créé dans l'appel et n'est visible de l'extérieur qu'une fois renvoyé : cette mutation locale ne change rien pour l'appelant.\n",
+          "skills": [
+            "data-transformation-efficiency"
+          ]
+        },
+        {
+          "id": "js-transformations-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Lesquels de ces motifs ont un coût qui croît avec le produit ou le carré des tailles ?\n",
+          "options": [
+            "a.filter((x) => b.includes(x))",
+            "liste.reduce((acc, x) => ({ ...acc, [x.id]: x }), {})",
+            "const s = new Set(b); a.filter((x) => s.has(x))",
+            "Object.fromEntries(liste.map((x) => [x.id, x]))"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "includes parcourt b pour chaque élément de a, et le spread recopie l'accumulateur à chaque tour. Le Set et Object.fromEntries restent linéaires.\n",
+          "skills": [
+            "data-transformation-efficiency"
+          ]
+        }
+      ],
+      "chapterId": "javascript-transformations-inutiles",
+      "technology": "javascript",
+      "contentPath": "javascript/transformation-de-donnees/transformations-inutiles/quiz.yaml",
+      "contentVersion": "10068e9728bb"
     },
     {
       "id": "javascript-primitives-references-quiz",

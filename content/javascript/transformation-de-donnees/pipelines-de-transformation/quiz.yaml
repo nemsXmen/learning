@@ -1,0 +1,60 @@
+id: javascript-pipelines-donnees-quiz
+kind: QUIZ
+questions:
+  - id: js-pipelines-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Qu'affiche `console.log([1, 2, 3].flatMap((n) => (n % 2 ? [n, n] : [])).length)` ?
+    answer: '4'
+    explanation: >
+      1 et 3 produisent chacun deux éléments, 2 produit un tableau vide qui est écarté :
+      [1, 1, 3, 3] a quatre éléments.
+    skills:
+      - data-pipelines
+
+  - id: js-pipelines-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Où placer la validation des données reçues d'une API dans un pipeline ?
+    options:
+      - "Au début, avant toute transformation métier"
+      - "Dans chaque étape, par précaution"
+      - "À la fin, juste avant l'affichage"
+      - "Nulle part si l'API est documentée"
+    answer: [0]
+    explanation: >
+      Valider et convertir à l'entrée garantit un format connu : les étapes suivantes n'ont plus
+      à se méfier, et les rejets sont comptés à un seul endroit.
+    skills:
+      - data-pipelines
+
+  - id: js-pipelines-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(5) === '5,00 €'` vaut `true`, avec un espace ordinaire.
+    answer: false
+    explanation: >
+      Le formatage français sépare le montant du symbole par une espace insécable, pas par un
+      espace ordinaire : la comparaison à une chaîne tapée à la main échoue.
+    skills:
+      - data-pipelines
+
+  - id: js-pipelines-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels sont les avantages de données normalisées par identifiant ?
+    options:
+      - "Une entité n'est stockée qu'une fois"
+      - "Une mise à jour se fait à un seul endroit"
+      - "L'affichage n'a jamais besoin de recomposer les données"
+      - "Les recherches par identifiant sont directes"
+    answer: [0, 1, 3]
+    explanation: >
+      La normalisation supprime les copies et rend les accès directs. En contrepartie, il faut
+      recomposer les entités liées au moment de l'affichage.
+    skills:
+      - data-pipelines

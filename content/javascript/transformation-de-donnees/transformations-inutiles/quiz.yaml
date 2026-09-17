@@ -1,0 +1,60 @@
+id: javascript-transformations-inutiles-quiz
+kind: QUIZ
+questions:
+  - id: js-transformations-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture remplace le mieux `commandes.filter((c) => c.id === id)[0]` ?
+    options:
+      - "commandes.find((c) => c.id === id)"
+      - "commandes.some((c) => c.id === id)"
+      - "commandes.map((c) => c.id === id)[0]"
+      - "commandes.includes(id)"
+    answer: [0]
+    explanation: >
+      find renvoie le premier élément qui correspond et s'arrête aussitôt, sans créer de tableau.
+      some renverrait un booléen.
+    skills:
+      - data-transformation-efficiency
+
+  - id: js-transformations-q2
+    type: predict_output
+    difficulty: 4
+    question: >
+      Qu'affiche `let n = 0; [1, 2, 3, 4, 5].values().map((x) => (n++, x * 2)).take(2).toArray(); console.log(n);` ?
+    answer: '2'
+    explanation: >
+      Les méthodes d'itérateurs sont paresseuses : take(2) cesse de demander des éléments après
+      le deuxième, donc map n'est appelé que deux fois.
+    skills:
+      - data-transformation-efficiency
+
+  - id: js-transformations-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Modifier directement l'accumulateur d'un `reduce` initialisé avec `{}` rend la fonction qui l'appelle impure.
+    answer: false
+    explanation: >
+      L'objet {} est créé dans l'appel et n'est visible de l'extérieur qu'une fois renvoyé :
+      cette mutation locale ne change rien pour l'appelant.
+    skills:
+      - data-transformation-efficiency
+
+  - id: js-transformations-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquels de ces motifs ont un coût qui croît avec le produit ou le carré des tailles ?
+    options:
+      - "a.filter((x) => b.includes(x))"
+      - "liste.reduce((acc, x) => ({ ...acc, [x.id]: x }), {})"
+      - "const s = new Set(b); a.filter((x) => s.has(x))"
+      - "Object.fromEntries(liste.map((x) => [x.id, x]))"
+    answer: [0, 1]
+    explanation: >
+      includes parcourt b pour chaque élément de a, et le spread recopie l'accumulateur à chaque
+      tour. Le Set et Object.fromEntries restent linéaires.
+    skills:
+      - data-transformation-efficiency

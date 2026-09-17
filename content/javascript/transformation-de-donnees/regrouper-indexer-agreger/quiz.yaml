@@ -1,0 +1,60 @@
+id: javascript-regrouper-indexer-quiz
+kind: QUIZ
+questions:
+  - id: js-regrouper-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture permet de retrouver ensuite une commande par identifiant sans parcourir la liste ?
+    options:
+      - "new Map(commandes.map((c) => [c.id, c]))"
+      - "commandes.find((c) => c.id === id)"
+      - "commandes.filter((c) => c.id === id)[0]"
+      - "Object.groupBy(commandes, (c) => c.client)"
+    answer: [0]
+    explanation: >
+      La Map construite une fois donne un accès direct par identifiant. find et filter
+      parcourent la liste à chaque recherche, et groupBy regroupe par client.
+    skills:
+      - data-grouping
+
+  - id: js-regrouper-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `console.log(Object.groupBy([1, '1', 2], (x) => x)['1'].length)` ?
+    answer: '2'
+    explanation: >
+      Object.groupBy convertit la clé en chaîne : 1 et '1' tombent dans le même groupe '1'.
+      Map.groupBy les aurait séparés.
+    skills:
+      - data-grouping
+
+  - id: js-regrouper-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      L'objet renvoyé par `Object.groupBy` hérite de `Object.prototype`.
+    answer: false
+    explanation: >
+      Il est créé sans prototype : aucune propriété héritée comme hasOwnProperty ou
+      constructor ne peut entrer en collision avec une clé de groupe.
+    skills:
+      - data-grouping
+
+  - id: js-regrouper-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles expressions posent problème pour agréger un groupe ?
+    options:
+      - "Math.max(...[]) sur un groupe vide"
+      - "somme / liste.length avec une liste vide"
+      - "Math.max(...liste) sur un million d'éléments"
+      - "liste.reduce((a, b) => a + b, 0) sur une liste vide"
+    answer: [0, 1, 2]
+    explanation: >
+      Math.max() sans argument vaut -Infinity, 0 / 0 vaut NaN, et étaler un million d'arguments
+      lève une RangeError. Le reduce avec une valeur initiale renvoie simplement 0.
+    skills:
+      - data-grouping

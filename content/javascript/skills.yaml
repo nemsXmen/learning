@@ -624,3 +624,29 @@ skills:
     name: Fuites mémoire
     importance: 4
     requires: [memory-model, closure-pitfalls]
+
+  # Partie 12 — Functional Programming
+  - id: referential-transparency
+    name: Transparence référentielle et style déclaratif
+    importance: 3
+    requires: [pure-functions, arrays-immutability]
+
+  - id: functional-patterns
+    name: Motifs fonctionnels professionnels
+    importance: 3
+    requires: [referential-transparency, currying-composition]
+
+  - id: data-grouping
+    name: Regrouper, indexer et agréger
+    importance: 4
+    requires: [arrays-transform, map-collection]
+
+  - id: data-pipelines
+    name: Pipelines de transformation de données
+    importance: 4
+    requires: [data-grouping, arrays-sort-flatten]
+
+  - id: data-transformation-efficiency
+    name: Éviter les transformations inutiles
+    importance: 3
+    requires: [data-pipelines, generators]

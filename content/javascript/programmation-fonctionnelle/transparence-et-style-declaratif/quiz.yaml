@@ -1,0 +1,60 @@
+id: javascript-transparence-referentielle-quiz
+kind: QUIZ
+questions:
+  - id: js-transparence-q1
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quels appels sont référentiellement transparents ?
+    options:
+      - "Math.max(2, 5)"
+      - "Date.now()"
+      - "[1, 2].concat(3)"
+      - "tableau.push(3)"
+    answer: [0, 2]
+    explanation: >
+      Math.max(2, 5) vaut toujours 5, et concat renvoie un nouveau tableau sans modifier
+      l'original. Date.now dépend de l'instant, push modifie le tableau et renvoie une longueur variable.
+    skills:
+      - referential-transparency
+
+  - id: js-transparence-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `const a = { x: { n: 1 }, y: { n: 2 } }; const b = { ...a, y: { ...a.y, n: 3 } }; console.log(a.x === b.x, a.y === b.y);` ?
+    answer: 'true false'
+    explanation: >
+      Le spread partage x, qui n'a pas changé ; y est recopié parce qu'il est sur le chemin
+      modifié. C'est le partage structurel.
+    skills:
+      - referential-transparency
+
+  - id: js-transparence-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Une fonction qui crée un tableau local, le remplit avec push puis le renvoie est forcément impure.
+    answer: false
+    explanation: >
+      La mutation porte sur un tableau créé par la fonction et invisible de l'extérieur avant
+      le retour : vue de l'appelant, la fonction reste pure.
+    skills:
+      - referential-transparency
+
+  - id: js-transparence-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture s'arrête au premier élément qui satisfait la condition ?
+    options:
+      - "produits.some((p) => p.stock === 0)"
+      - "produits.filter((p) => p.stock === 0).length > 0"
+      - "produits.map((p) => p.stock === 0).includes(true)"
+      - "produits.reduce((trouve, p) => trouve || p.stock === 0, false)"
+    answer: [0]
+    explanation: >
+      some s'arrête dès qu'un élément satisfait la condition. filter, map et reduce parcourent
+      tout le tableau, et les deux premiers créent en plus un tableau intermédiaire.
+    skills:
+      - referential-transparency

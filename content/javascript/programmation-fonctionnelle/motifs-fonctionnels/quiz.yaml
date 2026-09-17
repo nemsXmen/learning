@@ -1,0 +1,65 @@
+id: javascript-motifs-fonctionnels-quiz
+kind: QUIZ
+questions:
+  - id: js-motifs-fonctionnels-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pour quel cas un résultat `{ ok: false, erreur }` est-il le plus adapté ?
+    options:
+      - "Un code promo expiré saisi par l'utilisateur"
+      - "Une propriété lue sur undefined à cause d'un bug"
+      - "La base de données injoignable"
+      - "Une mémoire saturée"
+    answer: [0]
+    explanation: >
+      Un code promo expiré est un échec attendu du métier : l'appelant doit le traiter. Les bugs
+      et les pannes d'infrastructure restent des exceptions.
+    skills:
+      - functional-patterns
+
+  - id: js-motifs-fonctionnels-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que contient `[1, 2].map(tap((v) => v * 10))`, avec `const tap = (f) => (v) => { f(v); return v; };` ?
+    options:
+      - "[1, 2]"
+      - "[10, 20]"
+      - "[undefined, undefined]"
+      - "[1, 2, 10, 20]"
+    answer: [0]
+    explanation: >
+      tap exécute l'effet mais renvoie la valeur reçue, en ignorant ce que renvoie l'effet :
+      le tableau est inchangé.
+    skills:
+      - functional-patterns
+
+  - id: js-motifs-fonctionnels-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans `pipeAsync`, une étape peut renvoyer une valeur ordinaire ou une promesse indifféremment.
+    answer: true
+    explanation: >
+      Chaque étape est passée à then, qui résout aussi bien une valeur qu'une promesse avant
+      d'appeler l'étape suivante.
+    skills:
+      - functional-patterns
+
+  - id: js-motifs-fonctionnels-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels bénéfices apporte l'injection des dépendances en paramètre d'une fabrique ?
+    options:
+      - "Des tests déterministes avec une horloge fixe"
+      - "Pas besoin de simuler des modules entiers"
+      - "Des appels réseau plus rapides en production"
+      - "La logique métier ne connaît pas les implémentations concrètes"
+    answer: [0, 1, 3]
+    explanation: >
+      Injecter les effets permet de les remplacer en test et découple la logique de ses
+      implémentations. Cela ne change rien aux performances du réseau.
+    skills:
+      - functional-patterns
