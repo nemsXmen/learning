@@ -18,3 +18,268 @@ skills:
     name: Contraintes de types
     importance: 4
     requires: [generics]
+
+  - id: typescript-module-03
+    name: Module 3
+    importance: 3
+    requires: []
+
+  - id: typescript-module-04
+    name: Module 4
+    importance: 3
+    requires: []
+
+  - id: typescript-module-05
+    name: Module 5
+    importance: 3
+    requires: []
+
+  - id: typescript-module-06
+    name: Module 6
+    importance: 3
+    requires: []
+
+  - id: typescript-module-07
+    name: Module 7
+    importance: 3
+    requires: []
+
+  - id: typescript-module-08
+    name: Module 8
+    importance: 3
+    requires: []
+
+  - id: typescript-module-09
+    name: Module 9
+    importance: 3
+    requires: []
+
+  - id: typescript-module-10
+    name: Module 10
+    importance: 3
+    requires: []
+
+  - id: typescript-module-11
+    name: Module 11
+    importance: 3
+    requires: []
+
+  - id: typescript-module-12
+    name: Module 12
+    importance: 3
+    requires: []
+
+  - id: typescript-module-13
+    name: Module 13
+    importance: 3
+    requires: []
+
+  - id: typescript-module-14
+    name: Module 14
+    importance: 3
+    requires: []
+
+  - id: typescript-module-15
+    name: Module 15
+    importance: 3
+    requires: []
+
+  - id: typescript-module-16
+    name: Module 16
+    importance: 3
+    requires: []
+
+  - id: typescript-module-17
+    name: Module 17
+    importance: 3
+    requires: []
+
+  - id: typescript-module-18
+    name: Module 18
+    importance: 3
+    requires: []
+
+  - id: typescript-module-19
+    name: Module 19
+    importance: 3
+    requires: []
+
+  - id: typescript-module-20
+    name: Module 20
+    importance: 3
+    requires: []
+
+  - id: typescript-module-21
+    name: Module 21
+    importance: 3
+    requires: []
+
+  - id: typescript-module-22
+    name: Module 22
+    importance: 3
+    requires: []
+
+  - id: typescript-module-23
+    name: Module 23
+    importance: 3
+    requires: []
+
+  - id: typescript-module-24
+    name: Module 24
+    importance: 3
+    requires: []
+
+  - id: typescript-module-25
+    name: Module 25
+    importance: 3
+    requires: []
+
+  - id: typescript-module-26
+    name: Module 26
+    importance: 3
+    requires: []
+
+  - id: typescript-module-27
+    name: Module 27
+    importance: 3
+    requires: []
+
+  - id: typescript-module-28
+    name: Module 28
+    importance: 3
+    requires: []
+
+  - id: typescript-module-29
+    name: Module 29
+    importance: 3
+    requires: []
+
+  - id: typescript-module-30
+    name: Module 30
+    importance: 3
+    requires: []
+
+  - id: typescript-module-31
+    name: Module 31
+    importance: 3
+    requires: []
+
+  - id: typescript-module-32
+    name: Module 32
+    importance: 3
+    requires: []
+
+  - id: typescript-module-33
+    name: Module 33
+    importance: 3
+    requires: []
+
+  - id: typescript-module-34
+    name: Module 34
+    importance: 3
+    requires: []
+
+  - id: typescript-module-35
+    name: Module 35
+    importance: 3
+    requires: []
+
+  - id: typescript-module-36
+    name: Module 36
+    importance: 3
+    requires: []
+
+  - id: typescript-module-37
+    name: Module 37
+    importance: 3
+    requires: []
+
+  - id: typescript-module-38
+    name: Module 38
+    importance: 3
+    requires: []
+
+  - id: typescript-module-39
+    name: Module 39
+    importance: 3
+    requires: []
+
+  - id: typescript-module-40
+    name: Module 40
+    importance: 3
+    requires: []
+
+  - id: typescript-module-41
+    name: Module 41
+    importance: 3
+    requires: []
+
+  - id: typescript-module-42
+    name: Module 42
+    importance: 3
+    requires: []
+
+  - id: typescript-module-43
+    name: Module 43
+    importance: 3
+    requires: []
+
+  - id: typescript-module-44
+    name: Module 44
+    importance: 3
+    requires: []
+
+  - id: typescript-module-45
+    name: Module 45
+    importance: 3
+    requires: []
+
+  - id: typescript-module-46
+    name: Module 46
+    importance: 3
+    requires: []
+
+  - id: typescript-module-47
+    name: Module 47
+    importance: 3
+    requires: []
+
+  - id: typescript-module-48
+    name: Module 48
+    importance: 3
+    requires: []
+
+  - id: typescript-module-49
+    name: Module 49
+    importance: 3
+    requires: []
+
+  - id: typescript-module-50
+    name: Module 50
+    importance: 3
+    requires: []
+
+  - id: typescript-module-51
+    name: Module 51
+    importance: 3
+    requires: []
+
+  - id: typescript-module-52
+    name: Module 52
+    importance: 3
+    requires: []
+
+  - id: typescript-module-53
+    name: Module 53
+    importance: 3
+    requires: []
+
+  - id: typescript-module-54
+    name: Module 54
+    importance: 3
+    requires: []
+
+  - id: typescript-module-55
+    name: Module 55
+    importance: 3
+    requires: []
