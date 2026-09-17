@@ -1,0 +1,60 @@
+id: javascript-memoire-gc-quiz
+kind: QUIZ
+questions:
+  - id: js-memoire-gc-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      Après `const b = a; a = null;`, l'objet initialement référencé par `a` peut être libéré.
+    answer: false
+    explanation: >
+      a = null supprime un chemin, mais b référence toujours le même objet : il reste
+      accessible, donc en mémoire.
+    skills:
+      - memory-model
+
+  - id: js-memoire-gc-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Deux objets qui se référencent mutuellement, mais qu'aucune racine n'atteint, restent en mémoire.
+    answer: false
+    explanation: >
+      Le marquage part des racines : un cycle inaccessible n'est pas marqué, il est libéré.
+      Seul un comptage de références le garderait.
+    skills:
+      - memory-model
+
+  - id: js-memoire-gc-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquels sont des racines, ou retiennent des objets comme des racines, pour le ramasse-miettes ?
+    options:
+      - "L'objet global"
+      - "Les variables des fonctions en cours d'exécution"
+      - "Le callback d'un setInterval actif"
+      - "Un objet référencé uniquement par un autre objet inaccessible"
+    answer: [0, 1, 2]
+    explanation: >
+      Le global, la pile d'appels et les callbacks programmés sont des points de départ du
+      marquage. Un objet atteint seulement depuis un objet inaccessible est lui-même inaccessible.
+    skills:
+      - memory-model
+
+  - id: js-memoire-gc-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que lève une récursion trop profonde ?
+    options:
+      - "RangeError: Maximum call stack size exceeded"
+      - "Une erreur de mémoire du tas"
+      - "TypeError: stack overflow"
+      - "Rien : le moteur agrandit la pile"
+    answer: [0]
+    explanation: >
+      La pile d'appels a une taille limitée : chaque appel ajoute un cadre, et le moteur lève
+      une RangeError quand elle est pleine.
+    skills:
+      - memory-model

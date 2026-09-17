@@ -445,6 +445,33 @@ describe('validation issues', () => {
     expect(codes).toContain('BROKEN_LINK');
   });
 
+  it('does not read code as a link, in a fence or in a code span', async () => {
+    const code = [
+      '```js',
+      'class Montant { [Symbol.toPrimitive](indice) { return 1; } }',
+      '```',
+      'La méthode `[Symbol.toPrimitive](indice)` reçoit un indice.',
+    ].join('\n');
+    const codes = await codesFor(
+      validTree({
+        'javascript/fundamentals/alpha/lesson.md': lesson(VALID_FRONTMATTER, `${sections}\n${code}\n`),
+      }),
+    );
+    expect(codes).not.toContain('BROKEN_LINK');
+  });
+
+  it('still reports a broken link written next to a code span', async () => {
+    const codes = await codesFor(
+      validTree({
+        'javascript/fundamentals/alpha/lesson.md': lesson(
+          VALID_FRONTMATTER,
+          `${sections}\nVoir \`code\` et [schéma](./absent.png)\n`,
+        ),
+      }),
+    );
+    expect(codes).toContain('BROKEN_LINK');
+  });
+
   it('accepts a relative link that resolves', async () => {
     const result = await loadContentGraph(
       await tree(

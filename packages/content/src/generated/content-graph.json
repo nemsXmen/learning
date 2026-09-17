@@ -231,6 +231,15 @@
       "contentVersion": "af0f8e3542f1"
     },
     {
+      "slug": "descripteurs",
+      "title": "Descripteurs de propriétés",
+      "order": 34,
+      "part": "advanced",
+      "technology": "javascript",
+      "contentPath": "javascript/descripteurs/module.yaml",
+      "contentVersion": "0f424fd1f64a"
+    },
+    {
       "slug": "dom",
       "title": "DOM",
       "order": 27,
@@ -330,6 +339,15 @@
       "contentVersion": "b7403665e944"
     },
     {
+      "slug": "iterateurs-generateurs",
+      "title": "Itérateurs et générateurs",
+      "order": 32,
+      "part": "advanced",
+      "technology": "javascript",
+      "contentPath": "javascript/iterateurs-generateurs/module.yaml",
+      "contentVersion": "21a264396a96"
+    },
+    {
       "slug": "javascript-moderne",
       "title": "JavaScript moderne",
       "order": 26,
@@ -346,6 +364,15 @@
       "technology": "javascript",
       "contentPath": "javascript/map-et-set/module.yaml",
       "contentVersion": "e6f62eef6e79"
+    },
+    {
+      "slug": "memoire",
+      "title": "Mémoire et ramasse-miettes",
+      "order": 35,
+      "part": "advanced",
+      "technology": "javascript",
+      "contentPath": "javascript/memoire/module.yaml",
+      "contentVersion": "e59ea9a3af77"
     },
     {
       "slug": "objets",
@@ -400,6 +427,15 @@
       "technology": "javascript",
       "contentPath": "javascript/prototypes/module.yaml",
       "contentVersion": "157c48060ada"
+    },
+    {
+      "slug": "symboles-metaprogrammation",
+      "title": "Symboles et métaprogrammation",
+      "order": 33,
+      "part": "advanced",
+      "technology": "javascript",
+      "contentPath": "javascript/symboles-metaprogrammation/module.yaml",
+      "contentVersion": "d4b25556101f"
     },
     {
       "slug": "tableaux",
@@ -1488,6 +1524,91 @@
       "importance": 4,
       "requires": [
         "fetch-errors"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "iterators",
+      "name": "Itérables et itérateurs",
+      "importance": 4,
+      "requires": [
+        "classes-basics"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "generators",
+      "name": "Générateurs",
+      "importance": 4,
+      "requires": [
+        "iterators"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "async-iterators",
+      "name": "Itérateurs asynchrones",
+      "importance": 3,
+      "requires": [
+        "generators",
+        "fetch-basics"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "symbols",
+      "name": "Symboles et symboles bien connus",
+      "importance": 3,
+      "requires": [
+        "iterators"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "proxy-reflect",
+      "name": "Proxy et Reflect",
+      "importance": 3,
+      "requires": [
+        "symbols",
+        "prototype-property"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "property-descriptors",
+      "name": "Descripteurs de propriétés",
+      "importance": 3,
+      "requires": [
+        "class-accessors"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "object-immutability",
+      "name": "Figer, sceller et empêcher l'extension",
+      "importance": 3,
+      "requires": [
+        "property-descriptors"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "memory-model",
+      "name": "Pile, tas et ramasse-miettes",
+      "importance": 3,
+      "requires": [
+        "closures",
+        "weak-collections"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "memory-leaks",
+      "name": "Fuites mémoire",
+      "importance": 4,
+      "requires": [
+        "memory-model",
+        "closure-pitfalls"
       ],
       "technology": "javascript"
     },
@@ -2747,6 +2868,78 @@
       "contentPath": "javascript/debugging/reseau-performances-memoire/lesson.md",
       "contentVersion": "ca25552833bd",
       "body": "\n## Objectifs\n\n- Lire une requête dans l'onglet Réseau : statut, en-têtes, corps et chronologie.\n- Mesurer avant d'optimiser, avec `performance.now`, `performance.mark` et le profileur.\n- Repérer une fuite mémoire en comparant des instantanés du tas.\n\n## Introduction\n\nBeaucoup de bugs ne sont pas dans la logique, mais entre les programmes : une requête qui part sans\nen-tête d'authentification, une réponse 200 dont le corps est vide, une page qui ralentit au bout de\ndix minutes. Les DevTools ont un onglet pour chacun de ces problèmes. La règle qui les relie tient en\nune phrase : **on observe et on mesure avant de modifier quoi que ce soit**.\n\n## Concept\n\n**Onglet Réseau** :\n\n| À regarder | Ce qu'on y apprend |\n| --- | --- |\n| Statut | 2xx succès, 4xx erreur de la requête, 5xx erreur du serveur |\n| En-têtes | ce qui a vraiment été envoyé : `Authorization`, `Content-Type`, cookies |\n| Charge utile et réponse | le corps envoyé et reçu, tel quel |\n| Chronologie | attente du serveur, téléchargement, file d'attente du navigateur |\n| Options | conserver le journal entre deux pages, désactiver le cache, simuler un réseau lent |\n\n**Performances** : `performance.now()` pour une durée précise, `performance.mark` et\n`performance.measure` pour nommer des étapes, l'onglet **Performance** pour enregistrer une interaction\net voir quelles fonctions occupent le fil principal. Une tâche de plus de 50 ms bloque l'interface de\nfaçon perceptible.\n\n**Mémoire** : l'onglet **Memory** prend des instantanés du tas. Une mémoire qui grandit à chaque\nrépétition d'une même action, sans redescendre, signale une fuite.\n\n## Exemple\n\n```js\nconst n = 20_000;\nconst identifiants = Array.from({ length: n }, (_, i) => i);\nconst recherches = Array.from({ length: n }, (_, i) => i * 2);\n\nfunction avecIncludes() {\n  let trouves = 0;\n  for (const id of recherches) if (identifiants.includes(id)) trouves++;\n  return trouves;\n}\n\nfunction avecSet() {\n  const ensemble = new Set(identifiants);\n  let trouves = 0;\n  for (const id of recherches) if (ensemble.has(id)) trouves++;\n  return trouves;\n}\n\nperformance.mark('debut');\nconst resultatIncludes = avecIncludes();\nperformance.mark('fin');\nconst dureeIncludes = performance.measure('includes', 'debut', 'fin').duration;\n\nconst debutSet = performance.now();\nconst resultatSet = avecSet();\nconst dureeSet = performance.now() - debutSet;\n\nconsole.log(resultatIncludes === resultatSet); // true : même résultat\nconsole.log(dureeIncludes > dureeSet * 10); // true : Set est plusieurs dizaines de fois plus rapide ici\n```\n\n## Comment ça fonctionne\n\nL'onglet **Réseau** montre ce qui est réellement échangé, et non ce que le code est censé envoyer. C'est\nlà qu'on vérifie qu'un en-tête `Authorization` est présent, que le corps est bien du JSON avec le\n`Content-Type` correspondant, ou qu'une requête part deux fois. Le **statut** oriente la recherche : un\n4xx désigne en général la requête — données, droits, adresse —, un 5xx le serveur. Une erreur **CORS**\napparaît dans la console avec une requête rouge : le navigateur a reçu une réponse mais refuse de la\ntransmettre au code, faute d'en-têtes autorisant l'origine. La **chronologie** distingue une attente du\nserveur, longue avant le premier octet, d'un téléchargement lent. Les options « conserver le journal »,\n« désactiver le cache » et la simulation d'un réseau lent permettent de reproduire des situations\nqu'on ne voit jamais sur sa machine.\n\nPour les **performances**, la première règle est de mesurer. L'intuition sur ce qui est lent se trompe\nsouvent : l'exemple montre une boucle anodine, dont le coût réel vient de `includes`, qui parcourt tout le\ntableau à chaque recherche. `performance.now()` donne une durée en millisecondes avec décimales, plus\nprécise que `Date.now()`. `performance.mark` et `performance.measure` nomment des étapes, visibles aussi\ndans l'onglet Performance. Cet onglet enregistre une interaction et affiche un graphique en flammes : les\nbarres les plus larges sont les fonctions qui occupent le plus le fil principal, et les tâches longues sont\nsignalées. On optimise ce qui apparaît en haut du profil, puis on **mesure à nouveau**.\n\nPour la **mémoire**, la démarche est comparative. On prend un instantané du tas, on répète plusieurs fois\nune action qui devrait tout remettre à zéro — ouvrir puis fermer une fenêtre —, on force le ramasse-miettes\net on prend un second instantané. Des objets qui s'accumulent d'un instantané à l'autre sont retenus par\nquelqu'un : l'outil montre la chaîne de références qui les garde en vie. Les coupables habituels sont\nconnus : écouteurs non retirés, intervalles oubliés, caches sans limite, éléments du DOM détachés mais\nencore référencés. Dans Node.js, `process.memoryUsage()` suit l'évolution du tas, et `--inspect` donne\naccès aux mêmes instantanés.\n\n## Erreurs fréquentes\n\n**Optimiser sans mesurer.** On améliore du code qui n'était pas lent.\n\n**Conclure sur une seule mesure.** Répète, et compare dans les mêmes conditions.\n\n**Tester le réseau uniquement sur une connexion rapide.** Simule un réseau lent.\n\n**Chercher un bug CORS dans le code du client.** La correction se fait dans les en-têtes du serveur.\n\n**Prendre un seul instantané mémoire.** Une fuite se voit par comparaison.\n\n## À retenir\n\n- L'onglet Réseau montre ce qui a vraiment été envoyé et reçu : statut, en-têtes, corps, chronologie.\n- 4xx : la requête ; 5xx : le serveur ; CORS : les en-têtes de réponse.\n- Mesurer d'abord : `performance.now`, `mark`, `measure`, puis le profileur.\n- Une tâche de plus de 50 ms gêne l'interface.\n- Une fuite mémoire se repère en comparant des instantanés après des actions répétées.\n\n## Exercices\n\n1. Un utilisateur signale que son profil ne s'enregistre pas. La console n'affiche rien, et l'onglet Réseau\n   montre une requête `PUT /api/profil` avec le statut 415. Que vérifier en priorité, et que corriger dans ce\n   code ?\n\n   ```js\n   fetch('/api/profil', { method: 'PUT', body: JSON.stringify({ nom: 'Ada' }) });\n   ```\n\n   :::indice\n   Le statut 415 signifie « type de média non pris en charge ». Quel en-tête indique le type du corps ?\n   :::\n\n   :::solution\n   Dans l'onglet Réseau, les en-têtes de la requête montrent un `Content-Type` à `text/plain` : c'est la\n   valeur par défaut quand `body` est une chaîne. Le serveur attend du JSON et refuse la requête. Le code\n   doit déclarer le type du corps, et traiter les statuts d'erreur pour que l'échec ne reste pas silencieux.\n\n   ```js\n   const reponse = await fetch('/api/profil', {\n     method: 'PUT',\n     headers: { 'Content-Type': 'application/json' },\n     body: JSON.stringify({ nom: 'Ada' }),\n   });\n   if (!reponse.ok) {\n     throw new Error(`Enregistrement du profil impossible : ${reponse.status}`);\n   }\n   ```\n\n   `fetch` ne rompt pas sa promesse pour un 4xx ou un 5xx : sans ce test, l'erreur passe inaperçue.\n   :::\n\n2. `preparerRapport` est lente. Mesure séparément ses deux étapes avec `performance.mark` et\n   `performance.measure`, puis corrige l'étape fautive.\n\n   ```js\n   function preparerRapport(ventes) {\n     const triees = ventes.toSorted((a, b) => a - b);\n     const uniques = triees.filter((v, i) => triees.indexOf(v) === i);\n     return uniques;\n   }\n   ```\n\n   :::indice\n   Pose une marque avant et après chaque étape. Que coûte `indexOf` appelé pour chaque élément ?\n   :::\n\n   :::solution\n   ```js\n   const ventes = Array.from({ length: 20_000 }, (_, i) => i % 5_000);\n\n   performance.mark('tri-debut');\n   const triees = ventes.toSorted((a, b) => a - b);\n   performance.mark('tri-fin');\n   const uniquesLentes = triees.filter((v, i) => triees.indexOf(v) === i);\n   performance.mark('doublons-fin');\n\n   const tri = performance.measure('tri', 'tri-debut', 'tri-fin').duration;\n   const doublons = performance.measure('doublons', 'tri-fin', 'doublons-fin').duration;\n   console.log(doublons > tri); // true : le dédoublonnage domine\n\n   const uniques = [...new Set(triees)];\n   console.log(uniques.length === uniquesLentes.length); // true : même résultat, en un seul parcours\n   ```\n\n   `indexOf` parcourt le tableau pour chaque élément : le coût croît avec le carré de la taille. Le `Set`\n   ne parcourt qu'une fois.\n   :::\n\n3. Chaque ouverture de la vue « détails » augmente la mémoire, qui ne redescend jamais. Explique la fuite et\n   corrige-la.\n\n   ```js\n   const abonnes = [];\n   function ouvrirVue(donnees) {\n     const surMiseAJour = () => donnees.length;\n     abonnes.push(surMiseAJour);\n   }\n   function fermerVue() {}\n   ```\n\n   :::indice\n   Qui garde une référence vers `surMiseAJour`, et donc vers `donnees`, après la fermeture ?\n   :::\n\n   :::solution\n   Le tableau global `abonnes` garde chaque fonction, et chaque fonction capture `donnees` : rien n'est\n   jamais libéré. Un instantané du tas montrerait ces tableaux retenus par `abonnes`. L'ouverture doit\n   renvoyer de quoi se désabonner, et la fermeture l'appeler.\n\n   ```js\n   const abonnes = new Set();\n\n   function ouvrirVue(donnees) {\n     const surMiseAJour = () => donnees.length;\n     abonnes.add(surMiseAJour);\n     return function fermerVue() {\n       abonnes.delete(surMiseAJour);\n     };\n   }\n\n   for (let i = 0; i < 3; i++) {\n     const fermer = ouvrirVue(new Array(100_000).fill(i));\n     fermer();\n   }\n   console.log(abonnes.size); // 0 : plus rien ne retient les données\n   ```\n   :::\n\n## Questions d'entretien\n\n- Que regarder en premier dans l'onglet Réseau quand une requête « ne marche pas » ?\n\n  :::indice\n  Pense au statut, puis à ce qui a réellement été envoyé.\n  :::\n\n  :::reponse\n  Le statut d'abord : un 4xx oriente vers la requête elle-même — données, authentification, type de\n  contenu —, un 5xx vers le serveur, une erreur CORS vers les en-têtes de réponse. Puis les en-têtes et le\n  corps réellement envoyés, qui diffèrent souvent de ce que le code croit envoyer, et la réponse brute. La\n  chronologie sert ensuite pour les problèmes de lenteur.\n  :::\n\n- Pourquoi faut-il mesurer avant d'optimiser ?\n\n  :::indice\n  L'intuition sur ce qui est lent est-elle fiable ?\n  :::\n\n  :::reponse\n  Parce que l'intuition se trompe souvent : le coût réel se cache dans une ligne anodine, comme un\n  `includes` ou un `indexOf` dans une boucle, alors qu'on soupçonne le code le plus complexe. Mesurer avec\n  `performance.now`, des marques ou le profileur désigne précisément la partie qui domine, et une seconde\n  mesure prouve que l'optimisation a réellement servi. Optimiser à l'aveugle complique le code sans gain.\n  :::\n\n- Comment repérer une fuite mémoire dans une application web ?\n\n  :::indice\n  Une seule mesure suffit-elle ?\n  :::\n\n  :::reponse\n  Par comparaison : prendre un instantané du tas, répéter plusieurs fois une action qui devrait tout\n  libérer, forcer le ramasse-miettes, puis prendre un second instantané. Les objets qui s'accumulent sont\n  retenus, et l'outil montre la chaîne de références qui les garde en vie. Les causes habituelles sont les\n  écouteurs non retirés, les minuteurs oubliés, les caches sans limite et les éléments du DOM détachés mais\n  encore référencés.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-descripteurs",
+      "title": "Descripteurs : writable, enumerable et configurable",
+      "slug": "descripteurs-de-proprietes",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "descripteurs",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-classes-accesseurs"
+      ],
+      "skills": [
+        "property-descriptors"
+      ],
+      "tags": [
+        "javascript",
+        "avance"
+      ],
+      "contentPath": "javascript/descripteurs/descripteurs-de-proprietes/lesson.md",
+      "contentVersion": "36b97b03d193",
+      "body": "\n## Objectifs\n\n- Lire le descripteur d'une propriété et comprendre ses attributs.\n- Définir une propriété en lecture seule, cachée ou non supprimable avec `Object.defineProperty`.\n- Distinguer propriété de données et propriété accesseur, et copier correctement des propriétés avec leurs descripteurs.\n\n## Introduction\n\nUne propriété n'est pas seulement un nom et une valeur. Elle possède des **attributs** qui décident si elle peut être\nmodifiée, si elle apparaît quand on liste les clés, et si elle peut être supprimée. Ces attributs expliquent pourquoi\nles méthodes d'une classe n'apparaissent pas dans `Object.keys`, pourquoi `Math.PI` ne se réaffecte pas, et comment\nles bibliothèques définissent des propriétés calculées. Les manipuler permet de concevoir des objets plus robustes.\n\n## Concept\n\n**Propriété de données** :\n\n| Attribut | Rôle | Valeur par défaut avec un littéral | Avec `defineProperty` |\n| --- | --- | --- | --- |\n| `value` | la valeur | — | `undefined` |\n| `writable` | peut être réaffectée | `true` | `false` |\n| `enumerable` | apparaît dans `Object.keys`, `for...in`, `JSON.stringify` | `true` | `false` |\n| `configurable` | peut être supprimée ou redéfinie | `true` | `false` |\n\n**Propriété accesseur** : `get` et `set` remplacent `value` et `writable` ; `enumerable` et `configurable` restent.\n\n| Fonction | Rôle |\n| --- | --- |\n| `Object.getOwnPropertyDescriptor(objet, cle)` | lit le descripteur d'une propriété propre |\n| `Object.getOwnPropertyDescriptors(objet)` | lit tous les descripteurs |\n| `Object.defineProperty(objet, cle, descripteur)` | crée ou modifie une propriété |\n| `Object.defineProperties(objet, descripteurs)` | en définit plusieurs |\n\nAttention : avec `defineProperty`, tout attribut **omis vaut `false`**.\n\n## Exemple\n\n```js\nconst commande = { total: 30 };\nconsole.log(Object.getOwnPropertyDescriptor(commande, 'total'));\n// { value: 30, writable: true, enumerable: true, configurable: true }\n\nObject.defineProperty(commande, 'id', { value: 7, enumerable: true });\ntry {\n  commande.id = 8; // writable omis, donc false\n} catch (erreur) {\n  console.log(erreur.name); // 'TypeError' en mode strict\n}\n\nObject.defineProperty(commande, 'cleInterne', { value: 'abc123', writable: false });\nconsole.log(Object.keys(commande), JSON.stringify(commande)); // ['total', 'id'] '{\"total\":30,\"id\":7}'\nconsole.log(commande.cleInterne); // 'abc123' : cachée des énumérations, mais lisible\n\nObject.defineProperty(commande, 'totalTTC', {\n  get() {\n    return Math.round(this.total * 1.2 * 100) / 100;\n  },\n  enumerable: true,\n});\ncommande.total = 50;\nconsole.log(commande.totalTTC); // 60\n\ntry {\n  delete commande.id; // configurable omis, donc false\n} catch (erreur) {\n  console.log(erreur.name); // 'TypeError'\n}\n\nclass Produit {\n  afficher() {}\n}\nconsole.log(Object.getOwnPropertyDescriptor(Produit.prototype, 'afficher').enumerable); // false\n\nconst avecGetter = { get maintenant() { return 'calculé'; } };\nconst copieAssign = Object.assign({}, avecGetter);\nconst copieFidele = Object.defineProperties({}, Object.getOwnPropertyDescriptors(avecGetter));\nconsole.log('get' in Object.getOwnPropertyDescriptor(copieAssign, 'maintenant')); // false : valeur figée\nconsole.log('get' in Object.getOwnPropertyDescriptor(copieFidele, 'maintenant')); // true : accesseur conservé\n```\n\n## Comment ça fonctionne\n\nChaque propriété propre d'un objet est stockée avec son **descripteur**. Un littéral d'objet ou une affectation crée\nune propriété aux attributs permissifs — modifiable, énumérable, configurable —, ce qui explique qu'on ignore\nhabituellement leur existence. `Object.defineProperty` inverse ces valeurs par défaut : tout attribut non précisé vaut\n`false`. C'est la première source d'erreur avec cette fonction : une propriété créée ainsi, sans y penser, est en\nlecture seule, invisible et impossible à supprimer.\n\n`writable: false` rend la valeur non réaffectable : l'écriture échoue en silence en mode non strict, et lève une\n`TypeError` en mode strict, donc dans les modules et les classes. `enumerable: false` cache la propriété des\nénumérations — `Object.keys`, `for...in`, le spread, `Object.assign`, `JSON.stringify` — sans la rendre inaccessible :\non la lit toujours par son nom. C'est ainsi que les méthodes d'une classe, définies non énumérables sur le prototype,\nn'encombrent pas l'affichage des instances.\n\n`configurable: false` est le verrou le plus fort : la propriété ne peut plus être supprimée, ni transformée en\naccesseur, ni voir ses attributs changer. La seule modification encore permise est de passer `writable` de `true` à\n`false`, jamais l'inverse. Ce choix est **irréversible**.\n\nUne propriété **accesseur** n'a pas de valeur stockée : son descripteur contient `get` et `set`. Mélanger `value` et\n`get` dans un même descripteur lève une `TypeError`. Les accesseurs de classe et les `get` des littéraux produisent\nexactement ce type de propriété.\n\nLa copie révèle la différence entre valeur et descripteur. `Object.assign` et le spread **lisent** chaque propriété —\nen exécutant les getters — et **écrivent** des propriétés de données ordinaires : les accesseurs deviennent des valeurs\nfigées, et les propriétés non énumérables ne sont pas copiées. Pour une copie fidèle, on combine\n`Object.getOwnPropertyDescriptors` et `Object.defineProperties`, ou `Object.create` avec ces descripteurs pour conserver\naussi le prototype.\n\n## Erreurs fréquentes\n\n**Oublier que `defineProperty` met les attributs omis à `false`.** Précise explicitement ceux dont tu as besoin.\n\n**Croire qu'une propriété non énumérable est privée.** Elle est seulement absente des énumérations.\n\n**Rendre une propriété non configurable par défaut.** Le choix est irréversible.\n\n**Copier un objet à accesseurs avec le spread.** Les getters deviennent des valeurs figées.\n\n**Mélanger `value` et `get`.** Un descripteur est de données ou accesseur, jamais les deux.\n\n## À retenir\n\n- Propriété de données : `value`, `writable`, `enumerable`, `configurable` ; accesseur : `get`, `set`, `enumerable`,\n  `configurable`.\n- Littéral : attributs à `true` ; `defineProperty` : attributs omis à `false`.\n- Non énumérable : invisible pour `Object.keys` et `JSON`, mais lisible.\n- Non configurable : ni suppression ni redéfinition, de façon irréversible.\n- Copie fidèle : `Object.defineProperties({}, Object.getOwnPropertyDescriptors(source))`.\n\n## Exercices\n\n1. Ajoute à un objet `utilisateur` une propriété `id` en lecture seule, visible dans `Object.keys` et le JSON, puis une\n   propriété `_cache` modifiable mais absente des énumérations.\n\n   :::indice\n   Précise tous les attributs utiles : `defineProperty` met à `false` ceux qu'on omet.\n   :::\n\n   :::solution\n   ```js\n   const utilisateur = { nom: 'Ada' };\n\n   Object.defineProperty(utilisateur, 'id', { value: 42, enumerable: true });\n   Object.defineProperty(utilisateur, '_cache', { value: null, writable: true, enumerable: false });\n\n   utilisateur._cache = { derniereConnexion: '2026-09-17' };\n   console.log(Object.keys(utilisateur), JSON.stringify(utilisateur)); // ['nom', 'id'] '{\"nom\":\"Ada\",\"id\":42}'\n   console.log(utilisateur._cache.derniereConnexion); // '2026-09-17'\n   try {\n     utilisateur.id = 1;\n   } catch (erreur) {\n     console.log(erreur.name); // 'TypeError'\n   }\n   ```\n   :::\n\n2. Écris `definirConstante(objet, nom, valeur)` qui ajoute une propriété énumérable, ni modifiable ni supprimable, et\n   lève une erreur explicite si la propriété existe déjà.\n\n   :::indice\n   `Object.hasOwn` indique si la propriété existe déjà sur l'objet lui-même.\n   :::\n\n   :::solution\n   ```js\n   function definirConstante(objet, nom, valeur) {\n     if (Object.hasOwn(objet, nom)) {\n       throw new Error(`La propriété « ${nom} » existe déjà`);\n     }\n     return Object.defineProperty(objet, nom, {\n       value: valeur,\n       enumerable: true,\n       writable: false,\n       configurable: false,\n     });\n   }\n\n   const reglages = {};\n   definirConstante(reglages, 'TVA', 0.2);\n   console.log(Object.getOwnPropertyDescriptor(reglages, 'TVA'));\n   // { value: 0.2, writable: false, enumerable: true, configurable: false }\n   try {\n     definirConstante(reglages, 'TVA', 0.1);\n   } catch (erreur) {\n     console.log(erreur.message); // 'La propriété « TVA » existe déjà'\n   }\n   ```\n   :::\n\n3. Écris `copierFidelement(source)` qui conserve le prototype, les accesseurs et les propriétés non énumérables, puis\n   compare avec le spread sur un objet à accesseur.\n\n   :::indice\n   `Object.create` accepte un prototype et un objet de descripteurs.\n   :::\n\n   :::solution\n   ```js\n   function copierFidelement(source) {\n     return Object.create(Object.getPrototypeOf(source), Object.getOwnPropertyDescriptors(source));\n   }\n\n   class Panier {\n     constructor() {\n       this.articles = [2, 3];\n     }\n     get total() {\n       return this.articles.reduce((somme, prix) => somme + prix, 0);\n     }\n   }\n\n   const panier = new Panier();\n   Object.defineProperty(panier, 'version', { value: 1, enumerable: false });\n\n   const fidele = copierFidelement(panier);\n   const etalee = { ...panier };\n\n   console.log(fidele instanceof Panier, fidele.total, fidele.version); // true 5 1\n   console.log(etalee instanceof Panier, etalee.total, etalee.version); // false undefined undefined\n   ```\n\n   Le spread perd le prototype, donc le getter `total` défini sur la classe, et ignore la propriété non énumérable. La\n   copie reste superficielle : `fidele.articles` et `panier.articles` sont le même tableau.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre une propriété créée par affectation et par `Object.defineProperty` ?\n\n  :::indice\n  Regarde la valeur par défaut des attributs dans chaque cas.\n  :::\n\n  :::reponse\n  L'affectation crée une propriété de données dont `writable`, `enumerable` et `configurable` valent `true`.\n  `Object.defineProperty` met à `false` tous les attributs qu'on ne précise pas : la propriété est alors en lecture\n  seule, invisible des énumérations et définitive. Sur une propriété existante, `defineProperty` ne modifie que les\n  attributs fournis, dans les limites posées par `configurable`.\n  :::\n\n- Qu'implique `configurable: false` ?\n\n  :::indice\n  Cherche ce qu'on peut encore faire sur la propriété, et si l'on peut revenir en arrière.\n  :::\n\n  :::reponse\n  La propriété ne peut plus être supprimée, ni passer de données à accesseur, ni voir `enumerable` ou `configurable`\n  changer. Seul le passage de `writable: true` à `writable: false` reste permis, et la valeur reste modifiable tant que\n  `writable` vaut `true`. C'est irréversible : c'est ce que fait `Object.seal` sur toutes les propriétés, et ce qui\n  protège des propriétés comme `Math.PI`.\n  :::\n\n- Pourquoi les méthodes d'une classe n'apparaissent-elles pas dans `for...in` sur une instance ?\n\n  :::indice\n  Où sont-elles définies, et avec quel attribut ?\n  :::\n\n  :::reponse\n  Elles sont définies sur le prototype avec `enumerable: false`. `for...in` parcourt aussi les propriétés énumérables\n  héritées, et verrait donc des méthodes ajoutées au prototype par affectation ; la syntaxe `class` évite ce bruit. Les\n  instances n'ont en propre que les champs, qui sont énumérables. `Object.keys` et le spread, eux, se limitent de toute\n  façon aux propriétés propres.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-figer",
+      "title": "freeze, seal et preventExtensions",
+      "slug": "figer-sceller-empecher",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "descripteurs",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-descripteurs"
+      ],
+      "skills": [
+        "object-immutability"
+      ],
+      "tags": [
+        "javascript",
+        "avance"
+      ],
+      "contentPath": "javascript/descripteurs/figer-sceller-empecher/lesson.md",
+      "contentVersion": "6f640dfec6e9",
+      "body": "\n## Objectifs\n\n- Distinguer les trois niveaux de protection d'un objet : non extensible, scellé, gelé.\n- Savoir ce que chacun change aux descripteurs des propriétés.\n- Geler en profondeur un objet de configuration, et connaître les limites de ces protections.\n\n## Introduction\n\n`const` empêche de réaffecter une variable, mais pas de modifier l'objet qu'elle désigne. Pour protéger l'objet\nlui-même — une configuration qui ne doit pas changer, des constantes partagées, un état qu'aucun module ne doit altérer\n— le langage offre trois niveaux, de plus en plus stricts. Ils s'expliquent entièrement par les descripteurs vus au\nchapitre précédent.\n\n## Concept\n\n| Opération | Ajouter | Supprimer | Modifier une valeur | Test |\n| --- | --- | --- | --- | --- |\n| `Object.preventExtensions(o)` | non | oui | oui | `Object.isExtensible(o)` |\n| `Object.seal(o)` | non | non | oui | `Object.isSealed(o)` |\n| `Object.freeze(o)` | non | non | non | `Object.isFrozen(o)` |\n\nCe que chaque opération fait aux descripteurs :\n\n- `preventExtensions` rend l'objet **non extensible**, sans toucher aux propriétés existantes ;\n- `seal` fait de même et passe toutes les propriétés à `configurable: false` ;\n- `freeze` fait de même et passe en plus toutes les propriétés de données à `writable: false`.\n\nLes trois sont **superficiels** : les objets imbriqués ne sont pas protégés. Une opération interdite lève une\n`TypeError` en mode strict, et échoue silencieusement sinon.\n\n## Exemple\n\n```js\nconst configuration = Object.freeze({\n  port: 3000,\n  base: { hote: 'localhost' },\n});\n\ntry {\n  configuration.port = 8080;\n} catch (erreur) {\n  console.log(erreur.name); // 'TypeError' : modification refusée\n}\nconfiguration.base.hote = 'ailleurs'; // l'objet imbriqué n'est pas gelé\nconsole.log(configuration.port, configuration.base.hote); // 3000 'ailleurs'\nconsole.log(Object.getOwnPropertyDescriptor(configuration, 'port'));\n// { value: 3000, writable: false, enumerable: true, configurable: false }\n\nconst profil = Object.seal({ nom: 'Ada', ville: 'Londres' });\nprofil.ville = 'Paris'; // modification permise\ntry {\n  profil.age = 36; // ajout refusé\n} catch (erreur) {\n  console.log('scellé :', erreur.name); // 'scellé : TypeError'\n}\nconsole.log(profil); // { nom: 'Ada', ville: 'Paris' }\n\nconst brouillon = Object.preventExtensions({ titre: 'Sans titre' });\ndelete brouillon.titre; // suppression permise\ntry {\n  brouillon.auteur = 'Ada';\n} catch (erreur) {\n  console.log('non extensible :', erreur.name); // 'non extensible : TypeError'\n}\n\nfunction gelerProfondement(objet) {\n  Object.freeze(objet);\n  for (const valeur of Object.values(objet)) {\n    if (typeof valeur === 'object' && valeur !== null && !Object.isFrozen(valeur)) {\n      gelerProfondement(valeur);\n    }\n  }\n  return objet;\n}\n\nconst constantes = gelerProfondement({ tva: 0.2, devises: { euro: '€' } });\nconsole.log(Object.isFrozen(constantes.devises)); // true\n```\n\n## Comment ça fonctionne\n\nLes trois opérations agissent sur deux choses : l'**extensibilité** de l'objet, et les **descripteurs** de ses\npropriétés existantes. `preventExtensions` pose un drapeau interne qui interdit toute nouvelle propriété, et ne touche\nà rien d'autre. `seal` pose ce drapeau et rend chaque propriété non configurable : on ne peut plus en supprimer, mais\nleurs valeurs restent modifiables. `freeze` ajoute `writable: false` sur les propriétés de données : plus rien ne peut\nchanger. Chaque niveau inclut le précédent, et aucun ne peut être annulé : un objet gelé le reste.\n\nCes protections sont **superficielles** : elles ne concernent que les propriétés directes. Un objet imbriqué, un\ntableau contenu dans un objet gelé restent modifiables, ce que montre `configuration.base.hote`. Pour une protection\ncomplète, on gèle récursivement chaque objet atteint, comme `gelerProfondement`. La fonction gèle l'objet **avant** de\ndescendre : grâce au test `Object.isFrozen`, une référence circulaire retombe sur un objet déjà gelé et la récursion\ns'arrête. Contrepartie : un objet gelé superficiellement par ailleurs est sauté, avec ses enfants encore modifiables.\n\nLes **accesseurs** d'un objet gelé restent des fonctions : un `set` peut toujours s'exécuter et modifier autre chose que\nl'objet, par exemple une variable de closure. Geler un objet ne garantit donc pas qu'aucun état associé ne change.\n\nDeux cas particuliers méritent d'être connus. Les propriétés d'un objet gelé ne sont pas « copiées » par le gel : c'est\nbien le même objet, modifié dans ses attributs. Et un objet gelé peut toujours être **copié** par le spread, ce qui donne\nun nouvel objet ordinaire, modifiable : `{ ...configuration }` n'est plus gelé.\n\nEn pratique, `Object.freeze` sert surtout à protéger des constantes et des configurations partagées, et à rendre\nbruyante une modification accidentelle pendant le développement. Pour gérer un état qui évolue, on préfère les mises à\njour immuables — créer de nouvelles versions avec le spread — plutôt que geler et copier sans cesse. Dans un code en\nTypeScript, `readonly` et `as const` offrent une protection vérifiée à la compilation, sans coût à l'exécution.\n\n## Erreurs fréquentes\n\n**Croire qu'`Object.freeze` protège les objets imbriqués.** Gèle récursivement si nécessaire.\n\n**Confondre `const` et `Object.freeze`.** `const` fige la variable, `freeze` fige l'objet.\n\n**Attendre une erreur en mode non strict.** Les écritures refusées échouent en silence : travaille en module.\n\n**Vouloir dégeler un objet.** C'est impossible : crée une copie modifiable avec le spread.\n\n**Geler un état qui change souvent.** Préfère les mises à jour immuables.\n\n## À retenir\n\n- `preventExtensions` : pas d'ajout. `seal` : ni ajout ni suppression. `freeze` : aucune modification.\n- `seal` rend les propriétés non configurables ; `freeze` les rend aussi non modifiables.\n- Les trois sont superficiels et irréversibles.\n- Une écriture refusée lève une `TypeError` en mode strict.\n- Une copie par spread d'un objet gelé est un objet ordinaire.\n\n## Exercices\n\n1. Pour chaque ligne, dis si l'opération réussit, en mode strict, et justifie.\n\n   ```js\n   const a = Object.preventExtensions({ x: 1 });\n   const b = Object.seal({ x: 1 });\n   const c = Object.freeze({ x: 1, liste: [] });\n\n   a.x = 2;\n   delete a.x;\n   b.x = 2;\n   delete b.x;\n   c.liste.push(1);\n   c.x = 2;\n   ```\n\n   :::indice\n   Pour chaque objet, demande-toi : ajout, suppression ou modification d'une valeur ? Et l'opération porte-t-elle sur\n   l'objet protégé lui-même ?\n   :::\n\n   :::solution\n   - `a.x = 2` réussit : un objet non extensible accepte les modifications.\n   - `delete a.x` réussit : les suppressions sont permises.\n   - `b.x = 2` réussit : un objet scellé accepte les modifications de valeur.\n   - `delete b.x` échoue avec une `TypeError` : les propriétés d'un objet scellé ne sont pas configurables.\n   - `c.liste.push(1)` réussit : le tableau imbriqué n'est pas gelé.\n   - `c.x = 2` échoue avec une `TypeError` : la propriété d'un objet gelé n'est pas modifiable.\n   :::\n\n2. Écris `niveauDeProtection(objet)` qui renvoie `'gelé'`, `'scellé'`, `'non extensible'` ou `'libre'`, du niveau le\n   plus fort au plus faible.\n\n   :::indice\n   Teste dans l'ordre `Object.isFrozen`, `Object.isSealed`, puis `Object.isExtensible` : chaque niveau inclut le\n   suivant.\n   :::\n\n   :::solution\n   ```js\n   function niveauDeProtection(objet) {\n     if (Object.isFrozen(objet)) return 'gelé';\n     if (Object.isSealed(objet)) return 'scellé';\n     if (!Object.isExtensible(objet)) return 'non extensible';\n     return 'libre';\n   }\n\n   console.log(niveauDeProtection(Object.freeze({ a: 1 }))); // 'gelé'\n   console.log(niveauDeProtection(Object.seal({ a: 1 }))); // 'scellé'\n   console.log(niveauDeProtection(Object.preventExtensions({ a: 1 }))); // 'non extensible'\n   console.log(niveauDeProtection({ a: 1 })); // 'libre'\n   console.log(niveauDeProtection(Object.preventExtensions({}))); // 'gelé'\n   ```\n\n   Le dernier cas surprend : un objet vide et non extensible n'a aucune propriété à protéger, il est donc à la fois\n   scellé et gelé.\n   :::\n\n3. Une fonction `mettreAJour(etat, changements)` reçoit un état gelé. Écris-la pour qu'elle renvoie un nouvel état,\n   gelé lui aussi, sans jamais modifier l'ancien.\n\n   :::indice\n   Le spread d'un objet gelé produit un objet ordinaire : fusionne, puis gèle le résultat.\n   :::\n\n   :::solution\n   ```js\n   function mettreAJour(etat, changements) {\n     return Object.freeze({ ...etat, ...changements });\n   }\n\n   const initial = Object.freeze({ page: 1, filtre: 'tous' });\n   const suivant = mettreAJour(initial, { page: 2 });\n\n   console.log(initial.page, suivant.page, suivant.filtre); // 1 2 'tous'\n   console.log(Object.isFrozen(suivant), initial === suivant); // true false\n   ```\n\n   L'ancien état reste intact, ce qui permet de comparer les versions par référence pour détecter un changement.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `Object.freeze`, `Object.seal` et `Object.preventExtensions` ?\n\n  :::indice\n  Pour chacun, regarde l'ajout, la suppression et la modification d'une propriété.\n  :::\n\n  :::reponse\n  `preventExtensions` interdit seulement l'ajout de propriétés. `seal` interdit aussi la suppression en rendant les\n  propriétés non configurables, mais les valeurs restent modifiables. `freeze` rend en plus les propriétés de données\n  non modifiables. Les trois sont superficiels, irréversibles, et une opération refusée lève une `TypeError` en mode\n  strict, ou échoue en silence sinon.\n  :::\n\n- Un objet gelé peut-il changer malgré tout ?\n\n  :::indice\n  Pense aux objets imbriqués et aux accesseurs.\n  :::\n\n  :::reponse\n  Oui, de deux façons. Les objets qu'il référence ne sont pas gelés : un tableau contenu dans un objet gelé accepte\n  `push`. Et un accesseur reste une fonction : son `get` peut renvoyer une valeur calculée différente à chaque lecture,\n  et son `set` peut modifier un état extérieur. Le gel garantit que les propriétés propres ne changent pas de valeur ni\n  de forme, pas que tout ce qui est atteignable est immuable.\n  :::\n\n- `Object.freeze` est-il une bonne façon de gérer l'état d'une application ?\n\n  :::indice\n  Pense au coût d'un gel profond et à la manière dont l'état évolue.\n  :::\n\n  :::reponse\n  C'est utile pour des constantes partagées et pour détecter en développement une mutation accidentelle. Mais l'état\n  d'une application change sans cesse : on le gère plutôt par des mises à jour immuables, en créant de nouvelles\n  versions avec le spread, sans modifier les anciennes. Geler profondément chaque version coûte du temps, et\n  TypeScript, avec `readonly` et `as const`, apporte la même discipline à la compilation, sans coût à l'exécution.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -4133,6 +4326,116 @@
       ]
     },
     {
+      "id": "javascript-generateurs",
+      "title": "Générateurs : function*, yield et suites paresseuses",
+      "slug": "generateurs",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "iterateurs-generateurs",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-iterateurs"
+      ],
+      "skills": [
+        "generators"
+      ],
+      "tags": [
+        "javascript",
+        "avance"
+      ],
+      "contentPath": "javascript/iterateurs-generateurs/generateurs/lesson.md",
+      "contentVersion": "765c0d96e697",
+      "body": "\n## Objectifs\n\n- Écrire une fonction génératrice avec `function*` et `yield` pour produire des valeurs une à une.\n- Construire des suites paresseuses, y compris infinies, et les enchaîner sans créer de tableaux intermédiaires.\n- Déléguer à un autre itérable avec `yield*`, et comprendre ce que deviennent `return` et `finally`.\n\n## Introduction\n\nLe chapitre précédent a montré qu'un itérateur écrit à la main demande un objet, une méthode `next` et une\ngestion attentive de l'état. Une **fonction génératrice** fait tout cela automatiquement : on écrit le parcours\ncomme une boucle ordinaire, et chaque `yield` fournit la valeur suivante. Le code devient aussi lisible qu'une\nfonction classique, tout en restant paresseux.\n\n## Concept\n\n| Écriture | Effet |\n| --- | --- |\n| `function* nom() {}` | déclare une fonction génératrice |\n| Appel `nom()` | n'exécute rien : renvoie un **objet générateur**, à la fois itérateur et itérable |\n| `yield valeur` | suspend la fonction et fournit `{ value: valeur, done: false }` |\n| `return valeur` | termine : `{ value: valeur, done: true }`, ignoré par `for...of` |\n| `yield* iterable` | produit toutes les valeurs d'un autre itérable |\n| `generateur.next(x)` | reprend l'exécution ; `x` devient le résultat du `yield` en attente |\n\nUne méthode génératrice s'écrit `*[Symbol.iterator]() { … }` dans une classe : c'est la façon la plus simple de rendre\nune structure itérable.\n\n## Exemple\n\n```js\nfunction* compter(jusqua) {\n  for (let n = 1; n <= jusqua; n++) {\n    yield n;\n  }\n  return 'terminé';\n}\n\nconst generateur = compter(2);\nconsole.log(generateur.next(), generateur.next(), generateur.next());\n// { value: 1, done: false } { value: 2, done: false } { value: 'terminé', done: true }\nconsole.log([...compter(3)]); // [1, 2, 3] : la valeur de return n'est pas incluse\n\nclass Intervalle {\n  constructor(debut, fin) {\n    this.debut = debut;\n    this.fin = fin;\n  }\n\n  *[Symbol.iterator]() {\n    for (let n = this.debut; n <= this.fin; n++) yield n;\n  }\n}\nconsole.log([...new Intervalle(3, 6)]); // [3, 4, 5, 6]\n\nfunction* naturels() {\n  let n = 0;\n  while (true) yield n++; // infini, mais rien n'est calculé à l'avance\n}\n\nfunction* filtrer(iterable, predicat) {\n  for (const valeur of iterable) if (predicat(valeur)) yield valeur;\n}\n\nfunction* prendre(iterable, combien) {\n  if (combien <= 0) return;\n  for (const valeur of iterable) {\n    yield valeur;\n    if (--combien === 0) return;\n  }\n}\n\nconst multiplesDeSept = prendre(filtrer(naturels(), (n) => n % 7 === 0 && n > 0), 4);\nconsole.log([...multiplesDeSept]); // [7, 14, 21, 28]\n\nfunction* toutesLesLignes() {\n  yield* ['en-tête'];\n  yield* compter(2);\n}\nconsole.log([...toutesLesLignes()]); // ['en-tête', 1, 2]\n```\n\n## Comment ça fonctionne\n\nAppeler une fonction génératrice n'exécute **aucune** de ses lignes : on obtient un objet générateur, en attente.\nChaque appel à `next()` reprend l'exécution là où elle s'était arrêtée, jusqu'au `yield` suivant, qui suspend à\nnouveau la fonction en conservant ses variables locales. C'est la même idée de suspension que `await`, appliquée à la\nproduction de valeurs. Quand la fonction atteint un `return` ou sa dernière ligne, le générateur est terminé et le\nreste définitivement.\n\nL'objet générateur est à la fois un **itérateur**, puisqu'il a `next()`, et un **itérable**, puisque sa méthode\n`[Symbol.iterator]()` renvoie lui-même. On peut donc le passer directement à `for...of` ou au spread — une seule fois,\npuisqu'il s'épuise. C'est pourquoi une méthode `*[Symbol.iterator]()` dans une classe est si pratique : chaque parcours\nappelle la méthode et obtient un générateur neuf.\n\nLa **paresse** permet de composer des étapes sans matérialiser de tableaux. Dans l'exemple, `naturels` est infini,\nmais `filtrer` et `prendre` ne demandent une valeur que lorsqu'on leur en demande une : le calcul s'arrête dès que\nquatre multiples de 7 ont été produits. Avec des méthodes de tableau, il faudrait créer le tableau complet — impossible\nici. `prendre` ne consomme d'ailleurs **jamais** une valeur de trop : il s'arrête juste après la dernière produite.\n\n`yield*` délègue le parcours à un autre itérable, générateur compris, et renvoie la valeur de `return` du générateur\ndélégué. `next(valeur)` permet l'inverse de `yield` : envoyer une valeur **dans** le générateur, qui la reçoit comme\nrésultat de l'expression `yield` en attente. Ce mécanisme a servi de base aux bibliothèques asynchrones avant\n`async` / `await` ; il reste rare dans le code applicatif.\n\nEnfin, un parcours interrompu par `break` appelle la méthode `return()` du générateur : l'exécution reprend dans un\néventuel bloc `finally`, ce qui permet de libérer une ressource même quand la boucle s'arrête tôt.\n\n## Erreurs fréquentes\n\n**Attendre qu'un appel de générateur exécute quelque chose.** Rien ne se passe avant le premier `next()`.\n\n**Parcourir deux fois le même objet générateur.** Il est épuisé après le premier parcours.\n\n**Étaler un générateur infini.** `[...naturels()]` ne termine jamais : limite d'abord le nombre de valeurs.\n\n**Compter sur la valeur de `return` dans `for...of`.** Elle est ignorée.\n\n**Écrire un itérateur à la main quand un générateur suffit.** `*[Symbol.iterator]()` est plus court et plus sûr.\n\n## À retenir\n\n- `function*` renvoie un générateur ; chaque `next()` exécute jusqu'au `yield` suivant.\n- Un générateur est un itérateur et un itérable, qui s'épuise.\n- Les générateurs permettent des suites paresseuses, même infinies, composées sans tableaux intermédiaires.\n- `yield*` délègue à un autre itérable ; `*[Symbol.iterator]()` rend une classe itérable.\n- Un `break` déclenche le `finally` du générateur.\n\n## Exercices\n\n1. Écris un générateur `fibonacci()` infini, puis affiche les dix premiers termes sans créer de tableau intermédiaire\n   dans le générateur.\n\n   :::indice\n   Garde les deux derniers termes dans des variables, et produis le premier avant de décaler.\n   :::\n\n   :::solution\n   ```js\n   function* fibonacci() {\n     let [a, b] = [0, 1];\n     while (true) {\n       yield a;\n       [a, b] = [b, a + b];\n     }\n   }\n\n   const termes = [];\n   for (const terme of fibonacci()) {\n     if (termes.length === 10) break;\n     termes.push(terme);\n   }\n   console.log(termes); // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]\n   ```\n   :::\n\n2. Écris un générateur `enTranches(iterable, taille)` qui regroupe les valeurs de n'importe quel itérable en tableaux de\n   `taille` éléments, la dernière tranche pouvant être plus courte.\n\n   :::indice\n   Accumule dans un tableau, produis-le quand il est plein, et n'oublie pas la tranche restante à la fin.\n   :::\n\n   :::solution\n   ```js\n   function* enTranches(iterable, taille) {\n     let tranche = [];\n     for (const valeur of iterable) {\n       tranche.push(valeur);\n       if (tranche.length === taille) {\n         yield tranche;\n         tranche = [];\n       }\n     }\n     if (tranche.length > 0) yield tranche;\n   }\n\n   console.log([...enTranches([1, 2, 3, 4, 5], 2)]); // [[1, 2], [3, 4], [5]]\n   console.log([...enTranches('abcdef', 3)]); // [['a', 'b', 'c'], ['d', 'e', 'f']]\n   ```\n   :::\n\n3. Montre qu'un générateur exécute son bloc `finally` quand la boucle qui le parcourt s'arrête avec `break`, en écrivant\n   `lireEnregistrements(journal)` qui note « ouverture » et « fermeture ».\n\n   :::indice\n   Place les `yield` dans un `try`, et la fermeture dans le `finally`.\n   :::\n\n   :::solution\n   ```js\n   function* lireEnregistrements(journal) {\n     journal.push('ouverture');\n     try {\n       yield 'enregistrement 1';\n       yield 'enregistrement 2';\n       yield 'enregistrement 3';\n     } finally {\n       journal.push('fermeture');\n     }\n   }\n\n   const journal = [];\n   for (const enregistrement of lireEnregistrements(journal)) {\n     journal.push(enregistrement);\n     if (enregistrement.endsWith('2')) break;\n   }\n   console.log(journal); // ['ouverture', 'enregistrement 1', 'enregistrement 2', 'fermeture']\n   ```\n\n   Le `break` appelle `return()` sur le générateur, qui reprend son exécution dans le `finally` au lieu de continuer la\n   boucle.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'un générateur, et en quoi diffère-t-il d'une fonction classique ?\n\n  :::indice\n  Que se passe-t-il au moment de l'appel, et à chaque `yield` ?\n  :::\n\n  :::reponse\n  Un générateur est une fonction déclarée avec `function*` dont l'exécution peut être suspendue et reprise. L'appeler ne\n  lance rien et renvoie un objet générateur ; chaque appel à `next()` exécute le code jusqu'au prochain `yield`, qui livre\n  une valeur et suspend la fonction en conservant son état. Une fonction classique s'exécute en entier et renvoie une\n  seule valeur. L'objet générateur étant itérable, on le parcourt avec `for...of`.\n  :::\n\n- Qu'apporte l'évaluation paresseuse des générateurs ?\n\n  :::indice\n  Pense à une suite infinie, ou à un traitement qui s'arrête tôt.\n  :::\n\n  :::reponse\n  Les valeurs ne sont calculées qu'au moment où elles sont demandées. On peut donc représenter des suites infinies, enchaîner\n  des étapes de filtrage et de transformation sans créer de tableaux intermédiaires, et arrêter le calcul dès qu'on a ce qu'il\n  faut. C'est aussi économe en mémoire pour traiter de gros volumes élément par élément.\n  :::\n\n- À quoi sert `yield*` ?\n\n  :::indice\n  Comment un générateur peut-il produire toutes les valeurs d'un autre ?\n  :::\n\n  :::reponse\n  `yield*` délègue le parcours à un autre itérable : toutes ses valeurs sont produites par le générateur courant, comme si\n  on les avait données une à une avec `yield`. Appliqué à un générateur, il renvoie en plus la valeur de son `return`. Il\n  permet de composer des générateurs, par exemple pour parcourir récursivement une arborescence.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-iterateurs",
+      "title": "Itérables et itérateurs : le protocole derrière for...of",
+      "slug": "iterables-et-iterateurs",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "iterateurs-generateurs",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-for-of-for-in",
+        "javascript-classes-bases"
+      ],
+      "skills": [
+        "iterators"
+      ],
+      "tags": [
+        "javascript",
+        "avance"
+      ],
+      "contentPath": "javascript/iterateurs-generateurs/iterables-et-iterateurs/lesson.md",
+      "contentVersion": "4d24f0f1f356",
+      "body": "\n## Objectifs\n\n- Décrire le protocole d'itération : `Symbol.iterator`, `next`, `{ value, done }`.\n- Rendre un objet itérable pour qu'il fonctionne avec `for...of`, le spread et le destructuring.\n- Distinguer un itérable, qu'on peut parcourir plusieurs fois, d'un itérateur, qui s'épuise.\n\n## Introduction\n\n`for...of` parcourt un tableau, une chaîne, une `Map` ou un `Set`. Le spread `[...valeur]`, le destructuring,\n`Array.from`, `Promise.all` acceptent ces mêmes valeurs. Ce n'est pas une liste de cas particuliers : toutes ces\nsyntaxes reposent sur un **protocole** commun, que n'importe quel objet peut implémenter. Le connaître permet de\nrendre ses propres structures aussi naturelles à parcourir qu'un tableau.\n\n## Concept\n\n| Terme | Définition |\n| --- | --- |\n| **Itérable** | un objet qui possède une méthode `[Symbol.iterator]()` renvoyant un itérateur |\n| **Itérateur** | un objet qui possède une méthode `next()` |\n| Résultat de `next()` | `{ value, done }` : la valeur suivante, et `done: true` quand c'est terminé |\n\nCe qui consomme des itérables :\n\n| Syntaxe ou fonction | Exemple |\n| --- | --- |\n| `for...of` | `for (const x of iterable)` |\n| Spread | `[...iterable]`, `Math.max(...iterable)` |\n| Destructuring de tableau | `const [premier, ...reste] = iterable` |\n| Constructeurs et utilitaires | `Array.from`, `new Set`, `new Map`, `Promise.all`, `Object.fromEntries` |\n\nItérables natifs : tableaux, chaînes, `Map`, `Set`, `arguments`, `NodeList`. Un objet littéral **n'est pas** itérable.\n\n## Exemple\n\n```js\nconst tableau = [10, 20];\nconst iterateur = tableau[Symbol.iterator]();\nconsole.log(iterateur.next()); // { value: 10, done: false }\nconsole.log(iterateur.next()); // { value: 20, done: false }\nconsole.log(iterateur.next()); // { value: undefined, done: true }\n\nclass Intervalle {\n  constructor(debut, fin) {\n    this.debut = debut;\n    this.fin = fin;\n  }\n\n  [Symbol.iterator]() {\n    let courant = this.debut;\n    const fin = this.fin;\n    return {\n      next: () =>\n        courant <= fin ? { value: courant++, done: false } : { value: undefined, done: true },\n    };\n  }\n}\n\nconst semaine = new Intervalle(1, 7);\nconsole.log([...semaine]); // [1, 2, 3, 4, 5, 6, 7]\nconsole.log(Math.max(...semaine)); // 7\n\nconst [lundi, mardi, ...autres] = semaine;\nconsole.log(lundi, mardi, autres.length); // 1 2 5\n\nlet total = 0;\nfor (const jour of semaine) {\n  total += jour;\n}\nconsole.log(total); // 28 : l'intervalle se parcourt autant de fois qu'on veut\n\nconsole.log([...'été'].length); // 3 : une chaîne s'itère par caractère\n```\n\n## Comment ça fonctionne\n\nQuand le moteur rencontre `for (const x of valeur)`, il appelle `valeur[Symbol.iterator]()` pour obtenir un\n**itérateur**, puis appelle `next()` à chaque tour. Tant que le résultat a `done: false`, il affecte `value` à `x` et\nexécute le corps ; dès que `done` vaut `true`, la boucle s'arrête. Le spread, le destructuring et `Array.from` font\nexactement la même chose. Si `valeur` n'a pas de méthode `Symbol.iterator`, le moteur lève\n`TypeError: valeur is not iterable` — le message qu'on obtient en essayant de parcourir un objet littéral.\n\n`Symbol.iterator` est un **symbole bien connu** : une clé de propriété unique, définie par le langage, qui ne peut\nentrer en collision avec aucune chaîne. C'est ce qui permet d'ajouter le protocole à n'importe quel objet sans risquer\nd'écraser une propriété existante. Le module suivant détaille les symboles.\n\nLa distinction entre **itérable** et **itérateur** est importante. L'itérable est la collection : chaque appel à\n`[Symbol.iterator]()` crée un **nouvel** itérateur, qui repart du début. C'est pourquoi `semaine` peut être parcourue\nplusieurs fois. L'itérateur, lui, garde une position et **s'épuise** : une fois `done` atteint, il reste terminé. Dans\nl'exemple, `courant` est une variable locale à chaque appel, capturée par la fonction `next` — une closure —, ce qui\ndonne à chaque parcours son propre état.\n\nUn itérateur peut aussi définir une méthode `return()`. Le moteur l'appelle quand un parcours s'arrête avant la fin —\n`break`, `return` ou exception dans la boucle, destructuring qui ne lit que les premières valeurs —, pour libérer une\nressource comme un fichier ouvert.\n\nLe protocole est **paresseux** : les valeurs sont produites une à une, à la demande. Un itérateur peut donc\nreprésenter une suite très longue, voire infinie, tant que le code qui le consomme s'arrête à temps. Écrire ces\nitérateurs à la main est verbeux ; les **générateurs**, sujet du chapitre suivant, les produisent automatiquement.\n\n## Erreurs fréquentes\n\n**Parcourir un objet littéral avec `for...of`.** Il n'est pas itérable : utilise `Object.entries`.\n\n**Partager l'état du parcours dans l'objet lui-même.** Un second parcours reprendrait où le premier s'est arrêté.\n\n**Oublier `done: true`.** La boucle ne se termine jamais.\n\n**Étaler un itérable infini.** `[...naturels]` ne termine pas.\n\n**Confondre itérable et itérateur.** Un itérateur déjà consommé ne produit plus rien.\n\n## À retenir\n\n- Itérable : une méthode `[Symbol.iterator]()` ; itérateur : une méthode `next()` qui renvoie `{ value, done }`.\n- `for...of`, le spread, le destructuring et `Array.from` utilisent ce protocole.\n- Chaque appel à `[Symbol.iterator]()` doit créer un nouvel itérateur.\n- Un itérateur s'épuise ; `return()` permet de nettoyer un parcours interrompu.\n- Le protocole est paresseux : les valeurs sont produites à la demande.\n\n## Exercices\n\n1. Rends itérable une classe `Playlist` qui contient un tableau de titres, pour que `[...playlist]` et `for...of`\n   parcourent ses titres.\n\n   :::indice\n   La méthode `[Symbol.iterator]()` peut simplement renvoyer l'itérateur du tableau interne.\n   :::\n\n   :::solution\n   ```js\n   class Playlist {\n     #titres = [];\n\n     ajouter(titre) {\n       this.#titres.push(titre);\n       return this;\n     }\n\n     [Symbol.iterator]() {\n       return this.#titres[Symbol.iterator]();\n     }\n   }\n\n   const playlist = new Playlist().ajouter('Intro').ajouter('Refrain');\n   console.log([...playlist]); // ['Intro', 'Refrain']\n   for (const titre of playlist) console.log(titre); // 'Intro', puis 'Refrain'\n   ```\n\n   Déléguer à l'itérateur du tableau donne le bon comportement sans exposer le tableau privé.\n   :::\n\n2. Écris `associer(a, b)` qui renvoie un itérable de paires `[elementDeA, elementDeB]`, et s'arrête dès que l'un des deux\n   itérables est épuisé. Il doit fonctionner avec n'importe quels itérables, pas seulement des tableaux.\n\n   :::indice\n   Obtiens un itérateur pour chaque argument, puis appelle leurs `next()` en parallèle dans ton propre `next()`.\n   :::\n\n   :::solution\n   ```js\n   function associer(a, b) {\n     return {\n       [Symbol.iterator]() {\n         const iterateurA = a[Symbol.iterator]();\n         const iterateurB = b[Symbol.iterator]();\n         return {\n           next() {\n             const x = iterateurA.next();\n             const y = iterateurB.next();\n             if (x.done || y.done) return { value: undefined, done: true };\n             return { value: [x.value, y.value], done: false };\n           },\n         };\n       },\n     };\n   }\n\n   console.log([...associer(['a', 'b', 'c'], new Set([1, 2]))]); // [['a', 1], ['b', 2]]\n   console.log(Object.fromEntries(associer('xy', [10, 20]))); // { x: 10, y: 20 }\n   ```\n   :::\n\n3. Un lecteur de lignes ouvre une ressource. Ajoute à son itérateur une méthode `return()` qui la ferme, et vérifie\n   qu'elle est appelée quand la boucle s'arrête avec `break`.\n\n   ```js\n   function lignes(texte, journal) {\n     return {\n       [Symbol.iterator]() {\n         journal.push('ouvert');\n         const liste = texte.split('\\n');\n         let i = 0;\n         return { next: () => (i < liste.length ? { value: liste[i++], done: false } : { value: undefined, done: true }) };\n       },\n     };\n   }\n   ```\n\n   :::indice\n   `return()` doit renvoyer `{ done: true }` ; le moteur l'appelle seul lors d'une sortie anticipée.\n   :::\n\n   :::solution\n   ```js\n   function lignes(texte, journal) {\n     return {\n       [Symbol.iterator]() {\n         journal.push('ouvert');\n         const liste = texte.split('\\n');\n         let i = 0;\n         return {\n           next: () => (i < liste.length ? { value: liste[i++], done: false } : { value: undefined, done: true }),\n           return: () => {\n             journal.push('fermé');\n             return { value: undefined, done: true };\n           },\n         };\n       },\n     };\n   }\n\n   const journal = [];\n   for (const ligne of lignes('ERREUR disque\\nINFO démarrage\\nINFO prêt', journal)) {\n     if (ligne.startsWith('ERREUR')) {\n       journal.push(`trouvé : ${ligne}`);\n       break;\n     }\n   }\n   console.log(journal); // ['ouvert', 'trouvé : ERREUR disque', 'fermé']\n   ```\n\n   Un parcours mené jusqu'au bout n'appelle pas `return()` : la ressource doit alors être fermée quand `next()` renvoie\n   `done: true`.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que le protocole d'itération ?\n\n  :::indice\n  Deux rôles, deux méthodes, un format de résultat.\n  :::\n\n  :::reponse\n  Un objet est itérable s'il possède une méthode `[Symbol.iterator]()` qui renvoie un itérateur. Un itérateur possède une\n  méthode `next()` qui renvoie `{ value, done }`. `for...of`, le spread, le destructuring, `Array.from`, `Promise.all` ou\n  `new Map` reposent tous sur ce protocole, ce qui permet à n'importe quelle structure de s'intégrer au langage comme un\n  tableau.\n  :::\n\n- Quelle différence entre un itérable et un itérateur ?\n\n  :::indice\n  Lequel peut être parcouru plusieurs fois ?\n  :::\n\n  :::reponse\n  L'itérable représente la collection : chaque appel à `[Symbol.iterator]()` produit un nouvel itérateur qui repart du\n  début, donc on peut le parcourir autant de fois qu'on veut. L'itérateur représente un parcours en cours : il garde une\n  position et s'épuise une fois terminé. Les itérateurs natifs sont eux-mêmes itérables et renvoient `this`, ce qui permet\n  de les passer à `for...of`, mais ils ne se rembobinent pas.\n  :::\n\n- Pourquoi un objet littéral n'est-il pas itérable ?\n\n  :::indice\n  Que faudrait-il parcourir : les clés, les valeurs ou les paires ?\n  :::\n\n  :::reponse\n  Parce qu'il n'a pas de méthode `Symbol.iterator`, et que le langage n'impose pas de choix entre clés, valeurs ou paires.\n  On choisit explicitement avec `Object.keys`, `Object.values` ou `Object.entries`, qui renvoient des tableaux itérables. Un\n  objet peut toutefois devenir itérable si on lui ajoute sa propre méthode `[Symbol.iterator]`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-iterateurs-asynchrones",
+      "title": "Itérateurs asynchrones et for await...of",
+      "slug": "iterateurs-asynchrones",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "iterateurs-generateurs",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-generateurs",
+        "javascript-fetch"
+      ],
+      "skills": [
+        "async-iterators"
+      ],
+      "tags": [
+        "javascript",
+        "avance"
+      ],
+      "contentPath": "javascript/iterateurs-generateurs/iterateurs-asynchrones/lesson.md",
+      "contentVersion": "5a9b968d4c4d",
+      "body": "\n## Objectifs\n\n- Parcourir une suite de valeurs qui arrivent dans le temps avec `for await...of`.\n- Écrire un générateur asynchrone avec `async function*` pour paginer une API ou lire un flux.\n- Savoir quand un parcours séquentiel est voulu, et quand il ralentit inutilement.\n\n## Introduction\n\nCertaines données n'arrivent pas d'un bloc : les pages successives d'une API, les lignes d'un gros fichier lu\nmorceau par morceau, les messages d'une connexion ouverte. Les itérateurs ordinaires supposent que la valeur\nsuivante est disponible immédiatement. Les **itérateurs asynchrones** étendent le protocole au temps : chaque valeur\nest une promesse, et `for await...of` attend chacune avant de passer à la suivante.\n\n## Concept\n\n| Élément | Version synchrone | Version asynchrone |\n| --- | --- | --- |\n| Méthode du protocole | `[Symbol.iterator]()` | `[Symbol.asyncIterator]()` |\n| Résultat de `next()` | `{ value, done }` | une promesse de `{ value, done }` |\n| Boucle | `for (const x of …)` | `for await (const x of …)` dans une fonction `async` ou un module |\n| Générateur | `function*` | `async function*`, qui peut utiliser `await` et `yield` |\n\n`for await...of` accepte aussi les itérables synchrones de promesses, comme un tableau de promesses : il attend chaque\nélément dans l'ordre.\n\nCôté Node.js, les flux lisibles — un fichier ouvert avec `fs.createReadStream`, le corps d'une réponse — sont des\nitérables asynchrones : `for await (const morceau of flux)` lit un fichier sans le charger entièrement en mémoire.\n\n## Exemple\n\n```js\n// Une API simulée qui renvoie des pages de résultats.\nconst toutesLesCommandes = Array.from({ length: 7 }, (_, i) => ({ id: i + 1 }));\nasync function chargerPage(numero, taille = 3) {\n  await new Promise((resolve) => setTimeout(resolve, 10));\n  const debut = (numero - 1) * taille;\n  return { elements: toutesLesCommandes.slice(debut, debut + taille), pageSuivante: debut + taille < 7 ? numero + 1 : null };\n}\n\nasync function* commandes() {\n  let page = 1;\n  while (page !== null) {\n    const { elements, pageSuivante } = await chargerPage(page);\n    console.log(`page ${page} chargée`);\n    yield* elements;\n    page = pageSuivante;\n  }\n}\n\nconst identifiants = [];\nfor await (const commande of commandes()) {\n  identifiants.push(commande.id);\n}\nconsole.log(identifiants); // [1, 2, 3, 4, 5, 6, 7] après 'page 1', 'page 2', 'page 3'\n\nfor await (const commande of commandes()) {\n  if (commande.id === 2) {\n    console.log('trouvée sans charger les pages suivantes');\n    break; // une seule page chargée\n  }\n}\n```\n\n## Comment ça fonctionne\n\n`for await...of` appelle `[Symbol.asyncIterator]()`, puis attend la promesse renvoyée par chaque `next()` avant\nd'exécuter le corps de la boucle. S'il ne trouve pas de méthode asynchrone, il se rabat sur `[Symbol.iterator]()` et\nattend chaque valeur produite : c'est ce qui permet de parcourir un tableau de promesses. La boucle n'est utilisable\nque dans une fonction `async` ou au niveau supérieur d'un module.\n\nUn **générateur asynchrone** combine les deux mécanismes : `await` suspend en attendant une promesse, `yield` suspend\nen livrant une valeur. Dans l'exemple, le générateur charge une page, livre ses éléments un à un avec `yield*`, et ne\ncharge la page suivante que lorsque le consommateur en redemande. La pagination devient invisible pour le code qui\nparcourt : il voit une simple suite de commandes.\n\nCette paresse est l'intérêt principal. Si le consommateur trouve ce qu'il cherche à la deuxième commande et interrompt\nla boucle, les pages suivantes ne sont **jamais demandées** : le `break` appelle `return()` sur le générateur, qui\ns'arrête et exécute son éventuel `finally`. Le même principe permet de lire un fichier de plusieurs gigaoctets morceau\npar morceau, avec une mémoire constante.\n\nLa contrepartie est que `for await...of` est **séquentiel** : chaque valeur est attendue avant de demander la\nsuivante. C'est exactement ce qu'il faut pour une pagination, où chaque page dépend de la précédente, ou pour un flux,\nqui arrive dans l'ordre. En revanche, parcourir avec `for await` un tableau de promesses **déjà lancées** n'accélère\nrien et masque les erreurs : si la troisième promesse est rompue pendant qu'on attend la première, elle devient un rejet\nnon géré. Pour des opérations indépendantes, `Promise.all` reste la bonne écriture.\n\nLes **erreurs** se propagent naturellement : une exception levée ou une promesse rompue dans le générateur est levée\nà l'endroit du `for await`, et un `try` / `catch` autour de la boucle la rattrape.\n\n## Erreurs fréquentes\n\n**Utiliser `for await` hors d'une fonction `async` ou d'un module.** C'est une erreur de syntaxe.\n\n**Parcourir avec `for await` des requêtes indépendantes déjà lancées.** Utilise `Promise.all`.\n\n**Charger toutes les pages avant de les parcourir.** Le générateur asynchrone ne charge que ce qui est consommé.\n\n**Oublier que `break` interrompt le générateur.** Les ressources doivent être libérées dans un `finally`.\n\n**Confondre `Symbol.iterator` et `Symbol.asyncIterator`.** `for...of` ne parcourt pas un itérable asynchrone.\n\n## À retenir\n\n- Protocole asynchrone : `[Symbol.asyncIterator]()` et un `next()` qui renvoie une promesse.\n- `for await...of` attend chaque valeur ; il accepte aussi les itérables de promesses.\n- `async function*` combine `await` et `yield`, idéal pour paginer ou lire un flux.\n- Le parcours est paresseux : un `break` évite de charger la suite.\n- Le parcours est séquentiel : pour des opérations indépendantes, `Promise.all`.\n\n## Exercices\n\n1. Écris un générateur asynchrone `lignesParLots(lignes, taille, delai)` qui livre les lignes par lots de `taille`, en\n   attendant `delai` millisecondes avant chaque lot, puis compte les lots reçus avec `for await`.\n\n   :::indice\n   Découpe avec `slice` dans une boucle, `await` un minuteur, puis `yield` le lot.\n   :::\n\n   :::solution\n   ```js\n   const attendre = (ms) => new Promise((resolve) => setTimeout(resolve, ms));\n\n   async function* lignesParLots(lignes, taille, delai) {\n     for (let i = 0; i < lignes.length; i += taille) {\n       await attendre(delai);\n       yield lignes.slice(i, i + taille);\n     }\n   }\n\n   let lots = 0;\n   for await (const lot of lignesParLots(['a', 'b', 'c', 'd', 'e'], 2, 5)) {\n     lots += 1;\n     console.log(lot); // ['a', 'b'], puis ['c', 'd'], puis ['e']\n   }\n   console.log(lots); // 3\n   ```\n   :::\n\n2. Une API renvoie ses résultats par pages avec un curseur : `{ elements, curseurSuivant }`, où `curseurSuivant` vaut `null`\n   à la dernière page. Écris un générateur générique `parcourirPages(charger)` qui livre tous les éléments, `charger` étant\n   une fonction asynchrone qui reçoit le curseur.\n\n   :::indice\n   Commence avec un curseur `undefined`, et boucle tant que le curseur suivant n'est pas `null`.\n   :::\n\n   :::solution\n   ```js\n   async function* parcourirPages(charger) {\n     let curseur;\n     do {\n       const { elements, curseurSuivant } = await charger(curseur);\n       yield* elements;\n       curseur = curseurSuivant;\n     } while (curseur !== null);\n   }\n\n   const pages = { debut: { elements: ['a', 'b'], curseurSuivant: 'p2' }, p2: { elements: ['c'], curseurSuivant: null } };\n   const charger = async (curseur) => pages[curseur ?? 'debut'];\n\n   const tous = [];\n   for await (const element of parcourirPages(charger)) tous.push(element);\n   console.log(tous); // ['a', 'b', 'c']\n   ```\n\n   Le générateur ne connaît rien de l'API : la même fonction parcourt n'importe quelle source paginée par curseur.\n   :::\n\n3. Ce code attend trois requêtes déjà lancées avec `for await`. Explique pourquoi il peut provoquer un rejet non géré et\n   n'est pas plus rapide qu'une autre écriture, puis corrige-le.\n\n   ```js\n   const requetes = [charger('a'), charger('b'), charger('c')];\n   for await (const resultat of requetes) afficher(resultat);\n   ```\n\n   :::indice\n   Les trois requêtes sont lancées dès la création du tableau. Qui gère une rupture de la troisième pendant qu'on attend la\n   première ?\n   :::\n\n   :::solution\n   Les trois requêtes démarrent immédiatement ; `for await` les attend ensuite une à une. Si la troisième est rompue\n   pendant l'attente de la première, aucun gestionnaire n'est encore attaché à sa promesse : c'est un rejet non géré. Et\n   le parcours n'apporte aucun gain, puisque les requêtes tournaient déjà en parallèle.\n\n   ```js\n   const charger = (nom, echoue = false) =>\n     new Promise((resolve, reject) => setTimeout(() => (echoue ? reject(new Error(nom)) : resolve(nom)), 10));\n\n   try {\n     const resultats = await Promise.all([charger('a'), charger('b'), charger('c', true)]);\n     resultats.forEach((resultat) => console.log(resultat));\n   } catch (erreur) {\n     console.log('échec :', erreur.message); // 'échec : c'\n   }\n   ```\n\n   `Promise.all` attache ses gestionnaires à toutes les promesses dès le départ. `for await` convient aux valeurs produites\n   à la demande, comme des pages ou un flux.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `for...of` et `for await...of` ?\n\n  :::indice\n  Quel protocole chacun utilise-t-il, et qu'attend-il ?\n  :::\n\n  :::reponse\n  `for...of` utilise `Symbol.iterator` et traite chaque valeur immédiatement. `for await...of` utilise\n  `Symbol.asyncIterator`, attend la promesse renvoyée par chaque `next()` avant d'exécuter le corps, et accepte aussi les\n  itérables synchrones de promesses. Il n'est utilisable que dans une fonction `async` ou au niveau supérieur d'un module,\n  et il est séquentiel.\n  :::\n\n- Dans quels cas un générateur asynchrone est-il utile ?\n\n  :::indice\n  Pense à des données qui arrivent progressivement.\n  :::\n\n  :::reponse\n  Quand des valeurs arrivent au fil du temps et doivent être consommées à la demande : pagination d'une API, lecture d'un\n  fichier ou d'un corps de réponse par morceaux, messages d'une connexion. Le générateur cache le mécanisme — pages,\n  curseurs, lectures — derrière une simple suite, ne charge que ce qui est consommé, et s'arrête proprement si le parcours\n  est interrompu.\n  :::\n\n- Pourquoi ne pas utiliser `for await...of` pour attendre des requêtes indépendantes ?\n\n  :::indice\n  Pense au parallélisme et à la gestion des rejets.\n  :::\n\n  :::reponse\n  Parce que `for await` attend les valeurs une à une. Si les requêtes sont déjà lancées, il n'accélère rien et laisse les\n  promesses suivantes sans gestionnaire pendant l'attente : une rupture précoce devient un rejet non géré. Si elles sont\n  lancées au fil du parcours, elles deviennent séquentielles sans raison. Pour des opérations indépendantes, `Promise.all`\n  ou `Promise.allSettled` sont les bonnes écritures.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-syntaxe-moderne",
       "title": "Gabarits, affectations logiques et autres ajouts récents",
       "slug": "gabarits-et-affectations-logiques",
@@ -4338,6 +4641,80 @@
       "contentPath": "javascript/map-et-set/weakmap-et-weakset/lesson.md",
       "contentVersion": "a7480a0ea280",
       "body": "\n## Objectifs\n\n- Comprendre ce qu'est une référence faible, et pourquoi elle évite une fuite mémoire.\n- Utiliser une `WeakMap` pour attacher des données à un objet sans le modifier.\n- Connaître les limites de ces collections : clés objets uniquement, aucune itération.\n\n## Introduction\n\nUne `Map` garde ses clés en vie : tant que la `Map` existe, les objets qu'elle référence ne\npeuvent pas être libérés, même si plus personne d'autre ne s'en sert. Pour un cache ou des\nmétadonnées attachées à des objets temporaires — des nœuds du DOM, des requêtes en cours —,\nc'est une fuite mémoire qui grandit tant que l'application tourne. La `WeakMap` résout\nexactement ce problème.\n\n## Concept\n\n| | `Map` | `WeakMap` |\n| --- | --- | --- |\n| Clés acceptées | n'importe quelle valeur | objets (et symboles non partagés) |\n| Retient la clé en mémoire | oui | non |\n| `size` | oui | non |\n| Itérable | oui | non |\n| Méthodes | `set`, `get`, `has`, `delete`, `clear`, itération | `set`, `get`, `has`, `delete` |\n\nLe `WeakSet` est l'équivalent du `Set` : `add`, `has`, `delete`, des objets pour seules\nvaleurs, aucune itération.\n\nUne référence **faible** n'empêche pas le ramasse-miettes de libérer l'objet. Quand le\ndernier autre lien vers la clé disparaît, l'entrée disparaît aussi, toute seule.\n\n## Exemple\n\n```js\nconst metadonnees = new WeakMap();\n\nfunction marquerCommeVu(element) {\n  metadonnees.set(element, { vuLe: Date.now() });\n}\n\nlet bouton = { id: 'valider' }; // dans un navigateur : un élément du DOM\nmarquerCommeVu(bouton);\nconsole.log(metadonnees.has(bouton)); // true\nconsole.log(metadonnees.get(bouton).vuLe); // un horodatage\n\nbouton = null; // plus aucune référence : l'entrée devient éligible au nettoyage\n\nconst traites = new WeakSet();\nconst commande = { id: 42 };\ntraites.add(commande);\nconsole.log(traites.has(commande)); // true\n\ntry {\n  metadonnees.set('une chaine', 1);\n} catch (erreur) {\n  console.log(erreur.constructor.name); // 'TypeError' : clé primitive refusée\n}\n```\n\n## Comment ça fonctionne\n\nLe ramasse-miettes libère un objet quand plus aucune référence **forte** ne pointe vers lui.\nUne `Map` crée une référence forte sur ses clés : tant qu'elle vit, ses clés vivent. Une\n`WeakMap` crée une référence **faible** : elle n'empêche rien. Quand le dernier lien fort\nvers la clé disparaît, l'objet est libéré et l'entrée s'efface, sans qu'on ait à nettoyer.\n\nC'est pour cela qu'une `WeakMap` n'est ni itérable, ni comptable. Exposer ses entrées\nrendrait le résultat dépendant du moment où le ramasse-miettes passe : le même programme\ndonnerait deux résultats différents. La spécification supprime donc `size`, `keys`,\n`values`, `entries` et `clear`.\n\nLes clés doivent être des objets — ou des symboles non enregistrés. Une clé primitive lève\nune `TypeError` : `'ada'` n'a pas d'identité propre, deux chaînes égales sont la même\nvaleur, et rien ne pourrait être libéré.\n\nTrois usages reviennent :\n\n- **attacher des métadonnées** à des objets qu'on ne contrôle pas, sans y ajouter de\n  propriété ;\n- **mettre en cache** un résultat coûteux par instance, sans empêcher l'instance d'être\n  libérée ;\n- **stocker l'état privé** d'une classe, avant l'arrivée des champs privés `#champ`.\n\nPour observer une valeur unique, `WeakRef` et `FinalizationRegistry` existent aussi, mais\nleur comportement dépend du moteur : on ne les utilise qu'en dernier recours.\n\n## Erreurs fréquentes\n\n**Utiliser une clé primitive.** `weakMap.set('cle', v)` lève une `TypeError`.\n\n**Vouloir itérer ou compter.** Ces collections ne l'autorisent pas ; s'il faut lister les\nentrées, c'est qu'une `Map` convient mieux.\n\n**Croire que l'entrée disparaît immédiatement.** Elle devient éligible au nettoyage ; le\nmoment reste à la main du moteur.\n\n**Garder la clé dans un tableau à côté.** Cette référence forte annule tout le bénéfice.\n\n## À retenir\n\n- Référence faible : la collection n'empêche pas la libération de la clé.\n- Clés objets uniquement ; `set`, `get`, `has`, `delete`, rien d'autre.\n- Ni `size`, ni itération : le résultat dépendrait du ramasse-miettes.\n- Usages : métadonnées, cache par instance, état privé.\n- Une `Map` classique sur des objets temporaires fuit en mémoire.\n\n## Exercices\n\n1. Écris un cache qui mémorise un calcul coûteux par objet, sans empêcher ces objets d'être\n   libérés.\n\n   :::indice\n   La clé du cache est l'objet lui-même : quelle collection accepte cela sans le retenir ?\n   :::\n\n   :::solution\n   ```js\n   const cache = new WeakMap();\n\n   function tailleTotale(dossier) {\n     if (cache.has(dossier)) {\n       return cache.get(dossier);\n     }\n     const total = dossier.fichiers.reduce((somme, f) => somme + f.taille, 0);\n     cache.set(dossier, total);\n     return total;\n   }\n\n   const dossier = { fichiers: [{ taille: 10 }, { taille: 32 }] };\n   console.log(tailleTotale(dossier)); // 42\n   console.log(tailleTotale(dossier)); // 42, sans recalcul\n   ```\n   :::\n\n2. Stocke l'état privé d'une classe `Compteur` dans une `WeakMap`, de sorte qu'il ne soit pas\n   lisible depuis l'extérieur.\n\n   :::indice\n   La clé est l'instance, `this`, et la valeur est l'objet d'état.\n   :::\n\n   :::solution\n   ```js\n   const etat = new WeakMap();\n\n   class Compteur {\n     constructor() {\n       etat.set(this, { valeur: 0 });\n     }\n\n     incrementer() {\n       etat.get(this).valeur += 1;\n       return this;\n     }\n\n     get valeur() {\n       return etat.get(this).valeur;\n     }\n   }\n\n   const compteur = new Compteur();\n   compteur.incrementer().incrementer();\n   console.log(compteur.valeur); // 2\n   console.log(Object.keys(compteur)); // [] : rien n'est exposé\n   ```\n\n   Les champs privés `#valeur` remplissent aujourd'hui ce rôle plus simplement, mais ce motif\n   reste très présent dans le code existant.\n   :::\n\n3. Explique pourquoi `new WeakMap().size` vaut `undefined` et pourquoi ce n'est pas un\n   oubli.\n\n   :::indice\n   Que faudrait-il connaître pour donner une taille exacte à un instant donné ?\n   :::\n\n   :::solution\n   `size` n'existe pas sur une `WeakMap`. Le nombre d'entrées dépend du moment où le\n   ramasse-miettes a libéré les clés devenues inutiles, or ce moment n'est pas prévisible :\n   le même programme pourrait renvoyer 3 puis 2 sans qu'aucune ligne de code n'ait changé\n   l'état. Exposer `size` ou l'itération rendrait le comportement du ramasse-miettes\n   observable, ce que la spécification refuse. S'il faut compter, c'est qu'une `Map` est la\n   bonne structure.\n\n   ```js\n   console.log(new WeakMap().size); // undefined\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `Map` et `WeakMap` ?\n\n  :::indice\n  Que devient un objet utilisé comme clé quand plus personne d'autre ne s'en sert ?\n  :::\n\n  :::reponse\n  Une `Map` garde une référence forte sur ses clés : tant qu'elle existe, les objets qu'elle\n  référence ne sont jamais libérés, ce qui provoque une fuite mémoire quand les clés sont des\n  objets temporaires. Une `WeakMap` garde une référence faible : l'entrée disparaît d'elle-même\n  quand la clé n'est plus utilisée ailleurs. En échange, elle n'accepte que des objets comme\n  clés, et n'offre ni `size`, ni itération, ni `clear`.\n  :::\n\n- Pourquoi une `WeakMap` n'est-elle pas itérable ?\n\n  :::indice\n  Qu'observerait-on, exactement, en la parcourant ?\n  :::\n\n  :::reponse\n  Parce que le contenu dépend du passage du ramasse-miettes, qui n'est ni déterministe ni\n  observable par le programme. Itérer reviendrait à exposer quand la mémoire a été libérée :\n  le résultat varierait d'une exécution à l'autre, et un code correct pourrait devenir faux\n  selon la charge machine. La spécification supprime donc tout ce qui révélerait le contenu :\n  `size`, `keys`, `values`, `entries` et `clear`.\n  :::\n\n- Dans quels cas réels utilise-t-on une `WeakMap` ?\n\n  :::indice\n  Pense aux données qu'on veut associer à un objet sans le modifier.\n  :::\n\n  :::reponse\n  Pour attacher des métadonnées à des objets qu'on ne contrôle pas — marquer des nœuds du DOM\n  déjà traités, associer un observateur à un élément — sans y ajouter de propriété ni empêcher\n  leur libération. Pour un cache de résultats coûteux indexé par instance. Et, historiquement,\n  pour l'état privé d'une classe, rôle repris par les champs privés `#champ`. Le point commun :\n  la durée de vie des données doit suivre celle de l'objet.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-fuites-memoire",
+      "title": "Fuites mémoire : les reconnaître, les corriger, les mesurer",
+      "slug": "fuites-memoire",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "memoire",
+      "order": 2,
+      "estimatedMinutes": 35,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-memoire-gc",
+        "javascript-pieges-closures"
+      ],
+      "skills": [
+        "memory-leaks"
+      ],
+      "tags": [
+        "javascript",
+        "memoire"
+      ],
+      "contentPath": "javascript/memoire/fuites-memoire/lesson.md",
+      "contentVersion": "ba83d04f9ffc",
+      "body": "\n## Objectifs\n\n- Définir une fuite mémoire en JavaScript : un objet inutile qui reste accessible.\n- Reconnaître les sources classiques : abonnements, minuteurs, caches, closures et nœuds DOM détachés.\n- Corriger chaque cas avec une fonction de nettoyage, un `AbortController` ou une collection faible.\n- Mesurer une fuite par comparaison d'instantanés du tas et avec `process.memoryUsage`.\n\n## Introduction\n\nAvec un ramasse-miettes, une fuite mémoire ne vient jamais d'un oubli de libération : elle vient d'une **référence\noubliée**. Un écouteur jamais retiré, un minuteur jamais arrêté, un cache qui ne vide jamais rien : chacun garde\naccessible un objet dont plus personne n'a besoin, et avec lui tout ce qu'il référence. Sur une page consultée cinq\nminutes, cela passe inaperçu ; sur une application ouverte toute la journée ou un serveur qui tourne des semaines, la\nmémoire grimpe jusqu'au ralentissement, puis au plantage.\n\n## Concept\n\n| Source | Ce qui retient l'objet | Correction |\n| --- | --- | --- |\n| Abonnement | la liste d'abonnés de l'émetteur | se désabonner à la fermeture |\n| Minuteur | la file des minuteurs, jusqu'à `clearInterval` | arrêter le minuteur, par exemple via un `AbortSignal` |\n| Cache | une `Map` ou un objet global qui grandit | limite de taille, expiration, ou `WeakMap` |\n| Closure | l'environnement capturé par une fonction encore vivante | ne capturer que le nécessaire |\n| DOM détaché | une variable JavaScript vers un nœud retiré de la page | oublier la référence avec le nœud |\n| Variable globale | l'objet global, pour toute la durée du programme | portée de module, `const`, mode strict |\n\n## Exemple\n\n```js\nclass Emetteur {\n  #abonnes = new Set();\n  abonner(fonction) {\n    this.#abonnes.add(fonction);\n    return () => this.#abonnes.delete(fonction);\n  }\n  get nombreAbonnes() {\n    return this.#abonnes.size;\n  }\n}\n\n// Fuite : chaque vue s'abonne et ne se désabonne jamais.\nconst busFuyant = new Emetteur();\nfunction ouvrirVueFuyante() {\n  const lignes = new Array(10_000).fill('ligne'); // capturé par l'écouteur\n  busFuyant.abonner(() => lignes.length);\n}\nfor (let i = 0; i < 5; i += 1) ouvrirVueFuyante();\nconsole.log(busFuyant.nombreAbonnes); // 5 : cinq tableaux toujours accessibles\n\n// Correction : la vue rend une fonction de fermeture qui retire ses références.\nconst bus = new Emetteur();\nfunction ouvrirVue() {\n  const lignes = new Array(10_000).fill('ligne');\n  const desabonner = bus.abonner(() => lignes.length);\n  const controleur = new AbortController();\n  const minuteur = setInterval(() => lignes.length, 1000);\n  controleur.signal.addEventListener('abort', () => clearInterval(minuteur), { once: true });\n  return () => {\n    desabonner();\n    controleur.abort();\n  };\n}\nconst fermetures = Array.from({ length: 5 }, ouvrirVue);\nfermetures.forEach((fermer) => fermer());\nconsole.log(bus.nombreAbonnes); // 0\n\n// Cache : une WeakMap ne retient pas ses clés.\nconst metadonnees = new WeakMap();\nlet noeud = { id: 'carte-1' };\nmetadonnees.set(noeud, { ouvertLe: '2026-09-17' });\nconsole.log(metadonnees.has(noeud)); // true\nnoeud = null; // la clé et sa valeur deviennent collectables\n```\n\n## Comment ça fonctionne\n\nUne fuite est un objet **inutile mais accessible**. Le ramasse-miettes ne peut pas deviner l'intention du programme :\ntant qu'un chemin existe depuis une racine, l'objet est gardé, avec tout ce qu'il référence. Une petite référence\noubliée retient donc souvent beaucoup : l'écouteur de `ouvrirVueFuyante` n'est qu'une fonction, mais son environnement\ncontient `lignes`, et le `Set` de l'émetteur, lui-même accessible, garde le tout.\n\nLes **abonnements** et les **minuteurs** sont les causes les plus fréquentes, car ils inscrivent une fonction dans une\nstructure qui survit au composant : l'émetteur, la liste d'écouteurs d'un élément ou de `window`, la file des\nminuteurs. La règle est de toujours associer une création à sa destruction : `abonner` renvoie `desabonner`,\n`setInterval` appelle `clearInterval`, `addEventListener` appelle `removeEventListener`. Un `AbortController`\nsimplifie ce travail : on passe `{ signal }` à `addEventListener` ou à `fetch`, et un seul `abort()` défait tout.\n\nLes **caches** fuient par construction : une `Map` qui ne supprime jamais rien grandit avec chaque clé nouvelle. On\nles borne par une taille maximale (en supprimant les entrées les plus anciennes, puisqu'une `Map` garde l'ordre\nd'insertion), par une durée d'expiration, ou, quand la clé est un objet, par une `WeakMap` : l'entrée disparaît avec\nla clé. Une `WeakMap` ne s'énumère pas et n'a pas de taille, justement parce que son contenu dépend de la collecte.\n\nUne **closure** retient les variables qu'elle utilise. Dans V8, les fonctions créées dans une même portée partagent\nun environnement : une variable utilisée par l'une reste accessible tant que n'importe laquelle vit. Extraire la seule\nvaleur utile avant de créer la fonction évite de retenir un gros objet.\n\nUn **nœud DOM détaché** a été retiré de la page mais reste référencé par du JavaScript : un tableau d'éléments\nsélectionnés, un cache, un écouteur qui le mentionne. Il garde alors en mémoire tout son sous-arbre. Les outils le\nsignalent explicitement comme « Detached ».\n\nPour **mesurer**, on compare. Dans le navigateur, l'onglet Memory prend un instantané du tas ; on répète l'action\nsuspecte plusieurs fois, on reprend un instantané, et la vue comparative montre les objets créés et encore présents.\nCôté Node.js, `process.memoryUsage().heapUsed` suit le tas, `node --inspect` ouvre les mêmes outils, et\n`node --expose-gc` permet d'appeler `global.gc()` avant chaque mesure pour ne compter que ce qui est réellement retenu.\nUne seule mesure ne prouve rien : c'est une croissance **répétée**, qui ne redescend pas après collecte, qui signe une\nfuite.\n\n## Erreurs fréquentes\n\n**S'abonner dans un composant sans jamais se désabonner.** Chaque ouverture ajoute une copie retenue.\n\n**Oublier `clearInterval`.** Le minuteur et tout ce qu'il capture restent actifs pour toujours.\n\n**Utiliser une `Map` comme cache sans limite.** Borne-la, ou utilise une `WeakMap` si la clé est un objet.\n\n**Garder des références vers des éléments retirés du DOM.** Retire-les de tes structures en même temps que de la page.\n\n**Conclure sur une seule mesure.** Compare après répétitions et après collecte.\n\n## À retenir\n\n- Une fuite est un objet inutile encore accessible.\n- Chaque abonnement, écouteur ou minuteur a sa fonction de nettoyage ; `AbortController` les regroupe.\n- Un cache doit être borné ; une `WeakMap` ne retient pas ses clés.\n- Une closure retient son environnement : ne capture que le nécessaire.\n- On détecte une fuite par comparaison d'instantanés, après répétition de l'action.\n\n## Exercices\n\n1. `const cache = new Map()` mémorise les profils chargés par identifiant et ne supprime jamais rien. Écris\n   `creerCacheBorne(taille)` avec `get` et `set`, qui supprime l'entrée la moins récemment utilisée quand la limite est\n   atteinte.\n\n   :::indice\n   Une `Map` garde l'ordre d'insertion : `map.keys().next().value` est la plus ancienne clé.\n   :::\n\n   :::indice\n   Pour marquer une entrée comme récemment utilisée, supprime-la puis réinsère-la.\n   :::\n\n   :::solution\n   ```js\n   function creerCacheBorne(taille) {\n     const entrees = new Map();\n     return {\n       get(cle) {\n         if (!entrees.has(cle)) return undefined;\n         const valeur = entrees.get(cle);\n         entrees.delete(cle);\n         entrees.set(cle, valeur);\n         return valeur;\n       },\n       set(cle, valeur) {\n         entrees.delete(cle);\n         entrees.set(cle, valeur);\n         if (entrees.size > taille) entrees.delete(entrees.keys().next().value);\n       },\n       get taille() {\n         return entrees.size;\n       },\n     };\n   }\n\n   const cache = creerCacheBorne(2);\n   cache.set('ada', { nom: 'Ada' });\n   cache.set('alan', { nom: 'Alan' });\n   cache.get('ada'); // ada devient la plus récente\n   cache.set('grace', { nom: 'Grace' }); // alan est évincé\n   console.log(cache.taille, cache.get('alan'), cache.get('ada').nom); // 2 undefined 'Ada'\n   ```\n   :::\n\n2. Ce code garde des nœuds DOM détachés. Explique pourquoi, puis corrige-le.\n\n   ```js\n   const liste = document.querySelector('#liste');\n   const selection = new Set();\n   liste.addEventListener('click', (evenement) => {\n     const element = evenement.target.closest('li');\n     if (element) selection.add(element);\n   });\n   function supprimerSelection() {\n     for (const element of selection) element.remove();\n   }\n   ```\n\n   :::indice\n   Après `supprimerSelection`, que contient encore `selection` ? Et `selection` est-il accessible ?\n   :::\n\n   :::solution\n   `element.remove()` retire les nœuds de la page, mais `selection`, accessible depuis le module et depuis l'écouteur,\n   les référence toujours : chaque suppression accumule des éléments détachés, avec leurs sous-arbres. On vide la\n   sélection en même temps qu'on retire les nœuds.\n\n   ```js\n   document.body.innerHTML = '<ul id=\"liste\"><li>A</li><li>B</li><li>C</li></ul>';\n   const liste = document.querySelector('#liste');\n   const selection = new Set();\n   liste.addEventListener('click', (evenement) => {\n     const element = evenement.target.closest('li');\n     if (element) selection.add(element);\n   });\n   function supprimerSelection() {\n     for (const element of selection) element.remove();\n     selection.clear();\n   }\n\n   for (const element of liste.querySelectorAll('li')) element.click();\n   supprimerSelection();\n   console.log(liste.children.length, selection.size); // 0 0\n   ```\n\n   Une `WeakSet` éviterait aussi la rétention, mais elle ne s'itère pas : impossible alors d'écrire\n   `supprimerSelection`. Le `Set` vidé explicitement reste la bonne structure ici.\n   :::\n\n3. Écris un script Node.js qui mesure la croissance du tas après 50 appels d'une fonction, puis compare une version qui\n   retient ses tampons dans un tableau global et une version qui ne retient rien.\n\n   :::indice\n   Lance le script avec `node --expose-gc` et appelle `global.gc()` avant chaque lecture de\n   `process.memoryUsage().heapUsed`.\n   :::\n\n   :::solution\n   ```js\n   // node --expose-gc mesure.mjs\n   function tasEnMo() {\n     global.gc();\n     return process.memoryUsage().heapUsed / 1024 / 1024;\n   }\n\n   function mesurer(action, repetitions) {\n     const avant = tasEnMo();\n     for (let i = 0; i < repetitions; i += 1) action();\n     return tasEnMo() - avant;\n   }\n\n   const retenus = [];\n   const creerTampon = () => Array.from({ length: 100_000 }, (_, i) => i);\n\n   const avecFuite = mesurer(() => retenus.push(creerTampon()), 50);\n   retenus.length = 0;\n   const sansFuite = mesurer(() => creerTampon().length, 50);\n\n   console.log(avecFuite > 20, sansFuite < 5); // true true\n   ```\n\n   La version fuyante garde environ 40 Mo après collecte ; l'autre revient à son point de départ. Les valeurs exactes\n   varient selon la version de Node.js, d'où la comparaison par seuils plutôt que par nombres précis.\n   :::\n\n## Questions d'entretien\n\n- Comment peut-il y avoir des fuites mémoire dans un langage avec ramasse-miettes ?\n\n  :::indice\n  Le ramasse-miettes connaît l'accessibilité, pas l'utilité.\n  :::\n\n  :::reponse\n  Le ramasse-miettes libère ce qui est inaccessible, pas ce qui est inutile. Une fuite est un objet dont le programme\n  n'a plus besoin mais qui reste atteignable depuis une racine : écouteur jamais retiré, minuteur jamais arrêté, cache\n  sans limite, variable globale, nœud DOM retiré mais encore référencé. Chacune de ces références retient aussi tout ce\n  que l'objet référence, closures comprises.\n  :::\n\n- Quand utiliser une `WeakMap` plutôt qu'une `Map` ?\n\n  :::indice\n  Pense à la durée de vie de la clé, et à ce que la `WeakMap` ne permet pas.\n  :::\n\n  :::reponse\n  Quand on associe des données à un objet dont on ne contrôle pas la durée de vie — un nœud DOM, une instance fournie\n  par un autre module — et que ces données doivent disparaître avec lui. Une `WeakMap` ne retient pas ses clés, qui\n  doivent être des objets. En contrepartie, elle ne s'énumère pas et n'a pas de taille. Pour un cache à clés\n  primitives, on préfère une `Map` bornée par taille ou par expiration.\n  :::\n\n- Comment diagnostiquerais-tu une fuite mémoire signalée en production ?\n\n  :::indice\n  Reproduire, répéter, comparer.\n  :::\n\n  :::reponse\n  D'abord confirmer la tendance : une mémoire qui croît avec l'usage et ne redescend pas après collecte. Ensuite\n  reproduire en local l'action suspecte, prendre un instantané du tas, répéter l'action plusieurs fois, reprendre un\n  instantané et comparer : les objets créés et toujours présents, et leur chaîne de rétention, montrent qui les garde.\n  Côté Node.js, `--inspect` donne les mêmes outils, et `process.memoryUsage` permet de suivre la croissance. On corrige\n  en retirant la référence, puis on refait la mesure pour vérifier.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-memoire-gc",
+      "title": "Pile, tas et ramasse-miettes",
+      "slug": "pile-tas-ramasse-miettes",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "memoire",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-closures",
+        "javascript-weak-collections"
+      ],
+      "skills": [
+        "memory-model"
+      ],
+      "tags": [
+        "javascript",
+        "memoire"
+      ],
+      "contentPath": "javascript/memoire/pile-tas-ramasse-miettes/lesson.md",
+      "contentVersion": "131f1323b2bf",
+      "body": "\n## Objectifs\n\n- Distinguer ce qui vit sur la pile et ce qui vit sur le tas.\n- Comprendre qu'une variable objet contient une référence, et ce que cela implique pour la mémoire.\n- Expliquer l'accessibilité et l'algorithme « marquer et balayer » du ramasse-miettes.\n- Savoir ce que le ramasse-miettes ne fait pas, et pourquoi on ne le déclenche pas soi-même.\n\n## Introduction\n\nEn JavaScript, on n'alloue ni ne libère jamais la mémoire à la main : on crée des objets, et le moteur les récupère\nquand ils ne servent plus. Cette automatisation est confortable, mais elle repose sur une règle précise — un objet\nreste en mémoire tant qu'il est **accessible**. Comprendre cette règle, c'est comprendre pourquoi une application\nconsomme de plus en plus de mémoire alors que « rien n'est gardé », sujet du chapitre suivant.\n\n## Concept\n\n| Notion | Ce qu'elle désigne |\n| --- | --- |\n| Pile d'appels | les cadres des fonctions en cours, avec leurs variables locales |\n| Tas | la zone où vivent les objets, tableaux, fonctions et closures |\n| Référence | la valeur d'une variable objet : un moyen d'atteindre un objet du tas |\n| Racines | les points de départ toujours accessibles : global, pile d'appels, tâches en attente |\n| Accessible | atteignable depuis une racine en suivant des références |\n| Marquer et balayer | marquer tout ce qui est accessible, puis libérer le reste |\n\n## Exemple\n\nLe moteur ne montre pas son ramasse-miettes, mais on peut simuler son algorithme sur un petit graphe d'objets.\n\n```js\n// Un tas miniature : chaque objet liste les objets qu'il référence.\nconst tas = new Map([\n  ['session', ['utilisateur', 'panier']],\n  ['utilisateur', ['avatar']],\n  ['panier', ['article1', 'article2']],\n  ['article1', []],\n  ['article2', ['panier']], // référence circulaire\n  ['avatar', []],\n  ['ancienPanier', ['article3']],\n  ['article3', ['ancienPanier']], // cycle isolé\n]);\n\nfunction marquerEtBalayer(tas, racines) {\n  const marques = new Set();\n  const aVisiter = [...racines];\n  while (aVisiter.length > 0) {\n    const objet = aVisiter.pop();\n    if (marques.has(objet)) continue;\n    marques.add(objet);\n    aVisiter.push(...tas.get(objet));\n  }\n  const liberes = [...tas.keys()].filter((objet) => !marques.has(objet));\n  for (const objet of liberes) tas.delete(objet);\n  return liberes;\n}\n\nconsole.log(marquerEtBalayer(tas, ['session'])); // [ 'ancienPanier', 'article3' ]\n\ntas.set('session', ['utilisateur']); // on vide le panier de la session\nconsole.log(marquerEtBalayer(tas, ['session'])); // [ 'panier', 'article1', 'article2' ]\n\n// Côté langage : copier une variable copie la référence, pas l'objet.\nlet a = { donnees: new Array(3).fill('x') };\nconst b = a;\na = null; // l'objet reste accessible par b\nconsole.log(b.donnees.length); // 3\n```\n\n## Comment ça fonctionne\n\nLa **pile d'appels** contient un cadre par fonction en cours d'exécution. Ce cadre disparaît quand la fonction\nretourne : sa mémoire est récupérée immédiatement, sans ramasse-miettes. Le **tas** accueille tout ce dont la durée de\nvie n'est pas liée à un appel : objets, tableaux, fonctions, et les environnements capturés par les closures. Ce\ndécoupage est un modèle mental ; les moteurs l'optimisent — V8 place la plupart des valeurs sur le tas, garde les petits\nentiers directement dans les variables, et déplace sur le tas toute variable capturée par une closure.\n\nUne variable qui « contient » un objet contient en réalité une **référence** vers lui. Affecter, passer en argument ou\nranger dans un tableau copie la référence, jamais l'objet. Dans l'exemple, `a = null` ne détruit rien : l'objet reste\naccessible par `b`. On ne libère donc jamais un objet ; on **supprime des chemins** vers lui.\n\nLe ramasse-miettes part des **racines** : l'objet global, les variables de tous les cadres de la pile, les callbacks\nprogrammés (minuteurs, promesses, écouteurs enregistrés). Il **marque** tout ce qu'il atteint en suivant les\nréférences, puis **balaie** le reste. Un cycle isolé comme `ancienPanier` ↔ `article3` est libéré : les deux objets se\nréférencent, mais aucun chemin ne part d'une racine. C'est la grande différence avec le **comptage de références**,\nancienne stratégie incapable de libérer un cycle.\n\nLes moteurs réels raffinent cet algorithme. V8 est **générationnel** : la plupart des objets meurent jeunes, donc les\nnouveaux objets sont alloués dans une petite zone nettoyée très souvent et à faible coût ; ceux qui survivent passent\ndans une zone ancienne, marquée et compactée plus rarement. Le travail est **incrémental** et en partie **concurrent**\npour limiter les pauses. Conséquence pratique : le moment de la collecte est imprévisible, et le code ne doit jamais en\ndépendre.\n\nOn ne déclenche pas le ramasse-miettes soi-même. `node --expose-gc` rend disponible `global.gc()` pour des mesures de\ndiagnostic, jamais pour du code applicatif. `WeakRef` et `FinalizationRegistry` observent la collecte sans la\ncontrôler : une `WeakRef` peut devenir vide à n'importe quel moment après que l'objet est devenu inaccessible, ou\njamais.\n\nLa pile a une taille limitée : une récursion trop profonde lève `RangeError: Maximum call stack size exceeded`. Le tas\nest beaucoup plus grand, mais pas infini : une application qui garde trop de références finit par ralentir, puis par\néchouer avec une erreur de mémoire.\n\n## Erreurs fréquentes\n\n**Croire que `variable = null` libère l'objet.** Seul le dernier chemin compte.\n\n**Penser que les cycles provoquent des fuites.** Le marquage libère les cycles inaccessibles.\n\n**Appeler `global.gc()` dans une application.** C'est un outil de diagnostic, et il bloque l'exécution.\n\n**Compter sur `WeakRef` ou `FinalizationRegistry` pour une logique métier.** La collecte n'a pas de moment garanti.\n\n**Récurser sur des données de profondeur arbitraire.** Une boucle avec une pile explicite n'a pas la limite de la pile\nd'appels.\n\n## À retenir\n\n- La pile porte les appels en cours ; le tas porte les objets et les closures.\n- Une variable objet contient une référence : copier une variable copie la référence.\n- Un objet vit tant qu'il est accessible depuis une racine.\n- Marquer et balayer libère aussi les cycles isolés.\n- La collecte est générationnelle, incrémentale et imprévisible : ne jamais en dépendre.\n\n## Exercices\n\n1. Pour chaque objet créé ci-dessous, dis s'il peut être collecté à la fin du script, et pourquoi.\n\n   ```js\n   const cache = [];\n   function charger() {\n     const temporaire = { taille: 1000 };\n     const resultat = { id: 1 };\n     cache.push(resultat);\n     return temporaire.taille;\n   }\n   charger();\n   let parent = { nom: 'parent' };\n   parent.enfant = { parent };\n   parent = null;\n   ```\n\n   :::indice\n   Cherche, pour chaque objet, un chemin depuis une variable globale ou de module encore vivante.\n   :::\n\n   :::solution\n   - `temporaire` peut être collecté : seule la variable locale le référençait, et le cadre de `charger` a disparu.\n   - `resultat` reste en mémoire : `cache`, variable du module, le référence.\n   - `parent` et son `enfant` peuvent être collectés : ils forment un cycle, mais plus aucun chemin ne part d'une\n     racine depuis `parent = null`.\n   :::\n\n2. Écris `compterReferences(tas)` qui renvoie, pour chaque objet du tas miniature de l'exemple, le nombre de références\n   entrantes. Montre qu'un ramasse-miettes par comptage de références ne libérerait jamais le cycle isolé.\n\n   :::indice\n   Parcours chaque liste de références et incrémente un compteur dans une `Map`.\n   :::\n\n   :::solution\n   ```js\n   const tas = new Map([\n     ['session', ['utilisateur']],\n     ['utilisateur', []],\n     ['ancienPanier', ['article3']],\n     ['article3', ['ancienPanier']],\n   ]);\n\n   function compterReferences(tas) {\n     const compteurs = new Map([...tas.keys()].map((objet) => [objet, 0]));\n     for (const cibles of tas.values()) {\n       for (const cible of cibles) compteurs.set(cible, compteurs.get(cible) + 1);\n     }\n     return compteurs;\n   }\n\n   console.log(compterReferences(tas));\n   // Map(4) { 'session' => 0, 'utilisateur' => 1, 'ancienPanier' => 1, 'article3' => 1 }\n   ```\n\n   Aucun compteur du cycle ne tombe à zéro : un comptage de références le garderait pour toujours, alors qu'il est\n   inaccessible depuis `session`. (La racine `session` est à zéro, mais elle est retenue par la pile ou le global.)\n   :::\n\n3. `profondeur(noeud)` calcule récursivement la profondeur d'un arbre et lève une `RangeError` sur une liste chaînée de\n   100 000 nœuds. Réécris-la sans récursion.\n\n   :::indice\n   Remplace la pile d'appels par un tableau de paires `[noeud, niveau]`.\n   :::\n\n   :::solution\n   ```js\n   function profondeur(racine) {\n     let maximum = 0;\n     const pile = [[racine, 1]];\n     while (pile.length > 0) {\n       const [noeud, niveau] = pile.pop();\n       maximum = Math.max(maximum, niveau);\n       for (const enfant of noeud.enfants) pile.push([enfant, niveau + 1]);\n     }\n     return maximum;\n   }\n\n   let chaine = { enfants: [] };\n   for (let i = 1; i < 100_000; i += 1) chaine = { enfants: [chaine] };\n\n   console.log(profondeur(chaine)); // 100000\n   console.log(profondeur({ enfants: [{ enfants: [] }, { enfants: [{ enfants: [] }] }] })); // 3\n   ```\n\n   Le tableau `pile` vit sur le tas, dont la taille dépasse de très loin celle de la pile d'appels.\n   :::\n\n## Questions d'entretien\n\n- Comment le ramasse-miettes de JavaScript décide-t-il qu'un objet peut être libéré ?\n\n  :::indice\n  Parle de racines et d'accessibilité, pas de compteurs.\n  :::\n\n  :::reponse\n  Il part des racines — objet global, variables de la pile d'appels, callbacks programmés — et marque tout objet\n  atteignable en suivant les références. Les objets non marqués sont libérés. Un objet vit donc tant qu'un chemin existe\n  depuis une racine, peu importe qu'il soit encore référencé par d'autres objets eux-mêmes inaccessibles. Dans V8, ce\n  marquage est générationnel, incrémental et en partie concurrent.\n  :::\n\n- Les références circulaires provoquent-elles des fuites mémoire en JavaScript ?\n\n  :::indice\n  Compare le comptage de références et le marquage.\n  :::\n\n  :::reponse\n  Non. Un cycle inaccessible depuis les racines n'est pas marqué, il est donc libéré. Le comptage de références, utilisé\n  par de vieux moteurs pour les objets DOM, gardait ces cycles ; ce n'est plus le cas des moteurs modernes. Un cycle ne\n  fuit que s'il reste accessible, par exemple parce qu'un de ses objets est enregistré dans un cache global.\n  :::\n\n- Qu'est-ce qui est stocké sur la pile, et sur le tas ?\n\n  :::indice\n  Pense à la durée de vie des données.\n  :::\n\n  :::reponse\n  La pile contient les cadres des appels en cours : paramètres, variables locales, adresse de retour. Elle est libérée\n  dès qu'une fonction retourne, et sa taille est limitée, d'où la `RangeError` des récursions profondes. Le tas contient\n  les objets, tableaux, fonctions et environnements de closures, dont la durée de vie est gérée par le ramasse-miettes.\n  C'est un modèle : les moteurs placent en pratique la plupart des valeurs sur le tas, et y déplacent les variables\n  capturées par une closure.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -5169,6 +5546,79 @@
       "contentPath": "javascript/prototypes/prototype-et-proto/lesson.md",
       "contentVersion": "81761f7cab53",
       "body": "\n## Objectifs\n\n- Distinguer trois notions aux noms trompeurs : `[[Prototype]]`, `__proto__` et `.prototype`.\n- Lire et modifier le prototype d'un objet avec les fonctions recommandées.\n- Expliquer ce que vérifie réellement `instanceof`.\n\n## Introduction\n\nLe vocabulaire des prototypes est un piège à lui seul : « le prototype de `Voiture` » peut\ndésigner deux objets différents selon qu'on parle du lien de la fonction ou de sa propriété\n`prototype`. Ce chapitre ne présente aucun mécanisme nouveau ; il met des noms précis sur\nles trois notions que le chapitre précédent a utilisées, pour ne plus jamais les confondre.\n\n## Concept\n\n| Notion | Ce que c'est | Qui la possède |\n| --- | --- | --- |\n| `[[Prototype]]` | le lien interne vers l'objet suivant de la chaîne | tout objet |\n| `__proto__` | un accesseur historique qui lit ou écrit `[[Prototype]]` | les objets qui héritent d'`Object.prototype` |\n| `.prototype` | un objet ordinaire, qui deviendra le `[[Prototype]]` des instances créées avec `new` | les fonctions classiques et les classes |\n\nLes outils recommandés pour manipuler le lien :\n\n| Besoin | Écriture |\n| --- | --- |\n| Lire le prototype | `Object.getPrototypeOf(objet)` |\n| Créer un objet avec un prototype donné | `Object.create(prototype)` |\n| Changer le prototype d'un objet existant | `Object.setPrototypeOf(objet, prototype)` — à éviter |\n| Tester la présence d'un prototype dans la chaîne | `prototype.isPrototypeOf(objet)` |\n\n## Exemple\n\n```js\nfunction Voiture(marque) {\n  this.marque = marque;\n}\nVoiture.prototype.rouler = function () {\n  return `${this.marque} roule`;\n};\n\nconst clio = new Voiture('Renault');\nconsole.log(clio.rouler()); // 'Renault roule'\n\nconsole.log(Object.getPrototypeOf(clio) === Voiture.prototype); // true\nconsole.log(clio.__proto__ === Voiture.prototype); // true, mais déconseillé\n\n// Voiture.prototype n'est PAS le prototype de la fonction Voiture :\nconsole.log(Object.getPrototypeOf(Voiture) === Function.prototype); // true\nconsole.log(Object.getPrototypeOf(Voiture) === Voiture.prototype); // false\n\nconsole.log(Voiture.prototype.constructor === Voiture); // true\nconsole.log(clio.constructor === Voiture, Object.hasOwn(clio, 'constructor')); // true false\n\nconsole.log(clio instanceof Voiture); // true\nconsole.log(Voiture.prototype.isPrototypeOf(clio)); // true\n\nconst fleche = () => {};\nconsole.log(fleche.prototype); // undefined : une fléchée ne construit rien\n\nconst dictionnaire = Object.create(null);\nconsole.log(Object.getPrototypeOf(dictionnaire), dictionnaire.__proto__); // null undefined\n```\n\n## Comment ça fonctionne\n\n`[[Prototype]]` est le seul lien réellement utilisé par la recherche de propriété. Les deux\nautres noms n'en sont que des voies d'accès.\n\n`__proto__` n'est pas une propriété de chaque objet : c'est un **accesseur** défini sur\n`Object.prototype`, que les objets trouvent en remontant leur chaîne. Il lit ou modifie\n`[[Prototype]]`. Il a été standardisé tardivement pour compatibilité et reste déconseillé :\nun objet créé par `Object.create(null)` ne l'a pas, et une clé `\"__proto__\"` venant de données\nexternes peut altérer une chaîne par accident. `Object.getPrototypeOf` fonctionne dans tous\nles cas.\n\n`.prototype` est une propriété ordinaire que possèdent les fonctions classiques et les\nclasses. Elle ne sert **qu'à `new`** : quand on écrit `new Voiture()`, le nouvel objet reçoit\n`Voiture.prototype` comme `[[Prototype]]`. Le prototype **de la fonction** `Voiture`, lui,\nest `Function.prototype`, d'où viennent `call`, `apply` et `bind`. Les fonctions fléchées et\nles méthodes abrégées n'ont pas de propriété `prototype`, puisqu'elles ne peuvent pas être\nappelées avec `new`.\n\nChaque `.prototype` créé automatiquement contient une propriété `constructor` qui pointe vers\nla fonction. Les instances la trouvent par héritage : `clio.constructor` vaut `Voiture`, sans\nêtre une propriété propre. Si l'on **remplace** entièrement `Voiture.prototype` par un nouvel\nobjet, cette propriété disparaît, et il faut la rétablir soi-même.\n\n`objet instanceof F` ne regarde pas comment l'objet a été créé : il remonte la chaîne de\n`objet` et renvoie `true` s'il y rencontre `F.prototype`. Changer `F.prototype` après coup\npeut donc faire mentir `instanceof` sur les instances existantes.\n\nEnfin, `Object.setPrototypeOf` modifie la chaîne d'un objet déjà créé. C'est permis, mais les\nmoteurs optimisent les objets en supposant que leur forme et leur chaîne restent stables : un\nchangement de prototype à chaud peut ralentir durablement tout le code qui manipule cet objet.\nOn préfère fixer le prototype à la création, avec `Object.create` ou une classe.\n\n## Erreurs fréquentes\n\n**Confondre `F.prototype` et le prototype de `F`.** Le premier sert aux instances, le second\nest `Function.prototype`.\n\n**Utiliser `__proto__` dans du code applicatif.** Préfère `Object.getPrototypeOf` et\n`Object.create`.\n\n**Remplacer `F.prototype` sans rétablir `constructor`.** `instance.constructor` pointe alors\nvers `Object`.\n\n**Changer le prototype d'objets déjà utilisés.** `setPrototypeOf` dégrade les optimisations\ndu moteur.\n\n## À retenir\n\n- `[[Prototype]]` : le lien interne. `__proto__` : un accesseur historique vers ce lien.\n- `.prototype` : la propriété d'une fonction qui devient le prototype des instances de `new`.\n- Le prototype d'une fonction est `Function.prototype`, pas sa propriété `prototype`.\n- `instanceof` cherche `F.prototype` dans la chaîne de l'objet.\n- Lire : `Object.getPrototypeOf`. Créer : `Object.create`. Éviter : `setPrototypeOf`.\n\n## Exercices\n\n1. Dis si chaque expression vaut `true` ou `false`, et justifie.\n\n   ```js\n   function Livre(titre) { this.titre = titre; }\n   const livre = new Livre('Dune');\n\n   Object.getPrototypeOf(livre) === Livre.prototype;\n   Object.getPrototypeOf(Livre) === Livre.prototype;\n   Object.hasOwn(livre, 'constructor');\n   livre instanceof Object;\n   ```\n\n   :::indice\n   Distingue la chaîne de l'instance et celle de la fonction.\n   :::\n\n   :::solution\n   - `true` : `new` donne à l'instance `Livre.prototype` comme prototype.\n   - `false` : le prototype de la fonction `Livre` est `Function.prototype`.\n   - `false` : `constructor` est défini sur `Livre.prototype`, l'instance l'hérite.\n   - `true` : `Object.prototype` figure plus haut dans la chaîne de `livre`.\n   :::\n\n2. Écris `estInstanceDe(objet, Constructeur)` qui reproduit `instanceof` sans l'utiliser.\n\n   :::indice\n   Remonte la chaîne de l'objet et compare chaque maillon à `Constructeur.prototype`.\n   :::\n\n   :::solution\n   ```js\n   function estInstanceDe(objet, Constructeur) {\n     let courant = Object.getPrototypeOf(objet);\n     while (courant !== null) {\n       if (courant === Constructeur.prototype) {\n         return true;\n       }\n       courant = Object.getPrototypeOf(courant);\n     }\n     return false;\n   }\n\n   console.log(estInstanceDe([], Array), estInstanceDe([], Object)); // true true\n   console.log(estInstanceDe({}, Array)); // false\n   ```\n\n   Le vrai `instanceof` gère en plus les valeurs primitives, qui donnent toujours `false`, et\n   la méthode `Symbol.hasInstance` qu'une classe peut redéfinir.\n   :::\n\n3. Après ce remplacement, `new Point(1, 2).constructor` vaut `Object`. Explique, puis corrige\n   sans perdre les méthodes.\n\n   ```js\n   function Point(x, y) { this.x = x; this.y = y; }\n   Point.prototype = {\n     distance() { return Math.hypot(this.x, this.y); },\n   };\n   ```\n\n   :::indice\n   Le nouvel objet affecté à `Point.prototype` contient-il une propriété `constructor` ?\n   :::\n\n   :::solution\n   Le littéral remplace l'objet créé automatiquement, qui contenait `constructor`. La lecture\n   de `constructor` remonte donc jusqu'à `Object.prototype.constructor`, qui vaut `Object`.\n\n   ```js\n   function Point(x, y) { this.x = x; this.y = y; }\n   Point.prototype = {\n     constructor: Point,\n     distance() { return Math.hypot(this.x, this.y); },\n   };\n\n   const p = new Point(3, 4);\n   console.log(p.constructor === Point, p.distance()); // true 5\n   ```\n\n   Ajouter les méthodes une à une, `Point.prototype.distance = function () {}`, évite\n   entièrement le problème.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `prototype` et `__proto__` ?\n\n  :::indice\n  L'un appartient aux fonctions, l'autre donne accès au lien de n'importe quel objet.\n  :::\n\n  :::reponse\n  `__proto__` est un accesseur historique, hérité d'`Object.prototype`, qui lit ou écrit le\n  lien `[[Prototype]]` de l'objet sur lequel on l'utilise. `prototype` est une propriété\n  ordinaire des fonctions classiques et des classes : c'est l'objet qui deviendra le\n  `[[Prototype]]` des instances créées avec `new`. Ainsi `instance.__proto__ ===\n  Constructeur.prototype`. En code moderne, on remplace `__proto__` par\n  `Object.getPrototypeOf` et `Object.create`.\n  :::\n\n- Comment fonctionne `instanceof` ?\n\n  :::indice\n  Regarde-t-il la fonction qui a créé l'objet ?\n  :::\n\n  :::reponse\n  `objet instanceof F` remonte la chaîne de prototypes de `objet` et renvoie `true` dès qu'il\n  y trouve `F.prototype`. Il ne sait rien de la création réelle de l'objet : un objet fabriqué\n  avec `Object.create(F.prototype)` passe le test, et remplacer `F.prototype` fait échouer le\n  test pour les instances existantes. Une classe peut personnaliser ce comportement avec la\n  méthode statique `Symbol.hasInstance`.\n  :::\n\n- Pourquoi éviter `Object.setPrototypeOf` ?\n\n  :::indice\n  Pense à ce que les moteurs supposent sur la forme des objets.\n  :::\n\n  :::reponse\n  Les moteurs optimisent l'accès aux propriétés en supposant que la forme d'un objet et sa\n  chaîne de prototypes restent stables. Changer le prototype d'un objet déjà utilisé invalide\n  ces hypothèses et peut ralentir tout le code qui le manipule, bien au-delà de l'instruction\n  elle-même. On fixe donc le prototype à la création, avec `Object.create` ou une classe, et\n  l'on réserve `setPrototypeOf` aux outils et aux cas exceptionnels.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-proxy",
+      "title": "Proxy et Reflect : intercepter les opérations sur un objet",
+      "slug": "proxy-et-reflect",
+      "technology": "javascript",
+      "level": "expert",
+      "module": "symboles-metaprogrammation",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 5,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-symboles",
+        "javascript-prototype-proto"
+      ],
+      "skills": [
+        "proxy-reflect"
+      ],
+      "tags": [
+        "javascript",
+        "avance"
+      ],
+      "contentPath": "javascript/symboles-metaprogrammation/proxy-et-reflect/lesson.md",
+      "contentVersion": "904cec668999",
+      "body": "\n## Objectifs\n\n- Créer un `Proxy` qui intercepte la lecture, l'écriture, le test et la suppression de propriétés.\n- Utiliser `Reflect` pour appliquer le comportement par défaut depuis un piège.\n- Reconnaître les usages légitimes de la métaprogrammation, et ses limites.\n\n## Introduction\n\nUn framework réactif met l'interface à jour quand une donnée change, sans qu'on appelle la moindre fonction ; une\nbibliothèque de validation refuse une affectation incorrecte au moment où elle a lieu. Ces comportements reposent\nsur la **métaprogrammation** : du code qui intervient sur le fonctionnement même des objets. En JavaScript, l'outil\ncentral est `Proxy`, qui place un intermédiaire devant un objet et intercepte les opérations fondamentales.\n\n## Concept\n\n```js\nconst proxy = new Proxy(cible, gestionnaire);\n```\n\nLe **gestionnaire** définit des **pièges**, un par opération interceptée :\n\n| Piège | Opération interceptée |\n| --- | --- |\n| `get(cible, cle, recepteur)` | lecture `proxy.cle` |\n| `set(cible, cle, valeur, recepteur)` | écriture `proxy.cle = valeur` ; renvoyer `true` en cas de succès |\n| `has(cible, cle)` | `cle in proxy` |\n| `deleteProperty(cible, cle)` | `delete proxy.cle` |\n| `ownKeys(cible)` | `Object.keys`, `for...in`, `Reflect.ownKeys` |\n| `apply(cible, thisArg, arguments)` | appel, si la cible est une fonction |\n\nChaque piège a un équivalent dans **`Reflect`** — `Reflect.get`, `Reflect.set`, `Reflect.has`… — qui réalise\nl'opération par défaut. Un piège fait son traitement, puis délègue à `Reflect` pour conserver le comportement normal.\n\n## Exemple\n\n```js\nfunction avecValidation(cible, schema) {\n  return new Proxy(cible, {\n    set(objet, cle, valeur, recepteur) {\n      const valider = schema[cle];\n      if (valider && !valider(valeur)) {\n        throw new TypeError(`Valeur invalide pour ${String(cle)} : ${valeur}`);\n      }\n      return Reflect.set(objet, cle, valeur, recepteur);\n    },\n  });\n}\n\nconst utilisateur = avecValidation(\n  { nom: 'Ada', age: 36 },\n  { age: (v) => Number.isInteger(v) && v >= 0, nom: (v) => typeof v === 'string' && v.length > 0 },\n);\nutilisateur.age = 37;\ntry {\n  utilisateur.age = -4;\n} catch (erreur) {\n  console.log(erreur.message); // 'Valeur invalide pour age : -4'\n}\nconsole.log(utilisateur.age); // 37 : l'affectation invalide n'a pas eu lieu\n\nfunction observer(cible, surChangement) {\n  return new Proxy(cible, {\n    set(objet, cle, valeur, recepteur) {\n      const ancienne = objet[cle];\n      const resultat = Reflect.set(objet, cle, valeur, recepteur);\n      if (ancienne !== valeur) surChangement(cle, ancienne, valeur);\n      return resultat;\n    },\n  });\n}\n\nconst changements = [];\nconst panier = observer({ total: 0 }, (cle, avant, apres) => changements.push(`${cle} : ${avant} → ${apres}`));\npanier.total = 50;\npanier.total = 50; // même valeur : aucune notification\npanier.total = 70;\nconsole.log(changements); // ['total : 0 → 50', 'total : 50 → 70']\n\nconst configuration = new Proxy({ port: 3000 }, {\n  get(objet, cle, recepteur) {\n    if (!Reflect.has(objet, cle)) throw new ReferenceError(`Réglage inconnu : ${String(cle)}`);\n    return Reflect.get(objet, cle, recepteur);\n  },\n});\nconsole.log(configuration.port); // 3000\ntry {\n  configuration.prot;\n} catch (erreur) {\n  console.log(erreur.message); // 'Réglage inconnu : prot' : la faute de frappe ne passe plus inaperçue\n}\n```\n\n## Comment ça fonctionne\n\nUn `Proxy` est un objet vide en apparence, qui redirige chaque **opération fondamentale** vers le gestionnaire. Si le\ngestionnaire définit le piège correspondant, celui-ci est appelé ; sinon, l'opération est appliquée directement à la\ncible. Le proxy et la cible sont deux objets distincts : les modifications faites par le proxy atteignent la cible, mais\nun code qui détient une référence directe à la cible contourne entièrement les pièges.\n\n`Reflect` fournit, pour chaque piège, la fonction qui réalise l'opération **par défaut**, avec la même signature. Dans un\npiège, on appelle `Reflect.set(cible, cle, valeur, recepteur)` plutôt que `cible[cle] = valeur` : le récepteur est\ntransmis correctement aux accesseurs et à la chaîne de prototypes, et la valeur de retour indique le succès. Un piège\n`set` doit renvoyer `true` ; s'il renvoie `false`, l'affectation lève une `TypeError` en mode strict.\n\nLes pièges respectent des **invariants** : un proxy ne peut pas prétendre qu'une propriété non configurable n'existe pas,\nni renvoyer une valeur différente pour une propriété figée. Le moteur vérifie ces règles et lève une `TypeError` si un\npiège les enfreint, ce qui garantit qu'un objet gelé reste gelé même derrière un proxy.\n\nCertains objets natifs — `Date`, `Map`, `Set`, promesses, éléments du DOM — stockent leurs données dans des\n**emplacements internes**. Leurs méthodes vérifient que `this` est bien l'objet d'origine : appelées à travers un proxy,\nelles lèvent une `TypeError`. Pour ces types, il faut lier les méthodes à la cible dans le piège `get`, ou éviter le proxy.\n\n`Proxy` a un coût : chaque opération passe par une fonction, ce qui ralentit les accès fréquents. Les usages légitimes\nsont ceux où l'interception est la fonctionnalité elle-même : la **réactivité** des frameworks comme Vue, la\n**validation** à l'affectation, la détection de propriétés inconnues en développement, l'enregistrement d'appels dans les\ntests. Pour un besoin simple, une fonction ou un accesseur `set` restent plus lisibles.\n\n## Erreurs fréquentes\n\n**Oublier de renvoyer `true` dans le piège `set`.** L'affectation lève une `TypeError` en mode strict.\n\n**Modifier la cible directement au lieu du proxy.** Les pièges ne voient rien.\n\n**Écrire `cible[cle]` au lieu de `Reflect.get`.** Les accesseurs reçoivent le mauvais `this`.\n\n**Envelopper une `Map` ou une `Date` sans précaution.** Leurs méthodes lèvent une `TypeError`.\n\n**Utiliser un proxy là où une fonction suffit.** Le code devient plus lent et plus difficile à suivre.\n\n## À retenir\n\n- `new Proxy(cible, gestionnaire)` intercepte les opérations fondamentales par des pièges.\n- `Reflect` réalise l'opération par défaut : un piège traite, puis délègue.\n- Le piège `set` renvoie `true` en cas de succès ; les invariants de la cible restent vérifiés.\n- Les objets natifs à emplacements internes, comme `Map` et `Date`, se prêtent mal aux proxys.\n- Usages : réactivité, validation, détection d'erreurs, outils de test.\n\n## Exercices\n\n1. Écris `sansProprietesInconnues(objet)` qui renvoie un proxy levant une `ReferenceError` pour toute lecture d'une propriété\n   absente, sauf pour les symboles comme `Symbol.toPrimitive`, que les outils lisent automatiquement.\n\n   :::indice\n   Dans le piège `get`, laisse passer les clés de type symbole, et teste l'existence avec `Reflect.has`.\n   :::\n\n   :::solution\n   ```js\n   function sansProprietesInconnues(objet) {\n     return new Proxy(objet, {\n       get(cible, cle, recepteur) {\n         if (typeof cle === 'symbol' || Reflect.has(cible, cle)) {\n           return Reflect.get(cible, cle, recepteur);\n         }\n         throw new ReferenceError(`Propriété inconnue : ${cle}`);\n       },\n     });\n   }\n\n   const reglages = sansProprietesInconnues({ theme: 'sombre' });\n   console.log(reglages.theme, String(reglages)); // 'sombre' '[object Object]'\n   try {\n     reglages.tehme;\n   } catch (erreur) {\n     console.log(erreur.message); // 'Propriété inconnue : tehme'\n   }\n   ```\n\n   `Reflect.has` regarde aussi la chaîne de prototypes : les méthodes héritées comme `toString` restent accessibles.\n   :::\n\n2. Écris `espionner(fonction)` qui renvoie un proxy de la fonction enregistrant chaque appel — arguments et résultat — dans\n   un tableau `appels`, sans modifier le comportement de la fonction. C'est le principe des « espions » des outils de test.\n\n   :::indice\n   Le piège `apply(cible, thisArg, args)` intercepte l'appel ; `Reflect.apply` exécute la fonction d'origine.\n   :::\n\n   :::solution\n   ```js\n   function espionner(fonction) {\n     const appels = [];\n     const espion = new Proxy(fonction, {\n       apply(cible, thisArg, args) {\n         const resultat = Reflect.apply(cible, thisArg, args);\n         appels.push({ args, resultat });\n         return resultat;\n       },\n     });\n     return { espion, appels };\n   }\n\n   const { espion: ttc, appels } = espionner((ht) => Math.round(ht * 1.2 * 100) / 100);\n   console.log(ttc(10), ttc(25)); // 12 30\n   console.log(appels); // [{ args: [10], resultat: 12 }, { args: [25], resultat: 30 }]\n   ```\n   :::\n\n3. Un module de configuration doit pouvoir **retirer** l'accès à un objet sensible une fois l'initialisation terminée.\n   Utilise `Proxy.revocable` pour écrire `accesTemporaire(secrets)`.\n\n   :::indice\n   `Proxy.revocable(cible, gestionnaire)` renvoie `{ proxy, revoke }` ; après `revoke()`, toute opération sur le proxy lève\n   une `TypeError`.\n   :::\n\n   :::solution\n   ```js\n   function accesTemporaire(secrets) {\n     const { proxy, revoke } = Proxy.revocable(secrets, {});\n     return { secrets: proxy, revoquer: revoke };\n   }\n\n   const { secrets, revoquer } = accesTemporaire({ cleApi: 'xyz' });\n   console.log(secrets.cleApi); // 'xyz' : lecture pendant l'initialisation\n   revoquer();\n   try {\n     secrets.cleApi;\n   } catch (erreur) {\n     console.log(erreur.name); // 'TypeError' : l'accès est définitivement retiré\n   }\n   ```\n\n   Seul l'accès **par ce proxy** est retiré : un code qui aurait conservé une référence directe à l'objet d'origine pourrait\n   toujours le lire.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'un `Proxy`, et à quoi sert `Reflect` ?\n\n  :::indice\n  L'un intercepte, l'autre réalise le comportement par défaut.\n  :::\n\n  :::reponse\n  Un `Proxy` enveloppe un objet et intercepte ses opérations fondamentales — lecture, écriture, test d'appartenance,\n  suppression, énumération des clés, appel — par des fonctions appelées pièges. `Reflect` expose, pour chaque piège, la\n  fonction qui effectue l'opération normale, avec la même signature. Un piège fait son traitement puis délègue à\n  `Reflect`, ce qui conserve le comportement attendu, notamment pour les accesseurs et l'héritage.\n  :::\n\n- Donne des usages concrets de `Proxy`.\n\n  :::indice\n  Pense aux frameworks, à la validation et aux outils de test.\n  :::\n\n  :::reponse\n  La réactivité, où un framework comme Vue détecte les modifications d'un objet pour mettre l'interface à jour ; la\n  validation au moment de l'affectation ; la détection de propriétés inconnues, qui transforme une faute de frappe\n  silencieuse en erreur ; les espions et doublures des outils de test, qui enregistrent les appels ; ou encore un accès\n  révocable à un objet sensible. Dans tous ces cas, l'interception est la fonctionnalité elle-même.\n  :::\n\n- Quelles sont les limites de `Proxy` ?\n\n  :::indice\n  Pense aux performances, aux objets natifs et à l'identité des objets.\n  :::\n\n  :::reponse\n  Chaque opération passe par une fonction, ce qui ralentit les accès fréquents. Les objets natifs à emplacements internes,\n  comme `Map`, `Set` ou `Date`, lèvent une `TypeError` quand leurs méthodes sont appelées à travers un proxy. Le proxy est\n  un objet différent de sa cible : un code qui garde une référence à la cible contourne les pièges, et une comparaison\n  `proxy === cible` est fausse. Enfin, les invariants des propriétés non configurables limitent ce qu'un piège peut\n  renvoyer.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-symboles",
+      "title": "Symboles et symboles bien connus",
+      "slug": "symboles-et-protocoles",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "symboles-metaprogrammation",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-iterateurs"
+      ],
+      "skills": [
+        "symbols"
+      ],
+      "tags": [
+        "javascript",
+        "avance"
+      ],
+      "contentPath": "javascript/symboles-metaprogrammation/symboles-et-protocoles/lesson.md",
+      "contentVersion": "880b1a2a8554",
+      "body": "\n## Objectifs\n\n- Créer des symboles et les utiliser comme clés de propriété sans risque de collision.\n- Distinguer les symboles locaux, partagés par le registre global, et bien connus.\n- Personnaliser le comportement d'un objet avec `Symbol.toPrimitive`, `Symbol.toStringTag` et `Symbol.hasInstance`.\n\n## Introduction\n\nLe chapitre sur les itérateurs a utilisé `Symbol.iterator` comme une clé un peu étrange. C'est un **symbole** : le\nseptième type primitif de JavaScript, conçu pour une seule chose — créer des clés de propriété **uniques**. Ils\npermettent aux bibliothèques d'ajouter des informations à un objet sans jamais écraser une propriété existante, et au\nlangage lui-même d'exposer des points d'extension, les symboles bien connus.\n\n## Concept\n\n| Écriture | Résultat |\n| --- | --- |\n| `Symbol('description')` | un symbole **unique** ; la description ne sert qu'au débogage |\n| `Symbol.for('app.cle')` | un symbole **partagé**, pris dans le registre global par sa clé |\n| `objet[symbole] = valeur` | une propriété dont la clé est le symbole |\n| `Object.getOwnPropertySymbols(objet)` | les clés symboles d'un objet |\n\nLes propriétés à clé symbole sont ignorées par `Object.keys`, `for...in` et `JSON.stringify`.\n\nLes **symboles bien connus** permettent de brancher un objet sur les mécanismes du langage :\n\n| Symbole | Mécanisme personnalisé |\n| --- | --- |\n| `Symbol.iterator` / `Symbol.asyncIterator` | `for...of` / `for await...of` |\n| `Symbol.toPrimitive` | conversion en nombre ou en chaîne |\n| `Symbol.toStringTag` | le nom affiché par `Object.prototype.toString` |\n| `Symbol.hasInstance` | le résultat de `instanceof` |\n\n## Exemple\n\n```js\nconst identifiant = Symbol('identifiant');\nconst autre = Symbol('identifiant');\nconsole.log(identifiant === autre, identifiant.description); // false 'identifiant'\n\nconst utilisateur = { nom: 'Ada', [identifiant]: 42 };\nconsole.log(Object.keys(utilisateur), JSON.stringify(utilisateur)); // ['nom'] '{\"nom\":\"Ada\"}'\nconsole.log(utilisateur[identifiant]); // 42\nconsole.log(Reflect.ownKeys(utilisateur)); // ['nom', Symbol(identifiant)]\n\nconsole.log(Symbol.for('app.session') === Symbol.for('app.session')); // true : même symbole partagé\n\nclass Montant {\n  constructor(centimes) {\n    this.centimes = centimes;\n  }\n\n  [Symbol.toPrimitive](indice) {\n    return indice === 'string' ? `${(this.centimes / 100).toFixed(2)} €` : this.centimes / 100;\n  }\n\n  get [Symbol.toStringTag]() {\n    return 'Montant';\n  }\n}\n\nconst prix = new Montant(1250);\nconsole.log(`${prix}`); // '12.50 €' : conversion en chaîne\nconsole.log(prix * 2, prix + 1); // 25 13.5 : conversion en nombre\nconsole.log(Object.prototype.toString.call(prix)); // '[object Montant]'\n\nclass NombrePair {\n  static [Symbol.hasInstance](valeur) {\n    return Number.isInteger(valeur) && valeur % 2 === 0;\n  }\n}\nconsole.log(4 instanceof NombrePair, 3 instanceof NombrePair); // true false\n```\n\n## Comment ça fonctionne\n\nChaque appel à `Symbol()` crée une valeur **unique**, même avec la même description : deux symboles ne sont jamais\négaux. Une propriété dont la clé est un symbole ne peut donc pas entrer en collision avec une autre, ni être atteinte\npar un code qui ne possède pas ce symbole. C'est utile pour attacher une information à un objet qu'on ne contrôle pas —\nune bibliothèque qui marque les objets qu'elle a déjà traités — sans risquer d'écraser une propriété existante.\n\nCes propriétés sont **discrètes** plutôt que privées : `Object.keys`, `for...in` et `JSON.stringify` les ignorent, mais\n`Object.getOwnPropertySymbols` et `Reflect.ownKeys` les révèlent. Pour une véritable confidentialité, on utilise les\nchamps privés `#`. Un symbole ne se convertit pas implicitement en chaîne : l'insérer dans un gabarit lève une\n`TypeError` ; on écrit `String(symbole)` ou `symbole.description`.\n\n`Symbol.for(cle)` consulte un **registre global** : le même appel renvoie toujours le même symbole, même depuis un autre\nmodule ou une autre fenêtre du même programme. C'est le moyen de partager un symbole sans l'exporter, au prix de\nréintroduire un espace de noms global — d'où l'usage de clés préfixées comme `app.session`.\n\nLes **symboles bien connus** sont des propriétés statiques de `Symbol` que le langage consulte à des moments précis.\n`Symbol.toPrimitive` est appelé quand un objet doit devenir une valeur primitive ; son argument, l'**indice**, vaut\n`'string'` dans un gabarit ou avec `String`, `'number'` dans une opération arithmétique comme `*`, et `'default'` pour\n`+` ou `==`, qui peuvent attendre l'un ou l'autre. `Symbol.toStringTag` personnalise le nom renvoyé par\n`Object.prototype.toString`, utilisé par certains outils pour identifier le type d'un objet. `Symbol.hasInstance` permet à\nune classe de redéfinir `instanceof`.\n\nCes points d'extension sont puissants, mais ils rendent le comportement moins prévisible : un objet qui se convertit\nsilencieusement en nombre peut masquer une erreur. On les réserve aux types de valeur qui ont une représentation\nnaturelle, comme un montant ou une date.\n\n## Erreurs fréquentes\n\n**Croire qu'une propriété symbole est privée.** Elle est seulement discrète : utilise `#` pour la confidentialité.\n\n**Insérer un symbole dans un gabarit.** `TypeError` : utilise `description`.\n\n**Utiliser `Symbol()` là où un symbole partagé est nécessaire.** Deux appels créent deux symboles différents.\n\n**Compter sur `JSON.stringify` pour transmettre une propriété symbole.** Elle est ignorée.\n\n**Abuser de `Symbol.toPrimitive`.** Une conversion implicite surprenante masque des erreurs.\n\n## À retenir\n\n- `Symbol()` crée une clé unique ; `Symbol.for()` un symbole partagé par le registre global.\n- Les propriétés symboles sont ignorées par `Object.keys` et `JSON.stringify`, mais pas cachées.\n- Les symboles bien connus branchent un objet sur le langage : itération, conversion, `instanceof`.\n- `Symbol.toPrimitive` reçoit l'indice `'string'`, `'number'` ou `'default'`.\n- Pour la confidentialité, les champs privés `#`, pas les symboles.\n\n## Exercices\n\n1. Une bibliothèque doit marquer les objets qu'elle a déjà enregistrés, sans modifier leurs clés visibles ni leur\n   sérialisation. Écris `marquer(objet)` et `estMarque(objet)` avec un symbole.\n\n   :::indice\n   Un symbole créé une fois dans le module sert de clé ; il n'apparaît ni dans `Object.keys` ni dans le JSON.\n   :::\n\n   :::solution\n   ```js\n   const ENREGISTRE = Symbol('enregistré');\n\n   function marquer(objet) {\n     objet[ENREGISTRE] = true;\n     return objet;\n   }\n\n   function estMarque(objet) {\n     return objet[ENREGISTRE] === true;\n   }\n\n   const commande = marquer({ id: 7, total: 30 });\n   console.log(estMarque(commande), estMarque({ id: 8 })); // true false\n   console.log(Object.keys(commande), JSON.stringify(commande)); // ['id', 'total'] '{\"id\":7,\"total\":30}'\n   ```\n   :::\n\n2. Ajoute à une classe `Duree(secondes)` une conversion qui donne `'2 min 5 s'` en chaîne et le nombre de secondes dans un\n   calcul, pour que `` `${d}` `` et `d + 10` fonctionnent naturellement.\n\n   :::indice\n   `[Symbol.toPrimitive](indice)` : renvoie la chaîne quand l'indice vaut `'string'`, le nombre sinon.\n   :::\n\n   :::solution\n   ```js\n   class Duree {\n     constructor(secondes) {\n       this.secondes = secondes;\n     }\n\n     [Symbol.toPrimitive](indice) {\n       if (indice === 'string') {\n         return `${Math.floor(this.secondes / 60)} min ${this.secondes % 60} s`;\n       }\n       return this.secondes;\n     }\n   }\n\n   const pause = new Duree(125);\n   console.log(`${pause}`, pause + 10, pause > 120); // '2 min 5 s' 135 true\n   ```\n   :::\n\n3. Deux modules chargés séparément doivent partager la même clé symbole sans s'importer mutuellement. Montre pourquoi\n   `Symbol('app.cache')` ne convient pas, puis corrige.\n\n   :::indice\n   Deux appels à `Symbol` créent-ils la même valeur ? Quelle fonction consulte un registre commun ?\n   :::\n\n   :::solution\n   ```js\n   // module A\n   const cleA = Symbol('app.cache');\n   // module B\n   const cleB = Symbol('app.cache');\n   console.log(cleA === cleB); // false : deux symboles distincts, même avec la même description\n\n   const partageA = Symbol.for('app.cache');\n   const partageB = Symbol.for('app.cache');\n   const objet = { [partageA]: 'donnée en cache' };\n   console.log(partageA === partageB, objet[partageB]); // true 'donnée en cache'\n   ```\n\n   `Symbol.for` retrouve le symbole dans le registre global par sa clé. La clé préfixée limite le risque qu'une autre\n   bibliothèque utilise la même.\n   :::\n\n## Questions d'entretien\n\n- À quoi servent les symboles ?\n\n  :::indice\n  Pense aux clés de propriété et aux points d'extension du langage.\n  :::\n\n  :::reponse\n  Un symbole est une valeur primitive unique, utilisée principalement comme clé de propriété qui ne peut entrer en\n  collision avec aucune autre. Il permet d'attacher des informations à un objet sans risquer d'écraser une propriété, et\n  ces propriétés sont ignorées par `Object.keys` et `JSON.stringify`. Le langage s'en sert aussi pour ses points\n  d'extension, les symboles bien connus comme `Symbol.iterator` ou `Symbol.toPrimitive`.\n  :::\n\n- Une propriété à clé symbole est-elle privée ?\n\n  :::indice\n  Existe-t-il un moyen de lister les clés symboles d'un objet ?\n  :::\n\n  :::reponse\n  Non. Elle est seulement discrète : les énumérations habituelles et la sérialisation JSON l'ignorent, mais\n  `Object.getOwnPropertySymbols` et `Reflect.ownKeys` la révèlent, et n'importe quel code qui possède le symbole peut la\n  lire. Pour des données réellement inaccessibles de l'extérieur, on utilise les champs privés `#` d'une classe ou une\n  closure.\n  :::\n\n- Quelle différence entre `Symbol('x')` et `Symbol.for('x')` ?\n\n  :::indice\n  Que renvoient deux appels successifs de chacune ?\n  :::\n\n  :::reponse\n  `Symbol('x')` crée à chaque appel un nouveau symbole unique ; la description ne sert qu'au débogage. `Symbol.for('x')`\n  consulte un registre global : le premier appel crée le symbole, les suivants renvoient le même, y compris depuis un autre\n  module. On utilise `Symbol.for` pour partager une clé entre parties d'un programme qui ne s'importent pas.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -8093,6 +8543,149 @@
       "contentVersion": "f4f1757625f1"
     },
     {
+      "id": "javascript-descripteurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-descripteurs-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Après `Object.defineProperty(o, 'id', { value: 7 })`, quels attributs a la propriété `id` ?\n",
+          "options": [
+            "writable, enumerable et configurable valent false",
+            "writable, enumerable et configurable valent true",
+            "seul writable vaut false",
+            "seul configurable vaut false"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Object.defineProperty met à false tous les attributs non précisés : la propriété est en lecture seule, non énumérable et non configurable.\n",
+          "skills": [
+            "property-descriptors"
+          ]
+        },
+        {
+          "id": "js-descripteurs-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une propriété non énumérable ne peut plus être lue par son nom.\n",
+          "answer": false,
+          "explanation": "enumerable: false la cache seulement des énumérations (Object.keys, for...in, spread, JSON.stringify). On la lit toujours avec objet.nom.\n",
+          "skills": [
+            "property-descriptors"
+          ]
+        },
+        {
+          "id": "js-descripteurs-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Sur une propriété de données non configurable et modifiable, quelles opérations restent possibles ?\n",
+          "options": [
+            "Changer sa valeur",
+            "Passer writable de true à false",
+            "La supprimer",
+            "La transformer en accesseur"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "Tant que writable vaut true, la valeur change librement, et le passage de writable à false reste permis. Suppression et redéfinition sont interdites.\n",
+          "skills": [
+            "property-descriptors"
+          ]
+        },
+        {
+          "id": "js-descripteurs-q4",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche `console.log(typeof Object.getOwnPropertyDescriptor({ ...{ get x() { return 1; } } }, 'x').get)` ?\n",
+          "answer": "undefined",
+          "explanation": "Le spread exécute le getter et écrit une propriété de données de valeur 1 : le descripteur de la copie n'a plus de get.\n",
+          "skills": [
+            "property-descriptors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-descripteurs",
+      "technology": "javascript",
+      "contentPath": "javascript/descripteurs/descripteurs-de-proprietes/quiz.yaml",
+      "contentVersion": "d14b0a7ac0a1"
+    },
+    {
+      "id": "javascript-figer-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-figer-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle opération interdit l'ajout et la suppression de propriétés, mais laisse modifier leurs valeurs ?\n",
+          "options": [
+            "Object.seal",
+            "Object.freeze",
+            "Object.preventExtensions",
+            "const"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Object.seal empêche l'extension et rend les propriétés non configurables, sans toucher à writable. preventExtensions permet encore la suppression, freeze interdit aussi la modification.\n",
+          "skills": [
+            "object-immutability"
+          ]
+        },
+        {
+          "id": "js-figer-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Dans un module, qu'affiche `const o = Object.freeze({ liste: [] }); o.liste.push(1); console.log(o.liste.length);` ?\n",
+          "answer": "1",
+          "explanation": "Le gel est superficiel : la propriété liste ne peut pas être réaffectée, mais le tableau qu'elle référence reste modifiable.\n",
+          "skills": [
+            "object-immutability"
+          ]
+        },
+        {
+          "id": "js-figer-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "La copie `{ ...objetGele }` est elle aussi gelée.\n",
+          "answer": false,
+          "explanation": "Le spread crée un nouvel objet ordinaire aux propriétés modifiables. Le gel ne se transmet pas aux copies.\n",
+          "skills": [
+            "object-immutability"
+          ]
+        },
+        {
+          "id": "js-figer-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles affirmations sur `Object.freeze` sont vraies ?\n",
+          "options": [
+            "Un objet gelé est aussi scellé",
+            "Le gel est irréversible",
+            "Le gel s'applique aux objets imbriqués",
+            "Une écriture refusée lève une TypeError en mode strict"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "freeze inclut seal, ne peut pas être annulé et lève une TypeError en mode strict. Il est superficiel : les objets imbriqués restent modifiables.\n",
+          "skills": [
+            "object-immutability"
+          ]
+        }
+      ],
+      "chapterId": "javascript-figer",
+      "technology": "javascript",
+      "contentPath": "javascript/descripteurs/figer-sceller-empecher/quiz.yaml",
+      "contentVersion": "a0c9741927f3"
+    },
+    {
       "id": "javascript-dom-creer-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -10742,6 +11335,216 @@
       "contentVersion": "2936e1921050"
     },
     {
+      "id": "javascript-generateurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-generateurs-q1",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Appeler une fonction génératrice exécute son corps jusqu'au premier yield.\n",
+          "answer": false,
+          "explanation": "L'appel renvoie seulement un objet générateur ; le corps s'exécute au premier next().\n",
+          "skills": [
+            "generators"
+          ]
+        },
+        {
+          "id": "js-generateurs-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Avec `function* g() { yield 1; return 2; }`, que vaut `[...g()].length` ?\n",
+          "answer": "1",
+          "explanation": "Le spread ignore la valeur de return : seule la valeur 1 est produite.\n",
+          "skills": [
+            "generators"
+          ]
+        },
+        {
+          "id": "js-generateurs-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Comment rendre une classe itérable de la façon la plus concise ?\n",
+          "options": [
+            "En définissant une méthode *[Symbol.iterator]() qui utilise yield",
+            "En héritant d'Array",
+            "En définissant une propriété length",
+            "En ajoutant une méthode forEach"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une méthode génératrice renvoie un générateur neuf à chaque parcours, qui implémente le protocole.\n",
+          "skills": [
+            "generators"
+          ]
+        },
+        {
+          "id": "js-generateurs-q4",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "Quand une boucle for...of s'interrompt avec break, le bloc finally du générateur parcouru s'exécute.\n",
+          "answer": true,
+          "explanation": "break appelle return() sur le générateur, qui reprend dans son finally.\n",
+          "skills": [
+            "generators"
+          ]
+        }
+      ],
+      "chapterId": "javascript-generateurs",
+      "technology": "javascript",
+      "contentPath": "javascript/iterateurs-generateurs/generateurs/quiz.yaml",
+      "contentVersion": "4561c6e7b1b7"
+    },
+    {
+      "id": "javascript-iterateurs-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-iterateurs-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle méthode rend un objet utilisable avec for...of ?\n",
+          "options": [
+            "[Symbol.iterator]()",
+            "next()",
+            "forEach()",
+            "valueOf()"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "for...of appelle [Symbol.iterator]() pour obtenir un itérateur, puis next() à chaque tour.\n",
+          "skills": [
+            "iterators"
+          ]
+        },
+        {
+          "id": "js-iterateurs-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Avec `const it = [7][Symbol.iterator](); it.next();`, que vaut `it.next().done` ?\n",
+          "answer": "true",
+          "explanation": "Le premier appel renvoie la valeur 7 ; le second signale la fin du parcours.\n",
+          "skills": [
+            "iterators"
+          ]
+        },
+        {
+          "id": "js-iterateurs-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`for (const x of { a: 1 })` fonctionne.\n",
+          "answer": false,
+          "explanation": "Un objet littéral n'est pas itérable : l'appel lève une TypeError. On utilise Object.entries.\n",
+          "skills": [
+            "iterators"
+          ]
+        },
+        {
+          "id": "js-iterateurs-q4",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "Quand le moteur appelle-t-il la méthode `return()` d'un itérateur ?\n",
+          "options": [
+            "Quand le parcours s'arrête avant la fin, par exemple avec break",
+            "À chaque appel de next()",
+            "Quand next() renvoie done: true",
+            "Jamais : elle n'est appelée que manuellement"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "return() permet de libérer une ressource lors d'une sortie anticipée ; un parcours complet ne l'appelle pas.\n",
+          "skills": [
+            "iterators"
+          ]
+        }
+      ],
+      "chapterId": "javascript-iterateurs",
+      "technology": "javascript",
+      "contentPath": "javascript/iterateurs-generateurs/iterables-et-iterateurs/quiz.yaml",
+      "contentVersion": "69fe6cc0ab57"
+    },
+    {
+      "id": "javascript-iterateurs-asynchrones-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-iterateurs-asynchrones-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle méthode un objet doit-il avoir pour être parcouru nativement par for await...of ?\n",
+          "options": [
+            "[Symbol.asyncIterator]()",
+            "[Symbol.iterator]() uniquement",
+            "then()",
+            "await()"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "for await utilise Symbol.asyncIterator, et se rabat sur Symbol.iterator pour les itérables de promesses.\n",
+          "skills": [
+            "async-iterators"
+          ]
+        },
+        {
+          "id": "js-iterateurs-asynchrones-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "for await...of attend chaque valeur avant de demander la suivante.\n",
+          "answer": true,
+          "explanation": "Le parcours est séquentiel, ce qui convient aux pages et aux flux, pas aux opérations indépendantes.\n",
+          "skills": [
+            "async-iterators"
+          ]
+        },
+        {
+          "id": "js-iterateurs-asynchrones-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Un générateur asynchrone pagine une API. Le consommateur fait break au deuxième élément. Que se passe-t-il pour les pages suivantes ?\n",
+          "options": [
+            "Elles ne sont jamais chargées",
+            "Elles sont chargées puis ignorées",
+            "Une erreur est levée",
+            "Elles sont chargées au parcours suivant"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le générateur ne charge une page que lorsqu'on lui demande une valeur ; break l'arrête.\n",
+          "skills": [
+            "async-iterators"
+          ]
+        },
+        {
+          "id": "js-iterateurs-asynchrones-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle écriture permet d'utiliser à la fois await et yield ?\n",
+          "options": [
+            "async function*",
+            "function*",
+            "async function",
+            "function async*"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un générateur asynchrone se déclare avec async function*.\n",
+          "skills": [
+            "async-iterators"
+          ]
+        }
+      ],
+      "chapterId": "javascript-iterateurs-asynchrones",
+      "technology": "javascript",
+      "contentPath": "javascript/iterateurs-generateurs/iterateurs-asynchrones/quiz.yaml",
+      "contentVersion": "81b2530ce9bb"
+    },
+    {
       "id": "javascript-syntaxe-moderne-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -11136,6 +11939,158 @@
       "technology": "javascript",
       "contentPath": "javascript/map-et-set/weakmap-et-weakset/quiz.yaml",
       "contentVersion": "66a5cd5cc851"
+    },
+    {
+      "id": "javascript-fuites-memoire-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-fuites-memoire-q1",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Lesquelles de ces situations provoquent une fuite dans un composant ouvert et fermé à répétition ?\n",
+          "options": [
+            "Un setInterval jamais arrêté",
+            "Un écouteur ajouté sur window et jamais retiré",
+            "Une variable locale non utilisée après le retour de la fonction",
+            "Une Map globale qui mémorise chaque élément affiché"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "Le minuteur, l'écouteur sur window et la Map globale restent accessibles et retiennent ce qu'ils capturent. Une variable locale disparaît avec le cadre de la fonction.\n",
+          "skills": [
+            "memory-leaks"
+          ]
+        },
+        {
+          "id": "js-fuites-memoire-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une entrée de WeakMap est retirée quand sa clé n'est plus accessible ailleurs.\n",
+          "answer": true,
+          "explanation": "Une WeakMap ne retient pas ses clés : quand la clé est collectée, l'entrée et sa valeur le sont aussi.\n",
+          "skills": [
+            "memory-leaks"
+          ]
+        },
+        {
+          "id": "js-fuites-memoire-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Qu'est-ce qu'un nœud DOM détaché qui fuit ?\n",
+          "options": [
+            "Un nœud retiré de la page mais encore référencé par du JavaScript",
+            "Un nœud caché avec display: none",
+            "Un nœud créé mais pas encore inséré, puis abandonné",
+            "Un nœud dans un iframe"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Retiré du document mais encore référencé par un tableau, un cache ou un écouteur, le nœud reste accessible et garde tout son sous-arbre en mémoire.\n",
+          "skills": [
+            "memory-leaks"
+          ]
+        },
+        {
+          "id": "js-fuites-memoire-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle démarche met le mieux en évidence une fuite ?\n",
+          "options": [
+            "Comparer des instantanés du tas avant et après avoir répété l'action",
+            "Lire la mémoire utilisée une seule fois",
+            "Appeler global.gc() en production",
+            "Remplacer toutes les Map par des WeakMap"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une fuite se voit par une croissance répétée qui ne redescend pas après collecte : la comparaison d'instantanés montre les objets retenus et leur chaîne de rétention.\n",
+          "skills": [
+            "memory-leaks"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fuites-memoire",
+      "technology": "javascript",
+      "contentPath": "javascript/memoire/fuites-memoire/quiz.yaml",
+      "contentVersion": "9b396e2c5d59"
+    },
+    {
+      "id": "javascript-memoire-gc-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-memoire-gc-q1",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Après `const b = a; a = null;`, l'objet initialement référencé par `a` peut être libéré.\n",
+          "answer": false,
+          "explanation": "a = null supprime un chemin, mais b référence toujours le même objet : il reste accessible, donc en mémoire.\n",
+          "skills": [
+            "memory-model"
+          ]
+        },
+        {
+          "id": "js-memoire-gc-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Deux objets qui se référencent mutuellement, mais qu'aucune racine n'atteint, restent en mémoire.\n",
+          "answer": false,
+          "explanation": "Le marquage part des racines : un cycle inaccessible n'est pas marqué, il est libéré. Seul un comptage de références le garderait.\n",
+          "skills": [
+            "memory-model"
+          ]
+        },
+        {
+          "id": "js-memoire-gc-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Lesquels sont des racines, ou retiennent des objets comme des racines, pour le ramasse-miettes ?\n",
+          "options": [
+            "L'objet global",
+            "Les variables des fonctions en cours d'exécution",
+            "Le callback d'un setInterval actif",
+            "Un objet référencé uniquement par un autre objet inaccessible"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Le global, la pile d'appels et les callbacks programmés sont des points de départ du marquage. Un objet atteint seulement depuis un objet inaccessible est lui-même inaccessible.\n",
+          "skills": [
+            "memory-model"
+          ]
+        },
+        {
+          "id": "js-memoire-gc-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que lève une récursion trop profonde ?\n",
+          "options": [
+            "RangeError: Maximum call stack size exceeded",
+            "Une erreur de mémoire du tas",
+            "TypeError: stack overflow",
+            "Rien : le moteur agrandit la pile"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "La pile d'appels a une taille limitée : chaque appel ajoute un cadre, et le moteur lève une RangeError quand elle est pleine.\n",
+          "skills": [
+            "memory-model"
+          ]
+        }
+      ],
+      "chapterId": "javascript-memoire-gc",
+      "technology": "javascript",
+      "contentPath": "javascript/memoire/pile-tas-ramasse-miettes/quiz.yaml",
+      "contentVersion": "b039680db782"
     },
     {
       "id": "javascript-objets-copies-quiz",
@@ -12657,6 +13612,146 @@
       "technology": "javascript",
       "contentPath": "javascript/prototypes/prototype-et-proto/quiz.yaml",
       "contentVersion": "a7efad8d1d84"
+    },
+    {
+      "id": "javascript-proxy-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-proxy-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel piège intercepte l'affectation `proxy.nom = 'Ada'` ?\n",
+          "options": [
+            "set",
+            "get",
+            "defineProperty uniquement",
+            "apply"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "set intercepte l'écriture d'une propriété ; il doit renvoyer true en cas de succès.\n",
+          "skills": [
+            "proxy-reflect"
+          ]
+        },
+        {
+          "id": "js-proxy-q2",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "Si le piège set renvoie false, l'affectation lève une TypeError en mode strict.\n",
+          "answer": true,
+          "explanation": "Un retour false signale l'échec de l'opération, que le mode strict transforme en erreur.\n",
+          "skills": [
+            "proxy-reflect"
+          ]
+        },
+        {
+          "id": "js-proxy-q3",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "Que se passe-t-il quand on appelle `proxy.set('a', 1)` sur un Proxy sans pièges enveloppant une Map ?\n",
+          "options": [
+            "Une TypeError, car la méthode attend la vraie Map comme this",
+            "L'entrée est ajoutée normalement",
+            "L'entrée est ajoutée au proxy mais pas à la Map",
+            "Rien : l'appel est ignoré"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les méthodes de Map vérifient leurs emplacements internes, que le proxy ne possède pas.\n",
+          "skills": [
+            "proxy-reflect"
+          ]
+        },
+        {
+          "id": "js-proxy-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi appeler Reflect.get(cible, cle, recepteur) plutôt que cible[cle] dans un piège get ?\n",
+          "options": [
+            "Pour que les accesseurs et l'héritage reçoivent le bon this",
+            "Parce que cible[cle] est interdit dans un proxy",
+            "Pour rendre la lecture asynchrone",
+            "Pour empêcher la lecture des symboles"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Reflect.get transmet le récepteur, ce qui garde le comportement normal des getters et de la chaîne de prototypes.\n",
+          "skills": [
+            "proxy-reflect"
+          ]
+        }
+      ],
+      "chapterId": "javascript-proxy",
+      "technology": "javascript",
+      "contentPath": "javascript/symboles-metaprogrammation/proxy-et-reflect/quiz.yaml",
+      "contentVersion": "30696ad97285"
+    },
+    {
+      "id": "javascript-symboles-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-symboles-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `Symbol('a') === Symbol('a')` ?\n",
+          "answer": "false",
+          "explanation": "Chaque appel à Symbol crée une valeur unique, même avec la même description.\n",
+          "skills": [
+            "symbols"
+          ]
+        },
+        {
+          "id": "js-symboles-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Avec `const s = Symbol('s'); const o = { a: 1, [s]: 2 };`, que renvoie `JSON.stringify(o)` ?\n",
+          "answer": "{\"a\":1}",
+          "explanation": "Les propriétés à clé symbole sont ignorées par la sérialisation JSON.\n",
+          "skills": [
+            "symbols"
+          ]
+        },
+        {
+          "id": "js-symboles-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une propriété dont la clé est un symbole est impossible à lister depuis l'extérieur.\n",
+          "answer": false,
+          "explanation": "Object.getOwnPropertySymbols et Reflect.ownKeys la révèlent : elle est discrète, pas privée.\n",
+          "skills": [
+            "symbols"
+          ]
+        },
+        {
+          "id": "js-symboles-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel symbole bien connu permet de définir la conversion d'un objet en nombre ou en chaîne ?\n",
+          "options": [
+            "Symbol.toPrimitive",
+            "Symbol.iterator",
+            "Symbol.toStringTag",
+            "Symbol.hasInstance"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Symbol.toPrimitive reçoit l'indice 'string', 'number' ou 'default' et renvoie la valeur primitive.\n",
+          "skills": [
+            "symbols"
+          ]
+        }
+      ],
+      "chapterId": "javascript-symboles",
+      "technology": "javascript",
+      "contentPath": "javascript/symboles-metaprogrammation/symboles-et-protocoles/quiz.yaml",
+      "contentVersion": "ba3823c4f0fd"
     },
     {
       "id": "javascript-tableaux-ajouter-retirer-quiz",

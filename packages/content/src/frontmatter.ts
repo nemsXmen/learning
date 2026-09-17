@@ -163,14 +163,26 @@ export function scanPractice(body: string, bodyStartLine: number): PracticeScan 
   return { items, problems };
 }
 
-/** Relative Markdown links, excluding anchors and absolute URLs. */
+/**
+ * Relative Markdown links, excluding anchors and absolute URLs. Fence-aware and
+ * code-span-aware: `[Symbol.toPrimitive](indice)` in a lesson is JavaScript, not
+ * a link to a file named `indice`.
+ */
 export function extractRelativeLinks(
   body: string,
   bodyStartLine: number,
 ): Array<{ target: string; line: number }> {
   const links: Array<{ target: string; line: number }> = [];
+  let fence: string | null = null;
   body.split('\n').forEach((line, index) => {
-    for (const match of line.matchAll(/!?\[[^\]]*\]\(([^)\s]+)\)/g)) {
+    const marker = /^\s*(```|~~~)/.exec(line)?.[1];
+    if (marker) {
+      fence = fence === null ? marker : fence === marker ? null : fence;
+      return;
+    }
+    if (fence !== null) return;
+    const prose = line.replace(/(`+)[\s\S]*?\1/g, '');
+    for (const match of prose.matchAll(/!?\[[^\]]*\]\(([^)\s]+)\)/g)) {
       const target = match[1];
       if (!target) continue;
       if (/^([a-z]+:)?\/\//i.test(target) || target.startsWith('#') || target.startsWith('mailto:')) {

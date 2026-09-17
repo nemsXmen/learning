@@ -578,3 +578,49 @@ skills:
     name: Nouvelles tentatives et requêtes parallèles
     importance: 4
     requires: [fetch-errors]
+
+  # Partie 11 — Advanced JavaScript
+  - id: iterators
+    name: Itérables et itérateurs
+    importance: 4
+    requires: [classes-basics]
+
+  - id: generators
+    name: Générateurs
+    importance: 4
+    requires: [iterators]
+
+  - id: async-iterators
+    name: Itérateurs asynchrones
+    importance: 3
+    requires: [generators, fetch-basics]
+
+  - id: symbols
+    name: Symboles et symboles bien connus
+    importance: 3
+    requires: [iterators]
+
+  - id: proxy-reflect
+    name: Proxy et Reflect
+    importance: 3
+    requires: [symbols, prototype-property]
+
+  - id: property-descriptors
+    name: Descripteurs de propriétés
+    importance: 3
+    requires: [class-accessors]
+
+  - id: object-immutability
+    name: Figer, sceller et empêcher l'extension
+    importance: 3
+    requires: [property-descriptors]
+
+  - id: memory-model
+    name: Pile, tas et ramasse-miettes
+    importance: 3
+    requires: [closures, weak-collections]
+
+  - id: memory-leaks
+    name: Fuites mémoire
+    importance: 4
+    requires: [memory-model, closure-pitfalls]

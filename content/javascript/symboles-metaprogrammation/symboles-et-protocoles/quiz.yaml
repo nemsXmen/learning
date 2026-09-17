@@ -1,0 +1,51 @@
+id: javascript-symboles-quiz
+kind: QUIZ
+questions:
+  - id: js-symboles-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `Symbol('a') === Symbol('a')` ?
+    answer: 'false'
+    explanation: >
+      Chaque appel à Symbol crée une valeur unique, même avec la même description.
+    skills:
+      - symbols
+
+  - id: js-symboles-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Avec `const s = Symbol('s'); const o = { a: 1, [s]: 2 };`, que renvoie `JSON.stringify(o)` ?
+    answer: '{"a":1}'
+    explanation: >
+      Les propriétés à clé symbole sont ignorées par la sérialisation JSON.
+    skills:
+      - symbols
+
+  - id: js-symboles-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Une propriété dont la clé est un symbole est impossible à lister depuis l'extérieur.
+    answer: false
+    explanation: >
+      Object.getOwnPropertySymbols et Reflect.ownKeys la révèlent : elle est discrète, pas privée.
+    skills:
+      - symbols
+
+  - id: js-symboles-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel symbole bien connu permet de définir la conversion d'un objet en nombre ou en chaîne ?
+    options:
+      - "Symbol.toPrimitive"
+      - "Symbol.iterator"
+      - "Symbol.toStringTag"
+      - "Symbol.hasInstance"
+    answer: [0]
+    explanation: >
+      Symbol.toPrimitive reçoit l'indice 'string', 'number' ou 'default' et renvoie la valeur primitive.
+    skills:
+      - symbols

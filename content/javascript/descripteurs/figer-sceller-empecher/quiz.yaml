@@ -1,0 +1,60 @@
+id: javascript-figer-quiz
+kind: QUIZ
+questions:
+  - id: js-figer-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle opération interdit l'ajout et la suppression de propriétés, mais laisse modifier leurs valeurs ?
+    options:
+      - "Object.seal"
+      - "Object.freeze"
+      - "Object.preventExtensions"
+      - "const"
+    answer: [0]
+    explanation: >
+      Object.seal empêche l'extension et rend les propriétés non configurables, sans toucher à
+      writable. preventExtensions permet encore la suppression, freeze interdit aussi la modification.
+    skills:
+      - object-immutability
+
+  - id: js-figer-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Dans un module, qu'affiche `const o = Object.freeze({ liste: [] }); o.liste.push(1); console.log(o.liste.length);` ?
+    answer: '1'
+    explanation: >
+      Le gel est superficiel : la propriété liste ne peut pas être réaffectée, mais le tableau
+      qu'elle référence reste modifiable.
+    skills:
+      - object-immutability
+
+  - id: js-figer-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      La copie `{ ...objetGele }` est elle aussi gelée.
+    answer: false
+    explanation: >
+      Le spread crée un nouvel objet ordinaire aux propriétés modifiables. Le gel ne se
+      transmet pas aux copies.
+    skills:
+      - object-immutability
+
+  - id: js-figer-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles affirmations sur `Object.freeze` sont vraies ?
+    options:
+      - "Un objet gelé est aussi scellé"
+      - "Le gel est irréversible"
+      - "Le gel s'applique aux objets imbriqués"
+      - "Une écriture refusée lève une TypeError en mode strict"
+    answer: [0, 1, 3]
+    explanation: >
+      freeze inclut seal, ne peut pas être annulé et lève une TypeError en mode strict. Il est
+      superficiel : les objets imbriqués restent modifiables.
+    skills:
+      - object-immutability

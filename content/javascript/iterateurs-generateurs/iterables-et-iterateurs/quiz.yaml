@@ -1,0 +1,56 @@
+id: javascript-iterateurs-quiz
+kind: QUIZ
+questions:
+  - id: js-iterateurs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle méthode rend un objet utilisable avec for...of ?
+    options:
+      - "[Symbol.iterator]()"
+      - "next()"
+      - "forEach()"
+      - "valueOf()"
+    answer: [0]
+    explanation: >
+      for...of appelle [Symbol.iterator]() pour obtenir un itérateur, puis next() à chaque tour.
+    skills:
+      - iterators
+
+  - id: js-iterateurs-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Avec `const it = [7][Symbol.iterator](); it.next();`, que vaut `it.next().done` ?
+    answer: 'true'
+    explanation: >
+      Le premier appel renvoie la valeur 7 ; le second signale la fin du parcours.
+    skills:
+      - iterators
+
+  - id: js-iterateurs-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      `for (const x of { a: 1 })` fonctionne.
+    answer: false
+    explanation: >
+      Un objet littéral n'est pas itérable : l'appel lève une TypeError. On utilise Object.entries.
+    skills:
+      - iterators
+
+  - id: js-iterateurs-q4
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Quand le moteur appelle-t-il la méthode `return()` d'un itérateur ?
+    options:
+      - "Quand le parcours s'arrête avant la fin, par exemple avec break"
+      - "À chaque appel de next()"
+      - "Quand next() renvoie done: true"
+      - "Jamais : elle n'est appelée que manuellement"
+    answer: [0]
+    explanation: >
+      return() permet de libérer une ressource lors d'une sortie anticipée ; un parcours complet ne l'appelle pas.
+    skills:
+      - iterators

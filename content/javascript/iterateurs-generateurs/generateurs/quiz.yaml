@@ -1,0 +1,51 @@
+id: javascript-generateurs-quiz
+kind: QUIZ
+questions:
+  - id: js-generateurs-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      Appeler une fonction génératrice exécute son corps jusqu'au premier yield.
+    answer: false
+    explanation: >
+      L'appel renvoie seulement un objet générateur ; le corps s'exécute au premier next().
+    skills:
+      - generators
+
+  - id: js-generateurs-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Avec `function* g() { yield 1; return 2; }`, que vaut `[...g()].length` ?
+    answer: '1'
+    explanation: >
+      Le spread ignore la valeur de return : seule la valeur 1 est produite.
+    skills:
+      - generators
+
+  - id: js-generateurs-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment rendre une classe itérable de la façon la plus concise ?
+    options:
+      - "En définissant une méthode *[Symbol.iterator]() qui utilise yield"
+      - "En héritant d'Array"
+      - "En définissant une propriété length"
+      - "En ajoutant une méthode forEach"
+    answer: [0]
+    explanation: >
+      Une méthode génératrice renvoie un générateur neuf à chaque parcours, qui implémente le protocole.
+    skills:
+      - generators
+
+  - id: js-generateurs-q4
+    type: true_false
+    difficulty: 4
+    question: >
+      Quand une boucle for...of s'interrompt avec break, le bloc finally du générateur parcouru s'exécute.
+    answer: true
+    explanation: >
+      break appelle return() sur le générateur, qui reprend dans son finally.
+    skills:
+      - generators

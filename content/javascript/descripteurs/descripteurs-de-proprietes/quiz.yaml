@@ -1,0 +1,60 @@
+id: javascript-descripteurs-quiz
+kind: QUIZ
+questions:
+  - id: js-descripteurs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Après `Object.defineProperty(o, 'id', { value: 7 })`, quels attributs a la propriété `id` ?
+    options:
+      - "writable, enumerable et configurable valent false"
+      - "writable, enumerable et configurable valent true"
+      - "seul writable vaut false"
+      - "seul configurable vaut false"
+    answer: [0]
+    explanation: >
+      Object.defineProperty met à false tous les attributs non précisés : la propriété est en
+      lecture seule, non énumérable et non configurable.
+    skills:
+      - property-descriptors
+
+  - id: js-descripteurs-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une propriété non énumérable ne peut plus être lue par son nom.
+    answer: false
+    explanation: >
+      enumerable: false la cache seulement des énumérations (Object.keys, for...in, spread,
+      JSON.stringify). On la lit toujours avec objet.nom.
+    skills:
+      - property-descriptors
+
+  - id: js-descripteurs-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Sur une propriété de données non configurable et modifiable, quelles opérations restent possibles ?
+    options:
+      - "Changer sa valeur"
+      - "Passer writable de true à false"
+      - "La supprimer"
+      - "La transformer en accesseur"
+    answer: [0, 1]
+    explanation: >
+      Tant que writable vaut true, la valeur change librement, et le passage de writable à
+      false reste permis. Suppression et redéfinition sont interdites.
+    skills:
+      - property-descriptors
+
+  - id: js-descripteurs-q4
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `console.log(typeof Object.getOwnPropertyDescriptor({ ...{ get x() { return 1; } } }, 'x').get)` ?
+    answer: 'undefined'
+    explanation: >
+      Le spread exécute le getter et écrit une propriété de données de valeur 1 : le
+      descripteur de la copie n'a plus de get.
+    skills:
+      - property-descriptors

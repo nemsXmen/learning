@@ -1,0 +1,61 @@
+id: javascript-proxy-quiz
+kind: QUIZ
+questions:
+  - id: js-proxy-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel piège intercepte l'affectation `proxy.nom = 'Ada'` ?
+    options:
+      - "set"
+      - "get"
+      - "defineProperty uniquement"
+      - "apply"
+    answer: [0]
+    explanation: >
+      set intercepte l'écriture d'une propriété ; il doit renvoyer true en cas de succès.
+    skills:
+      - proxy-reflect
+
+  - id: js-proxy-q2
+    type: true_false
+    difficulty: 4
+    question: >
+      Si le piège set renvoie false, l'affectation lève une TypeError en mode strict.
+    answer: true
+    explanation: >
+      Un retour false signale l'échec de l'opération, que le mode strict transforme en erreur.
+    skills:
+      - proxy-reflect
+
+  - id: js-proxy-q3
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Que se passe-t-il quand on appelle `proxy.set('a', 1)` sur un Proxy sans pièges enveloppant une Map ?
+    options:
+      - "Une TypeError, car la méthode attend la vraie Map comme this"
+      - "L'entrée est ajoutée normalement"
+      - "L'entrée est ajoutée au proxy mais pas à la Map"
+      - "Rien : l'appel est ignoré"
+    answer: [0]
+    explanation: >
+      Les méthodes de Map vérifient leurs emplacements internes, que le proxy ne possède pas.
+    skills:
+      - proxy-reflect
+
+  - id: js-proxy-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi appeler Reflect.get(cible, cle, recepteur) plutôt que cible[cle] dans un piège get ?
+    options:
+      - "Pour que les accesseurs et l'héritage reçoivent le bon this"
+      - "Parce que cible[cle] est interdit dans un proxy"
+      - "Pour rendre la lecture asynchrone"
+      - "Pour empêcher la lecture des symboles"
+    answer: [0]
+    explanation: >
+      Reflect.get transmet le récepteur, ce qui garde le comportement normal des getters et de la chaîne de prototypes.
+    skills:
+      - proxy-reflect

@@ -1,0 +1,65 @@
+id: javascript-fuites-memoire-quiz
+kind: QUIZ
+questions:
+  - id: js-fuites-memoire-q1
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquelles de ces situations provoquent une fuite dans un composant ouvert et fermé à répétition ?
+    options:
+      - "Un setInterval jamais arrêté"
+      - "Un écouteur ajouté sur window et jamais retiré"
+      - "Une variable locale non utilisée après le retour de la fonction"
+      - "Une Map globale qui mémorise chaque élément affiché"
+    answer: [0, 1, 3]
+    explanation: >
+      Le minuteur, l'écouteur sur window et la Map globale restent accessibles et retiennent ce
+      qu'ils capturent. Une variable locale disparaît avec le cadre de la fonction.
+    skills:
+      - memory-leaks
+
+  - id: js-fuites-memoire-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Une entrée de WeakMap est retirée quand sa clé n'est plus accessible ailleurs.
+    answer: true
+    explanation: >
+      Une WeakMap ne retient pas ses clés : quand la clé est collectée, l'entrée et sa valeur
+      le sont aussi.
+    skills:
+      - memory-leaks
+
+  - id: js-fuites-memoire-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Qu'est-ce qu'un nœud DOM détaché qui fuit ?
+    options:
+      - "Un nœud retiré de la page mais encore référencé par du JavaScript"
+      - "Un nœud caché avec display: none"
+      - "Un nœud créé mais pas encore inséré, puis abandonné"
+      - "Un nœud dans un iframe"
+    answer: [0]
+    explanation: >
+      Retiré du document mais encore référencé par un tableau, un cache ou un écouteur, le nœud
+      reste accessible et garde tout son sous-arbre en mémoire.
+    skills:
+      - memory-leaks
+
+  - id: js-fuites-memoire-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle démarche met le mieux en évidence une fuite ?
+    options:
+      - "Comparer des instantanés du tas avant et après avoir répété l'action"
+      - "Lire la mémoire utilisée une seule fois"
+      - "Appeler global.gc() en production"
+      - "Remplacer toutes les Map par des WeakMap"
+    answer: [0]
+    explanation: >
+      Une fuite se voit par une croissance répétée qui ne redescend pas après collecte : la
+      comparaison d'instantanés montre les objets retenus et leur chaîne de rétention.
+    skills:
+      - memory-leaks

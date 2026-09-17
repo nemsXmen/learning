@@ -1,0 +1,62 @@
+id: javascript-iterateurs-asynchrones-quiz
+kind: QUIZ
+questions:
+  - id: js-iterateurs-asynchrones-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle méthode un objet doit-il avoir pour être parcouru nativement par for await...of ?
+    options:
+      - "[Symbol.asyncIterator]()"
+      - "[Symbol.iterator]() uniquement"
+      - "then()"
+      - "await()"
+    answer: [0]
+    explanation: >
+      for await utilise Symbol.asyncIterator, et se rabat sur Symbol.iterator pour les itérables de promesses.
+    skills:
+      - async-iterators
+
+  - id: js-iterateurs-asynchrones-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      for await...of attend chaque valeur avant de demander la suivante.
+    answer: true
+    explanation: >
+      Le parcours est séquentiel, ce qui convient aux pages et aux flux, pas aux opérations indépendantes.
+    skills:
+      - async-iterators
+
+  - id: js-iterateurs-asynchrones-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un générateur asynchrone pagine une API. Le consommateur fait break au deuxième élément. Que se passe-t-il pour les pages
+      suivantes ?
+    options:
+      - "Elles ne sont jamais chargées"
+      - "Elles sont chargées puis ignorées"
+      - "Une erreur est levée"
+      - "Elles sont chargées au parcours suivant"
+    answer: [0]
+    explanation: >
+      Le générateur ne charge une page que lorsqu'on lui demande une valeur ; break l'arrête.
+    skills:
+      - async-iterators
+
+  - id: js-iterateurs-asynchrones-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture permet d'utiliser à la fois await et yield ?
+    options:
+      - "async function*"
+      - "function*"
+      - "async function"
+      - "function async*"
+    answer: [0]
+    explanation: >
+      Un générateur asynchrone se déclare avec async function*.
+    skills:
+      - async-iterators
