@@ -1,0 +1,14 @@
+- id: ts-38-design-patterns-quand-utiliser-ou-viter-un-pattern-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Quand utiliser ou éviter un pattern ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Quand utiliser ou éviter un pattern est une fonctionnalité importante de TypeScript.
+  skills: []

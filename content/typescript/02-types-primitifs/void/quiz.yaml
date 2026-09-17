@@ -1,0 +1,57 @@
+- id: typescript-02-void-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    À quoi sert principalement le type `void` ?
+  options:
+    - À représenter null
+    - À indiquer qu’une fonction ne retourne pas de valeur utile
+    - À désactiver le type-checking
+    - À typer les tableaux vides
+  answer: [1]
+  explanation: >
+    void signale l’absence de valeur de retour utile.
+  skills: [primitive-types]
+
+- id: typescript-02-void-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Une fonction annotée `: void` peut faire `return 42`.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. TypeScript refuse de retourner une valeur concrète dans une fonction void.
+  skills: [primitive-types]
+
+- id: typescript-02-void-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quelle est la différence principale entre void et never ?
+  options:
+    - Aucune
+    - void = pas de valeur utile, never = la fonction ne se termine jamais
+    - never est plus ancien
+    - void est réservé aux variables
+  answer: [1]
+  explanation: >
+    void signifie « pas de retour utile ». never signifie « n’arrive jamais ».
+  skills: [primitive-types]
+
+- id: typescript-02-void-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel est le type de retour le plus idiomatique pour une fonction qui ne fait que logger ?
+  options:
+    - any
+    - undefined
+    - void
+    - never
+  answer: [2]
+  explanation: >
+    void est le choix standard pour les fonctions à effet de bord sans valeur de retour utile.
+  skills: [primitive-types]

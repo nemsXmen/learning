@@ -1,0 +1,57 @@
+- id: typescript-11-unknown-vs-any-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle est la différence clé entre unknown et any ?
+  options:
+    - Aucune
+    - unknown exige un narrowing ; any non
+    - any est plus sûr
+    - unknown n’existe qu’en mode non-strict
+  answer: [1]
+  explanation: >
+    unknown est type-safe, any ne l’est pas.
+  skills: [any-unknown-never]
+
+- id: typescript-11-unknown-vs-any-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    On peut assigner une valeur unknown à une variable string sans narrowing.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. Il faut narrow ou une assertion contrôlée.
+  skills: [any-unknown-never]
+
+- id: typescript-11-unknown-vs-any-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pour le retour de JSON.parse, on préfère souvent :
+  options:
+    - any
+    - unknown
+    - string
+    - never
+  answer: [1]
+  explanation: >
+    unknown reflète mieux l’incertitude.
+  skills: [any-unknown-never]
+
+- id: typescript-11-unknown-vs-any-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Par défaut, pour une valeur inconnue, on choisit :
+  options:
+    - any
+    - unknown
+    - Object
+    - null
+  answer: [1]
+  explanation: >
+    unknown est le choix sûr.
+  skills: [any-unknown-never]

@@ -1,0 +1,57 @@
+- id: typescript-02-bigint-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Comment déclare-t-on un littéral bigint ?
+  options:
+    - 100b
+    - 100n
+    - BigInt(100) uniquement
+    - 100i
+  answer: [1]
+  explanation: >
+    Le suffixe n crée un littéral bigint (100n).
+  skills: [primitive-types]
+
+- id: typescript-02-bigint-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    On peut écrire `10n + 5` sans problème.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. On ne peut pas mélanger bigint et number dans les opérations arithmétiques.
+  skills: [primitive-types]
+
+- id: typescript-02-bigint-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    À quoi sert principalement bigint ?
+  options:
+    - À remplacer tous les number
+    - À manipuler des entiers de précision arbitraire au-delà des limites de number
+    - À faire des calculs flottants plus précis
+    - À typer les booléens
+  answer: [1]
+  explanation: >
+    bigint permet des entiers bien plus grands que Number.MAX_SAFE_INTEGER.
+  skills: [primitive-types]
+
+- id: typescript-02-bigint-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quelle est la limite approximative des entiers sûrs avec number ?
+  options:
+    - 2^31
+    - 2^53 - 1
+    - 2^64
+    - Illimitée
+  answer: [1]
+  explanation: >
+    Number.MAX_SAFE_INTEGER vaut 9007199254740991 (2^53 - 1).
+  skills: [primitive-types]

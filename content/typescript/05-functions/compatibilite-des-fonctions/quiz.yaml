@@ -1,0 +1,57 @@
+- id: typescript-05-compatibilite-des-fonctions-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Sous strictFunctionTypes, les paramètres de fonctions sont :
+  options:
+    - Covariants
+    - Contravariants
+    - Invariants uniquement
+    - Ignorés
+  answer: [1]
+  explanation: >
+    Les paramètres sont traités en contravariance pour plus de sécurité.
+  skills: [functions]
+
+- id: typescript-05-compatibilite-des-fonctions-q2
+  type: true_false
+  difficulty: 2
+  question: >
+    Une fonction avec moins de paramètres peut être assignable à un type qui en attend plus.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, TypeScript l’autorise (les paramètres supplémentaires sont simplement ignorés à l’appel).
+  skills: [functions]
+
+- id: typescript-05-compatibilite-des-fonctions-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Le type de retour d’une fonction doit être :
+  options:
+    - Contravariant
+    - Covariant (compatible avec le type cible)
+    - Toujours any
+    - Identique au type des paramètres
+  answer: [1]
+  explanation: >
+    Le retour est covariant.
+  skills: [functions]
+
+- id: typescript-05-compatibilite-des-fonctions-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi active-t-on généralement strictFunctionTypes ?
+  options:
+    - Pour accélérer la compilation
+    - Pour une vérification plus sûre de la compatibilité des paramètres
+    - Pour interdire les arrow functions
+    - Pour activer les overloads
+  answer: [1]
+  explanation: >
+    Cela renforce la sécurité des assignations de fonctions.
+  skills: [functions]

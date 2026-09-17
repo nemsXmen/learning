@@ -1,0 +1,57 @@
+- id: typescript-09-literal-inference-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel type est inféré pour `const x = "hello"` ?
+  options:
+    - string
+    - "hello"
+    - any
+    - String
+  answer: [1]
+  explanation: >
+    Avec const, TypeScript infère le literal type.
+  skills: [literal-types]
+
+- id: typescript-09-literal-inference-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `let x = "hello"` est inféré comme string (et non "hello").
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, à cause de la possible réaffectation.
+  skills: [literal-types]
+
+- id: typescript-09-literal-inference-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Comment forcer un literal type dans un objet ?
+  options:
+    - Rien de spécial
+    - Avec as const (sur la propriété ou l’objet)
+    - Avec any
+    - Avec new
+  answer: [1]
+  explanation: >
+    as const empêche l’élargissement.
+  skills: [literal-types]
+
+- id: typescript-09-literal-inference-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    L’inférence de littéraux dépend principalement de :
+  options:
+    - La version de Node
+    - Le contexte (const/let, position, annotations)
+    - La taille du fichier
+    - Le nom de la variable
+  answer: [1]
+  explanation: >
+    const vs let et les assertions contrôlent l’inférence.
+  skills: [literal-types]

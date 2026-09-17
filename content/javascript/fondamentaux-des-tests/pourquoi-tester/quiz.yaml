@@ -1,0 +1,65 @@
+id: javascript-pourquoi-tester-quiz
+kind: QUIZ
+questions:
+  - id: js-pourquoi-tester-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel type de test vérifie qu'un visiteur peut se connecter en remplissant le formulaire dans un navigateur ?
+    options:
+      - "Un test de bout en bout"
+      - "Un test unitaire"
+      - "Un test d'intégration du dépôt"
+      - "Un test de performance"
+    answer: [0]
+    explanation: >
+      Le test pilote l'application complète comme un utilisateur, dans un vrai navigateur :
+      c'est un test de bout en bout.
+    skills:
+      - testing-levels
+
+  - id: js-pourquoi-tester-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Une suite de tests entièrement verte prouve que le code ne contient aucun bug.
+    answer: false
+    explanation: >
+      Les tests vérifient uniquement les cas écrits. Un comportement non testé peut être faux
+      sans qu'aucun test n'échoue.
+    skills:
+      - testing-levels
+
+  - id: js-pourquoi-tester-q3
+    type: multiple_answer
+    difficulty: 2
+    question: >
+      Quelles affirmations décrivent la pyramide des tests ?
+    options:
+      - "Beaucoup de tests unitaires à la base"
+      - "Quelques tests de bout en bout sur les parcours critiques"
+      - "Autant de tests de bout en bout que de tests unitaires"
+      - "Les tests du sommet sont plus lents et plus coûteux"
+    answer: [0, 1, 3]
+    explanation: >
+      La pyramide place beaucoup de tests rapides à la base et peu de tests lents et coûteux au
+      sommet, réservés aux parcours importants.
+    skills:
+      - testing-levels
+
+  - id: js-pourquoi-tester-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle assertion vérifie qu'une fonction lève une erreur ?
+    options:
+      - "expect(() => f(-1)).toThrow()"
+      - "expect(f(-1)).toThrow()"
+      - "expect(f).toBe(Error)"
+      - "expect(f(-1)).toBeUndefined()"
+    answer: [0]
+    explanation: >
+      expect doit recevoir une fonction à appeler : avec expect(f(-1)), l'erreur est levée
+      avant même que expect ne s'exécute, et le test échoue.
+    skills:
+      - testing-levels

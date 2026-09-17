@@ -1,0 +1,57 @@
+- id: typescript-03-tableaux-multidimensionnels-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Comment déclare-t-on un tableau à deux dimensions de numbers ?
+  options:
+    - number[]
+    - number[][]
+    - number[,]
+    - Matrix<number>
+  answer: [1]
+  explanation: >
+    number[][] est la syntaxe standard.
+  skills: [arrays-tuples]
+
+- id: typescript-03-tableaux-multidimensionnels-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `matrix[0][1]` sur un number[][] a le type number.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, TypeScript propage le type à travers les accès.
+  skills: [arrays-tuples]
+
+- id: typescript-03-tableaux-multidimensionnels-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    `Array<Array<string>>` est équivalent à :
+  options:
+    - string[]
+    - string[][]
+    - Array<string>
+    - string[][][]
+  answer: [1]
+  explanation: >
+    Ce sont deux écritures du même type.
+  skills: [arrays-tuples]
+
+- id: typescript-03-tableaux-multidimensionnels-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel est le type de `row` dans `matrix.forEach(row => …)` si matrix est number[][] ?
+  options:
+    - number
+    - number[]
+    - number[][]
+    - any
+  answer: [1]
+  explanation: >
+    Chaque élément du tableau externe est un number[].
+  skills: [arrays-tuples]

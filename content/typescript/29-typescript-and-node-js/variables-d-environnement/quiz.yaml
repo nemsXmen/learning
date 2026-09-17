@@ -1,0 +1,14 @@
+- id: ts-29-typescript-and-node-js-variables-d-environnement-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Variables d’environnement ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Variables d’environnement est une fonctionnalité importante de TypeScript.
+  skills: []

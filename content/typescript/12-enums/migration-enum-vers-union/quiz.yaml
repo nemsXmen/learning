@@ -1,0 +1,57 @@
+- id: typescript-12-migration-enum-vers-union-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Le remplacement idiomatique d’un string enum est souvent :
+  options:
+    - any
+    - Literal union + objet as const
+    - Une classe
+    - Un type never
+  answer: [1]
+  explanation: >
+    On garde les constantes nommées et le type fermé.
+  skills: [enums]
+
+- id: typescript-12-migration-enum-vers-union-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    On peut migrer progressivement sans tout casser d’un coup.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, en cohabitant enum et union le temps de la migration.
+  skills: [enums]
+
+- id: typescript-12-migration-enum-vers-union-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi utiliser `as const` sur l’objet de constantes ?
+  options:
+    - Pour accélérer le runtime
+    - Pour obtenir des literal types et non string
+    - Pour créer un enum
+    - Pour désactiver strict
+  answer: [1]
+  explanation: >
+    Sans as const, les valeurs seraient élargies en string.
+  skills: [enums]
+
+- id: typescript-12-migration-enum-vers-union-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Après migration, que devient l’ancien enum ?
+  options:
+    - Il reste obligatoire
+    - Il peut être supprimé une fois les call sites migrés
+    - Il doit être converti en class
+    - Il devient any
+  answer: [1]
+  explanation: >
+    L’objectif est de s’en passer.
+  skills: [enums]

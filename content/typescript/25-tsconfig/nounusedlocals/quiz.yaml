@@ -1,0 +1,14 @@
+- id: ts-25-tsconfig-nounusedlocals-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que `noUnusedLocals` ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    `noUnusedLocals` est une fonctionnalité importante de TypeScript.
+  skills: []

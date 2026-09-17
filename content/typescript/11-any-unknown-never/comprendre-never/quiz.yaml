@@ -1,0 +1,57 @@
+- id: typescript-11-comprendre-never-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `never` représente :
+  options:
+    - N’importe quelle valeur
+    - L’absence de valeur possible / ce qui n’arrive jamais
+    - void
+    - any
+  answer: [1]
+  explanation: >
+    C’est le bottom type.
+  skills: [any-unknown-never]
+
+- id: typescript-11-comprendre-never-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Une fonction qui throw toujours peut être typée `: never`.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [any-unknown-never]
+
+- id: typescript-11-comprendre-never-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    `string | never` se simplifie en :
+  options:
+    - never
+    - string
+    - string | never (inchangé)
+    - any
+  answer: [1]
+  explanation: >
+    never est absorbé dans les unions.
+  skills: [any-unknown-never]
+
+- id: typescript-11-comprendre-never-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    never est un :
+  options:
+    - Top type
+    - Bottom type
+    - Primitive type uniquement
+    - Type runtime
+  answer: [1]
+  explanation: >
+    Aucun type n’est plus bas que never.
+  skills: [any-unknown-never]

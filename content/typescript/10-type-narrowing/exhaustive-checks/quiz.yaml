@@ -1,0 +1,57 @@
+- id: typescript-10-exhaustive-checks-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Un check exhaustif vise à :
+  options:
+    - Ignorer certains cas
+    - Traiter tous les membres d’une union
+    - Convertir en any
+    - Désactiver strict
+  answer: [1]
+  explanation: >
+    Tous les cas doivent être couverts.
+  skills: [type-narrowing]
+
+- id: typescript-10-exhaustive-checks-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Un default silencieux peut masquer un cas oublié.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, c’est un anti-pattern courant.
+  skills: [type-narrowing]
+
+- id: typescript-10-exhaustive-checks-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pour forcer une erreur à l’ajout d’un membre d’union, on utilise souvent :
+  options:
+    - any
+    - never / assertNever dans le default
+    - unknown uniquement
+    - string
+  answer: [1]
+  explanation: >
+    Le pattern never détecte les cas non gérés.
+  skills: [type-narrowing]
+
+- id: typescript-10-exhaustive-checks-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    L’exhaustivité est particulièrement importante pour :
+  options:
+    - Les tableaux de numbers
+    - Les unions fermées (statuts, événements, formes)
+    - Les variables locales simples
+    - Les imports
+  answer: [1]
+  explanation: >
+    Ce sont les unions qui évoluent avec le domaine.
+  skills: [type-narrowing]

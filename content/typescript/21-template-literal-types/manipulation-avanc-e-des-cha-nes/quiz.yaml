@@ -1,0 +1,14 @@
+- id: ts-21-template-literal-types-manipulation-avanc-e-des-cha-nes-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Manipulation avancée des chaînes ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Manipulation avancée des chaînes est une fonctionnalité importante de TypeScript.
+  skills: []

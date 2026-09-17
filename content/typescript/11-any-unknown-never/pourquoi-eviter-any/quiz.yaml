@@ -1,0 +1,57 @@
+- id: typescript-11-pourquoi-eviter-any-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel est le principal problème de `any` ?
+  options:
+    - Il est trop lent
+    - Il désactive la sécurité de types
+    - Il n’existe qu’en mode strict
+    - Il est interdit par JavaScript
+  answer: [1]
+  explanation: >
+    On perd les garanties du compilateur.
+  skills: [any-unknown-never]
+
+- id: typescript-11-pourquoi-eviter-any-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Un `any` peut « contaminer » d’autres variables par propagation.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, c’est fréquent.
+  skills: [any-unknown-never]
+
+- id: typescript-11-pourquoi-eviter-any-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quelle est une bonne alternative à `any` pour des données inconnues ?
+  options:
+    - Laisser sans type
+    - unknown (+ narrowing)
+    - Object
+    - Function
+  answer: [1]
+  explanation: >
+    unknown force le narrowing avant usage.
+  skills: [any-unknown-never]
+
+- id: typescript-11-pourquoi-eviter-any-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Dans le code métier, l’objectif raisonnable est souvent :
+  options:
+    - Maximiser les any
+    - Zéro any (ou quasi)
+    - Remplacer tous les types par any
+    - Désactiver le compilateur
+  answer: [1]
+  explanation: >
+    La discipline « zero any » maximise la valeur de TypeScript.
+  skills: [any-unknown-never]

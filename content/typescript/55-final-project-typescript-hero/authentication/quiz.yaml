@@ -1,0 +1,14 @@
+- id: ts-55-final-project-typescript-hero-authentication-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Authentication ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Authentication est une fonctionnalité importante de TypeScript.
+  skills: []

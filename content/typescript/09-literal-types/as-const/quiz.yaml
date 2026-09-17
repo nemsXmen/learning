@@ -1,0 +1,57 @@
+- id: typescript-09-as-const-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Que fait principalement `as const` ?
+  options:
+    - Exécute le code
+    - Demande l’inférence la plus étroite (literal types + readonly)
+    - Convertit en any
+    - Active strictNullChecks
+  answer: [1]
+  explanation: >
+    C’est une const assertion d’inférence.
+  skills: [literal-types]
+
+- id: typescript-09-as-const-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `["a", "b"] as const` a le type `readonly ["a", "b"]`.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [literal-types]
+
+- id: typescript-09-as-const-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Sans `as const`, `const arr = ["a", "b"]` est inféré comme :
+  options:
+    - readonly ["a", "b"]
+    - string[]
+    - ["a", "b"]
+    - any[]
+  answer: [1]
+  explanation: >
+    Les littéraux sont élargis en string[].
+  skills: [literal-types]
+
+- id: typescript-09-as-const-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Comment dérive-t-on souvent une union à partir d’un tableau `as const` ?
+  options:
+    - typeof arr
+    - (typeof arr)[number]
+    - arr[0]
+    - keyof arr
+  answer: [1]
+  explanation: >
+    (typeof arr)[number] produit l’union des éléments.
+  skills: [literal-types]

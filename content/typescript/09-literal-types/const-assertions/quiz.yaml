@@ -1,0 +1,57 @@
+- id: typescript-09-const-assertions-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `as const` est aussi appelé :
+  options:
+    - Type guard
+    - Const assertion
+    - Type predicate
+    - Decorator
+  answer: [1]
+  explanation: >
+    C’est le nom officiel de cette assertion.
+  skills: [literal-types]
+
+- id: typescript-09-const-assertions-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `as const` a un effet à runtime.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. C’est purement une assertion de compilation.
+  skills: [literal-types]
+
+- id: typescript-09-const-assertions-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel pattern permet de dériver une union depuis un tableau constant ?
+  options:
+    - typeof arr
+    - (typeof arr)[number]
+    - arr.length
+    - keyof arr
+  answer: [1]
+  explanation: >
+    (typeof arr)[number] après as const donne l’union des littéraux.
+  skills: [literal-types]
+
+- id: typescript-09-const-assertions-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    `as const` sur un objet rend les propriétés :
+  options:
+    - Optionnelles
+    - Readonly (et littérales)
+    - any
+    - Privées
+  answer: [1]
+  explanation: >
+    Propriétés readonly + valeurs en literal types.
+  skills: [literal-types]

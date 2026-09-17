@@ -1,0 +1,14 @@
+- id: ts-41-advanced-generics-builders-typ-s-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Builders typés ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Builders typés est une fonctionnalité importante de TypeScript.
+  skills: []

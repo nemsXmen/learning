@@ -1,0 +1,57 @@
+- id: typescript-11-void-vs-never-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `void` signifie :
+  options:
+    - Ne retourne jamais
+    - Pas de valeur de retour utile
+    - any
+    - unknown
+  answer: [1]
+  explanation: >
+    La fonction se termine sans valeur utile.
+  skills: [any-unknown-never]
+
+- id: typescript-11-void-vs-never-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `never` signifie que la fonction ne se termine jamais normalement.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [any-unknown-never]
+
+- id: typescript-11-void-vs-never-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pour une fonction qui throw toujours, on annote :
+  options:
+    - void
+    - never
+    - undefined
+    - any
+  answer: [1]
+  explanation: >
+    never est le type correct.
+  skills: [any-unknown-never]
+
+- id: typescript-11-void-vs-never-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pour un logger ou un setter, on annote souvent :
+  options:
+    - never
+    - void
+    - unknown
+    - any
+  answer: [1]
+  explanation: >
+    void est idiomatique pour les effets de bord sans retour utile.
+  skills: [any-unknown-never]

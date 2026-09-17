@@ -1,0 +1,57 @@
+- id: typescript-08-combiner-unions-et-intersections-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi parenthéser souvent les combinaisons de | et & ?
+  options:
+    - Ce n’est jamais utile
+    - Pour contrôler l’ordre et la lisibilité
+    - Pour activer strict
+    - Pour créer des classes
+  answer: [1]
+  explanation: >
+    La précédence peut surprendre ; les parenthèses clarifient.
+  skills: [unions-intersections]
+
+- id: typescript-08-combiner-unions-et-intersections-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    On peut utiliser à la fois | et & dans un même type.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, c’est courant.
+  skills: [unions-intersections]
+
+- id: typescript-08-combiner-unions-et-intersections-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Un pattern fréquent est :
+  options:
+    - Uniquement des unions
+    - Une base commune (intersection) + des variantes (union)
+    - Uniquement des intersections
+    - Des any partout
+  answer: [1]
+  explanation: >
+    Base partagée + variantes discriminées.
+  skills: [unions-intersections]
+
+- id: typescript-08-combiner-unions-et-intersections-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `type R = (A | B) & C` signifie :
+  options:
+    - A ou B, puis intersection avec C
+    - Uniquement A
+    - never
+    - A et B et C obligatoirement séparés
+  answer: [0]
+  explanation: >
+    D’abord l’union A|B, puis intersection avec C.
+  skills: [unions-intersections]

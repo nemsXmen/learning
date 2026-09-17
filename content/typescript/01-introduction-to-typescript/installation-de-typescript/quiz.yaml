@@ -1,0 +1,61 @@
+- id: typescript-01-installation-de-typescript-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle est la façon recommandée d’installer TypeScript pour un projet ?
+  options:
+    - npm install -g typescript
+    - npm install --save-dev typescript
+    - npm install typescript
+    - Télécharger un binaire depuis le site de Microsoft
+  answer: [1]
+  explanation: >
+    L’installation locale en devDependency garantit que tout le monde utilise
+    la même version et que le projet est reproductible.
+  skills: [typescript-basics]
+
+- id: typescript-01-installation-de-typescript-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    TypeScript doit normalement être placé dans les `dependencies` (pas `devDependencies`).
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. TypeScript n’est nécessaire qu’au moment du développement et du build.
+    En production on n’exécute que le JavaScript généré.
+  skills: [typescript-basics]
+
+- id: typescript-01-installation-de-typescript-q3
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Comment vérifier la version de TypeScript installée localement ?
+  options:
+    - node --version
+    - npx tsc --version
+    - npm typescript
+    - tsc -v (toujours, même sans installation locale)
+  answer: [1]
+  explanation: >
+    `npx tsc --version` utilise le binaire local s’il existe. Une installation
+    globale pourrait donner une autre version.
+  skills: [typescript-basics]
+
+- id: typescript-01-installation-de-typescript-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi préfère-t-on l’installation locale plutôt que globale ?
+  options:
+    - Parce que l’installation globale est interdite par npm
+    - Pour garantir que tous les développeurs et la CI utilisent la même version
+    - Parce que l’installation locale est plus rapide
+    - Pour pouvoir utiliser TypeScript sans Node.js
+  answer: [1]
+  explanation: >
+    La version est fixée dans package.json et le lockfile. Cela évite les
+    problèmes de « ça marche chez moi ».
+  skills: [typescript-basics]

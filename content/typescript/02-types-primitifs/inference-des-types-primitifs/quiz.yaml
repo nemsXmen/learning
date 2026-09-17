@@ -1,0 +1,57 @@
+- id: typescript-02-inference-des-types-primitifs-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel type TypeScript infère-t-il pour `const msg = "hello";` ?
+  options:
+    - string
+    - "hello"
+    - any
+    - String
+  answer: [1]
+  explanation: >
+    Avec const, TypeScript infère le literal type "hello".
+  skills: [primitive-types]
+
+- id: typescript-02-inference-des-types-primitifs-q2
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel type TypeScript infère-t-il pour `let msg = "hello";` ?
+  options:
+    - "hello"
+    - string
+    - any
+    - const string
+  answer: [1]
+  explanation: >
+    Avec let, le type est élargi à string car la variable peut être réassignée.
+  skills: [primitive-types]
+
+- id: typescript-02-inference-des-types-primitifs-q3
+  type: true_false
+  difficulty: 1
+  question: >
+    L’inférence des types primitifs est généralement fiable et on peut la laisser faire.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui. Pour les primitifs, l’inférence fonctionne très bien.
+  skills: [primitive-types]
+
+- id: typescript-02-inference-des-types-primitifs-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi les literal types inférés avec const sont-ils utiles ?
+  options:
+    - Ils rendent le code plus lent
+    - Ils permettent des unions précises et un meilleur narrowing
+    - Ils désactivent le type-checking
+    - Ils sont obligatoires
+  answer: [1]
+  explanation: >
+    Les literal types rendent les unions discriminées et le contrôle de flux beaucoup plus puissants.
+  skills: [primitive-types]

@@ -1,0 +1,14 @@
+- id: ts-24-modules-barrel-files-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Barrel files ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Barrel files est une fonctionnalité importante de TypeScript.
+  skills: []

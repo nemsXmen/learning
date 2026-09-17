@@ -1,0 +1,57 @@
+- id: typescript-10-narrowing-in-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    L’opérateur `in` sert à :
+  options:
+    - Tester un type primitif
+    - Tester la présence d’une propriété et narrow l’union
+    - Créer des classes
+    - Convertir en any
+  answer: [1]
+  explanation: >
+    C’est un narrowing structurel.
+  skills: [type-narrowing]
+
+- id: typescript-10-narrowing-in-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Après `if ("swim" in animal)`, TypeScript peut restreindre animal au type qui possède swim.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [type-narrowing]
+
+- id: typescript-10-narrowing-in-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    `in` est particulièrement utile pour :
+  options:
+    - Les primitifs uniquement
+    - Les unions d’objets avec des propriétés distinctes
+    - Les enums uniquement
+    - Les fonctions uniquement
+  answer: [1]
+  explanation: >
+    Il discrimine par la présence de membres.
+  skills: [type-narrowing]
+
+- id: typescript-10-narrowing-in-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que se passe-t-il si on teste une propriété commune à tous les membres ?
+  options:
+    - Narrowing maximal
+    - Peu ou pas de narrowing utile
+    - Erreur de compilation
+    - Conversion en never
+  answer: [1]
+  explanation: >
+    Le test ne permet pas de distinguer les membres.
+  skills: [type-narrowing]

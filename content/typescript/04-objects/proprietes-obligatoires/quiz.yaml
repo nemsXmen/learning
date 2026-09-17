@@ -1,0 +1,57 @@
+- id: typescript-04-proprietes-obligatoires-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Par défaut, une propriété déclarée dans un type objet est :
+  options:
+    - Optionnelle
+    - Obligatoire
+    - Readonly
+    - any
+  answer: [1]
+  explanation: >
+    Sans ?, la propriété est obligatoire.
+  skills: [objects]
+
+- id: typescript-04-proprietes-obligatoires-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `const u: { name: string } = {}` compile sans erreur.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. name est obligatoire et manquant.
+  skills: [objects]
+
+- id: typescript-04-proprietes-obligatoires-q3
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Comment rendre une propriété optionnelle ?
+  options:
+    - name?: string
+    - name: string?
+    - optional name: string
+    - name: string | optional
+  answer: [0]
+  explanation: >
+    On place ? après le nom de la propriété.
+  skills: [objects]
+
+- id: typescript-04-proprietes-obligatoires-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi les propriétés sont-elles obligatoires par défaut ?
+  options:
+    - Pour forcer l’utilisation de any
+    - Pour maximiser la sécurité et éviter les oublis
+    - Parce que JavaScript l’impose
+    - Pour ralentir le compilateur
+  answer: [1]
+  explanation: >
+    Cela évite les objets incomplets et les accès à des propriétés undefined non déclarées.
+  skills: [objects]

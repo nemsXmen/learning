@@ -1,0 +1,57 @@
+- id: typescript-01-annotations-de-types-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle est la syntaxe correcte pour annoter un paramètre de fonction ?
+  options:
+    - function f(Type param)
+    - function f(param: Type)
+    - function f(param = Type)
+    - function f(param as Type)
+  answer: [1]
+  explanation: >
+    La syntaxe TypeScript pour une annotation de type est `nom: Type`.
+  skills: [typescript-basics]
+
+- id: typescript-01-annotations-de-types-q2
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Comment annote-t-on le type de retour d’une fonction ?
+  options:
+    - function f(): Type { ... }
+    - function f() -> Type { ... }
+    - function f() returns Type { ... }
+    - function Type f() { ... }
+  answer: [0]
+  explanation: >
+    On place `: Type` juste après la liste des paramètres.
+  skills: [typescript-basics]
+
+- id: typescript-01-annotations-de-types-q3
+  type: true_false
+  difficulty: 1
+  question: >
+    On est obligé d’annoter toutes les variables locales en TypeScript.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. L’inférence suffit souvent pour les variables locales. On annote surtout les frontières.
+  skills: [typescript-basics]
+
+- id: typescript-01-annotations-de-types-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que se passe-t-il avec `let n: number = "42";` ?
+  options:
+    - TypeScript convertit silencieusement la string en number
+    - Erreur de compilation : Type 'string' is not assignable to type 'number'
+    - Le code s’exécute et n vaut NaN
+    - TypeScript ignore l’annotation
+  answer: [1]
+  explanation: >
+    C’est une erreur de type classique. TypeScript refuse l’affectation incompatible.
+  skills: [typescript-basics]

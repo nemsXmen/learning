@@ -1,0 +1,57 @@
+- id: typescript-01-les-outils-de-developpement-typescript-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel éditeur offre la meilleure intégration native avec TypeScript ?
+  options:
+    - Notepad
+    - VS Code
+    - Sublime Text sans plugin
+    - Vim sans configuration
+  answer: [1]
+  explanation: >
+    VS Code intègre nativement le language service TypeScript et offre une expérience très complète.
+  skills: [typescript-basics]
+
+- id: typescript-01-les-outils-de-developpement-typescript-q2
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Que fournit principalement le language service TypeScript dans l’éditeur ?
+  options:
+    - Uniquement le formatage du code
+    - Autocomplétion, détection d’erreurs en temps réel, navigation et hover de types
+    - L’exécution du code
+    - La gestion des packages npm
+  answer: [1]
+  explanation: >
+    Le language service est le moteur qui alimente l’intelligence de l’éditeur autour de TypeScript.
+  skills: [typescript-basics]
+
+- id: typescript-01-les-outils-de-developpement-typescript-q3
+  type: true_false
+  difficulty: 1
+  question: >
+    ESLint et Prettier sont inutiles dès qu’on utilise TypeScript.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. TypeScript gère les types. ESLint gère les règles de qualité/style et Prettier le formatage.
+  skills: [typescript-basics]
+
+- id: typescript-01-les-outils-de-developpement-typescript-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel outil complète naturellement TypeScript pour la validation des données à runtime ?
+  options:
+    - Prettier
+    - Zod (ou Valibot, Yup…)
+    - ESLint
+    - tsc --watch
+  answer: [1]
+  explanation: >
+    TypeScript ne valide pas les données à runtime. Des bibliothèques comme Zod permettent de définir des schémas et d’inférer les types.
+  skills: [typescript-basics]

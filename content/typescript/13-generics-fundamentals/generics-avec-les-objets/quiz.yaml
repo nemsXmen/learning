@@ -1,0 +1,14 @@
+- id: ts-13-generics-fundamentals-generics-avec-les-objets-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Generics avec les objets ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Generics avec les objets est une fonctionnalité importante de TypeScript.
+  skills: []

@@ -1,0 +1,57 @@
+- id: typescript-10-asserts-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    `asserts x is string` signifie :
+  options:
+    - La fonction retourne un string
+    - Si la fonction ne throw pas, x est traité comme string ensuite
+    - x est toujours string
+    - Conversion automatique
+  answer: [1]
+  explanation: >
+    C’est le narrowing post-assertion.
+  skills: [type-narrowing]
+
+- id: typescript-10-asserts-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Une fonction `asserts` doit throw si la condition échoue.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, sinon le contrat est rompu.
+  skills: [type-narrowing]
+
+- id: typescript-10-asserts-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    `asserts condition` s’applique à :
+  options:
+    - Un type uniquement
+    - Une condition booléenne
+    - Uniquement aux classes
+    - Uniquement aux tableaux
+  answer: [1]
+  explanation: >
+    La première forme asserte une condition.
+  skills: [type-narrowing]
+
+- id: typescript-10-asserts-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Les assertion functions sont utiles pour :
+  options:
+    - Remplacer tous les if
+    - Exprimer des préconditions et narrow automatiquement
+    - Désactiver le typage
+    - Créer des enums
+  answer: [1]
+  explanation: >
+    Préconditions + narrowing.
+  skills: [type-narrowing]

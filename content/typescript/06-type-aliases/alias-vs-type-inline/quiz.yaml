@@ -1,0 +1,57 @@
+- id: typescript-06-alias-vs-type-inline-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quand préfère-t-on généralement un type alias ?
+  options:
+    - Pour tous les types, même les plus simples
+    - Quand le type est réutilisé ou représente un concept clair
+    - Uniquement pour les primitifs
+    - Jamais
+  answer: [1]
+  explanation: >
+    Réutilisation et clarté métier sont les critères principaux.
+  skills: [type-aliases]
+
+- id: typescript-06-alias-vs-type-inline-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Il faut toujours nommer tous les types, même les plus simples et locaux.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. La sur-abstraction peut nuire à la lisibilité.
+  skills: [type-aliases]
+
+- id: typescript-06-alias-vs-type-inline-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pour un type utilisé une seule fois et très simple, que choisis-tu souvent ?
+  options:
+    - Un type alias obligatoire
+    - Un type inline
+    - any
+    - unknown
+  answer: [1]
+  explanation: >
+    L’inline reste souvent plus clair pour les cas locaux simples.
+  skills: [type-aliases]
+
+- id: typescript-06-alias-vs-type-inline-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel est le critère principal pour décider alias vs inline ?
+  options:
+    - La performance runtime
+    - La lisibilité et la réutilisation
+    - L’ordre alphabétique
+    - Le nombre de lignes du fichier
+  answer: [1]
+  explanation: >
+    La clarté pour le lecteur est le guide principal.
+  skills: [type-aliases]

@@ -1,0 +1,57 @@
+- id: typescript-12-const-enum-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Un const enum :
+  options:
+    - Existe toujours comme objet runtime
+    - Est inliné à la compilation (pas d’objet runtime)
+    - Est identique à un type alias
+    - N’accepte que des strings
+  answer: [1]
+  explanation: >
+    Les valeurs sont inlinées.
+  skills: [enums]
+
+- id: typescript-12-const-enum-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `Direction.Up` dans un const enum peut être compilé en un littéral (ex. 0).
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [enums]
+
+- id: typescript-12-const-enum-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel est un avantage des const enums ?
+  options:
+    - Plus de flexibilité runtime
+    - Bundle plus léger (pas d’objet généré)
+    - Meilleur reverse mapping
+    - Support de l’héritage
+  answer: [1]
+  explanation: >
+    Moins de code généré.
+  skills: [enums]
+
+- id: typescript-12-const-enum-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Les const enums peuvent poser problème avec :
+  options:
+    - Les strings uniquement
+    - Certaines options modernes (isolationModules, imports type-only)
+    - Les number uniquement
+    - Les interfaces
+  answer: [1]
+  explanation: >
+    L’inlining entre en tension avec certaines configurations de modules.
+  skills: [enums]

@@ -1,0 +1,14 @@
+- id: ts-21-template-literal-types-noms-de-propri-t-s-dynamiques-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Noms de propriétés dynamiques ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Noms de propriétés dynamiques est une fonctionnalité importante de TypeScript.
+  skills: []

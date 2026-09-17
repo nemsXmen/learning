@@ -1,0 +1,14 @@
+- id: ts-33-typescript-and-nestjs-architecture-nestjs-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Architecture NestJS ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Architecture NestJS est une fonctionnalité importante de TypeScript.
+  skills: []

@@ -1,0 +1,14 @@
+- id: ts-26-typescript-and-javascript-runtime-type-erasure-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Type erasure ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Type erasure est une fonctionnalité importante de TypeScript.
+  skills: []

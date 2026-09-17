@@ -1,0 +1,57 @@
+- id: typescript-12-quand-eviter-les-enums-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Pour un simple ensemble de strings fermé, on préfère souvent :
+  options:
+    - Un numeric enum
+    - Une literal union
+    - any
+    - Une classe
+  answer: [1]
+  explanation: >
+    Plus simple et souvent suffisant.
+  skills: [enums]
+
+- id: typescript-12-quand-eviter-les-enums-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Les enums sont toujours obligatoires pour les ensembles fermés de valeurs.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. Les literal unions sont une alternative solide.
+  skills: [enums]
+
+- id: typescript-12-quand-eviter-les-enums-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi éviter parfois les enums ?
+  options:
+    - Parce qu’ils sont interdits
+    - Code généré, tree-shaking, complexité inutile si une union suffit
+    - Parce qu’ils ne supportent pas les strings
+    - Parce qu’ils n’existent qu’en mode non-strict
+  answer: [1]
+  explanation: >
+    Coût runtime et complexité parfois injustifiés.
+  skills: [enums]
+
+- id: typescript-12-quand-eviter-les-enums-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Un enum reste justifié si :
+  options:
+    - On n’en a jamais besoin
+    - On a besoin d’un objet runtime ou de reverse mapping
+    - Uniquement pour les booleans
+    - Uniquement pour les tableaux
+  answer: [1]
+  explanation: >
+    Ces besoins concrets justifient l’enum.
+  skills: [enums]

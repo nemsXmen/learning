@@ -1,0 +1,14 @@
+- id: ts-35-type-safe-apis-contrats-e2e-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Contrats E2E ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Contrats E2E est une fonctionnalité importante de TypeScript.
+  skills: []

@@ -1,0 +1,14 @@
+- id: ts-14-generics-advanced-api-responses-g-n-riques-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que API responses génériques ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    API responses génériques est une fonctionnalité importante de TypeScript.
+  skills: []

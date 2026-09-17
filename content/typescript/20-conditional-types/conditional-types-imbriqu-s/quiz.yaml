@@ -1,0 +1,14 @@
+- id: ts-20-conditional-types-conditional-types-imbriqu-s-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Conditional types imbriqués ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Conditional types imbriqués est une fonctionnalité importante de TypeScript.
+  skills: []

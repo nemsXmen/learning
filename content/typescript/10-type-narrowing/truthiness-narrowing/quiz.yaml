@@ -1,0 +1,57 @@
+- id: typescript-10-truthiness-narrowing-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelles valeurs sont falsy en JavaScript ?
+  options:
+    - Uniquement false
+    - false, 0, "", null, undefined, NaN
+    - Uniquement null et undefined
+    - Tous les objets
+  answer: [1]
+  explanation: >
+    Ce sont les valeurs falsy classiques.
+  skills: [type-narrowing]
+
+- id: typescript-10-truthiness-narrowing-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `if (value)` peut servir de narrowing en TypeScript.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, c’est le truthiness narrowing.
+  skills: [type-narrowing]
+
+- id: typescript-10-truthiness-narrowing-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel est le risque avec `if (n)` quand n est `number | undefined` ?
+  options:
+    - Aucun
+    - 0 est exclu alors qu’il peut être valide
+    - undefined reste possible
+    - Erreur de compilation systématique
+  answer: [1]
+  explanation: >
+    0 est falsy.
+  skills: [type-narrowing]
+
+- id: typescript-10-truthiness-narrowing-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quand préférer un test explicite (`!== null`) au truthiness ?
+  options:
+    - Jamais
+    - Quand 0 ou "" sont des valeurs légitimes
+    - Uniquement pour les strings
+    - Uniquement en mode non-strict
+  answer: [1]
+  explanation: >
+    Les tests explicites évitent d’éliminer des valeurs valides.
+  skills: [type-narrowing]

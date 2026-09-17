@@ -1,0 +1,64 @@
+id: javascript-aaa-isolation-quiz
+kind: QUIZ
+questions:
+  - id: js-aaa-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans un test structuré en Arrange, Act, Assert, que contient la partie Act ?
+    options:
+      - "L'unique action dont on teste l'effet"
+      - "La création des données de test"
+      - "Les vérifications avec expect"
+      - "Le nettoyage après le test"
+    answer: [0]
+    explanation: >
+      Arrange prépare l'état, Act exécute une seule action, Assert vérifie son résultat.
+    skills:
+      - test-structure
+
+  - id: js-aaa-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Dans Vitest, les tests d'un même fichier partagent les variables déclarées au niveau du module.
+    answer: true
+    explanation: >
+      Vitest isole les fichiers entre eux, mais pas les tests d'un même fichier : un état créé
+      une fois et modifié par un test est visible des suivants. D'où beforeEach.
+    skills:
+      - test-structure
+
+  - id: js-aaa-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles sources rendent un test non déterministe si le code testé les utilise directement ?
+    options:
+      - "Date.now()"
+      - "Math.random()"
+      - "Un appel réseau vers un service externe"
+      - "Une fonction pure appelée avec des constantes"
+    answer: [0, 1, 2]
+    explanation: >
+      Le temps, le hasard et le réseau varient d'une exécution à l'autre : il faut pouvoir les
+      remplacer. Une fonction pure avec des constantes donne toujours le même résultat.
+    skills:
+      - test-structure
+
+  - id: js-aaa-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment vérifier qu'aucun test d'un projet Vitest ne dépend de l'ordre d'exécution ?
+    options:
+      - "Lancer la suite avec --sequence.shuffle"
+      - "Lancer la suite avec --retry 3"
+      - "Mettre tous les tests dans le même fichier"
+      - "Supprimer les beforeEach"
+    answer: [0]
+    explanation: >
+      --sequence.shuffle mélange l'ordre des tests et révèle les dépendances cachées. --retry
+      masquerait au contraire les tests instables.
+    skills:
+      - test-structure

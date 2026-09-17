@@ -1,0 +1,14 @@
+- id: ts-38-design-patterns-chain-of-responsibility-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Chain of Responsibility ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Chain of Responsibility est une fonctionnalité importante de TypeScript.
+  skills: []

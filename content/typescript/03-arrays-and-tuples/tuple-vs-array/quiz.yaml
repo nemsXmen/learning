@@ -1,0 +1,57 @@
+- id: typescript-03-tuple-vs-array-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle est la principale différence entre un tuple et un array ?
+  options:
+    - Aucune
+    - Le tuple a une longueur (semi-)fixe et des types par position
+    - Le tuple est plus rapide
+    - L’array n’existe pas en TypeScript
+  answer: [1]
+  explanation: >
+    C’est la distinction fondamentale au niveau des types.
+  skills: [arrays-tuples]
+
+- id: typescript-03-tuple-vs-array-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    À runtime, un tuple et un array sont tous les deux des tableaux JavaScript.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui. La différence est purement au niveau du système de types.
+  skills: [arrays-tuples]
+
+- id: typescript-03-tuple-vs-array-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pour une liste de scores de longueur variable, que choisis-tu ?
+  options:
+    - Un tuple
+    - Un array (number[])
+    - Un object
+    - never[]
+  answer: [1]
+  explanation: >
+    Une liste homogène de longueur variable → Array.
+  skills: [arrays-tuples]
+
+- id: typescript-03-tuple-vs-array-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pour retourner le quotient et le reste d’une division, que choisis-tu ?
+  options:
+    - number[]
+    - [number, number]
+    - any
+    - void
+  answer: [1]
+  explanation: >
+    Un tuple de deux numbers est parfait pour un retour multiple ordonné.
+  skills: [arrays-tuples]

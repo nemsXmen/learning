@@ -1,20 +1,205 @@
 skills:
-  - id: type-inference
-    name: Inférence de types
-    importance: 4
+  - id: typescript-basics
+    name: Bases de TypeScript
+    importance: 5
     requires: []
-
   - id: primitive-types
     name: Types primitifs
-    importance: 3
-    requires: []
-
-  - id: generics
-    name: Génériques
     importance: 5
-    requires: [type-inference]
-
-  - id: type-constraints
-    name: Contraintes de types
+    requires: [typescript-basics]
+  - id: arrays-tuples
+    name: Arrays & Tuples
     importance: 4
-    requires: [generics]
+    requires: [primitive-types]
+  - id: objects
+    name: Objects
+    importance: 4
+    requires: [primitive-types]
+  - id: functions
+    name: Functions
+    importance: 5
+    requires: [primitive-types]
+  - id: type-aliases
+    name: Type Aliases
+    importance: 4
+    requires: [objects, functions]
+  - id: interfaces
+    name: Interfaces
+    importance: 5
+    requires: [objects, functions]
+  - id: unions-intersections
+    name: Union & Intersection
+    importance: 5
+    requires: [type-aliases]
+  - id: literal-types
+    name: Literal Types
+    importance: 4
+    requires: [unions-intersections]
+  - id: type-narrowing
+    name: Type Narrowing
+    importance: 5
+    requires: [unions-intersections]
+  - id: any-unknown-never
+    name: any, unknown & never
+    importance: 5
+    requires: [type-narrowing]
+  - id: enums
+    name: Enums
+    importance: 3
+    requires: [literal-types]
+  - id: generics-fundamentals
+    name: Generics Fundamentals
+    importance: 5
+    requires: [functions, type-aliases]
+  - id: generics-advanced
+    name: Generics Advanced
+    importance: 5
+    requires: [generics-fundamentals]
+  - id: classes
+    name: Classes
+    importance: 4
+    requires: [functions, objects]
+  - id: oop
+    name: OOP & TypeScript
+    importance: 4
+    requires: [classes, interfaces]
+  - id: advanced-types
+    name: Advanced Types
+    importance: 5
+    requires: [generics-advanced, type-narrowing]
+  - id: utility-types
+    name: Utility Types
+    importance: 5
+    requires: [advanced-types]
+  - id: mapped-types
+    name: Mapped Types
+    importance: 5
+    requires: [utility-types]
+  - id: conditional-types
+    name: Conditional Types
+    importance: 5
+    requires: [mapped-types]
+  - id: template-literal-types
+    name: Template Literal Types
+    importance: 4
+    requires: [conditional-types]
+  - id: type-assertions
+    name: Type Assertions
+    importance: 3
+    requires: [type-narrowing]
+  - id: declaration-files
+    name: Declaration Files
+    importance: 4
+    requires: [typescript-basics]
+  - id: modules
+    name: Modules
+    importance: 4
+    requires: [typescript-basics]
+  - id: tsconfig
+    name: tsconfig
+    importance: 4
+    requires: [modules]
+  - id: runtime
+    name: TypeScript & JavaScript Runtime
+    importance: 5
+    requires: [type-narrowing, any-unknown-never]
+  - id: async
+    name: TypeScript & Async
+    importance: 4
+    requires: [functions, generics-fundamentals]
+  - id: dom
+    name: TypeScript & DOM
+    importance: 3
+    requires: [objects, type-narrowing]
+  - id: nodejs
+    name: TypeScript & Node.js
+    importance: 4
+    requires: [modules, runtime]
+  - id: npm
+    name: TypeScript & NPM
+    importance: 3
+    requires: [modules, declaration-files]
+  - id: react
+    name: TypeScript & React
+    importance: 5
+    requires: [generics-fundamentals, functions]
+  - id: nextjs
+    name: TypeScript & Next.js
+    importance: 4
+    requires: [react]
+  - id: nestjs
+    name: TypeScript & NestJS
+    importance: 4
+    requires: [classes, oop, generics-fundamentals]
+  - id: runtime-validation
+    name: Runtime Validation
+    importance: 5
+    requires: [runtime, any-unknown-never]
+  - id: type-safe-apis
+    name: Type-safe APIs
+    importance: 5
+    requires: [runtime-validation, generics-advanced]
+  - id: database
+    name: Database & TypeScript
+    importance: 4
+    requires: [classes, generics-advanced]
+  - id: testing
+    name: TypeScript Testing
+    importance: 4
+    requires: [functions, generics-fundamentals]
+  - id: design-patterns
+    name: Design Patterns
+    importance: 4
+    requires: [oop, generics-advanced]
+  - id: clean-architecture
+    name: Clean Architecture
+    importance: 5
+    requires: [oop, design-patterns]
+  - id: solid
+    name: SOLID
+    importance: 4
+    requires: [oop]
+  - id: advanced-generics
+    name: Advanced Generics
+    importance: 5
+    requires: [generics-advanced]
+  - id: type-level-programming
+    name: Type-level Programming
+    importance: 5
+    requires: [conditional-types, mapped-types, template-literal-types]
+  - id: compiler
+    name: TypeScript Compiler
+    importance: 3
+    requires: [typescript-basics]
+  - id: tooling
+    name: Advanced Tooling
+    importance: 3
+    requires: [tsconfig]
+  - id: performance
+    name: TypeScript Performance
+    importance: 3
+    requires: [compiler, tsconfig]
+  - id: monorepo
+    name: Monorepo TypeScript
+    importance: 4
+    requires: [modules, tooling]
+  - id: advanced-type-safety
+    name: Advanced Type Safety
+    importance: 5
+    requires: [type-level-programming, runtime-validation]
+  - id: ddd
+    name: TypeScript & DDD
+    importance: 4
+    requires: [clean-architecture, advanced-type-safety]
+  - id: security
+    name: TypeScript Security
+    importance: 4
+    requires: [runtime-validation]
+  - id: production
+    name: Production TypeScript
+    importance: 5
+    requires: [clean-architecture, testing, security]
+  - id: projects
+    name: Projets TypeScript
+    importance: 5
+    requires: [production, fullstack]

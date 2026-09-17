@@ -1,0 +1,57 @@
+- id: typescript-09-literal-unions-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Une literal union est :
+  options:
+    - Une union de n’importe quels types
+    - Une union de littéraux (string, number, boolean…)
+    - Un tableau de littéraux
+    - Un enum uniquement
+  answer: [1]
+  explanation: >
+    Ce sont des unions de literal types.
+  skills: [literal-types]
+
+- id: typescript-09-literal-unions-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Les literal unions permettent un excellent narrowing.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [literal-types]
+
+- id: typescript-09-literal-unions-q3
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel est un cas d’usage classique des literal unions ?
+  options:
+    - Tous les calculs
+    - Statuts, rôles, variantes, modes
+    - Remplacer les objets
+    - Désactiver le typage
+  answer: [1]
+  explanation: >
+    Les ensembles fermés de valeurs métier.
+  skills: [literal-types]
+
+- id: typescript-09-literal-unions-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que se passe-t-il si on assigne une valeur hors de la literal union ?
+  options:
+    - Rien
+    - Erreur de compilation
+    - Conversion silencieuse
+    - any
+  answer: [1]
+  explanation: >
+    TypeScript refuse la valeur.
+  skills: [literal-types]

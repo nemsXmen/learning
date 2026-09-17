@@ -1,0 +1,57 @@
+- id: typescript-01-inference-de-types-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Que fait TypeScript quand on écrit `let count = 10;` ?
+  options:
+    - Il laisse le type any
+    - Il infère le type number
+    - Il demande une annotation obligatoire
+    - Il génère une erreur
+  answer: [1]
+  explanation: >
+    TypeScript infère que count est de type number grâce à la valeur initiale.
+  skills: [typescript-basics]
+
+- id: typescript-01-inference-de-types-q2
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quelle est la bonne pratique concernant l’inférence et les annotations ?
+  options:
+    - Annoter absolument toutes les variables
+    - Annoter les frontières (paramètres, retours publics) et laisser l’inférence à l’intérieur
+    - Ne jamais annoter quoi que ce soit
+    - Utiliser any partout pour laisser l’inférence libre
+  answer: [1]
+  explanation: >
+    On annote les contrats publics et on laisse TypeScript inférer le reste pour garder un code lisible.
+  skills: [typescript-basics]
+
+- id: typescript-01-inference-de-types-q3
+  type: true_false
+  difficulty: 1
+  question: >
+    L’inférence de types fonctionne aussi pour les valeurs de retour des fonctions.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui. TypeScript analyse les instructions return pour en déduire le type de retour.
+  skills: [typescript-basics]
+
+- id: typescript-01-inference-de-types-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel type TypeScript infère-t-il pour `const list = [1, "two", true];` ?
+  options:
+    - any[]
+    - number[]
+    - (string | number | boolean)[]
+    - object[]
+  answer: [2]
+  explanation: >
+    TypeScript crée une union des types des éléments : (string | number | boolean)[].
+  skills: [typescript-basics]

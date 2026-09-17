@@ -1,0 +1,14 @@
+- id: ts-13-generics-fundamentals-plusieurs-param-tres-g-n-riques-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Plusieurs paramètres génériques ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Plusieurs paramètres génériques est une fonctionnalité importante de TypeScript.
+  skills: []

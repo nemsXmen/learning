@@ -1,0 +1,57 @@
+- id: typescript-12-string-enums-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Dans un string enum, les valeurs doivent-elles être explicites ?
+  options:
+    - Non
+    - Oui
+    - Uniquement pour le premier membre
+    - Uniquement en mode strict
+  answer: [1]
+  explanation: >
+    Pas d’auto-incrémentation pour les strings.
+  skills: [enums]
+
+- id: typescript-12-string-enums-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Les string enums sont souvent plus lisibles dans les logs.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, on voit la chaîne plutôt qu’un nombre.
+  skills: [enums]
+
+- id: typescript-12-string-enums-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Les string enums ont-ils un reverse mapping automatique ?
+  options:
+    - Oui
+    - Non
+    - Uniquement en mode strict
+    - Uniquement avec const enum
+  answer: [1]
+  explanation: >
+    Seuls les numeric enums ont un reverse mapping.
+  skills: [enums]
+
+- id: typescript-12-string-enums-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `enum E { A = "a", B = "b" }` est un :
+  options:
+    - Numeric enum
+    - String enum
+    - Const enum uniquement
+    - Type alias
+  answer: [1]
+  explanation: >
+    Les membres ont des valeurs string.
+  skills: [enums]

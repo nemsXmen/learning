@@ -1,0 +1,57 @@
+- id: typescript-06-types-recursifs-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Un type récursif est un type qui :
+  options:
+    - N’a pas de propriétés
+    - Se référence lui-même
+    - Est uniquement un primitif
+    - Est toujours any
+  answer: [1]
+  explanation: >
+    La définition du type fait référence au type lui-même.
+  skills: [type-aliases]
+
+- id: typescript-06-types-recursifs-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Les type aliases supportent la récursion en TypeScript.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, c’est un usage courant et supporté.
+  skills: [type-aliases]
+
+- id: typescript-06-types-recursifs-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel est un exemple classique de type récursif ?
+  options:
+    - string
+    - Une structure JSON ou un arbre de nœuds
+    - number[]
+    - boolean
+  answer: [1]
+  explanation: >
+    JSON, arbres et listes chaînées sont des cas d’école.
+  skills: [type-aliases]
+
+- id: typescript-06-types-recursifs-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi faut-il un « cas de base » dans un type récursif ?
+  options:
+    - Pour accélérer le runtime
+    - Pour que le type soit productif et que le compilateur puisse le résoudre
+    - Pour activer strict
+    - Ce n’est pas nécessaire
+  answer: [1]
+  explanation: >
+    Sans cas de terminaison, le type pourrait être infini et non résolvable.
+  skills: [type-aliases]

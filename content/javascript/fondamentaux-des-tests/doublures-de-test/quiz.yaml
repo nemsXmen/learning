@@ -1,0 +1,65 @@
+id: javascript-doublures-de-test-quiz
+kind: QUIZ
+questions:
+  - id: js-doublures-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle doublure utiliser pour vérifier qu'un email de confirmation a bien été envoyé ?
+    options:
+      - "Un espion"
+      - "Un dummy"
+      - "Un stub"
+      - "Aucune : on lit la valeur de retour"
+    answer: [0]
+    explanation: >
+      L'envoi est une sortie indirecte, invisible dans la valeur de retour : un espion enregistre
+      l'appel pour qu'on le vérifie après l'action.
+    skills:
+      - test-doubles
+
+  - id: js-doublures-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment appelle-t-on un dépôt en mémoire qui fonctionne réellement, utilisé à la place de la base de données ?
+    options:
+      - "Un fake"
+      - "Un stub"
+      - "Un dummy"
+      - "Un espion"
+    answer: [0]
+    explanation: >
+      Un fake est une implémentation simplifiée mais fonctionnelle, qui conserve l'état entre
+      les opérations.
+    skills:
+      - test-doubles
+
+  - id: js-doublures-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Un test qui utilise un stub peut passer alors que le code échoue en production avec le vrai composant.
+    answer: true
+    explanation: >
+      Le stub est une hypothèse sur le vrai composant. S'il renvoie un format différent, le test
+      reste vert et la production échoue : d'où les tests d'intégration.
+    skills:
+      - test-doubles
+
+  - id: js-doublures-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels collaborateurs remplace-t-on typiquement par une doublure dans un test unitaire ?
+    options:
+      - "Un client HTTP vers un service externe"
+      - "L'horloge système"
+      - "Une fonction pure de calcul de TVA"
+      - "Le service d'envoi d'emails"
+    answer: [0, 1, 3]
+    explanation: >
+      On simule les frontières lentes, non déterministes ou qui ont des effets. Une fonction pure
+      s'utilise telle quelle : la simuler n'apporterait que de la fragilité.
+    skills:
+      - test-doubles

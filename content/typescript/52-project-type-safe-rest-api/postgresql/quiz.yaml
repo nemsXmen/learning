@@ -1,0 +1,14 @@
+- id: ts-52-project-type-safe-rest-api-postgresql-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que PostgreSQL ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    PostgreSQL est une fonctionnalité importante de TypeScript.
+  skills: []

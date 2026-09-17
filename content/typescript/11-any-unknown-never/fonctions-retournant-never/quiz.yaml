@@ -1,0 +1,57 @@
+- id: typescript-11-fonctions-retournant-never-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Une fonction typée `: never` :
+  options:
+    - Retourne toujours undefined
+    - Ne termine jamais normalement (throw ou boucle)
+    - Retourne any
+    - Est toujours async
+  answer: [1]
+  explanation: >
+    C’est le sens de never comme type de retour.
+  skills: [any-unknown-never]
+
+- id: typescript-11-fonctions-retournant-never-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Après un appel à une fonction never, TypeScript peut considérer le code suivant comme inatteignable.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, cela aide le control-flow analysis.
+  skills: [any-unknown-never]
+
+- id: typescript-11-fonctions-retournant-never-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    `assertNever(x: never): never` sert surtout à :
+  options:
+    - Convertir des types
+    - Vérifier l’exhaustivité
+    - Créer des classes
+    - Désactiver strict
+  answer: [1]
+  explanation: >
+    Pattern classique d’exhaustivité.
+  skills: [any-unknown-never]
+
+- id: typescript-11-fonctions-retournant-never-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Peut-on annoter `: never` une fonction qui a un return normal ?
+  options:
+    - Oui sans problème
+    - Non, TypeScript signalera une erreur
+    - Uniquement en mode non-strict
+    - Uniquement si le return est undefined
+  answer: [1]
+  explanation: >
+    never interdit les retours normaux.
+  skills: [any-unknown-never]

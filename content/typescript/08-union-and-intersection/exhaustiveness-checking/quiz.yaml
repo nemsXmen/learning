@@ -1,0 +1,57 @@
+- id: typescript-08-exhaustiveness-checking-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    À quoi sert le pattern `assertNever(x: never)` ?
+  options:
+    - À convertir des types
+    - À vérifier qu’aucun cas d’une union n’a été oublié
+    - À désactiver le typage
+    - À créer des symboles
+  answer: [1]
+  explanation: >
+    Si un cas manque, le type n’est pas never et TypeScript errora.
+  skills: [unions-intersections]
+
+- id: typescript-08-exhaustiveness-checking-q2
+  type: true_false
+  difficulty: 2
+  question: >
+    Si tous les cas d’une union sont couverts, le type dans le default est never.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [unions-intersections]
+
+- id: typescript-08-exhaustiveness-checking-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que se passe-t-il si on ajoute un membre à l’union sans mettre à jour le switch avec assertNever ?
+  options:
+    - Rien
+    - Erreur de compilation sur assertNever
+    - Le code plante à runtime uniquement
+    - any est utilisé
+  answer: [1]
+  explanation: >
+    TypeScript détecte que le type n’est plus never.
+  skills: [unions-intersections]
+
+- id: typescript-08-exhaustiveness-checking-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    L’exhaustiveness checking est particulièrement utile avec :
+  options:
+    - Les tableaux uniquement
+    - Les discriminated unions et literal unions
+    - Les classes uniquement
+    - Les primitifs uniquement
+  answer: [1]
+  explanation: >
+    C’est là qu’il apporte le plus de sécurité.
+  skills: [unions-intersections]

@@ -1,0 +1,57 @@
+- id: typescript-02-annotations-explicites-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Dans quel cas une annotation explicite est-elle souvent nécessaire ?
+  options:
+    - Sur toutes les variables const
+    - Sur une variable déclarée sans valeur initiale
+    - Sur les template literals
+    - Jamais
+  answer: [1]
+  explanation: >
+    Sans initialisation, TypeScript ne peut pas inférer le type (ou infère any en mode non-strict).
+  skills: [primitive-types]
+
+- id: typescript-02-annotations-explicites-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Il est recommandé d’annoter toutes les variables locales même quand l’inférence est évidente.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. La sur-annotation rend le code plus verbeux sans gain.
+  skills: [primitive-types]
+
+- id: typescript-02-annotations-explicites-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi annote-t-on souvent les paramètres de fonctions ?
+  options:
+    - Parce que l’inférence ne fonctionne jamais sur les paramètres
+    - Parce que ce sont des frontières de l’API et que le contrat doit être explicite
+    - Parce que TypeScript l’oblige toujours
+    - Pour activer le mode strict
+  answer: [1]
+  explanation: >
+    Les paramètres font partie du contrat public de la fonction.
+  skills: [primitive-types]
+
+- id: typescript-02-annotations-explicites-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que permet une annotation comme `let status: "on" | "off"` ?
+  options:
+    - Rien de spécial
+    - De restreindre les valeurs possibles à ces deux littéraux
+    - D’accepter n’importe quelle string
+    - De désactiver le type-checking
+  answer: [1]
+  explanation: >
+    C’est une union de literal types qui limite les valeurs acceptées.
+  skills: [primitive-types]

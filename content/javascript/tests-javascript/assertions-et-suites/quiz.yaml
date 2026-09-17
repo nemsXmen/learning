@@ -1,0 +1,65 @@
+id: javascript-vitest-assertions-quiz
+kind: QUIZ
+questions:
+  - id: js-vitest-assertions-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle assertion réussit ?
+    options:
+      - "expect({ id: 1 }).toEqual({ id: 1 })"
+      - "expect({ id: 1 }).toBe({ id: 1 })"
+      - "expect(0.1 + 0.2).toBe(0.3)"
+      - "expect([1, 2]).toBe([1, 2])"
+    answer: [0]
+    explanation: >
+      toBe compare les identités avec Object.is : deux littéraux sont deux objets différents,
+      et 0.1 + 0.2 vaut 0.30000000000000004. toEqual compare les contenus.
+    skills:
+      - vitest-assertions
+
+  - id: js-vitest-assertions-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      `expect({ id: 1, note: undefined }).toStrictEqual({ id: 1 })` réussit.
+    answer: false
+    explanation: >
+      toStrictEqual tient compte des propriétés qui valent undefined. toEqual, lui, les ignore
+      et réussirait.
+    skills:
+      - vitest-assertions
+
+  - id: js-vitest-assertions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi `expect(valider('')).toThrow('Email obligatoire')` échoue-t-il alors que `valider('')` lève bien cette erreur ?
+    options:
+      - "L'erreur est levée avant que expect ne reçoive quoi que ce soit"
+      - "toThrow exige une classe d'erreur"
+      - "toThrow ne fonctionne qu'avec des fonctions asynchrones"
+      - "Le message doit être une expression régulière"
+    answer: [0]
+    explanation: >
+      valider('') est exécuté en évaluant l'argument de expect : l'erreur interrompt le test. Il
+      faut passer une fonction, expect(() => valider('')).
+    skills:
+      - vitest-assertions
+
+  - id: js-vitest-assertions-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Dans un describe avec beforeAll, beforeEach et deux tests, lesquelles de ces affirmations sont vraies ?
+    options:
+      - "beforeAll s'exécute une seule fois"
+      - "beforeEach s'exécute deux fois"
+      - "beforeEach s'exécute avant beforeAll"
+      - "afterEach s'exécute même si le test échoue"
+    answer: [0, 1, 3]
+    explanation: >
+      beforeAll s'exécute une fois avant tout, beforeEach avant chaque test, et afterEach après
+      chaque test, qu'il réussisse ou échoue.
+    skills:
+      - vitest-assertions

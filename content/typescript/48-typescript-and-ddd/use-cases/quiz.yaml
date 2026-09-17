@@ -1,0 +1,14 @@
+- id: ts-48-typescript-and-ddd-use-cases-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Use cases ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Use cases est une fonctionnalité importante de TypeScript.
+  skills: []

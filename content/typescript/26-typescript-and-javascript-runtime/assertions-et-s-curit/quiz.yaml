@@ -1,0 +1,14 @@
+- id: ts-26-typescript-and-javascript-runtime-assertions-et-s-curit-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Assertions et sécurité ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Assertions et sécurité est une fonctionnalité importante de TypeScript.
+  skills: []

@@ -1,0 +1,57 @@
+- id: typescript-01-executer-typescript-avec-nodejs-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle est la méthode recommandée pour exécuter du TypeScript en production avec Node.js ?
+  options:
+    - npx ts-node src/index.ts
+    - Compiler avec tsc puis node dist/index.js
+    - node src/index.ts directement
+    - npx tsx toujours
+  answer: [1]
+  explanation: >
+    En production on préfère exécuter du JavaScript déjà compilé pour la performance et la simplicité.
+  skills: [typescript-basics]
+
+- id: typescript-01-executer-typescript-avec-nodejs-q2
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quel outil moderne est particulièrement recommandé pour exécuter du TypeScript rapidement en développement ?
+  options:
+    - babel
+    - tsx
+    - webpack
+    - nodemon uniquement
+  answer: [1]
+  explanation: >
+    `tsx` est rapide, gère bien ESM et offre une excellente expérience de développement.
+  skills: [typescript-basics]
+
+- id: typescript-01-executer-typescript-avec-nodejs-q3
+  type: true_false
+  difficulty: 1
+  question: >
+    Node.js comprend nativement les annotations de types TypeScript.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. Node.js exécute du JavaScript. Il faut compiler ou utiliser un loader (tsx, ts-node…).
+  skills: [typescript-basics]
+
+- id: typescript-01-executer-typescript-avec-nodejs-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi déconseille-t-on généralement d’utiliser ts-node en production ?
+  options:
+    - Parce qu’il ne supporte pas les modules ES
+    - Parce qu’il compile à la volée et n’est pas optimisé pour la production
+    - Parce qu’il est payant
+    - Parce qu’il ne fonctionne qu’avec Deno
+  answer: [1]
+  explanation: >
+    En production on veut du JavaScript déjà compilé, stable et performant, sans dépendre d’un transpileur à la volée.
+  skills: [typescript-basics]

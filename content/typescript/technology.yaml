@@ -1,7 +1,40 @@
-slug: typescript
 name: TypeScript
-order: 2
-description: >
-  Écrire des types qui décrivent la réalité du code, et laisser le compilateur
-  faire le travail que tu ferais à la main.
-published: true
+order: 1
+description: Programme complet d'apprentissage de TypeScript, du niveau débutant jusqu'à la maîtrise avancée et la conception d'applications TypeScript production-ready.
+parts:
+  - slug: zero
+    title: ZERO — Les bases
+    order: 1
+    description: Introduction à TypeScript, types primitifs, tableaux, objets et fonctions.
+  - slug: foundation
+    title: FOUNDATION — Fondations
+    order: 2
+    description: Type aliases, interfaces, unions, literals et narrowing.
+  - slug: core
+    title: CORE TYPESCRIPT — Cœur du langage
+    order: 3
+    description: any/unknown/never, enums, generics et classes.
+  - slug: advanced-types
+    title: ADVANCED TYPES — Types avancés
+    order: 4
+    description: Types avancés, utility types, mapped types, conditional types et template literals.
+  - slug: real
+    title: REAL TYPESCRIPT — TypeScript réel
+    order: 5
+    description: Assertions, declaration files, modules, tsconfig et runtime.
+  - slug: fullstack
+    title: FULLSTACK — Fullstack
+    order: 6
+    description: Async, DOM, Node.js, NPM, React, Next.js, NestJS et validation runtime.
+  - slug: production
+    title: PRODUCTION — Production
+    order: 7
+    description: APIs type-safe, database, testing, design patterns, clean architecture et SOLID.
+  - slug: expert
+    title: EXPERT — Expert
+    order: 8
+    description: Generics avancés, type-level programming, compiler, tooling, performance, monorepo, type safety et DDD.
+  - slug: hero
+    title: HERO — Projets finaux
+    order: 9
+    description: Projets CLI, REST API, fullstack, SaaS et projet Hero final.

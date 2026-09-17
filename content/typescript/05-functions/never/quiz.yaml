@@ -1,0 +1,57 @@
+- id: typescript-05-never-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Que signifie un type de retour `never` ?
+  options:
+    - Pas de valeur utile
+    - La fonction ne se termine jamais normalement
+    - Retour undefined
+    - Retour any
+  answer: [1]
+  explanation: >
+    never indique l’absence de chemin de retour normal.
+  skills: [functions]
+
+- id: typescript-05-never-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Une fonction qui fait `throw new Error()` peut être typée `: never`.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [functions]
+
+- id: typescript-05-never-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    À quoi sert souvent le pattern `assertNever` ?
+  options:
+    - À convertir des types
+    - À vérifier l’exhaustivité d’un switch sur une union
+    - À désactiver le typage
+    - À créer des symboles
+  answer: [1]
+  explanation: >
+    Si un cas n’est pas géré, TypeScript errora.
+  skills: [functions]
+
+- id: typescript-05-never-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    void et never sont-ils interchangeables ?
+  options:
+    - Oui
+    - Non
+    - Uniquement en mode strict
+    - Uniquement pour les async
+  answer: [1]
+  explanation: >
+    Non. Leurs sémantiques sont différentes.
+  skills: [functions]

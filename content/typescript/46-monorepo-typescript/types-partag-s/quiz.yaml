@@ -1,0 +1,14 @@
+- id: ts-46-monorepo-typescript-types-partag-s-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Types partagés ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Types partagés est une fonctionnalité importante de TypeScript.
+  skills: []

@@ -1,0 +1,57 @@
+- id: typescript-03-tableaux-types-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle annotation déclare un tableau de nombres ?
+  options:
+    - let a: number = []
+    - let a: number[] = []
+    - let a: Array = []
+    - let a: numbers[] = []
+  answer: [1]
+  explanation: >
+    number[] est la syntaxe la plus courante pour un tableau de numbers.
+  skills: [arrays-tuples]
+
+- id: typescript-03-tableaux-types-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    On peut faire `scores.push("10")` si scores est typé number[].
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. TypeScript refuse d’ajouter une string dans un number[].
+  skills: [arrays-tuples]
+
+- id: typescript-03-tableaux-types-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que retourne `names.map(n => n.length)` si names est string[] ?
+  options:
+    - string[]
+    - number[]
+    - any[]
+    - number
+  answer: [1]
+  explanation: >
+    map propage le type : chaque string devient un number (sa longueur).
+  skills: [arrays-tuples]
+
+- id: typescript-03-tableaux-types-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que se passe-t-il si on initialise un tableau vide sans annotation en mode strict ?
+  options:
+    - Type never[]
+    - Type any[] (ou erreur selon la config)
+    - Type unknown[]
+    - Type object[]
+  answer: [1]
+  explanation: >
+    Un tableau vide sans contexte est souvent inféré any[] ou never[]. Mieux vaut annoter.
+  skills: [arrays-tuples]

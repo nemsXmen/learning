@@ -1,0 +1,14 @@
+- id: ts-27-typescript-and-async-gestion-typ-e-des-erreurs-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Gestion typée des erreurs ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Gestion typée des erreurs est une fonctionnalité importante de TypeScript.
+  skills: []

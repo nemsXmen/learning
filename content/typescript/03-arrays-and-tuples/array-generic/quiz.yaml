@@ -1,0 +1,57 @@
+- id: typescript-03-array-generic-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `Array<string>` est équivalent à :
+  options:
+    - string
+    - string[]
+    - String[]
+    - any[]
+  answer: [1]
+  explanation: >
+    Array<T> et T[] désignent le même type.
+  skills: [arrays-tuples]
+
+- id: typescript-03-array-generic-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Il existe une différence de performance entre string[] et Array<string>.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. C’est purement syntaxique.
+  skills: [arrays-tuples]
+
+- id: typescript-03-array-generic-q3
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle forme est la plus courante au quotidien ?
+  options:
+    - Array<T>
+    - T[]
+    - Les deux également
+    - ReadonlyArray uniquement
+  answer: [1]
+  explanation: >
+    T[] est plus courte et plus lisible dans la majorité des cas.
+  skills: [arrays-tuples]
+
+- id: typescript-03-array-generic-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Dans une signature générique, quelle forme voit-on souvent ?
+  options:
+    - Uniquement T[]
+    - Array<T> ou T[] selon le style du projet
+    - Uniquement any[]
+    - Uniquement unknown[]
+  answer: [1]
+  explanation: >
+    Les deux sont acceptées ; certains styles préfèrent Array<T> pour la cohérence avec d’autres génériques.
+  skills: [arrays-tuples]

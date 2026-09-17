@@ -1,0 +1,57 @@
+- id: typescript-10-never-exhaustivite-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Dans le pattern assertNever, le paramètre est typé :
+  options:
+    - any
+    - never
+    - unknown
+    - string
+  answer: [1]
+  explanation: >
+    never force l’exhaustivité.
+  skills: [type-narrowing]
+
+- id: typescript-10-never-exhaustivite-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Si tous les cas sont couverts, le type dans le default est never.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui.
+  skills: [type-narrowing]
+
+- id: typescript-10-never-exhaustivite-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que se passe-t-il si on ajoute un membre à l’union sans mettre à jour le switch ?
+  options:
+    - Rien
+    - Erreur de compilation sur assertNever
+    - Le code plante uniquement à runtime
+    - any est utilisé
+  answer: [1]
+  explanation: >
+    Le type n’est plus never → erreur.
+  skills: [type-narrowing]
+
+- id: typescript-10-never-exhaustivite-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi ne pas typer le paramètre d’assertNever en any ?
+  options:
+    - Aucune raison
+    - On perdrait la protection d’exhaustivité
+    - any est interdit
+    - never est plus rapide
+  answer: [1]
+  explanation: >
+    any accepterait n’importe quoi et masquerait les oublis.
+  skills: [type-narrowing]

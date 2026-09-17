@@ -1,0 +1,57 @@
+- id: typescript-02-symbol-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Que retourne `Symbol("id") === Symbol("id")` ?
+  options:
+    - true
+    - false
+    - undefined
+    - Erreur
+  answer: [1]
+  explanation: >
+    Chaque appel à Symbol() crée une valeur unique, même avec la même description.
+  skills: [primitive-types]
+
+- id: typescript-02-symbol-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Les propriétés dont la clé est un symbol apparaissent dans Object.keys().
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. Les clés symbol ne sont pas énumérées par Object.keys() ni for…in.
+  skills: [primitive-types]
+
+- id: typescript-02-symbol-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel est le principal intérêt des symbols comme clés d’objet ?
+  options:
+    - Ils sont plus rapides
+    - Ils garantissent l’unicité et évitent les collisions de noms
+    - Ils sont obligatoires pour les classes
+    - Ils permettent d’avoir des clés numériques
+  answer: [1]
+  explanation: >
+    Chaque symbol est unique, ce qui évite qu’une autre partie du code écrase accidentellement la propriété.
+  skills: [primitive-types]
+
+- id: typescript-02-symbol-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Comment déclare-t-on une variable de type symbol ?
+  options:
+    - let s: Symbol = Symbol()
+    - let s: symbol = Symbol()
+    - let s: sym = Symbol()
+    - let s = new Symbol()
+  answer: [1]
+  explanation: >
+    Le type primitif s’écrit symbol (minuscule).
+  skills: [primitive-types]

@@ -1,0 +1,57 @@
+- id: typescript-08-unions-litterales-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Que représente `type Status = "idle" | "loading" | "success"` ?
+  options:
+    - N’importe quelle string
+    - Uniquement l’une de ces trois valeurs
+    - Un tableau de strings
+    - Un enum runtime
+  answer: [1]
+  explanation: >
+    C’est une literal union fermée.
+  skills: [unions-intersections]
+
+- id: typescript-08-unions-litterales-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    On peut assigner n’importe quelle string à une variable de type literal union de strings.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. Seules les valeurs listées sont acceptées.
+  skills: [unions-intersections]
+
+- id: typescript-08-unions-litterales-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel est un avantage majeur des literal unions ?
+  options:
+    - Elles accélèrent le runtime
+    - Narrowing précis et détection des valeurs invalides à la compilation
+    - Elles créent des classes
+    - Elles désactivent strict
+  answer: [1]
+  explanation: >
+    Autocomplétion + sécurité + exhaustivité.
+  skills: [unions-intersections]
+
+- id: typescript-08-unions-litterales-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `type Dice = 1 | 2 | 3 | 4 | 5 | 6` est une union de :
+  options:
+    - Strings
+    - Number literals
+    - Booleans
+    - Objets
+  answer: [1]
+  explanation: >
+    Ce sont des littéraux numériques.
+  skills: [unions-intersections]

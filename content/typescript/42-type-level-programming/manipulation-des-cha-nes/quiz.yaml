@@ -1,0 +1,14 @@
+- id: ts-42-type-level-programming-manipulation-des-cha-nes-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Manipulation des chaînes ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Manipulation des chaînes est une fonctionnalité importante de TypeScript.
+  skills: []

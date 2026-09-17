@@ -1,0 +1,57 @@
+- id: typescript-05-parametres-par-defaut-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Comment déclare-t-on un paramètre avec valeur par défaut ?
+  options:
+    - name?: "default"
+    - name = "default"
+    - name: string = "default"
+    - Les deux dernières sont valides
+  answer: [3]
+  explanation: >
+    On peut écrire name = "default" (inférence) ou name: string = "default".
+  skills: [functions]
+
+- id: typescript-05-parametres-par-defaut-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Un paramètre avec valeur par défaut peut être omis à l’appel.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, il devient optionnel.
+  skills: [functions]
+
+- id: typescript-05-parametres-par-defaut-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Que se passe-t-il si on omet un paramètre qui a une valeur par défaut ?
+  options:
+    - Erreur
+    - La valeur par défaut est utilisée
+    - La valeur devient null
+    - La fonction n’est pas appelée
+  answer: [1]
+  explanation: >
+    La valeur par défaut est injectée.
+  skills: [functions]
+
+- id: typescript-05-parametres-par-defaut-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    TypeScript peut-il inférer le type d’un paramètre à partir de sa valeur par défaut ?
+  options:
+    - Non
+    - Oui
+    - Uniquement pour les numbers
+    - Uniquement en mode non-strict
+  answer: [1]
+  explanation: >
+    Oui, le type est déduit de la valeur fournie.
+  skills: [functions]

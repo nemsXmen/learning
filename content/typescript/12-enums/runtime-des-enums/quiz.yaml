@@ -1,0 +1,57 @@
+- id: typescript-12-runtime-des-enums-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Un enum TypeScript classique (non const) :
+  options:
+    - Est entièrement effacé
+    - Génère un objet JavaScript à runtime
+    - N’existe que comme type
+    - Est une classe
+  answer: [1]
+  explanation: >
+    Le compilateur émet un objet.
+  skills: [enums]
+
+- id: typescript-12-runtime-des-enums-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Les const enums génèrent aussi un objet runtime.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. Ils sont inlinés.
+  skills: [enums]
+
+- id: typescript-12-runtime-des-enums-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Le reverse mapping est typique des :
+  options:
+    - String enums
+    - Numeric enums
+    - Type aliases
+    - Interfaces
+  answer: [1]
+  explanation: >
+    Numeric enums mappent dans les deux sens.
+  skills: [enums]
+
+- id: typescript-12-runtime-des-enums-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi est-il important de savoir que les enums existent à runtime ?
+  options:
+    - Ce n’est pas important
+    - Pour comprendre la taille du bundle, le reverse mapping et les différences avec les literal unions
+    - Uniquement pour les tests
+    - Pour désactiver strict
+  answer: [1]
+  explanation: >
+    Cela impacte le design et les performances.
+  skills: [enums]

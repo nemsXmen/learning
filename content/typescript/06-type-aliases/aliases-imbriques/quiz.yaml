@@ -1,0 +1,57 @@
+- id: typescript-06-aliases-imbriques-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Un type alias peut-il référencer un autre type alias ?
+  options:
+    - Non
+    - Oui
+    - Uniquement s’ils sont dans le même fichier
+    - Uniquement pour les primitifs
+  answer: [1]
+  explanation: >
+    Oui, c’est le mécanisme de composition de base.
+  skills: [type-aliases]
+
+- id: typescript-06-aliases-imbriques-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Il est recommandé de nommer chaque niveau significatif d’un modèle imbriqué.
+  options:
+    - "true"
+    - "false"
+  answer: [0]
+  explanation: >
+    Oui, pour la lisibilité et la réutilisation.
+  skills: [type-aliases]
+
+- id: typescript-06-aliases-imbriques-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Quel risque y a-t-il avec des imbrications trop profondes sans noms ?
+  options:
+    - Aucun
+    - Code difficile à lire et à faire évoluer
+    - Erreurs runtime systématiques
+    - Interdiction par TypeScript
+  answer: [1]
+  explanation: >
+    La lisibilité et la maintenance en souffrent.
+  skills: [type-aliases]
+
+- id: typescript-06-aliases-imbriques-q4
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    `type User = { address: Address }` où Address est un autre alias est un exemple de :
+  options:
+    - Récursion
+    - Composition d’aliases
+    - Intersection
+    - Enum
+  answer: [1]
+  explanation: >
+    On compose les types en les référençant.
+  skills: [type-aliases]

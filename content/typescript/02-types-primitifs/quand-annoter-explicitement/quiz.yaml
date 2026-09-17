@@ -1,0 +1,57 @@
+- id: typescript-02-quand-annoter-explicitement-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Quelle est la bonne pratique générale concernant les annotations ?
+  options:
+    - Annoter absolument tout
+    - Annoter les frontières et laisser l’inférence à l’intérieur
+    - Ne jamais annoter
+    - Annoter uniquement les const
+  answer: [1]
+  explanation: >
+    Contrats explicites aux frontières, inférence ailleurs.
+  skills: [primitive-types]
+
+- id: typescript-02-quand-annoter-explicitement-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    Il est recommandé d’annoter toutes les variables locales initialisées avec un littéral clair.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. L’inférence suffit et évite le bruit.
+  skills: [primitive-types]
+
+- id: typescript-02-quand-annoter-explicitement-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Dans quel cas annoterais-tu explicitement une variable locale ?
+  options:
+    - const name = "Alice"
+    - let total; (non initialisée)
+    - const list = [1, 2, 3]
+    - Jamais
+  answer: [1]
+  explanation: >
+    Sans initialisation, une annotation (ou une initialisation) est nécessaire.
+  skills: [primitive-types]
+
+- id: typescript-02-quand-annoter-explicitement-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Pourquoi annoter les paramètres de fonctions publiques ?
+  options:
+    - Parce que TypeScript ne peut jamais les inférer
+    - Pour rendre le contrat de l’API explicite et documenté
+    - Uniquement pour les fonctions async
+    - Pour activer strictNullChecks
+  answer: [1]
+  explanation: >
+    Les paramètres font partie du contrat visible par les appelants.
+  skills: [primitive-types]

@@ -1,0 +1,57 @@
+- id: typescript-02-readonly-et-valeurs-mutables-q1
+  type: multiple_choice
+  difficulty: 1
+  question: >
+    Que permet le modificateur `readonly` en TypeScript ?
+  options:
+    - D’accélérer le runtime
+    - D’exprimer une intention d’immutabilité vérifiée à la compilation
+    - De rendre les valeurs vraiment immuables à runtime
+    - D’interdire les strings
+  answer: [1]
+  explanation: >
+    readonly est une protection de type-checking, pas une immutabilité runtime.
+  skills: [primitive-types]
+
+- id: typescript-02-readonly-et-valeurs-mutables-q2
+  type: true_false
+  difficulty: 1
+  question: >
+    `const` rend un objet complètement immuable.
+  options:
+    - "true"
+    - "false"
+  answer: [1]
+  explanation: >
+    Faux. const empêche seulement de réassigner la variable, pas de muter l’objet.
+  skills: [primitive-types]
+
+- id: typescript-02-readonly-et-valeurs-mutables-q3
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Comment déclarer un tableau qui ne peut pas être modifié ?
+  options:
+    - let arr: number[] = [1, 2]
+    - let arr: readonly number[] = [1, 2]
+    - let arr: const number[] = [1, 2]
+    - let arr: Number[] = [1, 2]
+  answer: [1]
+  explanation: >
+    readonly number[] (ou ReadonlyArray<number>) empêche push, réaffectation d’index, etc.
+  skills: [primitive-types]
+
+- id: typescript-02-readonly-et-valeurs-mutables-q4
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    readonly protège-t-il aussi les objets imbriqués automatiquement ?
+  options:
+    - Oui, en profondeur
+    - Non, seulement le premier niveau (il faut des types Readonly en profondeur si besoin)
+    - Uniquement pour les strings
+    - Oui si on active strict
+  answer: [1]
+  explanation: >
+    readonly est superficiel par défaut. Pour une immutabilité profonde il faut des mapped types (Readonly récursif).
+  skills: [primitive-types]

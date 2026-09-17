@@ -1,0 +1,14 @@
+- id: ts-17-advanced-types-typeof-dans-les-types-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que `typeof` dans les types ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    `typeof` dans les types est une fonctionnalité importante de TypeScript.
+  skills: []

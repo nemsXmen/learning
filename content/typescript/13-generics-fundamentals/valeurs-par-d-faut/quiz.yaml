@@ -1,0 +1,14 @@
+- id: ts-13-generics-fundamentals-valeurs-par-d-faut-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que Valeurs par défaut ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    Valeurs par défaut est une fonctionnalité importante de TypeScript.
+  skills: []

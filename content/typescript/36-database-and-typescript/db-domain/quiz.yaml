@@ -1,0 +1,14 @@
+- id: ts-36-database-and-typescript-db-domain-q1
+  type: multiple_choice
+  difficulty: 2
+  question: >
+    Qu'est-ce que DB → Domain ?
+  options:
+    - Une fonctionnalité TypeScript
+    - Un type JavaScript
+    - Un outil de build
+    - Un framework
+  answer: [0]
+  explanation: >
+    DB → Domain est une fonctionnalité importante de TypeScript.
+  skills: []
