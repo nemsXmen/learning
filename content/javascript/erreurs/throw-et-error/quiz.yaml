@@ -1,0 +1,56 @@
+id: javascript-throw-error-quiz
+kind: QUIZ
+questions:
+  - id: js-throw-error-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel type d'erreur lève `JSON.parse('{')` ?
+    options:
+      - "SyntaxError"
+      - "TypeError"
+      - "RangeError"
+      - "ReferenceError"
+    answer: [0]
+    explanation: >
+      Le texte n'est pas un JSON analysable : JSON.parse lève une SyntaxError.
+    skills:
+      - error-objects
+
+  - id: js-throw-error-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que renvoie `JSON.stringify(new Error('panne'))` ?
+    answer: '{}'
+    explanation: >
+      message et stack ne sont pas des propriétés énumérables : la sérialisation JSON les ignore.
+    skills:
+      - error-objects
+
+  - id: js-throw-error-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Une chaîne de caractères levée avec throw possède une propriété stack.
+    answer: false
+    explanation: >
+      Seul un objet Error capture la pile d'appels à sa création. Une chaîne levée n'en a aucune.
+    skills:
+      - error-objects
+
+  - id: js-throw-error-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment conserver l'erreur d'origine en levant une erreur plus explicite ?
+    options:
+      - "new Error('message', { cause: erreur })"
+      - "new Error(erreur.message + ' message')"
+      - "throw erreur.stack"
+      - "Error.wrap(erreur)"
+    answer: [0]
+    explanation: >
+      L'option cause, depuis ES2022, attache l'erreur d'origine à la nouvelle.
+    skills:
+      - error-objects

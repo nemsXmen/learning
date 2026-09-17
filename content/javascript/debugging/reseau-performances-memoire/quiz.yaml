@@ -1,0 +1,63 @@
+id: javascript-debug-reseau-quiz
+kind: QUIZ
+questions:
+  - id: js-debug-reseau-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Une requête renvoie un statut 5xx. Où chercher la cause en priorité ?
+    options:
+      - "Du côté du serveur"
+      - "Dans le format des données envoyées par le client"
+      - "Dans les en-têtes CORS"
+      - "Dans le cache du navigateur"
+    answer: [0]
+    explanation: >
+      Les statuts 5xx signalent une erreur du serveur ; les 4xx désignent plutôt la requête.
+    skills:
+      - network-performance-debugging
+
+  - id: js-debug-reseau-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      fetch rompt sa promesse quand le serveur répond avec un statut 404.
+    answer: false
+    explanation: >
+      fetch n'est rompue que pour une erreur réseau. Il faut tester reponse.ok ou reponse.status.
+    skills:
+      - network-performance-debugging
+
+  - id: js-debug-reseau-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      À partir de quelle durée une tâche est-elle considérée comme longue pour l'interface ?
+    options:
+      - "50 ms"
+      - "5 ms"
+      - "500 ms"
+      - "5 secondes"
+    answer: [0]
+    explanation: >
+      Une tâche de plus de 50 ms occupe le fil principal assez longtemps pour retarder les
+      interactions de façon perceptible.
+    skills:
+      - network-performance-debugging
+
+  - id: js-debug-reseau-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment confirmer une fuite mémoire ?
+    options:
+      - "Comparer des instantanés du tas avant et après des actions répétées"
+      - "Prendre un seul instantané au démarrage"
+      - "Mesurer la durée d'une requête"
+      - "Désactiver le cache du navigateur"
+    answer: [0]
+    explanation: >
+      Une fuite se voit par accumulation : des objets qui restent d'un instantané à l'autre alors
+      qu'ils devraient être libérés.
+    skills:
+      - network-performance-debugging

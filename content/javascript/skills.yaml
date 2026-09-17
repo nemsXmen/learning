@@ -440,3 +440,38 @@ skills:
     name: Familles d'erreurs
     importance: 4
     requires: [strict-mode-errors]
+
+  - id: error-objects
+    name: throw et l'objet Error
+    importance: 4
+    requires: [error-types]
+
+  - id: try-catch
+    name: try, catch et finally
+    importance: 5
+    requires: [error-objects]
+
+  - id: custom-errors
+    name: Erreurs personnalisées et frontières d'erreur
+    importance: 4
+    requires: [try-catch, class-inheritance]
+
+  - id: console-debugging
+    name: Déboguer avec la console
+    importance: 4
+    requires: [error-objects]
+
+  - id: breakpoints
+    name: Points d'arrêt et exécution pas à pas
+    importance: 4
+    requires: [console-debugging]
+
+  - id: network-performance-debugging
+    name: Déboguer réseau, performances et mémoire
+    importance: 4
+    requires: [breakpoints]
+
+  - id: debugging-method
+    name: Méthode de débogage
+    importance: 5
+    requires: [network-performance-debugging]

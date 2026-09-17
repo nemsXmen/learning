@@ -1,0 +1,62 @@
+id: javascript-points-arret-quiz
+kind: QUIZ
+questions:
+  - id: js-points-arret-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans les DevTools de Chrome, quel raccourci entre dans la fonction appelée sur la ligne courante ?
+    options:
+      - "F11"
+      - "F10"
+      - "F8"
+      - "Maj+F11"
+    answer: [0]
+    explanation: >
+      F11 entre dans la fonction, F10 passe par-dessus, F8 reprend, Maj+F11 sort de la fonction.
+    skills:
+      - breakpoints
+
+  - id: js-points-arret-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment ne s'arrêter que sur l'itération suspecte d'une boucle de mille tours ?
+    options:
+      - "Un point d'arrêt conditionnel"
+      - "Mille points d'arrêt"
+      - "Une instruction debugger dans la boucle"
+      - "L'arrêt sur exception"
+    answer: [0]
+    explanation: >
+      Le point d'arrêt conditionnel n'interrompt l'exécution que lorsque son expression est vraie.
+    skills:
+      - breakpoints
+
+  - id: js-points-arret-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Un point de journalisation affiche un message sans arrêter l'exécution ni modifier le code source.
+    answer: true
+    explanation: >
+      C'est un console.log posé depuis les DevTools, qu'on ne risque pas d'oublier dans le code livré.
+    skills:
+      - breakpoints
+
+  - id: js-points-arret-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle option lance Node.js en s'arrêtant dès la première ligne du programme ?
+    options:
+      - "node --inspect-brk fichier.js"
+      - "node --inspect fichier.js"
+      - "node --debug fichier.js"
+      - "node --break fichier.js"
+    answer: [0]
+    explanation: >
+      --inspect ouvre le port de débogage ; --inspect-brk fait de même et suspend l'exécution avant
+      la première instruction.
+    skills:
+      - breakpoints

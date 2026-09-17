@@ -1,0 +1,54 @@
+id: javascript-try-catch-quiz
+kind: QUIZ
+questions:
+  - id: js-try-catch-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Que renvoie `(() => { try { return 'try'; } finally { return 'finally'; } })()` ?
+    answer: 'finally'
+    explanation: >
+      Un return dans finally remplace la valeur mise de côté par le try. C'est pourquoi on évite
+      return dans finally.
+    skills:
+      - try-catch
+
+  - id: js-try-catch-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Un `return` dans `finally` peut faire disparaître une erreur levée dans `try`.
+    answer: true
+    explanation: >
+      L'erreur en cours de propagation est abandonnée : la fonction renvoie normalement et la
+      panne ne laisse aucune trace.
+    skills:
+      - try-catch
+
+  - id: js-try-catch-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que doit faire un `catch` d'une erreur qu'il ne sait pas traiter ?
+    options:
+      - "La relever avec throw erreur"
+      - "L'afficher dans la console et continuer"
+      - "Renvoyer undefined"
+      - "L'ignorer"
+    answer: [0]
+    explanation: >
+      Relever l'erreur telle quelle conserve sa pile et laisse une couche mieux placée la traiter.
+    skills:
+      - try-catch
+
+  - id: js-try-catch-q4
+    type: true_false
+    difficulty: 1
+    question: >
+      Un bloc finally s'exécute même si le bloc try se termine par un return.
+    answer: true
+    explanation: >
+      finally s'exécute toujours, après la fin du try ou du catch, ce qui en fait l'endroit du
+      nettoyage.
+    skills:
+      - try-catch

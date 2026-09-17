@@ -1,0 +1,57 @@
+id: javascript-methode-debogage-quiz
+kind: QUIZ
+questions:
+  - id: js-methode-debogage-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle est la première étape face à un bug signalé ?
+    options:
+      - "Le reproduire de façon fiable"
+      - "Modifier le code suspect"
+      - "Écrire le test de régression"
+      - "Relancer l'application en production"
+    answer: [0]
+    explanation: >
+      Sans reproduction, on ne peut ni isoler la cause ni savoir si une correction fonctionne.
+    skills:
+      - debugging-method
+
+  - id: js-methode-debogage-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Combien de vérifications git bisect demande-t-il au plus pour départager 16 commits ?
+    answer: '4'
+    explanation: >
+      Chaque vérification divise l'intervalle par deux : 2 puissance 4 vaut 16.
+    skills:
+      - debugging-method
+
+  - id: js-methode-debogage-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Un test de régression doit échouer sur la version qui contenait le bug.
+    answer: true
+    explanation: >
+      S'il passait déjà avant la correction, il ne protège pas contre le retour du bug.
+    skills:
+      - debugging-method
+
+  - id: js-methode-debogage-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi réduire un bug à son cas minimal ?
+    options:
+      - "Pour rendre la cause visible et obtenir le futur test de régression"
+      - "Pour que le bug disparaisse"
+      - "Pour accélérer le programme"
+      - "Pour éviter d'avoir à le corriger"
+    answer: [0]
+    explanation: >
+      Chaque élément retiré sans faire disparaître le bug élimine un suspect, et le cas final sert de
+      test.
+    skills:
+      - debugging-method

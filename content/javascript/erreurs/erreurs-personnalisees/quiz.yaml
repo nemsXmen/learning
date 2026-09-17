@@ -1,0 +1,61 @@
+id: javascript-erreurs-personnalisees-quiz
+kind: QUIZ
+questions:
+  - id: js-erreurs-perso-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Dans une classe de base `ErreurApplication` qui écrit `this.name = new.target.name`, que vaut
+      `new ErreurIntrouvable('Commande', 9).name` ?
+    answer: 'ErreurIntrouvable'
+    explanation: >
+      new.target désigne la classe réellement instanciée : chaque sous-classe reçoit son nom sans
+      avoir à le définir.
+    skills:
+      - custom-errors
+
+  - id: js-erreurs-perso-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que doit renvoyer une API quand une erreur inattendue, comme une TypeError, atteint sa
+      frontière d'erreur ?
+    options:
+      - "Une réponse 500 générique, les détails étant journalisés"
+      - "Le message et la pile de l'erreur pour aider l'utilisateur"
+      - "Une réponse 200 avec un corps vide"
+      - "Une réponse 404"
+    answer: [0]
+    explanation: >
+      Une erreur inattendue est un bug : on ne divulgue aucun détail interne, et on le garde pour
+      les développeurs dans le journal.
+    skills:
+      - custom-errors
+
+  - id: js-erreurs-perso-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Tester le message d'une erreur est la façon la plus fiable de reconnaître son type.
+    answer: false
+    explanation: >
+      Un message peut changer. instanceof ou un code stable sont fiables, même après minification.
+    skills:
+      - custom-errors
+
+  - id: js-erreurs-perso-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      ErreurValidation hérite d'ErreurApplication. Dans quel ordre tester les types à la frontière ?
+    options:
+      - "ErreurValidation d'abord, puis ErreurApplication"
+      - "ErreurApplication d'abord, puis ErreurValidation"
+      - "L'ordre n'a pas d'importance"
+      - "Il faut tester Error en premier"
+    answer: [0]
+    explanation: >
+      Une ErreurValidation passe aussi le test ErreurApplication : le cas le plus précis doit être
+      testé avant le plus général.
+    skills:
+      - custom-errors

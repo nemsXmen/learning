@@ -213,6 +213,15 @@
       "contentVersion": "06c1ce012769"
     },
     {
+      "slug": "debugging",
+      "title": "Débogage",
+      "order": 24,
+      "part": "errors-debugging",
+      "technology": "javascript",
+      "contentPath": "javascript/debugging/module.yaml",
+      "contentVersion": "af0f8e3542f1"
+    },
+    {
       "slug": "erreurs",
       "title": "Gestion des erreurs",
       "order": 23,
@@ -1165,6 +1174,70 @@
       "importance": 4,
       "requires": [
         "strict-mode-errors"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "error-objects",
+      "name": "throw et l'objet Error",
+      "importance": 4,
+      "requires": [
+        "error-types"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "try-catch",
+      "name": "try, catch et finally",
+      "importance": 5,
+      "requires": [
+        "error-objects"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "custom-errors",
+      "name": "Erreurs personnalisées et frontières d'erreur",
+      "importance": 4,
+      "requires": [
+        "try-catch",
+        "class-inheritance"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "console-debugging",
+      "name": "Déboguer avec la console",
+      "importance": 4,
+      "requires": [
+        "error-objects"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "breakpoints",
+      "name": "Points d'arrêt et exécution pas à pas",
+      "importance": 4,
+      "requires": [
+        "console-debugging"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "network-performance-debugging",
+      "name": "Déboguer réseau, performances et mémoire",
+      "importance": 4,
+      "requires": [
+        "breakpoints"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "debugging-method",
+      "name": "Méthode de débogage",
+      "importance": 5,
+      "requires": [
+        "network-performance-debugging"
       ],
       "technology": "javascript"
     },
@@ -2184,6 +2257,187 @@
       ]
     },
     {
+      "id": "javascript-debug-console",
+      "title": "Déboguer avec la console, au-delà de console.log",
+      "slug": "console",
+      "technology": "javascript",
+      "level": "beginner",
+      "module": "debugging",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 2,
+      "xp": 60,
+      "prerequisites": [
+        "javascript-throw-error"
+      ],
+      "skills": [
+        "console-debugging"
+      ],
+      "tags": [
+        "javascript",
+        "debogage"
+      ],
+      "contentPath": "javascript/debugging/console/lesson.md",
+      "contentVersion": "2f98eb74ee67",
+      "body": "\n## Objectifs\n\n- Afficher des valeurs lisibles et nommées, et choisir la bonne méthode de `console` pour chaque besoin.\n- Mesurer une durée, compter des passages et vérifier une hypothèse sans interrompre le programme.\n- Éviter le piège des objets affichés par référence dans les outils du navigateur.\n\n## Introduction\n\n`console.log` est le premier outil de débogage de tout développeur JavaScript, et souvent le seul.\nBien utilisé, il est rapide et efficace ; mal utilisé, il noie l'information dans des dizaines de\nlignes anonymes. L'objet `console` offre pourtant une dizaine de méthodes qui répondent chacune à une\nquestion précise : que contient cet objet, combien de fois passe-t-on ici, combien de temps cela\nprend-il, d'où vient cet appel ?\n\n## Concept\n\n| Question | Méthode | Exemple |\n| --- | --- | --- |\n| Que vaut cette variable ? | `console.log({ variable })` | affiche `{ total: 70 }`, nom compris |\n| Que contient ce tableau d'objets ? | `console.table(liste)` | un tableau aligné par propriété |\n| Quelle est la structure complète ? | `console.dir(objet, { depth: null })` | sans limite de profondeur, dans Node.js |\n| Combien de fois passe-t-on ici ? | `console.count(libelle)` | `clic: 1`, `clic: 2` |\n| Cette hypothèse est-elle vraie ? | `console.assert(condition, message)` | n'affiche que si la condition est fausse |\n| Combien de temps cela prend-il ? | `console.time(libelle)` / `console.timeEnd(libelle)` | `calcul: 0.21ms` |\n| Qui a appelé cette fonction ? | `console.trace(message)` | la pile d'appels à cet endroit |\n| Comment regrouper des messages ? | `console.group(titre)` / `console.groupEnd()` | messages indentés et repliables |\n| Quel niveau d'importance ? | `console.warn`, `console.error` | filtrables dans la console |\n\n## Exemple\n\n```js\nconst commande = {\n  id: 42,\n  articles: [\n    { nom: 'clavier', prix: 50, quantite: 1 },\n    { nom: 'câble', prix: 5, quantite: 4 },\n  ],\n};\n\nfunction calculerTotal(commande) {\n  console.group(`commande ${commande.id}`);\n  let total = 0;\n  for (const article of commande.articles) {\n    const ligne = article.prix * article.quantite;\n    console.log({ article: article.nom, ligne }); // chaque valeur affichée avec son nom\n    total += ligne;\n  }\n  console.assert(total > 0, 'total nul pour la commande', commande.id); // silencieux si vrai\n  console.groupEnd();\n  return total;\n}\n\nconsole.table(commande.articles); // les articles, alignés en colonnes\nconsole.time('calcul');\nconst total = calculerTotal(commande);\nconsole.timeEnd('calcul'); // 'calcul: 0.2ms', par exemple\nconsole.log({ total }); // { total: 70 }\n\nfor (const evenement of ['clic', 'clic', 'survol']) {\n  console.count(evenement); // 'clic: 1', 'clic: 2', 'survol: 1'\n}\n```\n\n## Comment ça fonctionne\n\nÉcrire `console.log({ total })` plutôt que `console.log(total)` utilise le raccourci de propriété : on\naffiche un objet dont la clé est le nom de la variable. Quand dix messages s'enchaînent, chaque valeur\nreste identifiable, sans avoir à écrire `'total :'` à la main.\n\nDans les DevTools d'un navigateur, un objet affiché n'est **pas une copie** : la console garde une\nréférence, et quand on déplie l'objet plus tard, on voit son état **actuel**, pas celui du moment de\nl'appel. Un objet modifié juste après le `console.log` semble donc avoir eu sa valeur finale dès le\ndépart, ce qui envoie le diagnostic sur une fausse piste. Pour figer l'état, on affiche une copie :\n`console.log(structuredClone(etat))`, ou `JSON.stringify(etat)` pour des données simples. Dans Node.js,\nl'objet est converti en texte immédiatement, et le problème ne se pose pas.\n\n`console.assert` exprime une **hypothèse** : il ne dit rien tant qu'elle est vraie, et affiche\n« Assertion failed » avec le message quand elle est fausse, sans interrompre le programme. On peut\nainsi semer des vérifications dans un code suspect et ne lire que les échecs. `console.count` compte les\npassages par libellé — utile pour découvrir qu'un gestionnaire d'événement est attaché deux fois.\n\n`console.time` et `console.timeEnd` mesurent une durée entre deux points du code. Ils donnent un ordre de\ngrandeur, suffisant pour repérer une opération anormalement lente ; pour des mesures fines, le chapitre\nsuivant présente les outils de performance.\n\n`console.trace` affiche la pile d'appels à l'endroit où il est appelé, sans lever d'erreur : il répond à\nla question « par quel chemin arrive-t-on ici ? ». Les niveaux `warn` et `error` s'affichent en couleur et\npeuvent être filtrés dans les DevTools, ce qui aide à retrouver les messages importants.\n\nEnfin, les messages de débogage ne doivent pas rester dans le code livré : ils encombrent la console,\npeuvent exposer des données, et coûtent un peu. Une règle de lint comme `no-console` les signale.\n\n## Erreurs fréquentes\n\n**Afficher des valeurs sans nom.** Utilise `console.log({ variable })`.\n\n**Faire confiance à un objet déplié plus tard dans le navigateur.** Affiche une copie pour figer l'état.\n\n**Multiplier les `console.log` au hasard.** Formule une hypothèse, puis affiche ce qui la confirme ou\nl'infirme.\n\n**Laisser les messages de débogage dans le code livré.** Retire-les, ou passe par un vrai journal.\n\n**Afficher un tableau d'objets avec `console.log`.** `console.table` le rend lisible.\n\n## À retenir\n\n- `console.log({ variable })` affiche chaque valeur avec son nom.\n- `table` pour les listes d'objets, `dir` pour les structures profondes, `trace` pour la pile.\n- `assert` ne parle qu'en cas d'échec ; `count` compte les passages ; `time` mesure une durée.\n- Dans le navigateur, un objet affiché est une référence : affiche une copie pour figer l'état.\n- Les messages de débogage ne restent pas dans le code livré.\n\n## Exercices\n\n1. Un gestionnaire de clic semble s'exécuter deux fois par clic. Sans point d'arrêt, écris ce qu'il faut\n   ajouter pour le confirmer, puis corrige le défaut.\n\n   ```js\n   function initialiser(bouton, compteur) {\n     bouton.addEventListener('click', () => compteur.valeur++);\n   }\n   ```\n\n   :::indice\n   `console.count` compte les passages. Qui appelle `initialiser`, et combien de fois ?\n   :::\n\n   :::solution\n   ```js\n   function initialiser(bouton, compteur) {\n     console.count('initialiser'); // révèle un second appel\n     bouton.addEventListener('click', () => {\n       console.count('clic traité');\n       compteur.valeur++;\n     });\n   }\n   ```\n\n   Si `initialiser: 2` apparaît, deux écouteurs identiques sont attachés. On corrige en appelant\n   `initialiser` une seule fois, ou en protégeant l'attachement :\n\n   ```js\n   const initialises = new WeakSet();\n   function initialiser(bouton, compteur) {\n     if (initialises.has(bouton)) return;\n     initialises.add(bouton);\n     bouton.addEventListener('click', () => compteur.valeur++);\n   }\n   ```\n   :::\n\n2. Dans le navigateur, ce code affiche un panier qui semble déjà contenir trois articles au premier\n   `console.log`. Explique pourquoi, puis modifie l'affichage pour voir l'état réel de chaque étape.\n\n   ```js\n   const panier = { articles: [] };\n   panier.articles.push('clavier');\n   console.log(panier);\n   panier.articles.push('souris', 'écran');\n   console.log(panier);\n   ```\n\n   :::indice\n   Qu'est-ce que la console du navigateur conserve : une copie de l'objet, ou une référence vers lui ?\n   :::\n\n   :::solution\n   La console du navigateur garde une **référence** vers l'objet. Quand on déplie le premier message\n   après l'exécution, elle affiche l'objet dans son état actuel, avec trois articles. Il faut afficher\n   une copie, figée au moment de l'appel.\n\n   ```js\n   const panier = { articles: [] };\n   panier.articles.push('clavier');\n   console.log(structuredClone(panier)); // { articles: ['clavier'] }\n   panier.articles.push('souris', 'écran');\n   console.log(structuredClone(panier)); // { articles: ['clavier', 'souris', 'écran'] }\n   ```\n   :::\n\n3. `moyenne` renvoie parfois `NaN`. Ajoute des assertions qui ne parlent qu'en cas d'anomalie, trouve le\n   cas fautif, puis corrige la fonction.\n\n   ```js\n   function moyenne(notes) {\n     const somme = notes.reduce((total, note) => total + note, 0);\n     return somme / notes.length;\n   }\n   ```\n\n   :::indice\n   Formule les hypothèses : les notes sont des nombres, et la liste n'est pas vide.\n   :::\n\n   :::solution\n   ```js\n   function moyenneInstrumentee(notes) {\n     console.assert(notes.length > 0, 'liste de notes vide');\n     console.assert(notes.every(Number.isFinite), 'note non numérique dans', notes);\n     const somme = notes.reduce((total, note) => total + note, 0);\n     return somme / notes.length;\n   }\n\n   moyenneInstrumentee([12, 15]); // aucun message\n   moyenneInstrumentee([]); // 'Assertion failed: liste de notes vide' → 0 / 0 donne NaN\n\n   function moyenne(notes) {\n     if (notes.length === 0) {\n       return null;\n     }\n     return notes.reduce((total, note) => total + note, 0) / notes.length;\n   }\n\n   console.log(moyenne([12, 15]), moyenne([])); // 13.5 null\n   ```\n\n   Les assertions ont confirmé l'hypothèse sans interrompre le programme ; la correction, elle, traite\n   explicitement le cas vide.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `console.log({ variable })` plutôt que `console.log(variable)` ?\n\n  :::indice\n  Que devient la lisibilité quand dix messages s'enchaînent ?\n  :::\n\n  :::reponse\n  Le raccourci de propriété crée un objet dont la clé est le nom de la variable : chaque valeur affichée\n  est étiquetée sans effort, et l'on peut en afficher plusieurs d'un coup, `console.log({ total, taux })`.\n  Quand de nombreux messages se succèdent, on sait immédiatement à quoi correspond chaque valeur, ce qui\n  évite des erreurs de lecture pendant le diagnostic.\n  :::\n\n- Pourquoi un objet affiché dans la console du navigateur peut-il induire en erreur ?\n\n  :::indice\n  La console affiche-t-elle l'état du moment de l'appel ou l'état au moment où on déplie l'objet ?\n  :::\n\n  :::reponse\n  Parce que la console du navigateur conserve une référence vers l'objet, et l'évalue quand on le déplie.\n  Si l'objet a été modifié entre-temps, on voit son état final, pas celui du moment du `console.log`, et\n  l'on conclut à tort qu'une valeur était déjà présente. Pour figer l'état, on affiche une copie avec\n  `structuredClone` ou `JSON.stringify`, ou l'on pose un point d'arrêt.\n  :::\n\n- Quand préférer `console.assert` à `console.log` ?\n\n  :::indice\n  Que se passe-t-il quand la condition est vraie ?\n  :::\n\n  :::reponse\n  Quand on veut vérifier une hypothèse plutôt qu'afficher une valeur. `console.assert(condition, message)`\n  reste silencieux tant que la condition est vraie, et n'affiche un message que lorsqu'elle est fausse,\n  sans interrompre le programme. On peut ainsi semer des vérifications dans un code suspect et ne lire que\n  les anomalies, au lieu de parcourir des centaines de lignes de journal.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-methode-debogage",
+      "title": "Une méthode de débogage : reproduire, isoler, corriger, prouver",
+      "slug": "methode-de-debogage",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "debugging",
+      "order": 4,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-debug-reseau"
+      ],
+      "skills": [
+        "debugging-method"
+      ],
+      "tags": [
+        "javascript",
+        "debogage"
+      ],
+      "contentPath": "javascript/debugging/methode-de-debogage/lesson.md",
+      "contentVersion": "bc570f132c2f",
+      "body": "\n## Objectifs\n\n- Suivre une démarche en étapes plutôt que de modifier le code au hasard.\n- Réduire un bug à son cas le plus simple, et tester une hypothèse à la fois.\n- Corriger la cause plutôt que le symptôme, et le prouver par un test de régression.\n\n## Introduction\n\nLes outils des chapitres précédents ne servent à rien sans méthode. Face à un bug, la tentation est de\nmodifier une ligne, relancer, en modifier une autre : on finit parfois par faire disparaître le\nsymptôme sans savoir pourquoi, et le bug revient sous une autre forme. Les développeurs expérimentés\nsuivent une démarche proche de la méthode expérimentale. Elle paraît plus lente ; elle est presque\ntoujours plus rapide.\n\n## Concept\n\n| Étape | Question | Geste |\n| --- | --- | --- |\n| 1. Reproduire | Puis-je provoquer le bug à volonté ? | écrire les étapes exactes, les données, l'environnement |\n| 2. Réduire | Quel est le plus petit cas qui échoue ? | retirer tout ce qui n'est pas nécessaire |\n| 3. Isoler | Où le comportement diverge-t-il de l'attendu ? | comparer entrée et sortie de chaque étape, couper en deux |\n| 4. Formuler | Quelle est la cause probable ? | une hypothèse précise, testable |\n| 5. Vérifier | L'hypothèse est-elle vraie ? | une seule modification, puis observer |\n| 6. Corriger | Qu'est-ce qui produit le bug, et non ce qui le montre ? | modifier la cause |\n| 7. Prouver | Le bug peut-il revenir ? | un test de régression qui échouait avant la correction |\n\nLa recherche par **dichotomie** accélère l'isolement : couper le chemin suspect en deux, vérifier la\nmoitié où tout est encore correct, recommencer. Dans l'historique Git, `git bisect` fait de même entre\nun commit sain et un commit cassé.\n\n## Exemple\n\n```js\nimport assert from 'node:assert/strict';\n\n// Signalement : « après avoir affiché les meilleures ventes, le catalogue change d'ordre ».\nfunction meilleuresVentes(produits, n = 3) {\n  return produits.sort((a, b) => b.ventes - a.ventes).slice(0, n);\n}\n\n// 1-2. Reproduire avec le plus petit cas possible.\nconst catalogue = [{ nom: 'A', ventes: 1 }, { nom: 'B', ventes: 5 }];\nmeilleuresVentes(catalogue, 1);\nconsole.log(catalogue.map((p) => p.nom)); // ['B', 'A'] : reproduit\n\n// 3-5. Isoler, formuler et vérifier : « sort modifie le tableau reçu ».\nconst essai = [3, 1, 2];\nconsole.log(essai.sort() === essai, essai); // true [1, 2, 3] : hypothèse confirmée\n\n// 6. Corriger la cause.\nfunction meilleuresVentesCorrigee(produits, n = 3) {\n  return produits.toSorted((a, b) => b.ventes - a.ventes).slice(0, n);\n}\n\n// 7. Prouver par un test de régression.\nconst entree = [{ nom: 'A', ventes: 1 }, { nom: 'B', ventes: 5 }];\nassert.deepEqual(meilleuresVentesCorrigee(entree, 1), [{ nom: 'B', ventes: 5 }]);\nassert.deepEqual(entree.map((p) => p.nom), ['A', 'B']); // l'entrée n'est plus modifiée\nconsole.log('test de régression : OK');\n```\n\n## Comment ça fonctionne\n\n**Reproduire** vient en premier, parce qu'un bug qu'on ne peut pas déclencher ne peut pas être corrigé\navec certitude : on ne saura jamais si la modification a eu un effet. On note les étapes exactes, les\ndonnées, le navigateur, la version déployée. Si le bug est intermittent, on cherche ce qui varie : le\ntemps, l'ordre des requêtes, l'état laissé par une action précédente.\n\n**Réduire** rend le problème lisible. Le signalement parle d'un catalogue et d'une page d'accueil ; le cas\nminimal tient en deux produits et un appel de fonction. Chaque élément retiré sans que le bug disparaisse\nest un suspect de moins. À la fin, le cas réduit devient souvent le test de régression.\n\n**Isoler** consiste à trouver le premier endroit où la réalité s'écarte de l'attendu. On compare entrée et\nsortie de chaque étape, avec des points d'arrêt ou des assertions, et l'on coupe le chemin en deux plutôt\nque de tout parcourir. Pour une régression apparue entre deux versions, `git bisect` automatise la\ndichotomie dans l'historique : il propose des commits intermédiaires, on indique s'ils sont sains ou\ncassés, et il désigne le commit fautif en quelques étapes.\n\n**Formuler puis vérifier** une hypothèse à la fois est la discipline centrale. « Le tri modifie le tableau\nreçu » se vérifie en une ligne. Modifier trois choses à la fois, en revanche, empêche de savoir laquelle a\nagi, et peut en casser une quatrième. Si l'hypothèse est fausse, on l'écarte et on en formule une autre à\npartir de ce qu'on a observé.\n\n**Corriger la cause** évite de déplacer le bug. Recopier le catalogue avant chaque affichage masquerait le\nsymptôme ; utiliser `toSorted` supprime la cause, pour tous les appelants. Enfin, **prouver** : le test\nécrit sur le cas réduit échoue avant la correction, passe après, et empêchera le bug de revenir lors d'une\nmodification future.\n\nExpliquer le problème à voix haute, à un collègue ou à un canard en plastique, force à formuler chaque\nhypothèse : c'est souvent à ce moment qu'on voit celle qu'on n'avait pas vérifiée.\n\n## Erreurs fréquentes\n\n**Corriger avant d'avoir reproduit.** On ne peut pas savoir si la correction fonctionne.\n\n**Modifier plusieurs choses à la fois.** On ne sait plus laquelle a agi.\n\n**Supposer au lieu de vérifier.** « Cette fonction marche forcément » est une hypothèse comme une autre.\n\n**Traiter le symptôme.** Le bug revient ailleurs.\n\n**Oublier le test de régression.** Rien n'empêche le bug de réapparaître.\n\n## À retenir\n\n- Reproduire, réduire, isoler, formuler, vérifier, corriger, prouver.\n- Un cas minimal rend la cause visible et devient le test de régression.\n- Couper en deux pour isoler ; `git bisect` pour une régression dans l'historique.\n- Une hypothèse et une modification à la fois.\n- Corriger la cause, puis prouver par un test qui échouait avant.\n\n## Exercices\n\n1. On signale : « la facture affiche parfois 0,30000000000000004 € de TVA ». Écris le cas minimal qui\n   reproduit le problème, formule l'hypothèse, puis corrige en calculant en centimes.\n\n   ```js\n   function tva(prix) {\n     return prix * 0.2;\n   }\n   ```\n\n   :::indice\n   Cherche un prix qui produit ce résultat : `0.2` et beaucoup de décimaux n'ont pas de représentation\n   binaire exacte.\n   :::\n\n   :::solution\n   ```js\n   console.log(1.5 * 0.2); // 0.30000000000000004 : reproduit avec une seule valeur\n\n   // Hypothèse : les nombres à virgule flottante ne représentent pas exactement 0,2 et 1,5 * 0,2.\n   console.log(0.1 + 0.2 === 0.3); // false : même famille de problème\n\n   function tvaEnCentimes(prixEnCentimes) {\n     return Math.round(prixEnCentimes * 0.2);\n   }\n\n   console.log(tvaEnCentimes(150) / 100); // 0.3\n   ```\n\n   Les montants sont stockés et calculés en centimes entiers, et convertis en euros seulement pour\n   l'affichage.\n   :::\n\n2. Une fonctionnalité marchait il y a 64 commits et ne marche plus aujourd'hui. Combien de vérifications\n   `git bisect` demande-t-il au plus, et quelles commandes lances-tu ?\n\n   :::indice\n   Chaque vérification divise par deux l'intervalle de commits suspects.\n   :::\n\n   :::solution\n   Au plus **6** vérifications, puisque 2 puissance 6 vaut 64. La séquence :\n\n   ```bash\n   git bisect start\n   git bisect bad                 # le commit courant est cassé\n   git bisect good a1b2c3d        # un commit où tout fonctionnait\n   # Git place le dépôt sur un commit intermédiaire : on teste, puis on indique le résultat.\n   git bisect good                # ou : git bisect bad\n   # … jusqu'à ce que Git affiche le premier commit fautif\n   git bisect reset               # revenir à la branche de départ\n   ```\n\n   Si un script de test peut trancher seul, `git bisect run npm test` enchaîne toutes les vérifications\n   automatiquement.\n   :::\n\n3. Un bug a été corrigé : `moyenne([])` renvoyait `NaN`, elle doit renvoyer `null`. Écris le test de\n   régression avec `node:assert`, puis vérifie qu'il aurait échoué sur l'ancienne version.\n\n   :::indice\n   Le test porte sur le cas réduit qui révélait le bug, et sur un cas normal pour ne rien casser d'autre.\n   :::\n\n   :::solution\n   ```js\n   import assert from 'node:assert/strict';\n\n   function ancienneMoyenne(notes) {\n     return notes.reduce((t, n) => t + n, 0) / notes.length;\n   }\n\n   function moyenne(notes) {\n     if (notes.length === 0) return null;\n     return notes.reduce((t, n) => t + n, 0) / notes.length;\n   }\n\n   function testerMoyenne(fonction) {\n     assert.equal(fonction([]), null); // le cas du bug\n     assert.equal(fonction([12, 15]), 13.5); // le cas normal\n   }\n\n   testerMoyenne(moyenne);\n   console.log('version corrigée : OK');\n   assert.throws(() => testerMoyenne(ancienneMoyenne));\n   console.log('ancienne version : le test échoue bien');\n   ```\n\n   Un test de régression qui n'aurait pas échoué avant la correction ne prouve rien.\n   :::\n\n## Questions d'entretien\n\n- Comment abordes-tu un bug que tu ne comprends pas ?\n\n  :::indice\n  Une démarche en étapes, pas une liste d'outils.\n  :::\n\n  :::reponse\n  Je commence par le reproduire de façon fiable, puis je le réduis au cas le plus simple. J'isole\n  l'endroit où le comportement s'écarte de l'attendu, en comparant les entrées et sorties des étapes ou en\n  coupant le chemin en deux. Je formule une hypothèse précise, je la vérifie avec une seule modification,\n  et je corrige la cause plutôt que le symptôme. J'ajoute enfin un test de régression qui échouait avant la\n  correction.\n  :::\n\n- Qu'est-ce que `git bisect`, et quand l'utiliser ?\n\n  :::indice\n  Une recherche par dichotomie dans l'historique.\n  :::\n\n  :::reponse\n  C'est une commande qui cherche par dichotomie le commit qui a introduit une régression, entre un commit\n  sain et un commit cassé. À chaque étape, on indique si le commit proposé est bon ou mauvais, et Git divise\n  l'intervalle par deux : 1 000 commits se départagent en une dizaine d'étapes. On l'utilise quand on sait\n  qu'une fonctionnalité marchait avant, sans savoir quelle modification l'a cassée ; `git bisect run`\n  l'automatise avec un script de test.\n  :::\n\n- Pourquoi une seule modification à la fois ?\n\n  :::indice\n  Que conclure si le bug disparaît après trois changements ?\n  :::\n\n  :::reponse\n  Parce qu'avec plusieurs modifications on ne sait plus laquelle a produit l'effet observé : le bug peut\n  disparaître pour une raison fausse, ou une modification inutile peut rester dans le code et en casser\n  une autre partie. Une modification par hypothèse transforme chaque essai en information fiable, même\n  quand l'hypothèse est fausse.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-points-arret",
+      "title": "Points d'arrêt : exécuter pas à pas dans les DevTools",
+      "slug": "points-d-arret",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "debugging",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-debug-console"
+      ],
+      "skills": [
+        "breakpoints"
+      ],
+      "tags": [
+        "javascript",
+        "debogage"
+      ],
+      "contentPath": "javascript/debugging/points-d-arret/lesson.md",
+      "contentVersion": "1af97aa769d8",
+      "body": "\n## Objectifs\n\n- Suspendre l'exécution à un endroit précis, et inspecter les variables, la portée et la pile.\n- Avancer pas à pas, entrer dans une fonction ou en sortir.\n- Utiliser les points d'arrêt conditionnels, les points de journalisation et l'arrêt sur exception,\n  dans le navigateur comme dans Node.js.\n\n## Introduction\n\nAjouter un `console.log`, recharger, lire, en ajouter un autre, recharger encore : cette boucle\nfonctionne, mais elle oblige à deviner à l'avance ce qu'il faudra afficher. Un **point d'arrêt**\nrenverse la démarche : le programme s'arrête à la ligne choisie, et **toutes** les variables sont\nconsultables, la pile d'appels aussi, et l'on peut avancer instruction par instruction. Pour un bug\nqu'on ne comprend pas encore, c'est presque toujours plus rapide.\n\n## Concept\n\n| Outil | Effet |\n| --- | --- |\n| Point d'arrêt | un clic sur le numéro de ligne dans l'onglet *Sources* : l'exécution s'arrête avant cette ligne |\n| Instruction `debugger;` | le même arrêt, écrit dans le code, actif seulement si les outils sont ouverts |\n| Point d'arrêt conditionnel | ne s'arrête que si une expression est vraie, par exemple `article.prix < 0` |\n| Point de journalisation (*logpoint*) | affiche un message sans s'arrêter, sans modifier le code |\n| Arrêt sur exception | s'arrête à l'endroit où une erreur est levée, rattrapée ou non |\n\nUne fois arrêté, les commandes des DevTools de Chrome :\n\n| Action | Raccourci | Effet |\n| --- | --- | --- |\n| Reprendre | `F8` | continue jusqu'au prochain point d'arrêt |\n| Pas à pas principal | `F10` | exécute la ligne, sans entrer dans les fonctions appelées |\n| Entrer | `F11` | entre dans la fonction appelée sur la ligne |\n| Sortir | `Maj+F11` | termine la fonction courante et revient à l'appelant |\n\nLes panneaux à consulter : **Scope** pour les variables de chaque portée, **Call Stack** pour la chaîne\nd'appels, **Watch** pour suivre des expressions choisies.\n\n## Exemple\n\n```js\n// Le total affiché est faux pour certains paniers. Où poser les points d'arrêt ?\nfunction totalPanier(articles, codePromo) {\n  let total = 0;\n  for (const article of articles) {\n    total += article.prix * article.quantite; // point d'arrêt conditionnel : article.quantite === undefined\n  }\n  return appliquerPromo(total, codePromo); // F11 ici pour entrer dans appliquerPromo\n}\n\nfunction appliquerPromo(total, code) {\n  const remises = { BIENVENUE: 0.1, FIDELE: 0.2 };\n  const taux = remises[code]; // Watch : code, taux\n  return total * (1 - taux); // taux vaut undefined pour un code inconnu → NaN\n}\n\nconsole.log(totalPanier([{ prix: 20, quantite: 2 }], 'BIENVENUE')); // 36\nconsole.log(totalPanier([{ prix: 20, quantite: 2 }], 'INCONNU')); // NaN : le bug\nconsole.log(totalPanier([{ prix: 20 }], 'FIDELE')); // NaN : un second bug, quantité absente\n```\n\n## Comment ça fonctionne\n\nQuand l'exécution atteint un point d'arrêt, le moteur suspend le fil JavaScript **avant** la ligne\nmarquée. Rien d'autre ne s'exécute pendant la pause : ni minuteur, ni événement, ni rendu. Les DevTools\naffichent alors l'état exact du programme. Le panneau **Scope** liste les variables de chaque portée —\nlocale, closure, module, globale —, et l'on peut survoler une variable dans le code pour lire sa valeur.\nLe panneau **Call Stack** montre la chaîne d'appels : cliquer sur un cadre plus bas affiche les\nvariables de la fonction appelante, telles qu'elles étaient au moment de l'appel.\n\nAvancer pas à pas demande de choisir à chaque ligne : **passer** l'appel de fonction quand on lui fait\nconfiance, **entrer** dedans quand le problème peut s'y trouver, **sortir** quand on a vu ce qu'il fallait.\nDans l'exemple, un point d'arrêt sur le `return` de `totalPanier`, puis `F11` pour entrer dans\n`appliquerPromo`, montre en deux étapes que `taux` vaut `undefined` pour un code inconnu.\n\nLe **point d'arrêt conditionnel** évite de s'arrêter mille fois dans une boucle : on n'interrompt que\nl'itération suspecte. Le **point de journalisation** affiche un message à chaque passage sans s'arrêter\net sans toucher au code source — un `console.log` qu'on n'oublie pas de retirer. L'**arrêt sur exception**\nsuspend l'exécution là où l'erreur est levée, et non là où elle est finalement rattrapée : c'est le moyen\nle plus direct de trouver l'origine d'une erreur qu'un `catch` avale.\n\nLe code livré est souvent minifié et regroupé : les **source maps** permettent aux DevTools d'afficher et\nd'arrêter le code d'origine. Sans elles, les points d'arrêt se posent sur un fichier illisible.\n\nPour **Node.js**, `node --inspect fichier.js` ouvre un port de débogage, et `node --inspect-brk` s'arrête\ndès la première ligne. On s'y connecte depuis `chrome://inspect` dans Chrome, ou directement depuis\nl'éditeur : VS Code lance et attache le débogueur avec une simple configuration, et les points d'arrêt se\nposent dans la marge du code.\n\n## Erreurs fréquentes\n\n**Poser un point d'arrêt dans une boucle de mille tours.** Rends-le conditionnel.\n\n**Entrer dans chaque fonction.** Passe par-dessus celles qui ne sont pas suspectes.\n\n**Oublier une instruction `debugger`.** Elle arrête l'application de quiconque ouvre les outils : retire-la.\n\n**Déboguer du code minifié.** Active les source maps.\n\n**Ne regarder que la fonction courante.** La valeur fautive vient souvent d'un appelant : remonte la pile.\n\n## À retenir\n\n- Un point d'arrêt suspend l'exécution avant la ligne et rend tout l'état consultable.\n- `F8` reprendre, `F10` passer, `F11` entrer, `Maj+F11` sortir.\n- Conditionnel pour cibler une itération, journalisation pour observer sans s'arrêter.\n- L'arrêt sur exception montre où une erreur naît, pas où elle est rattrapée.\n- Node.js se débogue avec `--inspect`, depuis Chrome ou l'éditeur.\n\n## Exercices\n\n1. En t'appuyant sur l'exemple, décris la séquence de débogage — points d'arrêt, pas à pas, panneaux à\n   lire — qui mène à la cause du `NaN` pour le code `'INCONNU'`, puis corrige `appliquerPromo`.\n\n   :::indice\n   Pars du résultat faux et remonte : quelle valeur produit `NaN` dans la multiplication ?\n   :::\n\n   :::solution\n   1. Point d'arrêt sur `return appliquerPromo(total, codePromo)` : le panneau Scope montre `total` à 40,\n      une valeur correcte.\n   2. `F11` pour entrer dans `appliquerPromo`, puis `F10` jusqu'au `return`.\n   3. Le survol, ou une expression Watch, montre `taux` à `undefined` : `remises['INCONNU']` n'existe pas,\n      et `1 - undefined` vaut `NaN`.\n\n   ```js\n   function appliquerPromo(total, code) {\n     const remises = { BIENVENUE: 0.1, FIDELE: 0.2 };\n     const taux = remises[code] ?? 0;\n     return total * (1 - taux);\n   }\n\n   console.log(appliquerPromo(40, 'INCONNU'), appliquerPromo(40, 'BIENVENUE')); // 40 36\n   ```\n   :::\n\n2. Le troisième appel de l'exemple renvoie aussi `NaN`, pour une autre raison. Donne l'expression d'un point\n   d'arrêt conditionnel qui ne s'arrête que sur l'article fautif, puis corrige `totalPanier`.\n\n   :::indice\n   Dans la boucle, quelle propriété d'article peut être absente ?\n   :::\n\n   :::solution\n   Le point d'arrêt conditionnel sur la ligne `total += …` avec l'expression\n   `article.quantite === undefined` s'arrête uniquement sur l'article sans quantité : `20 * undefined`\n   vaut `NaN`, qui contamine tout le total. Selon la règle métier, on applique une quantité par défaut ou\n   l'on refuse la donnée ; ici, un article sans quantité compte pour un.\n\n   ```js\n   function totalPanier(articles, codePromo) {\n     let total = 0;\n     for (const { prix, quantite = 1 } of articles) {\n       total += prix * quantite;\n     }\n     return appliquerPromo(total, codePromo);\n   }\n\n   function appliquerPromo(total, code) {\n     const taux = { BIENVENUE: 0.1, FIDELE: 0.2 }[code] ?? 0;\n     return total * (1 - taux);\n   }\n\n   console.log(totalPanier([{ prix: 20 }], 'FIDELE')); // 16\n   ```\n   :::\n\n3. `lireReglages` renvoie `null` pour un texte qui semble valide, et le `catch` masque la raison. Décris\n   comment l'arrêt sur exception retrouve l'origine, puis modifie la fonction pour ne plus masquer les\n   erreurs inattendues.\n\n   ```js\n   function lireReglages(texte) {\n     try {\n       const reglages = JSON.parse(texte);\n       return reglages.affichage.theme;\n     } catch {\n       return null;\n     }\n   }\n   lireReglages('{\"theme\": \"sombre\"}'); // null\n   ```\n\n   :::indice\n   Active « Pause on caught exceptions » : où l'exécution s'arrête-t-elle, et avec quelle erreur ?\n   :::\n\n   :::solution\n   Avec l'arrêt sur les exceptions **rattrapées**, l'exécution s'arrête sur `reglages.affichage.theme` avec\n   une `TypeError` : `affichage` n'existe pas, le JSON est valide mais n'a pas la forme attendue. Le `catch`\n   transformait ce problème de données en `null` silencieux.\n\n   ```js\n   function lireReglages(texte) {\n     let reglages;\n     try {\n       reglages = JSON.parse(texte);\n     } catch {\n       return null; // seul cas prévu : un texte qui n'est pas du JSON\n     }\n     return reglages.affichage?.theme ?? reglages.theme ?? null;\n   }\n\n   console.log(lireReglages('{\"theme\": \"sombre\"}')); // 'sombre'\n   console.log(lireReglages('pas du json')); // null\n   ```\n\n   Le `try` ne couvre plus que `JSON.parse`, et la forme des données est traitée explicitement.\n   :::\n\n## Questions d'entretien\n\n- Quand un point d'arrêt est-il plus efficace qu'un `console.log` ?\n\n  :::indice\n  Sait-on déjà ce qu'il faut afficher ?\n  :::\n\n  :::reponse\n  Quand on ne sait pas encore où chercher. Un `console.log` oblige à deviner à l'avance quelles valeurs\n  afficher, puis à relancer pour chaque nouvelle hypothèse. Un point d'arrêt montre en une fois toutes les\n  variables de toutes les portées et la pile d'appels, et permet d'avancer pas à pas. `console.log` reste\n  pratique pour observer un comportement dans la durée, par exemple sur de nombreuses itérations ou dans\n  un flux d'événements rapides.\n  :::\n\n- Quelle différence entre « passer », « entrer » et « sortir » ?\n\n  :::indice\n  Que se passe-t-il quand la ligne courante appelle une fonction ?\n  :::\n\n  :::reponse\n  « Passer » (`F10`) exécute la ligne entière, fonctions appelées comprises, et s'arrête à la ligne\n  suivante. « Entrer » (`F11`) s'arrête à la première ligne de la fonction appelée sur la ligne courante.\n  « Sortir » (`Maj+F11`) termine la fonction en cours et s'arrête dans l'appelant, juste après l'appel.\n  On passe par-dessus ce qui est sûr et on entre dans ce qui est suspect.\n  :::\n\n- À quoi sert l'arrêt sur exception rattrapée ?\n\n  :::indice\n  Pense à une erreur qu'un `catch` transforme en valeur par défaut.\n  :::\n\n  :::reponse\n  À trouver l'endroit où une erreur est levée, même quand un `catch` la rattrape et la masque ensuite.\n  Sans lui, on ne voit que le symptôme — une valeur `null`, un message générique —, loin de la cause.\n  L'exécution s'arrête sur la ligne fautive, avec la pile et les variables du moment. On l'active\n  ponctuellement, car les bibliothèques lèvent et rattrapent souvent des erreurs de façon normale.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-debug-reseau",
+      "title": "Déboguer le réseau, les performances et la mémoire",
+      "slug": "reseau-performances-memoire",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "debugging",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-points-arret"
+      ],
+      "skills": [
+        "network-performance-debugging"
+      ],
+      "tags": [
+        "javascript",
+        "debogage"
+      ],
+      "contentPath": "javascript/debugging/reseau-performances-memoire/lesson.md",
+      "contentVersion": "ca25552833bd",
+      "body": "\n## Objectifs\n\n- Lire une requête dans l'onglet Réseau : statut, en-têtes, corps et chronologie.\n- Mesurer avant d'optimiser, avec `performance.now`, `performance.mark` et le profileur.\n- Repérer une fuite mémoire en comparant des instantanés du tas.\n\n## Introduction\n\nBeaucoup de bugs ne sont pas dans la logique, mais entre les programmes : une requête qui part sans\nen-tête d'authentification, une réponse 200 dont le corps est vide, une page qui ralentit au bout de\ndix minutes. Les DevTools ont un onglet pour chacun de ces problèmes. La règle qui les relie tient en\nune phrase : **on observe et on mesure avant de modifier quoi que ce soit**.\n\n## Concept\n\n**Onglet Réseau** :\n\n| À regarder | Ce qu'on y apprend |\n| --- | --- |\n| Statut | 2xx succès, 4xx erreur de la requête, 5xx erreur du serveur |\n| En-têtes | ce qui a vraiment été envoyé : `Authorization`, `Content-Type`, cookies |\n| Charge utile et réponse | le corps envoyé et reçu, tel quel |\n| Chronologie | attente du serveur, téléchargement, file d'attente du navigateur |\n| Options | conserver le journal entre deux pages, désactiver le cache, simuler un réseau lent |\n\n**Performances** : `performance.now()` pour une durée précise, `performance.mark` et\n`performance.measure` pour nommer des étapes, l'onglet **Performance** pour enregistrer une interaction\net voir quelles fonctions occupent le fil principal. Une tâche de plus de 50 ms bloque l'interface de\nfaçon perceptible.\n\n**Mémoire** : l'onglet **Memory** prend des instantanés du tas. Une mémoire qui grandit à chaque\nrépétition d'une même action, sans redescendre, signale une fuite.\n\n## Exemple\n\n```js\nconst n = 20_000;\nconst identifiants = Array.from({ length: n }, (_, i) => i);\nconst recherches = Array.from({ length: n }, (_, i) => i * 2);\n\nfunction avecIncludes() {\n  let trouves = 0;\n  for (const id of recherches) if (identifiants.includes(id)) trouves++;\n  return trouves;\n}\n\nfunction avecSet() {\n  const ensemble = new Set(identifiants);\n  let trouves = 0;\n  for (const id of recherches) if (ensemble.has(id)) trouves++;\n  return trouves;\n}\n\nperformance.mark('debut');\nconst resultatIncludes = avecIncludes();\nperformance.mark('fin');\nconst dureeIncludes = performance.measure('includes', 'debut', 'fin').duration;\n\nconst debutSet = performance.now();\nconst resultatSet = avecSet();\nconst dureeSet = performance.now() - debutSet;\n\nconsole.log(resultatIncludes === resultatSet); // true : même résultat\nconsole.log(dureeIncludes > dureeSet * 10); // true : Set est plusieurs dizaines de fois plus rapide ici\n```\n\n## Comment ça fonctionne\n\nL'onglet **Réseau** montre ce qui est réellement échangé, et non ce que le code est censé envoyer. C'est\nlà qu'on vérifie qu'un en-tête `Authorization` est présent, que le corps est bien du JSON avec le\n`Content-Type` correspondant, ou qu'une requête part deux fois. Le **statut** oriente la recherche : un\n4xx désigne en général la requête — données, droits, adresse —, un 5xx le serveur. Une erreur **CORS**\napparaît dans la console avec une requête rouge : le navigateur a reçu une réponse mais refuse de la\ntransmettre au code, faute d'en-têtes autorisant l'origine. La **chronologie** distingue une attente du\nserveur, longue avant le premier octet, d'un téléchargement lent. Les options « conserver le journal »,\n« désactiver le cache » et la simulation d'un réseau lent permettent de reproduire des situations\nqu'on ne voit jamais sur sa machine.\n\nPour les **performances**, la première règle est de mesurer. L'intuition sur ce qui est lent se trompe\nsouvent : l'exemple montre une boucle anodine, dont le coût réel vient de `includes`, qui parcourt tout le\ntableau à chaque recherche. `performance.now()` donne une durée en millisecondes avec décimales, plus\nprécise que `Date.now()`. `performance.mark` et `performance.measure` nomment des étapes, visibles aussi\ndans l'onglet Performance. Cet onglet enregistre une interaction et affiche un graphique en flammes : les\nbarres les plus larges sont les fonctions qui occupent le plus le fil principal, et les tâches longues sont\nsignalées. On optimise ce qui apparaît en haut du profil, puis on **mesure à nouveau**.\n\nPour la **mémoire**, la démarche est comparative. On prend un instantané du tas, on répète plusieurs fois\nune action qui devrait tout remettre à zéro — ouvrir puis fermer une fenêtre —, on force le ramasse-miettes\net on prend un second instantané. Des objets qui s'accumulent d'un instantané à l'autre sont retenus par\nquelqu'un : l'outil montre la chaîne de références qui les garde en vie. Les coupables habituels sont\nconnus : écouteurs non retirés, intervalles oubliés, caches sans limite, éléments du DOM détachés mais\nencore référencés. Dans Node.js, `process.memoryUsage()` suit l'évolution du tas, et `--inspect` donne\naccès aux mêmes instantanés.\n\n## Erreurs fréquentes\n\n**Optimiser sans mesurer.** On améliore du code qui n'était pas lent.\n\n**Conclure sur une seule mesure.** Répète, et compare dans les mêmes conditions.\n\n**Tester le réseau uniquement sur une connexion rapide.** Simule un réseau lent.\n\n**Chercher un bug CORS dans le code du client.** La correction se fait dans les en-têtes du serveur.\n\n**Prendre un seul instantané mémoire.** Une fuite se voit par comparaison.\n\n## À retenir\n\n- L'onglet Réseau montre ce qui a vraiment été envoyé et reçu : statut, en-têtes, corps, chronologie.\n- 4xx : la requête ; 5xx : le serveur ; CORS : les en-têtes de réponse.\n- Mesurer d'abord : `performance.now`, `mark`, `measure`, puis le profileur.\n- Une tâche de plus de 50 ms gêne l'interface.\n- Une fuite mémoire se repère en comparant des instantanés après des actions répétées.\n\n## Exercices\n\n1. Un utilisateur signale que son profil ne s'enregistre pas. La console n'affiche rien, et l'onglet Réseau\n   montre une requête `PUT /api/profil` avec le statut 415. Que vérifier en priorité, et que corriger dans ce\n   code ?\n\n   ```js\n   fetch('/api/profil', { method: 'PUT', body: JSON.stringify({ nom: 'Ada' }) });\n   ```\n\n   :::indice\n   Le statut 415 signifie « type de média non pris en charge ». Quel en-tête indique le type du corps ?\n   :::\n\n   :::solution\n   Dans l'onglet Réseau, les en-têtes de la requête montrent un `Content-Type` à `text/plain` : c'est la\n   valeur par défaut quand `body` est une chaîne. Le serveur attend du JSON et refuse la requête. Le code\n   doit déclarer le type du corps, et traiter les statuts d'erreur pour que l'échec ne reste pas silencieux.\n\n   ```js\n   const reponse = await fetch('/api/profil', {\n     method: 'PUT',\n     headers: { 'Content-Type': 'application/json' },\n     body: JSON.stringify({ nom: 'Ada' }),\n   });\n   if (!reponse.ok) {\n     throw new Error(`Enregistrement du profil impossible : ${reponse.status}`);\n   }\n   ```\n\n   `fetch` ne rompt pas sa promesse pour un 4xx ou un 5xx : sans ce test, l'erreur passe inaperçue.\n   :::\n\n2. `preparerRapport` est lente. Mesure séparément ses deux étapes avec `performance.mark` et\n   `performance.measure`, puis corrige l'étape fautive.\n\n   ```js\n   function preparerRapport(ventes) {\n     const triees = ventes.toSorted((a, b) => a - b);\n     const uniques = triees.filter((v, i) => triees.indexOf(v) === i);\n     return uniques;\n   }\n   ```\n\n   :::indice\n   Pose une marque avant et après chaque étape. Que coûte `indexOf` appelé pour chaque élément ?\n   :::\n\n   :::solution\n   ```js\n   const ventes = Array.from({ length: 20_000 }, (_, i) => i % 5_000);\n\n   performance.mark('tri-debut');\n   const triees = ventes.toSorted((a, b) => a - b);\n   performance.mark('tri-fin');\n   const uniquesLentes = triees.filter((v, i) => triees.indexOf(v) === i);\n   performance.mark('doublons-fin');\n\n   const tri = performance.measure('tri', 'tri-debut', 'tri-fin').duration;\n   const doublons = performance.measure('doublons', 'tri-fin', 'doublons-fin').duration;\n   console.log(doublons > tri); // true : le dédoublonnage domine\n\n   const uniques = [...new Set(triees)];\n   console.log(uniques.length === uniquesLentes.length); // true : même résultat, en un seul parcours\n   ```\n\n   `indexOf` parcourt le tableau pour chaque élément : le coût croît avec le carré de la taille. Le `Set`\n   ne parcourt qu'une fois.\n   :::\n\n3. Chaque ouverture de la vue « détails » augmente la mémoire, qui ne redescend jamais. Explique la fuite et\n   corrige-la.\n\n   ```js\n   const abonnes = [];\n   function ouvrirVue(donnees) {\n     const surMiseAJour = () => donnees.length;\n     abonnes.push(surMiseAJour);\n   }\n   function fermerVue() {}\n   ```\n\n   :::indice\n   Qui garde une référence vers `surMiseAJour`, et donc vers `donnees`, après la fermeture ?\n   :::\n\n   :::solution\n   Le tableau global `abonnes` garde chaque fonction, et chaque fonction capture `donnees` : rien n'est\n   jamais libéré. Un instantané du tas montrerait ces tableaux retenus par `abonnes`. L'ouverture doit\n   renvoyer de quoi se désabonner, et la fermeture l'appeler.\n\n   ```js\n   const abonnes = new Set();\n\n   function ouvrirVue(donnees) {\n     const surMiseAJour = () => donnees.length;\n     abonnes.add(surMiseAJour);\n     return function fermerVue() {\n       abonnes.delete(surMiseAJour);\n     };\n   }\n\n   for (let i = 0; i < 3; i++) {\n     const fermer = ouvrirVue(new Array(100_000).fill(i));\n     fermer();\n   }\n   console.log(abonnes.size); // 0 : plus rien ne retient les données\n   ```\n   :::\n\n## Questions d'entretien\n\n- Que regarder en premier dans l'onglet Réseau quand une requête « ne marche pas » ?\n\n  :::indice\n  Pense au statut, puis à ce qui a réellement été envoyé.\n  :::\n\n  :::reponse\n  Le statut d'abord : un 4xx oriente vers la requête elle-même — données, authentification, type de\n  contenu —, un 5xx vers le serveur, une erreur CORS vers les en-têtes de réponse. Puis les en-têtes et le\n  corps réellement envoyés, qui diffèrent souvent de ce que le code croit envoyer, et la réponse brute. La\n  chronologie sert ensuite pour les problèmes de lenteur.\n  :::\n\n- Pourquoi faut-il mesurer avant d'optimiser ?\n\n  :::indice\n  L'intuition sur ce qui est lent est-elle fiable ?\n  :::\n\n  :::reponse\n  Parce que l'intuition se trompe souvent : le coût réel se cache dans une ligne anodine, comme un\n  `includes` ou un `indexOf` dans une boucle, alors qu'on soupçonne le code le plus complexe. Mesurer avec\n  `performance.now`, des marques ou le profileur désigne précisément la partie qui domine, et une seconde\n  mesure prouve que l'optimisation a réellement servi. Optimiser à l'aveugle complique le code sans gain.\n  :::\n\n- Comment repérer une fuite mémoire dans une application web ?\n\n  :::indice\n  Une seule mesure suffit-elle ?\n  :::\n\n  :::reponse\n  Par comparaison : prendre un instantané du tas, répéter plusieurs fois une action qui devrait tout\n  libérer, forcer le ramasse-miettes, puis prendre un second instantané. Les objets qui s'accumulent sont\n  retenus, et l'outil montre la chaîne de références qui les garde en vie. Les causes habituelles sont les\n  écouteurs non retirés, les minuteurs oubliés, les caches sans limite et les éléments du DOM détachés mais\n  encore référencés.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-erreurs-personnalisees",
+      "title": "Erreurs personnalisées, propagation et frontières d'erreur",
+      "slug": "erreurs-personnalisees",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "erreurs",
+      "order": 4,
+      "estimatedMinutes": 30,
+      "difficulty": 4,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-try-catch",
+        "javascript-extends-super"
+      ],
+      "skills": [
+        "custom-errors"
+      ],
+      "tags": [
+        "javascript",
+        "erreurs"
+      ],
+      "contentPath": "javascript/erreurs/erreurs-personnalisees/lesson.md",
+      "contentVersion": "ca65742792e8",
+      "body": "\n## Objectifs\n\n- Construire une petite hiérarchie d'erreurs métier, avec un code et des données exploitables.\n- Décider, couche par couche, s'il faut laisser passer une erreur ou la relever avec un contexte.\n- Centraliser la conversion des erreurs en réponses dans une frontière d'erreur.\n\n## Introduction\n\nDans une application réelle, une même erreur traverse plusieurs couches : l'accès aux données\nconstate qu'une commande n'existe pas, le service métier l'appelle, le contrôleur HTTP doit répondre\n404, l'interface doit afficher un message compréhensible. Si chaque couche invente son propre\ntraitement, on obtient des `try` partout et des réponses incohérentes. Une hiérarchie d'erreurs et\nune **frontière** unique mettent de l'ordre dans ce trajet.\n\n## Concept\n\n| Élément | Rôle |\n| --- | --- |\n| Classe de base `ErreurApplication` | toutes les erreurs **prévues** par l'application en héritent |\n| Sous-classes métier | `ErreurIntrouvable`, `ErreurValidation`, `ErreurAcces`… avec leurs données |\n| `code` | un identifiant stable, lisible par un programme : `'INTROUVABLE'` |\n| Couches intermédiaires | laissent passer, ou relèvent avec un contexte et `cause` |\n| Frontière d'erreur | l'endroit unique qui transforme une erreur en réponse ou en affichage |\n| Gestionnaires globaux | dernier filet pour journaliser ce qui a échappé à tout le reste |\n\nLa distinction essentielle se fait à la frontière : une `ErreurApplication` est un cas **prévu**, dont\nle message peut être montré ; toute autre erreur est un **bug**, qui produit une réponse générique et\nune entrée dans le journal.\n\n## Exemple\n\n```js\nclass ErreurApplication extends Error {\n  constructor(message, { code, statut = 500, cause } = {}) {\n    super(message, { cause });\n    this.name = new.target.name; // le nom de la sous-classe réellement instanciée\n    this.code = code;\n    this.statut = statut;\n  }\n}\n\nclass ErreurIntrouvable extends ErreurApplication {\n  constructor(ressource, id) {\n    super(`${ressource} ${id} introuvable`, { code: 'INTROUVABLE', statut: 404 });\n  }\n}\n\nclass ErreurValidation extends ErreurApplication {\n  constructor(champs) {\n    super(`Champs invalides : ${champs.join(', ')}`, { code: 'VALIDATION', statut: 400 });\n    this.champs = champs;\n  }\n}\n\nconst commandes = new Map([[1, { id: 1, total: 30 }]]);\nfunction trouverCommande(id) {\n  const commande = commandes.get(id);\n  if (!commande) throw new ErreurIntrouvable('Commande', id);\n  return commande;\n}\n\nconst journal = [];\nfunction repondre(action) {\n  try {\n    return { statut: 200, corps: action() };\n  } catch (erreur) {\n    if (erreur instanceof ErreurApplication) {\n      return { statut: erreur.statut, corps: { code: erreur.code, message: erreur.message } };\n    }\n    journal.push(erreur); // un bug : on le garde pour les développeurs\n    return { statut: 500, corps: { code: 'INTERNE', message: 'Une erreur est survenue' } };\n  }\n}\n\nconsole.log(repondre(() => trouverCommande(1)).statut); // 200\nconsole.log(repondre(() => trouverCommande(9)));\n// { statut: 404, corps: { code: 'INTROUVABLE', message: 'Commande 9 introuvable' } }\nconsole.log(repondre(() => { throw new ErreurValidation(['email']); }).corps.code); // 'VALIDATION'\nconsole.log(repondre(() => trouverCommande(1).client.nom).statut, journal[0].name); // 500 'TypeError'\n```\n\n## Comment ça fonctionne\n\nLa classe de base porte ce que toutes les erreurs prévues partagent : un `code` stable et un `statut`.\n`this.name = new.target.name` donne automatiquement à chaque instance le nom de sa classe réelle, sans\nle répéter dans chaque sous-classe. Chaque sous-classe ne fait qu'une chose : construire un message\nprécis et attacher les données utiles, comme la liste des `champs` invalides. Le code appelant peut\nalors tester `instanceof` pour la famille, ou lire `code` pour un cas précis — ce qui reste fiable même\naprès une minification, qui renomme les classes.\n\nLe trajet d'une erreur suit une règle simple : **chaque couche ne rattrape que ce qu'elle peut\nenrichir ou traiter**. L'accès aux données lève `ErreurIntrouvable` ; le service métier la laisse\npasser, car il n'a rien à ajouter ; s'il appelle un service externe qui échoue, il peut relever une\n`ErreurApplication` explicite en gardant l'échec technique en `cause`. Aucune couche intermédiaire ne\ndécide de la réponse finale.\n\nLa **frontière d'erreur** est l'endroit unique où ce choix est fait. Dans une API, c'est le gestionnaire\nd'erreurs du routeur — l'équivalent de `repondre` dans l'exemple ; dans une interface, c'est un\ncomposant qui affiche un écran d'erreur à la place d'une zone en panne, comme les *error boundaries* de\nReact. Elle traduit les erreurs prévues en réponses adaptées, et traite toutes les autres comme des\nbugs : réponse générique, **aucun détail interne** renvoyé à l'utilisateur — ni pile, ni requête SQL —,\net journalisation complète pour les développeurs.\n\nLes **gestionnaires globaux** sont le dernier filet : `window.addEventListener('error')` et\n`'unhandledrejection'` dans un navigateur, `process.on('uncaughtException')` et\n`'unhandledRejection'` dans Node.js. Ils servent à journaliser ce qui a échappé à toutes les frontières,\njamais à piloter la logique. Après une `uncaughtException`, l'état d'un processus Node.js n'est plus\nfiable : on journalise, puis on laisse le processus redémarrer.\n\nUne hiérarchie d'erreurs reste courte. Quelques classes correspondant à des réponses différentes\nsuffisent : une classe par fonction du code produit une taxonomie que personne ne consulte.\n\n## Erreurs fréquentes\n\n**Renvoyer le message d'un bug à l'utilisateur.** Il peut contenir des détails internes : réponse\ngénérique et journal.\n\n**Rattraper l'erreur dans chaque couche.** Seule la frontière décide de la réponse.\n\n**Tester le type d'erreur par son message.** Un message change ; un `code` ou `instanceof` est stable.\n\n**Créer une classe d'erreur par situation.** Garde quelques familles utiles.\n\n**Utiliser les gestionnaires globaux comme logique normale.** Ils journalisent les oublis, c'est tout.\n\n## À retenir\n\n- Une classe de base pour les erreurs prévues, quelques sous-classes avec `code` et données.\n- `this.name = new.target.name` nomme chaque sous-classe automatiquement.\n- Les couches intermédiaires laissent passer, ou relèvent avec un contexte et `cause`.\n- La frontière d'erreur traduit les erreurs prévues et traite les autres comme des bugs.\n- Les gestionnaires globaux sont un dernier filet de journalisation.\n\n## Exercices\n\n1. Ajoute `ErreurAcces` à la hiérarchie de l'exemple : code `'ACCES_REFUSE'`, statut 403, et une\n   propriété `permission` qui indique la permission manquante.\n\n   :::indice\n   La sous-classe appelle `super` avec un message et les options, puis stocke sa donnée propre.\n   :::\n\n   :::solution\n   ```js\n   class ErreurAcces extends ErreurApplication {\n     constructor(permission) {\n       super(`Permission requise : ${permission}`, { code: 'ACCES_REFUSE', statut: 403 });\n       this.permission = permission;\n     }\n   }\n\n   const erreur = new ErreurAcces('commandes:supprimer');\n   console.log(erreur.name, erreur.statut, erreur.permission); // 'ErreurAcces' 403 'commandes:supprimer'\n   console.log(repondre(() => { throw erreur; }).corps.code); // 'ACCES_REFUSE'\n   ```\n   :::\n\n2. `payer` appelle un prestataire externe qui échoue avec une erreur technique. Relève une\n   `ErreurApplication` de code `'PAIEMENT_IMPOSSIBLE'` et de statut 502, en gardant l'erreur d'origine.\n\n   ```js\n   async function payer(commande, prestataire) {\n     return prestataire.debiter(commande.total);\n   }\n   ```\n\n   :::indice\n   `try` autour de l'appel attendu, puis `throw new ErreurApplication(…, { code, statut, cause })`.\n   :::\n\n   :::solution\n   ```js\n   async function payer(commande, prestataire) {\n     try {\n       return await prestataire.debiter(commande.total);\n     } catch (erreur) {\n       throw new ErreurApplication(`Paiement de la commande ${commande.id} impossible`, {\n         code: 'PAIEMENT_IMPOSSIBLE',\n         statut: 502,\n         cause: erreur,\n       });\n     }\n   }\n\n   const prestataire = { debiter: async () => { throw new Error('ECONNRESET'); } };\n   await payer({ id: 7, total: 30 }, prestataire).catch((erreur) => {\n     console.log(erreur.code, erreur.statut, erreur.cause.message); // 'PAIEMENT_IMPOSSIBLE' 502 'ECONNRESET'\n   });\n   ```\n\n   L'utilisateur verra un message sur le paiement ; les développeurs retrouveront `ECONNRESET` dans la\n   cause.\n   :::\n\n3. Écris `versReponse(erreur)` pour une API : les `ErreurValidation` renvoient aussi la liste des champs,\n   les autres `ErreurApplication` leur code et leur message, et toute autre erreur une réponse 500\n   générique qui ne contient **aucun** détail de l'erreur.\n\n   :::indice\n   Teste du plus précis au plus général : `ErreurValidation`, puis `ErreurApplication`, puis le reste.\n   :::\n\n   :::solution\n   ```js\n   function versReponse(erreur) {\n     if (erreur instanceof ErreurValidation) {\n       return { statut: 400, corps: { code: erreur.code, message: erreur.message, champs: erreur.champs } };\n     }\n     if (erreur instanceof ErreurApplication) {\n       return { statut: erreur.statut, corps: { code: erreur.code, message: erreur.message } };\n     }\n     return { statut: 500, corps: { code: 'INTERNE', message: 'Une erreur est survenue' } };\n   }\n\n   console.log(versReponse(new ErreurValidation(['email'])).corps.champs); // ['email']\n   const bug = versReponse(new TypeError(\"Cannot read properties of undefined (reading 'id')\"));\n   console.log(bug.statut, JSON.stringify(bug.corps).includes('undefined')); // 500 false\n   ```\n\n   L'ordre des tests compte : `ErreurValidation` est aussi une `ErreurApplication`, elle doit donc être\n   testée en premier.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi créer ses propres classes d'erreurs ?\n\n  :::indice\n  Que permet `instanceof` ou un `code`, face à un simple message ?\n  :::\n\n  :::reponse\n  Pour distinguer de façon fiable les cas prévus — ressource introuvable, validation, droits — des bugs,\n  et pour attacher des données exploitables : statut HTTP, champs invalides, permission manquante. Le code\n  appelant teste `instanceof` ou un `code` stable plutôt que le texte du message, qui peut changer. Une\n  classe de base commune permet en plus de traiter toute la famille d'un seul test à la frontière.\n  :::\n\n- Qu'est-ce qu'une frontière d'erreur ?\n\n  :::indice\n  Où décide-t-on de la réponse faite à l'utilisateur ?\n  :::\n\n  :::reponse\n  C'est l'endroit unique où les erreurs sont transformées en réponse : le gestionnaire d'erreurs d'une\n  API, un composant d'interface qui remplace une zone en panne par un message. Elle traduit les erreurs\n  prévues en réponses adaptées, traite toutes les autres comme des bugs avec une réponse générique, et\n  journalise les détails. Les couches situées en dessous n'ont plus à décider quoi afficher : elles lèvent\n  ou relèvent avec un contexte.\n  :::\n\n- Que faire dans un gestionnaire `uncaughtException` de Node.js ?\n\n  :::indice\n  L'état du processus est-il encore fiable après une exception que personne n'a prévue ?\n  :::\n\n  :::reponse\n  Journaliser l'erreur avec le plus de contexte possible, puis laisser le processus s'arrêter, pour qu'un\n  superviseur — un orchestrateur de conteneurs, un gestionnaire de processus — le redémarre. Une exception\n  non rattrapée peut avoir laissé des ressources ou des données dans un état incohérent : continuer à\n  servir des requêtes est plus dangereux que redémarrer. Ce gestionnaire est un filet de dernier recours,\n  pas un mécanisme de récupération.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-familles-erreurs",
       "title": "Les trois familles d'erreurs",
       "slug": "familles-d-erreurs",
@@ -2207,6 +2461,78 @@
       "contentPath": "javascript/erreurs/familles-d-erreurs/lesson.md",
       "contentVersion": "9656e029475b",
       "body": "\n## Objectifs\n\n- Distinguer une erreur de syntaxe, une erreur d'exécution et une erreur de logique.\n- Savoir à quel moment le moteur peut détecter chacune, et ce qu'il ne détectera jamais.\n- Choisir la bonne technique de diagnostic selon la famille.\n\n## Introduction\n\n« Ça ne marche pas » recouvre trois situations qui n'ont ni la même cause, ni le même\nmoment d'apparition, ni la même méthode de correction. Le code refuse de démarrer, il\ndémarre puis s'interrompt, ou il tourne jusqu'au bout en produisant un résultat faux.\n\nClasser l'erreur avant de la chercher fait gagner beaucoup de temps. Une erreur de\nsyntaxe se lit dans le message ; une erreur d'exécution se lit dans la pile d'appels ;\nune erreur de logique ne se lit nulle part — il faut la reproduire et la réduire. Ce\nchapitre pose ce tri, qui sert de plan à toute la partie.\n\n## Concept\n\n| Famille | Quand | Le moteur la détecte ? | Symptôme |\n| --- | --- | --- | --- |\n| Syntaxe | à l'analyse, avant toute exécution | oui, toujours | rien ne s'exécute dans le fichier |\n| Exécution | pendant l'exécution, à la ligne fautive | oui, au moment où elle survient | le programme s'interrompt |\n| Logique | jamais signalée | non | le programme finit, le résultat est faux |\n\nUne **erreur de syntaxe** est une violation de la grammaire du langage : parenthèse non\nfermée, `const` sans nom, mot-clé mal placé. Le moteur analyse tout le fichier avant de\nl'exécuter, donc aucune ligne ne tourne, même celles écrites avant la faute.\n\nUne **erreur d'exécution** est un code grammaticalement correct qui demande l'impossible :\nappeler ce qui n'est pas une fonction, lire une propriété de `null`, dépasser une limite.\nLe moteur lève alors un objet `Error` et interrompt le programme si personne ne l'attrape.\n\nUne **erreur de logique** est un programme valide qui fait autre chose que ce qu'on\nvoulait : un `<` à la place d'un `<=`, une soustraction inversée, une condition oubliée.\nLe moteur n'a aucun moyen de la voir : il exécute exactement ce qui est écrit.\n\n## Exemple\n\n```js\n// 1 — Syntaxe : rien ne s'exécute, pas même ce console.log\nconsole.log('début');\nconst prix = ; // SyntaxError: Unexpected token ';'\n```\n\n```js\n// 2 — Exécution : la première ligne s'affiche, la seconde interrompt le programme\nconst client = { nom: 'Ada' };\nconsole.log(client.nom); // 'Ada'\nconsole.log(client.adresse.ville); // TypeError: Cannot read properties of undefined\nconsole.log('jamais atteint');\n```\n\n```js\n// 3 — Logique : aucune erreur, un résultat faux\nfunction moyenne(notes) {\n  let somme = 0;\n  for (let i = 0; i < notes.length - 1; i++) {\n    somme += notes[i];\n  }\n  return somme / notes.length;\n}\nconsole.log(moyenne([10, 20, 30])); // 10 — attendu : 20\n```\n\nLe troisième cas est le plus coûteux : il ne se plaint pas. C'est le rôle des tests et de\nla méthode de débogage de le faire apparaître.\n\n## Comment ça fonctionne\n\nLe moteur travaille en deux temps. D'abord il **analyse** le fichier entier et construit\nsa représentation interne ; toute faute de grammaire arrête ce travail et lève une\n`SyntaxError` avant la moindre exécution. C'est pourquoi un `console.log` placé en\npremière ligne ne s'affiche pas quand la faute est à la trentième.\n\nEnsuite il **exécute**. Chaque opération impossible produit une erreur d'exécution, levée\nau moment précis où l'opération a lieu. L'erreur remonte alors la pile d'appels jusqu'à\nun `try` ; si elle n'en trouve aucun, le programme s'arrête et l'erreur est affichée avec\nsa pile.\n\nDeux nuances utiles. Certains fichiers sont analysés indépendamment les uns des autres :\nen modules ES, une `SyntaxError` dans un fichier n'empêche pas les autres d'être valides,\nmais elle empêche l'import. Et une erreur peut changer de famille selon le moment : un\n`eval('const x = ;')` produit une `SyntaxError`… à l'exécution, puisque la chaîne n'est\nanalysée qu'au moment de l'appel.\n\nLe mode strict déplace la frontière entre logique et exécution. Sans lui, une affectation\nà une variable non déclarée crée une globale silencieuse — une erreur de logique. Avec\n`'use strict'` (et donc dans tout module), la même ligne lève une `ReferenceError` : le\nmoteur transforme un bug invisible en erreur visible. C'est la raison principale d'écrire\ndu code en mode strict.\n\nPour les erreurs de logique, le langage n'offre rien : il faut d'autres outils. Un\nlinter attrape quelques cas (comparaison toujours fausse, variable inutilisée), les types\nen attrapent d'autres, et les tests attrapent le reste en comparant le résultat obtenu au\nrésultat attendu.\n\n## Erreurs fréquentes\n\n**Chercher la faute de syntaxe à la ligne indiquée.** Le moteur signale l'endroit où il\ncomprend qu'il y a un problème, pas l'endroit où il a été créé. Une accolade manquante\nligne 12 est souvent signalée à la fin du fichier. Remonte vers le haut depuis la ligne\nindiquée.\n\n**Croire qu'un fichier « en partie exécuté » avait une erreur de syntaxe.** S'il a affiché\nquelque chose avant de s'arrêter, c'est une erreur d'exécution : l'analyse avait réussi.\n\n**Traiter une erreur de logique en lisant le code.** Relire dix fois la même fonction ne\nrévèle presque jamais la faute, parce qu'on relit son intention. Il faut instrumenter :\nafficher les valeurs intermédiaires ou écrire un test qui échoue.\n\n**Faire taire une erreur d'exécution au lieu de la corriger.** Entourer d'un `try` vide\nune ligne qui plante transforme une erreur d'exécution en erreur de logique : on perd le\nsignal et on garde le bug.\n\n**Oublier que le mode strict change le diagnostic.** Le même code peut échouer\nsilencieusement dans un `<script>` classique et lever une erreur dans un module.\n\n## À retenir\n\n- Syntaxe : détectée à l'analyse, rien ne s'exécute, message souvent décalé vers le bas.\n- Exécution : détectée à la ligne fautive, interrompt le programme, laisse une pile.\n- Logique : jamais détectée par le moteur ; seuls les tests et l'instrumentation la voient.\n- Le mode strict convertit certaines erreurs de logique en erreurs d'exécution.\n- Classer l'erreur d'abord ; la méthode de recherche découle de la famille.\n\n## Exercices\n\n1. Pour chacun de ces trois extraits, dis à quelle famille appartient le problème et ce\n   que le programme affiche avant de s'arrêter.\n\n   ```js\n   // A\n   console.log('A');\n   function f( { return 1; }\n\n   // B\n   console.log('B');\n   const liste = null;\n   console.log(liste.length);\n\n   // C\n   console.log('C');\n   const tva = (prix) => prix * 0.2;\n   console.log(tva(100)); // attendu : le prix TTC\n   ```\n\n   :::indice\n   Pose-toi une seule question par extrait : le moteur a-t-il pu analyser le fichier, puis\n   a-t-il pu exécuter chaque opération demandée ?\n   :::\n\n   :::solution\n   - **A** — erreur de syntaxe : la parenthèse des paramètres n'est pas fermée. Le fichier\n     n'est pas analysable, donc `'A'` ne s'affiche **pas**.\n   - **B** — erreur d'exécution : `'B'` s'affiche, puis `liste.length` lève une\n     `TypeError: Cannot read properties of null`.\n   - **C** — erreur de logique : `'C'` puis `20` s'affichent, sans aucune erreur. La\n     fonction calcule la TVA, pas le prix TTC ; il fallait `prix * 1.2`.\n   :::\n\n2. Cette fonction doit renvoyer le plus grand nombre d'un tableau. Elle ne lève aucune\n   erreur mais se trompe sur certaines entrées. Trouve le cas qui échoue et corrige.\n\n   ```js\n   function maximum(nombres) {\n     let max = 0;\n     for (const n of nombres) {\n       if (n > max) max = n;\n     }\n     return max;\n   }\n   console.log(maximum([3, 9, 4])); // 9\n   ```\n\n   :::indice\n   La valeur de départ de `max` suppose quelque chose sur le contenu du tableau.\n   :::\n\n   :::indice\n   Essaie `maximum([-5, -2, -9])`.\n   :::\n\n   :::solution\n   ```js\n   function maximum(nombres) {\n     if (nombres.length === 0) return undefined;\n     let max = nombres[0]; // pas 0 : on part d'une valeur réellement présente\n     for (const n of nombres) {\n       if (n > max) max = n;\n     }\n     return max;\n   }\n\n   console.log(maximum([-5, -2, -9])); // -2 (et non 0)\n   console.log(maximum([])); // undefined\n   ```\n\n   C'est une erreur de logique typique : `0` n'appartient pas au tableau. Aucun message ne\n   la signale, seul un test sur des nombres négatifs la fait apparaître.\n   :::\n\n3. Transforme une erreur de logique en erreur d'exécution. Cette fonction accepte\n   silencieusement une entrée invalide et renvoie `NaN` ; fais-la échouer tôt et clairement.\n\n   ```js\n   function surface(largeur, hauteur) {\n     return largeur * hauteur;\n   }\n   console.log(surface(3, 'grand')); // NaN\n   ```\n\n   :::indice\n   Un `NaN` qui circule contamine tous les calculs suivants. Mieux vaut refuser l'entrée au\n   moment où elle arrive.\n   :::\n\n   :::indice\n   `typeof valeur !== 'number'` ou `Number.isFinite(valeur)` pour valider, puis `throw`.\n   :::\n\n   :::solution\n   ```js\n   function surface(largeur, hauteur) {\n     if (!Number.isFinite(largeur) || !Number.isFinite(hauteur)) {\n       throw new TypeError('surface attend deux nombres finis');\n     }\n     return largeur * hauteur;\n   }\n\n   console.log(surface(3, 4)); // 12\n   surface(3, 'grand'); // TypeError: surface attend deux nombres finis\n   ```\n\n   Le bug existait déjà ; il est maintenant visible à la ligne qui l'a créé, avec une pile\n   d'appels qui désigne l'appelant fautif, au lieu d'un `NaN` découvert trois écrans plus\n   loin.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi un `console.log` en première ligne ne s'affiche-t-il pas quand le fichier\n  contient une erreur de syntaxe plus bas ?\n\n  :::indice\n  Pense aux deux phases du moteur : que fait-il avant d'exécuter la première instruction ?\n  :::\n\n  :::reponse\n  Parce que le moteur analyse le fichier entier avant d'en exécuter la moindre ligne.\n  L'analyse construit la représentation interne du programme ; si la grammaire est violée\n  quelque part, cette construction échoue et le moteur lève une `SyntaxError` sans jamais\n  passer à la phase d'exécution. Rien du fichier ne tourne, pas même le code situé avant la\n  faute. C'est un bon test de diagnostic : si le programme a affiché quelque chose avant de\n  s'arrêter, la faute n'est pas syntaxique mais d'exécution.\n  :::\n\n- Quelle est la différence pratique entre une erreur d'exécution et une erreur de logique,\n  et laquelle est la plus dangereuse ?\n\n  :::indice\n  Compare le signal que chacune envoie, et le moment où on l'apprend.\n  :::\n\n  :::reponse\n  Une erreur d'exécution est bruyante : le moteur l'annonce, indique la ligne et fournit la\n  pile d'appels. On sait qu'il y a un problème et souvent où. Une erreur de logique est\n  silencieuse : le programme se termine normalement avec un résultat faux, qui peut être\n  stocké, facturé ou affiché à un utilisateur pendant des mois. La seconde est donc plus\n  dangereuse, malgré son apparence inoffensive. Toute la valeur du mode strict, des tests,\n  du typage et des validations d'entrée est de transformer des erreurs de logique en erreurs\n  d'exécution, le plus tôt possible après leur cause.\n  :::\n\n- Le mode strict fait-il apparaître de nouvelles erreurs, ou révèle-t-il des erreurs\n  existantes ?\n\n  :::indice\n  Que devient `x = 5` sans déclaration, dans chacun des deux modes ?\n  :::\n\n  :::reponse\n  Il révèle des erreurs existantes. Sans mode strict, `x = 5` sur une variable non déclarée\n  crée une propriété globale : le programme continue, mais la variable attendue n'a pas été\n  écrite là où on croyait — c'est déjà un bug, simplement invisible. En mode strict, la même\n  ligne lève une `ReferenceError`. Le code ne devient pas plus fautif, la faute devient\n  visible au bon endroit. C'est la même idée qu'une validation d'entrée qui `throw` : on\n  déplace la détection au plus près de la cause. Les modules ES sont en mode strict par\n  défaut, ce qui donne ce comportement sans rien écrire.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-throw-error",
+      "title": "throw et l'objet Error",
+      "slug": "throw-et-error",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "erreurs",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-familles-erreurs"
+      ],
+      "skills": [
+        "error-objects"
+      ],
+      "tags": [
+        "javascript",
+        "erreurs"
+      ],
+      "contentPath": "javascript/erreurs/throw-et-error/lesson.md",
+      "contentVersion": "7831d69a3f86",
+      "body": "\n## Objectifs\n\n- Lever une erreur avec `throw` et un objet `Error` porteur d'un message utile.\n- Lire les propriétés d'une erreur : `name`, `message`, `stack` et `cause`.\n- Reconnaître les types d'erreurs natifs et ce que chacun signale.\n\n## Introduction\n\nLe chapitre précédent a classé les erreurs. Celui-ci s'intéresse à l'objet qui les transporte.\nUne erreur bien construite dit ce qui s'est passé, où, et pourquoi ; une erreur mal construite — une\nchaîne de caractères levée à la hâte, un message vague — fait perdre des heures au moment du\ndiagnostic. Tout commence par `throw` et par le constructeur `Error`.\n\n## Concept\n\n`throw` interrompt l'exécution et remonte la pile jusqu'au premier `catch`. On peut lever n'importe\nquelle valeur, mais on lève **toujours un objet `Error`** :\n\n| Propriété | Contenu |\n| --- | --- |\n| `message` | la description, écrite pour un développeur |\n| `name` | le type : `'Error'`, `'TypeError'`… |\n| `stack` | la pile d'appels au moment de la création de l'erreur |\n| `cause` | l'erreur d'origine, passée avec `new Error(message, { cause })` |\n\nLes types natifs, levés par le moteur ou utilisables directement :\n\n| Type | Signale | Exemple déclencheur |\n| --- | --- | --- |\n| `TypeError` | une valeur du mauvais type | `null.x`, appeler une non-fonction |\n| `RangeError` | une valeur hors des bornes | `new Array(-1)` |\n| `ReferenceError` | un nom inexistant | lire une variable non déclarée |\n| `SyntaxError` | un texte non analysable | `JSON.parse('{')` |\n| `URIError` | un URI mal formé | `decodeURIComponent('%')` |\n| `AggregateError` | plusieurs erreurs réunies | `Promise.any` quand tout échoue |\n\n## Exemple\n\n```js\nfunction retirer(solde, montant) {\n  if (typeof montant !== 'number' || Number.isNaN(montant)) {\n    throw new TypeError(`Montant invalide : ${montant}`);\n  }\n  if (montant > solde) {\n    throw new RangeError(`Retrait de ${montant} supérieur au solde de ${solde}`);\n  }\n  return solde - montant;\n}\n\ntry {\n  retirer(100, 250);\n} catch (erreur) {\n  console.log(erreur.name); // 'RangeError'\n  console.log(erreur.message); // 'Retrait de 250 supérieur au solde de 100'\n  console.log(erreur instanceof RangeError, erreur instanceof Error); // true true\n  console.log(erreur.stack.split('\\n')[0]); // 'RangeError: Retrait de 250 supérieur au solde de 100'\n}\n\nfunction lireConfiguration(texte) {\n  try {\n    return JSON.parse(texte);\n  } catch (erreur) {\n    throw new Error('Configuration illisible', { cause: erreur });\n  }\n}\n\ntry {\n  lireConfiguration('{ port: 3000 }');\n} catch (erreur) {\n  console.log(erreur.message, '←', erreur.cause.name); // 'Configuration illisible ← SyntaxError'\n}\n\ntry {\n  throw 'échec'; // à éviter\n} catch (valeur) {\n  console.log(typeof valeur, valeur.stack); // 'string' undefined : aucune pile\n}\n```\n\n## Comment ça fonctionne\n\n`throw` arrête immédiatement la fonction en cours et remonte la pile d'appels : chaque fonction est\nquittée à son tour, jusqu'à trouver un `catch` englobant. Sans `catch`, l'erreur atteint le niveau\nsupérieur : le navigateur l'affiche dans la console, Node.js arrête le processus.\n\nLa propriété `stack` est remplie **au moment où l'objet `Error` est créé**, pas au moment où il est\nlevé. Elle indique la chaîne d'appels qui a conduit à cette création, avec fichiers et numéros de\nligne. C'est la raison principale de lever un objet `Error` : une chaîne ou un nombre levés n'ont\naucune pile, et le `catch` ne peut ni lire `message` ni tester le type avec `instanceof`.\n\nLe **message** s'adresse à un développeur : il doit contenir les valeurs en cause — « Retrait de 250\nsupérieur au solde de 100 » plutôt que « Erreur de retrait ». Il n'est pas destiné à être affiché tel\nquel à un utilisateur, qui a besoin d'un texte adapté, produit plus haut dans l'application.\n\nL'option **`cause`**, disponible depuis ES2022, résout un dilemme ancien. Quand une couche du\nprogramme rattrape une erreur technique pour lui donner un sens métier, elle perdait l'erreur\nd'origine ; désormais elle la conserve : `new Error('Configuration illisible', { cause })`. Les outils\nde journalisation et la console de Node.js affichent la chaîne complète des causes.\n\nChoisir le **type** a un intérêt pratique : `TypeError` pour une valeur du mauvais type, `RangeError`\npour une valeur hors bornes, ce qui permet au code appelant de réagir différemment. Pour les erreurs\npropres au domaine — validation, droits, ressource introuvable —, on crée ses propres classes, sujet\ndu chapitre 4.\n\nDeux détails utiles au diagnostic. `message` et `stack` ne sont **pas énumérables** :\n`JSON.stringify(erreur)` renvoie `'{}'`, et une erreur envoyée telle quelle dans un journal JSON perd\ntout son contenu. On sérialise donc explicitement `name`, `message`, `stack` et `cause`. Et `Error` peut\ns'appeler avec ou sans `new`, avec le même résultat.\n\n## Erreurs fréquentes\n\n**Lever une chaîne ou un nombre.** Aucune pile, aucun `instanceof` : lève un objet `Error`.\n\n**Écrire un message vague.** Inclus les valeurs en cause.\n\n**Relever une nouvelle erreur sans `cause`.** L'erreur d'origine disparaît du diagnostic.\n\n**Journaliser une erreur avec `JSON.stringify`.** Le résultat est `'{}'`.\n\n**Utiliser le message technique comme texte pour l'utilisateur.** Traduis-le plus haut.\n\n## À retenir\n\n- `throw` interrompt et remonte la pile jusqu'au premier `catch`.\n- On lève toujours un objet `Error`, ou une sous-classe.\n- `name`, `message`, `stack`, et `cause` pour chaîner l'erreur d'origine.\n- La pile est capturée à la création de l'objet `Error`.\n- `message` et `stack` ne sont pas énumérables : sérialise-les explicitement.\n\n## Exercices\n\n1. Écris `diviser(a, b)` qui lève une `TypeError` si un argument n'est pas un nombre, et une\n   `RangeError` si `b` vaut `0`, avec des messages qui citent les valeurs reçues.\n\n   :::indice\n   Teste le type d'abord, puis la borne ; `Number.isFinite` écarte aussi `NaN` et `Infinity`.\n   :::\n\n   :::solution\n   ```js\n   function diviser(a, b) {\n     if (!Number.isFinite(a) || !Number.isFinite(b)) {\n       throw new TypeError(`diviser attend deux nombres, reçu ${a} et ${b}`);\n     }\n     if (b === 0) {\n       throw new RangeError(`Division de ${a} par zéro`);\n     }\n     return a / b;\n   }\n\n   console.log(diviser(10, 4)); // 2.5\n   for (const [a, b] of [['10', 2], [10, 0]]) {\n     try {\n       diviser(a, b);\n     } catch (erreur) {\n       console.log(erreur.name, '-', erreur.message);\n     }\n   }\n   // 'TypeError - diviser attend deux nombres, reçu 10 et 2'\n   // 'RangeError - Division de 10 par zéro'\n   ```\n   :::\n\n2. Écris `versJournal(erreur)` qui transforme une erreur en objet sérialisable avec `name`, `message`,\n   la première ligne de `stack`, et sa `cause` convertie de la même façon si elle existe.\n\n   :::indice\n   Les propriétés utiles ne sont pas énumérables : copie-les explicitement, et appelle la fonction\n   récursivement sur `cause`.\n   :::\n\n   :::solution\n   ```js\n   function versJournal(erreur) {\n     if (!(erreur instanceof Error)) {\n       return { valeur: String(erreur) };\n     }\n     return {\n       name: erreur.name,\n       message: erreur.message,\n       origine: erreur.stack?.split('\\n')[1]?.trim(),\n       cause: erreur.cause === undefined ? undefined : versJournal(erreur.cause),\n     };\n   }\n\n   const erreur = new Error('Paiement refusé', { cause: new TypeError('montant manquant') });\n   const journal = versJournal(erreur);\n   console.log(JSON.stringify(erreur)); // '{}'\n   console.log(journal.message, '←', journal.cause.name); // 'Paiement refusé ← TypeError'\n   ```\n\n   `JSON.stringify` ignore les propriétés `undefined` : une erreur sans cause produit un objet sans clé\n   `cause`.\n   :::\n\n3. Écris `lirePort(texte)` qui analyse un JSON de la forme `{ \"port\": 3000 }`. Un JSON invalide doit\n   produire l'erreur « Configuration illisible » avec la `SyntaxError` en cause ; un port absent ou non\n   entier, une `RangeError` qui cite la valeur reçue.\n\n   :::indice\n   Un `try` court autour de `JSON.parse` seulement ; la validation du port se fait après, hors du `try`.\n   :::\n\n   :::solution\n   ```js\n   function lirePort(texte) {\n     let configuration;\n     try {\n       configuration = JSON.parse(texte);\n     } catch (erreur) {\n       throw new Error('Configuration illisible', { cause: erreur });\n     }\n     if (!Number.isInteger(configuration.port)) {\n       throw new RangeError(`Port invalide : ${configuration.port}`);\n     }\n     return configuration.port;\n   }\n\n   console.log(lirePort('{\"port\": 3000}')); // 3000\n   for (const texte of ['{port: 3000}', '{\"port\": \"3000\"}']) {\n     try {\n       lirePort(texte);\n     } catch (erreur) {\n       console.log(erreur.message, erreur.cause?.name ?? '');\n     }\n   }\n   // 'Configuration illisible SyntaxError'\n   // 'Port invalide : 3000 '\n   ```\n   :::\n\n## Questions d'entretien\n\n- Pourquoi lever un objet `Error` plutôt qu'une chaîne ?\n\n  :::indice\n  Que perd-on quand on lève `'échec'` ?\n  :::\n\n  :::reponse\n  Un objet `Error` capture la pile d'appels à sa création, porte un `name` et un `message` que le code\n  appelant peut lire, et permet de distinguer les cas avec `instanceof`. Une chaîne levée n'a aucune\n  pile : on ne sait plus d'où vient l'erreur, et le `catch` ne peut ni la classer ni l'enrichir. Les\n  outils de journalisation et de suivi d'erreurs s'appuient eux aussi sur ces propriétés.\n  :::\n\n- À quoi sert l'option `cause` ?\n\n  :::indice\n  Pense à une couche qui transforme une erreur technique en erreur métier.\n  :::\n\n  :::reponse\n  Elle permet de lever une nouvelle erreur, avec un message qui a du sens à ce niveau du programme,\n  tout en conservant l'erreur d'origine : `new Error('Paiement refusé', { cause: erreur })`. Avant\n  ES2022, on devait choisir entre un message utile et une information de diagnostic complète. Les\n  consoles et les outils de journalisation affichent désormais la chaîne des causes.\n  :::\n\n- Quels sont les principaux types d'erreurs natifs, et que signalent-ils ?\n\n  :::indice\n  Pense aux erreurs levées par le moteur pour un mauvais type, une borne, un nom, un texte.\n  :::\n\n  :::reponse\n  `TypeError` pour une valeur du mauvais type, comme une propriété lue sur `undefined` ; `RangeError`\n  pour une valeur hors bornes, comme une longueur de tableau négative ; `ReferenceError` pour un nom\n  qui n'existe pas ; `SyntaxError` pour un code ou un texte non analysable, notamment par `JSON.parse` ;\n  `URIError` pour un URI mal formé ; et `AggregateError` pour plusieurs erreurs réunies. Toutes héritent\n  d'`Error`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-try-catch",
+      "title": "try, catch, finally : ce qu'il faut attraper, et ce qu'il ne faut pas",
+      "slug": "try-catch-finally",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "erreurs",
+      "order": 3,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-throw-error"
+      ],
+      "skills": [
+        "try-catch"
+      ],
+      "tags": [
+        "javascript",
+        "erreurs"
+      ],
+      "contentPath": "javascript/erreurs/try-catch-finally/lesson.md",
+      "contentVersion": "ae503d20b7e2",
+      "body": "\n## Objectifs\n\n- Structurer un bloc `try` / `catch` / `finally` et connaître l'ordre exact d'exécution.\n- Ne rattraper que les erreurs qu'on sait traiter, et relever les autres.\n- Éviter les pièges de `finally` : `return` qui écrase un résultat ou avale une erreur.\n\n## Introduction\n\nEntourer du code d'un `try` / `catch` donne une impression de sécurité. Mal utilisé, c'est\nl'inverse : un `catch` trop large masque les bugs, transforme une panne franche en comportement\nbizarre, et rend le diagnostic impossible. Ce chapitre donne les règles d'un usage sain — dont la\nplus importante : **on n'attrape que ce qu'on sait traiter**.\n\n## Concept\n\n| Bloc | S'exécute | Rôle |\n| --- | --- | --- |\n| `try` | toujours, jusqu'à la première erreur levée | le code qui peut échouer |\n| `catch (erreur)` | seulement si une erreur est levée dans `try` | traiter, ou relever |\n| `finally` | toujours, après `try` ou `catch`, même après un `return` | nettoyer |\n\nRègles d'usage :\n\n- le `try` entoure **le plus petit** morceau de code qui peut échouer de la façon attendue ;\n- le `catch` vérifie le **type** de l'erreur et **relève** tout ce qu'il ne sait pas traiter ;\n- le `finally` **libère** des ressources et ne contient ni `return` ni `throw`.\n\nDepuis ES2019, le paramètre du `catch` est facultatif : `catch { … }` quand l'erreur elle-même\nn'est pas utilisée.\n\n## Exemple\n\n```js\nclass ErreurValidation extends Error {\n  constructor(message) {\n    super(message);\n    this.name = 'ErreurValidation';\n  }\n}\n\nfunction lireAge(saisie) {\n  const age = Number(saisie);\n  if (!Number.isInteger(age) || age < 0) {\n    throw new ErreurValidation(`Âge invalide : ${saisie}`);\n  }\n  return age;\n}\n\nfunction traiterFormulaire(saisie, journal) {\n  journal.push('ouverture');\n  try {\n    return `âge enregistré : ${lireAge(saisie)}`;\n  } catch (erreur) {\n    if (erreur instanceof ErreurValidation) {\n      return `message à l'utilisateur : ${erreur.message}`; // erreur attendue : traitée\n    }\n    throw erreur; // erreur inattendue : relevée telle quelle\n  } finally {\n    journal.push('fermeture'); // exécuté même après un return\n  }\n}\n\nconst journal = [];\nconsole.log(traiterFormulaire('42', journal)); // 'âge enregistré : 42'\nconsole.log(traiterFormulaire('-3', journal)); // \"message à l'utilisateur : Âge invalide : -3\"\nconsole.log(journal); // ['ouverture', 'fermeture', 'ouverture', 'fermeture']\n\nfunction piege() {\n  try {\n    throw new Error('panne réelle');\n  } finally {\n    return 'tout va bien'; // écrase l'erreur : à ne jamais faire\n  }\n}\nconsole.log(piege()); // 'tout va bien'\n```\n\n## Comment ça fonctionne\n\nLe moteur exécute le `try`. Si aucune erreur n'est levée, il passe au `finally`, puis à la suite. Si\nune erreur est levée, le reste du `try` est abandonné, le `catch` reçoit la valeur levée, puis le\n`finally` s'exécute. Le `finally` s'exécute **toujours** : après un `return` du `try` ou du `catch`, la\nvaleur à renvoyer est calculée, mise de côté, le `finally` s'exécute, puis la fonction renvoie la valeur.\n\nCe mécanisme a deux pièges. Un **`return` dans `finally`** remplace la valeur mise de côté — et s'il y\navait une erreur en cours de propagation, il l'**annule** : la fonction renvoie normalement, et la panne\ndisparaît sans trace. Un **`throw` dans `finally`** remplace de même l'erreur d'origine. On réserve donc\n`finally` au nettoyage : fermer un fichier, libérer un verrou, masquer un indicateur.\n\nLe `catch` reçoit **n'importe quelle valeur** levée : une erreur attendue, mais aussi un bug — une\n`TypeError` sur `undefined`, une faute de frappe. Un `catch` qui traite tout de la même façon transforme\nces bugs en comportement silencieux. D'où la règle : tester le type avec `instanceof`, traiter ce qu'on\nattend, et **relever** le reste avec `throw erreur`, sans le modifier, pour que la pile d'origine soit\nconservée.\n\nLa portée du `try` compte aussi. Un `try` qui entoure trente lignes rattrape des erreurs venues de\nn'importe laquelle d'entre elles, y compris celles qu'on n'envisageait pas. Entourer seulement l'appel\nsusceptible d'échouer rend l'intention lisible et le traitement correct.\n\nUn `try` ne rattrape que les erreurs levées **pendant son exécution**. Une erreur levée plus tard dans un\ncallback de minuteur ou dans une promesse non attendue lui échappe, comme vu dans la partie Asynchronous :\navec du code asynchrone, il faut `await`.\n\nEnfin, le coût d'un `try` est négligeable dans les moteurs modernes ; la raison de l'éviter n'est jamais\nla performance, mais la clarté.\n\n## Erreurs fréquentes\n\n**Attraper toutes les erreurs de la même façon.** Les bugs deviennent silencieux : teste le type et\nrelève le reste.\n\n**Rattraper sans rien faire.** Un `catch` vide cache la panne.\n\n**Écrire `return` ou `throw` dans `finally`.** La valeur ou l'erreur d'origine est écrasée.\n\n**Entourer un long bloc d'un seul `try`.** Réduis-le à l'opération qui peut échouer.\n\n**Relever une nouvelle erreur au lieu de l'originale, sans `cause`.** La pile d'origine est perdue.\n\n## À retenir\n\n- `finally` s'exécute toujours, même après un `return`.\n- On n'attrape que ce qu'on sait traiter ; le reste est relevé avec `throw erreur`.\n- Pas de `return` ni de `throw` dans `finally` : il nettoie, c'est tout.\n- Un `try` court rend l'intention claire.\n- Un `try` ne voit pas les erreurs asynchrones qu'on n'attend pas.\n\n## Exercices\n\n1. Ce code affiche « Aucun utilisateur » même quand le problème est une faute de frappe dans le code.\n   Explique pourquoi, puis corrige pour ne traiter que l'absence d'utilisateur.\n\n   ```js\n   function nomAffiche(utilisateurs, id) {\n     try {\n       return utilisateurs.find((u) => u.id === id).nom.toUppercase();\n     } catch {\n       return 'Aucun utilisateur';\n     }\n   }\n   ```\n\n   :::indice\n   Que lève `toUppercase`, qui n'existe pas ? Et comment distinguer « rien trouvé » d'un bug ?\n   :::\n\n   :::solution\n   Le `catch` attrape tout : l'absence d'utilisateur, mais aussi la `TypeError` levée par\n   `toUppercase`, qui n'existe pas (le nom correct est `toUpperCase`). Le bug est donc masqué pour\n   toujours. L'absence est un cas prévu : elle se teste sans exception.\n\n   ```js\n   function nomAffiche(utilisateurs, id) {\n     const utilisateur = utilisateurs.find((u) => u.id === id);\n     if (!utilisateur) {\n       return 'Aucun utilisateur';\n     }\n     return utilisateur.nom.toUpperCase();\n   }\n\n   console.log(nomAffiche([{ id: 1, nom: 'Ada' }], 1)); // 'ADA'\n   console.log(nomAffiche([{ id: 1, nom: 'Ada' }], 2)); // 'Aucun utilisateur'\n   ```\n   :::\n\n2. `exporter` doit toujours fermer le fichier, même quand l'écriture échoue, sans masquer l'échec.\n   Complète-la.\n\n   ```js\n   function exporter(fichier, lignes) {\n     fichier.ouvrir();\n     fichier.ecrire(lignes.join('\\n'));\n     fichier.fermer();\n   }\n   ```\n\n   :::indice\n   `finally` pour la fermeture, et aucun `catch` : l'erreur doit continuer à remonter.\n   :::\n\n   :::solution\n   ```js\n   function exporter(fichier, lignes) {\n     fichier.ouvrir();\n     try {\n       fichier.ecrire(lignes.join('\\n'));\n     } finally {\n       fichier.fermer();\n     }\n   }\n\n   const journal = [];\n   const fichier = (echoue) => ({\n     ouvrir: () => journal.push('ouvert'),\n     ecrire: () => { if (echoue) throw new Error('disque plein'); journal.push('écrit'); },\n     fermer: () => journal.push('fermé'),\n   });\n\n   exporter(fichier(false), ['a']);\n   try {\n     exporter(fichier(true), ['a']);\n   } catch (erreur) {\n     journal.push(`échec : ${erreur.message}`);\n   }\n   console.log(journal); // ['ouvert', 'écrit', 'fermé', 'ouvert', 'fermé', 'échec : disque plein']\n   ```\n\n   Un `try` / `finally` sans `catch` est parfaitement valide : il garantit le nettoyage et laisse\n   l'appelant décider du traitement.\n   :::\n\n3. `montantDepuisJSON(texte)` doit renvoyer `0` quand le texte n'est pas un JSON valide, mais laisser\n   passer toute autre erreur. Écris-la.\n\n   :::indice\n   Dans le `catch`, teste `erreur instanceof SyntaxError`, et relève le reste.\n   :::\n\n   :::solution\n   ```js\n   function montantDepuisJSON(texte) {\n     try {\n       return JSON.parse(texte).montant.valeur;\n     } catch (erreur) {\n       if (erreur instanceof SyntaxError) {\n         return 0;\n       }\n       throw erreur;\n     }\n   }\n\n   console.log(montantDepuisJSON('{\"montant\": {\"valeur\": 12}}')); // 12\n   console.log(montantDepuisJSON('pas du json')); // 0\n   try {\n     montantDepuisJSON('{\"total\": 5}');\n   } catch (erreur) {\n     console.log(erreur.name); // 'TypeError' : une donnée inattendue n'est pas masquée\n   }\n   ```\n   :::\n\n## Questions d'entretien\n\n- Dans quel ordre s'exécutent `try`, `catch` et `finally` quand `try` contient un `return` ?\n\n  :::indice\n  La valeur de retour est-elle calculée avant ou après `finally` ?\n  :::\n\n  :::reponse\n  L'expression du `return` est évaluée dans le `try`, la valeur est mise de côté, puis le `finally`\n  s'exécute, et la fonction renvoie enfin la valeur. Le `catch` n'intervient que si une erreur a été\n  levée. Si le `finally` contient lui-même un `return` ou un `throw`, il remplace la valeur ou l'erreur\n  d'origine, ce qui peut effacer silencieusement une panne.\n  :::\n\n- Pourquoi relever les erreurs qu'on ne sait pas traiter ?\n\n  :::indice\n  Que devient un bug de programmation attrapé par un `catch` générique ?\n  :::\n\n  :::reponse\n  Parce qu'un `catch` reçoit toutes les erreurs, y compris les bugs — une propriété lue sur `undefined`,\n  une méthode mal orthographiée. Les traiter comme un cas prévu les rend silencieux et produit un état\n  incohérent, découvert bien plus tard. En testant le type et en relevant le reste avec `throw erreur`,\n  on traite ce qui est attendu et on laisse remonter l'inattendu, avec sa pile d'origine.\n  :::\n\n- À quoi sert un `try` / `finally` sans `catch` ?\n\n  :::indice\n  On veut nettoyer sans décider du traitement de l'erreur.\n  :::\n\n  :::reponse\n  À garantir un nettoyage — fermer une ressource, libérer un verrou, arrêter un indicateur — tout en\n  laissant l'erreur remonter intacte à l'appelant, qui est mieux placé pour la traiter. C'est souvent\n  la forme la plus juste dans les fonctions de bas niveau : elles n'ont pas assez de contexte pour\n  décider quoi faire d'un échec, mais elles sont responsables de leurs ressources.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -6283,6 +6609,372 @@
       "contentVersion": "7fcf37535747"
     },
     {
+      "id": "javascript-debug-console-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-debug-console-q1",
+          "type": "predict_output",
+          "difficulty": 1,
+          "question": "Avec `const total = 70;`, qu'affiche Node.js pour `console.log({ total })` ?\n",
+          "answer": "{ total: 70 }",
+          "explanation": "Le raccourci de propriété crée un objet dont la clé est le nom de la variable.\n",
+          "skills": [
+            "console-debugging"
+          ]
+        },
+        {
+          "id": "js-debug-console-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`console.assert(condition, message)` affiche le message quand la condition est vraie.\n",
+          "answer": false,
+          "explanation": "console.assert ne parle qu'en cas d'échec : il affiche le message quand la condition est fausse.\n",
+          "skills": [
+            "console-debugging"
+          ]
+        },
+        {
+          "id": "js-debug-console-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle méthode affiche la pile d'appels à un endroit du code, sans lever d'erreur ?\n",
+          "options": [
+            "console.trace",
+            "console.table",
+            "console.count",
+            "console.dir"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "console.trace montre par quel chemin d'appels on est arrivé à cette ligne.\n",
+          "skills": [
+            "console-debugging"
+          ]
+        },
+        {
+          "id": "js-debug-console-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans le navigateur, comment voir l'état d'un objet au moment exact du console.log ?\n",
+          "options": [
+            "Afficher une copie, par exemple structuredClone(objet)",
+            "Afficher l'objet deux fois",
+            "Utiliser console.count",
+            "Recharger la page avant de déplier l'objet"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "La console garde une référence et montre l'état au moment où l'on déplie l'objet. Une copie fige l'état.\n",
+          "skills": [
+            "console-debugging"
+          ]
+        }
+      ],
+      "chapterId": "javascript-debug-console",
+      "technology": "javascript",
+      "contentPath": "javascript/debugging/console/quiz.yaml",
+      "contentVersion": "321898606bfc"
+    },
+    {
+      "id": "javascript-methode-debogage-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-methode-debogage-q1",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "Quelle est la première étape face à un bug signalé ?\n",
+          "options": [
+            "Le reproduire de façon fiable",
+            "Modifier le code suspect",
+            "Écrire le test de régression",
+            "Relancer l'application en production"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Sans reproduction, on ne peut ni isoler la cause ni savoir si une correction fonctionne.\n",
+          "skills": [
+            "debugging-method"
+          ]
+        },
+        {
+          "id": "js-methode-debogage-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Combien de vérifications git bisect demande-t-il au plus pour départager 16 commits ?\n",
+          "answer": "4",
+          "explanation": "Chaque vérification divise l'intervalle par deux : 2 puissance 4 vaut 16.\n",
+          "skills": [
+            "debugging-method"
+          ]
+        },
+        {
+          "id": "js-methode-debogage-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un test de régression doit échouer sur la version qui contenait le bug.\n",
+          "answer": true,
+          "explanation": "S'il passait déjà avant la correction, il ne protège pas contre le retour du bug.\n",
+          "skills": [
+            "debugging-method"
+          ]
+        },
+        {
+          "id": "js-methode-debogage-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Pourquoi réduire un bug à son cas minimal ?\n",
+          "options": [
+            "Pour rendre la cause visible et obtenir le futur test de régression",
+            "Pour que le bug disparaisse",
+            "Pour accélérer le programme",
+            "Pour éviter d'avoir à le corriger"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Chaque élément retiré sans faire disparaître le bug élimine un suspect, et le cas final sert de test.\n",
+          "skills": [
+            "debugging-method"
+          ]
+        }
+      ],
+      "chapterId": "javascript-methode-debogage",
+      "technology": "javascript",
+      "contentPath": "javascript/debugging/methode-de-debogage/quiz.yaml",
+      "contentVersion": "678b22aa55f7"
+    },
+    {
+      "id": "javascript-points-arret-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-points-arret-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Dans les DevTools de Chrome, quel raccourci entre dans la fonction appelée sur la ligne courante ?\n",
+          "options": [
+            "F11",
+            "F10",
+            "F8",
+            "Maj+F11"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "F11 entre dans la fonction, F10 passe par-dessus, F8 reprend, Maj+F11 sort de la fonction.\n",
+          "skills": [
+            "breakpoints"
+          ]
+        },
+        {
+          "id": "js-points-arret-q2",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment ne s'arrêter que sur l'itération suspecte d'une boucle de mille tours ?\n",
+          "options": [
+            "Un point d'arrêt conditionnel",
+            "Mille points d'arrêt",
+            "Une instruction debugger dans la boucle",
+            "L'arrêt sur exception"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le point d'arrêt conditionnel n'interrompt l'exécution que lorsque son expression est vraie.\n",
+          "skills": [
+            "breakpoints"
+          ]
+        },
+        {
+          "id": "js-points-arret-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un point de journalisation affiche un message sans arrêter l'exécution ni modifier le code source.\n",
+          "answer": true,
+          "explanation": "C'est un console.log posé depuis les DevTools, qu'on ne risque pas d'oublier dans le code livré.\n",
+          "skills": [
+            "breakpoints"
+          ]
+        },
+        {
+          "id": "js-points-arret-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle option lance Node.js en s'arrêtant dès la première ligne du programme ?\n",
+          "options": [
+            "node --inspect-brk fichier.js",
+            "node --inspect fichier.js",
+            "node --debug fichier.js",
+            "node --break fichier.js"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "--inspect ouvre le port de débogage ; --inspect-brk fait de même et suspend l'exécution avant la première instruction.\n",
+          "skills": [
+            "breakpoints"
+          ]
+        }
+      ],
+      "chapterId": "javascript-points-arret",
+      "technology": "javascript",
+      "contentPath": "javascript/debugging/points-d-arret/quiz.yaml",
+      "contentVersion": "b5d9395bd506"
+    },
+    {
+      "id": "javascript-debug-reseau-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-debug-reseau-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Une requête renvoie un statut 5xx. Où chercher la cause en priorité ?\n",
+          "options": [
+            "Du côté du serveur",
+            "Dans le format des données envoyées par le client",
+            "Dans les en-têtes CORS",
+            "Dans le cache du navigateur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les statuts 5xx signalent une erreur du serveur ; les 4xx désignent plutôt la requête.\n",
+          "skills": [
+            "network-performance-debugging"
+          ]
+        },
+        {
+          "id": "js-debug-reseau-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "fetch rompt sa promesse quand le serveur répond avec un statut 404.\n",
+          "answer": false,
+          "explanation": "fetch n'est rompue que pour une erreur réseau. Il faut tester reponse.ok ou reponse.status.\n",
+          "skills": [
+            "network-performance-debugging"
+          ]
+        },
+        {
+          "id": "js-debug-reseau-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "À partir de quelle durée une tâche est-elle considérée comme longue pour l'interface ?\n",
+          "options": [
+            "50 ms",
+            "5 ms",
+            "500 ms",
+            "5 secondes"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une tâche de plus de 50 ms occupe le fil principal assez longtemps pour retarder les interactions de façon perceptible.\n",
+          "skills": [
+            "network-performance-debugging"
+          ]
+        },
+        {
+          "id": "js-debug-reseau-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Comment confirmer une fuite mémoire ?\n",
+          "options": [
+            "Comparer des instantanés du tas avant et après des actions répétées",
+            "Prendre un seul instantané au démarrage",
+            "Mesurer la durée d'une requête",
+            "Désactiver le cache du navigateur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une fuite se voit par accumulation : des objets qui restent d'un instantané à l'autre alors qu'ils devraient être libérés.\n",
+          "skills": [
+            "network-performance-debugging"
+          ]
+        }
+      ],
+      "chapterId": "javascript-debug-reseau",
+      "technology": "javascript",
+      "contentPath": "javascript/debugging/reseau-performances-memoire/quiz.yaml",
+      "contentVersion": "f4f1757625f1"
+    },
+    {
+      "id": "javascript-erreurs-personnalisees-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-erreurs-perso-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Dans une classe de base `ErreurApplication` qui écrit `this.name = new.target.name`, que vaut `new ErreurIntrouvable('Commande', 9).name` ?\n",
+          "answer": "ErreurIntrouvable",
+          "explanation": "new.target désigne la classe réellement instanciée : chaque sous-classe reçoit son nom sans avoir à le définir.\n",
+          "skills": [
+            "custom-errors"
+          ]
+        },
+        {
+          "id": "js-erreurs-perso-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que doit renvoyer une API quand une erreur inattendue, comme une TypeError, atteint sa frontière d'erreur ?\n",
+          "options": [
+            "Une réponse 500 générique, les détails étant journalisés",
+            "Le message et la pile de l'erreur pour aider l'utilisateur",
+            "Une réponse 200 avec un corps vide",
+            "Une réponse 404"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une erreur inattendue est un bug : on ne divulgue aucun détail interne, et on le garde pour les développeurs dans le journal.\n",
+          "skills": [
+            "custom-errors"
+          ]
+        },
+        {
+          "id": "js-erreurs-perso-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Tester le message d'une erreur est la façon la plus fiable de reconnaître son type.\n",
+          "answer": false,
+          "explanation": "Un message peut changer. instanceof ou un code stable sont fiables, même après minification.\n",
+          "skills": [
+            "custom-errors"
+          ]
+        },
+        {
+          "id": "js-erreurs-perso-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "ErreurValidation hérite d'ErreurApplication. Dans quel ordre tester les types à la frontière ?\n",
+          "options": [
+            "ErreurValidation d'abord, puis ErreurApplication",
+            "ErreurApplication d'abord, puis ErreurValidation",
+            "L'ordre n'a pas d'importance",
+            "Il faut tester Error en premier"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une ErreurValidation passe aussi le test ErreurApplication : le cas le plus précis doit être testé avant le plus général.\n",
+          "skills": [
+            "custom-errors"
+          ]
+        }
+      ],
+      "chapterId": "javascript-erreurs-personnalisees",
+      "technology": "javascript",
+      "contentPath": "javascript/erreurs/erreurs-personnalisees/quiz.yaml",
+      "contentVersion": "7919eb8255af"
+    },
+    {
       "id": "javascript-familles-erreurs-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -6351,6 +7043,138 @@
       "technology": "javascript",
       "contentPath": "javascript/erreurs/familles-d-erreurs/quiz.yaml",
       "contentVersion": "76fd6055dafc"
+    },
+    {
+      "id": "javascript-throw-error-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-throw-error-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel type d'erreur lève `JSON.parse('{')` ?\n",
+          "options": [
+            "SyntaxError",
+            "TypeError",
+            "RangeError",
+            "ReferenceError"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le texte n'est pas un JSON analysable : JSON.parse lève une SyntaxError.\n",
+          "skills": [
+            "error-objects"
+          ]
+        },
+        {
+          "id": "js-throw-error-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que renvoie `JSON.stringify(new Error('panne'))` ?\n",
+          "answer": "{}",
+          "explanation": "message et stack ne sont pas des propriétés énumérables : la sérialisation JSON les ignore.\n",
+          "skills": [
+            "error-objects"
+          ]
+        },
+        {
+          "id": "js-throw-error-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Une chaîne de caractères levée avec throw possède une propriété stack.\n",
+          "answer": false,
+          "explanation": "Seul un objet Error capture la pile d'appels à sa création. Une chaîne levée n'en a aucune.\n",
+          "skills": [
+            "error-objects"
+          ]
+        },
+        {
+          "id": "js-throw-error-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment conserver l'erreur d'origine en levant une erreur plus explicite ?\n",
+          "options": [
+            "new Error('message', { cause: erreur })",
+            "new Error(erreur.message + ' message')",
+            "throw erreur.stack",
+            "Error.wrap(erreur)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'option cause, depuis ES2022, attache l'erreur d'origine à la nouvelle.\n",
+          "skills": [
+            "error-objects"
+          ]
+        }
+      ],
+      "chapterId": "javascript-throw-error",
+      "technology": "javascript",
+      "contentPath": "javascript/erreurs/throw-et-error/quiz.yaml",
+      "contentVersion": "f2e6a94cf0a8"
+    },
+    {
+      "id": "javascript-try-catch-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-try-catch-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Que renvoie `(() => { try { return 'try'; } finally { return 'finally'; } })()` ?\n",
+          "answer": "finally",
+          "explanation": "Un return dans finally remplace la valeur mise de côté par le try. C'est pourquoi on évite return dans finally.\n",
+          "skills": [
+            "try-catch"
+          ]
+        },
+        {
+          "id": "js-try-catch-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Un `return` dans `finally` peut faire disparaître une erreur levée dans `try`.\n",
+          "answer": true,
+          "explanation": "L'erreur en cours de propagation est abandonnée : la fonction renvoie normalement et la panne ne laisse aucune trace.\n",
+          "skills": [
+            "try-catch"
+          ]
+        },
+        {
+          "id": "js-try-catch-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que doit faire un `catch` d'une erreur qu'il ne sait pas traiter ?\n",
+          "options": [
+            "La relever avec throw erreur",
+            "L'afficher dans la console et continuer",
+            "Renvoyer undefined",
+            "L'ignorer"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Relever l'erreur telle quelle conserve sa pile et laisse une couche mieux placée la traiter.\n",
+          "skills": [
+            "try-catch"
+          ]
+        },
+        {
+          "id": "js-try-catch-q4",
+          "type": "true_false",
+          "difficulty": 1,
+          "question": "Un bloc finally s'exécute même si le bloc try se termine par un return.\n",
+          "answer": true,
+          "explanation": "finally s'exécute toujours, après la fin du try ou du catch, ce qui en fait l'endroit du nettoyage.\n",
+          "skills": [
+            "try-catch"
+          ]
+        }
+      ],
+      "chapterId": "javascript-try-catch",
+      "technology": "javascript",
+      "contentPath": "javascript/erreurs/try-catch-finally/quiz.yaml",
+      "contentVersion": "4d551be0bb9e"
     },
     {
       "id": "javascript-contexte-execution-quiz",

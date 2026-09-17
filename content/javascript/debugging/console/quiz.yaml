@@ -1,0 +1,58 @@
+id: javascript-debug-console-quiz
+kind: QUIZ
+questions:
+  - id: js-debug-console-q1
+    type: predict_output
+    difficulty: 1
+    question: >
+      Avec `const total = 70;`, qu'affiche Node.js pour `console.log({ total })` ?
+    answer: '{ total: 70 }'
+    explanation: >
+      Le raccourci de propriété crée un objet dont la clé est le nom de la variable.
+    skills:
+      - console-debugging
+
+  - id: js-debug-console-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      `console.assert(condition, message)` affiche le message quand la condition est vraie.
+    answer: false
+    explanation: >
+      console.assert ne parle qu'en cas d'échec : il affiche le message quand la condition est
+      fausse.
+    skills:
+      - console-debugging
+
+  - id: js-debug-console-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle méthode affiche la pile d'appels à un endroit du code, sans lever d'erreur ?
+    options:
+      - "console.trace"
+      - "console.table"
+      - "console.count"
+      - "console.dir"
+    answer: [0]
+    explanation: >
+      console.trace montre par quel chemin d'appels on est arrivé à cette ligne.
+    skills:
+      - console-debugging
+
+  - id: js-debug-console-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans le navigateur, comment voir l'état d'un objet au moment exact du console.log ?
+    options:
+      - "Afficher une copie, par exemple structuredClone(objet)"
+      - "Afficher l'objet deux fois"
+      - "Utiliser console.count"
+      - "Recharger la page avant de déplier l'objet"
+    answer: [0]
+    explanation: >
+      La console garde une référence et montre l'état au moment où l'on déplie l'objet. Une copie
+      fige l'état.
+    skills:
+      - console-debugging
