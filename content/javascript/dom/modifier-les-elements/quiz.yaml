@@ -1,0 +1,51 @@
+id: javascript-dom-modifier-quiz
+kind: QUIZ
+questions:
+  - id: js-dom-modifier-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle écriture affiche un pseudo saisi par un utilisateur sans risque d'injection ?
+    options:
+      - "element.textContent = pseudo"
+      - "element.innerHTML = pseudo"
+      - "element.outerHTML = pseudo"
+      - "document.write(pseudo)"
+    answer: [0]
+    explanation: >
+      textContent insère le texte tel quel, sans jamais l'interpréter comme du HTML.
+    skills:
+      - dom-modification
+
+  - id: js-dom-modifier-q2
+    type: predict_output
+    difficulty: 2
+    question: >
+      Pour `<li data-prix-ht="50">`, que vaut `typeof li.dataset.prixHt` ?
+    answer: 'string'
+    explanation: >
+      Les valeurs de dataset sont toujours des chaînes ; il faut les convertir pour calculer.
+    skills:
+      - dom-modification
+
+  - id: js-dom-modifier-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Après une saisie de l'utilisateur, `input.getAttribute('value')` renvoie le texte saisi.
+    answer: false
+    explanation: >
+      L'attribut value garde la valeur initiale ; c'est la propriété input.value qui suit la saisie.
+    skills:
+      - dom-modification
+
+  - id: js-dom-modifier-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Si l'élément n'a pas la classe `actif`, que renvoie `element.classList.toggle('actif')` ?
+    answer: 'true'
+    explanation: >
+      toggle ajoute la classe absente et renvoie true, qui indique sa présence après l'appel.
+    skills:
+      - dom-modification

@@ -1,0 +1,56 @@
+id: javascript-url-historique-quiz
+kind: QUIZ
+questions:
+  - id: js-url-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Que vaut `new URL('https://a.exemple/?page=2').searchParams.get('page') + 1` ?
+    answer: '21'
+    explanation: >
+      Les paramètres lus sont des chaînes : '2' + 1 donne '21'. Il faut Number avant de calculer.
+    skills:
+      - url-history
+
+  - id: js-url-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Appeler history.pushState déclenche l'événement popstate.
+    answer: false
+    explanation: >
+      popstate ne se déclenche que lors d'une navigation dans l'historique, comme le bouton Retour.
+    skills:
+      - url-history
+
+  - id: js-url-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pour garder l'adresse à jour pendant la saisie d'une recherche sans encombrer le bouton Retour, que choisir ?
+    options:
+      - "history.replaceState"
+      - "history.pushState"
+      - "location.href = nouvelleAdresse"
+      - "window.open"
+    answer: [0]
+    explanation: >
+      replaceState modifie l'entrée courante sans en ajouter ; location.href rechargerait la page.
+    skills:
+      - url-history
+
+  - id: js-url-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment lire toutes les valeurs de `tag` dans `?tag=promo&tag=neuf` ?
+    options:
+      - "searchParams.getAll('tag')"
+      - "searchParams.get('tag')"
+      - "searchParams.tag"
+      - "location.search.split('tag')"
+    answer: [0]
+    explanation: >
+      get ne renvoie que la première valeur ; getAll renvoie ['promo', 'neuf'].
+    skills:
+      - url-history

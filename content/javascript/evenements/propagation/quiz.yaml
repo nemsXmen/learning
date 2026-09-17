@@ -1,0 +1,58 @@
+id: javascript-propagation-quiz
+kind: QUIZ
+questions:
+  - id: js-propagation-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Pour un clic sur `#c` dans `<div id="a"><button id="c">`, avec un écouteur de capture et un écouteur de
+      bouillonnement sur `#a` et un écouteur sur `#c`, quel est l'ordre ? (réponds sous la forme X Y Z, avec
+      a-capture, c et a-bulle)
+    answer: 'a-capture c a-bulle'
+    explanation: >
+      La capture descend jusqu'à la cible, puis l'événement remonte en bouillonnement.
+    skills:
+      - event-propagation
+
+  - id: js-propagation-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle méthode empêche un lien de naviguer ?
+    options:
+      - "event.preventDefault()"
+      - "event.stopPropagation()"
+      - "event.stopImmediatePropagation()"
+      - "return false dans addEventListener"
+    answer: [0]
+    explanation: >
+      preventDefault annule l'action par défaut ; stopPropagation n'arrête que le trajet de l'événement.
+    skills:
+      - event-propagation
+
+  - id: js-propagation-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Un écouteur `focus` posé sur un formulaire est appelé quand un de ses champs reçoit le focus.
+    answer: false
+    explanation: >
+      focus ne bouillonne pas. Pour réagir depuis un conteneur, on écoute focusin.
+    skills:
+      - event-propagation
+
+  - id: js-propagation-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans l'écouteur de clic d'un fond de modale, comment savoir que le fond lui-même a été cliqué ?
+    options:
+      - "event.target === event.currentTarget"
+      - "event.defaultPrevented === false"
+      - "event.eventPhase === 1"
+      - "event.bubbles === true"
+    answer: [0]
+    explanation: >
+      Si la cible est l'élément qui porte l'écouteur, le clic n'est pas venu d'un de ses descendants.
+    skills:
+      - event-propagation

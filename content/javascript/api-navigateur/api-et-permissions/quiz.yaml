@@ -1,0 +1,57 @@
+id: javascript-api-permissions-quiz
+kind: QUIZ
+questions:
+  - id: js-api-permissions-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      navigator.clipboard est disponible sur une page servie en HTTP depuis un domaine public.
+    answer: false
+    explanation: >
+      Le presse-papiers asynchrone exige un contexte sécurisé : HTTPS, ou localhost en développement.
+    skills:
+      - browser-apis
+
+  - id: js-api-permissions-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quels états peut renvoyer `navigator.permissions.query` ?
+    options:
+      - "granted, denied ou prompt"
+      - "true ou false"
+      - "allowed, blocked ou unknown"
+      - "pending, fulfilled ou rejected"
+    answer: [0]
+    explanation: >
+      L'état indique si la permission est accordée, refusée, ou si une invite serait affichée.
+    skills:
+      - browser-apis
+
+  - id: js-api-permissions-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quand demander l'autorisation d'envoyer des notifications ?
+    options:
+      - "Lors d'une action de l'utilisateur qui en a besoin"
+      - "Dès le chargement de la page"
+      - "Dans un minuteur quelques secondes après l'arrivée"
+      - "À chaque rechargement, jusqu'à obtenir un accord"
+    answer: [0]
+    explanation: >
+      Les navigateurs exigent souvent un geste de l'utilisateur, et une demande contextualisée est bien mieux
+      acceptée.
+    skills:
+      - browser-apis
+
+  - id: js-api-permissions-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Le type d'un fichier choisi par l'utilisateur garantit la nature réelle de son contenu.
+    answer: false
+    explanation: >
+      Le type est déclaré par le système ou le navigateur et peut être falsifié : le serveur doit revalider.
+    skills:
+      - browser-apis

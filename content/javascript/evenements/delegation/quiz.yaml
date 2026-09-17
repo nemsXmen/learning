@@ -1,0 +1,62 @@
+id: javascript-delegation-quiz
+kind: QUIZ
+questions:
+  - id: js-delegation-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Sur quel mécanisme repose la délégation d'événements ?
+    options:
+      - "Le bouillonnement des événements"
+      - "La capture uniquement"
+      - "Le mode strict"
+      - "Les collections vivantes"
+    answer: [0]
+    explanation: >
+      Les événements des descendants remontent jusqu'au conteneur, où un seul écouteur les reçoit.
+    skills:
+      - event-delegation
+
+  - id: js-delegation-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Avec la délégation, un bouton ajouté à la liste après la pose de l'écouteur fonctionne sans écouteur
+      supplémentaire.
+    answer: true
+    explanation: >
+      L'écouteur est sur le conteneur, qui reçoit les clics de tous ses descendants, présents ou futurs.
+    skills:
+      - event-delegation
+
+  - id: js-delegation-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que renvoie `event.target.closest('button')` quand le clic a lieu sur le texte d'une ligne, hors de tout bouton ?
+    options:
+      - "null"
+      - "Le premier bouton de la liste"
+      - "La ligne"
+      - "Une erreur"
+    answer: [0]
+    explanation: >
+      closest ne trouve aucun ancêtre correspondant : l'écouteur doit alors ne rien faire.
+    skills:
+      - event-delegation
+
+  - id: js-delegation-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel événement déléguer pour réagir au focus de n'importe quel champ d'un formulaire ?
+    options:
+      - "focusin"
+      - "focus"
+      - "blur"
+      - "change"
+    answer: [0]
+    explanation: >
+      focus ne bouillonne pas ; focusin, son équivalent, remonte jusqu'au formulaire.
+    skills:
+      - event-delegation

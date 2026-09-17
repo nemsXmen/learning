@@ -150,6 +150,15 @@
   ],
   "modules": [
     {
+      "slug": "api-navigateur",
+      "title": "API du navigateur",
+      "order": 29,
+      "part": "browser",
+      "technology": "javascript",
+      "contentPath": "javascript/api-navigateur/module.yaml",
+      "contentVersion": "ed19239af70f"
+    },
+    {
       "slug": "async-await",
       "title": "Async / await",
       "order": 22,
@@ -222,6 +231,15 @@
       "contentVersion": "af0f8e3542f1"
     },
     {
+      "slug": "dom",
+      "title": "DOM",
+      "order": 27,
+      "part": "browser",
+      "technology": "javascript",
+      "contentPath": "javascript/dom/module.yaml",
+      "contentVersion": "4dc0a07c9580"
+    },
+    {
       "slug": "erreurs",
       "title": "Gestion des erreurs",
       "order": 23,
@@ -238,6 +256,15 @@
       "technology": "javascript",
       "contentPath": "javascript/es-modules/module.yaml",
       "contentVersion": "2cd8a172f885"
+    },
+    {
+      "slug": "evenements",
+      "title": "Événements",
+      "order": 28,
+      "part": "browser",
+      "technology": "javascript",
+      "contentPath": "javascript/evenements/module.yaml",
+      "contentVersion": "b42ddd199c5a"
     },
     {
       "slug": "execution-context",
@@ -1307,6 +1334,90 @@
       "technology": "javascript"
     },
     {
+      "id": "dom-selection",
+      "name": "DOM et sélection d'éléments",
+      "importance": 5,
+      "requires": [
+        "objects-basics"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "dom-modification",
+      "name": "Modifier contenu, attributs et classes",
+      "importance": 5,
+      "requires": [
+        "dom-selection"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "dom-structure",
+      "name": "Créer, supprimer et parcourir des éléments",
+      "importance": 4,
+      "requires": [
+        "dom-modification"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "dom-events",
+      "name": "Écouter des événements",
+      "importance": 5,
+      "requires": [
+        "dom-modification",
+        "callbacks"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "event-propagation",
+      "name": "Propagation des événements",
+      "importance": 4,
+      "requires": [
+        "dom-events"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "event-delegation",
+      "name": "Délégation d'événements",
+      "importance": 4,
+      "requires": [
+        "event-propagation",
+        "dom-structure"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "browser-storage",
+      "name": "localStorage, sessionStorage et cookies",
+      "importance": 4,
+      "requires": [
+        "dom-modification"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "url-history",
+      "name": "API URL et History",
+      "importance": 4,
+      "requires": [
+        "dom-events"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "browser-apis",
+      "name": "API de l'appareil et permissions",
+      "importance": 3,
+      "requires": [
+        "async-errors",
+        "browser-storage"
+      ],
+      "technology": "javascript"
+    },
+    {
       "id": "type-inference",
       "name": "Inférence de types",
       "importance": 4,
@@ -1340,6 +1451,115 @@
     }
   ],
   "chapters": [
+    {
+      "id": "javascript-api-permissions",
+      "title": "Presse-papiers, géolocalisation, notifications, fichiers et permissions",
+      "slug": "api-et-permissions",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "api-navigateur",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-async-erreurs",
+        "javascript-stockage"
+      ],
+      "skills": [
+        "browser-apis"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/api-navigateur/api-et-permissions/lesson.md",
+      "contentVersion": "e95248b1a865",
+      "body": "\n## Objectifs\n\n- Utiliser les API qui touchent à l'appareil : presse-papiers, position, notifications, fichiers.\n- Comprendre les conditions qu'elles imposent : contexte sécurisé, geste de l'utilisateur, permission.\n- Écrire un code qui détecte l'absence d'une API ou un refus, et reste utilisable dans tous les cas.\n\n## Introduction\n\nCopier un lien d'un clic, afficher les magasins proches, prévenir d'un message reçu, importer un fichier : ces\nfonctions accèdent à des ressources que l'utilisateur doit contrôler. Le navigateur les protège par des règles —\nHTTPS obligatoire, action volontaire, autorisation explicite — et par des API souvent **asynchrones**. Le code\nqui les utilise doit donc prévoir trois issues : l'API existe et fonctionne, l'API n'existe pas, ou l'utilisateur\nrefuse.\n\n## Concept\n\n| API | Utilisation | Conditions |\n| --- | --- | --- |\n| Presse-papiers | `await navigator.clipboard.writeText(texte)` | contexte sécurisé, souvent un geste de l'utilisateur |\n| Géolocalisation | `navigator.geolocation.getCurrentPosition(succes, erreur, options)` | contexte sécurisé, permission |\n| Notifications | `await Notification.requestPermission()`, puis `new Notification(titre)` | contexte sécurisé, permission, geste |\n| Fichiers | `input.files`, `await fichier.text()`, `URL.createObjectURL(fichier)` | choix explicite de l'utilisateur |\n| Permissions | `await navigator.permissions.query({ name: 'geolocation' })` | renvoie `granted`, `denied` ou `prompt` |\n\nUn **contexte sécurisé** est une page servie en HTTPS, ou depuis `localhost` pendant le développement ;\n`window.isSecureContext` l'indique. La **détection de fonctionnalité** vérifie l'existence d'une API avant de\nl'appeler : `'clipboard' in navigator`, `'geolocation' in navigator`.\n\n## Exemple\n\n```js\n// Les fonctions reçoivent l'environnement en paramètre : elles se testent sans navigateur.\nasync function copierTexte(texte, env = globalThis) {\n  if (!env.isSecureContext || !env.navigator?.clipboard) {\n    return { ok: false, raison: 'presse-papiers indisponible' };\n  }\n  try {\n    await env.navigator.clipboard.writeText(texte);\n    return { ok: true };\n  } catch (erreur) {\n    return { ok: false, raison: erreur.name }; // par exemple NotAllowedError\n  }\n}\n\nfunction positionActuelle(geolocalisation, options = { timeout: 5000 }) {\n  return new Promise((resolve, reject) => {\n    if (!geolocalisation) {\n      reject(new Error('Géolocalisation indisponible'));\n      return;\n    }\n    geolocalisation.getCurrentPosition(\n      ({ coords }) => resolve({ latitude: coords.latitude, longitude: coords.longitude }),\n      reject,\n      options,\n    );\n  });\n}\n\nasync function lireFichierTexte(fichier, tailleMax = 1_000_000) {\n  if (fichier.size > tailleMax) {\n    throw new RangeError(`Fichier trop volumineux : ${fichier.size} octets`);\n  }\n  return fichier.text();\n}\n\nconst environnementSecurise = { isSecureContext: true, navigator: { clipboard: { writeText: async () => {} } } };\nconsole.log(await copierTexte('https://boutique.exemple/produits/7', environnementSecurise)); // { ok: true }\nconsole.log(await copierTexte('texte', { isSecureContext: false, navigator: {} }));\n// { ok: false, raison: 'presse-papiers indisponible' }\n\nconst gpsFactice = { getCurrentPosition: (succes) => succes({ coords: { latitude: 48.85, longitude: 2.35 } }) };\nconsole.log(await positionActuelle(gpsFactice)); // { latitude: 48.85, longitude: 2.35 }\nconst refus = { getCurrentPosition: (_, erreur) => erreur({ code: 1, message: 'User denied Geolocation' }) };\nconsole.log(await positionActuelle(refus).catch((e) => `refus, code ${e.code}`)); // 'refus, code 1'\n\nconsole.log(await lireFichierTexte(new File(['bonjour'], 'note.txt'))); // 'bonjour'\n```\n\n## Comment ça fonctionne\n\nCes API sont réservées aux **contextes sécurisés** : sur une page en HTTP, `navigator.clipboard` ou\n`navigator.geolocation` peuvent tout simplement ne pas exister. Beaucoup exigent aussi une **activation par\nl'utilisateur** : écrire dans le presse-papiers ou demander l'autorisation de notifier doit se faire dans le\ntraitement d'un clic ou d'une touche, et non au chargement de la page. Un appel hors de ce contexte échoue avec\nune `NotAllowedError`.\n\nLes **permissions** sont accordées par l'utilisateur, qui voit une invite du navigateur. Le code ne peut que\ndemander ; l'utilisateur peut refuser, ignorer l'invite, ou révoquer plus tard son accord dans les réglages.\n`navigator.permissions.query` indique l'état actuel — `granted`, `denied` ou `prompt` — sans déclencher d'invite,\nce qui permet d'adapter l'interface : proposer un bouton « Me localiser » plutôt que de demander à l'arrivée. Une\npermission refusée ne peut pas être redemandée par le site : il faut expliquer à l'utilisateur comment la\nréactiver.\n\nLa **géolocalisation** utilise encore des callbacks : `getCurrentPosition` reçoit une fonction de succès et une\nfonction d'erreur. L'envelopper dans une promesse, comme dans l'exemple, permet de l'utiliser avec `await`. L'erreur\nporte un `code` : 1 pour un refus, 2 pour une position indisponible, 3 pour un délai dépassé — d'où l'option\n`timeout`, sans laquelle l'attente peut être longue.\n\nLes **fichiers** ne sont accessibles qu'après un choix explicite : un `<input type=\"file\">` ou un glisser-déposer.\nChaque fichier est un objet `File` qui porte `name`, `size` et `type`, et dont le contenu se lit avec `text()`,\n`arrayBuffer()` ou l'ancien `FileReader`. `URL.createObjectURL(fichier)` crée une adresse temporaire pour afficher\nun aperçu d'image ; il faut la libérer avec `URL.revokeObjectURL` une fois inutile. Le `type` et le nom sont fournis\npar le système : ils ne prouvent rien du contenu réel, qui doit être revalidé côté serveur.\n\nLa conception qui en découle est constante : **détecter**, **demander au bon moment**, **prévoir le refus**. Passer\nl'environnement en paramètre, comme dans l'exemple, rend ces fonctions testables sans navigateur, avec des objets\nfactices qui simulent l'acceptation, le refus ou l'absence de l'API.\n\n## Erreurs fréquentes\n\n**Demander une permission au chargement de la page.** L'invite surprend et reçoit souvent un refus : demande au\nmoment de l'action.\n\n**Appeler une API sans vérifier qu'elle existe.** En HTTP ou dans un ancien navigateur, elle est absente.\n\n**Ignorer le refus.** Prévois toujours un chemin sans l'API : saisie manuelle d'une ville, bouton de copie visible.\n\n**Faire confiance au type ou à la taille d'un fichier.** Revalide côté serveur.\n\n**Oublier `URL.revokeObjectURL`.** Les aperçus créés restent en mémoire.\n\n## À retenir\n\n- Presse-papiers, position et notifications exigent un contexte sécurisé, souvent un geste de l'utilisateur.\n- `navigator.permissions.query` donne l'état d'une permission sans déclencher d'invite.\n- Détecter l'API, demander au bon moment, prévoir le refus et l'absence.\n- La géolocalisation utilise des callbacks : on l'enveloppe dans une promesse, avec un `timeout`.\n- Un fichier se lit avec `text()` ou `arrayBuffer()` ; son type et sa taille se revalident côté serveur.\n\n## Exercices\n\n1. Écris l'écouteur d'un bouton « Copier le lien » qui copie l'adresse de la page, affiche « Lien copié » en cas de\n   succès, et sinon affiche le lien dans un champ sélectionné pour une copie manuelle.\n\n   :::indice\n   Appelle `writeText` dans l'écouteur du clic ; en cas d'absence ou d'échec, remplis un champ et appelle `select()`.\n   :::\n\n   :::solution\n   ```js\n   async function copierAvecRepli(lien, { presse, champ, message }) {\n     try {\n       if (!presse) throw new Error('indisponible');\n       await presse.writeText(lien);\n       message.textContent = 'Lien copié';\n     } catch {\n       champ.hidden = false;\n       champ.value = lien;\n       champ.select();\n       message.textContent = 'Copiez le lien ci-dessous';\n     }\n   }\n\n   // Test sans navigateur, avec des objets factices.\n   const champ = { hidden: true, value: '', selectionne: false, select() { this.selectionne = true; } };\n   const message = { textContent: '' };\n   await copierAvecRepli('https://boutique.exemple/p/7', { presse: undefined, champ, message });\n   console.log(message.textContent, champ.value, champ.selectionne); // 'Copiez le lien ci-dessous' 'https://boutique.exemple/p/7' true\n   ```\n\n   Dans la page, l'écouteur appelle\n   `copierAvecRepli(location.href, { presse: navigator.clipboard, champ, message })`, dans le traitement du clic.\n   :::\n\n2. Écris `peutLocaliserSansInvite(permissions)` qui renvoie `true` seulement si la permission de géolocalisation est\n   déjà accordée, `false` sinon, y compris quand l'API Permissions est absente.\n\n   :::indice\n   `await permissions.query({ name: 'geolocation' })` renvoie un objet dont la propriété `state` vaut `granted`,\n   `denied` ou `prompt`.\n   :::\n\n   :::solution\n   ```js\n   async function peutLocaliserSansInvite(permissions) {\n     if (!permissions?.query) return false;\n     try {\n       const { state } = await permissions.query({ name: 'geolocation' });\n       return state === 'granted';\n     } catch {\n       return false;\n     }\n   }\n\n   const accordee = { query: async () => ({ state: 'granted' }) };\n   const aDemander = { query: async () => ({ state: 'prompt' }) };\n   console.log(await peutLocaliserSansInvite(accordee), await peutLocaliserSansInvite(aDemander)); // true false\n   console.log(await peutLocaliserSansInvite(undefined)); // false\n   ```\n\n   Dans la page : `peutLocaliserSansInvite(navigator.permissions)`. Si le résultat est `false`, on affiche un bouton\n   « Me localiser » plutôt que de déclencher une invite à l'arrivée.\n   :::\n\n3. Écris `validerImage(fichier)` pour un envoi d'avatar : refuser tout fichier de plus de 2 Mo ou dont le type ne\n   commence pas par `image/`, en renvoyant un message clair, et accepter sinon.\n\n   :::indice\n   Utilise `fichier.size` et `fichier.type` ; rappelle-toi que ces vérifications côté client ne dispensent pas de celles\n   du serveur.\n   :::\n\n   :::solution\n   ```js\n   const TAILLE_MAX = 2 * 1024 * 1024;\n\n   function validerImage(fichier) {\n     if (!fichier.type.startsWith('image/')) {\n       return { ok: false, message: `« ${fichier.name} » n'est pas une image` };\n     }\n     if (fichier.size > TAILLE_MAX) {\n       return { ok: false, message: `« ${fichier.name} » dépasse 2 Mo` };\n     }\n     return { ok: true };\n   }\n\n   console.log(validerImage(new File(['x'], 'avatar.png', { type: 'image/png' }))); // { ok: true }\n   console.log(validerImage(new File(['x'], 'cv.pdf', { type: 'application/pdf' })).message);\n   // '« cv.pdf » n'est pas une image'\n   const lourd = new File([new Uint8Array(3 * 1024 * 1024)], 'photo.jpg', { type: 'image/jpeg' });\n   console.log(validerImage(lourd).message); // '« photo.jpg » dépasse 2 Mo'\n   ```\n\n   Ce contrôle améliore l'expérience en évitant un envoi inutile ; le serveur doit refaire la vérification, car le\n   type déclaré par le navigateur peut être falsifié.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi certaines API du navigateur exigent-elles un contexte sécurisé ?\n\n  :::indice\n  Que pourrait faire un intermédiaire sur une connexion HTTP non chiffrée ?\n  :::\n\n  :::reponse\n  Parce qu'elles donnent accès à des ressources sensibles — position, presse-papiers, notifications, caméra. Sur une\n  connexion HTTP, un intermédiaire peut modifier la page et en profiter pour espionner ou manipuler l'utilisateur au\n  nom du site. Exiger HTTPS garantit que le code qui demande l'accès est bien celui du site. `localhost` est considéré\n  comme sécurisé pour permettre le développement.\n  :::\n\n- Comment gérer correctement une demande de permission ?\n\n  :::indice\n  Pense au moment de la demande, à l'état existant et au refus.\n  :::\n\n  :::reponse\n  On vérifie d'abord que l'API existe, et éventuellement l'état actuel avec `navigator.permissions.query`, sans\n  déclencher d'invite. On demande au moment où l'utilisateur fait l'action qui en a besoin, en expliquant pourquoi,\n  plutôt qu'au chargement. Et on prévoit le refus comme un cas normal, avec une alternative : saisie manuelle, copie\n  manuelle, message dans l'interface au lieu d'une notification système.\n  :::\n\n- Pourquoi valider un fichier côté serveur alors qu'il l'est déjà dans le navigateur ?\n\n  :::indice\n  Qui contrôle le navigateur et les requêtes envoyées ?\n  :::\n\n  :::reponse\n  Parce que le client est entièrement sous le contrôle de l'utilisateur : le type déclaré, le nom et même la taille\n  annoncée peuvent être falsifiés, et une requête peut être envoyée sans passer par la page. La validation côté client\n  améliore l'expérience en évitant un envoi inutile ; seule la validation côté serveur protège réellement l'application.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-stockage",
+      "title": "localStorage, sessionStorage et cookies",
+      "slug": "stockage-local",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "api-navigateur",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-dom-modifier"
+      ],
+      "skills": [
+        "browser-storage"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/api-navigateur/stockage-local/lesson.md",
+      "contentVersion": "cce1c12e3c1b",
+      "body": "\n## Objectifs\n\n- Conserver des données dans le navigateur avec `localStorage` et `sessionStorage`.\n- Lire et écrire des cookies, et comprendre leurs attributs de sécurité.\n- Choisir le bon stockage selon la durée de vie, la taille et la sensibilité des données.\n\n## Introduction\n\nUn thème sombre choisi hier, un panier rempli avant de fermer l'onglet, une langue préférée : certaines données\ndoivent survivre au rechargement de la page. Le navigateur offre plusieurs stockages, qui se ressemblent en\napparence et diffèrent sur des points décisifs — qui peut les lire, combien de temps ils durent, et s'ils partent\navec chaque requête au serveur.\n\n## Concept\n\n| Stockage | Durée de vie | Portée | Envoyé au serveur | Taille |\n| --- | --- | --- | --- | --- |\n| `localStorage` | jusqu'à suppression | toute l'origine, tous les onglets | non | environ 5 Mo |\n| `sessionStorage` | fermeture de l'onglet | cet onglet seulement | non | environ 5 Mo |\n| Cookie | date d'expiration, ou fin de session | origine et chemin choisis | **oui, à chaque requête** | environ 4 Ko |\n\nL'interface de `localStorage` et de `sessionStorage` :\n\n| Méthode | Effet |\n| --- | --- |\n| `setItem(cle, valeur)` | enregistre une **chaîne** |\n| `getItem(cle)` | renvoie la chaîne, ou `null` |\n| `removeItem(cle)` / `clear()` | supprime une clé / tout |\n\nLes attributs d'un cookie : `max-age` ou `expires` pour la durée, `path` pour la portée, `Secure` pour n'être\nenvoyé qu'en HTTPS, `SameSite` contre les requêtes intersites, et `HttpOnly`, posé par le serveur, pour le rendre\n**inaccessible** à JavaScript.\n\n## Exemple\n\n```js\nlocalStorage.setItem('visites', 5);\nconsole.log(typeof localStorage.getItem('visites'), localStorage.getItem('visites')); // 'string' '5'\n\nlocalStorage.setItem('reglages', { theme: 'sombre' });\nconsole.log(localStorage.getItem('reglages')); // '[object Object]' : l'objet a été converti en chaîne\n\nfunction enregistrer(cle, valeur) {\n  localStorage.setItem(cle, JSON.stringify(valeur));\n}\nfunction lire(cle, parDefaut) {\n  const brut = localStorage.getItem(cle);\n  if (brut === null) return parDefaut;\n  try {\n    return JSON.parse(brut);\n  } catch {\n    return parDefaut; // donnée corrompue ou modifiée à la main\n  }\n}\n\nenregistrer('reglages', { theme: 'sombre', taillePolice: 16 });\nconsole.log(lire('reglages', {}).theme, lire('inconnue', 'défaut')); // 'sombre' 'défaut'\n\nsessionStorage.setItem('etape-formulaire', '2'); // disparaît à la fermeture de l'onglet\n\ndocument.cookie = 'langue=fr; path=/; max-age=31536000; SameSite=Lax';\ndocument.cookie = `recherche=${encodeURIComponent('clavier; sans fil')}; path=/`;\nconsole.log(document.cookie); // 'langue=fr; recherche=clavier%3B%20sans%20fil'\n\nfunction lireCookie(nom) {\n  const paire = document.cookie.split('; ').find((element) => element.startsWith(`${nom}=`));\n  return paire ? decodeURIComponent(paire.slice(nom.length + 1)) : null;\n}\nconsole.log(lireCookie('recherche')); // 'clavier; sans fil'\n\ndocument.cookie = 'langue=; path=/; max-age=0'; // suppression\nconsole.log(lireCookie('langue')); // null\n```\n\n## Comment ça fonctionne\n\n`localStorage` et `sessionStorage` sont des dictionnaires de **chaînes** rattachés à l'**origine** — le\nprotocole, le domaine et le port. Toute valeur est convertie en chaîne à l'écriture : un nombre devient `'5'`,\nun objet devient `'[object Object]'`. On passe donc systématiquement par `JSON.stringify` et `JSON.parse`, en\nprévoyant qu'une valeur lue soit absente, ancienne ou corrompue. Les deux API sont **synchrones** : lire ou\nécrire de gros volumes bloque le fil principal. Pour beaucoup de données structurées, `IndexedDB` est l'outil\nadapté.\n\n`localStorage` est partagé par tous les onglets de la même origine et persiste sans limite de temps.\n`sessionStorage` est propre à un onglet et disparaît avec lui. Quand un onglet modifie `localStorage`, les\n**autres** onglets de la même origine reçoivent un événement `storage`, ce qui permet de synchroniser un thème\nou une déconnexion.\n\nUn **cookie** fonctionne différemment : il est géré par le navigateur et **envoyé au serveur avec chaque\nrequête** vers son domaine. C'est ce qui en fait le support naturel d'une session, et ce qui impose de le garder\npetit. `document.cookie` a une interface déroutante : l'écriture ajoute ou remplace **un** cookie, avec ses\nattributs, alors que la lecture renvoie tous les cookies accessibles sous forme `nom=valeur; nom2=valeur2`,\nsans leurs attributs. Les valeurs contenant `;`, `,` ou des espaces doivent être encodées avec\n`encodeURIComponent`. Supprimer un cookie consiste à le réécrire avec `max-age=0` et le même `path`.\n\nLa **sécurité** guide le choix. Tout ce que JavaScript peut lire, un script malveillant injecté dans la page —\nune faille XSS — peut le lire aussi. Un jeton de session ne doit donc jamais être stocké dans `localStorage` : on\nle place dans un cookie `HttpOnly`, invisible pour JavaScript, avec `Secure` pour ne voyager qu'en HTTPS et\n`SameSite=Lax` ou `Strict` pour limiter les requêtes intersites. Le stockage local convient aux préférences et\naux données non sensibles.\n\nEnfin, ces stockages ne sont pas garantis : l'utilisateur peut les vider, la navigation privée peut les limiter,\net le quota peut être atteint — `setItem` lève alors une exception. Un code robuste traite toujours l'absence de\nvaleur comme un cas normal.\n\n## Erreurs fréquentes\n\n**Stocker un objet sans `JSON.stringify`.** On relit `'[object Object]'`.\n\n**Oublier que `getItem` renvoie `null` pour une clé absente.** Prévois une valeur par défaut.\n\n**Stocker un jeton d'authentification dans `localStorage`.** Utilise un cookie `HttpOnly`.\n\n**Écrire une valeur de cookie non encodée.** Un `;` coupe la valeur.\n\n**Supposer que les données sont toujours là.** L'utilisateur ou le navigateur peuvent les supprimer.\n\n## À retenir\n\n- `localStorage` persiste et se partage entre onglets ; `sessionStorage` vit avec l'onglet.\n- Les deux ne stockent que des chaînes : `JSON.stringify` à l'écriture, `JSON.parse` protégé à la lecture.\n- Un cookie part avec chaque requête vers son domaine : petit, et encodé.\n- `HttpOnly`, `Secure` et `SameSite` protègent les cookies sensibles ; `HttpOnly` les cache à JavaScript.\n- Jamais de jeton de session dans un stockage accessible au JavaScript.\n\n## Exercices\n\n1. Écris un module `preferences` avec `lirePreferences()` et `modifierPreference(cle, valeur)`, qui conserve les\n   préférences dans `localStorage` et renvoie `{ theme: 'clair', langue: 'fr' }` complétées par ce qui a été\n   enregistré, même si la donnée stockée est corrompue.\n\n   :::indice\n   Fusionne les valeurs par défaut avec l'objet lu, et protège `JSON.parse` avec un `try`.\n   :::\n\n   :::solution\n   ```js\n   const CLE = 'preferences';\n   const PAR_DEFAUT = { theme: 'clair', langue: 'fr' };\n\n   function lirePreferences() {\n     try {\n       return { ...PAR_DEFAUT, ...JSON.parse(localStorage.getItem(CLE) ?? '{}') };\n     } catch {\n       return { ...PAR_DEFAUT };\n     }\n   }\n\n   function modifierPreference(cle, valeur) {\n     const preferences = lirePreferences();\n     preferences[cle] = valeur;\n     localStorage.setItem(CLE, JSON.stringify(preferences));\n     return preferences;\n   }\n\n   modifierPreference('theme', 'sombre');\n   console.log(lirePreferences()); // { theme: 'sombre', langue: 'fr' }\n   localStorage.setItem(CLE, '{corrompu');\n   console.log(lirePreferences()); // { theme: 'clair', langue: 'fr' }\n   ```\n   :::\n\n2. Quand l'utilisateur change de thème dans un onglet, les autres onglets ouverts doivent l'appliquer aussi. Écris\n   l'écouteur qui le permet, sachant que chaque onglet affiche le thème avec l'attribut `data-theme` de `<html>`.\n\n   :::indice\n   Les autres onglets de la même origine reçoivent l'événement `storage`, avec `key` et `newValue`.\n   :::\n\n   :::solution\n   ```js\n   function appliquerTheme(theme) {\n     document.documentElement.dataset.theme = theme;\n   }\n\n   window.addEventListener('storage', (event) => {\n     if (event.key === 'theme' && event.newValue) {\n       appliquerTheme(event.newValue);\n     }\n   });\n\n   // Simulation de ce que reçoit un autre onglet quand celui-ci écrit localStorage.setItem('theme', 'sombre') :\n   window.dispatchEvent(new StorageEvent('storage', { key: 'theme', newValue: 'sombre' }));\n   console.log(document.documentElement.dataset.theme); // 'sombre'\n   ```\n\n   L'onglet qui écrit ne reçoit pas l'événement : il applique le thème directement au moment où il l'enregistre.\n   :::\n\n3. Pour chaque donnée, choisis entre cookie `HttpOnly`, `localStorage` et `sessionStorage`, et justifie : le jeton de\n   session d'un utilisateur connecté ; le brouillon d'un formulaire en plusieurs étapes, propre à l'onglet ; la langue\n   préférée ; le contenu du panier d'un visiteur non connecté.\n\n   :::indice\n   Pour chaque donnée : est-elle sensible ? Doit-elle survivre à la fermeture de l'onglet ? Le serveur en a-t-il besoin\n   à chaque requête ?\n   :::\n\n   :::solution\n   - **Jeton de session** : cookie `HttpOnly`, `Secure`, `SameSite`, posé par le serveur. Il est sensible, envoyé à\n     chaque requête, et doit rester invisible pour un éventuel script injecté.\n   - **Brouillon de formulaire propre à l'onglet** : `sessionStorage`. Il ne doit pas fuiter vers un autre onglet et\n     peut disparaître à la fermeture.\n   - **Langue préférée** : `localStorage`, non sensible et durable ; ou un cookie simple si le serveur doit rendre la\n     page directement dans la bonne langue.\n   - **Panier d'un visiteur** : `localStorage` pour le retrouver à la prochaine visite, sans information sensible, et\n     synchronisé avec le serveur à la connexion.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `localStorage`, `sessionStorage` et les cookies ?\n\n  :::indice\n  Compare durée de vie, portée, taille et envoi au serveur.\n  :::\n\n  :::reponse\n  `localStorage` persiste sans limite de temps et se partage entre les onglets d'une même origine ; `sessionStorage`\n  est propre à un onglet et disparaît à sa fermeture ; les deux stockent quelques mégaoctets de chaînes et ne sont\n  jamais envoyés au serveur. Les cookies sont petits, ont une date d'expiration, et sont envoyés automatiquement avec\n  chaque requête vers leur domaine, ce qui en fait le support des sessions — et impose de les garder légers.\n  :::\n\n- Pourquoi ne pas stocker un jeton d'authentification dans `localStorage` ?\n\n  :::indice\n  Qui peut lire `localStorage` si la page contient une faille XSS ?\n  :::\n\n  :::reponse\n  Parce que tout script exécuté dans la page peut lire `localStorage`, y compris un script injecté par une faille XSS,\n  qui pourrait alors voler le jeton et usurper la session. Un cookie `HttpOnly` n'est pas accessible depuis\n  JavaScript : même en cas d'injection, le jeton ne peut pas être lu. On l'accompagne de `Secure` et `SameSite` pour\n  limiter aussi son envoi aux connexions chiffrées et réduire les attaques CSRF.\n  :::\n\n- Pourquoi `localStorage.setItem('prefs', { theme: 'sombre' })` pose-t-il problème ?\n\n  :::indice\n  Quel type de valeur `localStorage` accepte-t-il ?\n  :::\n\n  :::reponse\n  `localStorage` ne stocke que des chaînes : l'objet est converti avec `String`, et l'on relit `'[object Object]'`,\n  sans aucune donnée. Il faut sérialiser avec `JSON.stringify` à l'écriture et analyser avec `JSON.parse` à la\n  lecture, en prévoyant une valeur absente — `getItem` renvoie `null` — ou corrompue, qui ferait échouer `JSON.parse`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-url-historique",
+      "title": "L'API URL et l'API History",
+      "slug": "url-et-historique",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "api-navigateur",
+      "order": 2,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-evenements"
+      ],
+      "skills": [
+        "url-history"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/api-navigateur/url-et-historique/lesson.md",
+      "contentVersion": "b00fdc39fc43",
+      "body": "\n## Objectifs\n\n- Analyser et construire des adresses avec `URL` et `URLSearchParams`, sans concaténation manuelle.\n- Refléter l'état d'une page dans son adresse, pour qu'elle soit partageable et rechargeable.\n- Changer l'adresse sans recharger la page avec `pushState`, et réagir au bouton Retour avec `popstate`.\n\n## Introduction\n\nUne page de résultats filtrée — deuxième page, tri par prix, catégorie « claviers » — doit pouvoir être partagée,\nmise en favori et rechargée sans perdre ses filtres. L'endroit naturel pour cet état est l'**adresse** elle-même.\nDeux API y sont consacrées : `URL` pour lire et construire les adresses correctement, et `History` pour les\nmodifier sans recharger la page, comme le font toutes les applications d'une seule page.\n\n## Concept\n\n| Élément | Rôle |\n| --- | --- |\n| `new URL(adresse, base)` | analyse une adresse ; `base` résout les chemins relatifs |\n| `url.pathname`, `url.search`, `url.hash` | les parties de l'adresse |\n| `url.searchParams` | un `URLSearchParams` : `get`, `getAll`, `set`, `append`, `delete`, `has` |\n| `location` | l'adresse de la page courante ; `location.href = …` navigue en rechargeant |\n| `history.pushState(etat, '', adresse)` | ajoute une entrée d'historique **sans** recharger |\n| `history.replaceState(etat, '', adresse)` | remplace l'entrée courante |\n| Événement `popstate` | se déclenche quand l'utilisateur navigue dans l'historique |\n\n`URLSearchParams` encode et décode automatiquement : espaces, accents, `&` et `=` dans les valeurs.\n\n## Exemple\n\n```js\n// Adresse de départ de la page : https://boutique.exemple/produits?page=2\nconst url = new URL('/produits?page=2&tag=promo&tag=neuf', 'https://boutique.exemple');\nconsole.log(url.pathname, url.searchParams.get('page')); // '/produits' '2' : toujours une chaîne\nconsole.log(url.searchParams.getAll('tag')); // ['promo', 'neuf']\n\nurl.searchParams.set('page', '3');\nurl.searchParams.append('tri', 'prix croissant');\nconsole.log(url.search); // '?page=3&tag=promo&tag=neuf&tri=prix+croissant'\n\nfunction lireFiltres() {\n  const parametres = new URL(location.href).searchParams;\n  return { page: Number(parametres.get('page') ?? 1), tri: parametres.get('tri') ?? 'pertinence' };\n}\n\nfunction appliquerFiltres(filtres) {\n  const adresse = new URL(location.href);\n  adresse.searchParams.set('page', String(filtres.page));\n  adresse.searchParams.set('tri', filtres.tri);\n  history.pushState(filtres, '', adresse); // l'adresse change, la page ne se recharge pas\n}\n\nconsole.log(lireFiltres()); // { page: 2, tri: 'pertinence' }\nappliquerFiltres({ page: 3, tri: 'prix' });\nconsole.log(location.search, lireFiltres()); // '?page=3&tri=prix' { page: 3, tri: 'prix' }\n\nwindow.addEventListener('popstate', () => {\n  console.log('retour arrière, filtres :', lireFiltres()); // { page: 2, tri: 'pertinence' }\n});\nhistory.back();\n```\n\n## Comment ça fonctionne\n\nConstruire une adresse par concaténation — `'/produits?recherche=' + saisie` — casse dès qu'une valeur contient\nun espace, un `&` ou un `#`, et peut même injecter des paramètres. `URL` et `URLSearchParams` font l'analyse et\nl'encodage selon les règles du web : un espace devient `+` dans les paramètres, un `&` est encodé, et `get`\nrenvoie la valeur décodée. Toutes les valeurs lues sont des **chaînes**, à convertir avant un calcul. Un paramètre\nrépété, comme `tag=promo&tag=neuf`, se lit avec `getAll`.\n\nL'**historique** d'un onglet est une pile d'entrées. `pushState` ajoute une entrée et change l'adresse affichée,\nsans requête au serveur ni rechargement : la page doit elle-même mettre à jour son contenu. Le premier argument,\nl'**état**, est un objet associé à l'entrée ; il est restitué plus tard dans `history.state`. `replaceState`\nmodifie l'entrée courante au lieu d'en ajouter une, ce qui convient à un changement qui ne doit pas créer de pas\ndans le bouton Retour, comme la saisie progressive d'une recherche.\n\nQuand l'utilisateur clique sur Retour ou Suivant, le navigateur change l'adresse et déclenche `popstate` —\njamais lors d'un appel à `pushState`. La page lit alors l'adresse, ou l'état de l'entrée, et affiche le contenu\ncorrespondant. Le schéma robuste est donc : **l'adresse est la source de vérité**. Une même fonction lit les\nfiltres depuis l'adresse au chargement initial, et à chaque `popstate` ; les actions de l'utilisateur écrivent dans\nl'adresse avec `pushState`, puis affichent.\n\nDeux contraintes à connaître. L'adresse passée à `pushState` doit rester sur la **même origine**, sinon une\nerreur est levée. Et une adresse créée par `pushState` doit aussi fonctionner si l'utilisateur la **recharge** : le\nserveur doit renvoyer la page pour ces chemins, sinon il répond 404. Les frameworks d'applications d'une seule page\net leurs routeurs reposent entièrement sur ces mécanismes.\n\n## Erreurs fréquentes\n\n**Construire une adresse par concaténation.** Utilise `URL` et `searchParams.set`.\n\n**Calculer avec un paramètre sans conversion.** `get('page') + 1` donne `'21'`.\n\n**Attendre `popstate` après `pushState`.** Il ne se déclenche que lors d'une navigation dans l'historique.\n\n**Garder l'état seulement en mémoire.** Recharger ou partager la page le perd : mets-le dans l'adresse.\n\n**Utiliser `pushState` pour chaque frappe.** Le bouton Retour devient inutilisable : `replaceState`.\n\n## À retenir\n\n- `URL` et `URLSearchParams` analysent et encodent les adresses ; les valeurs lues sont des chaînes.\n- `pushState` change l'adresse et ajoute une entrée sans recharger ; `replaceState` remplace l'entrée courante.\n- `popstate` se déclenche lors de la navigation dans l'historique, pas lors de `pushState`.\n- L'adresse est la source de vérité : on la lit au chargement et à chaque `popstate`.\n- Une adresse poussée doit fonctionner au rechargement : le serveur doit la servir.\n\n## Exercices\n\n1. Écris `adresseDeRecherche(base, termes, page)` qui construit une adresse `/recherche` avec les paramètres `q` et\n   `page`, correctement encodés, en omettant `page` quand elle vaut 1.\n\n   :::indice\n   Crée une `URL` avec la base, puis `searchParams.set` pour chaque paramètre.\n   :::\n\n   :::solution\n   ```js\n   function adresseDeRecherche(base, termes, page = 1) {\n     const url = new URL('/recherche', base);\n     url.searchParams.set('q', termes);\n     if (page > 1) {\n       url.searchParams.set('page', String(page));\n     }\n     return url.href;\n   }\n\n   console.log(adresseDeRecherche('https://boutique.exemple', 'souris & clavier'));\n   // 'https://boutique.exemple/recherche?q=souris+%26+clavier'\n   console.log(adresseDeRecherche('https://boutique.exemple', 'écran', 2));\n   // 'https://boutique.exemple/recherche?q=%C3%A9cran&page=2'\n   ```\n\n   Avec une concaténation, le `&` de « souris & clavier » aurait créé un second paramètre.\n   :::\n\n2. Cette page garde le numéro de page dans une variable : un rechargement ou le bouton Retour la ramène toujours en\n   page 1. Réécris-la pour que l'adresse soit la source de vérité, au chargement comme lors d'un retour arrière.\n\n   ```js\n   let page = 1;\n   function pageSuivante() {\n     page += 1;\n     afficher(page);\n   }\n   ```\n\n   :::indice\n   Une fonction `pageCourante()` lit l'adresse ; `pageSuivante` écrit dans l'adresse avec `pushState` puis affiche ;\n   `popstate` réaffiche d'après l'adresse.\n   :::\n\n   :::solution\n   ```js\n   const affichages = [];\n   const afficher = (page) => affichages.push(page);\n\n   function pageCourante() {\n     return Number(new URL(location.href).searchParams.get('page') ?? 1);\n   }\n\n   function pageSuivante() {\n     const adresse = new URL(location.href);\n     adresse.searchParams.set('page', String(pageCourante() + 1));\n     history.pushState(null, '', adresse);\n     afficher(pageCourante());\n   }\n\n   window.addEventListener('popstate', () => afficher(pageCourante()));\n\n   afficher(pageCourante()); // au chargement : la page de l'adresse\n   pageSuivante();\n   history.back();\n   await new Promise((resolve) => setTimeout(resolve, 50));\n   console.log(affichages); // [2, 3, 2] si l'adresse de départ contient ?page=2\n   ```\n\n   Aucune variable ne duplique l'état : recharger, partager ou revenir en arrière affiche toujours la page indiquée par\n   l'adresse.\n   :::\n\n3. Un champ de recherche met à jour l'adresse à chaque frappe, et le bouton Retour doit ensuite revenir à la page\n   précédente d'un seul clic, pas lettre par lettre. Écris l'écouteur.\n\n   :::indice\n   Une frappe ne doit pas ajouter d'entrée d'historique, seulement modifier l'entrée courante.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = '<input id=\"recherche\">';\n   const champ = document.getElementById('recherche');\n\n   champ.addEventListener('input', () => {\n     const adresse = new URL(location.href);\n     adresse.searchParams.set('q', champ.value);\n     history.replaceState(null, '', adresse);\n   });\n\n   const avant = history.length;\n   for (const texte of ['c', 'cl', 'cla']) {\n     champ.value = texte;\n     champ.dispatchEvent(new Event('input'));\n   }\n   console.log(new URL(location.href).searchParams.get('q'), history.length === avant); // 'cla' true\n   ```\n\n   `replaceState` garde l'adresse à jour sans empiler une entrée par lettre. On réserve `pushState` aux changements\n   que l'utilisateur voudra retrouver avec le bouton Retour, comme une recherche validée.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi utiliser `URL` et `URLSearchParams` plutôt que de concaténer des chaînes ?\n\n  :::indice\n  Que devient une valeur contenant `&`, un espace ou un accent ?\n  :::\n\n  :::reponse\n  Parce qu'ils appliquent les règles d'encodage des adresses : les espaces, les `&`, les `=` et les caractères non\n  ASCII sont encodés à l'écriture et décodés à la lecture. Une concaténation casse dès qu'une valeur contient l'un de\n  ces caractères, et peut même permettre d'injecter un paramètre supplémentaire. Ils offrent aussi une interface claire\n  pour lire, ajouter, remplacer ou supprimer des paramètres, y compris répétés.\n  :::\n\n- Quelle différence entre `pushState` et `replaceState` ?\n\n  :::indice\n  Que se passe-t-il avec le bouton Retour dans chaque cas ?\n  :::\n\n  :::reponse\n  Les deux changent l'adresse sans recharger la page. `pushState` ajoute une nouvelle entrée à l'historique : le bouton\n  Retour ramène à l'adresse précédente. `replaceState` remplace l'entrée courante : aucun pas supplémentaire n'est créé.\n  On utilise `pushState` pour une navigation que l'utilisateur voudra annuler, et `replaceState` pour garder l'adresse\n  synchronisée avec un état qui change souvent, comme une saisie.\n  :::\n\n- Quand l'événement `popstate` se déclenche-t-il ?\n\n  :::indice\n  Se déclenche-t-il quand le code appelle `pushState` ?\n  :::\n\n  :::reponse\n  Quand l'entrée active de l'historique change à cause d'une navigation : bouton Retour ou Suivant, ou appels à\n  `history.back()`, `forward()` et `go()`. Il ne se déclenche pas lors d'un `pushState` ou d'un `replaceState`. Son\n  écouteur doit relire l'adresse ou `event.state` et afficher le contenu correspondant, puisque le navigateur ne\n  recharge pas la page.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
     {
       "id": "javascript-async-await",
       "title": "async et await : lire l'asynchrone comme du synchrone",
@@ -2466,6 +2686,114 @@
       ]
     },
     {
+      "id": "javascript-dom-creer",
+      "title": "Créer, insérer, supprimer et parcourir des éléments",
+      "slug": "creer-supprimer-parcourir",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "dom",
+      "order": 3,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-dom-modifier"
+      ],
+      "skills": [
+        "dom-structure"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/dom/creer-supprimer-parcourir/lesson.md",
+      "contentVersion": "559a3b6b7de0",
+      "body": "\n## Objectifs\n\n- Construire des éléments à partir de données, et les insérer au bon endroit.\n- Insérer de nombreux éléments d'un coup avec un fragment ou un `<template>`.\n- Supprimer, remplacer et parcourir des éléments en se déplaçant dans l'arbre.\n\n## Introduction\n\nUne page dynamique affiche des données qui n'existaient pas dans le HTML d'origine : les résultats d'une\nrecherche, les articles d'un panier, les messages d'une conversation. Il faut donc **fabriquer** des\néléments, les placer, puis les retirer quand les données changent. Le DOM moderne offre pour cela des\nméthodes simples et sûres, qui remplacent avantageusement la construction de HTML par concaténation de\nchaînes.\n\n## Concept\n\n| Action | Méthode |\n| --- | --- |\n| Créer un élément | `document.createElement('li')` |\n| Insérer à la fin / au début d'un parent | `parent.append(...enfants)` / `parent.prepend(...enfants)` |\n| Insérer à côté d'un élément | `element.before(...)` / `element.after(...)` |\n| Remplacer un élément | `element.replaceWith(nouveau)` |\n| Supprimer un élément | `element.remove()` |\n| Vider un parent | `parent.replaceChildren()` |\n| Copier un élément | `element.cloneNode(true)` |\n| Insérer beaucoup d'éléments | un `DocumentFragment`, ou le contenu d'un `<template>` |\n\nSe déplacer dans l'arbre :\n\n| Direction | Propriété |\n| --- | --- |\n| Parent | `parentElement` ; ancêtre qui correspond : `closest(selecteur)` |\n| Enfants | `children`, `firstElementChild`, `lastElementChild` |\n| Voisins | `previousElementSibling`, `nextElementSibling` |\n\n`append` accepte aussi des chaînes, insérées comme **texte** : `parent.append('Total : ', total)`.\n\n## Exemple\n\n```js\ndocument.body.innerHTML = `\n  <ul id=\"panier\"></ul>\n  <template id=\"modele-article\">\n    <li class=\"article\"><span class=\"nom\"></span> <button class=\"retirer\">Retirer</button></li>\n  </template>`;\n\nconst articles = [\n  { id: 1, nom: 'Clavier' },\n  { id: 2, nom: 'Souris' },\n  { id: 3, nom: 'Écran' },\n];\n\nconst panier = document.getElementById('panier');\nconst modele = document.getElementById('modele-article');\nconst fragment = document.createDocumentFragment();\n\nfor (const { id, nom } of articles) {\n  const copie = modele.content.cloneNode(true);\n  const ligne = copie.querySelector('.article');\n  ligne.dataset.id = id;\n  ligne.querySelector('.nom').textContent = nom;\n  fragment.append(copie);\n}\npanier.append(fragment); // une seule insertion dans la page\nconsole.log(panier.children.length); // 3\n\nconst souris = panier.querySelector('[data-id=\"2\"]');\nconsole.log(souris.previousElementSibling.dataset.id, souris.nextElementSibling.dataset.id); // '1' '3'\n\nconst promo = document.createElement('li');\npromo.className = 'promotion';\npromo.append('Code BIENVENUE : -10 %');\npanier.prepend(promo);\n\nsouris.remove();\npanier.querySelector('[data-id=\"3\"]').replaceWith(Object.assign(document.createElement('li'), { textContent: 'Écran 27 pouces' }));\nconsole.log(Array.from(panier.children, (li) => li.textContent.trim()));\n// ['Code BIENVENUE : -10 %', 'Clavier Retirer', 'Écran 27 pouces']\n\npanier.replaceChildren();\nconsole.log(panier.children.length); // 0\n```\n\n## Comment ça fonctionne\n\nUn élément créé avec `createElement` existe en mémoire, mais n'apparaît pas tant qu'il n'est pas **inséré**\ndans le document. On peut donc le préparer entièrement — classe, texte, attributs, enfants — avant de\nl'ajouter en une seule opération. Insérer un élément déjà présent dans la page le **déplace** : un nœud\nn'a qu'un seul parent à la fois.\n\nChaque modification du document peut obliger le navigateur à recalculer la mise en page. Insérer cent\nlignes une par une dans une liste affichée multiplie ce travail. Un **`DocumentFragment`** est un conteneur\nléger, hors du document : on y ajoute toutes les lignes, puis on insère le fragment en une fois. Le fragment\nse vide alors de ses enfants, transférés dans la page. `append` accepte aussi plusieurs arguments, ce qui\nsuffit souvent pour quelques éléments.\n\nL'élément **`<template>`** contient du HTML qui n'est ni affiché ni actif : les images ne se chargent pas, les\nscripts ne s'exécutent pas. Sa propriété `content` est un fragment qu'on copie avec `cloneNode(true)` pour\nchaque donnée. Le balisage reste lisible dans le HTML, et les valeurs sont insérées avec `textContent`, donc\nsans risque d'injection — l'alternative sûre à la construction de chaînes passées à `innerHTML`.\n\nPour supprimer, `element.remove()` retire l'élément de son parent, et `parent.replaceChildren()` sans argument\nvide un conteneur. Un élément retiré de la page n'est pas forcément libéré : s'il reste référencé par une\nvariable ou par un écouteur d'événement, il demeure en mémoire. C'est le cas classique des éléments\n**détachés** qu'on retrouve dans les instantanés mémoire.\n\nPour **parcourir**, on préfère les propriétés qui ne voient que les éléments : `parentElement`, `children`,\n`nextElementSibling`. Les versions sans « Element » — `childNodes`, `nextSibling` — incluent les nœuds de\ntexte, y compris les espaces entre les balises, et surprennent souvent.\n\nEnfin, reconstruire toute une liste à chaque changement est simple et suffisant pour de petites listes. Les\nbibliothèques d'interface comme React calculent à la place les modifications minimales ; comprendre ces\nopérations de base permet de savoir ce qu'elles font sous le capot.\n\n## Erreurs fréquentes\n\n**Construire du HTML par concaténation avec des données.** Crée les éléments ou utilise un `<template>`.\n\n**Insérer les éléments un par un dans une grande liste affichée.** Passe par un fragment.\n\n**Croire qu'insérer un élément existant le copie.** Il est déplacé : utilise `cloneNode(true)`.\n\n**Oublier `true` dans `cloneNode`.** Sans lui, les enfants ne sont pas copiés.\n\n**Parcourir avec `nextSibling` et tomber sur du texte.** Utilise `nextElementSibling`.\n\n## À retenir\n\n- `createElement` prépare un élément ; il n'apparaît qu'une fois inséré.\n- `append`, `prepend`, `before`, `after`, `replaceWith`, `remove` couvrent les insertions et suppressions.\n- Un fragment ou un `<template>` insère de nombreux éléments en une opération, sans `innerHTML`.\n- Insérer un élément existant le déplace ; `cloneNode(true)` le copie avec ses enfants.\n- Pour parcourir : `parentElement`, `children`, `nextElementSibling`.\n\n## Exercices\n\n1. Écris `afficherListe(conteneur, taches)` qui vide le conteneur puis affiche une ligne `<li>` par tâche, avec la\n   classe `faite` pour les tâches terminées, en une seule insertion.\n\n   :::indice\n   `replaceChildren()` pour vider, un fragment pour préparer les lignes, puis un seul `append`.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = '<ul id=\"taches\"><li>ancienne</li></ul>';\n\n   function afficherListe(conteneur, taches) {\n     const fragment = document.createDocumentFragment();\n     for (const tache of taches) {\n       const ligne = document.createElement('li');\n       ligne.textContent = tache.titre;\n       ligne.classList.toggle('faite', tache.faite);\n       fragment.append(ligne);\n     }\n     conteneur.replaceChildren(fragment);\n   }\n\n   const liste = document.getElementById('taches');\n   afficherListe(liste, [{ titre: 'Écrire le test', faite: true }, { titre: 'Corriger le bug', faite: false }]);\n   console.log(liste.children.length, liste.querySelectorAll('.faite').length); // 2 1\n   ```\n\n   `replaceChildren(fragment)` vide et insère en une seule opération ; le second argument de `toggle` force l'état\n   de la classe.\n   :::\n\n2. Dans une liste de lignes `.article`, écris `monter(ligne)` et `descendre(ligne)` qui échangent une ligne avec sa\n   voisine, sans rien faire aux extrémités.\n\n   :::indice\n   Insérer un élément existant le déplace : `precedente.before(ligne)` place la ligne juste avant sa voisine.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = '<ul><li class=\"article\">A</li><li class=\"article\">B</li><li class=\"article\">C</li></ul>';\n\n   function monter(ligne) {\n     const precedente = ligne.previousElementSibling;\n     if (precedente) precedente.before(ligne);\n   }\n\n   function descendre(ligne) {\n     const suivante = ligne.nextElementSibling;\n     if (suivante) suivante.after(ligne);\n   }\n\n   const [a, , c] = document.querySelectorAll('.article');\n   monter(c);\n   descendre(a);\n   monter(document.querySelector('li')); // déjà en tête : rien ne change\n   const ordre = () => Array.from(document.querySelectorAll('.article'), (li) => li.textContent).join('');\n   console.log(ordre()); // 'CAB'\n   ```\n\n   `monter(c)` donne A C B, puis `descendre(a)` échange A et C : C A B. Le dernier appel porte sur la première\n   ligne, qui n'a pas de voisine précédente : l'ordre ne change pas.\n   :::\n\n3. Cette fonction construit les lignes d'un tableau par concaténation de chaînes. Réécris-la avec le `<template>`\n   fourni, sans `innerHTML`, pour qu'un nom contenant du HTML s'affiche comme du texte.\n\n   ```js\n   function afficherContacts(corps, contacts) {\n     corps.innerHTML = contacts.map((c) => '<tr><td>' + c.nom + '</td><td>' + c.email + '</td></tr>').join('');\n   }\n   ```\n\n   ```html\n   <template id=\"modele-contact\"><tr><td class=\"nom\"></td><td class=\"email\"></td></tr></template>\n   ```\n\n   :::indice\n   Pour chaque contact, clone le contenu du modèle, remplis les cellules avec `textContent`, puis insère le tout\n   en une fois.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = `\n     <table><tbody id=\"contacts\"></tbody></table>\n     <template id=\"modele-contact\"><tr><td class=\"nom\"></td><td class=\"email\"></td></tr></template>`;\n\n   function afficherContacts(corps, contacts) {\n     const modele = document.getElementById('modele-contact');\n     const lignes = contacts.map(({ nom, email }) => {\n       const copie = modele.content.cloneNode(true);\n       copie.querySelector('.nom').textContent = nom;\n       copie.querySelector('.email').textContent = email;\n       return copie;\n     });\n     corps.replaceChildren(...lignes);\n   }\n\n   const corps = document.getElementById('contacts');\n   afficherContacts(corps, [\n     { nom: 'Ada', email: 'ada@exemple.fr' },\n     { nom: '<b>Mallory</b>', email: 'm@exemple.fr' },\n   ]);\n   console.log(corps.rows.length, corps.querySelector('b')); // 2 null\n   ```\n   :::\n\n## Questions d'entretien\n\n- Pourquoi utiliser un `DocumentFragment` pour insérer beaucoup d'éléments ?\n\n  :::indice\n  Combien de fois le document est-il modifié dans chaque approche ?\n  :::\n\n  :::reponse\n  Un fragment est un conteneur hors du document : on y prépare tous les éléments sans toucher à la page, puis on\n  l'insère en une seule opération, et il se vide de ses enfants au passage. Le document n'est modifié qu'une fois,\n  ce qui évite des recalculs répétés de mise en page quand on ajoute de nombreuses lignes à une liste affichée.\n  `append` avec plusieurs arguments, ou `replaceChildren`, offre le même avantage pour un tableau d'éléments.\n  :::\n\n- À quoi sert l'élément `<template>` ?\n\n  :::indice\n  Son contenu est-il affiché ? Actif ?\n  :::\n\n  :::reponse\n  `<template>` contient du HTML inerte : non affiché, sans chargement d'images ni exécution de scripts. On clone son\n  `content` pour chaque donnée, on remplit les copies avec `textContent`, puis on les insère. Le balisage reste\n  lisible dans le HTML, et les données ne sont jamais interprétées comme du HTML, ce qui évite les injections\n  qu'entraîne la construction de chaînes passées à `innerHTML`.\n  :::\n\n- Que se passe-t-il quand on insère un élément qui est déjà dans la page ?\n\n  :::indice\n  Un nœud peut-il avoir deux parents ?\n  :::\n\n  :::reponse\n  Il est **déplacé** : un nœud n'appartient qu'à un seul parent, donc l'insérer ailleurs le retire de sa position\n  d'origine. C'est pratique pour réordonner une liste sans recréer d'éléments. Pour obtenir une copie, on utilise\n  `cloneNode(true)`, qui duplique l'élément et ses descendants — mais pas les écouteurs d'événements attachés avec\n  `addEventListener`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-dom-modifier",
+      "title": "Modifier le contenu, les attributs, les classes et les styles",
+      "slug": "modifier-les-elements",
+      "technology": "javascript",
+      "level": "beginner",
+      "module": "dom",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 2,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-dom-selection"
+      ],
+      "skills": [
+        "dom-modification"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/dom/modifier-les-elements/lesson.md",
+      "contentVersion": "19154b4c17ad",
+      "body": "\n## Objectifs\n\n- Changer le texte d'un élément en sécurité avec `textContent`, et savoir quand `innerHTML` est dangereux.\n- Lire et modifier attributs, propriétés et attributs `data-*`.\n- Changer l'apparence en ajoutant ou retirant des classes plutôt qu'en écrivant des styles.\n\n## Introduction\n\nUne fois l'élément trouvé, on le modifie : afficher un total, cocher une case, marquer un produit comme\nsélectionné. Le DOM offre plusieurs façons de faire la même chose, et elles ne se valent pas. L'une\nd'elles, `innerHTML`, est à l'origine d'une des failles de sécurité les plus répandues du web. Ce chapitre\nprésente les bons outils pour chaque type de modification.\n\n## Concept\n\n| Modifier | Écriture | Remarque |\n| --- | --- | --- |\n| Le texte | `element.textContent = texte` | le texte est inséré tel quel, jamais interprété |\n| Le HTML | `element.innerHTML = html` | interprète le HTML : **dangereux** avec des données externes |\n| Un attribut | `element.setAttribute('aria-label', 'Fermer')` | la valeur écrite dans le HTML |\n| Une propriété | `input.value = 'Ada'`, `lien.href` | l'état courant de l'objet |\n| Une donnée | `element.dataset.prixHt = '50'` | correspond à l'attribut `data-prix-ht` |\n| Les classes | `element.classList.add/remove/toggle/contains` | la manière recommandée de changer l'apparence |\n| Un style | `element.style.backgroundColor = 'red'` | style en ligne, à réserver aux valeurs calculées |\n\n**Attribut** et **propriété** ne sont pas la même chose : l'attribut est la valeur écrite dans le HTML, la\npropriété est l'état actuel de l'objet. Un champ dont l'utilisateur modifie le contenu garde son attribut\n`value` d'origine, mais sa propriété `value` change.\n\n## Exemple\n\n```js\ndocument.body.innerHTML = `\n  <article class=\"produit\" data-id=\"7\" data-prix-ht=\"50\">\n    <h2 class=\"nom\">Clavier</h2>\n    <p class=\"prix\"></p>\n    <input class=\"quantite\" value=\"1\">\n    <a class=\"lien\" href=\"/produits/7\">Voir</a>\n  </article>`;\n\nconst produit = document.querySelector('.produit');\nconst prixHT = Number(produit.dataset.prixHt); // les data-* sont toujours des chaînes\nproduit.querySelector('.prix').textContent = `${prixHT * 1.2} €`;\nconsole.log(produit.querySelector('.prix').textContent); // '60 €'\n\nconst pseudo = '<img src=x onerror=\"alert(1)\">';\nconst titre = produit.querySelector('.nom');\ntitre.textContent = pseudo; // affiché comme du texte, jamais exécuté\nconsole.log(titre.children.length); // 0 : aucun élément créé\n\nconst quantite = produit.querySelector('.quantite');\nquantite.value = '3';\nconsole.log(quantite.value, quantite.getAttribute('value')); // '3' '1'\n\nconst lien = produit.querySelector('.lien');\nconsole.log(lien.getAttribute('href'), lien.href); // '/produits/7' 'https://boutique.exemple/produits/7'\n\nproduit.classList.add('en-promotion');\nconsole.log(produit.classList.toggle('selectionne'), produit.classList.contains('selectionne')); // true true\nproduit.setAttribute('aria-selected', 'true');\nconsole.log(produit.className); // 'produit en-promotion selectionne'\n```\n\n## Comment ça fonctionne\n\n`textContent` insère une chaîne comme **texte** : les caractères `<` et `>` sont affichés, jamais\ninterprétés. `innerHTML`, lui, analyse la chaîne comme du HTML et crée les éléments correspondants. Si\ncette chaîne contient une donnée venue de l'utilisateur ou d'une API — un pseudo, un commentaire —, un\nattaquant peut y glisser une balise qui exécute du JavaScript dans la page de ses victimes : c'est une\nfaille **XSS**, détaillée dans la partie Security. La règle est simple : `textContent` pour tout ce qui\nvient de l'extérieur ; `innerHTML` seulement pour du HTML entièrement écrit par le développeur, ou passé\npar une bibliothèque d'assainissement.\n\nLes **attributs** sont les valeurs écrites dans le HTML ; les **propriétés** sont l'état de l'objet DOM.\nBeaucoup se correspondent, mais pas toujours à l'identique. `getAttribute('href')` renvoie ce qui est\nécrit, `/produits/7`, alors que la propriété `href` renvoie l'adresse complète résolue. Pour un champ,\nl'attribut `value` est la valeur **initiale**, et la propriété `value` la valeur **actuelle**, modifiée par\nla saisie : c'est la propriété qu'on lit pour connaître ce que l'utilisateur a tapé.\n\n`dataset` donne accès aux attributs `data-*` : `data-prix-ht` devient `dataset.prixHt`, en camelCase. Ces\nvaleurs sont **toujours des chaînes**, qu'il faut convertir avec `Number` avant tout calcul. Elles servent à\nattacher à un élément une donnée utile au script, comme un identifiant.\n\nPour changer l'apparence, on modifie les **classes** plutôt que les styles : la feuille de style décrit\n`.selectionne`, et le script se contente de l'ajouter ou de la retirer. Le rendu reste défini à un seul\nendroit, les états se combinent, et les transitions CSS fonctionnent. `classList.toggle` ajoute ou retire,\net renvoie `true` si la classe est présente après l'appel ; un second argument force l'état. `element.style`\nécrit des styles en ligne, à réserver aux valeurs réellement calculées, comme une position ou une largeur\nde barre de progression.\n\nEnfin, l'état visible doit aussi être accessible : une carte sélectionnée par une classe l'indique aux\ntechnologies d'assistance avec un attribut comme `aria-selected` ou `aria-pressed`.\n\n## Erreurs fréquentes\n\n**Insérer une donnée externe avec `innerHTML`.** Utilise `textContent`.\n\n**Calculer avec une valeur de `dataset` sans conversion.** `'50' + 10` donne `'5010'`.\n\n**Lire `getAttribute('value')` pour connaître la saisie.** Lis la propriété `value`.\n\n**Écrire les styles dans le script.** Ajoute une classe définie dans le CSS.\n\n**Changer l'apparence sans l'état accessible correspondant.** Mets à jour l'attribut ARIA.\n\n## À retenir\n\n- `textContent` pour le texte, toujours sûr ; `innerHTML` jamais avec des données externes.\n- Attribut : valeur écrite dans le HTML ; propriété : état actuel de l'objet.\n- `dataset` expose les `data-*` en camelCase, sous forme de chaînes.\n- `classList` pour l'apparence, `style` pour les seules valeurs calculées.\n- Un changement visuel d'état s'accompagne de l'attribut ARIA correspondant.\n\n## Exercices\n\n1. Écris `afficherCommentaire(conteneur, auteur, texte)` qui crée un paragraphe « auteur : texte » dans le\n   conteneur, sans risque même si `texte` contient du HTML.\n\n   :::indice\n   Crée l'élément, puis remplis-le avec `textContent`.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = '<section id=\"commentaires\"></section>';\n\n   function afficherCommentaire(conteneur, auteur, texte) {\n     const paragraphe = document.createElement('p');\n     paragraphe.textContent = `${auteur} : ${texte}`;\n     conteneur.append(paragraphe);\n   }\n\n   const zone = document.getElementById('commentaires');\n   afficherCommentaire(zone, 'Mallory', '<img src=x onerror=\"alert(1)\">');\n   console.log(zone.querySelector('img'), zone.textContent); // null \"Mallory : <img src=x onerror=\"alert(1)\">\"\n   ```\n   :::\n\n2. Un bouton « favori » doit basculer l'état de sa carte : classe `favori` sur la carte, texte du bouton\n   « Retirer des favoris » ou « Ajouter aux favoris », et attribut `aria-pressed` à jour. Écris `basculerFavori(bouton)`.\n\n   :::indice\n   `classList.toggle` renvoie le nouvel état : utilise-le pour le texte et pour l'attribut.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = `\n     <article class=\"carte\">\n       <button class=\"favori-bouton\" aria-pressed=\"false\">Ajouter aux favoris</button>\n     </article>`;\n\n   function basculerFavori(bouton) {\n     const estFavori = bouton.closest('.carte').classList.toggle('favori');\n     bouton.textContent = estFavori ? 'Retirer des favoris' : 'Ajouter aux favoris';\n     bouton.setAttribute('aria-pressed', String(estFavori));\n   }\n\n   const bouton = document.querySelector('.favori-bouton');\n   basculerFavori(bouton);\n   console.log(bouton.textContent, bouton.getAttribute('aria-pressed')); // 'Retirer des favoris' 'true'\n   basculerFavori(bouton);\n   console.log(bouton.closest('.carte').classList.contains('favori')); // false\n   ```\n   :::\n\n3. Ce calcul affiche « Total : 05020 € » pour deux articles à 50 € et 20 €. Explique et corrige.\n\n   ```js\n   const articles = document.querySelectorAll('.article');\n   let total = 0;\n   articles.forEach((article) => {\n     total = total + article.dataset.prix;\n   });\n   ```\n\n   :::indice\n   Quel est le type d'une valeur lue dans `dataset` ?\n   :::\n\n   :::solution\n   Les valeurs de `dataset` sont des **chaînes** : `0 + '50'` donne `'050'`, puis `'050' + '20'` donne `'05020'`.\n\n   ```js\n   document.body.innerHTML = '<li class=\"article\" data-prix=\"50\"></li><li class=\"article\" data-prix=\"20\"></li>';\n\n   const total = Array.from(document.querySelectorAll('.article')).reduce(\n     (somme, article) => somme + Number(article.dataset.prix),\n     0,\n   );\n   console.log(`Total : ${total} €`); // 'Total : 70 €'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `innerHTML` est-il dangereux ?\n\n  :::indice\n  Que fait le navigateur d'une chaîne contenant une balise, quand elle vient d'un utilisateur ?\n  :::\n\n  :::reponse\n  Parce que `innerHTML` interprète la chaîne comme du HTML. Si elle contient des données externes, un attaquant\n  peut y injecter une balise qui exécute du JavaScript, par exemple via un attribut `onerror` : c'est une faille\n  XSS, qui permet de voler des sessions ou d'agir au nom de la victime. On utilise `textContent` pour tout texte\n  venu de l'extérieur, et on réserve `innerHTML` à du HTML entièrement maîtrisé, ou assaini par une bibliothèque\n  dédiée.\n  :::\n\n- Quelle différence entre un attribut et une propriété du DOM ?\n\n  :::indice\n  Prends l'exemple d'un champ de saisie dont l'utilisateur change le contenu.\n  :::\n\n  :::reponse\n  L'attribut est la valeur écrite dans le HTML, lue avec `getAttribute`. La propriété est l'état courant de\n  l'objet DOM. Pour un champ, l'attribut `value` reste la valeur initiale alors que la propriété `value` suit la\n  saisie ; pour un lien, l'attribut `href` est le texte écrit et la propriété l'adresse complète résolue. On lit\n  en général les propriétés pour connaître l'état actuel.\n  :::\n\n- Pourquoi modifier des classes plutôt que des styles en ligne ?\n\n  :::indice\n  Où l'apparence est-elle définie, et combien d'états peut-on combiner ?\n  :::\n\n  :::reponse\n  Parce que l'apparence reste décrite à un seul endroit, la feuille de style, et que le script ne gère que\n  l'état. Les classes se combinent, profitent des transitions et des media queries, et se surchargent facilement\n  dans le CSS. Les styles en ligne dispersent le design dans le JavaScript et ont une priorité difficile à\n  contrer. On garde `element.style` pour les valeurs calculées dynamiquement, comme une position ou une largeur.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-dom-selection",
+      "title": "Le DOM et la sélection d'éléments",
+      "slug": "selectionner-des-elements",
+      "technology": "javascript",
+      "level": "beginner",
+      "module": "dom",
+      "order": 1,
+      "estimatedMinutes": 25,
+      "difficulty": 2,
+      "xp": 60,
+      "prerequisites": [
+        "javascript-objets-creer"
+      ],
+      "skills": [
+        "dom-selection"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/dom/selectionner-des-elements/lesson.md",
+      "contentVersion": "d0f6086a1c4e",
+      "body": "\n## Objectifs\n\n- Comprendre ce qu'est le DOM : une représentation vivante de la page, sous forme d'arbre d'objets.\n- Sélectionner des éléments avec `querySelector`, `querySelectorAll` et `closest`.\n- Distinguer une liste statique d'une collection vivante, et éléments de nœuds.\n\n## Introduction\n\nLe navigateur lit le HTML et construit en mémoire un arbre d'objets : le **DOM**, pour *Document\nObject Model*. Chaque balise devient un objet avec des propriétés et des méthodes, et modifier ces\nobjets modifie immédiatement la page affichée. Tout ce que JavaScript fait dans une page — afficher un\nmessage, réagir à un clic, remplir une liste — commence par la même étape : trouver le bon élément.\n\n## Concept\n\nL'objet `document` est la racine. Pour y trouver des éléments :\n\n| Méthode | Renvoie | Remarque |\n| --- | --- | --- |\n| `document.querySelector(selecteur)` | le premier élément correspondant, ou `null` | n'importe quel sélecteur CSS |\n| `document.querySelectorAll(selecteur)` | une `NodeList` **statique** | photographie au moment de l'appel |\n| `document.getElementById(id)` | l'élément, ou `null` | le plus direct pour un identifiant |\n| `document.getElementsByClassName(nom)` | une `HTMLCollection` **vivante** | se met à jour avec la page |\n| `element.querySelector(selecteur)` | cherche seulement **dans** cet élément | limite la recherche |\n| `element.closest(selecteur)` | l'ancêtre le plus proche qui correspond, lui-même compris | remonte l'arbre |\n| `element.matches(selecteur)` | `true` si l'élément correspond | teste sans chercher |\n\nLes sélecteurs sont ceux du CSS : `#id`, `.classe`, `li.produit`, `[data-id=\"2\"]`, `ul > li:first-child`.\n\n## Exemple\n\n```js\ndocument.body.innerHTML = `\n  <main id=\"catalogue\">\n    <ul class=\"produits\">\n      <li class=\"produit\" data-id=\"1\"><span class=\"nom\">Clavier</span></li>\n      <li class=\"produit\" data-id=\"2\"><span class=\"nom\">Souris</span></li>\n    </ul>\n  </main>`;\n\nconst catalogue = document.getElementById('catalogue');\nconst premier = catalogue.querySelector('.produit');\nconsole.log(premier.textContent); // 'Clavier'\n\nconst tous = document.querySelectorAll('.produit');\nconsole.log(tous.length); // 2\ntous.forEach((produit) => console.log(produit.dataset.id)); // '1', puis '2'\n\nconst souris = document.querySelector('[data-id=\"2\"]');\nconst nom = souris.querySelector('.nom');\nconsole.log(nom.closest('.produit') === souris); // true : l'ancêtre le plus proche\nconsole.log(souris.matches('li.produit')); // true\n\nconsole.log(document.querySelector('.inexistant')); // null : toujours tester avant d'utiliser\n\nconst statique = document.querySelectorAll('.produit');\nconst vivante = document.getElementsByClassName('produit');\nconst nouveau = document.createElement('li');\nnouveau.className = 'produit';\ndocument.querySelector('.produits').append(nouveau);\nconsole.log(statique.length, vivante.length); // 2 3 : seule la collection vivante a suivi\n```\n\n## Comment ça fonctionne\n\nLe DOM est un **arbre de nœuds**. Les éléments — `<main>`, `<li>`, `<span>` — sont des nœuds, mais les\ntextes aussi, y compris les espaces et retours à la ligne entre les balises, et les commentaires. C'est\npourquoi le DOM offre deux familles de propriétés : `childNodes`, `firstChild` et `nextSibling` parcourent\n**tous** les nœuds, alors que `children`, `firstElementChild` et `nextElementSibling` ne voient que les\n**éléments**. Dans la plupart des cas, ce sont les éléments qui intéressent.\n\n`querySelector` utilise le moteur de sélecteurs CSS du navigateur : tout ce qu'on écrit dans une feuille de\nstyle fonctionne, et la recherche s'arrête au premier résultat dans l'ordre du document. Appelée sur un\nélément plutôt que sur `document`, elle ne cherche que dans ses descendants, ce qui est plus rapide et\névite de sélectionner par erreur un élément d'une autre partie de la page.\n\n`querySelectorAll` renvoie une `NodeList` **statique** : c'est une photographie, qui ne change pas quand la\npage change. Elle possède `forEach`, mais pas `map` ni `filter` : on la convertit avec `Array.from` ou le\nspread. `getElementsByClassName` et `getElementsByTagName` renvoient au contraire une `HTMLCollection`\n**vivante**, qui se met à jour à chaque modification du document — pratique parfois, déroutante souvent,\nnotamment quand on retire des éléments en la parcourant.\n\n`closest` remonte l'arbre à partir d'un élément, en commençant par lui-même, et renvoie le premier ancêtre\nqui correspond au sélecteur. C'est l'outil central de la délégation d'événements, vue au module suivant :\nà partir de l'élément précis qui a été cliqué, on retrouve la carte ou la ligne qui le contient.\n\nUne sélection qui ne trouve rien renvoie `null`. Appeler une propriété sur ce `null` est l'erreur la plus\nfréquente du code DOM : `Cannot read properties of null`. Elle signale souvent un sélecteur mal écrit, ou un\nscript exécuté avant que le HTML correspondant existe — d'où l'attribut `defer` sur les balises `<script>`,\nou le chargement en module, qui attendent que le document soit analysé.\n\n## Erreurs fréquentes\n\n**Utiliser le résultat d'une sélection sans tester `null`.** Vérifie, ou échoue avec un message explicite.\n\n**Exécuter un script avant que le HTML existe.** Utilise `defer` ou `type=\"module\"`.\n\n**Appeler `map` sur une `NodeList`.** Convertis-la avec `Array.from`.\n\n**Parcourir une `HTMLCollection` vivante en retirant des éléments.** La collection rétrécit pendant la boucle.\n\n**Chercher dans tout le document ce qui se trouve dans un composant.** Cherche depuis l'élément parent.\n\n## À retenir\n\n- Le DOM est un arbre de nœuds ; `children` et `nextElementSibling` ne voient que les éléments.\n- `querySelector` renvoie le premier élément ou `null` ; `querySelectorAll` une `NodeList` statique.\n- `getElementsByClassName` renvoie une collection vivante.\n- `closest` remonte jusqu'à l'ancêtre qui correspond ; `matches` teste un élément.\n- Un script qui manipule le DOM doit s'exécuter après l'analyse du HTML.\n\n## Exercices\n\n1. Dans le HTML de l'exemple, récupère le tableau des noms de produits, puis l'identifiant du produit dont le nom\n   est « Souris ».\n\n   :::indice\n   `querySelectorAll` puis `Array.from` pour utiliser `map` et `find` ; `closest` pour remonter du nom au produit.\n   :::\n\n   :::solution\n   ```js\n   const noms = Array.from(document.querySelectorAll('.produit .nom'), (nom) => nom.textContent);\n   console.log(noms); // ['Clavier', 'Souris']\n\n   const nomSouris = Array.from(document.querySelectorAll('.nom')).find((nom) => nom.textContent === 'Souris');\n   console.log(nomSouris.closest('.produit').dataset.id); // '2'\n   ```\n\n   Le second argument d'`Array.from` transforme chaque élément au passage, sans `map` supplémentaire.\n   :::\n\n2. Ce code lève `Cannot read properties of null (reading 'textContent')`. Donne deux causes possibles, et écris\n   une fonction `texteDe(selecteur)` qui échoue avec un message explicite.\n\n   ```js\n   const total = document.querySelector('#total-panier').textContent;\n   ```\n\n   :::indice\n   Soit l'élément n'existe pas avec ce sélecteur, soit il n'existe pas **encore** au moment de l'exécution.\n   :::\n\n   :::solution\n   Première cause : le sélecteur ne correspond à aucun élément — faute de frappe, identifiant renommé. Seconde\n   cause : le script s'exécute avant que le HTML soit analysé, par exemple un `<script>` placé dans `<head>` sans\n   `defer`.\n\n   ```js\n   function texteDe(selecteur, racine = document) {\n     const element = racine.querySelector(selecteur);\n     if (!element) {\n       throw new Error(`Élément introuvable : ${selecteur}`);\n     }\n     return element.textContent;\n   }\n\n   document.body.innerHTML = '<p id=\"total\">42 €</p>';\n   console.log(texteDe('#total')); // '42 €'\n   try {\n     texteDe('#total-panier');\n   } catch (erreur) {\n     console.log(erreur.message); // 'Élément introuvable : #total-panier'\n   }\n   ```\n   :::\n\n3. On veut retirer tous les éléments ayant la classe `temporaire`. Explique pourquoi cette boucle en oublie un sur\n   deux, puis corrige.\n\n   ```js\n   const temporaires = document.getElementsByClassName('temporaire');\n   for (let i = 0; i < temporaires.length; i++) {\n     temporaires[i].remove();\n   }\n   ```\n\n   :::indice\n   Que devient la collection vivante après chaque suppression ?\n   :::\n\n   :::solution\n   `getElementsByClassName` renvoie une collection **vivante** : à chaque `remove`, l'élément disparaît de la\n   collection, les suivants se décalent d'un index, et `i++` saute celui qui vient de prendre la place.\n\n   ```js\n   document.body.innerHTML = '<p class=\"temporaire\">1</p><p class=\"temporaire\">2</p><p class=\"temporaire\">3</p>';\n\n   document.querySelectorAll('.temporaire').forEach((element) => element.remove());\n   console.log(document.querySelectorAll('.temporaire').length); // 0\n   ```\n\n   La `NodeList` statique renvoyée par `querySelectorAll` ne change pas pendant la boucle.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que le DOM ?\n\n  :::indice\n  Quelle relation entre le HTML, cet arbre d'objets et ce qui est affiché ?\n  :::\n\n  :::reponse\n  Le DOM est la représentation en mémoire du document, construite par le navigateur à partir du HTML : un arbre\n  de nœuds — éléments, textes, commentaires — exposés comme des objets avec des propriétés et des méthodes.\n  JavaScript le lit et le modifie, et le navigateur répercute ces modifications à l'écran. Le HTML n'est que le\n  point de départ : après chargement, c'est le DOM qui décrit la page, et il peut s'en écarter complètement.\n  :::\n\n- Quelle différence entre `querySelectorAll` et `getElementsByClassName` ?\n\n  :::indice\n  Que se passe-t-il pour chaque résultat quand la page change ?\n  :::\n\n  :::reponse\n  `querySelectorAll` accepte n'importe quel sélecteur CSS et renvoie une `NodeList` statique, figée au moment de\n  l'appel. `getElementsByClassName` ne cherche que par classe et renvoie une `HTMLCollection` vivante, mise à jour\n  à chaque modification du document. La collection vivante surprend quand on ajoute ou retire des éléments en la\n  parcourant ; `querySelectorAll` est le choix par défaut dans le code moderne.\n  :::\n\n- À quoi sert `closest` ?\n\n  :::indice\n  Pense à un clic sur une icône à l'intérieur d'une carte produit.\n  :::\n\n  :::reponse\n  `closest(selecteur)` remonte l'arbre depuis un élément, lui-même compris, et renvoie le premier ancêtre qui\n  correspond au sélecteur, ou `null`. On l'utilise pour retrouver le conteneur significatif d'un élément\n  précis : la carte produit à partir de l'icône cliquée, la ligne de tableau à partir d'un bouton. C'est la pièce\n  centrale de la délégation d'événements.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-erreurs-personnalisees",
       "title": "Erreurs personnalisées, propagation et frontières d'erreur",
       "slug": "erreurs-personnalisees",
@@ -2707,6 +3035,116 @@
       "contentPath": "javascript/es-modules/reexport-barrels-et-import-dynamique/lesson.md",
       "contentVersion": "d85ec5746b0b",
       "body": "\n## Objectifs\n\n- Réexporter les éléments d'autres modules pour offrir un point d'entrée unique.\n- Connaître le coût caché des fichiers barrel.\n- Charger un module à la demande avec `import()`.\n\n## Introduction\n\nQuand un dossier contient dix modules, les importer un à un depuis le reste de l'application devient\nfastidieux, et expose l'organisation interne du dossier. Les **réexports** permettent de publier une\nfaçade : un fichier qui rassemble ce que le dossier offre. À l'inverse, certains modules lourds ne\ndevraient être chargés que si l'utilisateur en a besoin : c'est le rôle de l'**import dynamique**.\n\n## Concept\n\n| Écriture | Effet |\n| --- | --- |\n| `export { formaterDate } from './dates.js';` | réexporte un export nommé |\n| `export { default as Bouton } from './bouton.js';` | réexporte un défaut sous un nom |\n| `export * from './prix.js';` | réexporte tous les exports nommés, **sans** le défaut |\n| `export * as Prix from './prix.js';` | réexporte tout, rangé dans un espace de noms |\n| `const module = await import('./lourd.js');` | charge un module à l'exécution, renvoie une promesse |\n\nUn **fichier barrel** — souvent `index.js` — ne contient que des réexports : il sert de point d'entrée\nunique à un dossier.\n\n## Exemple\n\n```js\n// outils/dates.js\nexport const formaterDate = (date) => date.toISOString().slice(0, 10);\n\n// outils/graphiques.js — un module volumineux\nexport const dessiner = () => 'graphique';\n\n// outils/index.js — le fichier barrel\nexport { formaterDate } from './dates.js';\nexport { dessiner } from './graphiques.js';\nexport * as Prix from './prix.js';\n\n// rapport.js\nimport { formaterDate, Prix } from './outils/index.js';\nconsole.log(formaterDate(new Date('2026-09-17T10:00:00Z')), Prix.prixTTC(10)); // '2026-09-17' 12\n// Attention : graphiques.js a quand même été chargé et évalué.\n\n// tableau-de-bord.js — le module lourd, chargé seulement quand on en a besoin\nexport async function afficherGraphique(utilisateurVeutUnGraphique) {\n  if (!utilisateurVeutUnGraphique) {\n    return 'aucun graphique';\n  }\n  const { dessiner } = await import('./outils/graphiques.js');\n  return dessiner();\n}\n```\n\n## Comment ça fonctionne\n\nUn réexport établit une liaison directe entre le module qui importe et le module d'origine : le fichier\nbarrel ne crée ni copie ni variable, il sert d'aiguillage. L'appelant écrit\n`import { formaterDate } from './outils/index.js'` sans savoir dans quel fichier se trouve la fonction,\net le dossier peut se réorganiser sans casser ses importateurs.\n\n`export * from` réexporte tous les exports **nommés**, mais pas l'export par défaut : un module ne peut\navoir qu'un défaut, et le moteur ne choisit pas lequel garder. On réexporte donc un défaut explicitement,\nsous un nom : `export { default as Bouton } from './bouton.js'`. Si deux `export *` exposent le même nom,\nce nom devient ambigu et n'est pas exporté.\n\nLe fichier barrel a un **coût caché**. Importer un seul nom depuis `index.js` oblige à charger et évaluer\n**tous** les modules qu'il réexporte : dans l'exemple, `graphiques.js` est évalué alors que `rapport.js`\nn'en a pas besoin. Dans un navigateur sans outil de build, ou en test, cela ralentit le démarrage. Les\noutils de build éliminent souvent le code inutilisé, mais seulement si les modules n'ont pas d'effet de\nbord à leur évaluation. Les barrels favorisent aussi les **dépendances circulaires**, sujet du chapitre\nsuivant. On les réserve donc à la frontière publique d'un dossier, et on les évite à l'intérieur.\n\n`import()` est une expression, pas une déclaration : on peut l'écrire dans une condition, une fonction,\nun gestionnaire de clic. Elle renvoie une **promesse** de l'objet espace de noms du module ; l'export par\ndéfaut se trouve sous `.default`. Le module n'est téléchargé et évalué qu'au premier appel, puis mis en\ncache : un second `import()` renvoie le même module. Les outils de build découpent automatiquement le code\nautour de ces imports, ce qui allège le chargement initial d'une application — c'est le principe du\n*code splitting*, détaillé dans la partie Performance.\n\n## Erreurs fréquentes\n\n**Attendre le défaut d'un `export *`.** Réexporte-le explicitement avec `default as`.\n\n**Importer depuis un barrel à l'intérieur de son propre dossier.** C'est un raccourci vers un cycle ;\nimporte le fichier voisin directement.\n\n**Créer un barrel pour chaque dossier.** Chacun ajoute des évaluations inutiles.\n\n**Oublier `await` sur `import()`.** On obtient une promesse, pas le module.\n\n**Chercher le défaut directement sur le résultat d'`import()`.** Il est sous `.default`.\n\n## À retenir\n\n- `export { x } from`, `export * from`, `export * as Nom from` : réexporter sans copier.\n- `export *` n'inclut pas le défaut.\n- Un barrel évalue tous les modules qu'il réexporte : à réserver aux frontières publiques.\n- `import()` charge à la demande, renvoie une promesse, et le défaut est sous `.default`.\n- Un module chargé dynamiquement est mis en cache comme les autres.\n\n## Exercices\n\n1. Le dossier `validation/` contient `email.js`, qui exporte `estEmailValide`, et `mot-de-passe.js`, qui\n   exporte par défaut `verifierMotDePasse`. Écris `validation/index.js` pour que le reste de l'application\n   écrive `import { estEmailValide, verifierMotDePasse } from './validation/index.js'`.\n\n   :::indice\n   Un export nommé se réexporte tel quel ; un défaut doit recevoir un nom.\n   :::\n\n   :::solution\n   ```js\n   // validation/index.js\n   export { estEmailValide } from './email.js';\n   export { default as verifierMotDePasse } from './mot-de-passe.js';\n   ```\n\n   `export * from './mot-de-passe.js'` n'aurait rien exposé : le module n'a qu'un export par défaut.\n   :::\n\n2. `boutons/index.js` contient `export * from './bouton.js';`, mais `import { Bouton } from './boutons/index.js'`\n   échoue alors que `bouton.js` contient `export default class Bouton {}`. Explique et corrige.\n\n   :::indice\n   Que réexporte exactement `export *` ?\n   :::\n\n   :::solution\n   `export *` ne réexporte que les exports **nommés**. `bouton.js` n'a qu'un export par défaut : le barrel\n   n'expose donc rien, et l'import nommé `Bouton` ne trouve aucun export de ce nom.\n\n   ```js\n   // boutons/index.js\n   export { default as Bouton } from './bouton.js';\n   ```\n\n   Une autre option est de passer `bouton.js` à un export nommé, `export class Bouton {}`, et de garder\n   `export *`.\n   :::\n\n3. L'export PDF s'appuie sur un module volumineux, utilisé par peu d'utilisateurs. Écris\n   `exporterEnPDF(donnees)` pour qu'il ne soit chargé qu'au premier export, et vérifie qu'un second appel ne le\n   recharge pas.\n\n   :::indice\n   `await import('./pdf.js')` dans la fonction ; le moteur met le module en cache après le premier chargement.\n   :::\n\n   :::solution\n   ```js\n   // pdf.js\n   console.log('module PDF chargé');\n   export default function genererPDF(donnees) {\n     return `PDF de ${donnees.length} lignes`;\n   }\n\n   // export.js\n   export async function exporterEnPDF(donnees) {\n     const { default: genererPDF } = await import('./pdf.js');\n     return genererPDF(donnees);\n   }\n\n   // bouton-export.js\n   import { exporterEnPDF } from './export.js';\n   console.log(await exporterEnPDF([1, 2])); // 'module PDF chargé', puis 'PDF de 2 lignes'\n   console.log(await exporterEnPDF([1])); // 'PDF de 1 lignes' : pas de second chargement\n   ```\n\n   Le défaut est récupéré par déstructuration sous le nom `default`, renommé en `genererPDF`.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'un fichier barrel, et quels sont ses inconvénients ?\n\n  :::indice\n  Pense à ce qui est évalué quand on importe un seul nom.\n  :::\n\n  :::reponse\n  C'est un fichier, souvent `index.js`, qui ne fait que réexporter le contenu d'un dossier pour offrir un point\n  d'entrée unique. Il simplifie les imports et cache l'organisation interne. Mais importer un seul nom oblige à\n  évaluer tous les modules réexportés, ce qui alourdit le démarrage et les tests, et les barrels favorisent les\n  dépendances circulaires quand un fichier du dossier importe son propre barrel. On les réserve à la frontière\n  publique d'un ensemble de modules.\n  :::\n\n- Pourquoi `export *` n'inclut-il pas l'export par défaut ?\n\n  :::indice\n  Combien d'exports par défaut un module peut-il avoir ?\n  :::\n\n  :::reponse\n  Parce qu'un module n'a qu'un seul export par défaut : si `export *` l'incluait, réexporter deux modules\n  produirait deux défauts en conflit, sans règle pour choisir. Le défaut doit donc être réexporté explicitement,\n  avec un nom : `export { default as Bouton } from './bouton.js'`. Pour la même raison, deux `export *` qui\n  exposent le même nom le rendent ambigu, et ce nom n'est pas exporté.\n  :::\n\n- Quand utiliser `import()` plutôt qu'un `import` statique ?\n\n  :::indice\n  Pense au moment du chargement et aux conditions.\n  :::\n\n  :::reponse\n  Quand un module n'est nécessaire que dans certains cas — une fonctionnalité rarement utilisée, un module lourd,\n  un choix qui dépend de l'environnement ou de l'utilisateur. `import()` s'écrit n'importe où, renvoie une\n  promesse, et ne charge le module qu'au premier appel, puis le garde en cache. Les outils de build en profitent\n  pour découper l'application en morceaux chargés à la demande. Pour les dépendances toujours nécessaires, les\n  imports statiques restent préférables : ils sont vérifiés avant l'exécution.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-delegation",
+      "title": "Délégation d'événements",
+      "slug": "delegation",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "evenements",
+      "order": 3,
+      "estimatedMinutes": 25,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-propagation",
+        "javascript-dom-creer"
+      ],
+      "skills": [
+        "event-delegation"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/evenements/delegation/lesson.md",
+      "contentVersion": "de137e65d6a7",
+      "body": "\n## Objectifs\n\n- Gérer les événements de nombreux éléments avec un seul écouteur posé sur leur conteneur.\n- Retrouver l'élément concerné avec `closest`, et lire ses données.\n- Faire fonctionner des éléments ajoutés après coup sans écouteur supplémentaire.\n\n## Introduction\n\nUne liste de tâches affiche un bouton « Supprimer » par ligne. Attacher un écouteur à chaque bouton pose deux\nproblèmes : cent lignes font cent écouteurs, et chaque ligne ajoutée plus tard doit recevoir le sien, sans\noublier de le retirer à la suppression. La **délégation** exploite le bouillonnement : un seul écouteur sur la\nliste reçoit tous les clics de ses descendants, et identifie celui qui l'intéresse.\n\n## Concept\n\n```js\nconteneur.addEventListener('click', (event) => {\n  const bouton = event.target.closest('.supprimer');\n  if (!bouton || !conteneur.contains(bouton)) return;\n  // traiter le bouton trouvé\n});\n```\n\n| Étape | Rôle |\n| --- | --- |\n| Écouteur sur le conteneur | reçoit, par bouillonnement, les événements de tous les descendants |\n| `event.target.closest(selecteur)` | remonte de l'élément touché jusqu'à l'élément significatif |\n| Test `null` | ignore les clics qui ne concernent aucun élément ciblé |\n| `conteneur.contains(element)` | écarte un ancêtre situé hors du conteneur |\n| `element.dataset` | lit l'identifiant ou l'action portés par l'élément |\n\nUn attribut `data-action` permet même de gérer plusieurs actions avec le même écouteur.\n\n## Exemple\n\n```js\ndocument.body.innerHTML = `\n  <form id=\"ajout\"><input name=\"titre\"><button>Ajouter</button></form>\n  <ul id=\"taches\">\n    <li data-id=\"1\"><span>Écrire le test</span> <button data-action=\"terminer\">✓</button> <button data-action=\"supprimer\">✕</button></li>\n  </ul>`;\n\nconst liste = document.getElementById('taches');\nlet prochainId = 2;\n\nliste.addEventListener('click', (event) => {\n  const bouton = event.target.closest('button[data-action]');\n  if (!bouton || !liste.contains(bouton)) return;\n\n  const ligne = bouton.closest('li');\n  if (bouton.dataset.action === 'supprimer') {\n    ligne.remove();\n  } else if (bouton.dataset.action === 'terminer') {\n    ligne.classList.toggle('terminee');\n  }\n});\n\ndocument.getElementById('ajout').addEventListener('submit', (event) => {\n  event.preventDefault();\n  const titre = new FormData(event.currentTarget).get('titre');\n  const ligne = document.createElement('li');\n  ligne.dataset.id = prochainId++;\n  const texte = document.createElement('span');\n  texte.textContent = titre;\n  const terminer = Object.assign(document.createElement('button'), { textContent: '✓' });\n  terminer.dataset.action = 'terminer';\n  ligne.append(texte, ' ', terminer);\n  liste.append(ligne); // aucun écouteur à ajouter\n});\n\nconst formulaire = document.getElementById('ajout');\nformulaire.elements.titre.value = 'Corriger le bug';\nformulaire.requestSubmit();\n\nliste.querySelector('[data-id=\"2\"] [data-action=\"terminer\"]').click(); // ligne ajoutée après coup\nliste.querySelector('[data-id=\"1\"] [data-action=\"supprimer\"]').click();\n\nconsole.log(Array.from(liste.children, (li) => `${li.dataset.id}:${li.classList.contains('terminee')}`));\n// ['2:true']\n```\n\n## Comment ça fonctionne\n\nUn clic sur le bouton « ✓ » d'une ligne bouillonne jusqu'à la liste, dont l'écouteur s'exécute avec\n`event.target` égal à l'élément exact cliqué. Cet élément n'est pas toujours celui qu'on attend : le clic peut\ntomber sur un `<span>` ou une icône à l'intérieur du bouton. `closest('button[data-action]')` résout ce problème\nen remontant jusqu'au bouton, ou renvoie `null` si le clic a eu lieu ailleurs dans la liste — sur le texte d'une\nligne, par exemple —, auquel cas l'écouteur ne fait rien.\n\nLe test `liste.contains(bouton)` couvre un cas plus rare : si la liste est elle-même placée dans un bouton ou un\nélément correspondant au sélecteur, `closest` pourrait remonter **au-delà** du conteneur et trouver un ancêtre\nextérieur. Vérifier l'appartenance rend l'écouteur robuste quel que soit le contexte d'intégration.\n\nLa délégation apporte trois avantages. Un **seul écouteur**, quelle que soit la taille de la liste. Les\néléments **ajoutés plus tard** fonctionnent immédiatement, puisque l'écouteur est sur le conteneur, qui existe\ndepuis le début. Et rien n'est à **nettoyer** quand une ligne disparaît : aucun écouteur ne reste attaché à un\nélément retiré de la page. C'est pourquoi les bibliothèques d'interface l'utilisent en interne.\n\nL'attribut `data-action` rend l'écouteur déclaratif : le HTML dit ce que fait chaque bouton, et l'écouteur\naiguille vers la bonne opération. Ajouter une action consiste à ajouter un bouton et une branche — ou mieux, une\nentrée dans un objet qui associe chaque action à sa fonction.\n\nLa délégation a des limites. Elle repose sur le bouillonnement : pour `focus` et `blur`, on délègue avec\n`focusin` et `focusout`. Et pour des événements très fréquents comme `mousemove` ou `scroll`, un écouteur\nglobal exécuté à chaque mouvement sur toute une zone doit rester très léger.\n\n## Erreurs fréquentes\n\n**Utiliser `event.target` directement comme bouton.** Le clic peut viser un enfant : utilise `closest`.\n\n**Oublier le cas `null`.** Un clic hors des éléments ciblés fait alors planter l'écouteur.\n\n**Déléguer au document entier par facilité.** Choisis le conteneur le plus proche.\n\n**Déléguer `focus` ou `blur`.** Ils ne bouillonnent pas : utilise `focusin` et `focusout`.\n\n**Continuer à attacher un écouteur par élément ajouté.** L'écouteur du conteneur suffit.\n\n## À retenir\n\n- Un écouteur sur le conteneur reçoit, par bouillonnement, les événements de tous ses descendants.\n- `event.target.closest(selecteur)` retrouve l'élément significatif, ou `null`.\n- Les éléments ajoutés plus tard fonctionnent sans écouteur supplémentaire.\n- `data-action` et `dataset` rendent le traitement déclaratif.\n- Pour les événements qui ne bouillonnent pas, on délègue leurs équivalents qui bouillonnent.\n\n## Exercices\n\n1. Un tableau affiche une ligne par produit avec un bouton « Ajouter au panier » portant `data-id`. Écris un seul\n   écouteur qui ajoute l'identifiant au tableau `panier`, y compris quand le clic tombe sur l'icône du bouton.\n\n   :::indice\n   `closest('button[data-id]')` remonte depuis l'icône jusqu'au bouton.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = `\n     <table id=\"produits\"><tbody>\n       <tr><td>Clavier</td><td><button data-id=\"7\"><i class=\"icone\"></i> Ajouter au panier</button></td></tr>\n       <tr><td>Souris</td><td><button data-id=\"9\"><i class=\"icone\"></i> Ajouter au panier</button></td></tr>\n     </tbody></table>`;\n\n   const panier = [];\n   const tableau = document.getElementById('produits');\n\n   tableau.addEventListener('click', (event) => {\n     const bouton = event.target.closest('button[data-id]');\n     if (!bouton || !tableau.contains(bouton)) return;\n     panier.push(Number(bouton.dataset.id));\n   });\n\n   tableau.querySelector('[data-id=\"9\"] .icone').click(); // clic sur l'icône\n   tableau.querySelector('td').click(); // clic hors d'un bouton : ignoré\n   console.log(panier); // [9]\n   ```\n   :::\n\n2. Remplace la chaîne de `if` de l'exemple par un objet qui associe chaque valeur de `data-action` à une fonction, et\n   ajoute une action `dupliquer` qui insère une copie de la ligne juste après elle.\n\n   :::indice\n   `actions[bouton.dataset.action]?.(ligne)` appelle la fonction si l'action existe.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = `\n     <ul id=\"taches\">\n       <li data-id=\"1\"><span>Écrire le test</span> <button data-action=\"dupliquer\">⧉</button></li>\n     </ul>`;\n\n   const liste = document.getElementById('taches');\n   const actions = {\n     supprimer: (ligne) => ligne.remove(),\n     terminer: (ligne) => ligne.classList.toggle('terminee'),\n     dupliquer: (ligne) => ligne.after(ligne.cloneNode(true)),\n   };\n\n   liste.addEventListener('click', (event) => {\n     const bouton = event.target.closest('button[data-action]');\n     if (!bouton || !liste.contains(bouton)) return;\n     actions[bouton.dataset.action]?.(bouton.closest('li'));\n   });\n\n   liste.querySelector('[data-action=\"dupliquer\"]').click();\n   liste.querySelectorAll('[data-action=\"dupliquer\"]')[1].click(); // la copie fonctionne aussi\n   console.log(liste.children.length); // 3\n   ```\n\n   La copie créée par `cloneNode` n'a aucun écouteur, et pourtant son bouton fonctionne : c'est la délégation.\n   :::\n\n3. Un formulaire contient des dizaines de champs. Affiche le nom du champ actif dans `#aide` quand il reçoit le focus,\n   avec un seul écouteur posé sur le formulaire.\n\n   :::indice\n   `focus` ne bouillonne pas ; son équivalent qui bouillonne permet de déléguer.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = `\n     <form id=\"profil\"><input name=\"nom\"><input name=\"email\"><input name=\"ville\"></form>\n     <p id=\"aide\"></p>`;\n\n   const formulaire = document.getElementById('profil');\n   const aide = document.getElementById('aide');\n\n   formulaire.addEventListener('focusin', (event) => {\n     if (event.target.matches('input[name]')) {\n       aide.textContent = `Champ actif : ${event.target.name}`;\n     }\n   });\n\n   formulaire.elements.email.focus();\n   console.log(aide.textContent); // 'Champ actif : email'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la délégation d'événements, et quels problèmes résout-elle ?\n\n  :::indice\n  Pense au nombre d'écouteurs et aux éléments ajoutés après le chargement.\n  :::\n\n  :::reponse\n  C'est le fait de poser un seul écouteur sur un conteneur plutôt qu'un écouteur par élément, en s'appuyant sur le\n  bouillonnement pour recevoir les événements des descendants. Elle réduit le nombre d'écouteurs, fait fonctionner\n  automatiquement les éléments ajoutés plus tard, et évite d'avoir à retirer des écouteurs quand des éléments sont\n  supprimés. Dans l'écouteur, on identifie l'élément concerné avec `event.target.closest`.\n  :::\n\n- Pourquoi utiliser `closest` plutôt qu'`event.target` directement ?\n\n  :::indice\n  Sur quel élément le clic tombe-t-il quand un bouton contient une icône ?\n  :::\n\n  :::reponse\n  Parce que `event.target` est l'élément le plus profond touché, qui peut être un enfant de l'élément voulu : une\n  icône, un `<span>` dans un bouton. `closest` remonte de cet élément jusqu'au premier ancêtre correspondant au\n  sélecteur, lui-même compris, et renvoie `null` si le clic n'était dans aucun élément ciblé. On vérifie aussi que\n  l'élément trouvé appartient bien au conteneur.\n  :::\n\n- Quelles sont les limites de la délégation ?\n\n  :::indice\n  Pense aux événements qui ne bouillonnent pas, et à ceux qui se produisent très souvent.\n  :::\n\n  :::reponse\n  Elle ne fonctionne qu'avec les événements qui bouillonnent : pour `focus`, `blur`, `mouseenter` ou `mouseleave`, il\n  faut utiliser leurs équivalents `focusin`, `focusout`, `mouseover` et `mouseout`. Pour les événements très\n  fréquents, comme `mousemove`, l'écouteur est exécuté pour chaque mouvement sur toute la zone et doit rester très\n  léger. Enfin, un `stopPropagation` posé plus bas empêche l'événement d'atteindre le conteneur.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-evenements",
+      "title": "Écouter des événements : addEventListener et l'objet Event",
+      "slug": "ecouter-des-evenements",
+      "technology": "javascript",
+      "level": "beginner",
+      "module": "evenements",
+      "order": 1,
+      "estimatedMinutes": 30,
+      "difficulty": 2,
+      "xp": 70,
+      "prerequisites": [
+        "javascript-dom-modifier",
+        "javascript-callbacks"
+      ],
+      "skills": [
+        "dom-events"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/evenements/ecouter-des-evenements/lesson.md",
+      "contentVersion": "b8ada8b5b80d",
+      "body": "\n## Objectifs\n\n- Réagir à un clic, une saisie, une touche ou une soumission avec `addEventListener`.\n- Lire l'objet événement : `type`, `target`, `currentTarget`, `key`.\n- Retirer un écouteur, avec `removeEventListener`, l'option `once` ou un `AbortController`.\n\n## Introduction\n\nUne page ne fait rien tant que l'utilisateur n'agit pas : il clique, tape, fait défiler, envoie un\nformulaire. Chacune de ces actions produit un **événement**, et le navigateur appelle les fonctions qu'on\na enregistrées pour lui. C'est l'application directe du modèle asynchrone vu plus tôt : les écouteurs sont\ndes callbacks placés dans la file des macrotâches, exécutés quand la pile est vide.\n\n## Concept\n\n```js\nelement.addEventListener(type, ecouteur, options);\n```\n\n| Famille | Types courants |\n| --- | --- |\n| Souris et pointeur | `click`, `dblclick`, `pointerdown`, `mouseover` |\n| Clavier | `keydown`, `keyup` — la touche est dans `event.key` |\n| Formulaire | `input` à chaque saisie, `change` à la validation d'une valeur, `submit` |\n| Focus | `focus`, `blur`, `focusin`, `focusout` |\n| Document | `DOMContentLoaded`, `scroll`, `resize` |\n\nPropriétés de l'objet événement :\n\n| Propriété | Contenu |\n| --- | --- |\n| `type` | le nom de l'événement |\n| `target` | l'élément sur lequel l'événement s'est produit |\n| `currentTarget` | l'élément auquel **cet** écouteur est attaché |\n| `key` | la touche, pour le clavier : `'Enter'`, `'Escape'`, `'a'` |\n\nOptions utiles : `{ once: true }` retire l'écouteur après le premier appel, `{ signal }` le retire quand un\n`AbortController` est annulé, `{ passive: true }` promet de ne pas appeler `preventDefault`.\n\n## Exemple\n\n```js\ndocument.body.innerHTML = `\n  <label>Recherche <input id=\"recherche\"></label>\n  <p id=\"apercu\"></p>\n  <button id=\"compteur\">Cliqué 0 fois</button>`;\n\nconst recherche = document.getElementById('recherche');\nconst apercu = document.getElementById('apercu');\nrecherche.addEventListener('input', (event) => {\n  apercu.textContent = `Recherche : ${event.target.value}`;\n});\nrecherche.addEventListener('keydown', (event) => {\n  if (event.key === 'Escape') {\n    event.currentTarget.value = '';\n    apercu.textContent = '';\n  }\n});\n\nlet clics = 0;\nconst bouton = document.getElementById('compteur');\nfunction compter() {\n  clics += 1;\n  bouton.textContent = `Cliqué ${clics} fois`;\n}\nbouton.addEventListener('click', compter);\n\nbouton.click();\nbouton.click();\nbouton.removeEventListener('click', compter); // même référence de fonction : retrait effectif\nbouton.click();\nconsole.log(bouton.textContent); // 'Cliqué 2 fois'\n\nrecherche.value = 'clavier';\nrecherche.dispatchEvent(new Event('input'));\nconsole.log(apercu.textContent); // 'Recherche : clavier'\nrecherche.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));\nconsole.log(JSON.stringify(recherche.value), JSON.stringify(apercu.textContent)); // \"\" \"\"\n```\n\n## Comment ça fonctionne\n\nQuand l'utilisateur agit, le navigateur crée un objet événement et appelle, dans l'ordre d'enregistrement,\nles écouteurs du type correspondant. Ces appels sont des macrotâches : un écouteur long bloque la page, et\nune modification du DOM faite dans un écouteur n'est dessinée qu'à la fin de la tâche.\n\n`addEventListener` permet d'attacher **plusieurs** écouteurs au même événement, contrairement à l'ancienne\nécriture `bouton.onclick = f`, qui remplace l'écouteur précédent. Pour en retirer un avec\n`removeEventListener`, il faut passer **la même référence de fonction** et les mêmes options de capture :\nune fonction fléchée écrite directement dans l'appel ne peut donc jamais être retirée, puisqu'on n'en garde\naucune référence. Deux solutions modernes évitent ce piège : `{ once: true }` pour un écouteur qui ne doit\nservir qu'une fois, et `{ signal }` avec un `AbortController`, dont l'appel à `abort()` retire en une fois tous\nles écouteurs qui partagent ce signal — idéal quand un composant est détruit.\n\n`target` et `currentTarget` ne désignent pas toujours le même élément. `target` est l'élément réellement\ntouché, par exemple une icône à l'intérieur d'un bouton ; `currentTarget` est l'élément auquel l'écouteur est\nattaché, le bouton. Dans un écouteur écrit en fonction classique, `this` vaut `currentTarget`, comme vu dans\nla partie Runtime ; lire `event.currentTarget` est plus explicite et fonctionne aussi avec une fonction fléchée.\n\nLes événements de formulaire se ressemblent mais diffèrent. `input` se déclenche à chaque modification de la\nvaleur, lettre par lettre ; `change` se déclenche quand la valeur est validée, en général à la perte du focus\npour un champ texte, immédiatement pour une case à cocher ou une liste. `submit` se déclenche sur le\nformulaire, et non sur le bouton, que la soumission vienne d'un clic ou de la touche Entrée : c'est donc\nl'événement à écouter pour traiter un formulaire.\n\nPour le clavier, `event.key` donne la touche logique — `'Enter'`, `'Escape'`, `'a'` — en tenant compte de la\ndisposition du clavier ; les anciennes propriétés numériques comme `keyCode` sont obsolètes.\n\n## Erreurs fréquentes\n\n**Passer une fonction anonyme puis tenter de la retirer.** Garde une référence, ou utilise `once` ou `signal`.\n\n**Écrire `bouton.addEventListener('click', compter())`.** La fonction est appelée tout de suite ; passe `compter`.\n\n**Écouter `click` sur le bouton d'un formulaire.** La touche Entrée soumet sans clic : écoute `submit`.\n\n**Confondre `target` et `currentTarget`.** Pour l'élément de l'écouteur, lis `currentTarget`.\n\n**Oublier de retirer les écouteurs d'un composant supprimé.** Ils retiennent le composant en mémoire.\n\n## À retenir\n\n- `addEventListener(type, ecouteur, options)` attache un écouteur, sans remplacer les autres.\n- `target` : l'élément touché ; `currentTarget` : l'élément de l'écouteur.\n- `input` à chaque saisie, `change` à la validation, `submit` sur le formulaire.\n- `removeEventListener` exige la même référence de fonction.\n- `{ once: true }` et `{ signal }` retirent les écouteurs sans garder de référence.\n\n## Exercices\n\n1. Écris un compteur de caractères : sous une zone de texte limitée à 140 caractères, affiche « 23 / 140 » à\n   chaque saisie, et ajoute la classe `limite` au compteur au-delà de 120.\n\n   :::indice\n   L'événement `input` se déclenche à chaque modification ; la longueur est `event.target.value.length`.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = '<textarea id=\"message\" maxlength=\"140\"></textarea><p id=\"compteur\">0 / 140</p>';\n\n   const message = document.getElementById('message');\n   const compteur = document.getElementById('compteur');\n\n   message.addEventListener('input', (event) => {\n     const longueur = event.target.value.length;\n     compteur.textContent = `${longueur} / 140`;\n     compteur.classList.toggle('limite', longueur > 120);\n   });\n\n   message.value = 'x'.repeat(125);\n   message.dispatchEvent(new Event('input'));\n   console.log(compteur.textContent, compteur.classList.contains('limite')); // '125 / 140' true\n   ```\n   :::\n\n2. Traite ce formulaire d'inscription : empêche le rechargement, lis l'email avec `FormData`, et affiche\n   « Adresse invalide » dans `#erreur` si elle ne contient pas `@`, sinon « Inscription enregistrée ».\n\n   ```html\n   <form id=\"inscription\"><input name=\"email\"><button>S'inscrire</button></form>\n   <p id=\"erreur\"></p>\n   ```\n\n   :::indice\n   Écoute `submit` sur le formulaire, appelle `event.preventDefault()`, puis\n   `new FormData(event.currentTarget).get('email')`.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = `\n     <form id=\"inscription\"><input name=\"email\"><button>S'inscrire</button></form>\n     <p id=\"erreur\"></p>`;\n\n   const formulaire = document.getElementById('inscription');\n   const retour = document.getElementById('erreur');\n\n   formulaire.addEventListener('submit', (event) => {\n     event.preventDefault();\n     const email = String(new FormData(event.currentTarget).get('email')).trim();\n     retour.textContent = email.includes('@') ? 'Inscription enregistrée' : 'Adresse invalide';\n   });\n\n   formulaire.elements.email.value = 'ada.exemple.fr';\n   formulaire.requestSubmit();\n   console.log(retour.textContent); // 'Adresse invalide'\n   formulaire.elements.email.value = 'ada@exemple.fr';\n   formulaire.requestSubmit();\n   console.log(retour.textContent); // 'Inscription enregistrée'\n   ```\n\n   `requestSubmit()` simule une vraie soumission, qui déclenche l'événement `submit` — contrairement à `submit()`.\n   :::\n\n3. Une fenêtre modale écoute la touche Échap sur le document pour se fermer. Écris `ouvrirModale(modale)` qui pose les\n   écouteurs nécessaires et les retire tous à la fermeture, sans garder de référence aux fonctions.\n\n   :::indice\n   Un `AbortController` créé à l'ouverture ; son `signal` est passé à chaque `addEventListener`, et `abort()` est\n   appelé à la fermeture.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = '<div id=\"modale\" hidden><button class=\"fermer\">Fermer</button></div>';\n\n   function ouvrirModale(modale) {\n     const controleur = new AbortController();\n     const { signal } = controleur;\n     modale.hidden = false;\n\n     function fermer() {\n       console.log('modale fermée');\n       modale.hidden = true;\n       controleur.abort(); // retire tous les écouteurs liés au signal\n     }\n\n     document.addEventListener('keydown', (event) => {\n       if (event.key === 'Escape') fermer();\n     }, { signal });\n     modale.querySelector('.fermer').addEventListener('click', fermer, { signal });\n   }\n\n   const modale = document.getElementById('modale');\n   ouvrirModale(modale);\n   document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));\n   document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' })); // plus d'écouteur\n   console.log(modale.hidden); // true, et « modale fermée » n'a été affiché qu'une fois\n   ```\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `event.target` et `event.currentTarget` ?\n\n  :::indice\n  Pense à un clic sur une icône placée dans un bouton qui porte l'écouteur.\n  :::\n\n  :::reponse\n  `target` est l'élément sur lequel l'événement s'est réellement produit, par exemple l'icône. `currentTarget` est\n  l'élément auquel l'écouteur en cours d'exécution est attaché, ici le bouton. `target` reste identique pendant tout\n  le trajet de l'événement, alors que `currentTarget` change à chaque élément traversé. On lit `currentTarget` pour\n  l'élément qu'on gère, et `target` pour savoir précisément ce qui a été touché.\n  :::\n\n- Pourquoi `removeEventListener` ne retire-t-il parfois rien ?\n\n  :::indice\n  Que faut-il lui passer exactement ?\n  :::\n\n  :::reponse\n  Parce qu'il faut lui passer la même référence de fonction et la même option de capture qu'à l'ajout. Une fonction\n  fléchée écrite directement dans `addEventListener` n'est référencée nulle part, et une nouvelle fonction identique\n  en apparence est un autre objet : rien n'est retiré. On garde la fonction dans une variable, ou on utilise\n  `{ once: true }` ou un `AbortController` et son `signal`, qui retirent l'écouteur sans référence.\n  :::\n\n- Quelle différence entre les événements `input` et `change` ?\n\n  :::indice\n  À quel moment chacun se déclenche-t-il pour un champ texte ?\n  :::\n\n  :::reponse\n  `input` se déclenche à chaque modification de la valeur, caractère par caractère : il sert aux retours immédiats,\n  comme une recherche instantanée ou un compteur. `change` se déclenche quand la valeur est validée : à la perte du\n  focus pour un champ texte, et immédiatement pour une case à cocher, un bouton radio ou une liste déroulante. Il\n  convient aux traitements plus lourds, comme un enregistrement.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-propagation",
+      "title": "Propagation : capture, bouillonnement, preventDefault et stopPropagation",
+      "slug": "propagation",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "evenements",
+      "order": 2,
+      "estimatedMinutes": 30,
+      "difficulty": 3,
+      "xp": 80,
+      "prerequisites": [
+        "javascript-evenements"
+      ],
+      "skills": [
+        "event-propagation"
+      ],
+      "tags": [
+        "javascript",
+        "navigateur"
+      ],
+      "contentPath": "javascript/evenements/propagation/lesson.md",
+      "contentVersion": "d93ba081e6b0",
+      "body": "\n## Objectifs\n\n- Décrire les trois phases d'un événement : capture, cible, bouillonnement.\n- Distinguer `preventDefault`, qui annule l'action par défaut, de `stopPropagation`, qui arrête le trajet.\n- Savoir quels événements ne remontent pas, et comment les écouter quand même.\n\n## Introduction\n\nUn clic sur un bouton est aussi un clic sur le formulaire qui le contient, sur la section, sur le corps de la\npage. L'événement ne reste pas sur l'élément cliqué : il **voyage** dans l'arbre. Ce trajet explique pourquoi\nun écouteur posé sur un parent reçoit les clics de ses enfants, pourquoi un clic dans une fenêtre modale peut\nla fermer par erreur, et comment empêcher un lien de naviguer.\n\n## Concept\n\nUn événement parcourt l'arbre en trois phases :\n\n| Phase | Trajet | Écouteurs appelés |\n| --- | --- | --- |\n| 1. Capture | de `window` jusqu'au parent de la cible | ceux posés avec `{ capture: true }` |\n| 2. Cible | sur l'élément concerné | tous ceux de la cible |\n| 3. Bouillonnement | de la cible jusqu'à `window` | ceux posés sans option de capture, le cas par défaut |\n\nAprès le trajet, le navigateur exécute l'**action par défaut** : suivre un lien, soumettre un formulaire,\ncocher une case.\n\n| Méthode | Effet |\n| --- | --- |\n| `event.preventDefault()` | annule l'action par défaut ; le trajet continue |\n| `event.stopPropagation()` | arrête le trajet vers les autres éléments ; l'action par défaut a lieu |\n| `event.stopImmediatePropagation()` | arrête aussi les autres écouteurs du même élément |\n\nCertains événements **ne bouillonnent pas** : `focus`, `blur`, `mouseenter`, `mouseleave`. Leurs équivalents\n`focusin`, `focusout`, `mouseover` et `mouseout` bouillonnent.\n\n## Exemple\n\n```js\ndocument.body.innerHTML = `\n  <section id=\"section\">\n    <form id=\"formulaire\">\n      <input id=\"email\" name=\"email\" value=\"ada@exemple.fr\">\n      <button id=\"envoyer\">Envoyer</button>\n    </form>\n  </section>`;\n\nconst trajet = [];\nconst section = document.getElementById('section');\nconst bouton = document.getElementById('envoyer');\n\nsection.addEventListener('click', () => trajet.push('section — capture'), { capture: true });\nsection.addEventListener('click', (e) => trajet.push(`section — bouillonnement, cible ${e.target.id}`));\nbouton.addEventListener('click', () => trajet.push('bouton — cible'));\n\ndocument.getElementById('formulaire').addEventListener('submit', (event) => {\n  event.preventDefault(); // pas de rechargement de la page\n  trajet.push(`soumission annulée pour ${new FormData(event.currentTarget).get('email')}`);\n});\n\nbouton.click();\nconsole.log(trajet);\n// ['section — capture', 'bouton — cible', 'section — bouillonnement, cible envoyer',\n//  'soumission annulée pour ada@exemple.fr']\n\nconst focus = [];\nsection.addEventListener('focus', () => focus.push('focus'));\nsection.addEventListener('focusin', () => focus.push('focusin'));\ndocument.getElementById('email').focus();\nconsole.log(focus); // ['focusin'] : focus ne bouillonne pas\n```\n\n## Comment ça fonctionne\n\nLe navigateur calcule d'abord le **chemin** de l'événement : la liste des ancêtres de la cible, de `window`\njusqu'à elle. Il le parcourt ensuite vers le bas pour la phase de capture, appelle les écouteurs de la cible,\npuis remonte le chemin pour la phase de bouillonnement. La plupart des écouteurs sont posés en bouillonnement,\nce qui correspond à l'intuition : l'élément le plus précis réagit en premier, puis ses conteneurs. La capture\nsert surtout aux cas où un conteneur doit intervenir **avant** ses enfants, par exemple pour intercepter tous\nles clics d'une zone.\n\nPendant tout ce trajet, `event.target` reste l'élément d'origine, alors que `event.currentTarget` change à\nchaque étape. C'est ce qui permet à un seul écouteur posé sur un parent de savoir quel enfant a été touché —\nle principe de la délégation, sujet du chapitre suivant.\n\n`preventDefault` et `stopPropagation` agissent sur deux choses indépendantes. Le premier annule l'**action\npar défaut** du navigateur — suivre un lien, soumettre un formulaire, insérer un caractère — mais laisse\nl'événement continuer son trajet. Le second arrête le **trajet**, mais n'annule rien : un lien dont l'écouteur\nappelle seulement `stopPropagation` navigue quand même. Pour savoir si l'action a été annulée, on lit\n`event.defaultPrevented`. Un événement n'est annulable que s'il est `cancelable`, ce qui est le cas de `click`,\n`submit` ou `keydown`, mais pas de `scroll`.\n\n`stopPropagation` est à utiliser avec parcimonie. Il masque l'événement pour tous les écouteurs situés plus\nhaut, y compris ceux dont on ignore l'existence : une bibliothèque qui ferme un menu quand on clique ailleurs,\nun outil de mesure d'audience. Une meilleure approche consiste souvent à vérifier, dans l'écouteur du parent,\nd'où vient l'événement — `event.target.closest(...)`.\n\nLes écouteurs **passifs** — `{ passive: true }` — promettent de ne pas appeler `preventDefault`. Pour les\névénements de défilement et de toucher, cette promesse permet au navigateur de faire défiler la page sans\nattendre la fin de l'écouteur, ce qui rend le défilement fluide.\n\nEnfin, `focus` et `blur` ne bouillonnent pas, pour des raisons historiques. Pour réagir au focus de n'importe\nquel champ d'un formulaire depuis le formulaire lui-même, on écoute `focusin` et `focusout`.\n\n## Erreurs fréquentes\n\n**Utiliser `stopPropagation` pour empêcher un lien de naviguer.** C'est `preventDefault` qu'il faut.\n\n**Arrêter la propagation par précaution.** D'autres écouteurs légitimes ne reçoivent plus rien.\n\n**Écouter `focus` sur un conteneur.** Il ne remonte pas : écoute `focusin`.\n\n**Appeler `preventDefault` dans un écouteur passif.** L'appel est ignoré.\n\n**Supposer que `currentTarget` reste l'élément cliqué.** Il change à chaque étape du trajet.\n\n## À retenir\n\n- Trois phases : capture vers le bas, cible, bouillonnement vers le haut.\n- Par défaut, les écouteurs réagissent au bouillonnement.\n- `preventDefault` annule l'action par défaut, `stopPropagation` arrête le trajet : ils sont indépendants.\n- `focus`, `blur`, `mouseenter` ne bouillonnent pas ; `focusin` et `focusout` si.\n- `{ passive: true }` fluidifie le défilement en renonçant à `preventDefault`.\n\n## Exercices\n\n1. Un clic sur le lien « Supprimer » doit afficher une confirmation au lieu de naviguer, et ce clic ne doit pas\n   ouvrir la carte, qui s'ouvre quand on clique ailleurs dessus. Écris les deux écouteurs sans\n   `stopPropagation`.\n\n   :::indice\n   `preventDefault` sur le lien ; dans l'écouteur de la carte, ignore les clics dont la cible est dans le lien.\n   :::\n\n   :::solution\n   ```js\n   document.body.innerHTML = `\n     <article class=\"carte\">\n       <h2>Commande 42</h2>\n       <a class=\"supprimer\" href=\"/commandes/42/supprimer\">Supprimer</a>\n     </article>`;\n\n   const journal = [];\n   const carte = document.querySelector('.carte');\n\n   carte.querySelector('.supprimer').addEventListener('click', (event) => {\n     event.preventDefault();\n     journal.push('confirmation demandée');\n   });\n\n   carte.addEventListener('click', (event) => {\n     if (event.target.closest('.supprimer')) return;\n     journal.push('carte ouverte');\n   });\n\n   carte.querySelector('.supprimer').click();\n   carte.querySelector('h2').click();\n   console.log(journal); // ['confirmation demandée', 'carte ouverte']\n   ```\n\n   Sans `stopPropagation`, d'autres écouteurs plus haut dans la page reçoivent toujours le clic.\n   :::\n\n2. Cliquer **dans** le contenu de la modale la ferme, alors que seul un clic sur le fond sombre devrait le faire.\n   Explique pourquoi et corrige.\n\n   ```js\n   const fond = document.querySelector('.fond');\n   fond.addEventListener('click', () => fond.remove());\n   ```\n\n   ```html\n   <div class=\"fond\"><div class=\"contenu\"><button>Valider</button></div></div>\n   ```\n\n   :::indice\n   Un clic sur le contenu bouillonne jusqu'au fond. Comment savoir si c'est le fond lui-même qui a été cliqué ?\n   :::\n\n   :::solution\n   Le clic sur `.contenu` ou sur le bouton **bouillonne** jusqu'à `.fond`, dont l'écouteur s'exécute. Il faut vérifier\n   que l'élément cliqué est le fond lui-même.\n\n   ```js\n   document.body.innerHTML = '<div class=\"fond\"><div class=\"contenu\"><button>Valider</button></div></div>';\n\n   const fond = document.querySelector('.fond');\n   fond.addEventListener('click', (event) => {\n     if (event.target === event.currentTarget) {\n       fond.remove();\n     }\n   });\n\n   document.querySelector('button').click();\n   console.log(document.querySelector('.fond') !== null); // true : toujours ouverte\n   fond.click();\n   console.log(document.querySelector('.fond')); // null : fermée par un clic sur le fond\n   ```\n\n   Ajouter `stopPropagation` sur le contenu fonctionnerait aussi, mais bloquerait tous les autres écouteurs de clic\n   situés plus haut.\n   :::\n\n3. Donne l'ordre des messages pour un clic sur `#c`, sous la forme `X Y Z`.\n\n   ```js\n   // <div id=\"a\"><div id=\"b\"><button id=\"c\"></button></div></div>\n   a.addEventListener('click', () => log('a-bulle'));\n   a.addEventListener('click', () => log('a-capture'), { capture: true });\n   b.addEventListener('click', () => log('b-bulle'));\n   c.addEventListener('click', () => log('c'));\n   ```\n\n   :::indice\n   Capture de haut en bas, puis la cible, puis bouillonnement de bas en haut.\n   :::\n\n   :::solution\n   L'ordre est `a-capture c b-bulle a-bulle`. La capture descend et rencontre l'écouteur de capture de `#a` ; la cible\n   `#c` exécute son écouteur ; le bouillonnement remonte par `#b` puis `#a`.\n\n   ```js\n   document.body.innerHTML = '<div id=\"a\"><div id=\"b\"><button id=\"c\"></button></div></div>';\n   const ordre = [];\n   const log = (message) => ordre.push(message);\n   const [a, b, c] = ['a', 'b', 'c'].map((id) => document.getElementById(id));\n\n   a.addEventListener('click', () => log('a-bulle'));\n   a.addEventListener('click', () => log('a-capture'), { capture: true });\n   b.addEventListener('click', () => log('b-bulle'));\n   c.addEventListener('click', () => log('c'));\n\n   c.click();\n   console.log(ordre.join(' ')); // 'a-capture c b-bulle a-bulle'\n   ```\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que le bouillonnement d'un événement ?\n\n  :::indice\n  Que se passe-t-il après que la cible a traité l'événement ?\n  :::\n\n  :::reponse\n  Après la phase de capture et le traitement sur la cible, l'événement remonte l'arbre du DOM, d'ancêtre en ancêtre,\n  jusqu'à `window`, et chaque écouteur posé sans capture est appelé au passage. C'est pourquoi un écouteur posé sur un\n  conteneur reçoit les événements de tous ses descendants. La plupart des événements bouillonnent, à l'exception\n  notable de `focus`, `blur`, `mouseenter` et `mouseleave`.\n  :::\n\n- Quelle différence entre `preventDefault` et `stopPropagation` ?\n\n  :::indice\n  L'un agit sur ce que fait le navigateur, l'autre sur le trajet de l'événement.\n  :::\n\n  :::reponse\n  `preventDefault` annule l'action par défaut du navigateur — suivre un lien, soumettre un formulaire, insérer un\n  caractère —, mais l'événement continue de se propager. `stopPropagation` interrompt le trajet vers les autres\n  éléments, mais laisse l'action par défaut se produire. Ils sont indépendants : pour empêcher un lien de naviguer,\n  c'est `preventDefault` qu'il faut.\n  :::\n\n- Pourquoi éviter `stopPropagation` ?\n\n  :::indice\n  Qui d'autre écoute peut-être le même événement plus haut dans la page ?\n  :::\n\n  :::reponse\n  Parce qu'il masque l'événement pour tous les écouteurs situés plus haut, y compris ceux qu'on ne connaît pas : un\n  menu qui se ferme quand on clique ailleurs, une bibliothèque d'analyse, une délégation d'événements. Le bug apparaît\n  loin de sa cause. On préfère vérifier l'origine de l'événement dans l'écouteur concerné, avec `event.target`,\n  `currentTarget` ou `closest`, et laisser l'événement suivre son trajet normal.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -4991,6 +5429,216 @@
   ],
   "quizzes": [
     {
+      "id": "javascript-api-permissions-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-api-permissions-q1",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "navigator.clipboard est disponible sur une page servie en HTTP depuis un domaine public.\n",
+          "answer": false,
+          "explanation": "Le presse-papiers asynchrone exige un contexte sécurisé : HTTPS, ou localhost en développement.\n",
+          "skills": [
+            "browser-apis"
+          ]
+        },
+        {
+          "id": "js-api-permissions-q2",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quels états peut renvoyer `navigator.permissions.query` ?\n",
+          "options": [
+            "granted, denied ou prompt",
+            "true ou false",
+            "allowed, blocked ou unknown",
+            "pending, fulfilled ou rejected"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'état indique si la permission est accordée, refusée, ou si une invite serait affichée.\n",
+          "skills": [
+            "browser-apis"
+          ]
+        },
+        {
+          "id": "js-api-permissions-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quand demander l'autorisation d'envoyer des notifications ?\n",
+          "options": [
+            "Lors d'une action de l'utilisateur qui en a besoin",
+            "Dès le chargement de la page",
+            "Dans un minuteur quelques secondes après l'arrivée",
+            "À chaque rechargement, jusqu'à obtenir un accord"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les navigateurs exigent souvent un geste de l'utilisateur, et une demande contextualisée est bien mieux acceptée.\n",
+          "skills": [
+            "browser-apis"
+          ]
+        },
+        {
+          "id": "js-api-permissions-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Le type d'un fichier choisi par l'utilisateur garantit la nature réelle de son contenu.\n",
+          "answer": false,
+          "explanation": "Le type est déclaré par le système ou le navigateur et peut être falsifié : le serveur doit revalider.\n",
+          "skills": [
+            "browser-apis"
+          ]
+        }
+      ],
+      "chapterId": "javascript-api-permissions",
+      "technology": "javascript",
+      "contentPath": "javascript/api-navigateur/api-et-permissions/quiz.yaml",
+      "contentVersion": "78c60ca8026e"
+    },
+    {
+      "id": "javascript-stockage-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-stockage-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Après `localStorage.setItem('n', 5)`, que vaut `typeof localStorage.getItem('n')` ?\n",
+          "answer": "string",
+          "explanation": "localStorage ne stocke que des chaînes : le nombre est converti en '5'.\n",
+          "skills": [
+            "browser-storage"
+          ]
+        },
+        {
+          "id": "js-stockage-q2",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel stockage est automatiquement envoyé au serveur avec chaque requête vers son domaine ?\n",
+          "options": [
+            "Les cookies",
+            "localStorage",
+            "sessionStorage",
+            "IndexedDB"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les cookies accompagnent chaque requête ; localStorage et sessionStorage restent dans le navigateur.\n",
+          "skills": [
+            "browser-storage"
+          ]
+        },
+        {
+          "id": "js-stockage-q3",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un cookie marqué HttpOnly peut être lu avec document.cookie.\n",
+          "answer": false,
+          "explanation": "HttpOnly rend le cookie inaccessible à JavaScript, ce qui le protège d'un script injecté.\n",
+          "skills": [
+            "browser-storage"
+          ]
+        },
+        {
+          "id": "js-stockage-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Où conserver le brouillon d'un formulaire qui ne doit exister que dans l'onglet courant ?\n",
+          "options": [
+            "sessionStorage",
+            "localStorage",
+            "Un cookie HttpOnly",
+            "Une variable globale partagée entre onglets"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "sessionStorage est propre à un onglet et disparaît à sa fermeture.\n",
+          "skills": [
+            "browser-storage"
+          ]
+        }
+      ],
+      "chapterId": "javascript-stockage",
+      "technology": "javascript",
+      "contentPath": "javascript/api-navigateur/stockage-local/quiz.yaml",
+      "contentVersion": "c003cf4323f5"
+    },
+    {
+      "id": "javascript-url-historique-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-url-q1",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Que vaut `new URL('https://a.exemple/?page=2').searchParams.get('page') + 1` ?\n",
+          "answer": "21",
+          "explanation": "Les paramètres lus sont des chaînes : '2' + 1 donne '21'. Il faut Number avant de calculer.\n",
+          "skills": [
+            "url-history"
+          ]
+        },
+        {
+          "id": "js-url-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Appeler history.pushState déclenche l'événement popstate.\n",
+          "answer": false,
+          "explanation": "popstate ne se déclenche que lors d'une navigation dans l'historique, comme le bouton Retour.\n",
+          "skills": [
+            "url-history"
+          ]
+        },
+        {
+          "id": "js-url-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pour garder l'adresse à jour pendant la saisie d'une recherche sans encombrer le bouton Retour, que choisir ?\n",
+          "options": [
+            "history.replaceState",
+            "history.pushState",
+            "location.href = nouvelleAdresse",
+            "window.open"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "replaceState modifie l'entrée courante sans en ajouter ; location.href rechargerait la page.\n",
+          "skills": [
+            "url-history"
+          ]
+        },
+        {
+          "id": "js-url-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Comment lire toutes les valeurs de `tag` dans `?tag=promo&tag=neuf` ?\n",
+          "options": [
+            "searchParams.getAll('tag')",
+            "searchParams.get('tag')",
+            "searchParams.tag",
+            "location.search.split('tag')"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "get ne renvoie que la première valeur ; getAll renvoie ['promo', 'neuf'].\n",
+          "skills": [
+            "url-history"
+          ]
+        }
+      ],
+      "chapterId": "javascript-url-historique",
+      "technology": "javascript",
+      "contentPath": "javascript/api-navigateur/url-et-historique/quiz.yaml",
+      "contentVersion": "5bd34b8e4d2b"
+    },
+    {
       "id": "javascript-async-await-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -7153,6 +7801,208 @@
       "contentVersion": "f4f1757625f1"
     },
     {
+      "id": "javascript-dom-creer-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-dom-creer-q1",
+          "type": "true_false",
+          "difficulty": 1,
+          "question": "Un élément créé avec document.createElement apparaît immédiatement dans la page.\n",
+          "answer": false,
+          "explanation": "Il existe en mémoire jusqu'à ce qu'on l'insère, par exemple avec append.\n",
+          "skills": [
+            "dom-structure"
+          ]
+        },
+        {
+          "id": "js-dom-creer-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Un fragment contient 3 éléments. Combien d'enfants contient-il juste après `liste.append(fragment)` ?\n",
+          "answer": "0",
+          "explanation": "Insérer un fragment transfère ses enfants dans le document : le fragment se vide.\n",
+          "skills": [
+            "dom-structure"
+          ]
+        },
+        {
+          "id": "js-dom-creer-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que fait `liste.append(element)` si `element` est déjà ailleurs dans la page ?\n",
+          "options": [
+            "Il le déplace à la fin de liste",
+            "Il en crée une copie",
+            "Il lève une erreur",
+            "Il ne fait rien"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un nœud n'a qu'un parent : l'insérer ailleurs le déplace. cloneNode(true) crée une copie.\n",
+          "skills": [
+            "dom-structure"
+          ]
+        },
+        {
+          "id": "js-dom-creer-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle propriété donne l'élément suivant, en ignorant les nœuds de texte ?\n",
+          "options": [
+            "nextElementSibling",
+            "nextSibling",
+            "nextNode",
+            "firstChild"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "nextSibling peut renvoyer un nœud de texte, comme un retour à la ligne ; nextElementSibling ne voit que les éléments.\n",
+          "skills": [
+            "dom-structure"
+          ]
+        }
+      ],
+      "chapterId": "javascript-dom-creer",
+      "technology": "javascript",
+      "contentPath": "javascript/dom/creer-supprimer-parcourir/quiz.yaml",
+      "contentVersion": "b5cce2b3a922"
+    },
+    {
+      "id": "javascript-dom-modifier-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-dom-modifier-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle écriture affiche un pseudo saisi par un utilisateur sans risque d'injection ?\n",
+          "options": [
+            "element.textContent = pseudo",
+            "element.innerHTML = pseudo",
+            "element.outerHTML = pseudo",
+            "document.write(pseudo)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "textContent insère le texte tel quel, sans jamais l'interpréter comme du HTML.\n",
+          "skills": [
+            "dom-modification"
+          ]
+        },
+        {
+          "id": "js-dom-modifier-q2",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Pour `<li data-prix-ht=\"50\">`, que vaut `typeof li.dataset.prixHt` ?\n",
+          "answer": "string",
+          "explanation": "Les valeurs de dataset sont toujours des chaînes ; il faut les convertir pour calculer.\n",
+          "skills": [
+            "dom-modification"
+          ]
+        },
+        {
+          "id": "js-dom-modifier-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Après une saisie de l'utilisateur, `input.getAttribute('value')` renvoie le texte saisi.\n",
+          "answer": false,
+          "explanation": "L'attribut value garde la valeur initiale ; c'est la propriété input.value qui suit la saisie.\n",
+          "skills": [
+            "dom-modification"
+          ]
+        },
+        {
+          "id": "js-dom-modifier-q4",
+          "type": "predict_output",
+          "difficulty": 2,
+          "question": "Si l'élément n'a pas la classe `actif`, que renvoie `element.classList.toggle('actif')` ?\n",
+          "answer": "true",
+          "explanation": "toggle ajoute la classe absente et renvoie true, qui indique sa présence après l'appel.\n",
+          "skills": [
+            "dom-modification"
+          ]
+        }
+      ],
+      "chapterId": "javascript-dom-modifier",
+      "technology": "javascript",
+      "contentPath": "javascript/dom/modifier-les-elements/quiz.yaml",
+      "contentVersion": "7099b7567dfd"
+    },
+    {
+      "id": "javascript-dom-selection-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-dom-selection-q1",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "Que renvoie `document.querySelector('.absent')` quand aucun élément ne correspond ?\n",
+          "options": [
+            "null",
+            "undefined",
+            "Une NodeList vide",
+            "Une erreur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "querySelector renvoie le premier élément trouvé, ou null. querySelectorAll renverrait une NodeList vide.\n",
+          "skills": [
+            "dom-selection"
+          ]
+        },
+        {
+          "id": "js-dom-selection-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "La NodeList renvoyée par querySelectorAll se met à jour quand on ajoute un élément correspondant.\n",
+          "answer": false,
+          "explanation": "Elle est statique. Les collections renvoyées par getElementsByClassName, elles, sont vivantes.\n",
+          "skills": [
+            "dom-selection"
+          ]
+        },
+        {
+          "id": "js-dom-selection-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle méthode retrouve la carte `.produit` qui contient un bouton cliqué ?\n",
+          "options": [
+            "bouton.closest('.produit')",
+            "bouton.querySelector('.produit')",
+            "bouton.matches('.produit')",
+            "document.getElementsByClassName('produit')[0]"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "closest remonte les ancêtres jusqu'au premier qui correspond ; querySelector cherche vers le bas.\n",
+          "skills": [
+            "dom-selection"
+          ]
+        },
+        {
+          "id": "js-dom-selection-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`element.children` inclut les nœuds de texte, comme les retours à la ligne entre les balises.\n",
+          "answer": false,
+          "explanation": "children ne contient que les éléments ; childNodes contient tous les nœuds, textes compris.\n",
+          "skills": [
+            "dom-selection"
+          ]
+        }
+      ],
+      "chapterId": "javascript-dom-selection",
+      "technology": "javascript",
+      "contentPath": "javascript/dom/selectionner-des-elements/quiz.yaml",
+      "contentVersion": "2d7506e27e53"
+    },
+    {
       "id": "javascript-erreurs-personnalisees-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -7641,6 +8491,232 @@
       "technology": "javascript",
       "contentPath": "javascript/es-modules/reexport-barrels-et-import-dynamique/quiz.yaml",
       "contentVersion": "01c69e65df81"
+    },
+    {
+      "id": "javascript-delegation-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-delegation-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Sur quel mécanisme repose la délégation d'événements ?\n",
+          "options": [
+            "Le bouillonnement des événements",
+            "La capture uniquement",
+            "Le mode strict",
+            "Les collections vivantes"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les événements des descendants remontent jusqu'au conteneur, où un seul écouteur les reçoit.\n",
+          "skills": [
+            "event-delegation"
+          ]
+        },
+        {
+          "id": "js-delegation-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Avec la délégation, un bouton ajouté à la liste après la pose de l'écouteur fonctionne sans écouteur supplémentaire.\n",
+          "answer": true,
+          "explanation": "L'écouteur est sur le conteneur, qui reçoit les clics de tous ses descendants, présents ou futurs.\n",
+          "skills": [
+            "event-delegation"
+          ]
+        },
+        {
+          "id": "js-delegation-q3",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que renvoie `event.target.closest('button')` quand le clic a lieu sur le texte d'une ligne, hors de tout bouton ?\n",
+          "options": [
+            "null",
+            "Le premier bouton de la liste",
+            "La ligne",
+            "Une erreur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "closest ne trouve aucun ancêtre correspondant : l'écouteur doit alors ne rien faire.\n",
+          "skills": [
+            "event-delegation"
+          ]
+        },
+        {
+          "id": "js-delegation-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel événement déléguer pour réagir au focus de n'importe quel champ d'un formulaire ?\n",
+          "options": [
+            "focusin",
+            "focus",
+            "blur",
+            "change"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "focus ne bouillonne pas ; focusin, son équivalent, remonte jusqu'au formulaire.\n",
+          "skills": [
+            "event-delegation"
+          ]
+        }
+      ],
+      "chapterId": "javascript-delegation",
+      "technology": "javascript",
+      "contentPath": "javascript/evenements/delegation/quiz.yaml",
+      "contentVersion": "1eae02e8f62f"
+    },
+    {
+      "id": "javascript-evenements-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-evenements-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Un clic sur une icône située dans un bouton déclenche l'écouteur du bouton. Que vaut `event.currentTarget` ?\n",
+          "options": [
+            "Le bouton",
+            "L'icône",
+            "Le document",
+            "La fenêtre"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "currentTarget est l'élément qui porte l'écouteur ; target est l'élément réellement touché, ici l'icône.\n",
+          "skills": [
+            "dom-events"
+          ]
+        },
+        {
+          "id": "js-evenements-q2",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "`bouton.removeEventListener('click', () => compter())` retire un écouteur ajouté avec `bouton.addEventListener('click', () => compter())`.\n",
+          "answer": false,
+          "explanation": "Deux fonctions fléchées identiques sont deux objets différents : il faut la même référence de fonction, ou utiliser once ou un signal.\n",
+          "skills": [
+            "dom-events"
+          ]
+        },
+        {
+          "id": "js-evenements-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel événement écouter pour traiter un formulaire, qu'il soit envoyé par clic ou par la touche Entrée ?\n",
+          "options": [
+            "submit, sur le formulaire",
+            "click, sur le bouton",
+            "keydown, sur le champ",
+            "change, sur le formulaire"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "submit se déclenche sur le formulaire pour tous les modes d'envoi.\n",
+          "skills": [
+            "dom-events"
+          ]
+        },
+        {
+          "id": "js-evenements-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Comment retirer en une fois plusieurs écouteurs posés par un composant, sans garder leurs fonctions ?\n",
+          "options": [
+            "Leur passer le signal d'un AbortController, puis appeler abort()",
+            "Appeler removeEventListener sans argument",
+            "Supprimer la variable qui contient le composant",
+            "Appeler stopPropagation dans chaque écouteur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Tous les écouteurs enregistrés avec le même signal sont retirés quand le contrôleur est annulé.\n",
+          "skills": [
+            "dom-events"
+          ]
+        }
+      ],
+      "chapterId": "javascript-evenements",
+      "technology": "javascript",
+      "contentPath": "javascript/evenements/ecouter-des-evenements/quiz.yaml",
+      "contentVersion": "f9ac075e5820"
+    },
+    {
+      "id": "javascript-propagation-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-propagation-q1",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Pour un clic sur `#c` dans `<div id=\"a\"><button id=\"c\">`, avec un écouteur de capture et un écouteur de bouillonnement sur `#a` et un écouteur sur `#c`, quel est l'ordre ? (réponds sous la forme X Y Z, avec a-capture, c et a-bulle)\n",
+          "answer": "a-capture c a-bulle",
+          "explanation": "La capture descend jusqu'à la cible, puis l'événement remonte en bouillonnement.\n",
+          "skills": [
+            "event-propagation"
+          ]
+        },
+        {
+          "id": "js-propagation-q2",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle méthode empêche un lien de naviguer ?\n",
+          "options": [
+            "event.preventDefault()",
+            "event.stopPropagation()",
+            "event.stopImmediatePropagation()",
+            "return false dans addEventListener"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "preventDefault annule l'action par défaut ; stopPropagation n'arrête que le trajet de l'événement.\n",
+          "skills": [
+            "event-propagation"
+          ]
+        },
+        {
+          "id": "js-propagation-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Un écouteur `focus` posé sur un formulaire est appelé quand un de ses champs reçoit le focus.\n",
+          "answer": false,
+          "explanation": "focus ne bouillonne pas. Pour réagir depuis un conteneur, on écoute focusin.\n",
+          "skills": [
+            "event-propagation"
+          ]
+        },
+        {
+          "id": "js-propagation-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans l'écouteur de clic d'un fond de modale, comment savoir que le fond lui-même a été cliqué ?\n",
+          "options": [
+            "event.target === event.currentTarget",
+            "event.defaultPrevented === false",
+            "event.eventPhase === 1",
+            "event.bubbles === true"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Si la cible est l'élément qui porte l'écouteur, le clic n'est pas venu d'un de ses descendants.\n",
+          "skills": [
+            "event-propagation"
+          ]
+        }
+      ],
+      "chapterId": "javascript-propagation",
+      "technology": "javascript",
+      "contentPath": "javascript/evenements/propagation/quiz.yaml",
+      "contentVersion": "6a05e05cc80f"
     },
     {
       "id": "javascript-contexte-execution-quiz",

@@ -1,0 +1,57 @@
+id: javascript-dom-selection-quiz
+kind: QUIZ
+questions:
+  - id: js-dom-selection-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que renvoie `document.querySelector('.absent')` quand aucun élément ne correspond ?
+    options:
+      - "null"
+      - "undefined"
+      - "Une NodeList vide"
+      - "Une erreur"
+    answer: [0]
+    explanation: >
+      querySelector renvoie le premier élément trouvé, ou null. querySelectorAll renverrait une
+      NodeList vide.
+    skills:
+      - dom-selection
+
+  - id: js-dom-selection-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      La NodeList renvoyée par querySelectorAll se met à jour quand on ajoute un élément correspondant.
+    answer: false
+    explanation: >
+      Elle est statique. Les collections renvoyées par getElementsByClassName, elles, sont vivantes.
+    skills:
+      - dom-selection
+
+  - id: js-dom-selection-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle méthode retrouve la carte `.produit` qui contient un bouton cliqué ?
+    options:
+      - "bouton.closest('.produit')"
+      - "bouton.querySelector('.produit')"
+      - "bouton.matches('.produit')"
+      - "document.getElementsByClassName('produit')[0]"
+    answer: [0]
+    explanation: >
+      closest remonte les ancêtres jusqu'au premier qui correspond ; querySelector cherche vers le bas.
+    skills:
+      - dom-selection
+
+  - id: js-dom-selection-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      `element.children` inclut les nœuds de texte, comme les retours à la ligne entre les balises.
+    answer: false
+    explanation: >
+      children ne contient que les éléments ; childNodes contient tous les nœuds, textes compris.
+    skills:
+      - dom-selection

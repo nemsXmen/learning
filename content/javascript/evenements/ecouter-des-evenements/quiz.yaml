@@ -1,0 +1,64 @@
+id: javascript-evenements-quiz
+kind: QUIZ
+questions:
+  - id: js-evenements-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Un clic sur une icône située dans un bouton déclenche l'écouteur du bouton. Que vaut `event.currentTarget` ?
+    options:
+      - "Le bouton"
+      - "L'icône"
+      - "Le document"
+      - "La fenêtre"
+    answer: [0]
+    explanation: >
+      currentTarget est l'élément qui porte l'écouteur ; target est l'élément réellement touché, ici
+      l'icône.
+    skills:
+      - dom-events
+
+  - id: js-evenements-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      `bouton.removeEventListener('click', () => compter())` retire un écouteur ajouté avec
+      `bouton.addEventListener('click', () => compter())`.
+    answer: false
+    explanation: >
+      Deux fonctions fléchées identiques sont deux objets différents : il faut la même référence de
+      fonction, ou utiliser once ou un signal.
+    skills:
+      - dom-events
+
+  - id: js-evenements-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel événement écouter pour traiter un formulaire, qu'il soit envoyé par clic ou par la touche Entrée ?
+    options:
+      - "submit, sur le formulaire"
+      - "click, sur le bouton"
+      - "keydown, sur le champ"
+      - "change, sur le formulaire"
+    answer: [0]
+    explanation: >
+      submit se déclenche sur le formulaire pour tous les modes d'envoi.
+    skills:
+      - dom-events
+
+  - id: js-evenements-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment retirer en une fois plusieurs écouteurs posés par un composant, sans garder leurs fonctions ?
+    options:
+      - "Leur passer le signal d'un AbortController, puis appeler abort()"
+      - "Appeler removeEventListener sans argument"
+      - "Supprimer la variable qui contient le composant"
+      - "Appeler stopPropagation dans chaque écouteur"
+    answer: [0]
+    explanation: >
+      Tous les écouteurs enregistrés avec le même signal sont retirés quand le contrôleur est annulé.
+    skills:
+      - dom-events

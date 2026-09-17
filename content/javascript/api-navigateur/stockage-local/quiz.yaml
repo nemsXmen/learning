@@ -1,0 +1,56 @@
+id: javascript-stockage-quiz
+kind: QUIZ
+questions:
+  - id: js-stockage-q1
+    type: predict_output
+    difficulty: 2
+    question: >
+      Après `localStorage.setItem('n', 5)`, que vaut `typeof localStorage.getItem('n')` ?
+    answer: 'string'
+    explanation: >
+      localStorage ne stocke que des chaînes : le nombre est converti en '5'.
+    skills:
+      - browser-storage
+
+  - id: js-stockage-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel stockage est automatiquement envoyé au serveur avec chaque requête vers son domaine ?
+    options:
+      - "Les cookies"
+      - "localStorage"
+      - "sessionStorage"
+      - "IndexedDB"
+    answer: [0]
+    explanation: >
+      Les cookies accompagnent chaque requête ; localStorage et sessionStorage restent dans le navigateur.
+    skills:
+      - browser-storage
+
+  - id: js-stockage-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Un cookie marqué HttpOnly peut être lu avec document.cookie.
+    answer: false
+    explanation: >
+      HttpOnly rend le cookie inaccessible à JavaScript, ce qui le protège d'un script injecté.
+    skills:
+      - browser-storage
+
+  - id: js-stockage-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Où conserver le brouillon d'un formulaire qui ne doit exister que dans l'onglet courant ?
+    options:
+      - "sessionStorage"
+      - "localStorage"
+      - "Un cookie HttpOnly"
+      - "Une variable globale partagée entre onglets"
+    answer: [0]
+    explanation: >
+      sessionStorage est propre à un onglet et disparaît à sa fermeture.
+    skills:
+      - browser-storage

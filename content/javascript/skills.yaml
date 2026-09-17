@@ -501,3 +501,49 @@ skills:
     name: Moderniser du code JavaScript
     importance: 4
     requires: [modern-syntax, async-await]
+
+  # Partie 9 — Browser JavaScript
+  - id: dom-selection
+    name: DOM et sélection d'éléments
+    importance: 5
+    requires: [objects-basics]
+
+  - id: dom-modification
+    name: Modifier contenu, attributs et classes
+    importance: 5
+    requires: [dom-selection]
+
+  - id: dom-structure
+    name: Créer, supprimer et parcourir des éléments
+    importance: 4
+    requires: [dom-modification]
+
+  - id: dom-events
+    name: Écouter des événements
+    importance: 5
+    requires: [dom-modification, callbacks]
+
+  - id: event-propagation
+    name: Propagation des événements
+    importance: 4
+    requires: [dom-events]
+
+  - id: event-delegation
+    name: Délégation d'événements
+    importance: 4
+    requires: [event-propagation, dom-structure]
+
+  - id: browser-storage
+    name: localStorage, sessionStorage et cookies
+    importance: 4
+    requires: [dom-modification]
+
+  - id: url-history
+    name: API URL et History
+    importance: 4
+    requires: [dom-events]
+
+  - id: browser-apis
+    name: API de l'appareil et permissions
+    importance: 3
+    requires: [async-errors, browser-storage]

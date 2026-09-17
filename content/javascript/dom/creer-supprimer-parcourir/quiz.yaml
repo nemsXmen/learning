@@ -1,0 +1,57 @@
+id: javascript-dom-creer-quiz
+kind: QUIZ
+questions:
+  - id: js-dom-creer-q1
+    type: true_false
+    difficulty: 1
+    question: >
+      Un élément créé avec document.createElement apparaît immédiatement dans la page.
+    answer: false
+    explanation: >
+      Il existe en mémoire jusqu'à ce qu'on l'insère, par exemple avec append.
+    skills:
+      - dom-structure
+
+  - id: js-dom-creer-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Un fragment contient 3 éléments. Combien d'enfants contient-il juste après `liste.append(fragment)` ?
+    answer: '0'
+    explanation: >
+      Insérer un fragment transfère ses enfants dans le document : le fragment se vide.
+    skills:
+      - dom-structure
+
+  - id: js-dom-creer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que fait `liste.append(element)` si `element` est déjà ailleurs dans la page ?
+    options:
+      - "Il le déplace à la fin de liste"
+      - "Il en crée une copie"
+      - "Il lève une erreur"
+      - "Il ne fait rien"
+    answer: [0]
+    explanation: >
+      Un nœud n'a qu'un parent : l'insérer ailleurs le déplace. cloneNode(true) crée une copie.
+    skills:
+      - dom-structure
+
+  - id: js-dom-creer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle propriété donne l'élément suivant, en ignorant les nœuds de texte ?
+    options:
+      - "nextElementSibling"
+      - "nextSibling"
+      - "nextNode"
+      - "firstChild"
+    answer: [0]
+    explanation: >
+      nextSibling peut renvoyer un nœud de texte, comme un retour à la ligne ; nextElementSibling ne
+      voit que les éléments.
+    skills:
+      - dom-structure
