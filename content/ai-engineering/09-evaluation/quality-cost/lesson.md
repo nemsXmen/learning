@@ -38,3 +38,32 @@ Segmenter les tâches, mesurer la qualité minimale requise et tester un modèle
 
 ## À retenir
 L'optimisation est un problème multi-objectifs mesuré.
+
+
+## Introduction
+
+Optimiser une application AI revient à arbitrer qualité, latence et coût.
+
+## Concept
+
+Réduire contexte, choisir un modèle adapté, cacher certaines réponses ou router les requêtes sont des leviers distincts.
+
+## Exemple
+
+Un modèle coûteux peut être réservé aux cas complexes tandis qu'un modèle plus léger traite les requêtes simples.
+
+## Comment ça fonctionne
+
+request → routing → model → quality/cost measurement
+
+## Questions d'entretien
+
+- Pourquoi mesurer le coût par tâche plutôt que seulement par requête ?
+
+  :::indice
+  Une bonne métrique doit être reliée à une décision.
+  :::
+
+  :::reponse
+  Parce qu'une tâche peut déclencher plusieurs appels, retrievals et retries.
+  :::
