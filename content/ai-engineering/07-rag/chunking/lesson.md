@@ -42,8 +42,14 @@ Ne récupère jamais un chunk uniquement parce qu'il est similaire : applique le
 ## Exercice
 Un manuel est réindexé après modification de deux pages. Comment éviter les doublons ?
 
-### Solution
+:::indice
+Sépare retrieval, contexte et génération pour localiser l'erreur.
+:::
+
+:::solution
 Versionner le document et utiliser des IDs déterministes avec upsert/suppression des anciennes versions.
+
+:::
 
 ## À retenir
 La qualité RAG commence à l'ingestion : parsing, chunking, métadonnées, versioning et ACL.
