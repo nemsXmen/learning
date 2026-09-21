@@ -51,9 +51,15 @@ MAE mesure l'erreur absolue moyenne. RMSE amplifie davantage les grosses erreurs
 
 Pour un filtre anti-spam, explique pourquoi recall seul ne suffit pas.
 
-### Solution
+:::indice
+Commence par définir la métrique et la baseline avant de choisir une technique.
+:::
+
+:::solution
 
 Un recall élevé peut augmenter les faux positifs. Mesure aussi precision et inspecte les erreurs selon leur coût utilisateur.
+
+:::
 
 ## À retenir
 
