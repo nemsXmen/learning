@@ -10,8 +10,8 @@ estimatedMinutes: 80
 difficulty: 5
 xp: 170
 prerequisites: [ai-11-gpu]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-infrastructure]
+tags: [infrastructure, inference, ai]
 ---
 
 ## Objectifs
@@ -25,19 +25,19 @@ tags: [ai, production, engineering]
 client -> API -> queue/batcher -> model server -> response
 ```
 
-Un serveur d'inférence doit contrôler concurrence, taille des requêtes et durée maximale.
+Un serveur d'inférence contrôle concurrence, taille des requêtes et durée maximale.
 
 ## Throughput vs latency
-Batching augmente souvent le débit mais peut ajouter de l'attente. Mesure p50, p95 et p99 au lieu d'une moyenne seule.
+Le batching peut augmenter le débit mais ajouter de l'attente. Mesure p50, p95 et p99.
 
 ## Backpressure
-Si la demande dépasse la capacité, une queue bornée et des réponses de surcharge protègent le système.
+Une queue bornée et des réponses de surcharge protègent le système lorsque la demande dépasse la capacité.
 
 ## Exercice
-La latence p99 explose pendant les pics. Quelle hypothèse tester ?
+La latence p99 explose pendant les pics. Quelles hypothèses tester ?
 
 ### Solution
 Vérifier saturation GPU, file d'attente, batching, concurrence et temps de prétraitement séparément.
 
 ## À retenir
-Servir un modèle est un problème de système distribué, pas seulement un appel de fonction.
+Servir un modèle est un problème de système distribué.
