@@ -40,3 +40,32 @@ Afficher les sources disponibles, permettre correction/régénération et rendre
 
 ## À retenir
 Une bonne UX IA transforme l'incertitude en information et contrôle utilisateur.
+
+
+## Introduction
+
+L'UX générative doit rendre visible l'incertitude et donner du contrôle.
+
+## Concept
+
+Streaming, états d'attente, citations, édition et approbation répondent à des risques différents.
+
+## Exemple
+
+Une action financière peut nécessiter confirmation humaine même si le modèle propose l'action.
+
+## Comment ça fonctionne
+
+request → progress → evidence → result → user control
+
+## Questions d'entretien
+
+- Pourquoi afficher les sources lorsque c'est possible ?
+
+  :::indice
+  Relie la métrique à une décision produit concrète.
+  :::
+
+  :::reponse
+  Pour aider l'utilisateur à vérifier la réponse et calibrer sa confiance.
+  :::
