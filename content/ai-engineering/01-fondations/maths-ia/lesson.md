@@ -111,3 +111,32 @@ print(similarity)
 ## À retenir
 
 Les vecteurs, matrices, probabilités et statistiques sont le langage quantitatif qui permet de comprendre embeddings, réseaux neuronaux, métriques et performances AI.
+
+
+## Introduction
+
+Les mathématiques donnent à l'AI Engineer les modèles mentaux nécessaires pour comprendre données, optimisation et métriques.
+
+## Concept
+
+Vecteurs, matrices, probabilités et statistiques permettent de raisonner sur représentations, incertitude et performance.
+
+## Exemple
+
+Exemple : le produit scalaire compare deux vecteurs et intervient directement dans de nombreux mécanismes d'embeddings.
+
+## Comment ça fonctionne
+
+Un pipeline ML transforme des données en représentations puis optimise une fonction objectif sous des hypothèses statistiques.
+
+## Questions d'entretien
+
+- Pourquoi les probabilités sont-elles importantes en IA ?
+
+  :::indice
+  Relie le concept à un problème concret de production AI.
+  :::
+
+  :::reponse
+  Réponse : elles permettent de quantifier incertitude, distributions, erreurs d'échantillonnage et décisions sous risque.
+  :::
