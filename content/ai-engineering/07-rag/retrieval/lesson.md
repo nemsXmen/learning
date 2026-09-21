@@ -42,8 +42,14 @@ Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées.
 ## Exercice
 Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
 
-### Solution
+:::indice
+Sépare retrieval, contexte et génération pour localiser l'erreur.
+:::
+
+:::solution
 Une recherche hybride peut exploiter l'identifiant exact et le sens de la description.
+
+:::
 
 ## À retenir
 Le retrieval est une étape de sélection mesurable, pas une fonction magique de base vectorielle.
