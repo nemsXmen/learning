@@ -10,8 +10,8 @@ estimatedMinutes: 80
 difficulty: 5
 xp: 180
 prerequisites: [ai-10-data-protection]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-security]
+tags: [security, ai, llm]
 ---
 
 ## Objectifs
@@ -28,13 +28,13 @@ proposal -> policy engine -> authorization -> tool -> side effect
 ```
 
 ## Sandbox
-Pour du code généré ou non fiable, isole filesystem, réseau, CPU, mémoire et durée. Interdis toute capacité inutile.
+Pour du code non fiable, isole filesystem, réseau, CPU, mémoire et durée. Interdis toute capacité inutile.
 
 ## Secrets
 Injecte les credentials uniquement dans le composant qui doit les utiliser. Évite de les placer dans le contexte LLM.
 
 ## Audit
-Trace les appels d'outils, décisions de politique, erreurs et identifiants de requête sans enregistrer inutilement des données sensibles.
+Trace appels d'outils, décisions de politique, erreurs et request IDs sans enregistrer inutilement des données sensibles.
 
 ## Exercice
 Un agent peut exécuter du code Python arbitraire. Quelles protections minimales ?
@@ -43,4 +43,4 @@ Un agent peut exécuter du code Python arbitraire. Quelles protections minimales
 Sandbox isolée, timeout, quotas CPU/mémoire, filesystem restreint, réseau contrôlé et validation des résultats.
 
 ## À retenir
-L'autonomie augmente la surface d'attaque ; les privilèges doivent rester bornés et vérifiables.
+L'autonomie augmente la surface d'attaque ; les privilèges doivent rester bornés.
