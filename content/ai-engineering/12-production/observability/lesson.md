@@ -35,8 +35,14 @@ Définis objectifs sur disponibilité, latence et erreurs. Ajoute des signaux qu
 ## Exercice
 Le coût par requête double sans hausse de trafic. Où chercher ?
 
-### Solution
+:::indice
+Raisonne en détection → mitigation → récupération → vérification.
+:::
+
+:::solution
 Comparer tokens, modèle routé, retries, contexte, outils et changement de prompt.
+
+:::
 
 ## À retenir
 Sans corrélation entre version, requête et métriques, une régression IA est difficile à expliquer.
