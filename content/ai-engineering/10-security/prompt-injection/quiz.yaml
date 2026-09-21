@@ -1,0 +1,26 @@
+id: ai-10-security-prompt-injection-quiz
+kind: QUIZ
+questions:
+  - id: ai-10-security-prompt-injection-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quel élément doit être identifié dans une threat model AI ?"
+    options: ["Les frontières de confiance","Uniquement le modèle","Uniquement l'interface","La couleur du dashboard"]
+    answer: [0]
+    explanation: "Les frontières de confiance déterminent où les entrées doivent être contrôlées."
+    skills: [ai-security]
+  - id: ai-10-security-prompt-injection-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels contrôles réduisent les risques ?"
+    options: ["Validation","Permissions minimales","Tests adverses","Secrets dans les prompts"]
+    answer: [0, 1, 2]
+    explanation: "Validation, moindre privilège et tests adverses sont des contrôles complémentaires."
+    skills: [ai-security]
+  - id: ai-10-security-prompt-injection-q3
+    type: true_false
+    difficulty: 1
+    question: "Un prompt système constitue à lui seul une frontière de sécurité fiable."
+    answer: false
+    explanation: "Les contrôles de sécurité doivent être appliqués hors du modèle lorsque c'est possible."
+    skills: [ai-security]
