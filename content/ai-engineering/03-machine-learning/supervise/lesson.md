@@ -1,75 +1,60 @@
 ---
-id: ai-03-machine-learning-supervise
-title: "Supervised learning"
+id: ai-ml-supervised
+title: "Machine Learning supervisé"
 slug: supervise
 technology: ai-engineering
-level: intermediate
-module: 03-machine-learning
+level: beginner
+module: machine-learning
 order: 1
-estimatedMinutes: 35
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-ml-basics
-tags:
-  - ai
-  - ai-engineering
+estimatedMinutes: 55
+difficulty: 3
+xp: 120
+prerequisites: [ai-probability, ai-data-quality]
+skills: [ai-ml-basics]
+tags: [machine-learning, supervised, classification, regression]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- distinguer régression et classification ;
+- comprendre features, labels et fonction de perte ;
+- construire une baseline ;
+- interpréter les erreurs.
 
-## Introduction
+## Cadre
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+En supervisé, on observe des exemples (x, y) et cherche une fonction f(x) qui généralise à des exemples non vus. x représente les features et y la cible.
 
-## Concept
+Deux grandes familles : régression pour une cible numérique et classification pour des catégories.
 
-**Supervised learning** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+## Baseline
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+Commence par un modèle simple. Une baseline vérifie que données, labels et métriques fonctionnent avant un modèle complexe.
 
-## Exemple
+## Classification
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+Pour une classification binaire, le modèle produit souvent un score ou une probabilité puis applique un seuil.
 
-## Méthode professionnelle
+La matrice de confusion distingue vrais positifs, faux positifs, vrais négatifs et faux négatifs.
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
+Precision = TP / (TP + FP)
 
-## Erreurs fréquentes
+Recall = TP / (TP + FN)
 
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+Le choix dépend du coût des erreurs.
+
+## Régression
+
+MAE mesure l'erreur absolue moyenne. RMSE amplifie davantage les grosses erreurs. La métrique doit correspondre au coût métier.
 
 ## Exercice
 
-Construis une petite expérience sur **Supervised learning**.
+Pour un filtre anti-spam, explique pourquoi recall seul ne suffit pas.
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
-
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+Un recall élevé peut augmenter les faux positifs. Mesure aussi precision et inspecte les erreurs selon leur coût utilisateur.
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+Le ML supervisé relie données, cible, modèle, métrique et décision. Le choix de l'algorithme vient après la définition correcte de cette chaîne.
