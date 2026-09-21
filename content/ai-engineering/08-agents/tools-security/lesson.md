@@ -1,57 +1,46 @@
 ---
-id: ai-08-agents-tools-security
-title: "Tools, permissions & sandboxes"
+id: ai-08-tools-security
+title: "Sécurité des agents et outils"
 slug: tools-security
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 08-agents
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-agents
-tags: [ai, evaluation, agents]
+order: 4
+estimatedMinutes: 80
+difficulty: 5
+xp: 180
+prerequisites: [ai-08-orchestration]
+skills: [ai-agents]
+tags: [agents, tools, orchestration, safety]
 ---
 
 ## Objectifs
-- Comprendre Tools, permissions & sandboxes.
-- Concevoir un comportement contrôlable.
-- Mesurer qualité et risques.
+- réduire le privilège des agents ;
+- séparer planification et exécution ;
+- contrôler secrets et outils ;
+- auditer les actions.
 
-## Concept
-Un système agentique combine un modèle, un état et des outils. **Tools, permissions & sandboxes** doit donc être traité comme un problème d'orchestration logicielle. Le modèle ne doit jamais obtenir implicitement une permission que le produit n'a pas explicitement accordée.
+## Least privilege
+Un agent ne doit accéder qu'aux données et outils nécessaires à sa tâche. Les permissions viennent de l'application, jamais d'une réponse du modèle.
 
-Une évaluation AI doit partir de cas représentatifs, avec des attentes explicites. Les juges automatiques peuvent accélérer la mesure, mais ils doivent eux-mêmes être contrôlés et complétés par des vérifications déterministes ou humaines lorsque l'enjeu le justifie.
+## Approval boundary
+Pour une action sensible, le modèle peut préparer une proposition ; un service autorisé décide si elle peut être exécutée.
 
-## Méthode
-- Définir les états possibles.
-- Définir les transitions autorisées.
-- Limiter le nombre d'étapes.
-- Donner à chaque outil le minimum de permissions.
-- Journaliser les décisions utiles sans exposer de secrets.
-- Construire un dataset d'évaluation versionné.
+```text
+model proposal -> policy check -> authorization -> side effect
+```
 
-## Erreurs fréquentes
-- Laisser le modèle inventer des permissions.
-- Confondre mémoire utile et accumulation de contexte.
-- Utiliser uniquement un score global.
-- Évaluer sur les mêmes exemples que ceux ayant servi à ajuster le système.
-- Faire confiance à un juge automatique sans calibration.
+## Secrets
+Ne donne pas les clés API directement au contexte du modèle. Le serveur appelle les services avec des credentials protégés.
+
+## Audit
+Journalise acteur, outil, paramètres minimisés, décision d'autorisation, résultat, request ID et timestamp.
 
 ## Exercice
-Construis un agent ou une suite d'évaluation minimale. Définis dix cas, leurs attentes, les limites d'exécution et la procédure de comparaison entre deux versions.
+Un agent propose un remboursement. Quelle frontière appliquer ?
 
-:::indice
-Une métrique doit aider à prendre une décision technique. Si elle ne change jamais une décision, elle est probablement mal choisie.
-:::
-
-:::solution
-La solution doit séparer état, outils et règles, puis utiliser un dataset versionné avec des critères observables. Les contrôles critiques doivent être déterministes lorsque possible.
-:::
+### Solution
+Valider identité, montant, règles métier et idempotence dans le backend ; l'agent ne fait que proposer ou déclencher un outil déjà autorisé.
 
 ## À retenir
-- Les agents sont des systèmes à états et permissions.
-- L'évaluation est un produit logiciel versionné.
-- Les juges automatiques sont des outils, pas une vérité absolue.
+Un agent puissant doit rester moins privilégié que le système qu'il pilote.
