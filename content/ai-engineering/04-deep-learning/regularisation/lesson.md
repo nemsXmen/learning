@@ -47,8 +47,14 @@ Surveille une métrique de validation et conserve le meilleur checkpoint. Défin
 ## Exercice
 Validation dégradée, train excellent, modèle très grand. Propose trois expériences contrôlées.
 
-### Solution
+:::indice
+Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+:::
+
+:::solution
 Comparer modèle plus petit, weight decay différent et dropout différent en gardant dataset, seed, protocole et budget constants.
+
+:::
 
 ## À retenir
 La régularisation est une réponse à un problème observé. Elle doit être expérimentée et mesurée.
