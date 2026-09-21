@@ -41,8 +41,14 @@ Combine unit tests, integration tests, API tests et tests d'évaluation IA. Les 
 ## Exercice
 Pourquoi construire d'abord un gateway abstrait plutôt que disperser les appels LLM ?
 
-### Solution
+:::indice
+Décompose le système en responsabilités et vérifie chaque frontière avant le lancement.
+:::
+
+:::solution
 Pour centraliser timeout, retry, sécurité, coût, observabilité et changement de fournisseur.
+
+:::
 
 ## À retenir
 Un capstone solide progresse par tranches verticales vérifiables.
