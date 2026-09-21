@@ -4,7 +4,7 @@ title: "Opérations, incidents et coûts"
 slug: operations
 technology: ai-engineering
 level: advanced
-module: 12-production
+module: production
 order: 3
 estimatedMinutes: 75
 difficulty: 5
