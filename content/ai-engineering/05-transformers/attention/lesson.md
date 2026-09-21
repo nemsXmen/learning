@@ -58,8 +58,14 @@ L'attention dense compare potentiellement toutes les positions entre elles, ce q
 ## Exercice
 Dans une génération autoregressive, pourquoi la position 5 ne doit-elle pas utiliser directement le token réel de position 6 ?
 
-### Solution
+:::indice
+Relie le concept à la chaîne tokens → représentation → modèle → sortie.
+:::
+
+:::solution
 Cela introduirait une information future absente au moment réel de la génération et provoquerait une fuite de cible pendant l'entraînement.
+
+:::
 
 ## À retenir
 L'attention n'est pas une simple moyenne : elle produit une combinaison pondérée des valeurs selon les compatibilités calculées entre requêtes et clés.
