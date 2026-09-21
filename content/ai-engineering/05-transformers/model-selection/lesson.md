@@ -4,7 +4,7 @@ title: "Sélection et benchmark des modèles"
 slug: model-selection
 technology: ai-engineering
 level: intermediate
-module: 05-transformers
+module: transformers
 order: 4
 estimatedMinutes: 55
 difficulty: 4
