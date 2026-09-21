@@ -4,7 +4,7 @@ title: "Fiabilité et résilience"
 slug: reliability
 technology: ai-engineering
 level: advanced
-module: 12-production
+module: production
 order: 4
 estimatedMinutes: 80
 difficulty: 5
