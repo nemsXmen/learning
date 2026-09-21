@@ -14,7 +14,6 @@ skills: [ai-rag]
 tags: [rag, retrieval, llm]
 ---
 
-
 ## Objectifs
 - distinguer recherche lexicale et sémantique ;
 - comprendre embeddings et similarité ;
@@ -32,19 +31,19 @@ query -> retrieval -> ranked chunks -> context
 ```
 
 ## Similarité
-La similarité cosinus compare deux vecteurs normalisés par leur angle. Le score sert à classer, pas à prouver qu'un document est correct.
+La similarité cosinus compare deux vecteurs par leur angle. Le score sert à classer, pas à prouver qu'un document est correct.
 
 ## Hybrid search
-Une recherche hybride combine signaux lexicaux et vectoriels. Elle est utile quand les requêtes contiennent à la fois des concepts et des identifiants exacts.
+Une recherche hybride combine signaux lexicaux et vectoriels, notamment pour des requêtes mêlant concepts et identifiants exacts.
 
 ## Evaluation
-Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées. N'optimise pas uniquement la qualité perçue de quelques exemples.
+Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées.
 
 ## Exercice
-Une requête contient une référence de facture exacte mais aussi une description métier. Quelle recherche utiliser ?
+Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
 
 ### Solution
-Une approche hybride peut exploiter l'identifiant exact via recherche lexicale et le sens via recherche sémantique.
+Une recherche hybride peut exploiter l'identifiant exact et le sens de la description.
 
 ## À retenir
-Le retrieval est une étape de sélection mesurable, pas une simple fonction magique de base vectorielle.
+Le retrieval est une étape de sélection mesurable, pas une fonction magique de base vectorielle.
