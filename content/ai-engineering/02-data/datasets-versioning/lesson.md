@@ -62,7 +62,11 @@ digest = hashlib.sha256(data).hexdigest()
 
 Conçois le manifeste d'une version de dataset.
 
-### Solution
+:::indice
+Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
+:::
+
+:::solution
 
 ```json
 {
@@ -75,6 +79,8 @@ Conçois le manifeste d'une version de dataset.
   "created_at": "2026-09-21T10:00:00Z"
 }
 ```
+
+:::
 
 ## À retenir
 
