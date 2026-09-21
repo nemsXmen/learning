@@ -1,0 +1,6 @@
+slug: deep-learning
+title: "Deep Learning"
+order: 4
+part: deep-learning
+description: >
+  Réseaux de neurones et entraînement avec PyTorch.
