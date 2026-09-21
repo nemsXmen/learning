@@ -4,16 +4,34 @@ questions:
   - id: ai-15-capstone-evaluate-q1
     type: multiple_choice
     difficulty: 3
-    question: "Quelle pratique caractérise une architecture AI maintenable ?"
-    options: ["Contrats clairs entre composants","Couplage direct à un seul fournisseur","Secrets côté client","Aucune métrique"]
+    question: "Que doit contenir un golden dataset ?"
+    options: ["Cas normaux, limites et adversariaux", "Uniquement les succès", "Uniquement les prompts courts", "Uniquement les erreurs"]
     answer: [0]
-    explanation: "Les contrats rendent les composants testables et remplaçables."
+    explanation: "Une évaluation représentative couvre les risques."
     skills: [ai-capstone]
+
   - id: ai-15-capstone-evaluate-q2
     type: multiple_answer
     difficulty: 3
-    question: "Que doit mesurer un capstone AI de production ?"
-    options: ["Qualité","Latence","Coût","Erreurs"]
+    question: "Quelles dimensions mesurer ?"
+    options: ["Qualité", "Latence", "Coût", "Sécurité"]
     answer: [0, 1, 2, 3]
-    explanation: "Ces dimensions permettent d'évaluer le système au-delà de la seule démonstration."
+    explanation: "Un système production doit être évalué sur plusieurs axes."
+    skills: [ai-capstone]
+
+  - id: ai-15-capstone-evaluate-q3
+    type: true_false
+    difficulty: 2
+    question: "Une moyenne globale peut masquer une régression sur un segment critique."
+    answer: true
+    explanation: "Il faut segmenter les résultats."
+    skills: [ai-capstone]
+
+  - id: ai-15-capstone-evaluate-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Que fait une release gate ?"
+    options: ["Bloque ou signale si des seuils critiques sont dépassés", "Déploie toujours", "Supprime les tests", "Ignore la sécurité"]
+    answer: [0]
+    explanation: "Elle transforme les critères en contrôle de release."
     skills: [ai-capstone]
