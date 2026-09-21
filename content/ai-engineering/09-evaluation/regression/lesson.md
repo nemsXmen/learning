@@ -4,7 +4,7 @@ title: "Tests de régression et observabilité qualité"
 slug: regression
 technology: ai-engineering
 level: advanced
-module: 09-evaluation
+module: evaluation
 order: 4
 estimatedMinutes: 70
 difficulty: 5
