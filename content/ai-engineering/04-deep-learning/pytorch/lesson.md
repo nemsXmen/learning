@@ -60,3 +60,31 @@ Stocke model.state_dict(), optimizer.state_dict(), epoch/step, configuration et 
 
 ## À retenir
 PyTorch fournit les primitives ; l'AI Engineer construit autour une structure testable, versionnée et reprenable.
+
+## Introduction
+
+PyTorch fournit les abstractions pour construire et entraîner des réseaux.
+
+## Concept
+
+Tensor, module, dataset et autograd forment les briques principales.
+
+## Exemple
+
+Un nn.Module encapsule paramètres et calcul ; DataLoader fournit les mini-batches.
+
+## Comment ça fonctionne
+
+dataset → DataLoader → model → loss → optimizer → checkpoint
+
+## Questions d'entretien
+
+- Pourquoi séparer train et eval ?
+
+  :::indice
+  Relie la question au comportement réel d'un entraînement.
+  :::
+
+  :::reponse
+  Certains composants comme dropout et batch normalization ont un comportement différent en évaluation.
+  :::
