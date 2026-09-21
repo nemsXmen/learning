@@ -32,3 +32,32 @@ Pour une réponse libre, une grille explicite peut évaluer exactitude, couvertu
 
 ## À retenir
 Une évaluation utile permet de comparer deux versions sans dépendre d'une impression ponctuelle.
+
+
+## Introduction
+
+L'évaluation transforme une intuition de qualité en critères mesurables.
+
+## Concept
+
+Un dataset d'évaluation doit représenter les cas normaux, limites et adversariaux.
+
+## Exemple
+
+Un golden set versionné permet de comparer deux prompts ou modèles sur les mêmes entrées.
+
+## Comment ça fonctionne
+
+dataset → criteria → run → metrics → decision
+
+## Questions d'entretien
+
+- Pourquoi versionner le dataset d'évaluation ?
+
+  :::indice
+  Une bonne métrique doit être reliée à une décision.
+  :::
+
+  :::reponse
+  Pour rendre les comparaisons reproductibles et détecter les changements de couverture.
+  :::
