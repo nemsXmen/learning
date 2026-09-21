@@ -1,0 +1,19 @@
+id: ai-05-transformers-model-selection-quiz
+kind: QUIZ
+questions:
+  - id: ai-05-transformers-model-selection-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Comment comparer correctement plusieurs modèles ?"
+    options: ["Même protocole et mêmes cas","Un prompt différent pour chaque modèle","Uniquement le nombre de paramètres","Une démonstration manuelle"]
+    answer: [0]
+    explanation: "Le protocole doit rester constant."
+    skills: [ai-llm]
+  - id: ai-05-transformers-model-selection-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels critères peuvent influencer un choix de modèle ?"
+    options: ["Qualité","Latence","Coût","Contraintes de confidentialité"]
+    answer: [0, 1, 2, 3]
+    explanation: "Le choix est une décision système."
+    skills: [ai-llm]
