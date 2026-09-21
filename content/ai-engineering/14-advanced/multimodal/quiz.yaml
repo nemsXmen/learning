@@ -4,16 +4,34 @@ questions:
   - id: ai-14-advanced-multimodal-q1
     type: multiple_choice
     difficulty: 3
-    question: "Quelle pratique caractérise une architecture AI maintenable ?"
-    options: ["Contrats clairs entre composants","Couplage direct à un seul fournisseur","Secrets côté client","Aucune métrique"]
+    question: "Quelle étape peut être nécessaire pour un document scanné ?"
+    options: ["OCR", "Fine-tuning obligatoire", "Rollback", "Rate limit"]
     answer: [0]
-    explanation: "Les contrats rendent les composants testables et remplaçables."
+    explanation: "Le texte doit d'abord être extrait de l'image."
     skills: [ai-multimodal]
+
   - id: ai-14-advanced-multimodal-q2
+    type: true_false
+    difficulty: 2
+    question: "Une erreur de transcription audio peut devenir une erreur de compréhension finale."
+    answer: true
+    explanation: "Les étapes amont influencent toutes les étapes aval."
+    skills: [ai-multimodal]
+
+  - id: ai-14-advanced-multimodal-q3
     type: multiple_answer
     difficulty: 3
-    question: "Que doit mesurer un capstone AI de production ?"
-    options: ["Qualité","Latence","Coût","Erreurs"]
+    question: "Quelles modalités peuvent appartenir à un pipeline multimodal ?"
+    options: ["Texte", "Image", "Audio", "Vidéo"]
     answer: [0, 1, 2, 3]
-    explanation: "Ces dimensions permettent d'évaluer le système au-delà de la seule démonstration."
+    explanation: "Les systèmes multimodaux combinent plusieurs représentations."
+    skills: [ai-multimodal]
+
+  - id: ai-14-advanced-multimodal-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Que faut-il évaluer séparément ?"
+    options: ["Extraction et compréhension finale", "Uniquement la réponse finale", "Uniquement le nombre de tokens", "Uniquement la latence"]
+    answer: [0]
+    explanation: "Séparer les étapes localise les erreurs."
     skills: [ai-multimodal]
