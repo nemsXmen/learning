@@ -55,13 +55,19 @@ print(w.grad)
 ## Exercice
 Crée un tenseur (32, 128), ajoute un biais (128,), puis vérifie la shape.
 
-### Solution
+:::indice
+Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+:::
+
+:::solution
 ```python
 x = torch.randn(32, 128)
 bias = torch.zeros(128)
 y = x + bias
 assert y.shape == (32, 128)
 ```
+
+:::
 
 ## À retenir
 Shape, dtype, device et gradients sont quatre notions essentielles au debugging d'un réseau neuronal.
