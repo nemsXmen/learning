@@ -96,7 +96,11 @@ Une fuite de données entre ces ensembles peut produire une métrique artificiel
 
 Calcule la similarité cosinus de a=[1,0] et b=[0.8,0.6].
 
-### Solution
+:::indice
+Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
+:::
+
+:::solution
 
 Le produit scalaire vaut 0.8 et les deux normes valent 1. La similarité vaut donc 0.8.
 
@@ -107,6 +111,8 @@ b = np.array([0.8, 0.6])
 similarity = (a @ b) / (np.linalg.norm(a) * np.linalg.norm(b))
 print(similarity)
 ```
+
+:::
 
 ## À retenir
 
