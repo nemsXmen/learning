@@ -4,7 +4,7 @@ title: "Queues, cache et tâches asynchrones"
 slug: queues-cache
 technology: ai-engineering
 level: advanced
-module: 11-infrastructure
+module: infrastructure
 order: 3
 estimatedMinutes: 75
 difficulty: 4
