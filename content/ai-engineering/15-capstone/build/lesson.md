@@ -50,6 +50,13 @@ Pour centraliser timeout, retry, sécurité, coût, observabilité et changement
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 Un capstone solide progresse par tranches verticales vérifiables.
 
