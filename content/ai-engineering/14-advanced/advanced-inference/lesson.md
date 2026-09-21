@@ -10,7 +10,7 @@ estimatedMinutes: 90
 difficulty: 5
 xp: 200
 prerequisites: [ai-14-multimodal]
-skills: [ai-finetuning]
+skills: [ai-infrastructure]
 tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
