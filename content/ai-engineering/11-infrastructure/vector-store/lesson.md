@@ -1,57 +1,46 @@
 ---
-id: ai-11-infrastructure-vector-store
-title: "Vector stores & indexing"
+id: ai-11-vector-store
+title: "Vector stores et architecture de recherche"
 slug: vector-store
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 11-infrastructure
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-infrastructure
-tags: [ai, infrastructure]
+order: 4
+estimatedMinutes: 75
+difficulty: 5
+xp: 170
+prerequisites: [ai-07-embeddings]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre Vector stores & indexing.
-- Choisir une architecture adaptée à la charge.
-- Mesurer fiabilité, latence et coût.
+- choisir un stockage vectoriel ;
+- comprendre index et filtres ;
+- gérer multi-tenant et migrations ;
+- mesurer les compromis opérationnels.
 
-## Concept
-L'infrastructure AI doit isoler les ressources coûteuses et les dépendances externes du reste de l'application. **Vector stores & indexing** se conçoit avec des limites explicites : concurrence, taille des requêtes, mémoire, durée d'exécution, quotas et capacité.
+## Architecture
+Un vector store conserve vecteurs et métadonnées et fournit une recherche par proximité.
 
-Une architecture robuste accepte les pics et les erreurs. Les files permettent de découpler les traitements longs, les caches réduisent les appels répétitifs et les limites empêchent une demande d'épuiser les ressources.
+```text
+tenant + filters -> candidate vectors -> top-k -> reranker
+```
 
-## Méthode
-1. Mesurer le trafic attendu.
-2. Définir un budget de latence et de coût.
-3. Déterminer les limites de concurrence.
-4. Ajouter timeouts, retries bornés et rate limits.
-5. Observer saturation CPU/GPU, mémoire et files.
-6. Tester sous charge avant production.
+## Index
+Les index ANN accélèrent la recherche approximative au prix de compromis entre recall, mémoire et latence.
 
-## Erreurs fréquentes
-- Dimensionner sur une moyenne au lieu d'un pic.
-- Mettre un cache sans stratégie d'invalidation.
-- Utiliser des retries qui amplifient la charge.
-- Ignorer la taille des vecteurs ou de l'index.
-- Confondre capacité théorique et débit réellement mesuré.
+## Multi-tenant
+Les filtres d'autorisation doivent être intégrés à la requête de retrieval et testés comme une propriété de sécurité.
+
+## Migration
+Changer dimension ou modèle d'embedding implique souvent un nouvel index et une réindexation contrôlée.
 
 ## Exercice
-Dessine une architecture pour **Vector stores & indexing**. Donne au moins une limite de capacité, une métrique de saturation, une stratégie de reprise et une estimation du coût.
+Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
 
-:::indice
-Chaque ressource partagée doit avoir un propriétaire, une limite et une métrique.
-:::
-
-:::solution
-Une architecture acceptable explicite les ressources, limites, files éventuelles, métriques de saturation et comportements en cas de panne ou de surcharge.
-:::
+### Solution
+L'isolation d'autorisation au retrieval. Le filtre tenant doit être imposé côté serveur et couvert par des tests.
 
 ## À retenir
-- L'infrastructure est une partie du produit AI.
-- Les limites protègent coût et disponibilité.
-- Il faut mesurer avant de dimensionner.
+Un vector store est une infrastructure de données avec des contraintes de sécurité, cohérence et performance.
