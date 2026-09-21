@@ -9,7 +9,7 @@ order: 1
 estimatedMinutes: 50
 difficulty: 3
 xp: 120
-prerequisites: [ai-transformers]
+prerequisites: [ai-dl-pytorch]
 skills: [ai-transformers]
 tags: [transformers, llm]
 ---
