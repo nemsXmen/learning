@@ -4,7 +4,7 @@ title: "Optimiser qualité, coût et latence"
 slug: quality-cost
 technology: ai-engineering
 level: advanced
-module: 09-evaluation
+module: evaluation
 order: 3
 estimatedMinutes: 70
 difficulty: 4
