@@ -4,7 +4,7 @@ title: "Model serving et inference"
 slug: serving
 technology: ai-engineering
 level: advanced
-module: 11-infrastructure
+module: infrastructure
 order: 2
 estimatedMinutes: 80
 difficulty: 5
