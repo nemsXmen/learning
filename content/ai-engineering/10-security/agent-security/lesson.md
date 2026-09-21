@@ -39,8 +39,14 @@ Trace appels d'outils, décisions de politique, erreurs et request IDs sans enre
 ## Exercice
 Un agent peut exécuter du code Python arbitraire. Quelles protections minimales ?
 
-### Solution
+:::indice
+Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
+:::
+
+:::solution
 Sandbox isolée, timeout, quotas CPU/mémoire, filesystem restreint, réseau contrôlé et validation des résultats.
+
+:::
 
 ## À retenir
 L'autonomie augmente la surface d'attaque ; les privilèges doivent rester bornés.
