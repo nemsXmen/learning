@@ -41,3 +41,32 @@ Vérifier saturation GPU, file d'attente, batching, concurrence et temps de pré
 
 ## À retenir
 Servir un modèle est un problème de système distribué.
+
+
+## Introduction
+
+Servir un modèle exige de gérer concurrence, batching, streaming et tail latency.
+
+## Concept
+
+p50, p95 et p99 décrivent des expériences différentes.
+
+## Exemple
+
+Un service peut avoir un bon temps moyen mais un p99 très élevé sous forte concurrence.
+
+## Comment ça fonctionne
+
+requests → scheduler → workers → response → metrics
+
+## Questions d'entretien
+
+- Pourquoi suivre p99 ?
+
+  :::indice
+  Relie performance et fiabilité au comportement sous charge.
+  :::
+
+  :::reponse
+  Parce que les utilisateurs les plus lents subissent souvent les files d'attente et saturations.
+  :::
