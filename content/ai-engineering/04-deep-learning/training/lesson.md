@@ -4,13 +4,13 @@ title: "Entraîner un réseau : loss, backpropagation et optimisation"
 slug: training
 technology: ai-engineering
 level: intermediate
-module: 04-deep-learning
+module: deep-learning
 order: 2
 estimatedMinutes: 70
 difficulty: 4
 xp: 150
-prerequisites: [ai-deep-learning]
-skills: [ai-deep-learning]
+prerequisites: [ai-dl-tensors]
+skills: [ai-pytorch]
 tags: [deep-learning, pytorch]
 ---
 
