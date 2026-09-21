@@ -9,7 +9,7 @@ order: 3
 estimatedMinutes: 60
 difficulty: 4
 xp: 130
-prerequisites: [ai-ml-basics, ai-experimentation]
+prerequisites: [ai-ml-supervised, ai-data-versioning]
 skills: [ai-model-selection]
 tags: [validation, cross-validation, leakage, generalization]
 ---
