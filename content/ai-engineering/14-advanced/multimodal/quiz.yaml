@@ -1,0 +1,19 @@
+id: ai-14-advanced-multimodal-quiz
+kind: QUIZ
+questions:
+  - id: ai-14-advanced-multimodal-q1
+    type: multiple_choice
+    difficulty: 3
+    question: "Quelle pratique caractérise une architecture AI maintenable ?"
+    options: ["Contrats clairs entre composants","Couplage direct à un seul fournisseur","Secrets côté client","Aucune métrique"]
+    answer: [0]
+    explanation: "Les contrats rendent les composants testables et remplaçables."
+    skills: [ai-multimodal]
+  - id: ai-14-advanced-multimodal-q2
+    type: multiple_answer
+    difficulty: 3
+    question: "Que doit mesurer un capstone AI de production ?"
+    options: ["Qualité","Latence","Coût","Erreurs"]
+    answer: [0, 1, 2, 3]
+    explanation: "Ces dimensions permettent d'évaluer le système au-delà de la seule démonstration."
+    skills: [ai-multimodal]
