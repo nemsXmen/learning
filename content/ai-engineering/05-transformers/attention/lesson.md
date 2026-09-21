@@ -63,3 +63,31 @@ Cela introduirait une information future absente au moment réel de la générat
 
 ## À retenir
 L'attention n'est pas une simple moyenne : elle produit une combinaison pondérée des valeurs selon les compatibilités calculées entre requêtes et clés.
+
+## Introduction
+
+L'attention permet à un Transformer de pondérer dynamiquement les relations entre positions.
+
+## Concept
+
+Queries, keys et values produisent des scores normalisés ; le masque causal empêche de voir le futur.
+
+## Exemple
+
+Pour une génération autoregressive, la position courante ne doit pas accéder aux tokens suivants.
+
+## Comment ça fonctionne
+
+Q/K/V → scores → scaling → mask → softmax → weighted values
+
+## Questions d'entretien
+
+- Pourquoi utiliser un masque causal ?
+
+  :::indice
+  Pense au lien entre comportement du modèle et contraintes de production.
+  :::
+
+  :::reponse
+  Pour conserver la contrainte autoregressive lors de l'entraînement et de la génération.
+  :::
