@@ -4,13 +4,13 @@ title: "Tool calling et exécution contrôlée"
 slug: tools
 technology: ai-engineering
 level: intermediate
-module: 06-llm-engineering
+module: llm-engineering
 order: 3
 estimatedMinutes: 70
 difficulty: 4
 xp: 150
 prerequisites: [ai-06-structured-output]
-skills: [ai-llm-engineering]
+skills: [ai-llm-apps]
 tags: [llm, ai-engineering]
 ---
 
