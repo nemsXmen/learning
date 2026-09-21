@@ -1,56 +1,54 @@
 ---
-id: ai-06-llm-engineering-structured-output
-title: "Structured outputs & validation"
+id: ai-06-structured-output
+title: "Sorties structurées et contrats de données"
 slug: structured-output
 technology: ai-engineering
 level: intermediate
 module: 06-llm-engineering
-order: 1
-estimatedMinutes: 40
-difficulty: 3
-xp: 110
-prerequisites: []
-skills:
-  - ai-llm-apps
-tags: [ai, llm, production]
+order: 2
+estimatedMinutes: 65
+difficulty: 4
+xp: 140
+prerequisites: [ai-06-prompting]
+skills: [ai-llm-engineering]
+tags: [llm, ai-engineering]
 ---
 
+
 ## Objectifs
-- Comprendre Structured outputs & validation.
-- Construire un composant LLM testable.
-- Maîtriser validation, erreurs et limites opérationnelles.
+- obtenir des sorties machine-readable ;
+- valider schéma et invariants métier ;
+- gérer les erreurs de sortie ;
+- séparer génération et effet de bord.
 
-## Concept
-Une application LLM doit traiter le modèle comme une dépendance non déterministe. Le logiciel autour du modèle impose donc des contrats : entrées validées, sorties structurées, timeouts, limites de taille, gestion des erreurs et journalisation sans données sensibles.
+## JSON ne suffit pas
+Du JSON peut être syntaxiquement valide mais métierement faux.
 
-Pour **Structured outputs & validation**, sépare l'orchestration de l'interface fournisseur. Un gateway permet de centraliser authentification, quotas, retries, fallback, budget et métriques.
+```text
+LLM -> parsing -> schema validation -> business validation -> application
+```
 
-## Pratique
-1. Définis un schéma d'entrée.
-2. Définis un schéma de sortie.
-3. Valide la réponse avant de la transmettre au reste du système.
-4. Ajoute timeout et limite de retry.
-5. Mesure tokens, latence, erreurs et coût.
+## Validation
+La sortie doit être validée côté serveur. Pour TypeScript, un schéma Zod peut servir de frontière déterministe.
 
-## Erreurs fréquentes
-- Faire confiance à une sortie texte quand un contrat structuré est nécessaire.
-- Réessayer sans limite une requête coûteuse.
-- Exposer les secrets au client.
-- Logger des prompts contenant des données sensibles.
-- Coupler toute l'application à une API fournisseur.
+```typescript
+const parsed = schema.safeParse(modelOutput)
+if (!parsed.success) {
+  // retry contrôlé, fallback ou erreur
+}
+```
+
+## Stratégie d'échec
+Prévois retry limité, fallback, réponse partielle explicitement marquée ou erreur. Un retry aveugle augmente coûts et latence.
+
+## Effets de bord
+Si une sortie déclenche une action externe, utilise autorisation, idempotency key et audit avant l'exécution.
 
 ## Exercice
-Conçois un service structured-output avec une interface fournisseur indépendante. Décris ses entrées, sorties, erreurs, timeout, politique de retry et métriques.
+Le modèle produit un montant négatif alors que le métier l'interdit.
 
-:::indice
-Le modèle peut échouer ou répondre dans un format inattendu : le système doit rester contrôlable.
-:::
-
-:::solution
-Un service robuste valide les entrées, impose un format de sortie, limite les retries, protège les secrets et expose des métriques permettant d'observer qualité, latence et coût.
-:::
+### Solution
+Rejeter la sortie via un invariant métier, journaliser le cas puis appliquer une stratégie contrôlée.
 
 ## À retenir
-- Le modèle est une dépendance ; l'application doit en contrôler les frontières.
-- Les sorties doivent être validées avant usage métier.
-- Les limites opérationnelles sont des fonctionnalités, pas des détails.
+Une sortie LLM devient fiable pour l'application seulement après validation déterministe.
