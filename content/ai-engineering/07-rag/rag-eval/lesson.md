@@ -49,3 +49,32 @@ Examiner les cas gagnés et perdus. Ne pas conclure avec une seule métrique : i
 
 ## À retenir
 Évaluer RAG signifie mesurer séparément récupération, réponse et contraintes opérationnelles.
+
+
+## Introduction
+
+Un système RAG doit être évalué séparément sur retrieval et génération.
+
+## Concept
+
+Recall, precision, groundedness et qualité finale mesurent des étapes différentes.
+
+## Exemple
+
+Un bon answer score avec un mauvais retrieval peut cacher des réponses mémorisées ou des cas faciles.
+
+## Comment ça fonctionne
+
+dataset → retrieve → evaluate context → generate → evaluate answer
+
+## Questions d'entretien
+
+- Pourquoi séparer retrieval et génération dans les tests ?
+
+  :::indice
+  Sépare toujours les erreurs de retrieval des erreurs de génération.
+  :::
+
+  :::reponse
+  Pour localiser si une régression vient de la recherche ou du modèle génératif.
+  :::
