@@ -50,8 +50,14 @@ Le frontend ne doit pas appeler directement les fournisseurs de modèles. Le bac
 ## Exercice
 Dessine les trust boundaries et indique quelles opérations nécessitent une autorisation indépendante du modèle.
 
-### Solution
+:::indice
+Décompose le système en responsabilités et vérifie chaque frontière avant le lancement.
+:::
+
+:::solution
 Les outils ayant des effets de bord, accès aux données sensibles ou coût important doivent être protégés par le backend et non par une simple instruction du prompt.
+
+:::
 
 ## À retenir
 Le capstone doit être conçu comme un produit logiciel distribué, pas comme un simple prompt.
