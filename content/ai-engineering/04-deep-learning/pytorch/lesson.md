@@ -1,60 +1,62 @@
 ---
-id: ai-04-deep-learning-pytorch
-title: "PyTorch engineering"
+id: ai-dl-pytorch
+title: "PyTorch : modèles, datasets et entraînement reproductible"
 slug: pytorch
 technology: ai-engineering
 level: intermediate
 module: 04-deep-learning
-order: 1
-estimatedMinutes: 40
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-pytorch
-tags: [ai, machine-learning]
+order: 3
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-dl-tensors, ai-dl-training]
+skills: [ai-deep-learning]
+tags: [deep-learning, pytorch]
 ---
 
 ## Objectifs
-- Comprendre PyTorch engineering.
-- Relier la théorie à une implémentation testable.
-- Savoir diagnostiquer les erreurs et compromis.
+- structurer un modèle PyTorch ;
+- utiliser Dataset et DataLoader ;
+- séparer train et eval ;
+- sauvegarder un checkpoint.
 
-## Introduction
-En AI engineering, un modèle n'est qu'une partie du système. PyTorch engineering devient utile lorsqu'il est relié à des données contrôlées, une méthode d'évaluation et un contrat d'exécution.
+## Module
+```python
+import torch.nn as nn
 
-## Concept
-Travaille avec une séparation nette entre données, entraînement, évaluation et inférence. Une baseline simple sert de point de comparaison. Les jeux d'entraînement, validation et test doivent avoir des rôles distincts afin d'éviter la fuite d'information.
+class Classifier(nn.Module):
+    def __init__(self, input_size, hidden, classes):
+        super().__init__()
+        self.net = nn.Sequential(nn.Linear(input_size, hidden), nn.ReLU(), nn.Linear(hidden, classes))
+    def forward(self, x):
+        return self.net(x)
+```
 
-Pour les réseaux de neurones, pense en termes de tenseurs, fonction de perte, gradients, optimiseur et boucle d'entraînement. Pour la sélection de modèles, compare les mêmes données et la même métrique plutôt que des impressions visuelles.
+## Dataset et DataLoader
+Dataset définit comment récupérer un exemple. DataLoader organise les batches, le mélange et le parallélisme. Teste types, shapes et labels avant un entraînement long.
 
-## Pratique
-1. Définis les données et leur schéma.
-2. Construis une baseline.
-3. Entraîne ou évalue un modèle.
-4. Mesure sur des données jamais utilisées pour ajuster le modèle.
-5. Analyse les erreurs par catégorie.
-6. Versionne la configuration.
+## Train vs eval
+```python
+model.train()
+model.eval()
+with torch.no_grad():
+    predictions = model(inputs)
+```
 
-## Erreurs fréquentes
-- Utiliser le test pour choisir les hyperparamètres.
-- Comparer des modèles avec des jeux de données différents.
-- Ignorer les classes rares.
-- Optimiser une métrique qui ne correspond pas au produit.
-- Déboguer uniquement le modèle alors que le problème vient des données.
+eval change notamment le comportement de dropout et batch normalization.
+
+## Checkpoint
+```python
+torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(), "epoch": epoch}, "checkpoint.pt")
+```
+
+Pour reprendre, conserve aussi configuration, métriques et état d'un scheduler/scaler s'ils existent.
 
 ## Exercice
-Crée une expérience minimale liée à **PyTorch engineering**. Documente la baseline, les données utilisées, la métrique, les erreurs observées et une modification que tu pourrais tester ensuite.
+Conçois un checkpoint permettant de reprendre l'entraînement après interruption.
 
-:::indice
-Une expérience utile permet de distinguer une amélioration réelle d'une variation due aux données ou au hasard.
-:::
-
-:::solution
-Conserve une baseline immuable, sépare les jeux de données, fixe les paramètres importants et compare les résultats avec la même procédure.
-:::
+### Solution
+Stocke model.state_dict(), optimizer.state_dict(), epoch/step, configuration et métriques.
 
 ## À retenir
-- Les données et l'évaluation déterminent la qualité de l'expérience.
-- Une baseline rend les améliorations mesurables.
-- Les erreurs doivent être analysées avant de complexifier le modèle.
+PyTorch fournit les primitives ; l'AI Engineer construit autour une structure testable, versionnée et reprenable.
