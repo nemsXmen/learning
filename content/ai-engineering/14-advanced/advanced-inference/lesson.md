@@ -1,51 +1,43 @@
 ---
-id: ai-14-advanced-advanced-inference
-title: "Advanced inference optimization"
+id: ai-14-advanced-inference
+title: "Inference avancée et systèmes à haute performance"
 slug: advanced-inference
 technology: ai-engineering
 level: advanced
 module: 14-advanced
-order: 1
-estimatedMinutes: 60
+order: 4
+estimatedMinutes: 90
 difficulty: 5
-xp: 180
-prerequisites: []
-skills:
-  - ai-finetuning
-tags: [ai, capstone, production]
+xp: 200
+prerequisites: [ai-14-multimodal]
+skills: [ai-advanced]
+tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
 ## Objectifs
-- Concevoir une solution complète autour de Advanced inference optimization.
-- Relier architecture, données, modèle et produit.
-- Prouver la qualité par des tests et des métriques.
+- raisonner sur throughput et tail latency ;
+- comprendre batching dynamique ;
+- choisir cache et parallélisme ;
+- dimensionner un service d'inférence.
 
-## Concept
-Le niveau expert consiste à raisonner sur le système complet. **Advanced inference optimization** ne doit pas être traité isolément : l'interface, les données, le modèle, le retrieval éventuel, les outils, la sécurité et l'observabilité forment une seule chaîne.
+## Performance
+Mesure temps jusqu'au premier token, temps total, tokens/seconde, concurrence et p95/p99.
 
-Dans le capstone, chaque composant doit avoir un contrat clair. Les opérations longues passent par une stratégie asynchrone adaptée, les secrets restent côté serveur et les actions à risque sont contrôlées.
+```text
+requests -> scheduler -> dynamic batching -> GPU workers -> streams
+```
 
-## Méthode
-- Écrire l'architecture avant le code.
-- Définir les contrats et schémas.
-- Construire une baseline fonctionnelle.
-- Ajouter RAG ou agents uniquement si le besoin le justifie.
-- Créer un jeu d'évaluation versionné.
-- Instrumenter qualité, latence, coût et erreurs.
-- Préparer rollback et documentation.
+## KV cache
+Pour les modèles autoregressifs, le cache d'attention peut réduire le recalcul mais consomme de la mémoire. Sa gestion devient importante avec longs contextes et forte concurrence.
+
+## Scalabilité
+Scale horizontalement lorsque la charge et les contraintes de mémoire le justifient. Un autoscaling mal calibré peut provoquer des cold starts et coûts excessifs.
 
 ## Exercice
-Implémente une partie du capstone sur **Advanced inference optimization**. Fournis architecture, contrats, tests, métriques et procédure de déploiement.
+Le throughput augmente mais p99 devient mauvais après activation du batching. Quelle analyse ?
 
-:::indice
-Chaque composant doit pouvoir être remplacé ou testé sans dépendre implicitement de tout le reste.
-:::
-
-:::solution
-Une solution complète sépare domaine, orchestration et infrastructure, valide les entrées/sorties, limite les permissions et mesure le système avec un dataset d'évaluation versionné.
-:::
+### Solution
+Mesurer taille des batches, attente du scheduler, distribution de longueur des requêtes et saturation GPU.
 
 ## À retenir
-- L'expertise vient de la capacité à relier les couches.
-- La production exige tests, sécurité et observabilité.
-- Un capstone doit laisser des artefacts réutilisables : code, tests, métriques et documentation.
+L'inférence avancée est une optimisation de système complète, pas seulement un choix de GPU.
