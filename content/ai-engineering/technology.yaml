@@ -1,0 +1,69 @@
+slug: ai-engineering
+name: AI Engineering
+order: 8
+description: >
+  Parcours de zéro à production pour concevoir, construire, évaluer, sécuriser et
+  exploiter des systèmes d'intelligence artificielle modernes, des fondamentaux Python
+  jusqu'aux LLM, RAG, agents et applications AI de production.
+published: true
+parts:
+  - slug: foundations
+    title: Foundations — Python, Linux, Git et mathématiques
+    order: 1
+    description: Construire les bases techniques et mathématiques nécessaires à l'IA.
+  - slug: data
+    title: Data Engineering for AI
+    order: 2
+    description: Acquérir, nettoyer, représenter, versionner et servir des données.
+  - slug: machine-learning
+    title: Machine Learning
+    order: 3
+    description: Comprendre les modèles, l'entraînement, la validation et la généralisation.
+  - slug: deep-learning
+    title: Deep Learning
+    order: 4
+    description: Réseaux de neurones, PyTorch, optimisation et entraînement.
+  - slug: transformers
+    title: Transformers & LLMs
+    order: 5
+    description: Attention, tokenisation, transformers et modèles de langage.
+  - slug: llm-engineering
+    title: LLM Engineering
+    order: 6
+    description: Prompts, structured output, tool calling, streaming et gateways.
+  - slug: rag
+    title: Retrieval-Augmented Generation
+    order: 7
+    description: Recherche, embeddings, chunking, reranking et RAG robuste.
+  - slug: agents
+    title: AI Agents
+    order: 8
+    description: Outils, boucles agentiques, mémoire, planification et garde-fous.
+  - slug: evaluation
+    title: AI Evaluation
+    order: 9
+    description: Construire des jeux de tests, métriques, évaluations humaines et régressions.
+  - slug: security
+    title: AI Security
+    order: 10
+    description: Prompt injection, exfiltration, permissions, données sensibles et abus.
+  - slug: infrastructure
+    title: AI Infrastructure
+    order: 11
+    description: GPU, serving, queues, caches, vector stores et observabilité.
+  - slug: production
+    title: Production AI
+    order: 12
+    description: Fiabilité, coûts, latence, monitoring, déploiement et opérations.
+  - slug: product
+    title: AI Product Engineering
+    order: 13
+    description: Concevoir des fonctionnalités AI utiles, mesurables et maintenables.
+  - slug: advanced
+    title: Advanced AI Engineering
+    order: 14
+    description: Fine-tuning, distillation, multimodalité et optimisation avancée.
+  - slug: capstone
+    title: Capstone — AI SaaS de production
+    order: 15
+    description: Construire une application AI complète avec données, RAG, agents, évaluation et observabilité.
