@@ -4,7 +4,7 @@ title: "Threat modeling pour les systèmes IA"
 slug: threat-model
 technology: ai-engineering
 level: advanced
-module: 10-security
+module: security
 order: 1
 estimatedMinutes: 70
 difficulty: 5
