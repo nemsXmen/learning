@@ -1,57 +1,40 @@
 ---
-id: ai-09-evaluation-metrics
-title: "Metrics, judges & human review"
+id: ai-09-metrics
+title: "Métriques LLM et jugement automatique"
 slug: metrics
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 09-evaluation
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-evaluation
-tags: [ai, evaluation, agents]
+order: 2
+estimatedMinutes: 75
+difficulty: 5
+xp: 170
+prerequisites: [ai-09-eval-design]
+skills: [ai-evaluation]
+tags: [evaluation, metrics, llm]
 ---
 
 ## Objectifs
-- Comprendre Metrics, judges & human review.
-- Concevoir un comportement contrôlable.
-- Mesurer qualité et risques.
+- choisir une métrique adaptée ;
+- comprendre précision, rappel et taux d'erreur ;
+- utiliser un judge avec prudence ;
+- suivre latence et coût.
 
-## Concept
-Un système agentique combine un modèle, un état et des outils. **Metrics, judges & human review** doit donc être traité comme un problème d'orchestration logicielle. Le modèle ne doit jamais obtenir implicitement une permission que le produit n'a pas explicitement accordée.
+## Métriques
+Classification : precision, recall, F1. Extraction : exact match ou validation de schéma. RAG : recall@k et groundedness. Système : latence, erreurs, tokens et coût.
 
-Une évaluation AI doit partir de cas représentatifs, avec des attentes explicites. Les juges automatiques peuvent accélérer la mesure, mais ils doivent eux-mêmes être contrôlés et complétés par des vérifications déterministes ou humaines lorsque l'enjeu le justifie.
+## LLM-as-judge
+Un autre modèle peut noter une réponse selon une rubrique. Mais il peut être biaisé par formulation, longueur ou préférence de modèle.
 
-## Méthode
-- Définir les états possibles.
-- Définir les transitions autorisées.
-- Limiter le nombre d'étapes.
-- Donner à chaque outil le minimum de permissions.
-- Journaliser les décisions utiles sans exposer de secrets.
-- Construire un dataset d'évaluation versionné.
-
-## Erreurs fréquentes
-- Laisser le modèle inventer des permissions.
-- Confondre mémoire utile et accumulation de contexte.
-- Utiliser uniquement un score global.
-- Évaluer sur les mêmes exemples que ceux ayant servi à ajuster le système.
-- Faire confiance à un juge automatique sans calibration.
+```text
+metric = quality + reliability + cost + latency
+```
 
 ## Exercice
-Construis un agent ou une suite d'évaluation minimale. Définis dix cas, leurs attentes, les limites d'exécution et la procédure de comparaison entre deux versions.
+Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
 
-:::indice
-Une métrique doit aider à prendre une décision technique. Si elle ne change jamais une décision, elle est probablement mal choisie.
-:::
-
-:::solution
-La solution doit séparer état, outils et règles, puis utiliser un dataset versionné avec des critères observables. Les contrôles critiques doivent être déterministes lorsque possible.
-:::
+### Solution
+Le tableau d'évaluation doit intégrer le coût par requête ou par tâche, avec une mesure de qualité comparable.
 
 ## À retenir
-- Les agents sont des systèmes à états et permissions.
-- L'évaluation est un produit logiciel versionné.
-- Les juges automatiques sont des outils, pas une vérité absolue.
+Aucune métrique unique ne résume un système LLM.
