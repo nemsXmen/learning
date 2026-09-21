@@ -36,8 +36,14 @@ Une queue bornée et des réponses de surcharge protègent le système lorsque l
 ## Exercice
 La latence p99 explose pendant les pics. Quelles hypothèses tester ?
 
-### Solution
+:::indice
+Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
+:::
+
+:::solution
 Vérifier saturation GPU, file d'attente, batching, concurrence et temps de prétraitement séparément.
+
+:::
 
 ## À retenir
 Servir un modèle est un problème de système distribué.
