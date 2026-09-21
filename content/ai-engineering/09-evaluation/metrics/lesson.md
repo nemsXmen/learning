@@ -4,7 +4,7 @@ title: "Métriques LLM et jugement automatique"
 slug: metrics
 technology: ai-engineering
 level: advanced
-module: 09-evaluation
+module: evaluation
 order: 2
 estimatedMinutes: 75
 difficulty: 5
