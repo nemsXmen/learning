@@ -1,51 +1,57 @@
 ---
-id: ai-15-capstone-architecture
-title: "Capstone architecture"
+id: ai-15-architecture
+title: "Capstone : architecture d'un AI SaaS production"
 slug: architecture
 technology: ai-engineering
-level: advanced
+level: expert
 module: 15-capstone
 order: 1
-estimatedMinutes: 60
+estimatedMinutes: 100
 difficulty: 5
-xp: 180
-prerequisites: []
-skills:
-  - ai-capstone
-tags: [ai, capstone, production]
+xp: 240
+prerequisites: [ai-14-advanced-inference]
+skills: [ai-capstone]
+tags: [capstone, architecture, rag, agents, production]
 ---
 
 ## Objectifs
-- Concevoir une solution complète autour de Capstone architecture.
-- Relier architecture, données, modèle et produit.
-- Prouver la qualité par des tests et des métriques.
+- concevoir un AI SaaS complet ;
+- définir les frontières de responsabilité ;
+- intégrer données, modèles et outils ;
+- préparer sécurité, observabilité et billing.
 
-## Concept
-Le niveau expert consiste à raisonner sur le système complet. **Capstone architecture** ne doit pas être traité isolément : l'interface, les données, le modèle, le retrieval éventuel, les outils, la sécurité et l'observabilité forment une seule chaîne.
+## Architecture cible
+```text
+Next.js
+   |
+API / Auth / Quotas
+   |
+AI Gateway ---- Evaluation
+ |  |  LLM RAG  Agents
+ |   |     |
+Postgres Redis Vector Store
+   |
+Workers / Object Storage
+```
 
-Dans le capstone, chaque composant doit avoir un contrat clair. Les opérations longues passent par une stratégie asynchrone adaptée, les secrets restent côté serveur et les actions à risque sont contrôlées.
+Le frontend ne doit pas appeler directement les fournisseurs de modèles. Le backend contrôle identité, permissions, quotas, validation et effets de bord.
 
-## Méthode
-- Écrire l'architecture avant le code.
-- Définir les contrats et schémas.
-- Construire une baseline fonctionnelle.
-- Ajouter RAG ou agents uniquement si le besoin le justifie.
-- Créer un jeu d'évaluation versionné.
-- Instrumenter qualité, latence, coût et erreurs.
-- Préparer rollback et documentation.
+## Flux principal
+1. authentification ;
+2. création d'une tâche ;
+3. récupération de contexte ;
+4. appel du modèle ;
+5. validation structurée ;
+6. tool call éventuel ;
+7. persistance ;
+8. trace d'observabilité ;
+9. facturation.
 
 ## Exercice
-Implémente une partie du capstone sur **Capstone architecture**. Fournis architecture, contrats, tests, métriques et procédure de déploiement.
+Dessine les trust boundaries et indique quelles opérations nécessitent une autorisation indépendante du modèle.
 
-:::indice
-Chaque composant doit pouvoir être remplacé ou testé sans dépendre implicitement de tout le reste.
-:::
-
-:::solution
-Une solution complète sépare domaine, orchestration et infrastructure, valide les entrées/sorties, limite les permissions et mesure le système avec un dataset d'évaluation versionné.
-:::
+### Solution
+Les outils ayant des effets de bord, accès aux données sensibles ou coût important doivent être protégés par le backend et non par une simple instruction du prompt.
 
 ## À retenir
-- L'expertise vient de la capacité à relier les couches.
-- La production exige tests, sécurité et observabilité.
-- Un capstone doit laisser des artefacts réutilisables : code, tests, métriques et documentation.
+Le capstone doit être conçu comme un produit logiciel distribué, pas comme un simple prompt.
