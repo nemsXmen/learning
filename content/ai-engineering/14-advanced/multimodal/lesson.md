@@ -4,13 +4,13 @@ title: "Multimodal : texte, image, audio et documents"
 slug: multimodal
 technology: ai-engineering
 level: advanced
-module: 14-advanced
+module: advanced
 order: 3
 estimatedMinutes: 85
 difficulty: 5
 xp: 190
 prerequisites: [ai-14-efficient]
-skills: [ai-advanced]
+skills: [ai-multimodal]
 tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
