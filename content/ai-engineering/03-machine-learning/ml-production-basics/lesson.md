@@ -67,3 +67,32 @@ Vérifier changement de distribution, preprocessing train/production, seuil, qua
 ## À retenir
 
 Le modèle n'est qu'un composant. L'AI Engineer construit contrats, versioning, serving, monitoring et rollback autour de lui.
+
+
+## Introduction
+
+Passer en production transforme un modèle en composant opérationnel.
+
+## Concept
+
+Version, monitoring, drift, rollback et contrat d'inférence sont aussi importants que la métrique offline.
+
+## Exemple
+
+Un modèle peut garder son score historique tout en recevant une distribution de données devenue différente.
+
+## Comment ça fonctionne
+
+training → registry → deployment → monitoring → retraining/rollback
+
+## Questions d'entretien
+
+- Que surveiller après déploiement ?
+
+  :::indice
+  Pense au risque de mesure trompeuse et à la généralisation.
+  :::
+
+  :::reponse
+  Erreurs, latence, distribution des entrées, qualité disponible et dérive du comportement.
+  :::
