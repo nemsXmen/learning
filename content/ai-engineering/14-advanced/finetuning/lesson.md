@@ -36,8 +36,14 @@ Compare au modèle de base sur des cas métier et généraux. Surveille régress
 ## Exercice
 Un dataset contient 20 000 exemples presque identiques. Quel risque ?
 
-### Solution
+:::indice
+Compare la baseline et mesure explicitement le compromis avant d'adopter l'optimisation.
+:::
+
+:::solution
 Surreprésentation, overfitting et faible diversité. Dédupliquer et enrichir les cas représentatifs.
+
+:::
 
 ## À retenir
 Fine-tuner ne remplace ni une base de connaissances ni une validation rigoureuse.
