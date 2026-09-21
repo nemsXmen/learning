@@ -44,3 +44,32 @@ L'isolation d'autorisation au retrieval. Le filtre tenant doit être imposé cô
 
 ## À retenir
 Un vector store est une infrastructure de données avec contraintes de sécurité et performance.
+
+
+## Introduction
+
+Un vector store permet de rechercher efficacement dans des embeddings.
+
+## Concept
+
+ANN, index, filtres metadata et migrations déterminent les performances et la sécurité.
+
+## Exemple
+
+Un index multi-tenant doit appliquer le filtre d'accès au même moment que la recherche.
+
+## Comment ça fonctionne
+
+query vector → ANN → metadata filter → ranked results
+
+## Questions d'entretien
+
+- Pourquoi les migrations d'embeddings sont-elles coûteuses ?
+
+  :::indice
+  Relie performance et fiabilité au comportement sous charge.
+  :::
+
+  :::reponse
+  Changer de modèle peut imposer de recalculer et réindexer tout le corpus.
+  :::
