@@ -38,3 +38,32 @@ Limiter trafic ou quotas, arrêter la boucle, identifier la version fautive, cor
 
 ## À retenir
 Les systèmes IA ont besoin des mêmes disciplines opérationnelles que les systèmes critiques.
+
+
+## Introduction
+
+L'exploitation quotidienne nécessite quotas, budgets, runbooks et procédures d'incident.
+
+## Concept
+
+Les opérations AI doivent prévoir dépassement de coût, fournisseur indisponible et dégradation contrôlée.
+
+## Exemple
+
+Un quota journalier peut empêcher une boucle agentique coûteuse de consommer toute la capacité.
+
+## Comment ça fonctionne
+
+detect → mitigate → communicate → recover → postmortem
+
+## Questions d'entretien
+
+- Pourquoi un runbook doit-il être écrit avant incident ?
+
+  :::indice
+  Pense aux conséquences d'une panne sous trafic réel.
+  :::
+
+  :::reponse
+  Pour réduire le temps de décision lorsque la pression opérationnelle est forte.
+  :::
