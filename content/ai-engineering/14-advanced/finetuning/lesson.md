@@ -4,13 +4,13 @@ title: "Fine-tuning, instruction tuning et adaptation"
 slug: finetuning
 technology: ai-engineering
 level: advanced
-module: 14-advanced
+module: advanced
 order: 1
 estimatedMinutes: 85
 difficulty: 5
 xp: 190
 prerequisites: [ai-05-llm-architecture]
-skills: [ai-advanced]
+skills: [ai-finetuning]
 tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
