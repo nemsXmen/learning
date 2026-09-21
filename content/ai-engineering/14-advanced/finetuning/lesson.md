@@ -45,6 +45,13 @@ Surreprésentation, overfitting et faible diversité. Dédupliquer et enrichir l
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 Fine-tuner ne remplace ni une base de connaissances ni une validation rigoureuse.
 
