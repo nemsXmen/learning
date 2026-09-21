@@ -4,7 +4,7 @@ title: "Protection des données et confidentialité"
 slug: data-protection
 technology: ai-engineering
 level: advanced
-module: 10-security
+module: security
 order: 3
 estimatedMinutes: 75
 difficulty: 5
