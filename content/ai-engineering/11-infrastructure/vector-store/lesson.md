@@ -10,8 +10,8 @@ estimatedMinutes: 75
 difficulty: 5
 xp: 170
 prerequisites: [ai-07-embeddings]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-infrastructure]
+tags: [infrastructure, inference, ai]
 ---
 
 ## Objectifs
@@ -28,10 +28,10 @@ tenant + filters -> candidate vectors -> top-k -> reranker
 ```
 
 ## Index
-Les index ANN accélèrent la recherche approximative au prix de compromis entre recall, mémoire et latence.
+Les index ANN accélèrent la recherche approximative avec des compromis entre recall, mémoire et latence.
 
 ## Multi-tenant
-Les filtres d'autorisation doivent être intégrés à la requête de retrieval et testés comme une propriété de sécurité.
+Les filtres d'autorisation doivent être intégrés au retrieval et testés comme une propriété de sécurité.
 
 ## Migration
 Changer dimension ou modèle d'embedding implique souvent un nouvel index et une réindexation contrôlée.
@@ -40,7 +40,7 @@ Changer dimension ou modèle d'embedding implique souvent un nouvel index et une
 Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
 
 ### Solution
-L'isolation d'autorisation au retrieval. Le filtre tenant doit être imposé côté serveur et couvert par des tests.
+L'isolation d'autorisation au retrieval. Le filtre tenant doit être imposé côté serveur.
 
 ## À retenir
-Un vector store est une infrastructure de données avec des contraintes de sécurité, cohérence et performance.
+Un vector store est une infrastructure de données avec contraintes de sécurité et performance.
