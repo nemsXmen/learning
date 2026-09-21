@@ -45,3 +45,32 @@ Le couplage rend migrations et tests difficiles. Centraliser les appels derrièr
 
 ## À retenir
 Une architecture AI-first garde les responsabilités déterministes hors du modèle.
+
+
+## Introduction
+
+Une architecture AI-first sépare interface, API, gateway, retrieval, modèles et outils.
+
+## Concept
+
+Les contrats internes permettent de changer fournisseurs et composants indépendamment.
+
+## Exemple
+
+Le backend conserve auth, quotas et effets de bord hors du modèle.
+
+## Comment ça fonctionne
+
+frontend → API → gateway → AI services → persistence/observability
+
+## Questions d'entretien
+
+- Pourquoi centraliser les appels modèles ?
+
+  :::indice
+  Relie la métrique à une décision produit concrète.
+  :::
+
+  :::reponse
+  Pour maîtriser sécurité, coût, timeout, observabilité et migrations de fournisseur.
+  :::
