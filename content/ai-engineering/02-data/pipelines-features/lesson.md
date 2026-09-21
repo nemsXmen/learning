@@ -9,7 +9,7 @@ order: 4
 estimatedMinutes: 55
 difficulty: 3
 xp: 120
-prerequisites: [ai-data-quality, ai-data-modeling]
+prerequisites: [ai-data-quality, ai-data-modelisation]
 skills: [ai-experimentation]
 tags: [pipelines, features, batch, streaming]
 ---
