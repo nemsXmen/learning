@@ -98,7 +98,11 @@ python -m my_pipeline
 
 Écris un script qui crée output/, lance un pipeline, sépare stdout/stderr et affiche les 20 dernières lignes d'erreur.
 
-### Solution
+:::indice
+Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
+:::
+
+:::solution
 
 ```bash
 #!/usr/bin/env bash
@@ -108,6 +112,8 @@ mkdir -p output
 python -m my_pipeline > output/pipeline.log 2> output/pipeline.err
 tail -n 20 output/pipeline.err
 ```
+
+:::
 
 ## À retenir
 
