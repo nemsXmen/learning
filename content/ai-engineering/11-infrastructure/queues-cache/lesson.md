@@ -38,8 +38,14 @@ Utilise backoff et nombre maximal d'essais. Une tâche non idempotente ne doit p
 ## Exercice
 Un worker tombe après l'action mais avant l'accusé de réception. Que prévoir ?
 
-### Solution
+:::indice
+Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
+:::
+
+:::solution
 Une clé d'idempotence et un état transactionnel permettent de reprendre sans doubler l'effet de bord.
+
+:::
 
 ## À retenir
 Queues et cache nécessitent des contrats d'idempotence et de cohérence.
