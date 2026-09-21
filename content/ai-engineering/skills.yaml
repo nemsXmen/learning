@@ -1,0 +1,105 @@
+skills:
+  - id: ai-python
+    name: Python pour l'IA
+    importance: 5
+    requires: []
+  - id: ai-cli-linux
+    name: CLI Linux et environnement de développement
+    importance: 4
+    requires: []
+  - id: ai-git
+    name: Git et reproductibilité
+    importance: 3
+    requires: []
+  - id: ai-linear-algebra
+    name: Algèbre linéaire
+    importance: 5
+    requires: []
+  - id: ai-probability
+    name: Probabilités et statistiques
+    importance: 5
+    requires: []
+  - id: ai-data-modeling
+    name: Modélisation des données
+    importance: 4
+    requires: [ai-python]
+  - id: ai-data-quality
+    name: Qualité et préparation des données
+    importance: 5
+    requires: [ai-python, ai-data-modeling]
+  - id: ai-experimentation
+    name: Expérimentation et reproductibilité
+    importance: 4
+    requires: [ai-git, ai-probability]
+  - id: ai-ml-basics
+    name: Fondamentaux du machine learning
+    importance: 5
+    requires: [ai-probability, ai-data-quality]
+  - id: ai-model-selection
+    name: Sélection et validation de modèles
+    importance: 5
+    requires: [ai-ml-basics, ai-experimentation]
+  - id: ai-neural-networks
+    name: Réseaux de neurones
+    importance: 5
+    requires: [ai-linear-algebra, ai-ml-basics]
+  - id: ai-pytorch
+    name: PyTorch et entraînement
+    importance: 5
+    requires: [ai-neural-networks]
+  - id: ai-transformers
+    name: Transformers et attention
+    importance: 5
+    requires: [ai-neural-networks]
+  - id: ai-llm
+    name: Modèles de langage
+    importance: 5
+    requires: [ai-transformers]
+  - id: ai-llm-apps
+    name: Applications LLM
+    importance: 5
+    requires: [ai-llm]
+  - id: ai-rag
+    name: RAG
+    importance: 5
+    requires: [ai-llm-apps, ai-data-modeling]
+  - id: ai-agents
+    name: Agents et tool calling
+    importance: 5
+    requires: [ai-llm-apps]
+  - id: ai-evaluation
+    name: Évaluation des systèmes AI
+    importance: 5
+    requires: [ai-llm-apps, ai-probability]
+  - id: ai-security
+    name: Sécurité des systèmes AI
+    importance: 5
+    requires: [ai-llm-apps]
+  - id: ai-infrastructure
+    name: Infrastructure AI
+    importance: 5
+    requires: [ai-llm-apps]
+  - id: ai-observability
+    name: Observabilité AI
+    importance: 4
+    requires: [ai-evaluation, ai-infrastructure]
+  - id: ai-production
+    name: Production AI
+    importance: 5
+    requires: [ai-security, ai-infrastructure, ai-observability]
+  - id: ai-product
+    name: AI Product Engineering
+    importance: 4
+    requires: [ai-evaluation, ai-production]
+  - id: ai-finetuning
+    name: Fine-tuning et optimisation
+    importance: 4
+    requires: [ai-pytorch, ai-llm]
+  - id: ai-multimodal
+    name: IA multimodale
+    importance: 3
+    requires: [ai-llm]
+  - id: ai-capstone
+    name: Capstone AI de production
+    importance: 5
+    requires: [ai-rag, ai-agents, ai-security, ai-production, ai-product]
