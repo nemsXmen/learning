@@ -9,7 +9,7 @@ order: 4
 estimatedMinutes: 55
 difficulty: 4
 xp: 130
-prerequisites: [ai-model-selection]
+prerequisites: [ai-ml-validation]
 skills: [ai-model-selection]
 tags: [mlops, serving, monitoring, drift]
 ---
