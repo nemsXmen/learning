@@ -1,58 +1,50 @@
 ---
-id: ai-07-rag-chunking
-title: "Ingestion, chunking & metadata"
+id: ai-07-chunking
+title: "Chunking, métadonnées et ingestion"
 slug: chunking
 technology: ai-engineering
 level: intermediate
 module: 07-rag
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-rag
-tags: [ai, rag, agents]
+order: 2
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-07-retrieval]
+skills: [ai-rag]
+tags: [rag, retrieval, llm]
 ---
 
+
 ## Objectifs
-- Comprendre Ingestion, chunking & metadata.
-- Construire une étape isolée et mesurable.
-- Diagnostiquer les erreurs de récupération ou d'orchestration.
+- découper des documents sans perdre leur sens ;
+- choisir une taille de chunk ;
+- conserver les métadonnées ;
+- construire une ingestion reproductible.
 
-## Concept
-Un système RAG sépare ingestion, représentation, indexation, récupération, génération et évaluation. Cette séparation est essentielle : une mauvaise réponse peut venir d'un document absent, d'un mauvais découpage, d'une recherche trop large ou du modèle de génération.
+## Chunking
+Un chunk trop petit perd le contexte ; trop grand, il dilue le signal et consomme davantage de contexte. La bonne taille dépend du type de document et des requêtes.
 
-Pour **Ingestion, chunking & metadata**, définis des contrats entre chaque étape. Conserve les métadonnées utiles, limite les résultats récupérés et mesure séparément la qualité de récupération et la qualité de réponse.
+## Stratégies
+Le découpage peut suivre titres, paragraphes, sections ou fenêtres glissantes. Les tableaux, listes et blocs de code nécessitent souvent un traitement spécifique.
 
-## Méthode
-1. Préparer des données propres.
-2. Produire une représentation stable.
-3. Indexer avec les métadonnées nécessaires.
-4. Récupérer un petit ensemble de candidats.
-5. Filtrer ou reranker si nécessaire.
-6. Générer une réponse ancrée dans les éléments récupérés.
-7. Évaluer récupération et réponse séparément.
+```text
+document -> parse -> normalize -> chunk -> enrich metadata -> embed -> index
+```
 
-## Erreurs fréquentes
-- Utiliser des chunks arbitraires sans mesurer leur effet.
-- Perdre les métadonnées lors de l'ingestion.
-- Envoyer trop de documents au modèle.
-- Ne pas distinguer échec de retrieval et hallucination.
-- Pour un agent, laisser une boucle ou un outil sans limite.
+## Métadonnées
+Conserve source, documentId, section, version, langue et permissions. Les métadonnées permettent filtrage et traçabilité.
+
+## Versioning
+Un document modifié doit pouvoir être réindexé sans laisser des chunks obsolètes. Utilise un identifiant stable et une version de contenu.
+
+## Permissions
+Ne récupère jamais un chunk uniquement parce qu'il est similaire : applique les autorisations au retrieval.
 
 ## Exercice
-Crée un jeu de dix questions avec leurs sources attendues. Mesure quels éléments sont récupérés et si la réponse finale reste ancrée dans ces sources.
+Un manuel de 100 pages est réindexé après modification de 2 pages. Comment éviter les doublons ?
 
-:::indice
-Quand une réponse est fausse, demande d'abord : « les bonnes informations étaient-elles disponibles dans le contexte ? »
-:::
-
-:::solution
-Sépare recall de retrieval et qualité de génération. Journalise les documents récupérés, leurs scores et les raisons d'un échec afin de pouvoir corriger la bonne étape.
-:::
+### Solution
+Versionner les documents et utiliser des IDs déterministes ou une stratégie d'upsert/suppression des anciennes versions.
 
 ## À retenir
-- RAG est une chaîne de composants, pas un simple prompt.
-- Les métadonnées et l'évaluation rendent le retrieval exploitable.
-- Les agents doivent être bornés par des états, outils et règles explicites.
+La qualité RAG commence à l'ingestion : parsing, chunking, métadonnées, versioning et ACL.
