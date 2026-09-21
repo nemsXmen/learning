@@ -46,3 +46,32 @@ Pour centraliser timeout, retry, sécurité, coût, observabilité et changement
 
 ## À retenir
 Un capstone solide progresse par tranches verticales vérifiables.
+
+
+## Introduction
+
+Construire un AI SaaS complexe demande des tranches verticales vérifiables.
+
+## Concept
+
+Contracts, migrations, tests et observabilité doivent progresser avec les fonctionnalités.
+
+## Exemple
+
+Un premier vertical slice peut aller d'une requête authentifiée à une réponse validée avant d'ajouter agents et billing.
+
+## Comment ça fonctionne
+
+foundation → gateway → RAG → agents → product → ops
+
+## Questions d'entretien
+
+- Pourquoi construire verticalement ?
+
+  :::indice
+  Pense à la responsabilité de chaque couche et au contrôle des risques.
+  :::
+
+  :::reponse
+  Pour valider tôt le flux réel et éviter d'accumuler des couches inutilisées.
+  :::
