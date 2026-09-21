@@ -4,7 +4,7 @@ title: "Mémoire agentique et contexte"
 slug: memory
 technology: ai-engineering
 level: advanced
-module: 08-agents
+module: agents
 order: 2
 estimatedMinutes: 70
 difficulty: 4
