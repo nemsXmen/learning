@@ -60,9 +60,15 @@ Un modèle doit pouvoir être remplacé rapidement par une version connue. Conse
 
 Un modèle offline a 92 % de précision mais le taux d'erreur métier augmente après déploiement. Donne quatre pistes.
 
-### Solution
+:::indice
+Commence par définir la métrique et la baseline avant de choisir une technique.
+:::
+
+:::solution
 
 Vérifier changement de distribution, preprocessing train/production, seuil, qualité des labels et comportement du service. Comparer périodes et sous-groupes.
+
+:::
 
 ## À retenir
 
