@@ -1,0 +1,26 @@
+id: ai-04-deep-learning-regularisation-quiz
+kind: QUIZ
+questions:
+  - id: ai-04-deep-learning-regularisation-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quel principe rend une comparaison de modèles fiable ?"
+    options: ["Même protocole et mêmes cas","Changer le prompt à chaque modèle","Utiliser uniquement des exemples faciles","Choisir le modèle avec le plus de paramètres"]
+    answer: [0]
+    explanation: "Une comparaison nécessite un protocole constant."
+    skills: [ai-pytorch]
+  - id: ai-04-deep-learning-regularisation-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels aspects faut-il mesurer en production ?"
+    options: ["Qualité","Latence","Coût","Nombre de couleurs"]
+    answer: [0, 1, 2]
+    explanation: "Qualité, latence et coût sont des propriétés opérationnelles."
+    skills: [ai-pytorch]
+  - id: ai-04-deep-learning-regularisation-q3
+    type: true_false
+    difficulty: 1
+    question: "Un benchmark public suffit toujours pour décider quel modèle utiliser dans un produit."
+    answer: false
+    explanation: "Le cas d'usage réel nécessite sa propre évaluation."
+    skills: [ai-pytorch]
