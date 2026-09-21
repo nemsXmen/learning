@@ -36,8 +36,14 @@ Un modèle plus petit peut apprendre des sorties d'un modèle enseignant. Évalu
 ## Exercice
 Un modèle quantifié consomme deux fois moins de mémoire mais perd sur une métrique critique. Que faire ?
 
-### Solution
+:::indice
+Compare la baseline et mesure explicitement le compromis avant d'adopter l'optimisation.
+:::
+
+:::solution
 Identifier les cas de régression, tester une quantification moins agressive ou un autre modèle avant de choisir.
+
+:::
 
 ## À retenir
 L'efficacité est un compromis mesuré, pas une optimisation gratuite.
