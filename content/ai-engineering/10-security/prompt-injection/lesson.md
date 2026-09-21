@@ -1,57 +1,46 @@
 ---
-id: ai-10-security-prompt-injection
-title: "Prompt injection & indirect attacks"
+id: ai-10-prompt-injection
+title: "Prompt injection et attaques indirectes"
 slug: prompt-injection
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 10-security
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-security
-tags: [ai, security, evaluation]
+order: 2
+estimatedMinutes: 75
+difficulty: 5
+xp: 170
+prerequisites: [ai-10-threat-model]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre Prompt injection & indirect attacks.
-- Construire des contrôles reproductibles.
-- Réduire les régressions et les risques.
+- distinguer injection directe et indirecte ;
+- limiter l'influence des contenus non fiables ;
+- sécuriser les outils ;
+- tester des scénarios adversariaux.
 
-## Concept
-Un système AI doit être traité comme un système logiciel soumis à des entrées adversariales, des changements de données et des dépendances externes. **Prompt injection & indirect attacks** permet de transformer un risque ou un objectif de qualité en contrôle observable.
+## Direct vs indirect
+Une injection directe vient de l'utilisateur. Une injection indirecte peut être cachée dans une page, un email, un PDF ou une base récupérée par RAG.
 
-Commence par identifier actifs, entrées non fiables, frontières de confiance, actions possibles et conséquences d'un échec. Ensuite, définis des tests qui peuvent être exécutés automatiquement lorsque c'est possible.
+```text
+untrusted content -> model context
+                         X
+                 policy boundary
+                         |
+                  tool execution
+```
 
-## Méthode
-1. Lister actifs et données sensibles.
-2. Identifier les frontières de confiance.
-3. Définir les comportements attendus.
-4. Ajouter des cas normaux, limites et adverses.
-5. Exécuter les contrôles dans CI.
-6. Bloquer le déploiement lorsque les seuils critiques sont dépassés.
+Le fait qu'une instruction soit lisible par le modèle ne lui donne aucun privilège.
 
-## Erreurs fréquentes
-- Considérer le modèle comme une frontière de sécurité.
-- Tester uniquement des réponses normales.
-- Stocker des secrets dans prompts ou logs.
-- Utiliser une métrique globale qui masque les échecs critiques.
-- Dépendre d'un test manuel impossible à reproduire.
+## Défenses
+Sépare instructions et données, applique ACL, minimise contexte, valide les arguments des outils et place l'autorisation hors modèle.
 
 ## Exercice
-Écris une mini threat model et une suite de dix tests pour **Prompt injection & indirect attacks**. Pour chaque test, précise entrée, comportement attendu et conséquence d'un échec.
+Une page récupérée demande à l'agent de transmettre son secret API. Que doit-il faire ?
 
-:::indice
-Commence par ce qui peut réellement être perdu : données, argent, accès, réputation ou disponibilité.
-:::
-
-:::solution
-Une solution utile identifie les actifs, les frontières de confiance et les scénarios d'abus, puis transforme les scénarios prioritaires en contrôles automatisables.
-:::
+### Solution
+Ignorer cette instruction comme donnée non fiable. Les secrets ne doivent pas être exposés au modèle et l'action doit être bloquée par les contrôles applicatifs.
 
 ## À retenir
-- La sécurité AI commence par les frontières de confiance.
-- Les tests adverses doivent être versionnés comme les tests fonctionnels.
-- Les secrets et données sensibles ne doivent pas devenir des entrées implicites du système.
+L'injection est un problème de frontière de confiance et d'autorité.
