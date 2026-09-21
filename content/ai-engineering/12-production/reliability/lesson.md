@@ -35,8 +35,14 @@ Une fonctionnalité peut passer en recherche lexicale, modèle plus petit, répo
 ## Exercice
 Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
 
-### Solution
+:::indice
+Raisonne en détection → mitigation → récupération → vérification.
+:::
+
+:::solution
 Conserver les fonctions déterministes disponibles et retourner un état dégradé explicite ou router vers un modèle compatible.
+
+:::
 
 ## À retenir
 La résilience consiste à prévoir comment le système se comporte quand ses dépendances échouent.
