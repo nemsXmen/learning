@@ -47,8 +47,14 @@ Si une sortie déclenche une action externe, utilise autorisation, idempotency k
 ## Exercice
 Le modèle produit un montant négatif alors que le métier l'interdit.
 
-### Solution
+:::indice
+Sépare génération, validation et exécution ; ne donne pas au modèle une autorité implicite.
+:::
+
+:::solution
 Rejeter la sortie via un invariant métier, journaliser le cas puis appliquer une stratégie contrôlée.
+
+:::
 
 ## À retenir
 Une sortie LLM devient fiable pour l'application seulement après validation déterministe.
