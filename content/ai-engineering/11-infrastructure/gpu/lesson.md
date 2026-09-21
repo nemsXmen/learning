@@ -4,12 +4,12 @@ title: "GPU, mémoire et calcul IA"
 slug: gpu
 technology: ai-engineering
 level: advanced
-module: 11-infrastructure
+module: infrastructure
 order: 1
 estimatedMinutes: 75
 difficulty: 4
 xp: 160
-prerequisites: [ai-04-pytorch]
+prerequisites: [ai-dl-pytorch]
 skills: [ai-infrastructure]
 tags: [infrastructure, inference, ai]
 ---
