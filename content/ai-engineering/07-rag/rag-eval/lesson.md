@@ -1,58 +1,51 @@
 ---
-id: ai-07-rag-rag-eval
-title: "RAG evaluation & grounded answers"
+id: ai-07-rag-evaluation
+title: "Évaluation RAG et groundedness"
 slug: rag-eval
 technology: ai-engineering
 level: intermediate
 module: 07-rag
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-rag
-tags: [ai, rag, agents]
+order: 4
+estimatedMinutes: 75
+difficulty: 5
+xp: 170
+prerequisites: [ai-07-embeddings]
+skills: [ai-rag]
+tags: [rag, retrieval, llm]
 ---
 
 ## Objectifs
-- Comprendre RAG evaluation & grounded answers.
-- Construire une étape isolée et mesurable.
-- Diagnostiquer les erreurs de récupération ou d'orchestration.
+- construire un dataset RAG ;
+- séparer retrieval et génération ;
+- mesurer fidélité et couverture ;
+- analyser les régressions.
 
-## Concept
-Un système RAG sépare ingestion, représentation, indexation, récupération, génération et évaluation. Cette séparation est essentielle : une mauvaise réponse peut venir d'un document absent, d'un mauvais découpage, d'une recherche trop large ou du modèle de génération.
+## Dataset
+Chaque cas contient question, passages pertinents et critères de réponse. Ajoute des cas ambigus, négatifs et hors périmètre.
 
-Pour **RAG evaluation & grounded answers**, définis des contrats entre chaque étape. Conserve les métadonnées utiles, limite les résultats récupérés et mesure séparément la qualité de récupération et la qualité de réponse.
+## Retrieval metrics
+Recall@k mesure si les passages pertinents apparaissent dans les k résultats. Precision@k mesure la proportion de résultats pertinents.
 
-## Méthode
-1. Préparer des données propres.
-2. Produire une représentation stable.
-3. Indexer avec les métadonnées nécessaires.
-4. Récupérer un petit ensemble de candidats.
-5. Filtrer ou reranker si nécessaire.
-6. Générer une réponse ancrée dans les éléments récupérés.
-7. Évaluer récupération et réponse séparément.
+## Génération
+Une réponse peut être fluide mais non supportée. Vérifie si les affirmations importantes sont entailées par le contexte récupéré.
 
-## Erreurs fréquentes
-- Utiliser des chunks arbitraires sans mesurer leur effet.
-- Perdre les métadonnées lors de l'ingestion.
-- Envoyer trop de documents au modèle.
-- Ne pas distinguer échec de retrieval et hallucination.
-- Pour un agent, laisser une boucle ou un outil sans limite.
+## Groundedness
+Évalue séparément retrieval, fidélité aux sources, couverture, citations, latence et coût.
+
+```text
+question -> retrieved context -> answer
+          |                 |
+       retrieval eval    groundedness eval
+```
+
+## Régression
+Conserve un jeu fixe de tests et compare les versions de chunking, embeddings, reranker et prompt.
 
 ## Exercice
-Crée un jeu de dix questions avec leurs sources attendues. Mesure quels éléments sont récupérés et si la réponse finale reste ancrée dans ces sources.
+Après changement d'embedding, la satisfaction humaine monte mais recall@5 baisse. Que faire ?
 
-:::indice
-Quand une réponse est fausse, demande d'abord : « les bonnes informations étaient-elles disponibles dans le contexte ? »
-:::
-
-:::solution
-Sépare recall de retrieval et qualité de génération. Journalise les documents récupérés, leurs scores et les raisons d'un échec afin de pouvoir corriger la bonne étape.
-:::
+### Solution
+Examiner les cas gagnés et perdus. Ne pas conclure avec une seule métrique : identifier le compromis selon les objectifs produit.
 
 ## À retenir
-- RAG est une chaîne de composants, pas un simple prompt.
-- Les métadonnées et l'évaluation rendent le retrieval exploitable.
-- Les agents doivent être bornés par des états, outils et règles explicites.
+Évaluer RAG signifie mesurer séparément récupération, réponse et contraintes opérationnelles.
