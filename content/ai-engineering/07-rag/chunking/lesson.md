@@ -47,3 +47,32 @@ Versionner le document et utiliser des IDs déterministes avec upsert/suppressio
 
 ## À retenir
 La qualité RAG commence à l'ingestion : parsing, chunking, métadonnées, versioning et ACL.
+
+
+## Introduction
+
+Le chunking détermine l'unité de connaissance indexée.
+
+## Concept
+
+Taille, chevauchement, structure sémantique et métadonnées influencent retrieval et contexte.
+
+## Exemple
+
+Un chapitre peut être découpé selon ses sections tout en conservant document_id et version.
+
+## Comment ça fonctionne
+
+document → parse → semantic chunks → metadata → index
+
+## Questions d'entretien
+
+- Pourquoi conserver la version du document dans les chunks ?
+
+  :::indice
+  Sépare toujours les erreurs de retrieval des erreurs de génération.
+  :::
+
+  :::reponse
+  Pour éviter de mélanger des passages provenant de versions incompatibles.
+  :::
