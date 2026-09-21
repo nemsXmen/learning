@@ -1,0 +1,26 @@
+id: ai-07-rag-rag-eval-quiz
+kind: QUIZ
+questions:
+  - id: ai-07-rag-rag-eval-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Comment diagnostiquer une réponse RAG incorrecte ?"
+    options: ["Vérifier d'abord le contexte récupéré","Changer immédiatement de modèle","Augmenter arbitrairement le contexte","Supprimer l'évaluation"]
+    answer: [0]
+    explanation: "Il faut distinguer problème de récupération et problème de génération."
+    skills: [ai-rag]
+  - id: ai-07-rag-rag-eval-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quelles étapes appartiennent à un pipeline RAG ?"
+    options: ["Ingestion","Indexation","Récupération","Génération","Peindre l'interface"]
+    answer: [0, 1, 2, 3]
+    explanation: "Un pipeline RAG sépare ingestion, indexation, retrieval et génération."
+    skills: [ai-rag]
+  - id: ai-07-rag-rag-eval-q3
+    type: true_false
+    difficulty: 1
+    question: "Un agent doit pouvoir appeler ses outils sans limite."
+    answer: false
+    explanation: "Les boucles et outils doivent être bornés pour maîtriser coût, sécurité et fiabilité."
+    skills: [ai-rag]
