@@ -38,8 +38,14 @@ Une mémoire persistante peut contenir des données sensibles. Applique ACL, chi
 ## Exercice
 Un utilisateur demande la suppression de ses données mémorisées. Que doit faire le système ?
 
-### Solution
+:::indice
+Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+:::
+
+:::solution
 Identifier les enregistrements concernés, supprimer ou anonymiser selon la politique applicable, invalider les caches puis journaliser l'opération.
+
+:::
 
 ## À retenir
 La mémoire est une fonctionnalité de données, avec cycle de vie et gouvernance, pas une simple liste de messages.
