@@ -95,3 +95,32 @@ Définis un manifeste minimal pour une évaluation RAG.
 ## À retenir
 
 Un résultat AI n'est exploitable professionnellement que si son origine peut être reconstruite. Git est une pièce du système de traçabilité, pas le système complet.
+
+
+## Introduction
+
+Un système AI évolue avec le code, les données, les prompts et les configurations ; Git fournit une base de traçabilité.
+
+## Concept
+
+Un commit doit représenter un changement compréhensible et reproductible, tandis que les gros artefacts suivent une stratégie adaptée.
+
+## Exemple
+
+Exemple : associer une version de code à une configuration de modèle permet de retrouver exactement une expérience.
+
+## Comment ça fonctionne
+
+Le flux reproductible est changement → commit → CI → artefact → déploiement. Les secrets restent hors du dépôt.
+
+## Questions d'entretien
+
+- Pourquoi versionner les configurations AI ?
+
+  :::indice
+  Relie le concept à un problème concret de production AI.
+  :::
+
+  :::reponse
+  Réponse : pour relier une sortie observée à une configuration précise et pouvoir reproduire ou rollbacker.
+  :::
