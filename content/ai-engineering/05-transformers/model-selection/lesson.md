@@ -1,33 +1,64 @@
 ---
-id: ai-05-transformers-model-selection
-title: "Open and hosted models"
+id: ai-05-model-selection
+title: "Sélection et benchmark des modèles"
 slug: model-selection
 technology: ai-engineering
 level: intermediate
 module: 05-transformers
 order: 4
-estimatedMinutes: 40
-difficulty: 3
-xp: 120
-prerequisites: []
-skills: [ai-llm]
-tags: [ai, llm, models]
+estimatedMinutes: 55
+difficulty: 4
+xp: 130
+prerequisites: [ai-05-llm-architecture]
+skills: [ai-transformers]
+tags: [transformers, llm]
 ---
 
 ## Objectifs
-- Comparer un modèle hébergé et un modèle auto-hébergé.
-- Construire une procédure de sélection basée sur le besoin.
-- Mesurer qualité, coût, latence et contraintes opérationnelles.
+- choisir un modèle selon une tâche et des contraintes ;
+- distinguer qualité, latence, coût et contexte ;
+- comprendre local, API et modèles spécialisés ;
+- construire un protocole de comparaison reproductible.
 
-## Concept
-Le choix d'un modèle ne dépend pas uniquement de sa qualité brute. Il faut considérer la qualité sur les cas réels, la latence, le coût par requête, les limites de contexte, la confidentialité des données, la disponibilité et l'effort d'exploitation.
+## Les critères
+Pour sélectionner un modèle, mesure séparément :
 
-Une évaluation sérieuse utilise le même dataset et le même protocole pour les candidats. Le résultat doit être documenté afin de pouvoir refaire la comparaison après une évolution du produit.
+- qualité sur les tâches réelles ;
+- latence p50/p95 ;
+- coût par requête ou par million de tokens ;
+- longueur de contexte utile ;
+- contraintes de confidentialité ;
+- disponibilité et limites de débit ;
+- capacités de tool calling ou sortie structurée ;
+- facilité d'exploitation.
+
+Il n'existe pas de modèle universellement optimal pour toutes les applications.
+
+## Benchmark applicatif
+Un benchmark utile contient des exemples représentatifs de production, des critères définis avant le test et des cas difficiles.
+
+```text
+dataset -> même prompts -> modèles -> mêmes métriques -> rapport
+```
+
+Ne compare pas deux modèles avec des prompts, paramètres ou budgets différents sans le documenter.
+
+## Modèle local vs API
+Un modèle local donne davantage de contrôle sur les données et l'infrastructure, mais impose matériel, déploiement et maintenance.
+
+Une API réduit l'effort opérationnel mais introduit dépendance fournisseur, coûts variables et contraintes de données.
+
+## Context window
+Une grande fenêtre ne signifie pas automatiquement meilleure compréhension. Teste la récupération d'information à différentes positions et longueurs.
+
+## Modèles spécialisés
+Pour certaines tâches, un petit modèle spécialisé peut être plus adapté qu'un modèle généraliste : classification, extraction structurée, reranking ou génération très contrainte.
 
 ## Exercice
-Crée une matrice de comparaison pour trois modèles fictifs ou réels. Définis au moins cinq critères et explique leur importance pour ton cas d'usage.
+Une application reçoit 100 000 requêtes par jour. Quelles dimensions mesurer avant de choisir un modèle ?
+
+### Solution
+Mesurer qualité sur données réelles, coût total, p50/p95 de latence, taux d'erreur, limites de débit, consommation de tokens, exigences de confidentialité et capacité à respecter le contrat de sortie.
 
 ## À retenir
-- Il n'existe pas de modèle universellement adapté à tous les usages.
-- La sélection est une décision système, pas uniquement un benchmark.
-- Une comparaison reproductible protège contre les choix basés sur une simple impression.
+Le choix de modèle est une décision d'ingénierie mesurable. Commence par les contraintes et les tâches réelles, puis benchmarke.
