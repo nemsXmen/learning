@@ -44,6 +44,13 @@ Identifier le job-to-be-done, le coût actuel et un indicateur de résultat avan
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 L'IA est un moyen produit ; la métrique de valeur précède le modèle.
 
