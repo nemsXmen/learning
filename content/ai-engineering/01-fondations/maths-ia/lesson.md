@@ -1,75 +1,113 @@
 ---
-id: ai-01-fondations-maths-ia
-title: "Linear algebra, probability & statistics"
+id: ai-maths-fondations
+title: "Mathématiques pour l'IA : vecteurs, matrices, probabilités et statistiques"
 slug: maths-ia
 technology: ai-engineering
-level: intermediate
-module: 01-fondations
+level: beginner
+module: fondations
 order: 4
-estimatedMinutes: 35
-difficulty: 2
-xp: 100
+estimatedMinutes: 60
+difficulty: 3
+xp: 120
 prerequisites: []
 skills:
   - ai-linear-algebra
-tags:
-  - ai
-  - ai-engineering
+  - ai-probability
+tags: [mathematics, linear-algebra, probability, statistics]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- comprendre vecteurs, matrices, produit scalaire et norme ;
+- calculer une similarité cosinus ;
+- utiliser probabilité conditionnelle et Bayes ;
+- lire moyenne, variance et quantiles ;
+- relier ces notions aux embeddings et à l'évaluation.
 
-## Introduction
+## Vecteurs
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+Un vecteur est une liste ordonnée de nombres.
 
-## Concept
+```python
+import numpy as np
 
-**Linear algebra, probability & statistics** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+a = np.array([1.0, 2.0, 3.0])
+b = np.array([2.0, 0.0, 1.0])
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+dot = a @ b
+norm = np.linalg.norm(a)
+```
 
-## Exemple
+Le produit scalaire est la somme des produits composante par composante.
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+## Similarité cosinus
 
-## Méthode professionnelle
+La formule est :
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
+cos(a,b) = (a·b) / (||a|| ||b||).
 
-## Erreurs fréquentes
+Elle mesure l'angle entre deux vecteurs. Elle est couramment utilisée pour comparer des embeddings, mais la métrique doit rester cohérente avec le modèle et l'index.
 
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+## Matrices
+
+```python
+X = np.array([[1, 2], [3, 4], [5, 6]])
+W = np.array([[0.2, 0.4], [0.1, 0.3]])
+Y = X @ W
+```
+
+Les dimensions doivent être compatibles. Les réseaux neuronaux effectuent une grande quantité d'opérations de ce type.
+
+## Probabilité conditionnelle
+
+La probabilité conditionnelle est P(A|B) = P(A∩B) / P(B).
+
+Bayes :
+
+P(A|B) = P(B|A)P(A) / P(B).
+
+Une sortie appelée probabilité par un modèle n'est pas automatiquement parfaitement calibrée.
+
+## Statistiques
+
+La moyenne résume le centre d'une distribution ; variance et quantiles décrivent sa dispersion.
+
+Pour une API AI, mesurer p50, p95 et p99 est plus informatif que la seule moyenne : une longue traîne peut être invisible dans une moyenne.
+
+## Train, validation et test
+
+- train : apprendre ;
+- validation : choisir et régler ;
+- test : estimation finale ;
+- production : distribution réelle.
+
+Une fuite de données entre ces ensembles peut produire une métrique artificiellement optimiste.
+
+## Lien avec l'IA
+
+- vecteurs → embeddings ;
+- matrices → couches neuronales ;
+- produit scalaire → attention et similarité ;
+- probabilités → classification et génération ;
+- statistiques → métriques et analyse d'incertitude ;
+- quantiles → SLO de latence.
 
 ## Exercice
 
-Construis une petite expérience sur **Linear algebra, probability & statistics**.
+Calcule la similarité cosinus de a=[1,0] et b=[0.8,0.6].
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
+Le produit scalaire vaut 0.8 et les deux normes valent 1. La similarité vaut donc 0.8.
 
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+```python
+import numpy as np
+a = np.array([1.0, 0.0])
+b = np.array([0.8, 0.6])
+similarity = (a @ b) / (np.linalg.norm(a) * np.linalg.norm(b))
+print(similarity)
+```
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+Les vecteurs, matrices, probabilités et statistiques sont le langage quantitatif qui permet de comprendre embeddings, réseaux neuronaux, métriques et performances AI.
