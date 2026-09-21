@@ -4,16 +4,34 @@ questions:
   - id: ai-15-capstone-build-q1
     type: multiple_choice
     difficulty: 3
-    question: "Quelle pratique caractérise une architecture AI maintenable ?"
-    options: ["Contrats clairs entre composants","Couplage direct à un seul fournisseur","Secrets côté client","Aucune métrique"]
+    question: "Pourquoi commencer par un vertical slice ?"
+    options: ["Valider tôt le flux réel", "Éviter tous les tests", "Supprimer les contrats", "Ajouter plus d'abstractions"]
     answer: [0]
-    explanation: "Les contrats rendent les composants testables et remplaçables."
+    explanation: "Un slice vérifiable réduit le risque d'architecture inutile."
     skills: [ai-capstone]
+
   - id: ai-15-capstone-build-q2
     type: multiple_answer
     difficulty: 3
-    question: "Que doit mesurer un capstone AI de production ?"
-    options: ["Qualité","Latence","Coût","Erreurs"]
+    question: "Quels tests doivent couvrir le capstone ?"
+    options: ["Unit", "Integration", "API", "Evaluation AI"]
     answer: [0, 1, 2, 3]
-    explanation: "Ces dimensions permettent d'évaluer le système au-delà de la seule démonstration."
+    explanation: "Les quatre niveaux couvrent logiciel et comportement AI."
+    skills: [ai-capstone]
+
+  - id: ai-15-capstone-build-q3
+    type: true_false
+    difficulty: 2
+    question: "Une sortie structurée doit être validée côté serveur avant exécution."
+    answer: true
+    explanation: "Le modèle n'est pas une frontière de validation."
+    skills: [ai-capstone]
+
+  - id: ai-15-capstone-build-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Pourquoi un gateway interne est-il utile ?"
+    options: ["Centraliser timeout, coût, sécurité et providers", "Stocker les mots de passe", "Remplacer Postgres", "Supprimer les métriques"]
+    answer: [0]
+    explanation: "Le gateway stabilise le contrat d'intégration."
     skills: [ai-capstone]
