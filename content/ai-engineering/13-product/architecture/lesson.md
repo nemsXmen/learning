@@ -49,6 +49,13 @@ Le couplage rend migrations et tests difficiles. Centraliser les appels derrièr
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 Une architecture AI-first garde les responsabilités déterministes hors du modèle.
 
