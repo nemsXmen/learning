@@ -1,56 +1,40 @@
 ---
-id: ai-12-production-operations
-title: "SLOs, incidents & cost operations"
+id: ai-12-operations
+title: "Opérations, incidents et coûts"
 slug: operations
 technology: ai-engineering
 level: advanced
 module: 12-production
-order: 1
-estimatedMinutes: 45
-difficulty: 4
-xp: 130
-prerequisites: []
-skills:
-  - ai-production
-tags: [ai, production, product]
+order: 3
+estimatedMinutes: 75
+difficulty: 5
+xp: 170
+prerequisites: [ai-12-observability]
+skills: [ai-production]
+tags: [production, reliability, observability]
 ---
 
 ## Objectifs
-- Comprendre SLOs, incidents & cost operations.
-- L'intégrer dans une architecture de production.
-- Définir des mesures et des critères d'acceptation.
+- construire une procédure incident ;
+- gérer budgets et quotas ;
+- documenter runbooks ;
+- distinguer panne fournisseur et panne applicative.
 
-## Concept
-Passer d'un prototype AI à un produit exige des garanties opérationnelles. **SLOs, incidents & cost operations** relie le comportement du modèle aux préoccupations classiques du logiciel : disponibilité, latence, erreurs, coûts, sécurité et expérience utilisateur.
+## Incident flow
+```text
+detect -> triage -> contain -> mitigate -> recover -> review
+```
 
-Un service de production doit avoir des limites explicites et des comportements de dégradation. Lorsqu'une dépendance devient indisponible, le système doit soit utiliser un fallback maîtrisé, soit échouer rapidement avec une réponse compréhensible.
+Les runbooks indiquent commandes, dashboards, seuils et rollback.
 
-## Méthode
-- Définir les SLI pertinents : latence, disponibilité, erreurs, qualité.
-- Fixer des seuils et une procédure d'alerte.
-- Instrumenter les appels sans journaliser inutilement les données sensibles.
-- Tester timeouts, retries bornés et idempotence.
-- Documenter les incidents et les décisions.
-
-## Erreurs fréquentes
-- Mesurer uniquement la disponibilité HTTP.
-- Ignorer les erreurs de qualité.
-- Ajouter un retry sans budget.
-- Ne pas distinguer incident technique et dérive du comportement AI.
-- Déployer sans procédure de rollback.
+## Coûts
+Suivre coût par modèle, tenant, fonctionnalité et période. Budgets et quotas évitent les consommations illimitées.
 
 ## Exercice
-Définis un mini runbook pour **SLOs, incidents & cost operations** : métriques, seuils, alerte, fallback, rollback et données à conserver pour diagnostiquer un incident.
+Un agent boucle et génère une facture inattendue. Que faire ?
 
-:::indice
-Un système observable permet de répondre à trois questions : que s'est-il passé, pour qui, et depuis quand ?
-:::
-
-:::solution
-Le runbook doit relier métriques et actions. Il précise les seuils, les responsables, les mécanismes de dégradation et la procédure de retour à une version connue.
-:::
+### Solution
+Limiter trafic ou quotas, arrêter la boucle, identifier la version fautive, corriger puis analyser la cause racine.
 
 ## À retenir
-- La qualité AI est aussi une propriété opérationnelle.
-- Les fallbacks et limites doivent être conçus avant l'incident.
-- Un produit AI doit être mesurable de bout en bout.
+Les systèmes IA ont besoin des mêmes disciplines opérationnelles que les systèmes critiques.
