@@ -1,75 +1,137 @@
 ---
-id: ai-01-fondations-python-fondamentaux
-title: "Python for AI"
+id: ai-python-fondamentaux
+title: "Python pour l'AI Engineer : du script au pipeline"
 slug: python-fondamentaux
 technology: ai-engineering
-level: intermediate
-module: 01-fondations
+level: beginner
+module: fondations
 order: 1
-estimatedMinutes: 35
+estimatedMinutes: 45
 difficulty: 2
 xp: 100
 prerequisites: []
-skills:
-  - ai-python
-tags:
-  - ai
-  - ai-engineering
+skills: [ai-python]
+tags: [python, data, ai]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- écrire un script Python lisible et testable ;
+- choisir entre listes, dictionnaires, tuples, ensembles et générateurs ;
+- utiliser fonctions, exceptions et compréhensions ;
+- isoler un environnement avec venv ;
+- structurer un pipeline de données sans effets de bord inutiles.
 
-## Introduction
+## Pourquoi Python est central en AI Engineering
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+Python sert à assembler ingestion, nettoyage, appels de modèles, évaluation, API, jobs et automatisation. Un AI Engineer doit donc maîtriser le Python de production : modules, typage, erreurs, tests, environnements et observabilité.
 
-## Concept
+## Modèle mental
 
-**Python for AI** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+Une variable référence un objet. Deux noms peuvent référencer la même liste :
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+```python
+documents = ["doc-1", "doc-2"]
+alias = documents
+alias.append("doc-3")
+print(documents)
+```
 
-## Exemple
+Pour une copie superficielle, utiliser copy().
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+## Structures utiles en IA
 
-## Méthode professionnelle
+| Structure | Usage |
+| --- | --- |
+| list | séquence ordonnée de documents |
+| dict | métadonnées et configuration |
+| tuple | résultat ou clé composite |
+| set | déduplication et appartenance |
+| générateur | flux de données sans tout charger |
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
+## Fonctions et contrats
+
+Une étape de pipeline doit avoir une responsabilité claire :
+
+```python
+def normalize_text(text: str) -> str:
+    return " ".join(text.lower().split())
+```
+
+Un type hint documente et aide les outils statiques ; il ne constitue pas une validation runtime complète.
+
+Sépare par exemple load_documents, normalize_text et chunk_document au lieu de créer une fonction qui lit, transforme, appelle un LLM et écrit en base.
+
+## Exceptions
+
+Conserver la cause originale :
+
+```python
+try:
+    config = load_config()
+except FileNotFoundError as exc:
+    raise RuntimeError("Configuration absente") from exc
+```
+
+Dans un système AI, distinguer erreur d'entrée, réseau, fournisseur, validation et erreur interne permet ensuite de choisir correctement retry ou fallback.
+
+## Environnement reproductible
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+```
+
+Sous Windows PowerShell : .venv/Scripts/Activate.ps1.
+
+Le code, les dépendances et la configuration nécessaire doivent pouvoir être reconstruits.
+
+## Itérateurs et mémoire
+
+Pour un gros corpus :
+
+```python
+def read_lines(path: str):
+    with open(path, encoding="utf-8") as file:
+        for line in file:
+            yield line.rstrip("\n")
+```
+
+Le générateur évite de charger tout le fichier en mémoire.
 
 ## Erreurs fréquentes
 
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+- attraper Exception partout et perdre la cause ;
+- muter une collection partagée sans le documenter ;
+- installer les dépendances globalement ;
+- charger tout un corpus alors qu'un flux suffit ;
+- mélanger ingestion, transformation et appel modèle.
 
 ## Exercice
 
-Construis une petite expérience sur **Python for AI**.
+Construis un pipeline qui lit des textes, les normalise, supprime les doublons, retourne id/text/length et lève une erreur pour un texte vide.
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
+```python
+def normalize_text(text: str) -> str:
+    return " ".join(text.lower().split())
 
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+def build_documents(items: list[tuple[str, str]]) -> list[dict]:
+    documents = []
+    seen = set()
+    for doc_id, raw in items:
+        text = normalize_text(raw)
+        if not text:
+            raise ValueError(f"Document vide: {doc_id}")
+        if doc_id in seen:
+            continue
+        seen.add(doc_id)
+        documents.append({"id": doc_id, "text": text, "length": len(text)})
+    return documents
+```
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+Python pour l'IA demande une vraie rigueur d'ingénierie. Structures, erreurs, environnements et flux de données deviennent des briques réutilisées dans tous les modules suivants.
