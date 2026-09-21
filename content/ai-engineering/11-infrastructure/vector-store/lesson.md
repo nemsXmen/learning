@@ -39,8 +39,14 @@ Changer dimension ou modèle d'embedding implique souvent un nouvel index et une
 ## Exercice
 Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
 
-### Solution
+:::indice
+Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
+:::
+
+:::solution
 L'isolation d'autorisation au retrieval. Le filtre tenant doit être imposé côté serveur.
+
+:::
 
 ## À retenir
 Un vector store est une infrastructure de données avec contraintes de sécurité et performance.
