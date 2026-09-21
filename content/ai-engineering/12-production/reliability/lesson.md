@@ -40,3 +40,32 @@ Conserver les fonctions déterministes disponibles et retourner un état dégrad
 
 ## À retenir
 La résilience consiste à prévoir comment le système se comporte quand ses dépendances échouent.
+
+
+## Introduction
+
+La fiabilité consiste à prévoir les défaillances plutôt qu'à espérer leur absence.
+
+## Concept
+
+Timeout, retry limité, fallback, circuit breaker et dégradation contrôlée répondent à des pannes différentes.
+
+## Exemple
+
+Si le provider principal échoue, un fallback peut produire une réponse simplifiée plutôt qu'une erreur totale.
+
+## Comment ça fonctionne
+
+failure → detect → fallback/degrade → recover
+
+## Questions d'entretien
+
+- Pourquoi limiter les retries ?
+
+  :::indice
+  Pense aux conséquences d'une panne sous trafic réel.
+  :::
+
+  :::reponse
+  Parce que des retries illimités amplifient congestion et coût.
+  :::
