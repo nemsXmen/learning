@@ -1,75 +1,52 @@
 ---
-id: ai-03-machine-learning-non-supervise
-title: "Unsupervised learning"
+id: ai-ml-unsupervised
+title: "Machine Learning non supervisé"
 slug: non-supervise
 technology: ai-engineering
 level: intermediate
-module: 03-machine-learning
+module: machine-learning
 order: 2
-estimatedMinutes: 35
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-ml-basics
-tags:
-  - ai
-  - ai-engineering
+estimatedMinutes: 50
+difficulty: 3
+xp: 110
+prerequisites: [ai-ml-basics]
+skills: [ai-ml-basics]
+tags: [clustering, dimensionality-reduction, anomaly]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- comprendre clustering et réduction de dimension ;
+- distinguer exploration et prédiction ;
+- détecter des anomalies avec prudence ;
+- valider un cluster avec le contexte métier.
 
-## Introduction
+## Clustering
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+K-means cherche des centroïdes minimisant la distance intra-cluster. Le nombre de clusters est un choix de modélisation, pas une vérité automatiquement découverte.
 
-## Concept
+Les groupes doivent être interprétés avec leurs caractéristiques et leur stabilité.
 
-**Unsupervised learning** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+## Réduction de dimension
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+PCA projette les données vers des directions expliquant une partie de la variance. Une projection 2D aide à visualiser mais ne prouve pas que la structure réelle est bidimensionnelle.
 
-## Exemple
+## Anomalies
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+Une observation inhabituelle n'est pas nécessairement une fraude ou une erreur. Distingue détection statistique et interprétation métier.
 
-## Méthode professionnelle
+## Embeddings
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
-
-## Erreurs fréquentes
-
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+Les embeddings permettent aussi regroupement et recherche sémantique. Le résultat dépend du modèle, des données et de la métrique.
 
 ## Exercice
 
-Construis une petite expérience sur **Unsupervised learning**.
+Tu observes trois clusters de clients. Comment vérifier qu'ils sont utiles ?
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
-
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+Comparer stabilité, caractéristiques, séparation selon plusieurs métriques et utilité pour une décision réelle. Ne pas conclure uniquement depuis une visualisation.
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+Le non supervisé sert à explorer et représenter. Une structure calculée doit être confrontée aux données et au contexte avant utilisation.
