@@ -47,3 +47,32 @@ Une recherche hybride peut exploiter l'identifiant exact et le sens de la descri
 
 ## À retenir
 Le retrieval est une étape de sélection mesurable, pas une fonction magique de base vectorielle.
+
+
+## Introduction
+
+Le retrieval sélectionne le contexte utile avant génération.
+
+## Concept
+
+Recherche lexicale, vectorielle et hybride répondent à des signaux différents.
+
+## Exemple
+
+BM25 retrouve bien des termes exacts tandis que les embeddings rapprochent des formulations sémantiquement similaires.
+
+## Comment ça fonctionne
+
+query → candidates → ranking → top-k → context
+
+## Questions d'entretien
+
+- Pourquoi mesurer recall@k ?
+
+  :::indice
+  Sépare toujours les erreurs de retrieval des erreurs de génération.
+  :::
+
+  :::reponse
+  Pour savoir si les documents pertinents sont effectivement récupérés dans les k premiers résultats.
+  :::
