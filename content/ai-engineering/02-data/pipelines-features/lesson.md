@@ -57,9 +57,15 @@ Les transformations apprises doivent être identiques entre entraînement et pr�
 
 Conçois un pipeline d'ingestion relançable sans duplication de chunks.
 
-### Solution
+:::indice
+Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
+:::
+
+:::solution
 
 Utilise une clé déterministe basée sur document_id + document_version + chunk_position, puis un upsert. Enregistre aussi version du pipeline et du chunker/tokenizer.
+
+:::
 
 ## À retenir
 
