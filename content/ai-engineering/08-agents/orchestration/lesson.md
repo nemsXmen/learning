@@ -4,7 +4,7 @@ title: "Orchestration multi-agents"
 slug: orchestration
 technology: ai-engineering
 level: advanced
-module: 08-agents
+module: agents
 order: 3
 estimatedMinutes: 80
 difficulty: 5
