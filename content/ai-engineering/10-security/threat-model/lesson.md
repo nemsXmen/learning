@@ -1,57 +1,43 @@
 ---
-id: ai-10-security-threat-model
-title: "Threat modeling AI systems"
+id: ai-10-threat-model
+title: "Threat modeling pour les systèmes IA"
 slug: threat-model
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 10-security
 order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-security
-tags: [ai, security, evaluation]
+estimatedMinutes: 70
+difficulty: 5
+xp: 160
+prerequisites: [ai-09-regression]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre Threat modeling AI systems.
-- Construire des contrôles reproductibles.
-- Réduire les régressions et les risques.
+- identifier les actifs et frontières de confiance ;
+- modéliser les menaces spécifiques à l'IA ;
+- relier menaces et contrôles ;
+- prioriser les risques.
 
-## Concept
-Un système AI doit être traité comme un système logiciel soumis à des entrées adversariales, des changements de données et des dépendances externes. **Threat modeling AI systems** permet de transformer un risque ou un objectif de qualité en contrôle observable.
+## Actifs
+Cartographie prompts, données, secrets, modèles, outils, bases, sorties et actions métier. Définis qui peut accéder à chacun.
 
-Commence par identifier actifs, entrées non fiables, frontières de confiance, actions possibles et conséquences d'un échec. Ensuite, définis des tests qui peuvent être exécutés automatiquement lorsque c'est possible.
+## Threat model
+```text
+asset -> trust boundary -> threat -> impact -> control -> residual risk
+```
 
-## Méthode
-1. Lister actifs et données sensibles.
-2. Identifier les frontières de confiance.
-3. Définir les comportements attendus.
-4. Ajouter des cas normaux, limites et adverses.
-5. Exécuter les contrôles dans CI.
-6. Bloquer le déploiement lorsque les seuils critiques sont dépassés.
+Les risques incluent injection, exfiltration, abus d'outils, fuite de données, empoisonnement de données, déni de service et coûts non maîtrisés.
 
-## Erreurs fréquentes
-- Considérer le modèle comme une frontière de sécurité.
-- Tester uniquement des réponses normales.
-- Stocker des secrets dans prompts ou logs.
-- Utiliser une métrique globale qui masque les échecs critiques.
-- Dépendre d'un test manuel impossible à reproduire.
+## Contrôles
+Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, sandbox, logging et approbation humaine.
 
 ## Exercice
-Écris une mini threat model et une suite de dix tests pour **Threat modeling AI systems**. Pour chaque test, précise entrée, comportement attendu et conséquence d'un échec.
+Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
 
-:::indice
-Commence par ce qui peut réellement être perdu : données, argent, accès, réputation ou disponibilité.
-:::
-
-:::solution
-Une solution utile identifie les actifs, les frontières de confiance et les scénarios d'abus, puis transforme les scénarios prioritaires en contrôles automatisables.
-:::
+### Solution
+Traiter le document comme donnée non fiable et placer une autorisation déterministe avant toute écriture.
 
 ## À retenir
-- La sécurité AI commence par les frontières de confiance.
-- Les tests adverses doivent être versionnés comme les tests fonctionnels.
-- Les secrets et données sensibles ne doivent pas devenir des entrées implicites du système.
+La sécurité commence par les frontières de confiance, pas par le prompt seul.
