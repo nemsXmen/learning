@@ -1,58 +1,42 @@
 ---
-id: ai-08-agents-agent-loop
-title: "Agent loop & state"
+id: ai-08-agent-loop
+title: "Boucle agentique et état"
 slug: agent-loop
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 08-agents
 order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-agents
-tags: [ai, rag, agents]
+estimatedMinutes: 75
+difficulty: 5
+xp: 170
+prerequisites: [ai-07-rag-evaluation]
+skills: [ai-agents]
+tags: [agents, tools, orchestration, safety]
 ---
 
 ## Objectifs
-- Comprendre Agent loop & state.
-- Construire une étape isolée et mesurable.
-- Diagnostiquer les erreurs de récupération ou d'orchestration.
+- comprendre la boucle perception-décision-action ;
+- définir un état explicite ;
+- limiter les itérations ;
+- distinguer planification et exécution.
 
-## Concept
-Un système RAG sépare ingestion, représentation, indexation, récupération, génération et évaluation. Cette séparation est essentielle : une mauvaise réponse peut venir d'un document absent, d'un mauvais découpage, d'une recherche trop large ou du modèle de génération.
+## Boucle
+```text
+input -> state -> model -> tool -> observation -> state -> ...
+```
+Un agent n'est pas simplement un prompt long : il possède une boucle d'exécution et un état contrôlé.
 
-Pour **Agent loop & state**, définis des contrats entre chaque étape. Conserve les métadonnées utiles, limite les résultats récupérés et mesure séparément la qualité de récupération et la qualité de réponse.
+## Garde-fous
+Définis budget de tokens, nombre maximal d'étapes, timeout, outils autorisés et condition d'arrêt.
 
-## Méthode
-1. Préparer des données propres.
-2. Produire une représentation stable.
-3. Indexer avec les métadonnées nécessaires.
-4. Récupérer un petit ensemble de candidats.
-5. Filtrer ou reranker si nécessaire.
-6. Générer une réponse ancrée dans les éléments récupérés.
-7. Évaluer récupération et réponse séparément.
-
-## Erreurs fréquentes
-- Utiliser des chunks arbitraires sans mesurer leur effet.
-- Perdre les métadonnées lors de l'ingestion.
-- Envoyer trop de documents au modèle.
-- Ne pas distinguer échec de retrieval et hallucination.
-- Pour un agent, laisser une boucle ou un outil sans limite.
+## Idempotence
+Une reprise peut répéter une action. Les opérations à effet de bord doivent donc utiliser des clés d'idempotence et des contrôles métier.
 
 ## Exercice
-Crée un jeu de dix questions avec leurs sources attendues. Mesure quels éléments sont récupérés et si la réponse finale reste ancrée dans ces sources.
+Un agent appelle cinq fois la même recherche sans progresser. Quel mécanisme ajouter ?
 
-:::indice
-Quand une réponse est fausse, demande d'abord : « les bonnes informations étaient-elles disponibles dans le contexte ? »
-:::
-
-:::solution
-Sépare recall de retrieval et qualité de génération. Journalise les documents récupérés, leurs scores et les raisons d'un échec afin de pouvoir corriger la bonne étape.
-:::
+### Solution
+Détection de répétition/no-progress, limite d'itérations et arrêt contrôlé avec trace exploitable.
 
 ## À retenir
-- RAG est une chaîne de composants, pas un simple prompt.
-- Les métadonnées et l'évaluation rendent le retrieval exploitable.
-- Les agents doivent être bornés par des états, outils et règles explicites.
+L'autonomie doit être bornée par un runtime déterministe.
