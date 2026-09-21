@@ -4,13 +4,13 @@ title: "PyTorch : modèles, datasets et entraînement reproductible"
 slug: pytorch
 technology: ai-engineering
 level: intermediate
-module: 04-deep-learning
+module: deep-learning
 order: 3
 estimatedMinutes: 70
 difficulty: 4
 xp: 150
 prerequisites: [ai-dl-tensors, ai-dl-training]
-skills: [ai-deep-learning]
+skills: [ai-pytorch]
 tags: [deep-learning, pytorch]
 ---
 
