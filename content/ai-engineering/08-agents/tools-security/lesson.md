@@ -4,7 +4,7 @@ title: "Sécurité des agents et outils"
 slug: tools-security
 technology: ai-engineering
 level: advanced
-module: 08-agents
+module: agents
 order: 4
 estimatedMinutes: 80
 difficulty: 5
