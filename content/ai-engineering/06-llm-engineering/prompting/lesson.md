@@ -4,13 +4,13 @@ title: "Prompt engineering"
 slug: prompting
 technology: ai-engineering
 level: intermediate
-module: 06-llm-engineering
+module: llm-engineering
 order: 1
 estimatedMinutes: 60
 difficulty: 3
 xp: 130
 prerequisites: [ai-05-llm-architecture]
-skills: [ai-llm-engineering]
+skills: [ai-llm-apps]
 tags: [llm, ai-engineering]
 ---
 
