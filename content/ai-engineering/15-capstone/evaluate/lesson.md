@@ -1,51 +1,44 @@
 ---
-id: ai-15-capstone-evaluate
-title: "Evaluate, secure & observe"
+id: ai-15-evaluate
+title: "Capstone : évaluer qualité, coût, latence et sécurité"
 slug: evaluate
 technology: ai-engineering
-level: advanced
+level: expert
 module: 15-capstone
-order: 1
-estimatedMinutes: 60
+order: 3
+estimatedMinutes: 100
 difficulty: 5
-xp: 180
-prerequisites: []
-skills:
-  - ai-capstone
-tags: [ai, capstone, production]
+xp: 240
+prerequisites: [ai-15-build]
+skills: [ai-capstone]
+tags: [capstone, architecture, rag, agents, production]
 ---
 
 ## Objectifs
-- Concevoir une solution complète autour de Evaluate, secure & observe.
-- Relier architecture, données, modèle et produit.
-- Prouver la qualité par des tests et des métriques.
+- créer un golden dataset ;
+- mesurer plusieurs dimensions ;
+- tester les régressions ;
+- intégrer la sécurité aux évaluations.
 
-## Concept
-Le niveau expert consiste à raisonner sur le système complet. **Evaluate, secure & observe** ne doit pas être traité isolément : l'interface, les données, le modèle, le retrieval éventuel, les outils, la sécurité et l'observabilité forment une seule chaîne.
+## Golden dataset
+Construis des cas représentatifs : succès, ambiguïté, données manquantes, adversarial, longues entrées et erreurs d'outils.
 
-Dans le capstone, chaque composant doit avoir un contrat clair. Les opérations longues passent par une stratégie asynchrone adaptée, les secrets restent côté serveur et les actions à risque sont contrôlées.
+```text
+input -> system -> retrieval -> generation -> tools -> final
+                 |                 |
+              metrics           traces
+```
 
-## Méthode
-- Écrire l'architecture avant le code.
-- Définir les contrats et schémas.
-- Construire une baseline fonctionnelle.
-- Ajouter RAG ou agents uniquement si le besoin le justifie.
-- Créer un jeu d'évaluation versionné.
-- Instrumenter qualité, latence, coût et erreurs.
-- Préparer rollback et documentation.
+Mesure qualité, groundedness, exactitude structurée, latence, coût et taux d'erreur.
+
+## Release gate
+Une version ne doit pas seulement « sembler meilleure ». Elle doit respecter des seuils définis sur les métriques critiques et ne pas introduire de régression de sécurité.
 
 ## Exercice
-Implémente une partie du capstone sur **Evaluate, secure & observe**. Fournis architecture, contrats, tests, métriques et procédure de déploiement.
+Une nouvelle version améliore la qualité moyenne mais échoue davantage sur les requêtes sensibles. Que montre l'évaluation ?
 
-:::indice
-Chaque composant doit pouvoir être remplacé ou testé sans dépendre implicitement de tout le reste.
-:::
-
-:::solution
-Une solution complète sépare domaine, orchestration et infrastructure, valide les entrées/sorties, limite les permissions et mesure le système avec un dataset d'évaluation versionné.
-:::
+### Solution
+La moyenne masque une régression sur un segment critique. Il faut segmenter les résultats et bloquer la release si le seuil de sécurité est dépassé.
 
 ## À retenir
-- L'expertise vient de la capacité à relier les couches.
-- La production exige tests, sécurité et observabilité.
-- Un capstone doit laisser des artefacts réutilisables : code, tests, métriques et documentation.
+L'évaluation doit représenter les vrais risques du produit, pas seulement sa moyenne.
