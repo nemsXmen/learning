@@ -10,8 +10,8 @@ estimatedMinutes: 70
 difficulty: 5
 xp: 160
 prerequisites: [ai-09-regression]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-security]
+tags: [security, ai, llm]
 ---
 
 ## Objectifs
@@ -28,10 +28,10 @@ Cartographie prompts, données, secrets, modèles, outils, bases, sorties et act
 asset -> trust boundary -> threat -> impact -> control -> residual risk
 ```
 
-Les risques incluent injection, exfiltration, abus d'outils, fuite de données, empoisonnement de données, déni de service et coûts non maîtrisés.
+Les risques incluent injection, exfiltration, abus d'outils, fuite de données, empoisonnement, déni de service et coûts non maîtrisés.
 
 ## Contrôles
-Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, sandbox, logging et approbation humaine.
+Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, sandbox, logging et approbation.
 
 ## Exercice
 Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
