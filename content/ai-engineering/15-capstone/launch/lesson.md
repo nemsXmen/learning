@@ -52,6 +52,13 @@ Comparer tokens d'entrée/sortie, contexte récupéré, retries, latence, taille
 
 :::
 
+## Erreurs fréquentes
+
+- mélanger responsabilités métier, modèle et autorisation ;
+- lancer sans golden dataset ni observabilité ;
+- ignorer coûts et quotas ;
+- ne pas préparer rollback et runbook.
+
 ## À retenir
 Le lancement n'est pas la fin du capstone : c'est le début de son cycle d'exploitation.
 
