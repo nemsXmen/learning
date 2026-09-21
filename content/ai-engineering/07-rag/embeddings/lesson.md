@@ -1,58 +1,47 @@
 ---
-id: ai-07-rag-embeddings
-title: "Embeddings & semantic search"
+id: ai-07-embeddings
+title: "Embeddings et index vectoriels"
 slug: embeddings
 technology: ai-engineering
 level: intermediate
 module: 07-rag
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-rag
-tags: [ai, rag, agents]
+order: 3
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-07-chunking]
+skills: [ai-rag]
+tags: [rag, retrieval, llm]
 ---
 
 ## Objectifs
-- Comprendre Embeddings & semantic search.
-- Construire une étape isolée et mesurable.
-- Diagnostiquer les erreurs de récupération ou d'orchestration.
+- comprendre ce qu'est un embedding ;
+- gérer dimensions et modèles d'embedding ;
+- indexer et interroger des vecteurs ;
+- éviter les incompatibilités de versions.
 
-## Concept
-Un système RAG sépare ingestion, représentation, indexation, récupération, génération et évaluation. Cette séparation est essentielle : une mauvaise réponse peut venir d'un document absent, d'un mauvais découpage, d'une recherche trop large ou du modèle de génération.
+## Embedding
+Un embedding transforme un texte en vecteur numérique. Des textes proches selon le modèle tendent à avoir des vecteurs proches.
 
-Pour **Embeddings & semantic search**, définis des contrats entre chaque étape. Conserve les métadonnées utiles, limite les résultats récupérés et mesure séparément la qualité de récupération et la qualité de réponse.
+```text
+text -> embedding model -> vector -> vector index
+query -> same embedding space -> nearest neighbors
+```
 
-## Méthode
-1. Préparer des données propres.
-2. Produire une représentation stable.
-3. Indexer avec les métadonnées nécessaires.
-4. Récupérer un petit ensemble de candidats.
-5. Filtrer ou reranker si nécessaire.
-6. Générer une réponse ancrée dans les éléments récupérés.
-7. Évaluer récupération et réponse séparément.
+## Dimension et distance
+Tous les vecteurs d'un même index doivent respecter la dimension attendue. Le choix de distance doit correspondre à la façon dont le modèle produit ses représentations.
 
-## Erreurs fréquentes
-- Utiliser des chunks arbitraires sans mesurer leur effet.
-- Perdre les métadonnées lors de l'ingestion.
-- Envoyer trop de documents au modèle.
-- Ne pas distinguer échec de retrieval et hallucination.
-- Pour un agent, laisser une boucle ou un outil sans limite.
+## Modèle
+Changer de modèle d'embedding peut changer dimension, distribution et qualité. Une migration doit donc réindexer les documents et réévaluer le retrieval.
+
+## Metadata filtering
+Le vecteur ne remplace pas les filtres métier : tenant, ACL, langue, type de document et version peuvent être appliqués avant ou pendant la recherche selon le moteur.
 
 ## Exercice
-Crée un jeu de dix questions avec leurs sources attendues. Mesure quels éléments sont récupérés et si la réponse finale reste ancrée dans ces sources.
+Un index attend 768 dimensions mais le nouveau modèle produit 1536. Peut-on mélanger les deux ?
 
-:::indice
-Quand une réponse est fausse, demande d'abord : « les bonnes informations étaient-elles disponibles dans le contexte ? »
-:::
-
-:::solution
-Sépare recall de retrieval et qualité de génération. Journalise les documents récupérés, leurs scores et les raisons d'un échec afin de pouvoir corriger la bonne étape.
-:::
+### Solution
+Non dans un index homogène. Créer un nouvel index compatible et réindexer les contenus concernés.
 
 ## À retenir
-- RAG est une chaîne de composants, pas un simple prompt.
-- Les métadonnées et l'évaluation rendent le retrieval exploitable.
-- Les agents doivent être bornés par des états, outils et règles explicites.
+Un embedding est un signal de recherche ; il ne garantit ni vérité ni autorisation.
