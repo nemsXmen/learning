@@ -45,6 +45,13 @@ Mesurer qualité perçue, taux de correction, temps gagné et raisons d'abandon 
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 L'analytics IA doit relier usage, qualité et outcome métier.
 
