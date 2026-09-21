@@ -42,8 +42,14 @@ Une page web ou un document peut contenir des instructions malveillantes. Sépar
 ## Exercice
 Extraire name, email et amount depuis un message client. Quelles contraintes ajouter ?
 
-### Solution
+:::indice
+Sépare génération, validation et exécution ; ne donne pas au modèle une autorité implicite.
+:::
+
+:::solution
 Définir un schéma, les types, les champs manquants, l'interdiction d'inventer et des exemples couvrant les cas ambigus.
+
+:::
 
 ## À retenir
 Le prompt est une partie versionnée du logiciel, pas une formule magique.
