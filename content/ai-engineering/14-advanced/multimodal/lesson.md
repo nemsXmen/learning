@@ -1,51 +1,44 @@
 ---
-id: ai-14-advanced-multimodal
-title: "Multimodal systems"
+id: ai-14-multimodal
+title: "Multimodal : texte, image, audio et documents"
 slug: multimodal
 technology: ai-engineering
 level: advanced
 module: 14-advanced
-order: 1
-estimatedMinutes: 60
+order: 3
+estimatedMinutes: 85
 difficulty: 5
-xp: 180
-prerequisites: []
-skills:
-  - ai-multimodal
-tags: [ai, capstone, production]
+xp: 190
+prerequisites: [ai-14-efficient]
+skills: [ai-advanced]
+tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
 ## Objectifs
-- Concevoir une solution complète autour de Multimodal systems.
-- Relier architecture, données, modèle et produit.
-- Prouver la qualité par des tests et des métriques.
+- comprendre les pipelines multimodaux ;
+- traiter documents et images ;
+- contrôler provenance et permissions ;
+- évaluer chaque modalité.
 
-## Concept
-Le niveau expert consiste à raisonner sur le système complet. **Multimodal systems** ne doit pas être traité isolément : l'interface, les données, le modèle, le retrieval éventuel, les outils, la sécurité et l'observabilité forment une seule chaîne.
+## Pipeline
+```text
+file -> detection -> parsing/OCR -> normalized representation
+                                  -> retrieval/model
+```
 
-Dans le capstone, chaque composant doit avoir un contrat clair. Les opérations longues passent par une stratégie asynchrone adaptée, les secrets restent côté serveur et les actions à risque sont contrôlées.
+Un PDF peut contenir texte, tableaux, images et instructions malveillantes. Chaque composant doit être traité comme donnée non fiable.
 
-## Méthode
-- Écrire l'architecture avant le code.
-- Définir les contrats et schémas.
-- Construire une baseline fonctionnelle.
-- Ajouter RAG ou agents uniquement si le besoin le justifie.
-- Créer un jeu d'évaluation versionné.
-- Instrumenter qualité, latence, coût et erreurs.
-- Préparer rollback et documentation.
+## Images
+Pour une analyse visuelle, précise les tâches attendues : classification, extraction, comparaison ou question-réponse.
+
+## Audio
+Sépare transcription, diarisation éventuelle et compréhension. Une erreur de transcription peut devenir une erreur de raisonnement.
 
 ## Exercice
-Implémente une partie du capstone sur **Multimodal systems**. Fournis architecture, contrats, tests, métriques et procédure de déploiement.
+Un document scanné contient une information critique dans une image. Que faut-il tester ?
 
-:::indice
-Chaque composant doit pouvoir être remplacé ou testé sans dépendre implicitement de tout le reste.
-:::
-
-:::solution
-Une solution complète sépare domaine, orchestration et infrastructure, valide les entrées/sorties, limite les permissions et mesure le système avec un dataset d'évaluation versionné.
-:::
+### Solution
+OCR, qualité de lecture, localisation de l'information et validation de la sortie finale avec la source.
 
 ## À retenir
-- L'expertise vient de la capacité à relier les couches.
-- La production exige tests, sécurité et observabilité.
-- Un capstone doit laisser des artefacts réutilisables : code, tests, métriques et documentation.
+Multimodal signifie plusieurs chaînes de données et plusieurs surfaces d'erreur.
