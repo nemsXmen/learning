@@ -1,50 +1,50 @@
 ---
-id: ai-15-capstone-launch
-title: "Launch: reliability, cost & documentation"
+id: ai-15-launch
+title: "Capstone : lancer, observer et faire évoluer"
 slug: launch
 technology: ai-engineering
-level: advanced
+level: expert
 module: 15-capstone
 order: 4
-estimatedMinutes: 90
+estimatedMinutes: 100
 difficulty: 5
 xp: 250
-prerequisites: []
-skills:
-  - ai-capstone
-tags: [ai, capstone, production]
+prerequisites: [ai-15-evaluate]
+skills: [ai-capstone]
+tags: [capstone, architecture, rag, agents, production]
 ---
 
-## Mission
+## Objectifs
+- préparer un lancement progressif ;
+- exploiter métriques et traces ;
+- gérer incidents et coûts ;
+- savoir rollbacker.
 
-Mettre en production un AI SaaS complet et démontrer qu'il est exploitable, observable, sécurisé et maintenable.
+## Production
+Utilise au minimum environnements séparés, secrets gérés, migrations contrôlées, CI/CD, health checks et rollback.
 
-## Livrables
+## Progressive delivery
+```text
+staging -> internal users -> small cohort -> wider rollout
+                    |
+                 monitor
+                    |
+              rollback if needed
+```
 
-- architecture et ADR ;
-- API avec contrats validés ;
-- authentification et contrôle des permissions ;
-- pipeline d'ingestion et recherche ;
-- fonctionnalité RAG ;
-- agent avec outils limités si nécessaire ;
-- suite d'évaluation versionnée ;
-- observabilité ;
-- limites de coût et de débit ;
-- procédure de rollback ;
-- documentation développeur et runbook.
+Surveille erreurs, p95/p99, coût par tâche, quotas, consommation tokens, qualité d'évaluation et incidents de sécurité.
 
-## Critères techniques
+## Runbook
+Chaque incident important doit avoir une procédure : détection, mitigation, décision de rollback, collecte des preuves et postmortem.
 
-Le système doit distinguer les erreurs utilisateur, les erreurs d'infrastructure et les erreurs de qualité AI. Les secrets ne doivent jamais être exposés au client. Les appels externes doivent avoir des timeouts et des retries bornés.
+## Évolution
+Après lancement, les changements de prompts, modèles, retrieval et tools doivent rester versionnés et évalués.
 
-## Évaluation finale
+## Exercice
+Le coût par tâche double après un changement de modèle alors que la qualité reste stable. Que vérifier ?
 
-Prépare un dataset de référence et compare une version baseline à la version finale. Mesure au minimum qualité, latence, taux d'erreur et coût. Présente les compromis et les limites connues.
+### Solution
+Comparer tokens d'entrée/sortie, contexte récupéré, retries, latence, taille des réponses et tarif fournisseur. Corriger la cause avant de généraliser le changement.
 
-## Exercice final
-
-Déploie le projet, provoque volontairement au moins trois scénarios d'échec, puis montre comment le système les détecte et se dégrade.
-
-:::solution
-Un capstone terminé n'est pas seulement une démo : il possède des contrats, des tests, une évaluation reproductible, des contrôles de sécurité, des métriques opérationnelles et une documentation permettant à un autre ingénieur de l'exploiter.
-:::
+## À retenir
+Le lancement n'est pas la fin du capstone : c'est le début de son cycle d'exploitation.
