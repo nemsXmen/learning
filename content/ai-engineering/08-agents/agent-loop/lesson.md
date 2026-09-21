@@ -35,8 +35,14 @@ Une reprise peut répéter une action. Les opérations à effet de bord doivent 
 ## Exercice
 Un agent appelle cinq fois la même recherche sans progresser. Quel mécanisme ajouter ?
 
-### Solution
+:::indice
+Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+:::
+
+:::solution
 Détection de répétition/no-progress, limite d'itérations et arrêt contrôlé avec trace exploitable.
+
+:::
 
 ## À retenir
 L'autonomie doit être bornée par un runtime déterministe.
