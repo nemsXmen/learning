@@ -96,3 +96,32 @@ Ajoute une contrainte d'unicité adaptée au processus d'ingestion.
 ## À retenir
 
 La donnée AI doit être traçable, versionnée et découplée des fournisseurs. Un bon schéma rend les pipelines idempotents, auditables et évolutifs.
+
+
+## Introduction
+
+La modélisation organise les données pour qu'un système AI puisse les retrouver et les relier sans ambiguïté.
+
+## Concept
+
+Une donnée utile possède identité, provenance, schéma et contexte.
+
+## Exemple
+
+Un document peut avoir un identifiant stable, une version, une source et des métadonnées de filtrage.
+
+## Comment ça fonctionne
+
+ingestion → normalisation → identité → stockage → consommation
+
+## Questions d'entretien
+
+- Pourquoi la provenance compte-t-elle ?
+
+  :::indice
+  Pense à la reproductibilité et aux erreurs silencieuses.
+  :::
+
+  :::reponse
+  Elle permet de comprendre d'où vient une donnée et de diagnostiquer ou corriger une sortie.
+  :::
