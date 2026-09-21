@@ -4,13 +4,13 @@ title: "LLM Gateway, routage et résilience"
 slug: gateway
 technology: ai-engineering
 level: intermediate
-module: 06-llm-engineering
+module: llm-engineering
 order: 4
 estimatedMinutes: 75
 difficulty: 5
 xp: 160
 prerequisites: [ai-06-tools]
-skills: [ai-llm-engineering]
+skills: [ai-llm-apps]
 tags: [llm, ai-engineering]
 ---
 
