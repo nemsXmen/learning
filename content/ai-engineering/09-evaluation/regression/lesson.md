@@ -36,8 +36,14 @@ Un changement peut être bloqué si une métrique critique baisse au-delà d'un 
 ## Exercice
 Le score global reste stable mais les requêtes en français régressent. Que montre une métrique agrégée ?
 
-### Solution
+:::indice
+Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
+:::
+
+:::solution
 Elle peut masquer une régression sur un sous-groupe. Il faut segmenter les résultats.
+
+:::
 
 ## À retenir
 La qualité doit être testée comme une propriété versionnée du logiciel.
