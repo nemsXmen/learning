@@ -1,56 +1,45 @@
 ---
-id: ai-12-production-observability
-title: "AI observability"
+id: ai-12-observability
+title: "Observabilité LLM et AI systems"
 slug: observability
 technology: ai-engineering
 level: advanced
 module: 12-production
-order: 1
-estimatedMinutes: 45
-difficulty: 4
-xp: 130
-prerequisites: []
-skills:
-  - ai-observability
-tags: [ai, production, product]
+order: 2
+estimatedMinutes: 80
+difficulty: 5
+xp: 180
+prerequisites: [ai-12-deployment]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre AI observability.
-- L'intégrer dans une architecture de production.
-- Définir des mesures et des critères d'acceptation.
+- tracer les requêtes ;
+- mesurer qualité, latence et coût ;
+- corréler modèle, prompt et version ;
+- protéger les données observées.
 
-## Concept
-Passer d'un prototype AI à un produit exige des garanties opérationnelles. **AI observability** relie le comportement du modèle aux préoccupations classiques du logiciel : disponibilité, latence, erreurs, coûts, sécurité et expérience utilisateur.
+## Traces
+Utilise requestId, tenant, route, modèle, version de prompt, durée, tokens et statut.
 
-Un service de production doit avoir des limites explicites et des comportements de dégradation. Lorsqu'une dépendance devient indisponible, le système doit soit utiliser un fallback maîtrisé, soit échouer rapidement avec une réponse compréhensible.
+```text
+request -> trace -> model call -> tool calls -> response
+             |          |             |
+          latency      cost         errors
+```
 
-## Méthode
-- Définir les SLI pertinents : latence, disponibilité, erreurs, qualité.
-- Fixer des seuils et une procédure d'alerte.
-- Instrumenter les appels sans journaliser inutilement les données sensibles.
-- Tester timeouts, retries bornés et idempotence.
-- Documenter les incidents et les décisions.
+## SLO
+Définis objectifs sur disponibilité, latence et erreurs. Pour l'IA, ajoute des signaux qualité lorsque leur calcul est compatible avec la confidentialité.
 
-## Erreurs fréquentes
-- Mesurer uniquement la disponibilité HTTP.
-- Ignorer les erreurs de qualité.
-- Ajouter un retry sans budget.
-- Ne pas distinguer incident technique et dérive du comportement AI.
-- Déployer sans procédure de rollback.
+## Alertes
+Alerte sur hausse d'erreurs, latence, coûts ou baisse de métriques critiques.
 
 ## Exercice
-Définis un mini runbook pour **AI observability** : métriques, seuils, alerte, fallback, rollback et données à conserver pour diagnostiquer un incident.
+Le coût par requête double sans hausse de trafic. Où chercher ?
 
-:::indice
-Un système observable permet de répondre à trois questions : que s'est-il passé, pour qui, et depuis quand ?
-:::
-
-:::solution
-Le runbook doit relier métriques et actions. Il précise les seuils, les responsables, les mécanismes de dégradation et la procédure de retour à une version connue.
-:::
+### Solution
+Comparer tokens entrée/sortie, modèle routé, retries, contexte, outils et changement de prompt.
 
 ## À retenir
-- La qualité AI est aussi une propriété opérationnelle.
-- Les fallbacks et limites doivent être conçus avant l'incident.
-- Un produit AI doit être mesurable de bout en bout.
+Sans corrélation entre version, requête et métriques, une régression IA est difficile à expliquer.
