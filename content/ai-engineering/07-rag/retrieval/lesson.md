@@ -1,58 +1,50 @@
 ---
-id: ai-07-rag-retrieval
-title: "Retrieval, filters & reranking"
+id: ai-07-retrieval
+title: "Retrieval et recherche sémantique"
 slug: retrieval
 technology: ai-engineering
 level: intermediate
 module: 07-rag
 order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-rag
-tags: [ai, rag, agents]
+estimatedMinutes: 65
+difficulty: 4
+xp: 140
+prerequisites: [ai-05-attention]
+skills: [ai-rag]
+tags: [rag, retrieval, llm]
 ---
 
+
 ## Objectifs
-- Comprendre Retrieval, filters & reranking.
-- Construire une étape isolée et mesurable.
-- Diagnostiquer les erreurs de récupération ou d'orchestration.
+- distinguer recherche lexicale et sémantique ;
+- comprendre embeddings et similarité ;
+- choisir une stratégie de retrieval ;
+- mesurer la qualité des résultats.
 
-## Concept
-Un système RAG sépare ingestion, représentation, indexation, récupération, génération et évaluation. Cette séparation est essentielle : une mauvaise réponse peut venir d'un document absent, d'un mauvais découpage, d'une recherche trop large ou du modèle de génération.
+## Pourquoi le retrieval
+Un LLM ne connaît pas automatiquement les données privées ou les changements récents. Le retrieval sélectionne des passages pertinents avant la génération.
 
-Pour **Retrieval, filters & reranking**, définis des contrats entre chaque étape. Conserve les métadonnées utiles, limite les résultats récupérés et mesure séparément la qualité de récupération et la qualité de réponse.
+## Recherche lexicale vs sémantique
+BM25 exploite les termes présents. Les embeddings représentent le sens dans un espace vectoriel. Les deux approches sont complémentaires.
 
-## Méthode
-1. Préparer des données propres.
-2. Produire une représentation stable.
-3. Indexer avec les métadonnées nécessaires.
-4. Récupérer un petit ensemble de candidats.
-5. Filtrer ou reranker si nécessaire.
-6. Générer une réponse ancrée dans les éléments récupérés.
-7. Évaluer récupération et réponse séparément.
+```text
+query -> retrieval -> ranked chunks -> context
+```
 
-## Erreurs fréquentes
-- Utiliser des chunks arbitraires sans mesurer leur effet.
-- Perdre les métadonnées lors de l'ingestion.
-- Envoyer trop de documents au modèle.
-- Ne pas distinguer échec de retrieval et hallucination.
-- Pour un agent, laisser une boucle ou un outil sans limite.
+## Similarité
+La similarité cosinus compare deux vecteurs normalisés par leur angle. Le score sert à classer, pas à prouver qu'un document est correct.
+
+## Hybrid search
+Une recherche hybride combine signaux lexicaux et vectoriels. Elle est utile quand les requêtes contiennent à la fois des concepts et des identifiants exacts.
+
+## Evaluation
+Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées. N'optimise pas uniquement la qualité perçue de quelques exemples.
 
 ## Exercice
-Crée un jeu de dix questions avec leurs sources attendues. Mesure quels éléments sont récupérés et si la réponse finale reste ancrée dans ces sources.
+Une requête contient une référence de facture exacte mais aussi une description métier. Quelle recherche utiliser ?
 
-:::indice
-Quand une réponse est fausse, demande d'abord : « les bonnes informations étaient-elles disponibles dans le contexte ? »
-:::
-
-:::solution
-Sépare recall de retrieval et qualité de génération. Journalise les documents récupérés, leurs scores et les raisons d'un échec afin de pouvoir corriger la bonne étape.
-:::
+### Solution
+Une approche hybride peut exploiter l'identifiant exact via recherche lexicale et le sens via recherche sémantique.
 
 ## À retenir
-- RAG est une chaîne de composants, pas un simple prompt.
-- Les métadonnées et l'évaluation rendent le retrieval exploitable.
-- Les agents doivent être bornés par des états, outils et règles explicites.
+Le retrieval est une étape de sélection mesurable, pas une simple fonction magique de base vectorielle.
