@@ -42,3 +42,32 @@ OCR, qualité de lecture, localisation de l'information et validation de la sort
 
 ## À retenir
 Multimodal signifie plusieurs chaînes de données et plusieurs surfaces d'erreur.
+
+
+## Introduction
+
+Les systèmes multimodaux combinent plusieurs chaînes de données et plusieurs sources d'erreur.
+
+## Concept
+
+OCR, vision, audio, transcription et compréhension doivent être évalués séparément.
+
+## Exemple
+
+Un document scanné nécessite de tester extraction visuelle avant de juger la réponse finale.
+
+## Comment ça fonctionne
+
+file → parse/OCR → normalized data → model → evaluation
+
+## Questions d'entretien
+
+- Pourquoi tester chaque modalité séparément ?
+
+  :::indice
+  Pense en compromis mesurables plutôt qu'en optimisation absolue.
+  :::
+
+  :::reponse
+  Une erreur de transcription ou OCR peut être confondue avec une erreur du modèle final.
+  :::
