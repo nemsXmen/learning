@@ -1,57 +1,43 @@
 ---
-id: ai-14-advanced-finetuning
-title: "Fine-tuning foundations"
+id: ai-14-finetuning
+title: "Fine-tuning, instruction tuning et adaptation"
 slug: finetuning
 technology: ai-engineering
 level: advanced
 module: 14-advanced
 order: 1
-estimatedMinutes: 50
-difficulty: 4
-xp: 140
-prerequisites: []
-skills:
-  - ai-finetuning
-tags: [ai, product, advanced]
+estimatedMinutes: 85
+difficulty: 5
+xp: 190
+prerequisites: [ai-05-llm-architecture]
+skills: [ai-advanced]
+tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
 ## Objectifs
-- Comprendre Fine-tuning foundations.
-- Choisir une approche proportionnée au problème.
-- Construire des critères de succès mesurables.
+- distinguer prompting, RAG et fine-tuning ;
+- préparer un dataset d'adaptation ;
+- comprendre overfitting et contamination ;
+- évaluer un modèle adapté.
 
-## Concept
-Une fonctionnalité AI doit résoudre un problème utilisateur, pas simplement exposer un modèle. **Fine-tuning foundations** doit être relié à un contrat produit : qui utilise la fonctionnalité, quelle décision elle aide, quel niveau d'erreur est acceptable et quelle action humaine reste possible.
+## Choix
+Le prompting modifie l'instruction. Le RAG apporte des connaissances externes. Le fine-tuning modifie les paramètres du modèle pour apprendre un comportement ou une spécialisation.
 
-Les techniques avancées ne doivent être introduites qu'après une baseline. Fine-tuning, adaptation efficace ou compression ajoutent des coûts de données, calcul et maintenance ; leur intérêt doit être démontré par une mesure.
+```text
+base model -> curated dataset -> adaptation -> evaluation -> deployment
+```
 
-## Méthode
-1. Définir le problème utilisateur.
-2. Établir une baseline.
-3. Définir les métriques produit et techniques.
-4. Tester sur des cas réels représentatifs.
-5. Mesurer l'effet de la modification.
-6. Documenter les limites et le rollback.
+## Dataset
+Qualité, diversité, cohérence des labels et déduplication sont critiques. Évite les données confidentielles inutiles.
 
-## Erreurs fréquentes
-- Construire une démo sans critère de succès.
-- Remplacer l'humain dans une décision sensible sans garde-fou.
-- Fine-tuner avant d'avoir établi une baseline.
-- Optimiser un benchmark sans bénéfice produit.
-- Oublier la maintenance d'un artefact spécialisé.
+## Evaluation
+Compare au modèle de base sur des cas métier et généraux. Surveille régression, hallucination et comportement hors distribution.
 
 ## Exercice
-Écris une fiche produit pour **Fine-tuning foundations** : utilisateur cible, problème, baseline, métriques, risques, contrôle humain et critères de lancement.
+Un dataset contient 20 000 exemples presque identiques. Quel risque ?
 
-:::indice
-Une fonctionnalité AI réussie améliore une tâche mesurable ; elle n'a pas besoin d'utiliser la technique la plus complexe.
-:::
-
-:::solution
-La fiche doit relier besoin, métriques et risques. Elle doit également expliquer pourquoi l'approche choisie est préférable à une baseline plus simple.
-:::
+### Solution
+Surreprésentation, overfitting et faible diversité. Dédupliquer et enrichir les cas représentatifs.
 
 ## À retenir
-- Produit et modèle doivent être évalués ensemble.
-- Les techniques avancées ont un coût de maintenance.
-- L'humain doit rester dans la boucle lorsque le risque le justifie.
+Fine-tuner ne remplace ni une base de connaissances ni une validation rigoureuse.
