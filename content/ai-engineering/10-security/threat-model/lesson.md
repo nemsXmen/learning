@@ -41,3 +41,32 @@ Traiter le document comme donnée non fiable et placer une autorisation détermi
 
 ## À retenir
 La sécurité commence par les frontières de confiance, pas par le prompt seul.
+
+
+## Introduction
+
+La sécurité AI commence par identifier actifs, acteurs, trust boundaries et scénarios d'abus.
+
+## Concept
+
+Threat modeling relie menaces à contrôles concrets.
+
+## Exemple
+
+Un système RAG doit considérer documents, prompts, embeddings, secrets et données tenant comme actifs distincts.
+
+## Comment ça fonctionne
+
+assets → threats → controls → verification
+
+## Questions d'entretien
+
+- Pourquoi modéliser les frontières de confiance ?
+
+  :::indice
+  Pense aux contrôles qui restent fiables même si le modèle se trompe.
+  :::
+
+  :::reponse
+  Pour savoir où authentifier, autoriser, valider et journaliser.
+  :::
