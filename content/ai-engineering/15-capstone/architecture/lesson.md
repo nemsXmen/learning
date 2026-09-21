@@ -59,6 +59,13 @@ Les outils ayant des effets de bord, accès aux données sensibles ou coût impo
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 Le capstone doit être conçu comme un produit logiciel distribué, pas comme un simple prompt.
 
