@@ -36,8 +36,14 @@ Versionne prompt, modèle et configuration. Compare des cohortes comparables et 
 ## Exercice
 Les utilisateurs génèrent beaucoup mais valident rarement les résultats. Quelle hypothèse tester ?
 
-### Solution
+:::indice
+Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+:::
+
+:::solution
 Mesurer qualité perçue, taux de correction, temps gagné et raisons d'abandon plutôt que compter uniquement les générations.
+
+:::
 
 ## À retenir
 L'analytics IA doit relier usage, qualité et outcome métier.
