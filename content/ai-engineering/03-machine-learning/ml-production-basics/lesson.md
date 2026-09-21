@@ -1,60 +1,69 @@
 ---
-id: ai-03-machine-learning-ml-production-basics
-title: "ML pipeline fundamentals"
+id: ai-ml-production
+title: "ML en production : training, inference et monitoring"
 slug: ml-production-basics
 technology: ai-engineering
 level: intermediate
-module: 03-machine-learning
-order: 1
-estimatedMinutes: 40
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-experimentation
-tags: [ai, machine-learning]
+module: machine-learning
+order: 4
+estimatedMinutes: 55
+difficulty: 4
+xp: 130
+prerequisites: [ai-model-selection]
+skills: [ai-model-selection]
+tags: [mlops, serving, monitoring, drift]
 ---
 
 ## Objectifs
-- Comprendre ML pipeline fundamentals.
-- Relier la théorie à une implémentation testable.
-- Savoir diagnostiquer les erreurs et compromis.
 
-## Introduction
-En AI engineering, un modèle n'est qu'une partie du système. ML pipeline fundamentals devient utile lorsqu'il est relié à des données contrôlées, une méthode d'évaluation et un contrat d'exécution.
+- séparer entraînement et inférence ;
+- versionner modèle et preprocessing ;
+- définir un contrat de prédiction ;
+- détecter dérive et dégradation ;
+- préparer un rollback.
 
-## Concept
-Travaille avec une séparation nette entre données, entraînement, évaluation et inférence. Une baseline simple sert de point de comparaison. Les jeux d'entraînement, validation et test doivent avoir des rôles distincts afin d'éviter la fuite d'information.
+## Training vs inference
 
-Pour les réseaux de neurones, pense en termes de tenseurs, fonction de perte, gradients, optimiseur et boucle d'entraînement. Pour la sélection de modèles, compare les mêmes données et la même métrique plutôt que des impressions visuelles.
+Le training produit un artefact versionné. L'inférence charge cet artefact et applique exactement les transformations attendues.
 
-## Pratique
-1. Définis les données et leur schéma.
-2. Construis une baseline.
-3. Entraîne ou évalue un modèle.
-4. Mesure sur des données jamais utilisées pour ajuster le modèle.
-5. Analyse les erreurs par catégorie.
-6. Versionne la configuration.
+```text
+data -> preprocessing -> model -> prediction
+```
 
-## Erreurs fréquentes
-- Utiliser le test pour choisir les hyperparamètres.
-- Comparer des modèles avec des jeux de données différents.
-- Ignorer les classes rares.
-- Optimiser une métrique qui ne correspond pas au produit.
-- Déboguer uniquement le modèle alors que le problème vient des données.
+Le preprocessing doit rester cohérent entre entraînement et production.
+
+## Contrat d'inférence
+
+```json
+{
+  "customer_id": "42",
+  "features": {
+    "amount_7d": 125.4,
+    "transactions_7d": 7
+  }
+}
+```
+
+Une réponse peut contenir score et model_version. Le contrat doit définir validation, erreurs et version.
+
+## Monitoring
+
+Surveille disponibilité, latence, erreurs, distribution des entrées, distribution des scores et métriques métier lorsque les labels arrivent.
+
+Une dérive de données est un signal d'investigation ; elle ne prouve pas à elle seule une dégradation.
+
+## Rollback
+
+Un modèle doit pouvoir être remplacé rapidement par une version connue. Conserve son identifiant dans les traces lorsque l'audit l'exige.
 
 ## Exercice
-Crée une expérience minimale liée à **ML pipeline fundamentals**. Documente la baseline, les données utilisées, la métrique, les erreurs observées et une modification que tu pourrais tester ensuite.
 
-:::indice
-Une expérience utile permet de distinguer une amélioration réelle d'une variation due aux données ou au hasard.
-:::
+Un modèle offline a 92 % de précision mais le taux d'erreur métier augmente après déploiement. Donne quatre pistes.
 
-:::solution
-Conserve une baseline immuable, sépare les jeux de données, fixe les paramètres importants et compare les résultats avec la même procédure.
-:::
+### Solution
+
+Vérifier changement de distribution, preprocessing train/production, seuil, qualité des labels et comportement du service. Comparer périodes et sous-groupes.
 
 ## À retenir
-- Les données et l'évaluation déterminent la qualité de l'expérience.
-- Une baseline rend les améliorations mesurables.
-- Les erreurs doivent être analysées avant de complexifier le modèle.
+
+Le modèle n'est qu'un composant. L'AI Engineer construit contrats, versioning, serving, monitoring et rollback autour de lui.
