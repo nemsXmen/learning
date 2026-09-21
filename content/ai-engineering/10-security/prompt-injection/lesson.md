@@ -39,8 +39,14 @@ Sépare instructions et données, applique ACL, minimise contexte, valide les ar
 ## Exercice
 Une page récupérée demande à l'agent de transmettre son secret API. Que doit-il faire ?
 
-### Solution
+:::indice
+Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
+:::
+
+:::solution
 Ignorer cette instruction comme donnée non fiable. Les secrets ne doivent pas être exposés au modèle.
+
+:::
 
 ## À retenir
 L'injection est un problème de frontière de confiance et d'autorité.
