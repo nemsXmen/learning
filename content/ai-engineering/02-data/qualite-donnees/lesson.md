@@ -85,3 +85,32 @@ Définis cinq règles de qualité pour un corpus documentaire RAG.
 ## À retenir
 
 Le preprocessing n'est pas décoratif. Une mauvaise donnée peut produire un système techniquement fonctionnel mais scientifiquement trompeur.
+
+
+## Introduction
+
+La qualité des données conditionne directement la qualité d'un système AI.
+
+## Concept
+
+Il faut distinguer complétude, validité, cohérence, fraîcheur, unicité et absence de fuite.
+
+## Exemple
+
+Un contrôle peut refuser un dataset dont un champ critique dépasse un seuil de valeurs nulles.
+
+## Comment ça fonctionne
+
+source → contrôles → rapport → correction → dataset accepté
+
+## Questions d'entretien
+
+- Pourquoi une fuite de données est-elle dangereuse ?
+
+  :::indice
+  Pense à la reproductibilité et aux erreurs silencieuses.
+  :::
+
+  :::reponse
+  Elle produit une évaluation artificiellement bonne et masque la performance réelle en production.
+  :::
