@@ -35,8 +35,14 @@ Une réponse indisponible doit être explicite. Prévois retry, édition, annula
 ## Exercice
 Une réponse générée contient une erreur factuelle. Quelle UX aide l'utilisateur ?
 
-### Solution
+:::indice
+Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+:::
+
+:::solution
 Afficher les sources disponibles, permettre correction/régénération et rendre la limite du système visible plutôt que présenter la réponse comme certaine.
+
+:::
 
 ## À retenir
 Une bonne UX IA transforme l'incertitude en information et contrôle utilisateur.
