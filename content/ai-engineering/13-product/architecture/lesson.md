@@ -40,8 +40,14 @@ Sépare données métier, documents, embeddings, traces et artefacts d'évaluati
 ## Exercice
 Le produit dépend directement de trois SDK fournisseurs dans dix modules. Quel risque ?
 
-### Solution
+:::indice
+Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+:::
+
+:::solution
 Le couplage rend migrations et tests difficiles. Centraliser les appels derrière un gateway réduit la surface de changement.
+
+:::
 
 ## À retenir
 Une architecture AI-first garde les responsabilités déterministes hors du modèle.
