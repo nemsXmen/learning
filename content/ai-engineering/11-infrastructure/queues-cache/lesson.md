@@ -1,57 +1,45 @@
 ---
-id: ai-11-infrastructure-queues-cache
-title: "Queues, caching & rate limits"
+id: ai-11-queues-cache
+title: "Queues, cache et tâches asynchrones"
 slug: queues-cache
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 11-infrastructure
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-infrastructure
-tags: [ai, infrastructure]
+order: 3
+estimatedMinutes: 75
+difficulty: 4
+xp: 160
+prerequisites: [ai-11-serving]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre Queues, caching & rate limits.
-- Choisir une architecture adaptée à la charge.
-- Mesurer fiabilité, latence et coût.
+- déplacer les tâches longues hors requête ;
+- choisir une stratégie de cache ;
+- gérer retries et idempotence ;
+- éviter les files infinies.
 
-## Concept
-L'infrastructure AI doit isoler les ressources coûteuses et les dépendances externes du reste de l'application. **Queues, caching & rate limits** se conçoit avec des limites explicites : concurrence, taille des requêtes, mémoire, durée d'exécution, quotas et capacité.
+## Async
+Génération longue, ingestion et embeddings peuvent être exécutés en arrière-plan.
 
-Une architecture robuste accepte les pics et les erreurs. Les files permettent de découpler les traitements longs, les caches réduisent les appels répétitifs et les limites empêchent une demande d'épuiser les ressources.
+```text
+API -> queue -> worker -> result store
+          |       |
+       retry    idempotency
+```
 
-## Méthode
-1. Mesurer le trafic attendu.
-2. Définir un budget de latence et de coût.
-3. Déterminer les limites de concurrence.
-4. Ajouter timeouts, retries bornés et rate limits.
-5. Observer saturation CPU/GPU, mémoire et files.
-6. Tester sous charge avant production.
+## Cache
+Cache les résultats déterministes ou suffisamment stables. Définis TTL, invalidation et clé tenant-safe.
 
-## Erreurs fréquentes
-- Dimensionner sur une moyenne au lieu d'un pic.
-- Mettre un cache sans stratégie d'invalidation.
-- Utiliser des retries qui amplifient la charge.
-- Ignorer la taille des vecteurs ou de l'index.
-- Confondre capacité théorique et débit réellement mesuré.
+## Retry
+Utilise backoff et nombre maximal d'essais. Une tâche non idempotente ne doit pas être rejouée aveuglément.
 
 ## Exercice
-Dessine une architecture pour **Queues, caching & rate limits**. Donne au moins une limite de capacité, une métrique de saturation, une stratégie de reprise et une estimation du coût.
+Un worker tombe après avoir effectué l'action mais avant d'accuser réception. Que prévoir ?
 
-:::indice
-Chaque ressource partagée doit avoir un propriétaire, une limite et une métrique.
-:::
-
-:::solution
-Une architecture acceptable explicite les ressources, limites, files éventuelles, métriques de saturation et comportements en cas de panne ou de surcharge.
-:::
+### Solution
+Une clé d'idempotence et un état transactionnel permettent de reprendre sans doubler l'effet de bord.
 
 ## À retenir
-- L'infrastructure est une partie du produit AI.
-- Les limites protègent coût et disponibilité.
-- Il faut mesurer avant de dimensionner.
+Queues et cache améliorent la résilience seulement avec des contrats d'idempotence et de cohérence.
