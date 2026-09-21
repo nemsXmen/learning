@@ -1,33 +1,71 @@
 ---
-id: ai-05-transformers-llm-architecture
-title: "LLM architecture & inference"
+id: ai-05-llm-architecture
+title: "Architecture des LLM"
 slug: llm-architecture
 technology: ai-engineering
 level: intermediate
 module: 05-transformers
 order: 3
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills: [ai-llm]
-tags: [ai, transformers, llm]
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-05-attention]
+skills: [ai-transformers]
+tags: [transformers, llm]
 ---
 
 ## Objectifs
-- Comprendre le chemin d'une requête à travers un LLM.
-- Distinguer paramètres, contexte, cache et décodage.
-- Identifier les coûts de l'inférence.
+- comprendre les blocs fondamentaux d'un Transformer ;
+- suivre le trajet d'un token jusqu'à la sortie ;
+- distinguer pré-entraînement et génération ;
+- comprendre causalité, positions et logits.
 
-## Concept
-À l'inférence, le modèle transforme une séquence tokenisée en distributions de probabilité puis en nouveaux tokens. Le contexte fourni à chaque requête consomme de la mémoire et du calcul. La taille du modèle, la longueur du contexte, le débit et le matériel influencent donc directement latence et coût.
+## Pipeline
+Un LLM autoregressif suit conceptuellement :
 
-Un service applicatif doit séparer préparation du contexte, appel modèle et post-traitement. Cette frontière facilite les tests et permet d'ajouter cache, streaming ou fallback sans mélanger la logique métier au moteur d'inférence.
+```text
+texte
+  -> tokenizer
+  -> token IDs
+  -> embeddings + information de position
+  -> Transformer blocks
+  -> logits
+  -> sampling / argmax
+  -> prochain token
+```
+
+Le processus est répété pour générer une séquence.
+
+## Bloc Transformer
+Un bloc moderne contient notamment attention, normalisation et réseau feed-forward, avec connexions résiduelles.
+
+```text
+x -> norm -> attention -> residual
+  -> norm -> MLP      -> residual
+```
+
+Les détails exacts varient selon l'architecture.
+
+## Logits et probabilités
+Le modèle produit un score par token du vocabulaire. Un softmax transforme ces scores en distribution lorsque nécessaire.
+
+La température modifie la concentration de cette distribution. Top-k et top-p imposent également des contraintes au sampling.
+
+## Pré-entraînement
+Un modèle causal apprend généralement à prédire le prochain token à partir des tokens précédents. L'objectif est appliqué sur de très grands corpus.
+
+Cela ne signifie pas que le modèle possède une base de données fiable : ses poids encodent des régularités apprises et peuvent produire des sorties fausses.
+
+## Génération
+À chaque étape, le modèle estime le prochain token, puis ce token devient une nouvelle entrée du contexte.
+
+La latence dépend notamment de la taille du modèle, de la longueur du contexte, du matériel et de la stratégie d'inférence.
 
 ## Exercice
-Trace le parcours d'une requête depuis le texte utilisateur jusqu'à la réponse. Identifie trois endroits où mesurer latence ou consommation mémoire.
+Pourquoi une température élevée peut-elle rendre une génération plus variée ?
+
+### Solution
+Elle a tendance à aplatir la distribution des logits avant le sampling, donnant davantage de chances aux tokens moins probables.
 
 ## À retenir
-- L'inférence est un pipeline mesurable.
-- Contexte, modèle et stratégie de décodage influencent le coût.
-- Les frontières logicielles facilitent l'évolution du système.
+Un LLM n'est pas seulement un prompt et une réponse : tokenizer, contexte, architecture, logits et stratégie de génération font partie du système.
