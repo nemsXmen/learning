@@ -69,3 +69,31 @@ Elle a tendance à aplatir la distribution des logits avant le sampling, donnant
 
 ## À retenir
 Un LLM n'est pas seulement un prompt et une réponse : tokenizer, contexte, architecture, logits et stratégie de génération font partie du système.
+
+## Introduction
+
+Un LLM assemble embeddings, blocs Transformer et tête de sortie pour prédire des tokens.
+
+## Concept
+
+Les logits représentent des scores avant transformation en distribution de probabilités.
+
+## Exemple
+
+La température modifie la distribution d'échantillonnage mais ne change pas les connaissances du modèle.
+
+## Comment ça fonctionne
+
+tokens → embeddings → transformer blocks → logits → sampling
+
+## Questions d'entretien
+
+- Que produit directement la tête d'un LLM ?
+
+  :::indice
+  Pense au lien entre comportement du modèle et contraintes de production.
+  :::
+
+  :::reponse
+  Des logits sur le vocabulaire, utilisés ensuite pour choisir le prochain token.
+  :::
