@@ -2,6 +2,55 @@ slug: typescript
 name: TypeScript
 order: 1
 description: Programme complet d'apprentissage de TypeScript, du niveau débutant jusqu'à la maîtrise avancée et la conception d'applications TypeScript production-ready.
+modules:
+  - slug: 01-introduction-to-typescript
+    title: Introduction to TypeScript
+    order: 1
+    part: zero
+  - slug: 02-types-primitifs
+    title: Types primitifs
+    order: 2
+    part: zero
+  - slug: 03-arrays-and-tuples
+    title: Arrays & Tuples
+    order: 3
+    part: zero
+  - slug: 04-objects
+    title: Objects
+    order: 4
+    part: zero
+  - slug: 05-functions
+    title: Functions
+    order: 5
+    part: zero
+  - slug: 06-type-aliases
+    title: Type Aliases
+    order: 6
+    part: foundation
+  - slug: 07-interfaces
+    title: Interfaces
+    order: 7
+    part: foundation
+  - slug: 08-union-and-intersection
+    title: Union & Intersection
+    order: 8
+    part: foundation
+  - slug: 09-literal-types
+    title: Literal Types
+    order: 9
+    part: foundation
+  - slug: 10-type-narrowing
+    title: Type Narrowing
+    order: 10
+    part: foundation
+  - slug: 11-any-unknown-never
+    title: any, unknown & never
+    order: 11
+    part: core
+  - slug: 12-enums
+    title: Enums
+    order: 12
+    part: core
 parts:
   - slug: zero
     title: ZERO — Les bases
@@ -10,32 +59,8 @@ parts:
   - slug: foundation
     title: FOUNDATION — Fondations
     order: 2
-    description: Type aliases, interfaces, unions, literals et narrowing.
+    description: Type aliases, interfaces, unions, littéraux et narrowing.
   - slug: core
     title: CORE TYPESCRIPT — Cœur du langage
     order: 3
-    description: any/unknown/never, enums, generics et classes.
-  - slug: advanced-types
-    title: ADVANCED TYPES — Types avancés
-    order: 4
-    description: Types avancés, utility types, mapped types, conditional types et template literals.
-  - slug: real
-    title: REAL TYPESCRIPT — TypeScript réel
-    order: 5
-    description: Assertions, declaration files, modules, tsconfig et runtime.
-  - slug: fullstack
-    title: FULLSTACK — Fullstack
-    order: 6
-    description: Async, DOM, Node.js, NPM, React, Next.js, NestJS et validation runtime.
-  - slug: production
-    title: PRODUCTION — Production
-    order: 7
-    description: APIs type-safe, database, testing, design patterns, clean architecture et SOLID.
-  - slug: expert
-    title: EXPERT — Expert
-    order: 8
-    description: Generics avancés, type-level programming, compiler, tooling, performance, monorepo, type safety et DDD.
-  - slug: hero
-    title: HERO — Projets finaux
-    order: 9
-    description: Projets CLI, REST API, fullstack, SaaS et projet Hero final.
+    description: any, unknown, never et enums.

@@ -1,0 +1,57 @@
+id: interfaces-et-contrats-quiz
+kind: QUIZ
+questions:
+  - id: typescript-07-interfaces-et-contrats-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      À quoi sert principalement une interface TypeScript ?
+    options:
+      - À créer une instance à runtime
+      - À décrire le contrat de forme d'un objet
+      - À remplacer tous les modules JavaScript
+      - À accélérer l'exécution
+    answer: [1]
+    explanation: |
+      Une interface décrit la forme attendue d'un objet et est supprimée à la compilation.
+    skills: [interfaces]
+  - id: typescript-07-interfaces-et-contrats-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une propriété optionnelle marquée avec `?` doit toujours être présente.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Une propriété optionnelle peut être absente de l'objet.
+    skills: [interfaces]
+  - id: typescript-07-interfaces-et-contrats-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que signifie `readonly createdAt: Date` dans une interface ?
+    options:
+      - La propriété est supprimée à runtime
+      - La propriété ne peut pas être réassignée via ce type
+      - La propriété accepte uniquement des chaînes
+      - La propriété devient privée
+    answer: [1]
+    explanation: |
+      `readonly` interdit la réaffectation au niveau du typage TypeScript.
+    skills: [interfaces]
+  - id: typescript-07-interfaces-et-contrats-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une interface peut-elle être utilisée comme type de paramètre ?
+    options:
+      - Non
+      - Oui
+      - Uniquement dans une classe
+      - Uniquement avec `any`
+    answer: [1]
+    explanation: |
+      Oui, une interface peut typer les paramètres, retours et variables.
+    skills: [interfaces]

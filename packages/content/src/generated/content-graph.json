@@ -154,53 +154,17 @@
           "slug": "foundation",
           "title": "FOUNDATION — Fondations",
           "order": 2,
-          "description": "Type aliases, interfaces, unions, literals et narrowing."
+          "description": "Type aliases, interfaces, unions, littéraux et narrowing."
         },
         {
           "slug": "core",
           "title": "CORE TYPESCRIPT — Cœur du langage",
           "order": 3,
-          "description": "any/unknown/never, enums, generics et classes."
-        },
-        {
-          "slug": "advanced-types",
-          "title": "ADVANCED TYPES — Types avancés",
-          "order": 4,
-          "description": "Types avancés, utility types, mapped types, conditional types et template literals."
-        },
-        {
-          "slug": "real",
-          "title": "REAL TYPESCRIPT — TypeScript réel",
-          "order": 5,
-          "description": "Assertions, declaration files, modules, tsconfig et runtime."
-        },
-        {
-          "slug": "fullstack",
-          "title": "FULLSTACK — Fullstack",
-          "order": 6,
-          "description": "Async, DOM, Node.js, NPM, React, Next.js, NestJS et validation runtime."
-        },
-        {
-          "slug": "production",
-          "title": "PRODUCTION — Production",
-          "order": 7,
-          "description": "APIs type-safe, database, testing, design patterns, clean architecture et SOLID."
-        },
-        {
-          "slug": "expert",
-          "title": "EXPERT — Expert",
-          "order": 8,
-          "description": "Generics avancés, type-level programming, compiler, tooling, performance, monorepo, type safety et DDD."
-        },
-        {
-          "slug": "hero",
-          "title": "HERO — Projets finaux",
-          "order": 9,
-          "description": "Projets CLI, REST API, fullstack, SaaS et projet Hero final."
+          "description": "any, unknown, never et enums."
         }
       ],
       "contentPath": "typescript/technology.yaml",
-      "contentVersion": "88a7b8e8de4f"
+      "contentVersion": "c77e5facbf1f"
     }
   ],
   "modules": [
@@ -608,6 +572,15 @@
       "technology": "typescript",
       "contentPath": "typescript/06-type-aliases/module.yaml",
       "contentVersion": "da81a4ff05b5"
+    },
+    {
+      "slug": "07-interfaces",
+      "title": "Interfaces",
+      "order": 7,
+      "part": "foundation",
+      "technology": "typescript",
+      "contentPath": "typescript/07-interfaces/module.yaml",
+      "contentVersion": "64cb75d289da"
     },
     {
       "slug": "08-union-and-intersection",
@@ -10035,6 +10008,43 @@
       "contentPath": "typescript/06-type-aliases/union-avec-aliases/lesson.md",
       "contentVersion": "3270aaec1dc4",
       "body": "\n## Objectifs\n\n- Créer des unions à partir de type aliases\n- Composer des unions lisibles\n- Voir les literal unions nommées\n\n## Introduction\n\nLes type aliases rendent les unions beaucoup plus lisibles et réutilisables.\n\n## Concept\n\n```ts\ntype Status = \"pending\" | \"success\" | \"error\";\ntype ID = string | number;\n\ntype Result = \n  | { ok: true; value: string }\n  | { ok: false; error: string };\n```\n\n## Exemple\n\n```ts\ntype Shape = \"circle\" | \"square\" | \"triangle\";\n\nfunction getSides(shape: Shape): number {\n  switch (shape) {\n    case \"circle\": return 0;\n    case \"square\": return 4;\n    case \"triangle\": return 3;\n  }\n}\n```\n\n## Comment ça fonctionne\n\nOn peut unionner des aliases entre eux, des littéraux, des objets, etc. Le nom de l’alias documente le concept (Status, Result, Shape…).\n\n## Erreurs fréquentes\n\n- Créer des unions trop larges (`string | number | boolean | object`)\n- Oublier le narrowing ensuite\n\n## À retenir\n\n- Les aliases rendent les unions lisibles\n- Très puissant avec les literal types et les discriminated unions\n- Nomme le concept métier\n\n## Exercices\n\n1. Crée un type `HttpMethod` pour les littéraux \"GET\" | \"POST\" | \"PUT\" | \"DELETE\".\n\n   :::indice\n   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.\n   :::\n\n   :::solution\n   ```ts\n   type HttpMethod = \"GET\" | \"POST\" | \"PUT\" | \"DELETE\";\n   ```\n   :::\n\n## Questions d'entretien\n\n\n1. Pourquoi encapsuler une union dans un type alias ?\n\n   :::indice\n   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.\n   :::\n\n   :::reponse\n   Pour donner un nom clair au concept (Status, Role, Result…), éviter de répéter l’union partout, et faciliter les évolutions futures.\n   :::\n\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "typescript-07-interfaces-et-contrats",
+      "title": "Interfaces et contrats d'objets",
+      "slug": "interfaces-et-contrats",
+      "technology": "typescript",
+      "level": "beginner",
+      "module": "07-interfaces",
+      "order": 1,
+      "estimatedMinutes": 20,
+      "difficulty": 2,
+      "xp": 50,
+      "prerequisites": [
+        "typescript-06-introduction-a-type"
+      ],
+      "skills": [
+        "interfaces"
+      ],
+      "tags": [
+        "typescript",
+        "interfaces",
+        "objets"
+      ],
+      "contentPath": "typescript/07-interfaces/interfaces-et-contrats/lesson.md",
+      "contentVersion": "b4f44c9dc370",
+      "body": "\n## Objectifs\n\n- Déclarer une interface pour décrire un objet.\n- Utiliser une interface comme contrat de fonction.\n- Comprendre les propriétés optionnelles et readonly.\n\n## Introduction\n\nUne interface nomme la forme attendue d'un objet et rend ce contrat réutilisable entre plusieurs fonctions et modules.\n\n## Concept\n\n```ts\ninterface User {\n  id: number;\n  name: string;\n  email?: string;\n  readonly createdAt: Date;\n}\n```\n\nUne interface décrit la structure attendue. Elle ne crée pas de valeur à runtime et peut être utilisée comme type de paramètre, de retour ou de variable.\n\n## Exemple\n\n```ts\nfunction displayUser(user: User): string {\n  return user.email ? `${user.name} <${user.email}>` : user.name;\n}\n\nconst user: User = {\n  id: 1,\n  name: 'Ada',\n  createdAt: new Date(),\n};\n```\n\n## Comment ça fonctionne\n\nTypeScript vérifie qu'un objet fourni respecte les propriétés obligatoires de l'interface et leurs types. Une propriété marquée `?` est facultative, tandis que `readonly` interdit sa réaffectation après création.\n\n## Erreurs fréquentes\n\n- Confondre une interface avec une classe instanciable.\n- Oublier une propriété obligatoire.\n- Utiliser `readonly` en pensant qu'il protège une valeur imbriquée à runtime.\n\n## À retenir\n\n- Une interface décrit un contrat de structure.\n- Elle peut être réutilisée sur plusieurs frontières de code.\n- Les interfaces sont effacées lors de la compilation.\n\n## Exercices\n\n1. Déclare une interface `Product` avec un `id` numérique, un `name` textuel et un prix numérique.\n\n   :::indice\n   Utilise une propriété par ligne et indique le type après `:`.\n   :::\n\n   :::solution\n   ```ts\n   interface Product {\n     id: number;\n     name: string;\n     price: number;\n   }\n   ```\n   :::\n\n## Questions d'entretien\n\n1. Quelle est la différence principale entre une interface et un objet JavaScript ?\n\n   :::indice\n   Pense à la compilation et au rôle de description.\n   :::\n\n   :::reponse\n   Une interface est un contrat de type vérifié par TypeScript et effacé à la compilation. Un objet JavaScript est une valeur concrète présente à runtime.\n   :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -27381,6 +27391,88 @@
       "technology": "typescript",
       "contentPath": "typescript/06-type-aliases/union-avec-aliases/quiz.yaml",
       "contentVersion": "0bee39fe3ef4"
+    },
+    {
+      "id": "interfaces-et-contrats-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "typescript-07-interfaces-et-contrats-q1",
+          "type": "multiple_choice",
+          "difficulty": 1,
+          "question": "À quoi sert principalement une interface TypeScript ?\n",
+          "options": [
+            "À créer une instance à runtime",
+            "À décrire le contrat de forme d'un objet",
+            "À remplacer tous les modules JavaScript",
+            "À accélérer l'exécution"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "Une interface décrit la forme attendue d'un objet et est supprimée à la compilation.\n",
+          "skills": [
+            "interfaces"
+          ]
+        },
+        {
+          "id": "typescript-07-interfaces-et-contrats-q2",
+          "type": "true_false",
+          "difficulty": 1,
+          "question": "Une propriété optionnelle marquée avec `?` doit toujours être présente.\n",
+          "options": [
+            "true",
+            "false"
+          ],
+          "answer": false,
+          "explanation": "Faux. Une propriété optionnelle peut être absente de l'objet.\n",
+          "skills": [
+            "interfaces"
+          ]
+        },
+        {
+          "id": "typescript-07-interfaces-et-contrats-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Que signifie `readonly createdAt: Date` dans une interface ?\n",
+          "options": [
+            "La propriété est supprimée à runtime",
+            "La propriété ne peut pas être réassignée via ce type",
+            "La propriété accepte uniquement des chaînes",
+            "La propriété devient privée"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "`readonly` interdit la réaffectation au niveau du typage TypeScript.\n",
+          "skills": [
+            "interfaces"
+          ]
+        },
+        {
+          "id": "typescript-07-interfaces-et-contrats-q4",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Une interface peut-elle être utilisée comme type de paramètre ?\n",
+          "options": [
+            "Non",
+            "Oui",
+            "Uniquement dans une classe",
+            "Uniquement avec `any`"
+          ],
+          "answer": [
+            1
+          ],
+          "explanation": "Oui, une interface peut typer les paramètres, retours et variables.\n",
+          "skills": [
+            "interfaces"
+          ]
+        }
+      ],
+      "chapterId": "typescript-07-interfaces-et-contrats",
+      "technology": "typescript",
+      "contentPath": "typescript/07-interfaces/interfaces-et-contrats/quiz.yaml",
+      "contentVersion": "3f38f26dc86b"
     },
     {
       "id": "combiner-unions-et-intersections-quiz",
