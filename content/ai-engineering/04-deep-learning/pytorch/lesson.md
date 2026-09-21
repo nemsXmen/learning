@@ -55,8 +55,14 @@ Pour reprendre, conserve aussi configuration, métriques et état d'un scheduler
 ## Exercice
 Conçois un checkpoint permettant de reprendre l'entraînement après interruption.
 
-### Solution
+:::indice
+Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+:::
+
+:::solution
 Stocke model.state_dict(), optimizer.state_dict(), epoch/step, configuration et métriques.
+
+:::
 
 ## À retenir
 PyTorch fournit les primitives ; l'AI Engineer construit autour une structure testable, versionnée et reprenable.
