@@ -54,8 +54,14 @@ Une même information peut nécessiter des nombres de tokens très différents s
 ## Exercice
 Pourquoi un long texte peut-il être coûteux même s'il contient relativement peu de mots ?
 
-### Solution
+:::indice
+Relie le concept à la chaîne tokens → représentation → modèle → sortie.
+:::
+
+:::solution
 Parce que le coût et la fenêtre de contexte sont mesurés en tokens. Une langue ou un format mal représenté par le tokenizer peut produire beaucoup de sous-tokens.
+
+:::
 
 ## À retenir
 Tokeniser est une étape d'ingénierie : mesure les tokens, la couverture linguistique et les limites de contexte avant de dimensionner une application.
