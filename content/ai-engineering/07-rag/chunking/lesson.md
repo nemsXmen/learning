@@ -4,7 +4,7 @@ title: "Chunking, métadonnées et ingestion"
 slug: chunking
 technology: ai-engineering
 level: intermediate
-module: 07-rag
+module: rag
 order: 2
 estimatedMinutes: 70
 difficulty: 4
