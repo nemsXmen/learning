@@ -76,7 +76,11 @@ Dans un SaaS, tenant_id doit participer à la frontière de données lorsque les
 
 Conçois le modèle minimal d'un chunk RAG permettant de retrouver document, version, tenant, texte et embedding.
 
-### Solution
+:::indice
+Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
+:::
+
+:::solution
 
 ```text
 chunk
@@ -92,6 +96,8 @@ chunk
 ```
 
 Ajoute une contrainte d'unicité adaptée au processus d'ingestion.
+
+:::
 
 ## À retenir
 
