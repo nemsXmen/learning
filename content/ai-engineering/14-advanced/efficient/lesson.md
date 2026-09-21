@@ -41,3 +41,32 @@ Identifier les cas de régression, tester une quantification moins agressive ou 
 
 ## À retenir
 L'efficacité est un compromis mesuré, pas une optimisation gratuite.
+
+
+## Introduction
+
+L'efficacité AI cherche à réduire mémoire, latence et coût sans dépasser les contraintes qualité.
+
+## Concept
+
+Quantification, batching, distillation et caching ont des compromis distincts.
+
+## Exemple
+
+Une quantification plus agressive peut réduire la mémoire mais dégrader une métrique critique.
+
+## Comment ça fonctionne
+
+baseline → optimization → benchmark → tradeoff
+
+## Questions d'entretien
+
+- Pourquoi benchmarker après quantification ?
+
+  :::indice
+  Pense en compromis mesurables plutôt qu'en optimisation absolue.
+  :::
+
+  :::reponse
+  Parce que gain mémoire ou débit ne garantit pas une qualité suffisante.
+  :::
