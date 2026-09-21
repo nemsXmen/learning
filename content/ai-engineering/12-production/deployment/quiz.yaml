@@ -1,0 +1,26 @@
+id: ai-12-production-deployment-quiz
+kind: QUIZ
+questions:
+  - id: ai-12-production-deployment-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quelle propriété distingue une observabilité utile ?"
+    options: ["Elle relie une mesure à une action","Elle collecte tout sans filtrer","Elle supprime les alertes","Elle mesure seulement le nombre de requêtes"]
+    answer: [0]
+    explanation: "Une métrique utile permet de détecter et diagnostiquer un problème."
+    skills: [ai-production]
+  - id: ai-12-production-deployment-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels sujets doivent être prévus avant un déploiement AI ?"
+    options: ["Rollback","Timeouts","Métriques","Fallbacks"]
+    answer: [0, 1, 2, 3]
+    explanation: "Ces mécanismes réduisent le risque opérationnel."
+    skills: [ai-production]
+  - id: ai-12-production-deployment-q3
+    type: true_false
+    difficulty: 1
+    question: "La disponibilité HTTP suffit à mesurer la santé d'une fonctionnalité AI."
+    answer: false
+    explanation: "Une réponse HTTP 200 peut contenir une réponse AI incorrecte."
+    skills: [ai-production]
