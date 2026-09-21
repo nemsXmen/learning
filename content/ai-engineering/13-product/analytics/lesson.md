@@ -41,3 +41,32 @@ Mesurer qualité perçue, taux de correction, temps gagné et raisons d'abandon 
 
 ## À retenir
 L'analytics IA doit relier usage, qualité et outcome métier.
+
+
+## Introduction
+
+L'analytics AI mesure adoption, qualité et outcome métier.
+
+## Concept
+
+Activation, task completion, acceptance, correction, fallback et coût par tâche sont complémentaires.
+
+## Exemple
+
+Un volume élevé de générations peut cacher un faible taux d'acceptation.
+
+## Comment ça fonctionne
+
+activation → task → AI result → accepted/edited → outcome
+
+## Questions d'entretien
+
+- Pourquoi ne pas utiliser seulement le nombre de générations ?
+
+  :::indice
+  Relie la métrique à une décision produit concrète.
+  :::
+
+  :::reponse
+  Parce qu'une génération n'est pas nécessairement une valeur créée.
+  :::
