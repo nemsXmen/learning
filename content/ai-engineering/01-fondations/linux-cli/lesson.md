@@ -112,3 +112,32 @@ tail -n 20 output/pipeline.err
 ## À retenir
 
 Le shell est une interface d'automatisation et de diagnostic. Comprendre processus, flux, permissions et ressources est indispensable avant de déployer des systèmes AI.
+
+
+## Introduction
+
+Linux est l'environnement d'exécution courant des workloads AI et la CLI permet de diagnostiquer rapidement fichiers, processus et ressources.
+
+## Concept
+
+Les commandes composent des transformations simples ; stdout, stderr, codes de sortie et signaux forment un contrat d'exécution.
+
+## Exemple
+
+Exemple : combiner recherche, filtrage et journalisation permet d'inspecter un dataset sans écrire immédiatement un script.
+
+## Comment ça fonctionne
+
+Un job AI peut être lancé, surveillé, arrêté puis relancé en observant processus, mémoire, CPU et fichiers de logs.
+
+## Questions d'entretien
+
+- Pourquoi la maîtrise des processus est-elle utile pour un AI Engineer ?
+
+  :::indice
+  Relie le concept à un problème concret de production AI.
+  :::
+
+  :::reponse
+  Réponse : elle permet de diagnostiquer jobs bloqués, fuites de ressources, workers et arrêts contrôlés.
+  :::
