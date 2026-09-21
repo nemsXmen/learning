@@ -9,7 +9,7 @@ order: 3
 estimatedMinutes: 50
 difficulty: 3
 xp: 110
-prerequisites: [ai-data-modeling, ai-git]
+prerequisites: [ai-data-modelisation, ai-git-reproductibilite]
 skills: [ai-experimentation]
 tags: [datasets, versioning, lineage]
 ---
