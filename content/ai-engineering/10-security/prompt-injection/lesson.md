@@ -10,8 +10,8 @@ estimatedMinutes: 75
 difficulty: 5
 xp: 170
 prerequisites: [ai-10-threat-model]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-security]
+tags: [security, ai, llm]
 ---
 
 ## Objectifs
@@ -40,7 +40,7 @@ Sépare instructions et données, applique ACL, minimise contexte, valide les ar
 Une page récupérée demande à l'agent de transmettre son secret API. Que doit-il faire ?
 
 ### Solution
-Ignorer cette instruction comme donnée non fiable. Les secrets ne doivent pas être exposés au modèle et l'action doit être bloquée par les contrôles applicatifs.
+Ignorer cette instruction comme donnée non fiable. Les secrets ne doivent pas être exposés au modèle.
 
 ## À retenir
 L'injection est un problème de frontière de confiance et d'autorité.
