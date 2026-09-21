@@ -41,3 +41,32 @@ Surreprésentation, overfitting et faible diversité. Dédupliquer et enrichir l
 
 ## À retenir
 Fine-tuner ne remplace ni une base de connaissances ni une validation rigoureuse.
+
+
+## Introduction
+
+Le fine-tuning adapte les paramètres d'un modèle à un comportement ou domaine ciblé.
+
+## Concept
+
+SFT, PEFT et LoRA réduisent différents coûts d'adaptation mais exigent un dataset de qualité.
+
+## Exemple
+
+Comparer modèle de base et modèle adapté sur cas métier et généraux révèle les régressions.
+
+## Comment ça fonctionne
+
+dataset → adaptation → validation → comparison → deployment
+
+## Questions d'entretien
+
+- Quand préférer RAG au fine-tuning ?
+
+  :::indice
+  Pense en compromis mesurables plutôt qu'en optimisation absolue.
+  :::
+
+  :::reponse
+  Lorsque le besoin principal est d'apporter des connaissances externes, changeantes ou traçables.
+  :::
