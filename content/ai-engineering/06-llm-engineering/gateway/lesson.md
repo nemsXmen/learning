@@ -1,56 +1,57 @@
 ---
-id: ai-06-llm-engineering-gateway
-title: "LLM gateways, retries & cost control"
+id: ai-06-gateway
+title: "LLM Gateway, routage et résilience"
 slug: gateway
 technology: ai-engineering
 level: intermediate
 module: 06-llm-engineering
-order: 1
-estimatedMinutes: 40
-difficulty: 3
-xp: 110
-prerequisites: []
-skills:
-  - ai-production
-tags: [ai, llm, production]
+order: 4
+estimatedMinutes: 75
+difficulty: 5
+xp: 160
+prerequisites: [ai-06-tools]
+skills: [ai-llm-engineering]
+tags: [llm, ai-engineering]
 ---
 
+
 ## Objectifs
-- Comprendre LLM gateways, retries & cost control.
-- Construire un composant LLM testable.
-- Maîtriser validation, erreurs et limites opérationnelles.
+- centraliser les appels LLM ;
+- gérer timeout, retry et rate limit ;
+- contrôler coûts et observabilité ;
+- faciliter le changement de fournisseur.
 
-## Concept
-Une application LLM doit traiter le modèle comme une dépendance non déterministe. Le logiciel autour du modèle impose donc des contrats : entrées validées, sorties structurées, timeouts, limites de taille, gestion des erreurs et journalisation sans données sensibles.
+## Architecture
+```text
+application
+   -> LLM Gateway
+      -> provider A
+      -> provider B
+      -> local model
+```
 
-Pour **LLM gateways, retries & cost control**, sépare l'orchestration de l'interface fournisseur. Un gateway permet de centraliser authentification, quotas, retries, fallback, budget et métriques.
+Le gateway impose un contrat interne stable et évite de disperser les clés et politiques d'appel.
 
-## Pratique
-1. Définis un schéma d'entrée.
-2. Définis un schéma de sortie.
-3. Valide la réponse avant de la transmettre au reste du système.
-4. Ajoute timeout et limite de retry.
-5. Mesure tokens, latence, erreurs et coût.
+## Résilience
+Définis timeout, retry limité, backoff, circuit breaker et fallback. Ne retry pas toutes les erreurs : une erreur d'autorisation ne devient pas correcte au deuxième appel.
 
-## Erreurs fréquentes
-- Faire confiance à une sortie texte quand un contrat structuré est nécessaire.
-- Réessayer sans limite une requête coûteuse.
-- Exposer les secrets au client.
-- Logger des prompts contenant des données sensibles.
-- Coupler toute l'application à une API fournisseur.
+## Rate limiting
+Limite par utilisateur, organisation, clé ou route et protège les budgets.
+
+## Coûts et observabilité
+Journalise modèle, tokens entrée/sortie, durée, statut et request ID. Agrège par tenant et fonctionnalité.
+
+## Streaming
+Le streaming améliore souvent le temps avant le premier token perçu mais complexifie annulation, reconnexion et comptage.
+
+## Secrets
+Les clés fournisseurs restent côté serveur.
 
 ## Exercice
-Conçois un service gateway avec une interface fournisseur indépendante. Décris ses entrées, sorties, erreurs, timeout, politique de retry et métriques.
+Un fournisseur devient indisponible. Décris un fallback propre.
 
-:::indice
-Le modèle peut échouer ou répondre dans un format inattendu : le système doit rester contrôlable.
-:::
-
-:::solution
-Un service robuste valide les entrées, impose un format de sortie, limite les retries, protège les secrets et expose des métriques permettant d'observer qualité, latence et coût.
-:::
+### Solution
+Détecter les erreurs éligibles, respecter un timeout global, sélectionner un fournisseur compatible, tracer le changement et éviter les retries en cascade.
 
 ## À retenir
-- Le modèle est une dépendance ; l'application doit en contrôler les frontières.
-- Les sorties doivent être validées avant usage métier.
-- Les limites opérationnelles sont des fonctionnalités, pas des détails.
+Un gateway rend les appels LLM contrôlables, observables et remplaçables.
