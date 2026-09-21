@@ -1,75 +1,98 @@
 ---
-id: ai-02-data-modelisation-donnees
-title: "Data modeling"
+id: ai-data-modelisation
+title: "Modéliser les données pour les systèmes AI"
 slug: modelisation-donnees
 technology: ai-engineering
-level: intermediate
-module: 02-data
+level: beginner
+module: data
 order: 1
-estimatedMinutes: 35
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-data-modeling
-tags:
-  - ai
-  - ai-engineering
+estimatedMinutes: 50
+difficulty: 3
+xp: 110
+prerequisites: [ai-python]
+skills: [ai-data-modeling]
+tags: [data, schema, database, ai]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- distinguer donnée brute, document, exemple d'entraînement et métadonnée ;
+- concevoir un schéma stable pour un pipeline AI ;
+- identifier clés, contraintes et relations ;
+- découpler le modèle métier des fournisseurs de modèles.
 
-## Introduction
+## Les représentations d'une même donnée
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+Un système AI manipule souvent source originale, contenu normalisé, chunks, embeddings, résultats de retrieval, réponses et traces. Une erreur de modélisation peut rendre l'audit impossible.
 
-## Concept
+## Document et provenance
 
-**Data modeling** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+Exemple de représentation interne :
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+```json
+{
+  "id": "doc_123",
+  "source_id": "crm_42",
+  "source_type": "ticket",
+  "title": "Remboursement",
+  "content": "...",
+  "metadata": {"language": "fr", "tenant_id": "tenant_7"},
+  "version": 3
+}
+```
 
-## Exemple
+La provenance permet de retrouver l'origine d'un chunk ou d'une réponse.
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+## Identité et idempotence
 
-## Méthode professionnelle
+Définis une clé d'identité métier et une stratégie de mise à jour. Par exemple, tenant_id + source_type + source_id + version peut identifier une version de document.
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
+## Contrat interne vs fournisseur
 
-## Erreurs fréquentes
+Ne stocke pas directement toute la réponse d'un SDK comme modèle métier. Préfère un contrat interne :
 
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+```text
+GenerateRequest
+  messages
+  model
+  temperature
+  response_format
+
+GenerateResult
+  text
+  usage
+  provider
+  model
+  request_id
+```
+
+Un adaptateur traduit ensuite ce contrat vers le fournisseur choisi.
+
+## Multi-tenant
+
+Dans un SaaS, tenant_id doit participer à la frontière de données lorsque les utilisateurs ne doivent pas accéder aux données d'un autre tenant. Le filtre doit être appliqué systématiquement et renforcé si possible par les mécanismes de sécurité de la base.
 
 ## Exercice
 
-Construis une petite expérience sur **Data modeling**.
+Conçois le modèle minimal d'un chunk RAG permettant de retrouver document, version, tenant, texte et embedding.
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
+```text
+chunk
+  id
+  document_id
+  document_version
+  tenant_id
+  position
+  text
+  embedding
+  metadata
+  created_at
+```
 
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+Ajoute une contrainte d'unicité adaptée au processus d'ingestion.
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+La donnée AI doit être traçable, versionnée et découplée des fournisseurs. Un bon schéma rend les pipelines idempotents, auditables et évolutifs.
