@@ -1,57 +1,47 @@
 ---
-id: ai-13-product-architecture
-title: "Feature architecture & contracts"
+id: ai-13-architecture
+title: "Architecture d'un produit AI-first"
 slug: architecture
 technology: ai-engineering
 level: advanced
 module: 13-product
-order: 1
-estimatedMinutes: 50
-difficulty: 4
-xp: 140
-prerequisites: []
-skills:
-  - ai-product
-tags: [ai, product, advanced]
+order: 2
+estimatedMinutes: 80
+difficulty: 5
+xp: 170
+prerequisites: [ai-13-problem]
+skills: [ai-product]
+tags: [product, ux, analytics, ai]
 ---
 
 ## Objectifs
-- Comprendre Feature architecture & contracts.
-- Choisir une approche proportionnée au problème.
-- Construire des critères de succès mesurables.
+- séparer frontend, backend, gateway et workers ;
+- gérer données et modèles ;
+- prévoir évolution des fournisseurs ;
+- concevoir les frontières de confiance.
 
-## Concept
-Une fonctionnalité AI doit résoudre un problème utilisateur, pas simplement exposer un modèle. **Feature architecture & contracts** doit être relié à un contrat produit : qui utilise la fonctionnalité, quelle décision elle aide, quel niveau d'erreur est acceptable et quelle action humaine reste possible.
+## Architecture
+```text
+Next.js -> API -> AI gateway -> providers
+              |       |
+           Postgres  Redis
+              |
+            workers -> vector store
+```
 
-Les techniques avancées ne doivent être introduites qu'après une baseline. Fine-tuning, adaptation efficace ou compression ajoutent des coûts de données, calcul et maintenance ; leur intérêt doit être démontré par une mesure.
+Le backend reste responsable auth, quotas, permissions, validation et effets de bord.
 
-## Méthode
-1. Définir le problème utilisateur.
-2. Établir une baseline.
-3. Définir les métriques produit et techniques.
-4. Tester sur des cas réels représentatifs.
-5. Mesurer l'effet de la modification.
-6. Documenter les limites et le rollback.
+## Contrats
+Utilise des interfaces internes stables pour prompts, modèles et tools afin de pouvoir changer un fournisseur sans réécrire le produit.
 
-## Erreurs fréquentes
-- Construire une démo sans critère de succès.
-- Remplacer l'humain dans une décision sensible sans garde-fou.
-- Fine-tuner avant d'avoir établi une baseline.
-- Optimiser un benchmark sans bénéfice produit.
-- Oublier la maintenance d'un artefact spécialisé.
+## Données
+Sépare données métier, documents, embeddings, traces et artefacts d'évaluation.
 
 ## Exercice
-Écris une fiche produit pour **Feature architecture & contracts** : utilisateur cible, problème, baseline, métriques, risques, contrôle humain et critères de lancement.
+Le produit dépend directement de trois SDK fournisseurs dans dix modules. Quel risque ?
 
-:::indice
-Une fonctionnalité AI réussie améliore une tâche mesurable ; elle n'a pas besoin d'utiliser la technique la plus complexe.
-:::
-
-:::solution
-La fiche doit relier besoin, métriques et risques. Elle doit également expliquer pourquoi l'approche choisie est préférable à une baseline plus simple.
-:::
+### Solution
+Le couplage rend migrations et tests difficiles. Centraliser les appels derrière un gateway réduit la surface de changement.
 
 ## À retenir
-- Produit et modèle doivent être évalués ensemble.
-- Les techniques avancées ont un coût de maintenance.
-- L'humain doit rester dans la boucle lorsque le risque le justifie.
+Une architecture AI-first garde les responsabilités déterministes hors du modèle.
