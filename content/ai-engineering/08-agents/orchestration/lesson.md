@@ -39,8 +39,14 @@ Si une fonction déterministe ou un seul appel suffit, ajouter des agents augmen
 ## Exercice
 Deux agents modifient la même ressource simultanément. Comment prévenir les conflits ?
 
-### Solution
+:::indice
+Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+:::
+
+:::solution
 Centraliser l'autorisation et l'écriture, utiliser verrou/version optimiste ou idempotency key et définir une source d'autorité unique.
+
+:::
 
 ## À retenir
 Le multi-agent est une architecture, pas un objectif. Mesure son bénéfice contre sa complexité.
