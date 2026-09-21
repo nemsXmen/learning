@@ -38,8 +38,14 @@ Définis durée de conservation, suppression, backups et logs. Les données d'ob
 ## Exercice
 Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
 
-### Solution
+:::indice
+Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
+:::
+
+:::solution
 Le log devient une copie de données sensibles. Réduire les données journalisées et définir une rétention adaptée.
+
+:::
 
 ## À retenir
 La confidentialité concerne tout le pipeline, pas uniquement le fournisseur LLM.
