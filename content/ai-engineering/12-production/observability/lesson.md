@@ -4,7 +4,7 @@ title: "Observabilité LLM et AI systems"
 slug: observability
 technology: ai-engineering
 level: advanced
-module: 12-production
+module: production
 order: 2
 estimatedMinutes: 80
 difficulty: 5
