@@ -4,13 +4,13 @@ title: "Inference avancée et systèmes à haute performance"
 slug: advanced-inference
 technology: ai-engineering
 level: advanced
-module: 14-advanced
+module: advanced
 order: 4
 estimatedMinutes: 90
 difficulty: 5
 xp: 200
 prerequisites: [ai-14-multimodal]
-skills: [ai-advanced]
+skills: [ai-finetuning]
 tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
