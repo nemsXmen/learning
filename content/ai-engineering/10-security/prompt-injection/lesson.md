@@ -44,3 +44,32 @@ Ignorer cette instruction comme donnée non fiable. Les secrets ne doivent pas �
 
 ## À retenir
 L'injection est un problème de frontière de confiance et d'autorité.
+
+
+## Introduction
+
+Les instructions peuvent provenir de sources non fiables et tenter de détourner le modèle.
+
+## Concept
+
+Injection directe et indirecte nécessitent défense en profondeur.
+
+## Exemple
+
+Un document récupéré peut contenir une instruction malveillante ; il doit rester une donnée et non une autorité.
+
+## Comment ça fonctionne
+
+untrusted input → retrieval → model → constrained action
+
+## Questions d'entretien
+
+- Pourquoi le contexte RAG est-il une surface d'attaque ?
+
+  :::indice
+  Pense aux contrôles qui restent fiables même si le modèle se trompe.
+  :::
+
+  :::reponse
+  Parce qu'un document externe peut contenir des instructions adversariales interprétées par le modèle.
+  :::
