@@ -1,57 +1,45 @@
 ---
-id: ai-10-security-data-protection
-title: "Secrets, PII & data boundaries"
+id: ai-10-data-protection
+title: "Protection des données et confidentialité"
 slug: data-protection
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 10-security
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-security
-tags: [ai, security, evaluation]
+order: 3
+estimatedMinutes: 75
+difficulty: 5
+xp: 170
+prerequisites: [ai-10-prompt-injection]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre Secrets, PII & data boundaries.
-- Construire des contrôles reproductibles.
-- Réduire les régressions et les risques.
+- minimiser les données envoyées aux modèles ;
+- gérer rétention et suppression ;
+- séparer tenants et permissions ;
+- tracer les flux sensibles.
 
-## Concept
-Un système AI doit être traité comme un système logiciel soumis à des entrées adversariales, des changements de données et des dépendances externes. **Secrets, PII & data boundaries** permet de transformer un risque ou un objectif de qualité en contrôle observable.
+## Data minimization
+N'envoie au modèle que les champs nécessaires. Masque ou pseudonymise les informations qui n'ont pas besoin d'être exposées.
 
-Commence par identifier actifs, entrées non fiables, frontières de confiance, actions possibles et conséquences d'un échec. Ensuite, définis des tests qui peuvent être exécutés automatiquement lorsque c'est possible.
+## Multi-tenant
+```text
+tenant -> authorization -> retrieval -> model
+                         |
+                    filtered data
+```
 
-## Méthode
-1. Lister actifs et données sensibles.
-2. Identifier les frontières de confiance.
-3. Définir les comportements attendus.
-4. Ajouter des cas normaux, limites et adverses.
-5. Exécuter les contrôles dans CI.
-6. Bloquer le déploiement lorsque les seuils critiques sont dépassés.
+L'isolation doit être appliquée avant retrieval et avant toute opération d'écriture.
 
-## Erreurs fréquentes
-- Considérer le modèle comme une frontière de sécurité.
-- Tester uniquement des réponses normales.
-- Stocker des secrets dans prompts ou logs.
-- Utiliser une métrique globale qui masque les échecs critiques.
-- Dépendre d'un test manuel impossible à reproduire.
+## Rétention
+Définis durée de conservation, suppression, backups et logs. Les données d'observabilité peuvent elles-mêmes contenir des informations sensibles.
 
 ## Exercice
-Écris une mini threat model et une suite de dix tests pour **Secrets, PII & data boundaries**. Pour chaque test, précise entrée, comportement attendu et conséquence d'un échec.
+Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
 
-:::indice
-Commence par ce qui peut réellement être perdu : données, argent, accès, réputation ou disponibilité.
-:::
-
-:::solution
-Une solution utile identifie les actifs, les frontières de confiance et les scénarios d'abus, puis transforme les scénarios prioritaires en contrôles automatisables.
-:::
+### Solution
+Le log devient une copie de données sensibles. Réduire les données journalisées, masquer les champs sensibles et définir une politique de rétention.
 
 ## À retenir
-- La sécurité AI commence par les frontières de confiance.
-- Les tests adverses doivent être versionnés comme les tests fonctionnels.
-- Les secrets et données sensibles ne doivent pas devenir des entrées implicites du système.
+La confidentialité concerne tout le pipeline, pas uniquement le fournisseur LLM.
