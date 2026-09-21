@@ -4,13 +4,13 @@ title: "Sorties structurées et contrats de données"
 slug: structured-output
 technology: ai-engineering
 level: intermediate
-module: 06-llm-engineering
+module: llm-engineering
 order: 2
 estimatedMinutes: 65
 difficulty: 4
 xp: 140
 prerequisites: [ai-06-prompting]
-skills: [ai-llm-engineering]
+skills: [ai-llm-apps]
 tags: [llm, ai-engineering]
 ---
 
