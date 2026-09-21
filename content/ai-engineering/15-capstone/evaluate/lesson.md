@@ -46,6 +46,13 @@ La moyenne masque une régression sur un segment critique. Il faut segmenter les
 
 :::
 
+## Erreurs fréquentes
+
+- mélanger responsabilités métier, modèle et autorisation ;
+- lancer sans golden dataset ni observabilité ;
+- ignorer coûts et quotas ;
+- ne pas préparer rollback et runbook.
+
 ## À retenir
 L'évaluation doit représenter les vrais risques du produit, pas seulement sa moyenne.
 
