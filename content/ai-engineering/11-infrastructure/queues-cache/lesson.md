@@ -43,3 +43,32 @@ Une clé d'idempotence et un état transactionnel permettent de reprendre sans d
 
 ## À retenir
 Queues et cache nécessitent des contrats d'idempotence et de cohérence.
+
+
+## Introduction
+
+Queues et cache découplent tâches lentes et requêtes interactives.
+
+## Concept
+
+Idempotence, retry et dead-letter handling sont essentiels aux workers.
+
+## Exemple
+
+Un job d'embedding peut être rejoué sans créer de doublons si son identifiant est idempotent.
+
+## Comment ça fonctionne
+
+API → queue → worker → result/cache
+
+## Questions d'entretien
+
+- Pourquoi l'idempotence est-elle essentielle avec les retries ?
+
+  :::indice
+  Relie performance et fiabilité au comportement sous charge.
+  :::
+
+  :::reponse
+  Pour qu'une même tâche ne provoque pas plusieurs effets de bord.
+  :::
