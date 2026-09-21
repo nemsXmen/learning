@@ -37,8 +37,14 @@ Sépare transcription, diarisation éventuelle et compréhension. Une erreur de 
 ## Exercice
 Un document scanné contient une information critique dans une image. Que faut-il tester ?
 
-### Solution
+:::indice
+Compare la baseline et mesure explicitement le compromis avant d'adopter l'optimisation.
+:::
+
+:::solution
 OCR, qualité de lecture, localisation de l'information et validation de la sortie finale avec la source.
+
+:::
 
 ## À retenir
 Multimodal signifie plusieurs chaînes de données et plusieurs surfaces d'erreur.
