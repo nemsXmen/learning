@@ -43,3 +43,32 @@ Le log devient une copie de données sensibles. Réduire les données journalis�
 
 ## À retenir
 La confidentialité concerne tout le pipeline, pas uniquement le fournisseur LLM.
+
+
+## Introduction
+
+Un produit AI traite souvent des données sensibles et doit minimiser ce qu'il collecte.
+
+## Concept
+
+Tenant isolation, ACL, rétention et chiffrement sont des contrôles de données indépendants du modèle.
+
+## Exemple
+
+Une requête d'un tenant ne doit jamais récupérer des embeddings d'un autre tenant.
+
+## Comment ça fonctionne
+
+identity → authorization → filtered retrieval → processing → retention
+
+## Questions d'entretien
+
+- Pourquoi le filtrage tenant doit-il être côté serveur ?
+
+  :::indice
+  Pense aux contrôles qui restent fiables même si le modèle se trompe.
+  :::
+
+  :::reponse
+  Parce que le client et le modèle ne sont pas des frontières de confiance.
+  :::
