@@ -45,6 +45,13 @@ Mesurer taille des batches, attente du scheduler, distribution de longueur des r
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 L'inférence avancée est une optimisation de système complète, pas seulement un choix de GPU.
 
