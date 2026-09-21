@@ -36,8 +36,14 @@ Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, s
 ## Exercice
 Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
 
-### Solution
+:::indice
+Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
+:::
+
+:::solution
 Traiter le document comme donnée non fiable et placer une autorisation déterministe avant toute écriture.
+
+:::
 
 ## À retenir
 La sécurité commence par les frontières de confiance, pas par le prompt seul.
