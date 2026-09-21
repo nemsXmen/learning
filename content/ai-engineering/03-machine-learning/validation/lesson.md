@@ -47,9 +47,15 @@ Une classification peut bien classer tout en étant mal calibrée. Une probabili
 
 Un modèle obtient 99 % sur train et 72 % sur validation. Donne deux hypothèses et trois vérifications.
 
-### Solution
+:::indice
+Commence par définir la métrique et la baseline avant de choisir une technique.
+:::
+
+:::solution
 
 Hypothèses : surapprentissage ou changement de distribution. Vérifications : comparer les distributions, inspecter erreurs, vérifier doublons/fuites et tester une baseline simple.
+
+:::
 
 ## À retenir
 
