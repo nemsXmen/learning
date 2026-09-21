@@ -1,75 +1,114 @@
 ---
-id: ai-01-fondations-linux-cli
-title: "Linux CLI & environments"
+id: ai-linux-cli
+title: "Linux CLI et environnement d'un AI Engineer"
 slug: linux-cli
 technology: ai-engineering
-level: intermediate
-module: 01-fondations
+level: beginner
+module: fondations
 order: 2
-estimatedMinutes: 35
+estimatedMinutes: 40
 difficulty: 2
-xp: 100
+xp: 90
 prerequisites: []
-skills:
-  - ai-cli-linux
-tags:
-  - ai
-  - ai-engineering
+skills: [ai-cli-linux]
+tags: [linux, cli, environment]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- naviguer et inspecter Linux ;
+- comprendre processus, signaux, variables d'environnement et permissions ;
+- automatiser un pipeline depuis le shell ;
+- diagnostiquer CPU, mémoire, disque et logs.
 
-## Introduction
+## Le terminal comme outil d'ingénierie
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+Les serveurs, conteneurs, runners CI et machines GPU sont souvent administrés sans interface graphique.
 
-## Concept
+```bash
+pwd
+ls -la
+find . -maxdepth 2 -type f
+grep -R "timeout" .
+```
 
-**Linux CLI & environments** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+## Flux et composition
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+```bash
+cat logs.txt | grep ERROR | tail -n 50
+```
 
-## Exemple
+stdout et stderr sont deux flux différents :
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+```bash
+python worker.py > output.log 2> error.log
+```
 
-## Méthode professionnelle
+Les codes de sortie servent également de contrat : 0 indique généralement le succès, une valeur non nulle l'échec.
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
+## Processus et signaux
 
-## Erreurs fréquentes
+```bash
+ps aux
+pgrep -af python
+top
+free -h
+df -h
+kill <PID>
+```
 
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+SIGTERM demande un arrêt gracieux. SIGKILL force l'arrêt.
+
+## Variables d'environnement
+
+```bash
+export MODEL_NAME="..."
+export APP_ENV="production"
+```
+
+Python :
+
+```python
+import os
+model_name = os.environ["MODEL_NAME"]
+```
+
+Les clés API ne doivent jamais être committées.
+
+## Permissions
+
+```bash
+ls -l
+chmod 750 script.sh
+```
+
+Une permission trop large sur un fichier de secrets est un problème de sécurité.
+
+## Scripts robustes
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+python -m pytest
+python -m my_pipeline
+```
 
 ## Exercice
 
-Construis une petite expérience sur **Linux CLI & environments**.
+Écris un script qui crée output/, lance un pipeline, sépare stdout/stderr et affiche les 20 dernières lignes d'erreur.
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+mkdir -p output
+python -m my_pipeline > output/pipeline.log 2> output/pipeline.err
+tail -n 20 output/pipeline.err
+```
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+Le shell est une interface d'automatisation et de diagnostic. Comprendre processus, flux, permissions et ressources est indispensable avant de déployer des systèmes AI.
