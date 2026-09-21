@@ -79,3 +79,32 @@ Conçois le manifeste d'une version de dataset.
 ## À retenir
 
 La version d'un dataset fait partie du contexte expérimental. Sans lineage, une métrique ne permet pas de savoir précisément ce qui a été évalué.
+
+
+## Introduction
+
+Un dataset AI doit être traçable comme du code.
+
+## Concept
+
+Version, provenance, transformation et partition doivent être reproductibles.
+
+## Exemple
+
+Associer un hash de dataset à une expérience permet de retrouver exactement les données utilisées.
+
+## Comment ça fonctionne
+
+source → snapshot → transformation → version → expérience
+
+## Questions d'entretien
+
+- Que faut-il pouvoir retrouver après une expérience ?
+
+  :::indice
+  Pense à la reproductibilité et aux erreurs silencieuses.
+  :::
+
+  :::reponse
+  La version des données, du code, de la configuration et du modèle.
+  :::
