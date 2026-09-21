@@ -4,7 +4,7 @@ title: "Architecture des LLM"
 slug: llm-architecture
 technology: ai-engineering
 level: intermediate
-module: 05-transformers
+module: transformers
 order: 3
 estimatedMinutes: 70
 difficulty: 4
