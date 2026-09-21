@@ -4,7 +4,7 @@ title: "Sécuriser les agents autonomes"
 slug: agent-security
 technology: ai-engineering
 level: advanced
-module: 10-security
+module: security
 order: 4
 estimatedMinutes: 80
 difficulty: 5
