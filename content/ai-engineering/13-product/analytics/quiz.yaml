@@ -3,17 +3,35 @@ kind: QUIZ
 questions:
   - id: ai-13-product-analytics-q1
     type: multiple_choice
-    difficulty: 2
-    question: "Quand introduire une technique AI plus complexe ?"
-    options: ["Après avoir mesuré une baseline","Dès le prototype","Uniquement parce qu'elle est récente","Sans métrique"]
+    difficulty: 3
+    question: "Quelle métrique reflète mieux la valeur qu'un simple nombre de générations ?"
+    options: ["Taux d'acceptation ou outcome", "Nombre de prompts", "Tokens bruts", "Nombre de modèles"]
     answer: [0]
-    explanation: "La baseline permet de démontrer la valeur de la complexité ajoutée."
+    explanation: "L'acceptation relie usage et valeur."
     skills: [ai-product]
+
   - id: ai-13-product-analytics-q2
-    type: multiple_answer
+    type: true_false
     difficulty: 2
-    question: "Quels éléments appartiennent à un contrat produit AI ?"
-    options: ["Utilisateur cible","Critères de succès","Limites","Plan de contrôle humain"]
+    question: "Le feedback utilisateur peut contribuer à construire un dataset d'amélioration."
+    answer: true
+    explanation: "Corrections et feedback peuvent devenir des signaux d'évaluation."
+    skills: [ai-product]
+
+  - id: ai-13-product-analytics-q3
+    type: multiple_answer
+    difficulty: 3
+    question: "Quels éléments doivent être versionnés pour une expérimentation AI ?"
+    options: ["Prompt", "Modèle", "Dataset d'évaluation", "Configuration"]
     answer: [0, 1, 2, 3]
-    explanation: "Ces éléments relient la capacité AI au besoin réel."
+    explanation: "Sans versionnement, la comparaison n'est pas reproductible."
+    skills: [ai-product]
+
+  - id: ai-13-product-analytics-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Pourquoi minimiser les données d'analytics ?"
+    options: ["Réduire exposition et risques de confidentialité", "Augmenter le coût", "Empêcher toute mesure", "Rendre les métriques inutiles"]
+    answer: [0]
+    explanation: "Collecter uniquement ce qui est nécessaire réduit les risques."
     skills: [ai-product]
