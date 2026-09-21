@@ -50,8 +50,14 @@ Les clés fournisseurs restent côté serveur.
 ## Exercice
 Un fournisseur devient indisponible. Décris un fallback propre.
 
-### Solution
+:::indice
+Sépare génération, validation et exécution ; ne donne pas au modèle une autorité implicite.
+:::
+
+:::solution
 Détecter les erreurs éligibles, respecter un timeout global, sélectionner un fournisseur compatible, tracer le changement et éviter les retries en cascade.
+
+:::
 
 ## À retenir
 Un gateway rend les appels LLM contrôlables, observables et remplaçables.
