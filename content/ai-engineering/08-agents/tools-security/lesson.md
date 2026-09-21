@@ -44,3 +44,32 @@ Valider identité, montant, règles métier et idempotence dans le backend ; l'a
 
 ## À retenir
 Un agent puissant doit rester moins privilégié que le système qu'il pilote.
+
+
+## Introduction
+
+Les agents rendent les frontières de sécurité plus importantes car ils peuvent déclencher des actions.
+
+## Concept
+
+Least privilege, sandbox, approbation et audit limitent les dommages possibles.
+
+## Exemple
+
+Un agent de support peut lire une facture mais ne doit pas pouvoir rembourser sans politique d'autorisation.
+
+## Comment ça fonctionne
+
+agent → policy → tool → audit
+
+## Questions d'entretien
+
+- Pourquoi l'autorisation doit-elle rester hors du prompt ?
+
+  :::indice
+  Cherche la frontière entre décision du modèle et contrôle déterministe.
+  :::
+
+  :::reponse
+  Parce qu'une instruction textuelle ne constitue pas un contrôle de sécurité fiable.
+  :::
