@@ -50,8 +50,14 @@ Surveille NaN, gradients explosifs, stagnation, validation qui se dégrade et ut
 ## Exercice
 Un entraînement devient NaN. Donne une stratégie de diagnostic.
 
-### Solution
+:::indice
+Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+:::
+
+:::solution
 Vérifie données, labels, valeurs extrêmes, learning rate, gradients, mixed precision et opérations produisant inf/NaN. Reproduis avec un petit batch déterministe.
+
+:::
 
 ## À retenir
 Entraîner un réseau est une expérience contrôlée. Chaque changement doit être mesuré et relié à une hypothèse.
