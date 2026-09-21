@@ -1,75 +1,87 @@
 ---
-id: ai-02-data-qualite-donnees
-title: "Data quality & preprocessing"
+id: ai-data-quality
+title: "Qualité des données et preprocessing pour l'IA"
 slug: qualite-donnees
 technology: ai-engineering
-level: intermediate
-module: 02-data
+level: beginner
+module: data
 order: 2
-estimatedMinutes: 35
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-data-quality
-tags:
-  - ai
-  - ai-engineering
+estimatedMinutes: 55
+difficulty: 3
+xp: 120
+prerequisites: [ai-python, ai-data-modeling]
+skills: [ai-data-quality]
+tags: [data-quality, preprocessing, leakage]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- mesurer complétude, validité, unicité et fraîcheur ;
+- normaliser sans détruire l'information utile ;
+- détecter doublons, données manquantes et anomalies ;
+- prévenir la fuite de données ;
+- automatiser les contrôles.
 
-## Introduction
+## Qualité observable
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+Une donnée peut être syntaxiquement valide mais inutilisable : texte vide, langue inattendue, date impossible, doublon, contenu obsolète, PII non autorisée ou label contradictoire.
 
-## Concept
+| Dimension | Exemple |
+| --- | --- |
+| complétude | champs présents |
+| validité | respect du schéma |
+| unicité | taux de doublons |
+| fraîcheur | âge des données |
+| cohérence | relations métier |
+| couverture | représentation des cas importants |
 
-**Data quality & preprocessing** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+## Normalisation
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+```python
+def normalize(text: str) -> str:
+    return " ".join(text.replace("\r", " ").split())
+```
 
-## Exemple
+Le preprocessing doit répondre à un besoin mesuré. Supprimer systématiquement ponctuation, accents ou structure peut dégrader certaines tâches.
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+## Données manquantes
 
-## Méthode professionnelle
+On peut supprimer, imputer ou conserver explicitement l'absence. Le choix dépend de la cause et de la tâche ; l'absence peut elle-même être informative.
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
+## Doublons
 
-## Erreurs fréquentes
+Les doublons exacts sont simples à détecter. Les quasi-doublons demandent une comparaison plus coûteuse. Pour un RAG, dédupliquer avant embedding peut réduire coût et bruit.
 
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+## Fuite de données
+
+Une fuite arrive lorsqu'une information indisponible au moment de la prédiction influence entraînement ou évaluation. Les transformations qui apprennent des statistiques doivent être ajustées sur train puis appliquées à validation/test.
+
+## Contrôle automatisé
+
+```json
+{
+  "rows": 120000,
+  "duplicate_rate": 0.014,
+  "missing_title_rate": 0.002,
+  "invalid_language_rate": 0.001,
+  "status": "pass"
+}
+```
+
+Versionne les règles et leurs seuils.
 
 ## Exercice
 
-Construis une petite expérience sur **Data quality & preprocessing**.
+Définis cinq règles de qualité pour un corpus documentaire RAG.
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
-
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+1. text non vide ;
+2. taille dans une plage raisonnable ;
+3. source_id unique par version ;
+4. langue supportée ;
+5. source et date de mise à jour présentes.
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+Le preprocessing n'est pas décoratif. Une mauvaise donnée peut produire un système techniquement fonctionnel mais scientifiquement trompeur.
