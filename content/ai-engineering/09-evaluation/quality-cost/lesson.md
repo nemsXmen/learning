@@ -1,57 +1,40 @@
 ---
-id: ai-09-evaluation-quality-cost
-title: "Quality, latency & cost trade-offs"
+id: ai-09-quality-cost
+title: "Optimiser qualité, coût et latence"
 slug: quality-cost
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 09-evaluation
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-evaluation
-tags: [ai, security, evaluation]
+order: 3
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-09-metrics]
+skills: [ai-evaluation]
+tags: [evaluation, metrics, llm]
 ---
 
 ## Objectifs
-- Comprendre Quality, latency & cost trade-offs.
-- Construire des contrôles reproductibles.
-- Réduire les régressions et les risques.
+- analyser les compromis ;
+- réduire tokens et appels ;
+- choisir le bon modèle par tâche ;
+- mesurer avant optimisation.
 
-## Concept
-Un système AI doit être traité comme un système logiciel soumis à des entrées adversariales, des changements de données et des dépendances externes. **Quality, latency & cost trade-offs** permet de transformer un risque ou un objectif de qualité en contrôle observable.
+## Leviers
+Réduire contexte inutile, mettre en cache les requêtes sûres, router vers un modèle adapté et limiter les retries.
 
-Commence par identifier actifs, entrées non fiables, frontières de confiance, actions possibles et conséquences d'un échec. Ensuite, définis des tests qui peuvent être exécutés automatiquement lorsque c'est possible.
+```text
+quality
+  / /  cost--latency
+```
 
-## Méthode
-1. Lister actifs et données sensibles.
-2. Identifier les frontières de confiance.
-3. Définir les comportements attendus.
-4. Ajouter des cas normaux, limites et adverses.
-5. Exécuter les contrôles dans CI.
-6. Bloquer le déploiement lorsque les seuils critiques sont dépassés.
-
-## Erreurs fréquentes
-- Considérer le modèle comme une frontière de sécurité.
-- Tester uniquement des réponses normales.
-- Stocker des secrets dans prompts ou logs.
-- Utiliser une métrique globale qui masque les échecs critiques.
-- Dépendre d'un test manuel impossible à reproduire.
+Ne dégrade pas silencieusement la qualité pour gagner quelques millisecondes. Compare sur le même dataset.
 
 ## Exercice
-Écris une mini threat model et une suite de dix tests pour **Quality, latency & cost trade-offs**. Pour chaque test, précise entrée, comportement attendu et conséquence d'un échec.
+Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
 
-:::indice
-Commence par ce qui peut réellement être perdu : données, argent, accès, réputation ou disponibilité.
-:::
-
-:::solution
-Une solution utile identifie les actifs, les frontières de confiance et les scénarios d'abus, puis transforme les scénarios prioritaires en contrôles automatisables.
-:::
+### Solution
+Segmenter les tâches, mesurer la qualité minimale requise et tester un modèle moins coûteux sur les cas compatibles.
 
 ## À retenir
-- La sécurité AI commence par les frontières de confiance.
-- Les tests adverses doivent être versionnés comme les tests fonctionnels.
-- Les secrets et données sensibles ne doivent pas devenir des entrées implicites du système.
+L'optimisation est un problème multi-objectifs mesuré.
