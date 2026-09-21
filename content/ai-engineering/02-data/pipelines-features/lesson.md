@@ -64,3 +64,32 @@ Utilise une clé déterministe basée sur document_id + document_version + chunk
 ## À retenir
 
 Un pipeline AI fiable est une chaîne de contrats. Validation, idempotence, lineage et cohérence des transformations comptent autant que l'algorithme final.
+
+
+## Introduction
+
+Les pipelines transforment des données brutes en entrées exploitables par les modèles.
+
+## Concept
+
+Une feature doit avoir une définition, une source, une temporalité et une règle de calcul.
+
+## Exemple
+
+Une feature calculée à partir d'événements futurs crée une fuite temporelle.
+
+## Comment ça fonctionne
+
+events → validation → transformation → features → training/serving
+
+## Questions d'entretien
+
+- Pourquoi l'idempotence est-elle utile ?
+
+  :::indice
+  Pense à la reproductibilité et aux erreurs silencieuses.
+  :::
+
+  :::reponse
+  Un même traitement peut être rejoué sans produire de doublons ou d'état incohérent.
+  :::
