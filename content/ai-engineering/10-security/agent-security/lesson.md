@@ -1,57 +1,46 @@
 ---
-id: ai-10-security-agent-security
-title: "Least privilege & tool safety"
+id: ai-10-agent-security
+title: "Sécuriser les agents autonomes"
 slug: agent-security
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 10-security
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-security
-tags: [ai, infrastructure]
+order: 4
+estimatedMinutes: 80
+difficulty: 5
+xp: 180
+prerequisites: [ai-10-data-protection]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre Least privilege & tool safety.
-- Choisir une architecture adaptée à la charge.
-- Mesurer fiabilité, latence et coût.
+- appliquer least privilege ;
+- contrôler les actions à effet de bord ;
+- sécuriser les sandboxes ;
+- auditer les décisions.
 
-## Concept
-L'infrastructure AI doit isoler les ressources coûteuses et les dépendances externes du reste de l'application. **Least privilege & tool safety** se conçoit avec des limites explicites : concurrence, taille des requêtes, mémoire, durée d'exécution, quotas et capacité.
+## Agent non privilégié
+Le modèle peut proposer une action mais ne doit pas devenir l'autorité d'accès.
 
-Une architecture robuste accepte les pics et les erreurs. Les files permettent de découpler les traitements longs, les caches réduisent les appels répétitifs et les limites empêchent une demande d'épuiser les ressources.
+```text
+proposal -> policy engine -> authorization -> tool -> side effect
+```
 
-## Méthode
-1. Mesurer le trafic attendu.
-2. Définir un budget de latence et de coût.
-3. Déterminer les limites de concurrence.
-4. Ajouter timeouts, retries bornés et rate limits.
-5. Observer saturation CPU/GPU, mémoire et files.
-6. Tester sous charge avant production.
+## Sandbox
+Pour du code généré ou non fiable, isole filesystem, réseau, CPU, mémoire et durée. Interdis toute capacité inutile.
 
-## Erreurs fréquentes
-- Dimensionner sur une moyenne au lieu d'un pic.
-- Mettre un cache sans stratégie d'invalidation.
-- Utiliser des retries qui amplifient la charge.
-- Ignorer la taille des vecteurs ou de l'index.
-- Confondre capacité théorique et débit réellement mesuré.
+## Secrets
+Injecte les credentials uniquement dans le composant qui doit les utiliser. Évite de les placer dans le contexte LLM.
+
+## Audit
+Trace les appels d'outils, décisions de politique, erreurs et identifiants de requête sans enregistrer inutilement des données sensibles.
 
 ## Exercice
-Dessine une architecture pour **Least privilege & tool safety**. Donne au moins une limite de capacité, une métrique de saturation, une stratégie de reprise et une estimation du coût.
+Un agent peut exécuter du code Python arbitraire. Quelles protections minimales ?
 
-:::indice
-Chaque ressource partagée doit avoir un propriétaire, une limite et une métrique.
-:::
-
-:::solution
-Une architecture acceptable explicite les ressources, limites, files éventuelles, métriques de saturation et comportements en cas de panne ou de surcharge.
-:::
+### Solution
+Sandbox isolée, timeout, quotas CPU/mémoire, filesystem restreint, réseau contrôlé et validation des résultats.
 
 ## À retenir
-- L'infrastructure est une partie du produit AI.
-- Les limites protègent coût et disponibilité.
-- Il faut mesurer avant de dimensionner.
+L'autonomie augmente la surface d'attaque ; les privilèges doivent rester bornés et vérifiables.
