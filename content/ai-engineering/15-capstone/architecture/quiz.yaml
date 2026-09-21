@@ -4,16 +4,34 @@ questions:
   - id: ai-15-capstone-architecture-q1
     type: multiple_choice
     difficulty: 3
-    question: "Quelle pratique caractérise une architecture AI maintenable ?"
-    options: ["Contrats clairs entre composants","Couplage direct à un seul fournisseur","Secrets côté client","Aucune métrique"]
+    question: "Quelle couche doit contrôler les autorisations d'un tool ?"
+    options: ["Backend/policy layer", "Prompt utilisateur", "Modèle seul", "Navigateur"]
     answer: [0]
-    explanation: "Les contrats rendent les composants testables et remplaçables."
+    explanation: "Les effets de bord doivent être autorisés côté serveur."
     skills: [ai-capstone]
+
   - id: ai-15-capstone-architecture-q2
     type: multiple_answer
     difficulty: 3
-    question: "Que doit mesurer un capstone AI de production ?"
-    options: ["Qualité","Latence","Coût","Erreurs"]
+    question: "Quelles briques appartiennent à l'architecture cible ?"
+    options: ["AI gateway", "RAG", "Postgres", "Observability"]
     answer: [0, 1, 2, 3]
-    explanation: "Ces dimensions permettent d'évaluer le système au-delà de la seule démonstration."
+    explanation: "Le capstone assemble ces responsabilités."
+    skills: [ai-capstone]
+
+  - id: ai-15-capstone-architecture-q3
+    type: true_false
+    difficulty: 2
+    question: "Les secrets fournisseurs doivent rester côté serveur."
+    answer: true
+    explanation: "Le frontend ne doit pas recevoir les secrets."
+    skills: [ai-capstone]
+
+  - id: ai-15-capstone-architecture-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Quel flux est correct ?"
+    options: ["Auth → gateway → retrieval/agent → validation → persistence", "Modèle → navigateur → DB", "Prompt → paiement direct", "Vector store → client sans ACL"]
+    answer: [0]
+    explanation: "Le backend conserve les contrôles avant persistance."
     skills: [ai-capstone]
