@@ -1,56 +1,42 @@
 ---
-id: ai-12-production-reliability
-title: "Timeouts, fallbacks & idempotency"
+id: ai-12-reliability
+title: "Fiabilité et résilience"
 slug: reliability
 technology: ai-engineering
 level: advanced
 module: 12-production
-order: 1
-estimatedMinutes: 45
-difficulty: 4
-xp: 130
-prerequisites: []
-skills:
-  - ai-production
-tags: [ai, production, product]
+order: 4
+estimatedMinutes: 80
+difficulty: 5
+xp: 180
+prerequisites: [ai-12-operations]
+skills: [ai-production]
+tags: [production, reliability, observability]
 ---
 
 ## Objectifs
-- Comprendre Timeouts, fallbacks & idempotency.
-- L'intégrer dans une architecture de production.
-- Définir des mesures et des critères d'acceptation.
+- concevoir des fallbacks ;
+- gérer dépendances externes ;
+- pratiquer la dégradation contrôlée ;
+- tester les scénarios de panne.
 
-## Concept
-Passer d'un prototype AI à un produit exige des garanties opérationnelles. **Timeouts, fallbacks & idempotency** relie le comportement du modèle aux préoccupations classiques du logiciel : disponibilité, latence, erreurs, coûts, sécurité et expérience utilisateur.
+## Failure modes
+Provider indisponible, timeout, réponse invalide, rate limit, vector store indisponible ou queue saturée.
 
-Un service de production doit avoir des limites explicites et des comportements de dégradation. Lorsqu'une dépendance devient indisponible, le système doit soit utiliser un fallback maîtrisé, soit échouer rapidement avec une réponse compréhensible.
+```text
+dependency failure -> timeout -> fallback/degrade -> observable response
+```
 
-## Méthode
-- Définir les SLI pertinents : latence, disponibilité, erreurs, qualité.
-- Fixer des seuils et une procédure d'alerte.
-- Instrumenter les appels sans journaliser inutilement les données sensibles.
-- Tester timeouts, retries bornés et idempotence.
-- Documenter les incidents et les décisions.
+Ne masque pas une panne par des retries illimités. Les budgets de temps doivent traverser toute la chaîne.
 
-## Erreurs fréquentes
-- Mesurer uniquement la disponibilité HTTP.
-- Ignorer les erreurs de qualité.
-- Ajouter un retry sans budget.
-- Ne pas distinguer incident technique et dérive du comportement AI.
-- Déployer sans procédure de rollback.
+## Dégradation
+Une fonctionnalité peut passer en recherche lexicale, modèle plus petit, réponse différée ou lecture seule selon le produit.
 
 ## Exercice
-Définis un mini runbook pour **Timeouts, fallbacks & idempotency** : métriques, seuils, alerte, fallback, rollback et données à conserver pour diagnostiquer un incident.
+Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
 
-:::indice
-Un système observable permet de répondre à trois questions : que s'est-il passé, pour qui, et depuis quand ?
-:::
-
-:::solution
-Le runbook doit relier métriques et actions. Il précise les seuils, les responsables, les mécanismes de dégradation et la procédure de retour à une version connue.
-:::
+### Solution
+Conserver les fonctions déterministes disponibles et retourner un état dégradé explicite ou router vers un modèle compatible.
 
 ## À retenir
-- La qualité AI est aussi une propriété opérationnelle.
-- Les fallbacks et limites doivent être conçus avant l'incident.
-- Un produit AI doit être mesurable de bout en bout.
+La résilience consiste à prévoir comment le système se comporte quand ses dépendances échouent.
