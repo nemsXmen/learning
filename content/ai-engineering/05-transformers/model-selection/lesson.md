@@ -57,8 +57,14 @@ Pour certaines tâches, un petit modèle spécialisé peut être plus adapté qu
 ## Exercice
 Une application reçoit 100 000 requêtes par jour. Quelles dimensions mesurer avant de choisir un modèle ?
 
-### Solution
+:::indice
+Relie le concept à la chaîne tokens → représentation → modèle → sortie.
+:::
+
+:::solution
 Mesurer qualité sur données réelles, coût total, p50/p95 de latence, taux d'erreur, limites de débit, consommation de tokens, exigences de confidentialité et capacité à respecter le contrat de sortie.
+
+:::
 
 ## À retenir
 Le choix de modèle est une décision d'ingénierie mesurable. Commence par les contraintes et les tâches réelles, puis benchmarke.
