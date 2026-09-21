@@ -4,13 +4,13 @@ title: "Efficient AI : quantification, batching et distillation"
 slug: efficient
 technology: ai-engineering
 level: advanced
-module: 14-advanced
+module: advanced
 order: 2
 estimatedMinutes: 80
 difficulty: 5
 xp: 180
 prerequisites: [ai-14-finetuning]
-skills: [ai-advanced]
+skills: [ai-finetuning]
 tags: [fine-tuning, inference, multimodal, optimization]
 ---
 
