@@ -4,7 +4,7 @@ title: "Attention et multi-head attention"
 slug: attention
 technology: ai-engineering
 level: intermediate
-module: 05-transformers
+module: transformers
 order: 2
 estimatedMinutes: 65
 difficulty: 4
