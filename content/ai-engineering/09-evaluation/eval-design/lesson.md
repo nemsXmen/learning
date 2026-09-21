@@ -4,7 +4,7 @@ title: "Concevoir un système d'évaluation"
 slug: eval-design
 technology: ai-engineering
 level: advanced
-module: 09-evaluation
+module: evaluation
 order: 1
 estimatedMinutes: 70
 difficulty: 4
