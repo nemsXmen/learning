@@ -9,7 +9,7 @@ order: 2
 estimatedMinutes: 55
 difficulty: 3
 xp: 120
-prerequisites: [ai-python, ai-data-modeling]
+prerequisites: [ai-python-fondamentaux, ai-data-modelisation]
 skills: [ai-data-quality]
 tags: [data-quality, preprocessing, leakage]
 ---
