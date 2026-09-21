@@ -1,75 +1,97 @@
 ---
-id: ai-01-fondations-git-reproductibilite
-title: "Git & reproducibility"
+id: ai-git-reproductibilite
+title: "Git, versions et reproductibilité des expériences AI"
 slug: git-reproductibilite
 technology: ai-engineering
-level: intermediate
-module: 01-fondations
+level: beginner
+module: fondations
 order: 3
-estimatedMinutes: 35
+estimatedMinutes: 40
 difficulty: 2
-xp: 100
+xp: 90
 prerequisites: []
-skills:
-  - ai-git
-tags:
-  - ai
-  - ai-engineering
+skills: [ai-git]
+tags: [git, reproducibility, experiments]
 ---
 
 ## Objectifs
 
-- Comprendre le problème avant de choisir un modèle ou un framework.
-- Savoir appliquer le concept dans un système reproductible.
-- Identifier les compromis de qualité, coût, latence, sécurité et maintenabilité.
+- rendre une expérience AI traçable ;
+- distinguer code, configuration, données et artefacts ;
+- utiliser commits, branches et tags ;
+- documenter les versions de datasets et modèles.
 
-## Introduction
+## Pourquoi Git ne suffit pas
 
-L'ingénierie AI ne consiste pas à appeler un modèle et à afficher sa réponse. Elle consiste à construire un système dont les entrées, transformations, dépendances, sorties et contrôles sont explicites.
+Git versionne très bien le code et les petits fichiers, mais pas automatiquement les gros datasets, checkpoints ou secrets.
 
-## Concept
+Pour reproduire un résultat, il faut retrouver code, données, modèle, configuration, dépendances et environnement.
 
-**Git & reproducibility** s'étudie avec une boucle d'ingénierie : définir le contrat d'entrée/sortie, établir une baseline, mesurer sur des cas représentatifs, isoler les variables, tester les erreurs et les cas adverses, puis déployer avec des limites et de l'observabilité.
+## Manifeste d'expérience
 
-Une bonne solution reste compréhensible lorsque les données, utilisateurs, modèles ou dépendances changent.
+Un run peut enregistrer :
 
-## Exemple
+```json
+{
+  "git_commit": "abc123",
+  "dataset": "support-v3",
+  "model": "model-x@2026-09-01",
+  "temperature": 0,
+  "eval_set": "gold-v2"
+}
+```
 
-Un composant applicatif devrait dépendre d'une interface stable plutôt que d'un fournisseur concret. Par exemple, une fonction de classification peut recevoir un texte, valider qu'il n'est pas vide, appeler un modèle injecté, puis retourner un résultat normalisé avec label et confiance. Cette séparation rend le composant testable et permet de remplacer le modèle.
+## Commits utiles
 
-## Méthode professionnelle
+```bash
+git status
+git diff
+git add src/eval.py tests/test_eval.py
+git commit -m "feat: add retrieval evaluation"
+git log --oneline --decorate -10
+```
 
-Pour chaque expérimentation, conserve la version du code, l'identifiant du dataset, le modèle et sa version, la configuration, les métriques, la latence, le coût approximatif et les erreurs observées. Pour une application LLM, versionne aussi prompts, schémas de sortie, outils autorisés et règles de sécurité.
+Un commit atomique représente un changement compréhensible et réversible.
 
-## Erreurs fréquentes
+## Expériences
 
-- Choisir un modèle avant de définir la métrique.
-- Confondre une réponse plausible avec une réponse correcte.
-- Tester uniquement des exemples faciles.
-- Mélanger données de développement et données d'évaluation.
-- Donner à un agent des permissions supérieures à son besoin.
-- Oublier les timeouts, limites de coût et comportements de secours.
+Une branche isole une modification :
+
+```bash
+git switch -c feat/reranker
+```
+
+Une branche Git n'est pas une version de modèle. Le code et les artefacts ML ont leurs propres identifiants.
+
+## Reproductibilité
+
+Même code ne signifie pas toujours résultat identique. Les causes possibles incluent seed, version de bibliothèque, matériel, ordre des données, précision numérique et modèle externe.
+
+Il faut enregistrer les facteurs importants et mesurer la variabilité.
+
+## Secrets
+
+Ne jamais committer une clé API ou un mot de passe. Si un secret a fuité, le retirer du dernier fichier ne suffit pas : il faut le révoquer et traiter l'historique selon la procédure du projet.
 
 ## Exercice
 
-Construis une petite expérience sur **Git & reproducibility**.
+Définis un manifeste minimal pour une évaluation RAG.
 
-1. Définis une entrée et une sortie.
-2. Écris trois cas normaux et trois cas difficiles.
-3. Choisis une métrique observable.
-4. Ajoute au moins une validation de sécurité.
-5. Note ce qui pourrait changer entre deux exécutions.
+### Solution
 
-:::indice
-Si tu ne peux pas expliquer comment détecter une régression, ton expérimentation n'est pas encore suffisamment définie.
-:::
-
-:::solution
-Une solution acceptable possède un contrat clair, un dataset de référence, une métrique calculable et une procédure de comparaison entre deux versions. Elle sépare également développement et évaluation.
-:::
+```json
+{
+  "git_commit": "abc123",
+  "dataset_version": "docs-v4",
+  "embedding_model": "embed-v2",
+  "generator_model": "llm-v7",
+  "retrieval_top_k": 8,
+  "reranker": "reranker-v1",
+  "eval_set": "gold-v3",
+  "environment": "python-3.12"
+}
+```
 
 ## À retenir
 
-- L'AI engineering est d'abord de l'ingénierie de systèmes.
-- Les contrats, tests, métriques et versions rendent les expériences reproductibles.
-- Qualité, coût, latence et sécurité doivent être considérés ensemble.
+Un résultat AI n'est exploitable professionnellement que si son origine peut être reconstruite. Git est une pièce du système de traçabilité, pas le système complet.
