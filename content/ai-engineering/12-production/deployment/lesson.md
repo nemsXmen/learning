@@ -10,8 +10,8 @@ estimatedMinutes: 75
 difficulty: 4
 xp: 160
 prerequisites: [ai-11-serving]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-production]
+tags: [production, reliability, observability]
 ---
 
 ## Objectifs
@@ -27,7 +27,7 @@ web -> API -> queue -> workers
        database   model service
 ```
 
-Sépare les responsabilités pour pouvoir scaler chaque composant selon sa charge.
+Sépare les responsabilités pour scaler chaque composant selon sa charge.
 
 ## Reproductibilité
 Pin les dépendances, versionne les artefacts et garde la configuration hors du code.
@@ -36,10 +36,10 @@ Pin les dépendances, versionne les artefacts et garde la configuration hors du 
 Une release doit pouvoir revenir à une version connue sans perdre les données compatibles.
 
 ## Exercice
-Une nouvelle version du modèle augmente les erreurs après déploiement. Quelle procédure ?
+Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
 
 ### Solution
-Stopper ou réduire le trafic, comparer métriques, conserver l'ancienne version et effectuer un rollback si le seuil critique est dépassé.
+Réduire le trafic, comparer les métriques, conserver l'ancienne version et effectuer un rollback si nécessaire.
 
 ## À retenir
 Un déploiement IA doit être réversible et observable.
