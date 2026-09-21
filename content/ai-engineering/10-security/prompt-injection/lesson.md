@@ -4,7 +4,7 @@ title: "Prompt injection et attaques indirectes"
 slug: prompt-injection
 technology: ai-engineering
 level: advanced
-module: 10-security
+module: security
 order: 2
 estimatedMinutes: 75
 difficulty: 5
