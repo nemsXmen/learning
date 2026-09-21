@@ -38,3 +38,32 @@ Le tableau d'évaluation doit intégrer le coût par requête ou par tâche, ave
 
 ## À retenir
 Aucune métrique unique ne résume un système LLM.
+
+
+## Introduction
+
+Les métriques doivent correspondre au risque réel du système.
+
+## Concept
+
+Exact match, précision, rappel, groundedness, latence et coût ne mesurent pas la même chose.
+
+## Exemple
+
+Un système de classification sensible peut privilégier le rappel alors qu'une autre tâche privilégie la précision.
+
+## Comment ça fonctionne
+
+outputs → metrics → segments → thresholds
+
+## Questions d'entretien
+
+- Pourquoi segmenter les métriques ?
+
+  :::indice
+  Une bonne métrique doit être reliée à une décision.
+  :::
+
+  :::reponse
+  Une moyenne peut masquer une régression importante sur une population ou un type de requête.
+  :::
