@@ -4,7 +4,7 @@ title: "Déploiement d'applications IA"
 slug: deployment
 technology: ai-engineering
 level: advanced
-module: 12-production
+module: production
 order: 1
 estimatedMinutes: 75
 difficulty: 4
