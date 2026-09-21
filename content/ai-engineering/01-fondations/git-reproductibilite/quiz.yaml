@@ -1,0 +1,37 @@
+id: ai-01-fondations-git-reproductibilite-quiz
+kind: QUIZ
+questions:
+  - id: ai-01-fondations-git-reproductibilite-q1
+    type: multiple_choice
+    difficulty: 1
+    question: "Quel réflexe doit précéder une optimisation AI ?"
+    options:
+      - "Définir le contrat et la métrique"
+      - "Choisir le modèle le plus grand"
+      - "Ajouter davantage de frameworks"
+      - "Augmenter la température"
+    answer: [0]
+    explanation: "Sans contrat ni métrique, une optimisation ne peut pas être évaluée correctement."
+    skills:
+      - ai-git
+  - id: ai-01-fondations-git-reproductibilite-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quelles informations améliorent la reproductibilité ?"
+    options:
+      - "Version du code"
+      - "Version du dataset"
+      - "Configuration du modèle"
+      - "La couleur de l'interface"
+    answer: [0, 1, 2]
+    explanation: "Code, données et configuration permettent de comparer les exécutions."
+    skills:
+      - ai-git
+  - id: ai-01-fondations-git-reproductibilite-q3
+    type: true_false
+    difficulty: 1
+    question: "Une réponse plausible suffit à démontrer qu'une fonctionnalité AI est correcte."
+    answer: false
+    explanation: "La plausibilité n'est pas une métrique de correction."
+    skills:
+      - ai-git
