@@ -4,7 +4,7 @@ title: "Évaluation RAG et groundedness"
 slug: rag-eval
 technology: ai-engineering
 level: intermediate
-module: 07-rag
+module: rag
 order: 4
 estimatedMinutes: 75
 difficulty: 5
