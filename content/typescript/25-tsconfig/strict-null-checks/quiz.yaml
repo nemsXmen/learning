@@ -1,0 +1,64 @@
+id: typescript-25-strict-null-checks-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-strict-null-checks-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Avec strictNullChecks, null est assignable à string :
+    options:
+      - Oui toujours
+      - Non (sauf string | null)
+      - Uniquement en mode non-strict
+      - Uniquement pour les arrays
+    answer:
+      - 1
+    explanation: |
+      null doit être dans l’union.
+    skills:
+      - tsconfig
+  - id: typescript-25-strict-null-checks-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      strictNullChecks fait partie de strict.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-strict-null-checks-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour utiliser une string | null, on doit souvent :
+    options:
+      - as any
+      - Narrower (check null)
+      - Désactiver TypeScript
+      - Utiliser un enum
+    answer:
+      - 1
+    explanation: |
+      Affiner le type.
+    skills:
+      - tsconfig
+  - id: typescript-25-strict-null-checks-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Abuser de ! pour contourner strictNullChecks :
+    options:
+      - Est recommandé
+      - Est un anti-pattern
+      - Active plus de checks
+      - Est impossible
+    answer:
+      - 1
+    explanation: |
+      Fausse sécurité.
+    skills:
+      - tsconfig

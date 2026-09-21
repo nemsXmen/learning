@@ -1,0 +1,64 @@
+id: typescript-38-factory-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-factory-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une Factory sert surtout à :
+    options:
+      - Styliser l’UI
+      - Encapsuler la création d’objets
+      - Remplacer SQL
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Création découplée.
+    skills:
+      - patterns
+  - id: typescript-38-factory-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le client devrait dépendre de l’interface produit, pas du concret.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-factory-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un switch de factory non exhaustif risque de :
+    options:
+      - Rien
+      - Oublier un cas de l’union
+      - Activer strict
+      - Remplacer DI
+    answer:
+      - 1
+    explanation: |
+      never / exhaustiveness.
+    skills:
+      - patterns
+  - id: typescript-38-factory-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      createNotifier("email" | "sms") retourne :
+    options:
+      - any
+      - Notifier (interface)
+      - Uniquement string
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Produit typé.
+    skills:
+      - patterns

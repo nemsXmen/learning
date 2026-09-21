@@ -1,0 +1,64 @@
+id: typescript-34-dto-plus-schema-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-dto-plus-schema-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      class-validator s’utilise souvent avec :
+    options:
+      - Uniquement React
+      - Des classes DTO + décorateurs
+      - Uniquement du CSS
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Décorateurs de validation.
+    skills:
+      - validation
+  - id: typescript-34-dto-plus-schema-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un DTO validé peut être mappé vers un modèle domaine.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-dto-plus-schema-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Utiliser le DTO comme entity DB :
+    options:
+      - Est toujours idéal
+      - Coupler transport et persistance (risqué)
+      - Active Zod auto
+      - Est interdit par TS
+    answer:
+      - 1
+    explanation: |
+      Séparer les couches.
+    skills:
+      - validation
+  - id: typescript-34-dto-plus-schema-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Standardiser sur une lib de validation :
+    options:
+      - Nuit à l’équipe
+      - Améliore la cohérence
+      - Est impossible
+      - Remplace TypeScript
+    answer:
+      - 1
+    explanation: |
+      Conventions.
+    skills:
+      - validation

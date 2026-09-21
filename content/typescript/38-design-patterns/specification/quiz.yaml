@@ -1,0 +1,64 @@
+id: typescript-38-specification-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-specification-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      isSatisfiedBy retourne :
+    options:
+      - void
+      - boolean
+      - Promise only always
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Règle booléenne.
+    skills:
+      - patterns
+  - id: typescript-38-specification-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les specifications peuvent se composer (and/or/not).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-specification-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une spec pure ne devrait pas :
+    options:
+      - Lire des champs du candidat
+      - Muter le candidat ou faire de l’IO cachée
+      - Retourner boolean
+      - Être testée
+    answer:
+      - 1
+    explanation: |
+      Prévisibilité.
+    skills:
+      - patterns
+  - id: typescript-38-specification-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Specification<T> est générique pour :
+    options:
+      - Fixer T = any
+      - Appliquer la règle à un type de candidat précis
+      - Remplacer TypeScript
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Candidat typé.
+    skills:
+      - patterns

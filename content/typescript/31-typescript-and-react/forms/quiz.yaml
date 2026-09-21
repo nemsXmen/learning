@@ -1,0 +1,64 @@
+id: typescript-31-forms-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-forms-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      useState<FormState> fixe :
+    options:
+      - Le CSS
+      - La forme de l’état du formulaire
+      - Le routeur
+      - Le tsconfig
+    answer:
+      - 1
+    explanation: |
+      Générique d’état.
+    skills:
+      - react
+  - id: typescript-31-forms-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les inputs contrôlés utilisent value + onChange typés.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-forms-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      React Hook Form + Zod apporte :
+    options:
+      - Uniquement du CSS
+      - Validation runtime + types
+      - Un serveur HTTP
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Stack form typée.
+    skills:
+      - react
+  - id: typescript-31-forms-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Stocker un age number depuis un input text demande souvent :
+    options:
+      - Rien
+      - Une conversion / validation Number
+      - Un enum DOM
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      value est string.
+    skills:
+      - react

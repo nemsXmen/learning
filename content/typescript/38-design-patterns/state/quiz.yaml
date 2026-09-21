@@ -1,0 +1,64 @@
+id: typescript-38-state-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-state-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une union "draft" | "placed" modélise :
+    options:
+      - Des styles
+      - Des états légaux
+      - Des buffers
+      - Des routes CSS
+    answer:
+      - 1
+    explanation: |
+      State space.
+    skills:
+      - patterns
+  - id: typescript-38-state-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les transitions devraient valider l’état de départ.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-state-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Status en string libre :
+    options:
+      - Est plus sûr
+      - Autorise des états invalides
+      - Active XState auto
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Préférer unions.
+    skills:
+      - patterns
+  - id: typescript-38-state-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      XState est :
+    options:
+      - Un ORM
+      - Une lib de state machines (souvent typée)
+      - Un bundler
+      - Un linter CSS
+    answer:
+      - 1
+    explanation: |
+      FSM tooling.
+    skills:
+      - patterns

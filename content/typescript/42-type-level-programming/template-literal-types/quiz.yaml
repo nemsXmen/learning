@@ -1,0 +1,64 @@
+id: typescript-42-template-literal-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-template-literal-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `on${Capitalize<"click">}` produit :
+    options:
+      - onclick
+      - onClick
+      - never
+      - number
+    answer:
+      - 1
+    explanation: |
+      Template + Capitalize.
+    skills:
+      - type-level
+  - id: typescript-42-template-literal-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les template literal types travaillent au niveau des types string.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-template-literal-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une union dans un template :
+    options:
+      - Est interdite
+      - Se distribue en union de résultats
+      - Devient always string
+      - Active runtime
+    answer:
+      - 1
+    explanation: |
+      Combinaisons.
+    skills:
+      - type-level
+  - id: typescript-42-template-literal-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Capitalize / Uppercase sont :
+    options:
+      - Des fonctions runtime obligatoires
+      - Des intrinsic string type utilities
+      - Des décorateurs Nest
+      - Des middleware
+    answer:
+      - 1
+    explanation: |
+      Built-in type helpers.
+    skills:
+      - type-level

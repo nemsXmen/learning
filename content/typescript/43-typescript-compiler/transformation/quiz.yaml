@@ -1,0 +1,64 @@
+id: typescript-43-transformation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-transformation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les transformations servent surtout à :
+    options:
+      - Exécuter les tests
+      - Adapter l’AST à la cible d’émission
+      - Styliser l’UI
+      - Créer une DB
+    answer:
+      - 1
+    explanation: |
+      Downlevel / JSX…
+    skills:
+      - compiler
+  - id: typescript-43-transformation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’option target influence les transforms émis.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-transformation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un custom transformer peut :
+    options:
+      - Uniquement changer le CSS
+      - Réécrire des nœuds AST avant/après l’emit officiel
+      - Remplacer Node
+      - Être interdit toujours
+    answer:
+      - 1
+    explanation: |
+      API transformers.
+    skills:
+      - compiler
+  - id: typescript-43-transformation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      JSX → createElement est un exemple de :
+    options:
+      - Type error
+      - Transformation
+      - Runtime Node obligatoire
+      - Migration SQL
+    answer:
+      - 1
+    explanation: |
+      Transform JSX.
+    skills:
+      - compiler

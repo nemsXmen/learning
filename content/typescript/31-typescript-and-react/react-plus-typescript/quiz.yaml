@@ -1,0 +1,64 @@
+id: typescript-31-react-plus-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-react-plus-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les composants React TypeScript utilisent souvent l’extension :
+    options:
+      - .css
+      - .tsx
+      - .json
+      - .d.ts uniquement
+    answer:
+      - 1
+    explanation: |
+      JSX + TS.
+    skills:
+      - react
+  - id: typescript-31-react-plus-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      @types/react fournit les types du package React.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui (ou types intégrés selon version).
+    skills:
+      - react
+  - id: typescript-31-react-plus-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’option tsconfig pour JSX moderne est souvent :
+    options:
+      - '"jsx": "preserve" only always'
+      - '"jsx": "react-jsx"'
+      - '"jsx": false'
+      - '"jsx": "node"'
+    answer:
+      - 1
+    explanation: |
+      Transform automatique.
+    skills:
+      - react
+  - id: typescript-31-react-plus-typescript-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Vite template react-ts sert à :
+    options:
+      - Backend only
+      - Bootstrap une app React typée
+      - Remplacer npm
+      - Compiler du CSS uniquement
+    answer:
+      - 1
+    explanation: |
+      Starter front.
+    skills:
+      - react

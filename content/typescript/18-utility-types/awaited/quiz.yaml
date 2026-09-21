@@ -1,0 +1,64 @@
+id: typescript-18-awaited-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-awaited-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Awaited<Promise<string>> produit :
+    options:
+      - Promise<string>
+      - string
+      - any
+      - never
+    answer:
+      - 1
+    explanation: |
+      Unwrap de la Promise.
+    skills:
+      - utility-types
+  - id: typescript-18-awaited-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Awaited unwrap aussi les Promises imbriquées.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, récursivement.
+    skills:
+      - utility-types
+  - id: typescript-18-awaited-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour une fonction async, le type de la valeur résolue est :
+    options:
+      - ReturnType uniquement
+      - Awaited<ReturnType<typeof fn>>
+      - Parameters<typeof fn>
+      - InstanceType
+    answer:
+      - 1
+    explanation: |
+      Combo classique.
+    skills:
+      - utility-types
+  - id: typescript-18-awaited-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Awaited<string> vaut :
+    options:
+      - Promise<string>
+      - string
+      - never
+      - any
+    answer:
+      - 1
+    explanation: |
+      Non-thenable → inchangé.
+    skills:
+      - utility-types

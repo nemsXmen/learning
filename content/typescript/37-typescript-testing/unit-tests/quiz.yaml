@@ -1,0 +1,64 @@
+id: typescript-37-unit-tests-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-unit-tests-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un unit test cible surtout :
+    options:
+      - Toute la prod E2E
+      - Une unité isolée (fonction/classe)
+      - Uniquement le CSS
+      - Le DNS
+    answer:
+      - 1
+    explanation: |
+      Isolation.
+    skills:
+      - testing
+  - id: typescript-37-unit-tests-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les tests TypeScript profitent de l’inférence et du type-check.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-unit-tests-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Utiliser any partout dans les tests :
+    options:
+      - Est idéal
+      - Réduit la valeur du typage
+      - Active Vitest
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Garder les types.
+    skills:
+      - testing
+  - id: typescript-37-unit-tests-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Préférer tester :
+    options:
+      - Les détails privés d’implémentation
+      - Le comportement public observable
+      - Uniquement les types never
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Résilience aux refactors.
+    skills:
+      - testing

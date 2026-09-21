@@ -1,0 +1,64 @@
+id: typescript-23-types-declares-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-types-declares-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans un .d.ts, on peut exporter :
+    options:
+      - Uniquement des fonctions
+      - Interfaces, types, enums, classes, fonctions…
+      - Uniquement du CSS
+      - Uniquement des tests
+    answer:
+      - 1
+    explanation: |
+      Toute la surface de types/valeurs déclarée.
+    skills:
+      - declaration-files
+  - id: typescript-23-types-declares-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les interfaces exportées d’un .d.ts sont utilisables par les consommateurs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-types-declares-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un enum classique peut avoir une présence runtime. Dans un .d.ts pur :
+    options:
+      - C’est toujours transparent
+      - Il faut s’assurer que l’implémentation JS correspond si l’enum est utilisé comme valeur
+      - Les enums sont interdits
+      - TypeScript génère toujours le runtime
+    answer:
+      - 1
+    explanation: |
+      Cohérence types / JS.
+    skills:
+      - declaration-files
+  - id: typescript-23-types-declares-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour un pure type sans runtime, on préfère souvent :
+    options:
+      - enum numérique
+      - type ou interface
+      - class avec méthodes
+      - var globale
+    answer:
+      - 1
+    explanation: |
+      Effacés à la compile.
+    skills:
+      - declaration-files

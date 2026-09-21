@@ -1,0 +1,64 @@
+id: typescript-20-infer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-infer-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      infer s’utilise uniquement dans :
+    options:
+      - Les interfaces
+      - Les conditional types
+      - Les enums
+      - Les classes
+    answer:
+      - 1
+    explanation: |
+      Contexte obligatoire.
+    skills:
+      - conditional-types
+  - id: typescript-20-infer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      ReturnType s’appuie sur infer.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - conditional-types
+  - id: typescript-20-infer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T extends Promise<infer U> ? U : T` extrait :
+    options:
+      - La Promise elle-même
+      - Le type résolu de la Promise
+      - never toujours
+      - any
+    answer:
+      - 1
+    explanation: |
+      Unwrap Promise.
+    skills:
+      - conditional-types
+  - id: typescript-20-infer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      infer permet de :
+    options:
+      - Exécuter du code
+      - Capturer une partie d’un type
+      - Créer des classes
+      - Remplacer keyof
+    answer:
+      - 1
+    explanation: |
+      Variable de type locale.
+    skills:
+      - conditional-types

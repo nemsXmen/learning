@@ -1,0 +1,64 @@
+id: typescript-34-compile-time-vs-runtime-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-compile-time-vs-runtime-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les types TypeScript à runtime :
+    options:
+      - Sont toujours présents
+      - Sont effacés
+      - Deviennent des classes auto
+      - Valident le JSON
+    answer:
+      - 1
+    explanation: |
+      Type erasure.
+    skills:
+      - validation
+  - id: typescript-34-compile-time-vs-runtime-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Typage et validation runtime sont complémentaires.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-compile-time-vs-runtime-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le compilateur TypeScript voit :
+    options:
+      - Toutes les données réseau réelles
+      - Le code source et ses annotations
+      - Uniquement la prod
+      - Les secrets chiffrés
+    answer:
+      - 1
+    explanation: |
+      Analyse statique.
+    skills:
+      - validation
+  - id: typescript-34-compile-time-vs-runtime-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour sécuriser une frontière API il faut :
+    options:
+      - Uniquement as T
+      - De la validation runtime
+      - Désactiver strict
+      - Uniquement ESLint CSS
+    answer:
+      - 1
+    explanation: |
+      Checks à l’exécution.
+    skills:
+      - validation

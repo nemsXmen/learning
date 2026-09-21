@@ -1,0 +1,64 @@
+id: typescript-21-uppercase-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-uppercase-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Uppercase<"hello"> produit :
+    options:
+      - hello
+      - HELLO
+      - string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Majuscules.
+    skills:
+      - template-literal-types
+  - id: typescript-21-uppercase-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Uppercase se distribue sur les unions de littéraux.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-uppercase-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Uppercase est un :
+    options:
+      - Runtime helper
+      - Utility type intrinsèque
+      - Décorateur
+      - Enum
+    answer:
+      - 1
+    explanation: |
+      Fourni par TypeScript.
+    skills:
+      - template-literal-types
+  - id: typescript-21-uppercase-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Uppercase<string> (string large) donne :
+    options:
+      - never
+      - string
+      - STRING
+      - any
+    answer:
+      - 1
+    explanation: |
+      Pas de littéral à transformer.
+    skills:
+      - template-literal-types

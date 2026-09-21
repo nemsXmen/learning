@@ -1,0 +1,64 @@
+id: typescript-39-entities-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-entities-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une entity de domaine a surtout :
+    options:
+      - Une identité et des invariants
+      - Uniquement des styles CSS
+      - Des routes HTTP
+      - process.env
+    answer:
+      - 0
+    explanation: |
+      Cœur métier.
+    skills:
+      - architecture
+  - id: typescript-39-entities-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Entity domaine et row ORM peuvent être distinctes.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-entities-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des setters publics sur tous les champs :
+    options:
+      - Protègent les invariants
+      - Risquent de casser les invariants
+      - Sont imposés
+      - Activent DI
+    answer:
+      - 1
+    explanation: |
+      Méthodes métier préférables.
+    skills:
+      - architecture
+  - id: typescript-39-entities-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Order.create est une :
+    options:
+      - Route HTTP
+      - Factory d’entity avec validation
+      - Migration SQL
+      - Config Vite
+    answer:
+      - 1
+    explanation: |
+      Construction valide.
+    skills:
+      - architecture

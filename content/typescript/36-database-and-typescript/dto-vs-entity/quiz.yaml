@@ -1,0 +1,64 @@
+id: typescript-36-dto-vs-entity-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-dto-vs-entity-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une entity représente surtout :
+    options:
+      - Le contrat HTTP public
+      - La forme de persistance
+      - Un style CSS
+      - Un middleware
+    answer:
+      - 1
+    explanation: |
+      DB layer.
+    skills:
+      - database
+  - id: typescript-36-dto-vs-entity-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un DTO public ne devrait pas exposer passwordHash.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-dto-vs-entity-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      return entity dans un controller :
+    options:
+      - Est idéal
+      - Risque de fuite de champs
+      - Active Zod
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Mapper vers DTO.
+    skills:
+      - database
+  - id: typescript-36-dto-vs-entity-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      CreateUserDto vs UserEntity :
+    options:
+      - Sont toujours identiques
+      - Diffèrent (password clair vs hash, pas d’id…)
+      - Sont des enums
+      - Remplacent SQL
+    answer:
+      - 1
+    explanation: |
+      Cycles de vie différents.
+    skills:
+      - database

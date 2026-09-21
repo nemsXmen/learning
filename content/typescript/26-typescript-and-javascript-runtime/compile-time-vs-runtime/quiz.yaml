@@ -1,0 +1,64 @@
+id: typescript-26-compile-time-vs-runtime-quiz
+kind: QUIZ
+questions:
+  - id: typescript-26-compile-time-vs-runtime-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les types TypeScript existent :
+    options:
+      - À runtime dans le moteur JS
+      - Principalement à la compilation
+      - Uniquement dans le DOM
+      - Dans la base de données
+    answer:
+      - 1
+    explanation: |
+      Effacés à l’émission.
+    skills:
+      - runtime
+  - id: typescript-26-compile-time-vs-runtime-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une erreur de typage TS est une exception runtime.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Compile-time vs runtime.
+    skills:
+      - runtime
+  - id: typescript-26-compile-time-vs-runtime-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      as User sur un JSON réseau :
+    options:
+      - Valide les champs à runtime
+      - N’ajoute aucune validation runtime
+      - Est impossible
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Assertion pure.
+    skills:
+      - runtime
+  - id: typescript-26-compile-time-vs-runtime-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le code exécuté par Node/le navigateur est :
+    options:
+      - Les types TS
+      - Le JavaScript émis
+      - Les fichiers .d.ts
+      - Le tsconfig
+    answer:
+      - 1
+    explanation: |
+      Sortie du compilateur / bundler.
+    skills:
+      - runtime

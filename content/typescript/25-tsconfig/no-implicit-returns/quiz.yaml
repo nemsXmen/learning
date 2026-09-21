@@ -1,0 +1,64 @@
+id: typescript-25-no-implicit-returns-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-no-implicit-returns-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      noImplicitReturns exige :
+    options:
+      - Aucun return
+      - Un return sur tous les chemins (si type de retour)
+      - Uniquement des async
+      - Des any
+    answer:
+      - 1
+    explanation: |
+      Exhaustivité des returns.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-implicit-returns-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un if sans else peut déclencher noImplicitReturns.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui si le chemin restant ne retourne pas.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-implicit-returns-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Cette option améliore :
+    options:
+      - Uniquement le style
+      - La fiabilité du control flow des fonctions
+      - La vitesse runtime
+      - Les imports
+    answer:
+      - 1
+    explanation: |
+      Moins de undefined surprises.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-implicit-returns-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      noImplicitReturns est :
+    options:
+      - Toujours dans strict
+      - Un flag séparé utile
+      - Déprécié
+      - Identique à noImplicitAny
+    answer:
+      - 1
+    explanation: |
+      Souvent activé en plus de strict.
+    skills:
+      - tsconfig

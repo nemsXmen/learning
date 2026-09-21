@@ -1,0 +1,64 @@
+id: typescript-31-generic-components-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-generic-components-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      function List<T>({ items }: { items: T[] }) permet de :
+    options:
+      - Fixer T = any seulement
+      - Préserver le type des éléments
+      - Désactiver React
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Générique de composant.
+    skills:
+      - react
+  - id: typescript-31-generic-components-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      T est souvent inféré depuis la prop items.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-generic-components-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      renderItem: (item: T) => ReactNode garantit :
+    options:
+      - item en any
+      - item du même type que les éléments de items
+      - Un serveur
+      - Un enum DOM
+    answer:
+      - 1
+    explanation: |
+      Lien générique.
+    skills:
+      - react
+  - id: typescript-31-generic-components-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les composants génériques sont utiles pour :
+    options:
+      - Uniquement le styling
+      - List / Select / Table réutilisables
+      - Remplacer TypeScript
+      - Configurer npm
+    answer:
+      - 1
+    explanation: |
+      UI data-driven.
+    skills:
+      - react

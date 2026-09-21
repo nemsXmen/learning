@@ -1,0 +1,64 @@
+id: typescript-32-server-components-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-server-components-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Par défaut dans app/, un composant est :
+    options:
+      - Client
+      - Server Component
+      - Native mobile
+      - Sans typage
+    answer:
+      - 1
+    explanation: |
+      RSC default.
+    skills:
+      - nextjs
+  - id: typescript-32-server-components-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un Server Component peut être une async function.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-server-components-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      useState dans un Server Component :
+    options:
+      - Est recommandé
+      - N’est pas supporté
+      - Active strict
+      - Est obligatoire
+    answer:
+      - 1
+    explanation: |
+      Hooks client interdits.
+    skills:
+      - nextjs
+  - id: typescript-32-server-components-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les Server Components sont idéaux pour :
+    options:
+      - Uniquement les animations CSS
+      - Le data fetching serveur typé
+      - Remplacer TypeScript
+      - process.browser only
+    answer:
+      - 1
+    explanation: |
+      Accès data côté serveur.
+    skills:
+      - nextjs

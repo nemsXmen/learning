@@ -1,0 +1,64 @@
+id: typescript-25-no-unused-locals-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-no-unused-locals-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      noUnusedLocals signale :
+    options:
+      - Les imports CSS
+      - Les variables locales non utilisées
+      - Les types trop stricts
+      - Les modules manquants
+    answer:
+      - 1
+    explanation: |
+      Code mort local.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unused-locals-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Cette option aide à garder le code propre.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unused-locals-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      noUnusedLocals est :
+    options:
+      - Obligatoire dans strict
+      - Un flag optionnel utile
+      - Déprécié
+      - Identique à strictNullChecks
+    answer:
+      - 1
+    explanation: |
+      Souvent activé en plus.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unused-locals-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      On la combine souvent avec :
+    options:
+      - skipLibCheck uniquement
+      - noUnusedParameters
+      - target ES3 forcé
+      - Désactiver les modules
+    answer:
+      - 1
+    explanation: |
+      Hygiène locals + params.
+    skills:
+      - tsconfig

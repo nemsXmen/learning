@@ -1,0 +1,64 @@
+id: typescript-18-instancetype-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-instancetype-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      InstanceType extrait :
+    options:
+      - Les paramètres du constructeur
+      - Le type d’instance d’un constructeur
+      - Le type de retour d’une fonction
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Type de l’objet new.
+    skills:
+      - utility-types
+  - id: typescript-18-instancetype-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      InstanceType se couple bien avec ConstructorParameters.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, pour les factories.
+    skills:
+      - utility-types
+  - id: typescript-18-instancetype-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      InstanceType<typeof User> pour class User {} vaut :
+    options:
+      - typeof User
+      - User (type d’instance)
+      - any
+      - never
+    answer:
+      - 1
+    explanation: |
+      Type des instances.
+    skills:
+      - utility-types
+  - id: typescript-18-instancetype-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      InstanceType attend :
+    options:
+      - Une instance
+      - Un type constructeur
+      - Un string
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      new (...args) => ...
+    skills:
+      - utility-types

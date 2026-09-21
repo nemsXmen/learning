@@ -1,0 +1,64 @@
+id: typescript-19-transformation-de-dto-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-transformation-de-dto-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour retirer password d’un User public, on utilise souvent :
+    options:
+      - Partial
+      - Omit
+      - Record
+      - Awaited
+    answer:
+      - 1
+    explanation: |
+      Exclusion de clés sensibles.
+    skills:
+      - mapped-types
+  - id: typescript-19-transformation-de-dto-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une source de vérité unique + transformations évite la duplication des DTOs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-transformation-de-dto-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      DeepPartial est adapté pour :
+    options:
+      - Un DTO de création complet
+      - Un payload de patch imbriqué
+      - Uniquement les enums
+      - Remplacer Omit
+    answer:
+      - 1
+    explanation: |
+      Updates partiels profonds.
+    skills:
+      - mapped-types
+  - id: typescript-19-transformation-de-dto-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le risque de dupliquer manuellement les DTOs est :
+    options:
+      - Aucun
+      - Divergence des champs et oublis de sécurité
+      - Meilleure performance
+      - Types plus précis automatiquement
+    answer:
+      - 1
+    explanation: |
+      Incohérences et fuites possibles.
+    skills:
+      - mapped-types

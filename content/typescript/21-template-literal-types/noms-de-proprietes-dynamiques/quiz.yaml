@@ -1,0 +1,64 @@
+id: typescript-21-noms-de-proprietes-dynamiques-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-noms-de-proprietes-dynamiques-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour générer getName à partir de name, on utilise :
+    options:
+      - Uniquement keyof
+      - Key remapping + template literal + Capitalize
+      - Un enum
+      - any
+    answer:
+      - 1
+    explanation: |
+      Pattern standard.
+    skills:
+      - template-literal-types
+  - id: typescript-21-noms-de-proprietes-dynamiques-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Capitalize attend souvent string & K car K peut être number | symbol.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-noms-de-proprietes-dynamiques-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le pattern onX pour des events s’appuie sur :
+    options:
+      - Partial uniquement
+      - Template literals + mapped types
+      - Uniquement des classes
+      - Exclude
+    answer:
+      - 1
+    explanation: |
+      Même famille de techniques.
+    skills:
+      - template-literal-types
+  - id: typescript-21-noms-de-proprietes-dynamiques-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Key remapping utilise le mot-clé :
+    options:
+      - extends
+      - as
+      - infer
+      - implements
+    answer:
+      - 1
+    explanation: |
+      as NewKey.
+    skills:
+      - template-literal-types

@@ -1,0 +1,64 @@
+id: typescript-37-e2e-tests-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-e2e-tests-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un test E2E exerce souvent :
+    options:
+      - Une fonction pure seule
+      - Le système via UI/API comme un utilisateur
+      - Uniquement tsc
+      - Un fichier CSS isolé
+    answer:
+      - 1
+    explanation: |
+      Bout en bout.
+    skills:
+      - testing
+  - id: typescript-37-e2e-tests-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Playwright fournit des APIs typées pour le browser.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-e2e-tests-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Trop d’E2E peut entraîner :
+    options:
+      - Une suite plus rapide toujours
+      - Lenteur et flakiness
+      - Moins de bugs magiquement
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Coût élevé.
+    skills:
+      - testing
+  - id: typescript-37-e2e-tests-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans la pyramide de tests, les E2E sont :
+    options:
+      - La base la plus large
+      - Le sommet (peu nombreux)
+      - Interdits en TS
+      - Uniquement type-level
+    answer:
+      - 1
+    explanation: |
+      Stratégie classique.
+    skills:
+      - testing

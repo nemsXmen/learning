@@ -1,0 +1,64 @@
+id: typescript-24-default-exports-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-default-exports-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Combien de default exports par module ?
+    options:
+      - Illimité
+      - Un maximum
+      - Zéro obligatoire
+      - Deux
+    answer:
+      - 1
+    explanation: |
+      Au plus un.
+    skills:
+      - modules
+  - id: typescript-24-default-exports-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’import default s’écrit sans accolades : import X from "./mod".
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - modules
+  - id: typescript-24-default-exports-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un inconvénient possible des default exports est :
+    options:
+      - Ils sont interdits en TS
+      - Refactors / nommage moins guidés que les named
+      - Ils n’existent pas en ESM
+      - Ils forcent any
+    answer:
+      - 1
+    explanation: |
+      Le nom local est libre.
+    skills:
+      - modules
+  - id: typescript-24-default-exports-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour une lib d’utilitaires, on préfère souvent :
+    options:
+      - Uniquement des defaults
+      - Des named exports
+      - Aucun export
+      - Des globals
+    answer:
+      - 1
+    explanation: |
+      API explicite.
+    skills:
+      - modules

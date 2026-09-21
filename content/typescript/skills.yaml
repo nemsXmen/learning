@@ -199,3 +199,27 @@ skills:
     name: Projets TypeScript
     importance: 5
     requires: [production]
+  - id: generics
+    name: Generics TypeScript
+    importance: 5
+    requires: [generics-fundamentals]
+  - id: api
+    name: APIs TypeScript
+    importance: 4
+    requires: [type-safe-apis]
+  - id: architecture
+    name: Architecture TypeScript
+    importance: 5
+    requires: [clean-architecture]
+  - id: patterns
+    name: Patterns TypeScript
+    importance: 4
+    requires: [design-patterns]
+  - id: type-level
+    name: Programmation au niveau des types
+    importance: 5
+    requires: [type-level-programming]
+  - id: validation
+    name: Validation TypeScript
+    importance: 4
+    requires: [runtime-validation]

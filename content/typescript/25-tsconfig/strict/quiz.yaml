@@ -1,0 +1,64 @@
+id: typescript-25-strict-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-strict-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      strict: true :
+    options:
+      - Désactive le typage
+      - Active un pack de checks stricts
+      - Change uniquement target
+      - Est déprécié
+    answer:
+      - 1
+    explanation: |
+      Socle de type-safety.
+    skills:
+      - tsconfig
+  - id: typescript-25-strict-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      strict inclut notamment noImplicitAny et strictNullChecks.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-strict-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour un nouveau projet, on recommande :
+    options:
+      - '{"strict":false}'
+      - '{"strict":true}'
+      - Aucun tsconfig
+      - skipLibCheck uniquement
+    answer:
+      - 1
+    explanation: |
+      Bonne base.
+    skills:
+      - tsconfig
+  - id: typescript-25-strict-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      En migration, une stratégie est :
+    options:
+      - Tout ignorer
+      - Activer les flags progressivement
+      - Supprimer TypeScript
+      - Mettre any partout
+    answer:
+      - 1
+    explanation: |
+      Adoption progressive.
+    skills:
+      - tsconfig

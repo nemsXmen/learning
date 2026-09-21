@@ -1,0 +1,64 @@
+id: typescript-44-incremental-compilation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-incremental-compilation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      incremental: true active :
+    options:
+      - Un serveur HTTP
+      - La réutilisation d’infos de compile
+      - Le minify CSS
+      - skipLibCheck only
+    answer:
+      - 1
+    explanation: |
+      Speed.
+    skills:
+      - tooling
+  - id: typescript-44-incremental-compilation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      tsbuildinfo est souvent gitignored.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Artefact local/CI cache.
+    skills:
+      - tooling
+  - id: typescript-44-incremental-compilation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Cache corrompu : réflexe utile :
+    options:
+      - Ignorer à jamais
+      - Clean rebuild (supprimer tsbuildinfo)
+      - Désactiver TypeScript
+      - Reboot DNS
+    answer:
+      - 1
+    explanation: |
+      Reset.
+    skills:
+      - tooling
+  - id: typescript-44-incremental-compilation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      tsc -b profite surtout :
+    options:
+      - Des project references + incremental
+      - Du CSS only
+      - De process.env
+      - D’un ORM
+    answer:
+      - 0
+    explanation: |
+      Build mode.
+    skills:
+      - tooling

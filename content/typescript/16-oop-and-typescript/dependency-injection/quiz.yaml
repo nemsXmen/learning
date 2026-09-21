@@ -1,0 +1,64 @@
+id: typescript-16-dependency-injection-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-dependency-injection-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’injection de dépendances consiste à :
+    options:
+      - Créer toutes les dépendances en interne
+      - Recevoir ses dépendances de l’extérieur
+      - Supprimer les constructeurs
+      - Utiliser uniquement des static
+    answer:
+      - 1
+    explanation: |
+      Inversion du contrôle des dépendances.
+    skills:
+      - oop
+  - id: typescript-16-dependency-injection-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’injection via le constructeur est un pattern courant et clair.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-dependency-injection-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un bénéfice majeur de la DI est :
+    options:
+      - Code plus long uniquement
+      - Tests plus faciles et couplage réduit
+      - Interdiction des interfaces
+      - Runtime plus lent obligatoirement
+    answer:
+      - 1
+    explanation: |
+      Mocking et substitution simplifiés.
+    skills:
+      - oop
+  - id: typescript-16-dependency-injection-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La DI manuelle en TypeScript :
+    options:
+      - Est impossible
+      - Suffit souvent sans framework
+      - Oblige NestJS
+      - Interdit les interfaces
+    answer:
+      - 1
+    explanation: |
+      new + passage au constructeur.
+    skills:
+      - oop

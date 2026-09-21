@@ -1,0 +1,64 @@
+id: typescript-35-http-clients-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-http-clients-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      axios.get<UserResponse> type principalement :
+    options:
+      - Le CSS
+      - La forme attendue de data (annotation)
+      - La validation runtime obligatoire
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Générique de confiance.
+    skills:
+      - api
+  - id: typescript-35-http-clients-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les clients générés depuis OpenAPI typent paths et payloads.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-http-clients-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Client généré désynchronisé de la spec :
+    options:
+      - Reste parfait
+      - Ment sur le contrat réel
+      - Active strict
+      - Est impossible
+    answer:
+      - 1
+    explanation: |
+      Régénérer.
+    skills:
+      - api
+  - id: typescript-35-http-clients-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ofetch / ky sont :
+    options:
+      - Des ORM
+      - Des wrappers fetch modernes
+      - Des bundlers
+      - Des linters CSS
+    answer:
+      - 1
+    explanation: |
+      HTTP clients.
+    skills:
+      - api

@@ -1,0 +1,64 @@
+id: typescript-30-esm-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-esm-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      "type": "module" dans package.json active :
+    options:
+      - CommonJS forcé
+      - ESM par défaut pour .js
+      - Uniquement TypeScript
+      - Le mode strict DOM
+    answer:
+      - 1
+    explanation: |
+      Modules ES.
+    skills:
+      - npm
+  - id: typescript-30-esm-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      La condition exports "import" cible les consommateurs ESM.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-esm-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      require() d’un package pure ESM :
+    options:
+      - Fonctionne toujours
+      - Échoue souvent / non supporté
+      - Active strict
+      - Convertit en CSS
+    answer:
+      - 1
+    explanation: |
+      Interop limitée.
+    skills:
+      - npm
+  - id: typescript-30-esm-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      dual package hazard désigne :
+    options:
+      - Un bug CSS
+      - Des problèmes d’interop CJS/ESM (doubles instances…)
+      - Un type TypeScript
+      - Un champ npm obligatoire
+    answer:
+      - 1
+    explanation: |
+      Piège de dual publish.
+    skills:
+      - npm

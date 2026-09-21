@@ -1,0 +1,64 @@
+id: typescript-34-validation-des-variables-denvironnement-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-validation-des-variables-denvironnement-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      process.env.PORT est typiquement :
+    options:
+      - number garanti
+      - string | undefined
+      - boolean
+      - Buffer
+    answer:
+      - 1
+    explanation: |
+      Strings d’env.
+    skills:
+      - validation
+  - id: typescript-34-validation-des-variables-denvironnement-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Valider l’env au boot permet un fail fast.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-validation-des-variables-denvironnement-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      z.coerce.number() sur PORT sert à :
+    options:
+      - Ignorer PORT
+      - Convertir la string d’env en number
+      - Désactiver Zod
+      - Typer le DOM
+    answer:
+      - 1
+    explanation: |
+      Coercion.
+    skills:
+      - validation
+  - id: typescript-34-validation-des-variables-denvironnement-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      process.env.X! partout :
+    options:
+      - Est une bonne pratique
+      - Est risqué (pas de validation réelle)
+      - Remplace Zod
+      - Est imposé par Node
+    answer:
+      - 1
+    explanation: |
+      Assertion vide.
+    skills:
+      - validation

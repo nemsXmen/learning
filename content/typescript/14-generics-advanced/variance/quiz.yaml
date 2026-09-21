@@ -1,0 +1,64 @@
+id: typescript-14-variance-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-variance-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La covariance signifie :
+    options:
+      - Si A ⊂ B alors F<B> ⊂ F<A>
+      - Si A ⊂ B alors F<A> ⊂ F<B>
+      - Aucune relation
+      - Égalité stricte uniquement
+    answer:
+      - 1
+    explanation: |
+      Le sous-typage se conserve dans le même sens.
+    skills:
+      - generics
+  - id: typescript-14-variance-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Sous strictFunctionTypes, les paramètres de fonctions sont contravariants.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-variance-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les types de retour de fonctions sont généralement :
+    options:
+      - Contravariants
+      - Covariants
+      - Invariants uniquement
+      - Ignorés
+    answer:
+      - 1
+    explanation: |
+      Un producteur de sous-type est un producteur de super-type.
+    skills:
+      - generics
+  - id: typescript-14-variance-q4
+    type: multiple_choice
+    difficulty: 3
+    question: |
+      Pourquoi la covariance des tableaux peut-elle être unsafe ?
+    options:
+      - Elle ne l’est jamais
+      - On peut écrire un super-type via une référence de sous-type (mutation)
+      - Parce que les tableaux sont immuables
+      - Parce que TypeScript l’interdit
+    answer:
+      - 1
+    explanation: |
+      Lecture covariante OK, écriture potentiellement dangereuse.
+    skills:
+      - generics

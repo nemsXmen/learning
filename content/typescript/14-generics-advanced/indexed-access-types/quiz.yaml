@@ -1,0 +1,64 @@
+id: typescript-14-indexed-access-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-indexed-access-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `User["name"]` si User a name: string produit :
+    options:
+      - User
+      - string
+      - name
+      - any
+    answer:
+      - 1
+    explanation: |
+      C’est le type de la propriété name.
+    skills:
+      - generics
+  - id: typescript-14-indexed-access-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `T["a" | "b"]` produit l’union des types des propriétés a et b.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-indexed-access-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans `getProp<T, K extends keyof T>(obj: T, key: K): T[K]`, le retour est :
+    options:
+      - Toujours any
+      - Le type exact de la propriété key
+      - string uniquement
+      - unknown
+    answer:
+      - 1
+    explanation: |
+      T[K] est précis.
+    skills:
+      - generics
+  - id: typescript-14-indexed-access-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T[number]` pour un tableau T sert souvent à :
+    options:
+      - Rien
+      - Extraire le type des éléments
+      - Convertir en string
+      - Créer un enum
+    answer:
+      - 1
+    explanation: |
+      Pattern classique pour le type d’élément.
+    skills:
+      - generics

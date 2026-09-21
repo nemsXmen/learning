@@ -1,0 +1,64 @@
+id: typescript-35-api-clients-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-api-clients-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un client d’API typé expose souvent :
+    options:
+      - Uniquement des strings non typées
+      - Des fonctions par endpoint avec types in/out
+      - Du CSS
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Miroir du contrat.
+    skills:
+      - api
+  - id: typescript-35-api-clients-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Parser la réponse avec un schema détecte les drifts serveur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-api-clients-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      as User sur res.json() :
+    options:
+      - Valide le payload
+      - N’offre aucune garantie
+      - Remplace le client
+      - Est obligatoire
+    answer:
+      - 1
+    explanation: |
+      Assertion.
+    skills:
+      - api
+  - id: typescript-35-api-clients-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Centraliser le client évite surtout :
+    options:
+      - TypeScript
+      - La duplication d’URL, headers et mapping d’erreurs
+      - Les tests
+      - Les modules
+    answer:
+      - 1
+    explanation: |
+      DRY.
+    skills:
+      - api

@@ -1,0 +1,64 @@
+id: typescript-19-keyof-et-mapped-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-keyof-et-mapped-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      keyof T dans un mapped type fournit :
+    options:
+      - Les valeurs de T
+      - L’union des clés à itérer
+      - Uniquement des numbers
+      - never
+    answer:
+      - 1
+    explanation: |
+      Ensemble des noms de propriétés.
+    skills:
+      - mapped-types
+  - id: typescript-19-keyof-et-mapped-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut filtrer les clés pendant le mapping.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, via as / conditionals.
+    skills:
+      - mapped-types
+  - id: typescript-19-keyof-et-mapped-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Utiliser string au lieu de keyof T :
+    options:
+      - Améliore la précision
+      - Perd la précision des clés
+      - Est obligatoire
+      - Crée un enum
+    answer:
+      - 1
+    explanation: |
+      keyof conserve les littéraux de clés.
+    skills:
+      - mapped-types
+  - id: typescript-19-keyof-et-mapped-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le duo keyof + mapped types permet de :
+    options:
+      - Exécuter du JS
+      - Transformer n’importe quel type objet systématiquement
+      - Remplacer le runtime
+      - Interdire les interfaces
+    answer:
+      - 1
+    explanation: |
+      Cœur des transformations d’objets.
+    skills:
+      - mapped-types

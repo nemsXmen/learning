@@ -1,0 +1,64 @@
+id: typescript-43-architecture-du-compilateur-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-architecture-du-compilateur-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      tsc --noEmit s’arrête typiquement après :
+    options:
+      - L’exécution runtime
+      - Le type checking
+      - Le déploiement
+      - Le CSS
+    answer:
+      - 1
+    explanation: |
+      Pas d’emit.
+    skills:
+      - compiler
+  - id: typescript-43-architecture-du-compilateur-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le compilateur TypeScript exécute ton programme comme Node.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Il compile / vérifie.
+    skills:
+      - compiler
+  - id: typescript-43-architecture-du-compilateur-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La phase d’émission produit :
+    options:
+      - Uniquement des erreurs de type
+      - JS, éventuellement d.ts et source maps
+      - Une base SQL
+      - Du CSS minifié only
+    answer:
+      - 1
+    explanation: |
+      Emit.
+    skills:
+      - compiler
+  - id: typescript-43-architecture-du-compilateur-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      transpile-only (swc/esbuild) saute souvent :
+    options:
+      - Le parse
+      - Le type checking complet
+      - Toute écriture disque
+      - npm
+    answer:
+      - 1
+    explanation: |
+      Vitesse vs sûreté.
+    skills:
+      - compiler

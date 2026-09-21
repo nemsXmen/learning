@@ -1,0 +1,64 @@
+id: typescript-20-t-extends-u-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-t-extends-u-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans un conditional type, extends exprime :
+    options:
+      - L’égalité stricte
+      - L’assignabilité
+      - L’héritage de classe uniquement
+      - Une conversion runtime
+    answer:
+      - 1
+    explanation: |
+      Relation d’assignabilité.
+    skills:
+      - conditional-types
+  - id: typescript-20-t-extends-u-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      string extends string | number est vrai.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, string est assignable à l’union.
+    skills:
+      - conditional-types
+  - id: typescript-20-t-extends-u-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      extends dans une contrainte générique vs conditional type :
+    options:
+      - Concepts totalement différents
+      - Même idée d’assignabilité, rôles différents
+      - Uniquement pour les classes
+      - Identique à implements
+    answer:
+      - 1
+    explanation: |
+      Même notion, contextes distincts.
+    skills:
+      - conditional-types
+  - id: typescript-20-t-extends-u-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La forme d’un conditional type est :
+    options:
+      - T if U then X
+      - '{"T extends U ? X":"Y"}'
+      - '{"T == U ? X":"Y"}'
+      - T extends U | X | Y
+    answer:
+      - 1
+    explanation: |
+      Syntaxe standard.
+    skills:
+      - conditional-types

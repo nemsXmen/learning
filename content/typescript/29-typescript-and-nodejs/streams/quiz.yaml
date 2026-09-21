@@ -1,0 +1,64 @@
+id: typescript-29-streams-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-streams-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      createReadStream produit un stream :
+    options:
+      - Writable
+      - Readable
+      - Uniquement HTTP
+      - Enum
+    answer:
+      - 1
+    explanation: |
+      Lecture.
+    skills:
+      - nodejs
+  - id: typescript-29-streams-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      pipeline (stream/promises) propage les erreurs plus proprement que pipe seul.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-streams-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les streams sont utiles pour :
+    options:
+      - Uniquement les petits strings
+      - Gros fichiers / flux sans tout charger en RAM
+      - Remplacer TypeScript
+      - Typer des enums
+    answer:
+      - 1
+    explanation: |
+      Mémoire et débit.
+    skills:
+      - nodejs
+  - id: typescript-29-streams-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Transform est un stream :
+    options:
+      - Lecture seule
+      - Duplex qui transforme les données
+      - Uniquement synchrone
+      - Interdit en TS
+    answer:
+      - 1
+    explanation: |
+      Lecture + écriture transformée.
+    skills:
+      - nodejs

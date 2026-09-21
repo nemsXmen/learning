@@ -1,0 +1,64 @@
+id: typescript-23-classes-declarees-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-classes-declarees-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans un .d.ts, une classe est introduite par :
+    options:
+      - class Foo { body }
+      - declare class Foo { ... }
+      - enum Foo
+      - type Foo = class
+    answer:
+      - 1
+    explanation: |
+      Déclaration sans corps d’implémentation.
+    skills:
+      - declaration-files
+  - id: typescript-23-classes-declarees-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut déclarer des membres static dans une declare class.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-classes-declarees-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour une méthode chaînée, le retour est souvent :
+    options:
+      - any
+      - this
+      - never
+      - void uniquement
+    answer:
+      - 1
+    explanation: |
+      Préserve le type d’instance.
+    skills:
+      - declaration-files
+  - id: typescript-23-classes-declarees-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans un .d.ts de classe, on expose surtout :
+    options:
+      - Tous les détails privés
+      - L’API publique
+      - Le bytecode
+      - Les tests internes
+    answer:
+      - 1
+    explanation: |
+      Surface utile aux consommateurs.
+    skills:
+      - declaration-files

@@ -1,0 +1,64 @@
+id: typescript-32-app-router-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-app-router-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La page d’une route App Router s’appelle souvent :
+    options:
+      - index.html
+      - page.tsx
+      - route.css
+      - main.py
+    answer:
+      - 1
+    explanation: |
+      Convention Next.
+    skills:
+      - nextjs
+  - id: typescript-32-app-router-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      layout.tsx définit un layout partagé pour un segment.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-app-router-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un segment dynamique ressemble à :
+    options:
+      - app/blog/static only
+      - app/blog/[slug]/page.tsx
+      - app/blog/{slug}.css
+      - pages only obligatoire
+    answer:
+      - 1
+    explanation: |
+      Dossier [param].
+    skills:
+      - nextjs
+  - id: typescript-32-app-router-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Par défaut dans app/, les composants sont :
+    options:
+      - Client Components
+      - Server Components
+      - Uniquement native mobile
+      - Sans TypeScript
+    answer:
+      - 1
+    explanation: |
+      RSC by default.
+    skills:
+      - nextjs

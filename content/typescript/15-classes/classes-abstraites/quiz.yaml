@@ -1,0 +1,64 @@
+id: typescript-15-classes-abstraites-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-classes-abstraites-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Peut-on instancier une classe abstraite ?
+    options:
+      - Oui
+      - Non
+      - Uniquement en mode non-strict
+      - Uniquement avec new abstract
+    answer:
+      - 1
+    explanation: |
+      Interdit : elle sert de base.
+    skills:
+      - classes
+  - id: typescript-15-classes-abstraites-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une classe abstraite peut contenir des méthodes concrètes.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est un de ses intérêts.
+    skills:
+      - classes
+  - id: typescript-15-classes-abstraites-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les sous-classes concrètes doivent :
+    options:
+      - Rien de spécial
+      - Implémenter les membres abstraits
+      - Être aussi abstraites obligatoirement
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Sinon erreur de compilation.
+    skills:
+      - classes
+  - id: typescript-15-classes-abstraites-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Classe abstraite vs interface : la classe abstraite peut :
+    options:
+      - Uniquement décrire une forme
+      - Fournir de l’implémentation et de l’état
+      - Être implémentée en multiple comme une interface
+      - Exister uniquement à runtime sans type
+    answer:
+      - 1
+    explanation: |
+      Implémentation partagée possible.
+    skills:
+      - classes

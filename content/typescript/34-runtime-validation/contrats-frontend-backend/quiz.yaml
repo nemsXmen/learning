@@ -1,0 +1,64 @@
+id: typescript-34-contrats-frontend-backend-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-contrats-frontend-backend-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Partager un schema Zod entre front et back aide à :
+    options:
+      - Supprimer le serveur
+      - Éviter la dérive de contrats
+      - Désactiver HTTP
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Source unique.
+    skills:
+      - validation
+  - id: typescript-34-contrats-frontend-backend-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le serveur doit valider même si le front est TypeScript.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Client non fiable.
+    skills:
+      - validation
+  - id: typescript-34-contrats-frontend-backend-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      tRPC / OpenAPI codegen servent notamment à :
+    options:
+      - Remplacer la validation runtime
+      - Aligner les types client/serveur
+      - Supprimer TypeScript
+      - Gérer le CSS
+    answer:
+      - 1
+    explanation: |
+      Contrats générés.
+    skills:
+      - validation
+  - id: typescript-34-contrats-frontend-backend-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Deux types User divergents front/back :
+    options:
+      - Sont idéaux
+      - Causent bugs d’intégration
+      - Activent strict
+      - Sont imposés
+    answer:
+      - 1
+    explanation: |
+      Dérive.
+    skills:
+      - validation

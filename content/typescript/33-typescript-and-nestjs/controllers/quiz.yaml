@@ -1,0 +1,64 @@
+id: typescript-33-controllers-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-controllers-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      @Controller("users") définit :
+    options:
+      - Un style CSS
+      - Le préfixe de route du controller
+      - Un module obligatoire
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Path HTTP.
+    skills:
+      - nestjs
+  - id: typescript-33-controllers-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      @Body() dto: CreateUserDto type le corps de la requête.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui (validation via pipes).
+    skills:
+      - nestjs
+  - id: typescript-33-controllers-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La logique métier devrait plutôt vivre dans :
+    options:
+      - Le controller uniquement
+      - Le service
+      - Un fichier CSS
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Séparation des responsabilités.
+    skills:
+      - nestjs
+  - id: typescript-33-controllers-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      @Param("id") extrait :
+    options:
+      - Un header
+      - Un segment de route
+      - Un cookie always
+      - Le body JSON
+    answer:
+      - 1
+    explanation: |
+      Route params.
+    skills:
+      - nestjs

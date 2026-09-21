@@ -1,0 +1,64 @@
+id: typescript-22-assertions-avec-le-dom-quiz
+kind: QUIZ
+questions:
+  - id: typescript-22-assertions-avec-le-dom-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      getElementById retourne typiquement :
+    options:
+      - HTMLElement
+      - HTMLElement | null
+      - never
+      - Document
+    answer:
+      - 1
+    explanation: |
+      Peut être absent.
+    skills:
+      - type-assertions
+  - id: typescript-22-assertions-avec-le-dom-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      instanceof HTMLDivElement est une forme de narrowing plus sûre qu’une assertion pure.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, vérification runtime.
+    skills:
+      - type-assertions
+  - id: typescript-22-assertions-avec-le-dom-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Assertir en HTMLInputElement un div :
+    options:
+      - Est toujours sûr
+      - Peut casser à runtime (pas de .value réel)
+      - Est intercepté par TypeScript à runtime
+      - Convertit l’élément
+    answer:
+      - 1
+    explanation: |
+      Pas de check runtime.
+    skills:
+      - type-assertions
+  - id: typescript-22-assertions-avec-le-dom-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une bonne pratique DOM est :
+    options:
+      - Tout assertir en any
+      - Gérer null et préférer narrowing quand l’élément n’est pas garanti
+      - Ignorer les types DOM
+      - Utiliser uniquement double assertions
+    answer:
+      - 1
+    explanation: |
+      Sécurité + réalisme.
+    skills:
+      - type-assertions

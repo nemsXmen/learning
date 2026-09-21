@@ -1,0 +1,64 @@
+id: typescript-34-donnees-externes-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-donnees-externes-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      res.json() devrait être traité comme :
+    options:
+      - User garanti
+      - unknown / à valider
+      - never
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Frontière réseau.
+    skills:
+      - validation
+  - id: typescript-34-donnees-externes-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TypeScript vérifie automatiquement la forme des JSON réseau.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Non, types effacés.
+    skills:
+      - validation
+  - id: typescript-34-donnees-externes-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      process.env est une donnée :
+    options:
+      - Compile-time only
+      - Externe à valider
+      - Toujours number
+      - Un type React
+    answer:
+      - 1
+    explanation: |
+      Environnement runtime.
+    skills:
+      - validation
+  - id: typescript-34-donnees-externes-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      as User sur un JSON :
+    options:
+      - Valide les champs
+      - N’offre aucune garantie runtime
+      - Est une validation Zod
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Assertion pure.
+    skills:
+      - validation

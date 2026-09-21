@@ -1,0 +1,64 @@
+id: typescript-35-error-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-error-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un body d’erreur API utile contient souvent :
+    options:
+      - Uniquement un stack trace
+      - code + message (+ details)
+      - Un fichier CSS
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Erreur structurée.
+    skills:
+      - api
+  - id: typescript-35-error-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les erreurs font partie du contrat d’API.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-error-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Result<T> = ok true|false permet de :
+    options:
+      - Ignorer les erreurs
+      - Modéliser succès/échec dans le type
+      - Remplacer HTTP
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Union discriminée.
+    skills:
+      - api
+  - id: typescript-35-error-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exposer les stack traces en production :
+    options:
+      - Est recommandé
+      - Est un risque sécurité / bruit
+      - Active strict
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Fuite d’info.
+    skills:
+      - api

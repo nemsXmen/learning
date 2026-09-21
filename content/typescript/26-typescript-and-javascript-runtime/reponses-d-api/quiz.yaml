@@ -1,0 +1,64 @@
+id: typescript-26-reponses-d-api-quiz
+kind: QUIZ
+questions:
+  - id: typescript-26-reponses-d-api-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Avant de parser le body, on devrait souvent :
+    options:
+      - Rien
+      - Vérifier res.ok / status
+      - as any
+      - Ignorer les erreurs
+    answer:
+      - 1
+    explanation: |
+      HTTP d’abord.
+    skills:
+      - runtime
+  - id: typescript-26-reponses-d-api-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      res.json() fournit une garantie de type User.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux.
+    skills:
+      - runtime
+  - id: typescript-26-reponses-d-api-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le flux sûr est :
+    options:
+      - as User immédiat
+      - ok check → unknown → validate → User
+      - any partout
+      - Désactiver fetch
+    answer:
+      - 1
+    explanation: |
+      Pattern complet.
+    skills:
+      - runtime
+  - id: typescript-26-reponses-d-api-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      OpenAPI / tRPC :
+    options:
+      - Rendent toute validation inutile à jamais
+      - Réduisent l’écart mais la validation défensive reste utile
+      - Remplacent HTTP
+      - Désactivent TypeScript
+    answer:
+      - 1
+    explanation: |
+      Défense en profondeur.
+    skills:
+      - runtime

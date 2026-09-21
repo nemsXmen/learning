@@ -1,0 +1,64 @@
+id: typescript-42-path-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-path-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      PathKeys<T> produit souvent :
+    options:
+      - Uniquement number
+      - Une union de chemins string valides
+      - Un Buffer
+      - never always
+    answer:
+      - 1
+    explanation: |
+      Chemins.
+    skills:
+      - type-level
+  - id: typescript-42-path-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      PathValue résout le type au bout d’un chemin.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-path-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      get(obj, path) typé avec PathValue évite :
+    options:
+      - Les chemins invalides silencieux
+      - TypeScript
+      - Les tests
+      - Les modules
+    answer:
+      - 0
+    explanation: |
+      Sûreté.
+    skills:
+      - type-level
+  - id: typescript-42-path-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Cas d’usage fréquent :
+    options:
+      - Formulaires / i18n / accessors
+      - Uniquement CSS
+      - DNS
+      - skipLibCheck
+    answer:
+      - 0
+    explanation: |
+      DX structures imbriquées.
+    skills:
+      - type-level

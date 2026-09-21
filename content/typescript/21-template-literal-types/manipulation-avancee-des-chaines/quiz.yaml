@@ -1,0 +1,64 @@
+id: typescript-21-manipulation-avancee-des-chaines-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-manipulation-avancee-des-chaines-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour parser une string au niveau des types, on utilise :
+    options:
+      - Uniquement keyof
+      - Template literal + infer (+ récursion)
+      - Uniquement des classes
+      - any
+    answer:
+      - 1
+    explanation: |
+      Pattern de parsing type-level.
+    skills:
+      - template-literal-types
+  - id: typescript-21-manipulation-avancee-des-chaines-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut extraire les params d’une route comme "/users/:id" avec des templates + infer.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-manipulation-avancee-des-chaines-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le risque d’un parser de strings trop ambitieux est :
+    options:
+      - Aucun
+      - Complexité et problèmes de profondeur / maintenance
+      - Interdiction par TypeScript
+      - Bugs runtime uniquement
+    answer:
+      - 1
+    explanation: |
+      Rester pragmatique.
+    skills:
+      - template-literal-types
+  - id: typescript-21-manipulation-avancee-des-chaines-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Split type-level d’une string s’appuie sur :
+    options:
+      - Array.split runtime
+      - Récursion + infer dans un template
+      - Un enum
+      - Partial
+    answer:
+      - 1
+    explanation: |
+      Pure compile-time.
+    skills:
+      - template-literal-types

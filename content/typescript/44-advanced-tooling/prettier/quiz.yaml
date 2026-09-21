@@ -1,0 +1,64 @@
+id: typescript-44-prettier-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-prettier-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Prettier sert surtout au :
+    options:
+      - Type checking
+      - Formatage de code
+      - Déploiement Kubernetes
+      - ORM
+    answer:
+      - 1
+    explanation: |
+      Style.
+    skills:
+      - tooling
+  - id: typescript-44-prettier-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      prettier --check échoue si le code n’est pas formaté.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-prettier-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      eslint-config-prettier :
+    options:
+      - Ajoute des règles de format ESLint
+      - Désactive les règles ESLint conflictuelles avec Prettier
+      - Remplace tsc
+      - Compile le CSS
+    answer:
+      - 1
+    explanation: |
+      Compatibilité.
+    skills:
+      - tooling
+  - id: typescript-44-prettier-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Prettier décide du format de façon :
+    options:
+      - Hautement configurable métier
+      - Opinionated
+      - Aléatoire
+      - Basée sur SQL
+    answer:
+      - 1
+    explanation: |
+      Peu d’options.
+    skills:
+      - tooling

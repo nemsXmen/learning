@@ -1,0 +1,64 @@
+id: typescript-28-typages-dom-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-typages-dom-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les types DOM sont fournis via :
+    options:
+      - Un package npm obligatoire unique
+      - lib.dom.d.ts (option lib)
+      - Uniquement @types/react
+      - Le runtime Node
+    answer:
+      - 1
+    explanation: |
+      Libs standard TypeScript.
+    skills:
+      - dom
+  - id: typescript-28-typages-dom-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      HTMLDivElement étend HTMLElement.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, hiérarchie DOM.
+    skills:
+      - dom
+  - id: typescript-28-typages-dom-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans lib DOM, document est :
+    options:
+      - Toujours typé
+      - Inconnu du type-checker
+      - Un enum
+      - never
+    answer:
+      - 1
+    explanation: |
+      Lib non chargée.
+    skills:
+      - dom
+  - id: typescript-28-typages-dom-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      getElementById retourne souvent :
+    options:
+      - HTMLElement
+      - HTMLElement | null
+      - never
+      - Document
+    answer:
+      - 1
+    explanation: |
+      Peut être absent.
+    skills:
+      - dom

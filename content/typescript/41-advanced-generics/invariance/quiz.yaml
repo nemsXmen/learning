@@ -1,0 +1,64 @@
+id: typescript-41-invariance-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-invariance-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un type avec lecture et écriture de T est souvent :
+    options:
+      - Covariant
+      - Invariant
+      - Sans type
+      - Un enum CSS
+    answer:
+      - 1
+    explanation: |
+      In + out.
+    skills:
+      - generics
+  - id: typescript-41-invariance-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Box<Dog> n’est pas sûrement assignable à Box<Animal>.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Écriture dangereuse.
+    skills:
+      - generics
+  - id: typescript-41-invariance-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Cast forcé entre Box<T> différents :
+    options:
+      - Est toujours sûr
+      - Peut casser les invariants
+      - Active strict
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Risqué.
+    skills:
+      - generics
+  - id: typescript-41-invariance-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Rendre la box readonly oriente vers :
+    options:
+      - Plus d’écriture
+      - Une covariance plus sûre (lecture)
+      - L’interdiction de T
+      - Un middleware
+    answer:
+      - 1
+    explanation: |
+      Moins d’écriture.
+    skills:
+      - generics

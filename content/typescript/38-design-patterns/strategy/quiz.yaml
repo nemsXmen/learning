@@ -1,0 +1,64 @@
+id: typescript-38-strategy-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-strategy-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Strategy permet de :
+    options:
+      - Fixer un seul algorithme pour toujours
+      - Interchanger des comportements via une interface
+      - Compiler le CSS
+      - Remplacer TypeScript
+    answer:
+      - 1
+    explanation: |
+      Comportements plugables.
+    skills:
+      - patterns
+  - id: typescript-38-strategy-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      checkout(amount, strategy) dépend de l’interface PricingStrategy.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-strategy-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Ajouter une nouvelle stratégie devrait :
+    options:
+      - Modifier tous les switchs centraux
+      - Ajouter une implémentation de l’interface
+      - Casser les types existants
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      OCP.
+    skills:
+      - patterns
+  - id: typescript-38-strategy-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une interface de stratégie trop large :
+    options:
+      - Est idéale
+      - Force des méthodes inutiles aux implémenteurs
+      - Active DI auto
+      - Est imposée
+    answer:
+      - 1
+    explanation: |
+      ISP / interfaces fines.
+    skills:
+      - patterns

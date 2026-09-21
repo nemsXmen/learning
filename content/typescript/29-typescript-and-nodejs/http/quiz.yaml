@@ -1,0 +1,64 @@
+id: typescript-29-http-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-http-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans createServer, req est typé comme :
+    options:
+      - Express.Request uniquement
+      - http.IncomingMessage
+      - string
+      - Buffer
+    answer:
+      - 1
+    explanation: |
+      Type Node HTTP.
+    skills:
+      - nodejs
+  - id: typescript-29-http-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      res.end accepte une string de réponse.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-http-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      req.url est typé :
+    options:
+      - string obligatoire
+      - string | undefined
+      - URL object toujours
+      - never
+    answer:
+      - 1
+    explanation: |
+      Peut être absent.
+    skills:
+      - nodejs
+  - id: typescript-29-http-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      En production, on utilise souvent :
+    options:
+      - Uniquement http nu sans couche
+      - Un framework (Express, Fastify, Hono…) mieux typé pour les routes
+      - document.getElementById
+      - Uniquement fs
+    answer:
+      - 1
+    explanation: |
+      Ergonomie + types routes.
+    skills:
+      - nodejs

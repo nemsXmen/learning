@@ -1,0 +1,64 @@
+id: typescript-14-recursive-generics-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-recursive-generics-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un type générique récursif :
+    options:
+      - Ne peut pas se référencer
+      - Se référence lui-même dans sa définition
+      - Est toujours any
+      - N’existe qu’en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      C’est la définition de la récursion.
+    skills:
+      - generics
+  - id: typescript-14-recursive-generics-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les arbres et listes chaînées sont des cas d’usage classiques des recursive generics.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-recursive-generics-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que se passe-t-il si la récursion de types est trop profonde ?
+    options:
+      - Rien
+      - Erreur du compilateur (instantiation excessively deep)
+      - Conversion en any automatique
+      - Runtime crash uniquement
+    answer:
+      - 1
+    explanation: |
+      TypeScript limite la profondeur d’instanciation.
+    skills:
+      - generics
+  - id: typescript-14-recursive-generics-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi faut-il un cas de base dans un type récursif ?
+    options:
+      - Pour la performance runtime uniquement
+      - Pour que le type soit productif et résolvable
+      - Ce n’est pas nécessaire
+      - Pour activer strict
+    answer:
+      - 1
+    explanation: |
+      Sinon le type peut être infini.
+    skills:
+      - generics

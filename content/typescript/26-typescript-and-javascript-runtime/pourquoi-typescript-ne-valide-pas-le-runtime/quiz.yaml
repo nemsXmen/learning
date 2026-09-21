@@ -1,0 +1,64 @@
+id: typescript-26-pourquoi-typescript-ne-valide-pas-le-runtime-quiz
+kind: QUIZ
+questions:
+  - id: typescript-26-pourquoi-typescript-ne-valide-pas-le-runtime-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TypeScript ne valide pas le runtime principalement à cause :
+    options:
+      - D’un bug non corrigé
+      - Du type erasure et d’un choix de design proche de JS
+      - De l’absence de JSON
+      - De strict uniquement
+    answer:
+      - 1
+    explanation: |
+      Philosophie + modèle.
+    skills:
+      - runtime
+  - id: typescript-26-pourquoi-typescript-ne-valide-pas-le-runtime-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Des libs comme Zod complètent TypeScript pour la validation runtime.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - runtime
+  - id: typescript-26-pourquoi-typescript-ne-valide-pas-le-runtime-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TypeScript garantit surtout :
+    options:
+      - La forme de toutes les réponses HTTP
+      - La cohérence compile-time du code typé
+      - L’absence de bugs runtime
+      - La validité de localStorage
+    answer:
+      - 1
+    explanation: |
+      Scope compile-time.
+    skills:
+      - runtime
+  - id: typescript-26-pourquoi-typescript-ne-valide-pas-le-runtime-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une stack complète types + runtime ressemble à :
+    options:
+      - TS seul sans frontières
+      - TS + validation aux bords (schemas / guards)
+      - any partout
+      - Désactiver le compilateur
+    answer:
+      - 1
+    explanation: |
+      Duo classique.
+    skills:
+      - runtime

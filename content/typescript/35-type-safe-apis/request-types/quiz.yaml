@@ -1,0 +1,64 @@
+id: typescript-35-request-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-request-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les query params HTTP arrivent souvent comme :
+    options:
+      - number natifs
+      - strings
+      - Buffer only
+      - classes Nest
+    answer:
+      - 1
+    explanation: |
+      URL strings.
+    skills:
+      - api
+  - id: typescript-35-request-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Séparer body, query et params clarifie le contrat.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-request-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Idéalement CreateUserBody vient de :
+    options:
+      - any
+      - Un schema (z.infer)
+      - Un fichier CSS
+      - process.argv
+    answer:
+      - 1
+    explanation: |
+      Source de vérité.
+    skills:
+      - api
+  - id: typescript-35-request-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un type Request unique fourre-tout :
+    options:
+      - Est toujours préférable
+      - Nuit à la clarté du contrat
+      - Active la validation auto
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Séparer les concerns.
+    skills:
+      - api

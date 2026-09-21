@@ -1,0 +1,64 @@
+id: typescript-35-contract-first-development-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-contract-first-development-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Contract-first signifie surtout :
+    options:
+      - Coder sans spec
+      - Définir le contrat comme source de vérité
+      - Supprimer TypeScript
+      - Uniquement du CSS
+    answer:
+      - 1
+    explanation: |
+      Spec-first.
+    skills:
+      - api
+  - id: typescript-35-contract-first-development-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le codegen produit des types/clients depuis la spec.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-contract-first-development-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Code-first Nest → OpenAPI :
+    options:
+      - Est impossible
+      - Dérive la spec depuis le code
+      - Supprime les décorateurs
+      - Remplace HTTP
+    answer:
+      - 1
+    explanation: |
+      Spec générée.
+    skills:
+      - api
+  - id: typescript-35-contract-first-development-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une spec non régénérée / morte :
+    options:
+      - Reste alignée magiquement
+      - Divergent du code réel
+      - Active strict
+      - Est idéale
+    answer:
+      - 1
+    explanation: |
+      Drift.
+    skills:
+      - api

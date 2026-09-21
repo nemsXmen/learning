@@ -1,0 +1,64 @@
+id: typescript-30-packages-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-packages-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le champ "types" dans package.json pointe souvent vers :
+    options:
+      - Un fichier CSS
+      - Le .d.ts d’entrée
+      - Un binaire
+      - Un test
+    answer:
+      - 1
+    explanation: |
+      Déclarations principales.
+    skills:
+      - npm
+  - id: typescript-30-packages-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      declaration: true lors du build produit des .d.ts.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-packages-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des types obsolètes peuvent :
+    options:
+      - Rien causer
+      - Mentir sur l’API réelle de la lib
+      - Accélérer le runtime
+      - Remplacer la lib
+    answer:
+      - 1
+    explanation: |
+      Désynchronisation.
+    skills:
+      - npm
+  - id: typescript-30-packages-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      On préfère souvent :
+    options:
+      - Des libs sans aucun type
+      - Des packages avec types natifs à jour
+      - any partout
+      - Ignorer package.json
+    answer:
+      - 1
+    explanation: |
+      Meilleure DX.
+    skills:
+      - npm

@@ -1,0 +1,64 @@
+id: typescript-20-utility-types-personnalises-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-utility-types-personnalises-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Beaucoup d’utilities custom s’appuient sur :
+    options:
+      - Uniquement des classes
+      - Conditional types (± mapped types)
+      - Uniquement des enums
+      - Le runtime
+    answer:
+      - 1
+    explanation: |
+      Moteur type-level.
+    skills:
+      - conditional-types
+  - id: typescript-20-utility-types-personnalises-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Il faut tester les utilities sur unions, never et any.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, cas edge fréquents.
+    skills:
+      - conditional-types
+  - id: typescript-20-utility-types-personnalises-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      FunctionPropertyNames combine souvent :
+    options:
+      - Uniquement keyof
+      - Mapped type + conditional + index access
+      - Uniquement Partial
+      - class + enum
+    answer:
+      - 1
+    explanation: |
+      Pattern riche standard.
+    skills:
+      - conditional-types
+  - id: typescript-20-utility-types-personnalises-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un bon utility type a :
+    options:
+      - Un nom obscur
+      - Un nom expressif et un comportement documenté
+      - Toujours 10 paramètres
+      - Aucun rapport avec le domaine
+    answer:
+      - 1
+    explanation: |
+      Clarté pour l’équipe.
+    skills:
+      - conditional-types

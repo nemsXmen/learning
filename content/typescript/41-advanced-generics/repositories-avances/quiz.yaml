@@ -1,0 +1,64 @@
+id: typescript-41-repositories-avances-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-repositories-avances-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      T extends Entity garantit souvent :
+    options:
+      - L’absence d’id
+      - La présence d’un id
+      - Un style CSS
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Contrainte.
+    skills:
+      - generics
+  - id: typescript-41-repositories-avances-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      T["id"] propage le type de l’identifiant.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-repositories-avances-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un repo générique trop abstrait :
+    options:
+      - Est toujours parfait
+      - Peut mal coller aux cas métier
+      - Remplace le domain
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Spécialisations utiles.
+    skills:
+      - generics
+  - id: typescript-41-repositories-avances-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      InMemoryRepo<T> implements Repository<T> est :
+    options:
+      - Une violation de DIP
+      - Une implémentation typée du port
+      - Un fichier CSS
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Adapter.
+    skills:
+      - generics

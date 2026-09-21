@@ -1,0 +1,64 @@
+id: typescript-42-state-machines-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-state-machines-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Transitions["draft"] = "placed" | "cancelled" décrit :
+    options:
+      - Des styles
+      - Les cibles légales depuis draft
+      - SQL
+      - Docker
+    answer:
+      - 1
+    explanation: |
+      Graphe typé.
+    skills:
+      - type-level
+  - id: typescript-42-state-machines-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      never comme cible signifie souvent état terminal.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-state-machines-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      CanTransition type-level sert à :
+    options:
+      - Exécuter la machine
+      - Valider une transition à la compile
+      - Minifier
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Check statique.
+    skills:
+      - type-level
+  - id: typescript-42-state-machines-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      XState apporte surtout :
+    options:
+      - Uniquement du CSS
+      - Runtime de machines + bons typings
+      - Un ORM
+      - Un bundler
+    answer:
+      - 1
+    explanation: |
+      FSM tooling.
+    skills:
+      - type-level

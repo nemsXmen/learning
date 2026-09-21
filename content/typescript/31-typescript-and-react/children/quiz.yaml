@@ -1,0 +1,64 @@
+id: typescript-31-children-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-children-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le type le plus courant pour children est :
+    options:
+      - number uniquement
+      - React.ReactNode
+      - Window
+      - process
+    answer:
+      - 1
+    explanation: |
+      Flexible.
+    skills:
+      - react
+  - id: typescript-31-children-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      ReactElement est plus strict que ReactNode.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-children-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      children: string autorise :
+    options:
+      - N’importe quel élément React
+      - Uniquement du texte
+      - Des hooks
+      - Des buffers Node
+    answer:
+      - 1
+    explanation: |
+      Restriction forte.
+    skills:
+      - react
+  - id: typescript-31-children-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Il vaut mieux déclarer children :
+    options:
+      - Implicitement via any
+      - Explicitement dans les props
+      - Uniquement en CSS
+      - Jamais
+    answer:
+      - 1
+    explanation: |
+      Contrat clair.
+    skills:
+      - react

@@ -1,0 +1,64 @@
+id: typescript-43-type-checking-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-type-checking-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      program.getTypeChecker() retourne :
+    options:
+      - Un serveur HTTP
+      - L’API de typage
+      - Un bundler
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Checker.
+    skills:
+      - compiler
+  - id: typescript-43-type-checking-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      getTypeAtLocation donne le type d’un nœud AST.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-type-checking-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les diagnostics de type sont produits pendant :
+    options:
+      - Uniquement l’emit
+      - Le type checking
+      - npm publish only
+      - Le CSS
+    answer:
+      - 1
+    explanation: |
+      Checker.
+    skills:
+      - compiler
+  - id: typescript-43-type-checking-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      createProgram nécessite surtout :
+    options:
+      - Des root names + options compiler
+      - Un cluster Kubernetes
+      - Un thème IDE
+      - process.exit
+    answer:
+      - 0
+    explanation: |
+      Entrées du programme.
+    skills:
+      - compiler

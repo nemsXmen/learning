@@ -1,0 +1,64 @@
+id: typescript-14-pagination-generique-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-pagination-generique-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans `Page<T>`, T représente :
+    options:
+      - Le numéro de page
+      - Le type des éléments de la liste
+      - Uniquement string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Le type des items.
+    skills:
+      - generics
+  - id: typescript-14-pagination-generique-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut réutiliser le même type Page pour User, Product, etc.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est l’intérêt du generic.
+    skills:
+      - generics
+  - id: typescript-14-pagination-generique-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une pagination par cursor typée ressemble souvent à :
+    options:
+      - Page sans items
+      - "{ items: T[]; nextCursor: string | null }"
+      - Uniquement number
+      - any
+    answer:
+      - 1
+    explanation: |
+      Pattern cursor classique.
+    skills:
+      - generics
+  - id: typescript-14-pagination-generique-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Sans generic, le risque pour la pagination est :
+    options:
+      - Aucun
+      - Dupliquer un type par ressource ou utiliser any
+      - Interdiction de compiler
+      - Runtime plus rapide
+    answer:
+      - 1
+    explanation: |
+      Duplication ou perte de typage.
+    skills:
+      - generics

@@ -1,0 +1,64 @@
+id: typescript-28-event-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-event-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Event est :
+    options:
+      - Un type d’input uniquement
+      - L’interface de base des événements DOM
+      - Un module Node
+      - Un enum CSS
+    answer:
+      - 1
+    explanation: |
+      Base de la hiérarchie d’events.
+    skills:
+      - dom
+  - id: typescript-28-event-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      e.preventDefault() est typé sur Event.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - dom
+  - id: typescript-28-event-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      e.target est typé comme :
+    options:
+      - HTMLElement toujours
+      - EventTarget | null
+      - string
+      - Document
+    answer:
+      - 1
+    explanation: |
+      Large + nullable.
+    skills:
+      - dom
+  - id: typescript-28-event-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un clic, on préfère souvent typer e en :
+    options:
+      - Event générique seulement
+      - MouseEvent
+      - StorageEvent
+      - never
+    answer:
+      - 1
+    explanation: |
+      Plus précis (clientX…).
+    skills:
+      - dom

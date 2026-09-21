@@ -1,0 +1,64 @@
+id: typescript-41-covariance-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-covariance-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Producer<Dog> assignable à Producer<Animal> illustre :
+    options:
+      - Contravariance
+      - Covariance
+      - Un enum
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Outputs.
+    skills:
+      - generics
+  - id: typescript-41-covariance-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Les tableaux mutables ne sont pas sûrement covariants.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Écriture dangereuse.
+    skills:
+      - generics
+  - id: typescript-41-covariance-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ReadonlyArray aide parce que :
+    options:
+      - On peut push librement
+      - On limite l’écriture
+      - C’est un middleware
+      - Ça désactive strict
+    answer:
+      - 1
+    explanation: |
+      Lecture.
+    skills:
+      - generics
+  - id: typescript-41-covariance-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Covariance = relation de sous-typage qui se propage dans le :
+    options:
+      - Même sens pour les outputs
+      - Sens inverse always
+      - CSS
+      - Docker
+    answer:
+      - 0
+    explanation: |
+      Même sens.
+    skills:
+      - generics

@@ -1,0 +1,64 @@
+id: typescript-33-interfaces-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-interfaces-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une interface TypeScript à runtime :
+    options:
+      - Existe comme objet
+      - Est effacée
+      - Devient une classe auto
+      - Est un middleware
+    answer:
+      - 1
+    explanation: |
+      Type erasure.
+    skills:
+      - nestjs
+  - id: typescript-33-interfaces-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      implements UserRepository vérifie la conformité à la compile.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-interfaces-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour injecter un port repository, on utilise souvent :
+    options:
+      - L’interface pure comme token
+      - Une classe abstraite / token custom + useClass
+      - Uniquement @Get
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Token runtime.
+    skills:
+      - nestjs
+  - id: typescript-33-interfaces-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les interfaces sont idéales pour :
+    options:
+      - ValidationPipe only
+      - Contrats métier compile-time
+      - Remplacer les modules
+      - Déclarer des routes HTTP
+    answer:
+      - 1
+    explanation: |
+      Documentation de forme.
+    skills:
+      - nestjs

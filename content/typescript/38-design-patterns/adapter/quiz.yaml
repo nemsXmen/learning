@@ -1,0 +1,64 @@
+id: typescript-38-adapter-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-adapter-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un Adapter sert à :
+    options:
+      - Styliser
+      - Convertir une interface vers une autre
+      - Compiler TS
+      - Remplacer les tests
+    answer:
+      - 1
+    explanation: |
+      Mapping d’interfaces.
+    skills:
+      - patterns
+  - id: typescript-38-adapter-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’adapter isole souvent une lib tierce du domaine.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-adapter-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Fuiter les types d’une lib tierce dans le domaine :
+    options:
+      - Est idéal
+      - Couple inutilement
+      - Active strict
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Contenir à la bordure.
+    skills:
+      - patterns
+  - id: typescript-38-adapter-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      SystemClock implements Clock est :
+    options:
+      - Un enum
+      - Une implémentation de l’interface cible
+      - Un middleware HTTP
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Port + adapter.
+    skills:
+      - patterns

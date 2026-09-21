@@ -1,0 +1,64 @@
+id: typescript-22-assertions-vs-narrowing-quiz
+kind: QUIZ
+questions:
+  - id: typescript-22-assertions-vs-narrowing-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le narrowing s’appuie sur :
+    options:
+      - Une assertion pure
+      - Des checks runtime (typeof, instanceof…)
+      - Uniquement as const
+      - any
+    answer:
+      - 1
+    explanation: |
+      Preuve runtime + compile-time.
+    skills:
+      - type-assertions
+  - id: typescript-22-assertions-vs-narrowing-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une assertion n’ajoute pas de check runtime.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-assertions
+  - id: typescript-22-assertions-vs-narrowing-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      En présence d’une union string | number, on préfère :
+    options:
+      - as string systématique
+      - typeof narrowing
+      - as any
+      - Double assertion
+    answer:
+      - 1
+    explanation: |
+      Check + typage sûr.
+    skills:
+      - type-assertions
+  - id: typescript-22-assertions-vs-narrowing-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les type guards sont une forme de :
+    options:
+      - Assertion pure
+      - Narrowing réutilisable
+      - Enum
+      - Décorateur
+    answer:
+      - 1
+    explanation: |
+      Affinent le type via une fonction.
+    skills:
+      - type-assertions

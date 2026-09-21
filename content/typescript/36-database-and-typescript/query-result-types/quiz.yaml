@@ -1,0 +1,64 @@
+id: typescript-36-query-result-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-query-result-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une projection findMany select id, email mérite :
+    options:
+      - Le type User complet avec password
+      - Un type allégé (id, email)
+      - any
+      - never
+    answer:
+      - 1
+    explanation: |
+      Alignement select/type.
+    skills:
+      - database
+  - id: typescript-36-query-result-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Prisma peut inférer le type selon select/include.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-query-result-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      SQL brut sans typage :
+    options:
+      - Est toujours sûr
+      - Produit souvent any / unknown à valider
+      - Active Zod auto
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Frontière.
+    skills:
+      - database
+  - id: typescript-36-query-result-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      UserWithOrders = User & { orders: Order[] } modélise :
+    options:
+      - Un enum
+      - Un join / include typé
+      - Un middleware
+      - Un DTO CSS
+    answer:
+      - 1
+    explanation: |
+      Agrégation d’objets.
+    skills:
+      - database

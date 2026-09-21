@@ -1,0 +1,64 @@
+id: typescript-22-as-quiz
+kind: QUIZ
+questions:
+  - id: typescript-22-as-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `value as string` :
+    options:
+      - Valide que value est une string à runtime
+      - Dit au compilateur de traiter value comme string
+      - Convertit forcément value en string
+      - Lance une exception si ce n’est pas une string
+    answer:
+      - 1
+    explanation: |
+      Assertion compile-time uniquement.
+    skills:
+      - type-assertions
+  - id: typescript-22-as-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      as n’ajoute aucune vérification runtime.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-assertions
+  - id: typescript-22-as-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      JSON.parse(...) as User est :
+    options:
+      - Une validation runtime de User
+      - Une assertion que le développeur prend la responsabilité du type
+      - Interdit en TypeScript
+      - Équivalent à un type guard
+    answer:
+      - 1
+    explanation: |
+      Pas de validation réelle des champs.
+    skills:
+      - type-assertions
+  - id: typescript-22-as-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe moderne préférée d’assertion est :
+    options:
+      - <Type>value
+      - value as Type
+      - '{"value":"Type de force"}'
+      - assert value Type
+    answer:
+      - 1
+    explanation: |
+      as est standard (surtout avec JSX).
+    skills:
+      - type-assertions

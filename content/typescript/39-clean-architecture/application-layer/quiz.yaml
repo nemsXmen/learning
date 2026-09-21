@@ -1,0 +1,64 @@
+id: typescript-39-application-layer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-application-layer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un use case orchestre surtout :
+    options:
+      - Le CSS
+      - Un scénario applicatif métier
+      - Le DNS
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Application service.
+    skills:
+      - architecture
+  - id: typescript-39-application-layer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les use cases devraient dépendre de ports (interfaces), pas d’ORM concrets.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-application-layer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Parser req Express dans un use case :
+    options:
+      - Est idéal
+      - Couple l’application au transport HTTP
+      - Active DI
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Rester agnostique transport.
+    skills:
+      - architecture
+  - id: typescript-39-application-layer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      CreateUserInput est typiquement :
+    options:
+      - Un type d’entrée du use case
+      - Une entity SQL
+      - Un middleware
+      - Un fichier CSS
+    answer:
+      - 0
+    explanation: |
+      DTO applicatif.
+    skills:
+      - architecture

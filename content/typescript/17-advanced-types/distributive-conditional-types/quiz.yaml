@@ -1,0 +1,64 @@
+id: typescript-17-distributive-conditional-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-distributive-conditional-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T extends any ? T[] : never` avec T = string | number produit :
+    options:
+      - (string | number)[]
+      - string[] | number[]
+      - any[]
+      - never
+    answer:
+      - 1
+    explanation: |
+      Distribution sur chaque membre.
+    skills:
+      - advanced-types
+  - id: typescript-17-distributive-conditional-types-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Envelopper T dans [T] désactive la distributivité.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - advanced-types
+  - id: typescript-17-distributive-conditional-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exclude s’appuie sur :
+    options:
+      - Les mapped types uniquement
+      - La distributivité des conditional types
+      - Les enums
+      - Les classes
+    answer:
+      - 1
+    explanation: |
+      T extends U ? never : T se distribue.
+    skills:
+      - advanced-types
+  - id: typescript-17-distributive-conditional-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un « naked type parameter » signifie :
+    options:
+      - Un type any
+      - Un paramètre de type non enveloppé (ex. T et non [T] ou Promise<T>)
+      - Un type never
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Condition pour la distributivité automatique.
+    skills:
+      - advanced-types

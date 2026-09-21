@@ -1,0 +1,64 @@
+id: typescript-21-string-unions-dynamiques-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-string-unions-dynamiques-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `locale_${"fr"|"en"}` produit :
+    options:
+      - string
+      - '"locale_fr" | "locale_en"'
+      - locale_
+      - never
+    answer:
+      - 1
+    explanation: |
+      Union préfixée.
+    skills:
+      - template-literal-types
+  - id: typescript-21-string-unions-dynamiques-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une union de base + template réduit la duplication.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-string-unions-dynamiques-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Si on ajoute un membre à l’union de base :
+    options:
+      - Rien ne change
+      - Les template types dérivés s’enrichissent automatiquement
+      - Il faut tout réécrire à la main
+      - TypeScript refuse
+    answer:
+      - 1
+    explanation: |
+      Source unique.
+    skills:
+      - template-literal-types
+  - id: typescript-21-string-unions-dynamiques-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un cas d’usage classique est :
+    options:
+      - Uniquement les nombres
+      - Classes CSS / clés i18n / actions API
+      - Remplacer les objets
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Strings structurées.
+    skills:
+      - template-literal-types

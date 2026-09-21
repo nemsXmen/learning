@@ -1,0 +1,64 @@
+id: typescript-18-constructorparameters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-constructorparameters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ConstructorParameters s’applique à :
+    options:
+      - Un type fonction ordinaire uniquement
+      - Un type constructeur (classe)
+      - Un enum
+      - Un string
+    answer:
+      - 1
+    explanation: |
+      Signature new (...args) => ...
+    skills:
+      - utility-types
+  - id: typescript-18-constructorparameters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On utilise souvent typeof Class avec ConstructorParameters.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-constructorparameters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ConstructorParameters se couple souvent avec :
+    options:
+      - Exclude
+      - InstanceType
+      - Partial uniquement
+      - Record uniquement
+    answer:
+      - 1
+    explanation: |
+      Factories typées.
+    skills:
+      - utility-types
+  - id: typescript-18-constructorparameters-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ConstructorParameters produit :
+    options:
+      - Une instance
+      - Un tuple de paramètres de constructeur
+      - Un type de retour
+      - never
+    answer:
+      - 1
+    explanation: |
+      Comme Parameters, mais pour new.
+    skills:
+      - utility-types

@@ -1,0 +1,64 @@
+id: typescript-30-packages-javascript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-packages-javascript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour une lib JS sans types, la première piste est :
+    options:
+      - Réécrire la lib
+      - Chercher @types/lib
+      - Désactiver TypeScript
+      - Utiliser uniquement CSS
+    answer:
+      - 1
+    explanation: |
+      DefinitelyTyped.
+    skills:
+      - npm
+  - id: typescript-30-packages-javascript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      declare module permet de typer localement une lib non typée.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-packages-javascript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      any sur tout le module :
+    options:
+      - Est la meilleure pratique
+      - Fait perdre la sécurité de types
+      - Est obligatoire
+      - Publie des .d.ts
+    answer:
+      - 1
+    explanation: |
+      Dernier recours.
+    skills:
+      - npm
+  - id: typescript-30-packages-javascript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une bonne suite après declare module local :
+    options:
+      - Rien jamais
+      - Upstream / DefinitelyTyped si utile à d’autres
+      - Supprimer la lib
+      - Forcer skipLibCheck off only
+    answer:
+      - 1
+    explanation: |
+      Partager les types.
+    skills:
+      - npm

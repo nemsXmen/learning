@@ -1,0 +1,64 @@
+id: typescript-29-fs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-fs-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      readFile(path, "utf8") retourne typiquement :
+    options:
+      - Buffer
+      - Promise<string> (promises API)
+      - number
+      - void
+    answer:
+      - 1
+    explanation: |
+      String décodée.
+    skills:
+      - nodejs
+  - id: typescript-29-fs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Sans encoding, readFile résout souvent en Buffer.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-fs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      On préfère souvent :
+    options:
+      - Uniquement les callbacks fs
+      - fs/promises avec async/await
+      - fs sync partout en prod request path
+      - Ignorer les erreurs disque
+    answer:
+      - 1
+    explanation: |
+      API moderne.
+    skills:
+      - nodejs
+  - id: typescript-29-fs-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les types de fs viennent surtout de :
+    options:
+      - "@types/node"
+      - lib.dom
+      - Un package CSS
+      - ESLint
+    answer:
+      - 0
+    explanation: |
+      Déclarations Node.
+    skills:
+      - nodejs

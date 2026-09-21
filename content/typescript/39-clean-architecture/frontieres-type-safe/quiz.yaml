@@ -1,0 +1,64 @@
+id: typescript-39-frontieres-type-safe-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-frontieres-type-safe-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Aux bords externes, on préfère souvent :
+    options:
+      - any
+      - unknown + validation
+      - never only
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Frontière sûre.
+    skills:
+      - architecture
+  - id: typescript-39-frontieres-type-safe-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Des types distincts par couche aident à contrôler les fuites.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-frontieres-type-safe-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      any qui traverse domain et infra :
+    options:
+      - Renforce Clean Architecture
+      - Sabote le typage des frontières
+      - Est imposé
+      - Active Zod auto
+    answer:
+      - 1
+    explanation: |
+      À bannir.
+    skills:
+      - architecture
+  - id: typescript-39-frontieres-type-safe-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mapping explicite sert à :
+    options:
+      - Cacher les conversions
+      - Documenter et contrôler les conversions entre couches
+      - Remplacer les tests
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Clarté.
+    skills:
+      - architecture

@@ -1,0 +1,64 @@
+id: typescript-18-extract-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-extract-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Extract est conceptuellement l’inverse de :
+    options:
+      - Partial
+      - Exclude
+      - Readonly
+      - Record
+    answer:
+      - 1
+    explanation: |
+      Garde vs retire.
+    skills:
+      - utility-types
+  - id: typescript-18-extract-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Extract conserve les membres assignables à U.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-extract-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Extract<string | number, string> produit :
+    options:
+      - number
+      - string
+      - string | number
+      - never
+    answer:
+      - 1
+    explanation: |
+      Seul string est assignable à string.
+    skills:
+      - utility-types
+  - id: typescript-18-extract-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Extract peut filtrer avec des template literals pour :
+    options:
+      - Rien
+      - Sélectionner des membres d’union selon un motif de string
+      - Créer des classes
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Ex. Extract<Events, `mouse${string}`>.
+    skills:
+      - utility-types

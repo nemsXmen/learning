@@ -1,0 +1,64 @@
+id: typescript-32-search-params-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-search-params-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      searchParams.q est souvent typé :
+    options:
+      - number obligatoire
+      - string | undefined
+      - boolean
+      - Buffer
+    answer:
+      - 1
+    explanation: |
+      Query optionnelle.
+    skills:
+      - nextjs
+  - id: typescript-32-search-params-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      useSearchParams est utilisable dans un Client Component.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-search-params-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des clés répétées peuvent produire :
+    options:
+      - Uniquement number
+      - string[]
+      - never
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Multi-valeurs.
+    skills:
+      - nextjs
+  - id: typescript-32-search-params-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Parser page en number nécessite :
+    options:
+      - as number seulement
+      - Conversion + gestion NaN / défaut
+      - Un enum DOM
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Validation.
+    skills:
+      - nextjs

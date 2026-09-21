@@ -1,0 +1,64 @@
+id: typescript-21-types-inspires-du-css-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-types-inspires-du-css-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `${number}${"px"|"em"}` modélise :
+    options:
+      - Un objet
+      - Une longueur CSS typée
+      - Un enum runtime
+      - never
+    answer:
+      - 1
+    explanation: |
+      Pattern d’unités.
+    skills:
+      - template-literal-types
+  - id: typescript-21-types-inspires-du-css-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut typer des classes utilitaires style text-primary avec des templates.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-types-inspires-du-css-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Vouloir typer tout le CSS avec des templates :
+    options:
+      - Est toujours une bonne idée
+      - Peut être excessif — rester pragmatique
+      - Est obligatoire
+      - Remplace les feuilles de style
+    answer:
+      - 1
+    explanation: |
+      Cibler design system / tokens.
+    skills:
+      - template-literal-types
+  - id: typescript-21-types-inspires-du-css-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un design system typé apporte :
+    options:
+      - Rien
+      - Autocomplétion et restriction aux tokens valides
+      - Un runtime CSS
+      - La suppression de HTML
+    answer:
+      - 1
+    explanation: |
+      DX et cohérence.
+    skills:
+      - template-literal-types

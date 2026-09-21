@@ -1,0 +1,64 @@
+id: typescript-32-variables-denvironnement-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-variables-denvironnement-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      NEXT_PUBLIC_API_URL est :
+    options:
+      - Serveur only
+      - Accessible aussi côté client
+      - Un type React
+      - Un middleware
+    answer:
+      - 1
+    explanation: |
+      Préfixe public.
+    skills:
+      - nextjs
+  - id: typescript-32-variables-denvironnement-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      DATABASE_URL sans NEXT_PUBLIC reste côté serveur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-variables-denvironnement-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mettre un secret en NEXT_PUBLIC_ :
+    options:
+      - Est sûr
+      - L’expose dans le bundle client
+      - Active strict
+      - Est ignoré par Next
+    answer:
+      - 1
+    explanation: |
+      Fuite.
+    skills:
+      - nextjs
+  - id: typescript-32-variables-denvironnement-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Valider process.env avec Zod au boot :
+    options:
+      - Est inutile
+      - Fail fast sur config invalide
+      - Remplace les routes
+      - Compile le CSS
+    answer:
+      - 1
+    explanation: |
+      Robustesse.
+    skills:
+      - nextjs

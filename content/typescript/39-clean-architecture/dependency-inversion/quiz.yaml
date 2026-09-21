@@ -1,0 +1,64 @@
+id: typescript-39-dependency-inversion-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-dependency-inversion-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dependency inversion dit que le haut niveau dépend de :
+    options:
+      - Détails concrets
+      - Abstractions
+      - Uniquement du CSS
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      DIP.
+    skills:
+      - architecture
+  - id: typescript-39-dependency-inversion-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      infra peut importer des types du domain.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, les détails dépendent du centre.
+    skills:
+      - architecture
+  - id: typescript-39-dependency-inversion-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      application importe prisma-user-repository :
+    options:
+      - Respecte DIP
+      - Viole DIP
+      - Est obligatoire
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Mauvaise direction.
+    skills:
+      - architecture
+  - id: typescript-39-dependency-inversion-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Placer l’interface UserRepository dans infra :
+    options:
+      - Est idéal
+      - Inverse le centre de gravité du design
+      - Active Nest auto
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Ports au centre.
+    skills:
+      - architecture

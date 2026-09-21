@@ -1,0 +1,64 @@
+id: typescript-27-promise-allsettled-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-promise-allsettled-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Promise.allSettled :
+    options:
+      - S’arrête au premier rejet
+      - Attend toutes les promesses (succès ou échec)
+      - Ignore les promesses
+      - Retourne uniquement les erreurs
+    answer:
+      - 1
+    explanation: |
+      Settlement complet.
+    skills:
+      - async
+  - id: typescript-27-promise-allsettled-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Il faut narrower sur status pour accéder à value ou reason.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, union discriminée.
+    skills:
+      - async
+  - id: typescript-27-promise-allsettled-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le type d’un résultat settled est :
+    options:
+      - T uniquement
+      - PromiseSettledResult<T>
+      - never
+      - void
+    answer:
+      - 1
+    explanation: |
+      fulfilled | rejected.
+    skills:
+      - async
+  - id: typescript-27-promise-allsettled-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      allSettled est adapté pour :
+    options:
+      - Un seul appel critique fail-fast
+      - Des batchs où chaque résultat compte
+      - Remplacer JSON
+      - Désactiver async
+    answer:
+      - 1
+    explanation: |
+      Agrégation complète.
+    skills:
+      - async

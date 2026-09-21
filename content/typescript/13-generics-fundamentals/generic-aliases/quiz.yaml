@@ -1,0 +1,64 @@
+id: typescript-13-generic-aliases-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-generic-aliases-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe d’un type alias générique est :
+    options:
+      - type Foo(T) = ...
+      - type Foo<T> = ...
+      - alias Foo<T>
+      - type Foo[T] = ...
+    answer:
+      - 1
+    explanation: |
+      type Nom<T> = ...
+    skills:
+      - generics
+  - id: typescript-13-generic-aliases-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut définir un type Result générique avec une union.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est un cas d’usage classique.
+    skills:
+      - generics
+  - id: typescript-13-generic-aliases-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `Nullable<T> = T | null | undefined` est un :
+    options:
+      - Enum
+      - Type alias générique
+      - Décorateur
+      - Namespace
+    answer:
+      - 1
+    explanation: |
+      Alias paramétré.
+    skills:
+      - generics
+  - id: typescript-13-generic-aliases-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les type aliases génériques sont particulièrement adaptés pour :
+    options:
+      - Uniquement les classes
+      - Unions et compositions avancées
+      - Remplacer les fonctions
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Là où l’interface est limitée.
+    skills:
+      - generics

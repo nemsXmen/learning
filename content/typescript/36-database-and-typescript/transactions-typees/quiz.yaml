@@ -1,0 +1,64 @@
+id: typescript-36-transactions-typees-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-transactions-typees-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une transaction vise surtout :
+    options:
+      - Le styling
+      - L’atomicité de plusieurs opérations
+      - La compilation TS
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      All or nothing.
+    skills:
+      - database
+  - id: typescript-36-transactions-typees-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Il faut utiliser le client tx fourni, pas le client global, dans la transaction.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-transactions-typees-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une exception dans le callback de transaction :
+    options:
+      - Commit quand même
+      - Déclenche typiquement un rollback
+      - Active Zod
+      - Est ignorée
+    answer:
+      - 1
+    explanation: |
+      Atomicité.
+    skills:
+      - database
+  - id: typescript-36-transactions-typees-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Propager tx aux repositories sert à :
+    options:
+      - Rien
+      - Garder toutes les écritures dans la même tx
+      - Remplacer SQL
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Cohérence.
+    skills:
+      - database

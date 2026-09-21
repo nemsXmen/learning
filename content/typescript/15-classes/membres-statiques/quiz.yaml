@@ -1,0 +1,64 @@
+id: typescript-15-membres-statiques-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-membres-statiques-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un membre static appartient à :
+    options:
+      - Chaque instance
+      - La classe elle-même
+      - Uniquement au module
+      - never
+    answer:
+      - 1
+    explanation: |
+      Niveau classe, pas instance.
+    skills:
+      - classes
+  - id: typescript-15-membres-statiques-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On accède à un membre static via `ClassName.member`.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - classes
+  - id: typescript-15-membres-statiques-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un bon cas d’usage des static est :
+    options:
+      - Tout l’état métier mutable
+      - Helpers, constantes, compteurs de classe
+      - Remplacer toutes les méthodes d’instance
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Données / comportements partagés au niveau classe.
+    skills:
+      - classes
+  - id: typescript-15-membres-statiques-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `private static nextId` sert souvent à :
+    options:
+      - Rien
+      - Générer des identifiants uniques côté classe
+      - Remplacer readonly
+      - Créer des interfaces
+    answer:
+      - 1
+    explanation: |
+      Compteur partagé encapsulé.
+    skills:
+      - classes

@@ -1,0 +1,64 @@
+id: typescript-41-partial-inference-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-partial-inference-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La partial inference en TypeScript est :
+    options:
+      - Toujours complète comme espéré
+      - Limitée ; souvent tout ou rien à un site d’appel
+      - Interdite
+      - Uniquement pour CSS
+    answer:
+      - 1
+    explanation: |
+      Limite connue.
+    skills:
+      - generics
+  - id: typescript-41-partial-inference-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le currying peut créer un nouveau site d’inférence.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-partial-inference-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      defineHandler("click")() sert à :
+    options:
+      - Rien
+      - Figer le type d’event puis inférer le payload
+      - Compiler SQL
+      - Remplacer les modules
+    answer:
+      - 1
+    explanation: |
+      Factory.
+    skills:
+      - generics
+  - id: typescript-41-partial-inference-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des overloads trop nombreux pour forcer l’inférence :
+    options:
+      - Sont toujours clairs
+      - Peuvent nuire à la maintenabilité
+      - Sont imposés
+      - Activent strictNullChecks
+    answer:
+      - 1
+    explanation: |
+      Équilibre.
+    skills:
+      - generics

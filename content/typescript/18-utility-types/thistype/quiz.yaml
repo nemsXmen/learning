@@ -1,0 +1,64 @@
+id: typescript-18-thistype-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-thistype-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ThisType sert à :
+    options:
+      - Créer des classes
+      - Marquer le type de this dans certains contextes
+      - Remplacer ReturnType
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Marqueur type-level.
+    skills:
+      - utility-types
+  - id: typescript-18-thistype-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      ThisType a un effet à runtime.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Compile-time uniquement.
+    skills:
+      - utility-types
+  - id: typescript-18-thistype-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ThisType est surtout utile pour :
+    options:
+      - Les enums
+      - Les objets littéraux avec méthodes (options APIs)
+      - Uniquement les tableaux
+      - Les namespaces
+    answer:
+      - 1
+    explanation: |
+      Typage de this dans les méthodes.
+    skills:
+      - utility-types
+  - id: typescript-18-thistype-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ThisType est un utility :
+    options:
+      - Très courant au quotidien
+      - Avancé et situationnel
+      - Obligatoire pour toute classe
+      - Identique à Partial
+    answer:
+      - 1
+    explanation: |
+      Cas d’usage ciblés.
+    skills:
+      - utility-types

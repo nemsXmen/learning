@@ -1,0 +1,64 @@
+id: typescript-35-response-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-response-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un response type décrit :
+    options:
+      - Le CSS de la page
+      - La forme JSON de succès
+      - Uniquement les erreurs
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Payload succès.
+    skills:
+      - api
+  - id: typescript-35-response-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      ApiSuccess<T> = { data: T } est une enveloppe courante.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-response-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Renvoyer l’entity DB brute :
+    options:
+      - Est idéal
+      - Risque d’exposer des champs internes
+      - Active Zod auto
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      DTO de sortie.
+    skills:
+      - api
+  - id: typescript-35-response-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les dates dans le JSON API sont souvent :
+    options:
+      - Des Date JS natives sur le fil
+      - Des strings ISO
+      - Des Buffer
+      - Des enums CSS
+    answer:
+      - 1
+    explanation: |
+      Sérialisation JSON.
+    skills:
+      - api

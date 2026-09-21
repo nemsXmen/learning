@@ -1,0 +1,64 @@
+id: typescript-13-generics-avec-objets-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-generics-avec-objets-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `type Box<T> = { value: T }` est :
+    options:
+      - Une classe
+      - Un type alias générique
+      - Un enum
+      - Un décorateur
+    answer:
+      - 1
+    explanation: |
+      Type alias paramétré par T.
+    skills:
+      - generics
+  - id: typescript-13-generics-avec-objets-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les generics peuvent paramétrer des formes d’objets.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-13-generics-avec-objets-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `ApiResponse<User>` avec `type ApiResponse<T> = { data: T }` signifie :
+    options:
+      - data est any
+      - data est de type User
+      - data est unknown
+      - data est never
+    answer:
+      - 1
+    explanation: |
+      T est fixé à User.
+    skills:
+      - generics
+  - id: typescript-13-generics-avec-objets-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un cas d’usage classique d’objet générique est :
+    options:
+      - Uniquement les nombres
+      - Les réponses API / wrappers / conteneurs
+      - Remplacer les strings
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Enveloppes réutilisables typées.
+    skills:
+      - generics

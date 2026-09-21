@@ -1,0 +1,64 @@
+id: typescript-29-path-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-path-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      path.join sert à :
+    options:
+      - Lire un fichier
+      - Composer des chemins de façon portable
+      - Typer des generics
+      - Lancer un serveur
+    answer:
+      - 1
+    explanation: |
+      Manipulation de chemins.
+    skills:
+      - nodejs
+  - id: typescript-29-path-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      path.extname("a.ts") retourne ".ts".
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-path-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      En ESM, __dirname :
+    options:
+      - Existe toujours tel quel
+      - Nécessite souvent un équivalent via import.meta.url
+      - Est un type TypeScript
+      - Remplace path
+    answer:
+      - 1
+    explanation: |
+      Différence CJS/ESM.
+    skills:
+      - nodejs
+  - id: typescript-29-path-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      path.resolve produit :
+    options:
+      - Un Buffer
+      - Un chemin absolu résolu
+      - Un stream
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Résolution absolue.
+    skills:
+      - nodejs

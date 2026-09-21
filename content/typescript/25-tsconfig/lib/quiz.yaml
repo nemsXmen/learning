@@ -1,0 +1,64 @@
+id: typescript-25-lib-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-lib-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      lib contrôle :
+    options:
+      - Le format des modules émis
+      - Les bibliothèques de types disponibles
+      - Uniquement paths
+      - Le theme IDE
+    answer:
+      - 1
+    explanation: |
+      Types ES / DOM…
+    skills:
+      - tsconfig
+  - id: typescript-25-lib-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      lib n’émet pas de polyfills.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-lib-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un frontend classique, on inclut souvent :
+    options:
+      - Uniquement ES5
+      - ES20xx + DOM
+      - Aucune lib
+      - Uniquement AMD
+    answer:
+      - 1
+    explanation: |
+      APIs navigateur + langage.
+    skills:
+      - tsconfig
+  - id: typescript-25-lib-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Inclure DOM dans un service Node pur peut :
+    options:
+      - Être idéal
+      - Introduire des APIs non disponibles au runtime
+      - Accélérer Node
+      - Remplacer @types/node
+    answer:
+      - 1
+    explanation: |
+      Fausse disponibilité de document etc.
+    skills:
+      - tsconfig

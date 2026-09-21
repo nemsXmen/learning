@@ -1,0 +1,64 @@
+id: typescript-16-domain-models-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-domain-models-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un modèle de domaine représente :
+    options:
+      - Uniquement la base de données
+      - Les concepts et règles métier
+      - Uniquement l’UI
+      - Les fichiers de config
+    answer:
+      - 1
+    explanation: |
+      Cœur métier du logiciel.
+    skills:
+      - oop
+  - id: typescript-16-domain-models-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un modèle anémique n’a presque pas de comportement.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-domain-models-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Où placer de préférence les invariants métier ?
+    options:
+      - Uniquement dans les contrôleurs
+      - Dans le modèle de domaine
+      - Uniquement dans la base de données
+      - Dans les commentaires
+    answer:
+      - 1
+    explanation: |
+      Proches des données qu’ils protègent.
+    skills:
+      - oop
+  - id: typescript-16-domain-models-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TypeScript aide les modèles de domaine via :
+    options:
+      - Uniquement any
+      - Types précis, encapsulation, unions discriminées
+      - L’interdiction des classes
+      - Le runtime uniquement
+    answer:
+      - 1
+    explanation: |
+      Outils de modélisation riches.
+    skills:
+      - oop

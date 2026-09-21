@@ -1,0 +1,64 @@
+id: typescript-31-usereducer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-usereducer-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les actions useReducer se modélisent bien avec :
+    options:
+      - any
+      - Une union discriminée
+      - Uniquement des numbers
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      type: "..."
+    skills:
+      - react
+  - id: typescript-31-usereducer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le reducer doit retourner le type State.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-usereducer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      default: const _exhaustive: never = action sert à :
+    options:
+      - Rien
+      - Vérifier l’exhaustivité des cas
+      - Désactiver strict
+      - Typer le CSS
+    answer:
+      - 1
+    explanation: |
+      Pattern never.
+    skills:
+      - react
+  - id: typescript-31-usereducer-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      dispatch({ type: "set", value: 1 }) est checké si :
+    options:
+      - Action est bien typée
+      - On utilise any
+      - On ignore TypeScript
+      - On compile en ES3 only
+    answer:
+      - 0
+    explanation: |
+      Contrat d’actions.
+    skills:
+      - react

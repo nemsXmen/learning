@@ -1,0 +1,64 @@
+id: typescript-17-mapped-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-mapped-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La forme de base d’un mapped type est :
+    options:
+      - '{"K in T":"..."}'
+      - '{"[ K in keyof T ]":"..."}'
+      - map T to ...
+      - T.map(...)
+    answer:
+      - 1
+    explanation: |
+      Itération sur les clés.
+    skills:
+      - advanced-types
+  - id: typescript-17-mapped-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Partial et Readonly sont des mapped types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - advanced-types
+  - id: typescript-17-mapped-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `-?` dans un mapped type sert à :
+    options:
+      - Ajouter l’optionalité
+      - Retirer l’optionalité (Required)
+      - Ajouter readonly
+      - Rien
+    answer:
+      - 1
+    explanation: |
+      Suppression du modifier optional.
+    skills:
+      - advanced-types
+  - id: typescript-17-mapped-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un mapped type permet de :
+    options:
+      - Exécuter du code runtime
+      - Transformer systématiquement les propriétés d’un type
+      - Créer des classes
+      - Remplacer les enums
+    answer:
+      - 1
+    explanation: |
+      Transformation type-level.
+    skills:
+      - advanced-types

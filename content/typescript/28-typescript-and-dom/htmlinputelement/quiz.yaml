@@ -1,0 +1,64 @@
+id: typescript-28-htmlinputelement-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-htmlinputelement-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      HTMLInputElement expose :
+    options:
+      - Uniquement innerHTML
+      - value, checked, type
+      - process.argv
+      - fetch only
+    answer:
+      - 1
+    explanation: |
+      API input.
+    skills:
+      - dom
+  - id: typescript-28-htmlinputelement-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      instanceof HTMLInputElement permet d’accéder à .value en sécurité.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - dom
+  - id: typescript-28-htmlinputelement-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      textarea se type plutôt en :
+    options:
+      - HTMLInputElement
+      - HTMLTextAreaElement
+      - HTMLDivElement
+      - Window
+    answer:
+      - 1
+    explanation: |
+      Interface dédiée.
+    skills:
+      - dom
+  - id: typescript-28-htmlinputelement-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      querySelector("#email") retourne par défaut :
+    options:
+      - HTMLInputElement
+      - Element | null
+      - string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Type générique + null.
+    skills:
+      - dom

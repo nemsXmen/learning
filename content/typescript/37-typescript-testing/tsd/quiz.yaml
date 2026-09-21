@@ -1,0 +1,64 @@
+id: typescript-37-tsd-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-tsd-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      tsd sert à :
+    options:
+      - Tester des types TypeScript
+      - Bundler du CSS
+      - Héberger une DB
+      - Remplacer Node
+    answer:
+      - 0
+    explanation: |
+      Type testing tool.
+    skills:
+      - testing
+  - id: typescript-37-tsd-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      expectType<number>(x) échoue si x n’est pas number.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-tsd-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      expectError sert à :
+    options:
+      - Forcer un succès runtime
+      - Vérifier qu’un usage est bien rejeté par le type-checker
+      - Lancer un serveur
+      - Minifier
+    answer:
+      - 1
+    explanation: |
+      Cas négatifs de types.
+    skills:
+      - testing
+  - id: typescript-37-tsd-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les fichiers tsd sont souvent en :
+    options:
+      - .css
+      - .test-d.ts
+      - .sql
+      - .png
+    answer:
+      - 1
+    explanation: |
+      Convention tsd.
+    skills:
+      - testing

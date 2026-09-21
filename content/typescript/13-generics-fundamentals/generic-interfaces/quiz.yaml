@@ -1,0 +1,64 @@
+id: typescript-13-generic-interfaces-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-generic-interfaces-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe d’une interface générique est :
+    options:
+      - interface Foo(T)
+      - interface Foo<T> { ... }
+      - generic interface Foo
+      - interface Foo[T]
+    answer:
+      - 1
+    explanation: |
+      Paramètres de type entre chevrons.
+    skills:
+      - generics
+  - id: typescript-13-generic-interfaces-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut utiliser plusieurs paramètres de type sur une interface.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, ex. KeyValuePair<K, V>.
+    skills:
+      - generics
+  - id: typescript-13-generic-interfaces-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `Repository<User>` signifie :
+    options:
+      - Repository de any
+      - Repository paramétré pour le type User
+      - Un enum
+      - Un décorateur
+    answer:
+      - 1
+    explanation: |
+      T est fixé à User.
+    skills:
+      - generics
+  - id: typescript-13-generic-interfaces-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les interfaces génériques sont utiles pour :
+    options:
+      - Uniquement les primitives
+      - Repositories, factories, structures réutilisables
+      - Remplacer les fonctions
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Contrats réutilisables typés.
+    skills:
+      - generics

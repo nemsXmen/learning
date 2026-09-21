@@ -1,0 +1,64 @@
+id: typescript-38-dependency-injection-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-dependency-injection-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’injection de dépendances consiste à :
+    options:
+      - new les deps à l’intérieur toujours
+      - Recevoir les deps de l’extérieur
+      - Supprimer les interfaces
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Inversion de contrôle.
+    skills:
+      - patterns
+  - id: typescript-38-dependency-injection-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le constructeur est un point d’injection courant et typé.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-dependency-injection-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La composition root est :
+    options:
+      - Un style CSS
+      - L’endroit qui assemble le graphe d’objets
+      - Un ORM
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Wiring.
+    skills:
+      - patterns
+  - id: typescript-38-dependency-injection-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      new SmtpMailer() dans le domaine :
+    options:
+      - Facilite les tests
+      - Couple au concret et complique les tests
+      - Est imposé par TS
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Préférer l’injection.
+    skills:
+      - patterns

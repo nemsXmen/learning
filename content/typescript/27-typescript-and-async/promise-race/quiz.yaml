@@ -1,0 +1,64 @@
+id: typescript-27-promise-race-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-promise-race-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Promise.race se décide sur :
+    options:
+      - Toutes les promesses
+      - La première qui se termine (succès ou rejet)
+      - La dernière uniquement
+      - Aucune
+    answer:
+      - 1
+    explanation: |
+      Premier settlement.
+    skills:
+      - async
+  - id: typescript-27-promise-race-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un rejet peut gagner Promise.race.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-promise-race-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un cas d’usage classique est :
+    options:
+      - Typer des enums
+      - Timeout d’une opération
+      - Remplacer JSON
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      race avec timer.
+    skills:
+      - async
+  - id: typescript-27-promise-race-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Après un race, les autres promesses :
+    options:
+      - Sont automatiquement annulées par JS
+      - Continuent sauf si on annule explicitement (AbortController…)
+      - N’existent plus
+      - Deviennent never
+    answer:
+      - 1
+    explanation: |
+      Pas d’auto-cancel.
+    skills:
+      - async

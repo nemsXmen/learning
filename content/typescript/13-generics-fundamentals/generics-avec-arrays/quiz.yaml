@@ -1,0 +1,64 @@
+id: typescript-13-generics-avec-arrays-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-generics-avec-arrays-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `T[]` est équivalent à :
+    options:
+      - any[]
+      - Array<T>
+      - '["T"]'
+      - object
+    answer:
+      - 1
+    explanation: |
+      Les deux notations désignent un tableau de T.
+    skills:
+      - generics
+  - id: typescript-13-generics-avec-arrays-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les méthodes map/filter de Array sont génériques.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-13-generics-avec-arrays-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `head([1, 2, 3])` avec `head<T>(arr: T[])` retourne :
+    options:
+      - any
+      - number | undefined
+      - string
+      - never
+    answer:
+      - 1
+    explanation: |
+      T = number, retour T | undefined.
+    skills:
+      - generics
+  - id: typescript-13-generics-avec-arrays-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour un helper sur tableaux, on déclare souvent :
+    options:
+      - '{"function f(arr":"any[])"}'
+      - '{"function f<T>(arr":"T[])"}'
+      - '{"function f(arr":"object)"}'
+      - '{"function f(arr":"never)"}'
+    answer:
+      - 1
+    explanation: |
+      Le generic préserve le type des éléments.
+    skills:
+      - generics

@@ -1,0 +1,64 @@
+id: typescript-31-usestate-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-usestate-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      useState(0) infère souvent :
+    options:
+      - string
+      - number
+      - never
+      - User
+    answer:
+      - 1
+    explanation: |
+      Littéral numérique.
+    skills:
+      - react
+  - id: typescript-31-usestate-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      useState([]) peut devenir never[].
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, annoter le générique.
+    skills:
+      - react
+  - id: typescript-31-usestate-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour une donnée absente puis chargée, on type souvent :
+    options:
+      - User seulement
+      - User | null
+      - never
+      - Window
+    answer:
+      - 1
+    explanation: |
+      État vide explicite.
+    skills:
+      - react
+  - id: typescript-31-usestate-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le setter de useState<T> accepte :
+    options:
+      - N’importe quel type
+      - '{"T ou un updater (prev":"T) => T"}'
+      - Uniquement string
+      - Uniquement null
+    answer:
+      - 1
+    explanation: |
+      Même type d’état.
+    skills:
+      - react

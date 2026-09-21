@@ -1,0 +1,64 @@
+id: typescript-37-type-testing-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-type-testing-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les type tests vérifient surtout :
+    options:
+      - La perf réseau
+      - Le comportement des types (assignabilité, inférence)
+      - Le CSS
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Niveau types.
+    skills:
+      - testing
+  - id: typescript-37-type-testing-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les type tests remplacent les tests runtime.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Complémentaires.
+    skills:
+      - testing
+  - id: typescript-37-type-testing-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      tsd est un outil pour :
+    options:
+      - Bundler
+      - Tester des déclarations de types
+      - ORM
+      - Linter CSS
+    answer:
+      - 1
+    explanation: |
+      Type testing.
+    skills:
+      - testing
+  - id: typescript-37-type-testing-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      tsc --noEmit en CI sert notamment à :
+    options:
+      - Exécuter les tests e2e
+      - Vérifier que le projet type-check
+      - Minifier le CSS
+      - Publier npm
+    answer:
+      - 1
+    explanation: |
+      Gate de typage.
+    skills:
+      - testing

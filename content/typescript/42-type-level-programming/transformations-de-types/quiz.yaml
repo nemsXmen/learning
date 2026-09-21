@@ -1,0 +1,64 @@
+id: typescript-42-transformations-de-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-transformations-de-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Partial<T> rend les props :
+    options:
+      - required
+      - optionnelles
+      - never
+      - readonly only
+    answer:
+      - 1
+    explanation: |
+      ?.
+    skills:
+      - type-level
+  - id: typescript-42-transformations-de-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut composer Partial et Readonly.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-transformations-de-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un mapped type [K in keyof T] sert à :
+    options:
+      - Boucler sur les clés de T
+      - Exécuter du JS
+      - Lancer un serveur
+      - Configurer Docker
+    answer:
+      - 0
+    explanation: |
+      Transformation structurelle.
+    skills:
+      - type-level
+  - id: typescript-42-transformations-de-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      NullableProps transforme T[K] en :
+    options:
+      - never
+      - T[K] | null
+      - void
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Union null.
+    skills:
+      - type-level

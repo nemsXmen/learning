@@ -1,0 +1,64 @@
+id: typescript-33-providers-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-providers-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un provider Nest peut être :
+    options:
+      - Uniquement un fichier CSS
+      - Une classe, une valeur ou une factory
+      - Uniquement un enum HTML
+      - process.browser
+    answer:
+      - 1
+    explanation: |
+      Formes multiples.
+    skills:
+      - nestjs
+  - id: typescript-33-providers-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      useFactory permet de créer un provider via une fonction.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-providers-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour injecter un token string "CONFIG", on utilise souvent :
+    options:
+      - Rien de spécial
+      - '@Inject("CONFIG")'
+      - "@Get only"
+      - "@Controller"
+    answer:
+      - 1
+    explanation: |
+      Token custom.
+    skills:
+      - nestjs
+  - id: typescript-33-providers-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      useValue sert à :
+    options:
+      - Compiler le CSS
+      - Fournir une valeur constante / config
+      - Remplacer les modules
+      - Désactiver la DI
+    answer:
+      - 1
+    explanation: |
+      Injection de valeur.
+    skills:
+      - nestjs

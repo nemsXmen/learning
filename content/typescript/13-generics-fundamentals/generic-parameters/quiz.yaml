@@ -1,0 +1,64 @@
+id: typescript-13-generic-parameters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-generic-parameters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un paramètre de type est souvent noté :
+    options:
+      - t
+      - T (ou U, K…)
+      - type
+      - any
+    answer:
+      - 1
+    explanation: |
+      Convention : majuscules, souvent une seule lettre.
+    skills:
+      - generics
+  - id: typescript-13-generic-parameters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le paramètre de type est visible dans le type de retour de la fonction.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, dans toute la signature.
+    skills:
+      - generics
+  - id: typescript-13-generic-parameters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `K` est souvent utilisé pour :
+    options:
+      - Un nombre
+      - Une clé (key)
+      - Un callback uniquement
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Convention fréquente avec keyof.
+    skills:
+      - generics
+  - id: typescript-13-generic-parameters-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La valeur concrète d’un paramètre de type est fixée :
+    options:
+      - À la définition uniquement
+      - À chaque appel
+      - Uniquement au runtime
+      - Jamais
+    answer:
+      - 1
+    explanation: |
+      Inférence ou argument de type explicite à l’appel.
+    skills:
+      - generics

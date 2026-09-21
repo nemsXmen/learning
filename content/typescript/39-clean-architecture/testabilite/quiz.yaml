@@ -1,0 +1,64 @@
+id: typescript-39-testabilite-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-testabilite-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Tester un use case isolément s’appuie sur :
+    options:
+      - La prod DB toujours
+      - Des fakes de ports
+      - Uniquement du CSS
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Injection.
+    skills:
+      - architecture
+  - id: typescript-39-testabilite-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le domain peut souvent être testé sans mocks IO.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Pureté.
+    skills:
+      - architecture
+  - id: typescript-39-testabilite-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mocks collés à Prisma dans les tests de use case :
+    options:
+      - Sont idéaux
+      - Couplent les tests à l’ORM
+      - Activent DI
+      - Sont imposés
+    answer:
+      - 1
+    explanation: |
+      Mocker le port.
+    skills:
+      - architecture
+  - id: typescript-39-testabilite-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les tests d’adapters (DB) sont plutôt :
+    options:
+      - Unitaires purs
+      - D’intégration
+      - Type-level only
+      - CSS
+    answer:
+      - 1
+    explanation: |
+      IO réel.
+    skills:
+      - architecture

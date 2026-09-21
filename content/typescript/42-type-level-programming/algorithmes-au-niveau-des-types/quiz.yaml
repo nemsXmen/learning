@@ -1,0 +1,64 @@
+id: typescript-42-algorithmes-au-niveau-des-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-algorithmes-au-niveau-des-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      BuildTuple<N> sert souvent de :
+    options:
+      - Serveur HTTP
+      - Compteur type-level via length
+      - Fichier CSS
+      - ORM
+    answer:
+      - 1
+    explanation: |
+      Peano-like.
+    skills:
+      - type-level
+  - id: typescript-42-algorithmes-au-niveau-des-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’arithmétique type-level peut être coûteuse pour le compilateur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-algorithmes-au-niveau-des-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour de la logique métier numérique, on préfère :
+    options:
+      - Type-level exclusively
+      - Runtime
+      - CSS
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Pragmatisme.
+    skills:
+      - type-level
+  - id: typescript-42-algorithmes-au-niveau-des-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le type-level reste le plus utile pour :
+    options:
+      - Formes, contrats, DX
+      - Remplacer toute la logique métier
+      - Héberger des bases
+      - Minifier images
+    answer:
+      - 0
+    explanation: |
+      Objectif principal.
+    skills:
+      - type-level

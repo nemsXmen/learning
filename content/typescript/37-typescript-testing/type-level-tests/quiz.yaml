@@ -1,0 +1,64 @@
+id: typescript-37-type-level-tests-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-type-level-tests-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les type-level tests échouent via :
+    options:
+      - Uniquement un assert runtime
+      - Une erreur de compilation TypeScript
+      - Un style CSS
+      - process.exit obligatoire
+    answer:
+      - 1
+    explanation: |
+      tsc.
+    skills:
+      - testing
+  - id: typescript-37-type-level-tests-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Expect<T extends true> force T à être true.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-type-level-tests-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Equal<A, B> sert à :
+    options:
+      - Comparer des fichiers
+      - Vérifier l’égalité de deux types
+      - Lancer un serveur
+      - Minifier
+    answer:
+      - 1
+    explanation: |
+      Helper de types.
+    skills:
+      - testing
+  - id: typescript-37-type-level-tests-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Ces tests se placent bien :
+    options:
+      - Uniquement en prod runtime
+      - Dans des fichiers dédiés checkés par tsc en CI
+      - Dans le CSS
+      - Nulle part
+    answer:
+      - 1
+    explanation: |
+      Gate CI.
+    skills:
+      - testing

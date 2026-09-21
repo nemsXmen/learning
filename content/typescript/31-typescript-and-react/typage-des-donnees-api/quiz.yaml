@@ -1,0 +1,64 @@
+id: typescript-31-typage-des-donnees-api-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-typage-des-donnees-api-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Après fetch().json(), on devrait traiter le résultat comme :
+    options:
+      - User garanti
+      - unknown à valider
+      - never
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Frontière réseau.
+    skills:
+      - react
+  - id: typescript-31-typage-des-donnees-api-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      React Query accepte des génériques pour typer data.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-typage-des-donnees-api-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      as User sur la réponse API :
+    options:
+      - Valide les champs
+      - N’offre aucune garantie runtime
+      - Est obligatoire
+      - Remplace Zod
+    answer:
+      - 1
+    explanation: |
+      Assertion pure.
+    skills:
+      - react
+  - id: typescript-31-typage-des-donnees-api-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un état typé courant pour une ressource est :
+    options:
+      - any seulement
+      - T | null (+ error/loading)
+      - Window
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Présence optionnelle.
+    skills:
+      - react

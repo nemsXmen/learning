@@ -1,0 +1,64 @@
+id: typescript-24-named-exports-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-named-exports-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un named export s’importe avec :
+    options:
+      - import x from "mod"
+      - import { x } from "mod"
+      - import * only
+      - require uniquement
+    answer:
+      - 1
+    explanation: |
+      Accolades.
+    skills:
+      - modules
+  - id: typescript-24-named-exports-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut renommer un named import avec as.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui : import { x as y }.
+    skills:
+      - modules
+  - id: typescript-24-named-exports-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un module peut avoir :
+    options:
+      - Un seul named export max
+      - Plusieurs named exports
+      - Aucun export nommé jamais
+      - Uniquement des defaults
+    answer:
+      - 1
+    explanation: |
+      Plusieurs possibles.
+    skills:
+      - modules
+  - id: typescript-24-named-exports-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les named exports sont souvent préférés car :
+    options:
+      - Ils interdisent le tree-shaking
+      - Ils sont explicites et tree-shakeable
+      - Ils sont plus lents à runtime
+      - TypeScript les impose seuls
+    answer:
+      - 1
+    explanation: |
+      Clarté + optimisation.
+    skills:
+      - modules

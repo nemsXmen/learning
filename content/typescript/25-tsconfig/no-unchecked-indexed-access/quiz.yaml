@@ -1,0 +1,64 @@
+id: typescript-25-no-unchecked-indexed-access-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-no-unchecked-indexed-access-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Avec noUncheckedIndexedAccess, arr[i] est typé :
+    options:
+      - Toujours T
+      - T | undefined
+      - never
+      - any
+    answer:
+      - 1
+    explanation: |
+      Présence non garantie.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unchecked-indexed-access-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Cette option n’est pas incluse par défaut dans strict.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, flag séparé souvent activé en plus.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unchecked-indexed-access-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Record<string, number>["x"] sous cette option :
+    options:
+      - number
+      - number | undefined
+      - string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Clé pas forcément présente.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unchecked-indexed-access-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’option pousse à :
+    options:
+      - Ignorer les accès
+      - Vérifier avant d’utiliser la valeur indexée
+      - Utiliser any
+      - Désactiver les tableaux
+    answer:
+      - 1
+    explanation: |
+      Sécurité des accès.
+    skills:
+      - tsconfig

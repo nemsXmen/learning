@@ -1,0 +1,64 @@
+id: typescript-25-module-resolution-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-module-resolution-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      moduleResolution contrôle :
+    options:
+      - La syntaxe JS émise uniquement
+      - Comment les imports sont résolus
+      - Uniquement strict
+      - Les décorateurs
+    answer:
+      - 1
+    explanation: |
+      Résolution des modules.
+    skills:
+      - tsconfig
+  - id: typescript-25-module-resolution-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      "bundler" est adapté aux projets Vite / Webpack.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-module-resolution-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      NodeNext est souvent pairé avec :
+    options:
+      - '{"module":"AMD"}'
+      - '{"module":"NodeNext / Node16"}'
+      - '{"module":"None"}'
+      - Uniquement target ES5
+    answer:
+      - 1
+    explanation: |
+      Cohérence Node moderne.
+    skills:
+      - tsconfig
+  - id: typescript-25-module-resolution-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une mauvaise combinaison module / moduleResolution peut :
+    options:
+      - Rien causer
+      - Casser la résolution d’imports
+      - Accélérer la compile uniquement
+      - Remplacer tsconfig
+    answer:
+      - 1
+    explanation: |
+      Erreurs de résolution.
+    skills:
+      - tsconfig

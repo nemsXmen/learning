@@ -1,0 +1,64 @@
+id: typescript-15-parameter-properties-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-parameter-properties-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `constructor(public name: string) {}` crée :
+    options:
+      - Uniquement un paramètre
+      - Une propriété public name + son assignation
+      - Une méthode
+      - Un type alias
+    answer:
+      - 1
+    explanation: |
+      C’est une parameter property.
+    skills:
+      - classes
+  - id: typescript-15-parameter-properties-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut combiner private et readonly sur une parameter property.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui : private readonly repo: Repo.
+    skills:
+      - classes
+  - id: typescript-15-parameter-properties-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans modificateur sur un paramètre de constructeur :
+    options:
+      - Une propriété est quand même créée
+      - Ce n’est qu’un paramètre local
+      - Erreur de compilation
+      - Il devient static
+    answer:
+      - 1
+    explanation: |
+      Le modificateur est nécessaire pour la parameter property.
+    skills:
+      - classes
+  - id: typescript-15-parameter-properties-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les parameter properties servent surtout à :
+    options:
+      - Ralentir le runtime
+      - Réduire le boilerplate d’initialisation
+      - Remplacer les interfaces
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Moins de code répétitif.
+    skills:
+      - classes

@@ -1,0 +1,64 @@
+id: typescript-27-promise-t-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-promise-t-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans Promise<User>, User est :
+    options:
+      - Le type de l’erreur
+      - Le type de la valeur résolue
+      - Un enum
+      - Le status HTTP
+    answer:
+      - 1
+    explanation: |
+      Type de succès.
+    skills:
+      - async
+  - id: typescript-27-promise-t-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une async function retourne toujours une Promise.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-promise-t-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      await sur Promise<number> produit :
+    options:
+      - Promise<number>
+      - number
+      - void
+      - unknown
+    answer:
+      - 1
+    explanation: |
+      Unwrap.
+    skills:
+      - async
+  - id: typescript-27-promise-t-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Promise.resolve(42) a pour type :
+    options:
+      - number
+      - Promise<number>
+      - any
+      - never
+    answer:
+      - 1
+    explanation: |
+      Promise enveloppante.
+    skills:
+      - async

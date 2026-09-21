@@ -1,0 +1,64 @@
+id: typescript-18-exclude-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-exclude-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Exclude<"a"|"b"|"c", "a"> produit :
+    options:
+      - a
+      - '"b" | "c"'
+      - never
+      - string
+    answer:
+      - 1
+    explanation: |
+      Retire "a".
+    skills:
+      - utility-types
+  - id: typescript-18-exclude-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Exclude opère sur des unions de types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-exclude-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exclude s’appuie sur :
+    options:
+      - Un mapped type uniquement
+      - Un conditional type distributif
+      - Un enum
+      - Une classe
+    answer:
+      - 1
+    explanation: |
+      T extends U ? never : T.
+    skills:
+      - utility-types
+  - id: typescript-18-exclude-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Omit vs Exclude :
+    options:
+      - Identiques
+      - Omit = props d’objet ; Exclude = membres d’union
+      - Exclude = props d’objet uniquement
+      - Aucun rapport avec les types
+    answer:
+      - 1
+    explanation: |
+      Domaines d’application différents.
+    skills:
+      - utility-types

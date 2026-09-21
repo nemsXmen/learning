@@ -1,0 +1,64 @@
+id: typescript-38-command-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-command-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une Command représente souvent :
+    options:
+      - Un style CSS
+      - Une intention / action exécutable
+      - Une table SQL only
+      - Un type never
+    answer:
+      - 1
+    explanation: |
+      Action encapsulée.
+    skills:
+      - patterns
+  - id: typescript-38-command-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      execute() peut être async (Promise).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-command-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      CQRS sépare souvent :
+    options:
+      - CSS et HTML
+      - Commands (écritures) et Queries (lectures)
+      - Types et valeurs de façon illégale
+      - Dev et prod sans CI
+    answer:
+      - 1
+    explanation: |
+      Séparation des responsabilités.
+    skills:
+      - patterns
+  - id: typescript-38-command-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une command trop chargée en logique de lecture :
+    options:
+      - Est idéale
+      - Mélange command et query
+      - Active DI
+      - Est imposée
+    answer:
+      - 1
+    explanation: |
+      Rester focalisé écriture.
+    skills:
+      - patterns

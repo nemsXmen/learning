@@ -1,0 +1,64 @@
+id: typescript-33-repository-pattern-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-repository-pattern-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le pattern repository sert à :
+    options:
+      - Styliser les réponses
+      - Isoler l’accès data derrière un contrat
+      - Remplacer les controllers
+      - Compiler les décorateurs
+    answer:
+      - 1
+    explanation: |
+      Découplage ORM.
+    skills:
+      - nestjs
+  - id: typescript-33-repository-pattern-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le service métier peut dépendre d’une interface UserRepository.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui (avec token DI).
+    skills:
+      - nestjs
+  - id: typescript-33-repository-pattern-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Fuiter les types Prisma dans tout le domaine :
+    options:
+      - Est idéal
+      - Couple fortement au ORM
+      - Active ValidationPipe
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Fragilité.
+    skills:
+      - nestjs
+  - id: typescript-33-repository-pattern-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      useClass: PrismaUserRepository sur le token UserRepository :
+    options:
+      - N’a aucun effet
+      - Relie le port à l’adapter
+      - Supprime le module
+      - Compile le CSS
+    answer:
+      - 1
+    explanation: |
+      Binding DI.
+    skills:
+      - nestjs

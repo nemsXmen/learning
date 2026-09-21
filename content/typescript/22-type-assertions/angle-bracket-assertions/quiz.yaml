@@ -1,0 +1,64 @@
+id: typescript-22-angle-bracket-assertions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-22-angle-bracket-assertions-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `<string>value` est équivalent à :
+    options:
+      - value as string
+      - '{"value":"string"}'
+      - String(value)
+      - typeof value
+    answer:
+      - 0
+    explanation: |
+      Même assertion, autre syntaxe.
+    skills:
+      - type-assertions
+  - id: typescript-22-angle-bracket-assertions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      En TSX, on préfère as à la syntaxe angle-bracket.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, conflit avec JSX.
+    skills:
+      - type-assertions
+  - id: typescript-22-angle-bracket-assertions-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe angle-bracket a un effet runtime :
+    options:
+      - Oui, elle convertit
+      - Non
+      - Uniquement en mode strict
+      - Uniquement avec DOM
+    answer:
+      - 1
+    explanation: |
+      Compile-time uniquement.
+    skills:
+      - type-assertions
+  - id: typescript-22-angle-bracket-assertions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans un projet React TSX, on utilise surtout :
+    options:
+      - <Type>value
+      - value as Type
+      - Les deux indifféremment partout
+      - assert Type
+    answer:
+      - 1
+    explanation: |
+      as pour éviter l’ambiguïté JSX.
+    skills:
+      - type-assertions

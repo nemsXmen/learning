@@ -1,0 +1,64 @@
+id: typescript-38-decorator-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-decorator-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le pattern Decorator :
+    options:
+      - Modifie forcément le code source de la classe wrappée
+      - Enveloppe un objet pour enrichir son comportement
+      - Est uniquement du CSS
+      - Remplace TypeScript
+    answer:
+      - 1
+    explanation: |
+      Wrapping.
+    skills:
+      - patterns
+  - id: typescript-38-decorator-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Pattern Decorator et syntaxe @decorator TypeScript sont la même chose.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Concepts différents.
+    skills:
+      - patterns
+  - id: typescript-38-decorator-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TimestampLogger implements Logger et délègue à inner :
+    options:
+      - Cas par cas non typé
+      - Respecte le contrat Logger
+      - Est interdit
+      - Active Nest only
+    answer:
+      - 1
+    explanation: |
+      Même interface.
+    skills:
+      - patterns
+  - id: typescript-38-decorator-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’ordre des wrappers :
+    options:
+      - N’a jamais d’importance
+      - Peut changer le comportement observable
+      - Est fixé par SQL
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Composition ordonnée.
+    skills:
+      - patterns

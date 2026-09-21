@@ -1,0 +1,64 @@
+id: typescript-27-gestion-typee-des-erreurs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-gestion-typee-des-erreurs-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Avec useUnknownInCatchVariables, e dans catch est :
+    options:
+      - any
+      - unknown
+      - Error toujours
+      - never
+    answer:
+      - 1
+    explanation: |
+      unknown par défaut sous strict moderne.
+    skills:
+      - async
+  - id: typescript-27-gestion-typee-des-erreurs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Il faut narrower unknown avant d’accéder à e.message.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-gestion-typee-des-erreurs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un pattern Result expose :
+    options:
+      - Uniquement des throw
+      - Succès / échec de façon explicite dans le type
+      - Uniquement any
+      - Des enums HTTP seulement
+    answer:
+      - 1
+    explanation: |
+      ok: true | false.
+    skills:
+      - async
+  - id: typescript-27-gestion-typee-des-erreurs-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TypeScript type nativement le rejet des Promises :
+    options:
+      - De façon très précise par défaut
+      - De façon limitée (souvent any/unknown côté catch)
+      - Comme never uniquement
+      - Comme string obligatoire
+    answer:
+      - 1
+    explanation: |
+      Zone faible du système de types.
+    skills:
+      - async

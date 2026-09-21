@@ -1,0 +1,64 @@
+id: typescript-37-typed-mocks-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-typed-mocks-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un mock typé devrait respecter :
+    options:
+      - Un fichier CSS
+      - L’interface de la dépendance
+      - process.env only
+      - Un enum HTML
+    answer:
+      - 1
+    explanation: |
+      Même contrat.
+    skills:
+      - testing
+  - id: typescript-37-typed-mocks-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      mock as any fait perdre les checks de signature.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-typed-mocks-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      vi.fn().mockResolvedValue convient pour :
+    options:
+      - Une fonction sync void only
+      - Une méthode async retournant une Promise
+      - Un style CSS
+      - Une migration SQL
+    answer:
+      - 1
+    explanation: |
+      Async mock.
+    skills:
+      - testing
+  - id: typescript-37-typed-mocks-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Partial<UserRepository> comme mock :
+    options:
+      - Est toujours sûr
+      - Peut cacher des méthodes manquantes (prudence)
+      - Est interdit
+      - Active Vitest
+    answer:
+      - 1
+    explanation: |
+      Utiliser avec soin.
+    skills:
+      - testing

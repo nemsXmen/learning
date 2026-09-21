@@ -1,0 +1,64 @@
+id: typescript-30-typesversions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-typesversions-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      typesVersions permet de :
+    options:
+      - Changer le runtime Node
+      - Varier les .d.ts selon la version de TypeScript
+      - Compiler le CSS
+      - Remplacer exports
+    answer:
+      - 1
+    explanation: |
+      Mapping version → types.
+    skills:
+      - npm
+  - id: typescript-30-typesversions-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      typesVersions est un outil avancé, souvent inutile pour les petites libs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, complexité optionnelle.
+    skills:
+      - npm
+  - id: typescript-30-typesversions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une alternative simple est :
+    options:
+      - Dix variantes de types dès le début
+      - Une seule ligne de types moderne
+      - Supprimer les types
+      - any obligatoire
+    answer:
+      - 1
+    explanation: |
+      Simplicité d’abord.
+    skills:
+      - npm
+  - id: typescript-30-typesversions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      typesVersions se configure dans :
+    options:
+      - tsconfig uniquement
+      - package.json
+      - Un fichier CSS
+      - .gitignore
+    answer:
+      - 1
+    explanation: |
+      Manifest npm.
+    skills:
+      - npm

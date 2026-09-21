@@ -1,0 +1,64 @@
+id: typescript-14-abstractions-reutilisables-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-abstractions-reutilisables-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quand abstraire avec un generic ?
+    options:
+      - Dès la première ligne de code
+      - Quand on a une duplication réelle entre plusieurs usages
+      - Jamais
+      - Uniquement pour les strings
+    answer:
+      - 1
+    explanation: |
+      Éviter la généricité spéculative.
+    skills:
+      - generics
+  - id: typescript-14-abstractions-reutilisables-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Trop de paramètres de type peut nuire à la lisibilité.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-abstractions-reutilisables-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un bon principe est :
+    options:
+      - Maximiser le nombre de generics
+      - Lisibilité > astuce type-level
+      - Toujours utiliser any
+      - Interdire les generics
+    answer:
+      - 1
+    explanation: |
+      La clarté prime.
+    skills:
+      - generics
+  - id: typescript-14-abstractions-reutilisables-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `Result<T, E>` est un exemple de :
+    options:
+      - Sur-abstraction
+      - Abstraction générique simple et utile
+      - Enum
+      - Décorateur
+    answer:
+      - 1
+    explanation: |
+      Pattern clair et réutilisable.
+    skills:
+      - generics

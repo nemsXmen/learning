@@ -1,0 +1,64 @@
+id: typescript-32-server-actions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-server-actions-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une Server Action se marque souvent avec :
+    options:
+      - use client
+      - use server
+      - use memo
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Directive serveur.
+    skills:
+      - nextjs
+  - id: typescript-32-server-actions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les Server Actions peuvent recevoir FormData depuis un form.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-server-actions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Avant d’écrire en DB, une action devrait :
+    options:
+      - Rien vérifier
+      - Valider les inputs (+ auth)
+      - Uniquement logger
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Frontière + sécurité.
+    skills:
+      - nextjs
+  - id: typescript-32-server-actions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les types TS d’une action :
+    options:
+      - Valident le runtime réseau
+      - Aident à la compile, pas une validation runtime
+      - Remplacent l’auth
+      - Sont interdits
+    answer:
+      - 1
+    explanation: |
+      Compile-time only.
+    skills:
+      - nextjs

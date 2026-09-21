@@ -1,0 +1,64 @@
+id: typescript-26-unknown-aux-frontieres-quiz
+kind: QUIZ
+questions:
+  - id: typescript-26-unknown-aux-frontieres-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Aux frontières, on préfère souvent :
+    options:
+      - any
+      - unknown
+      - never
+      - enum
+    answer:
+      - 1
+    explanation: |
+      Force le narrowing.
+    skills:
+      - runtime
+  - id: typescript-26-unknown-aux-frontieres-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On ne peut pas appeler de méthodes sur unknown sans narrowing.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - runtime
+  - id: typescript-26-unknown-aux-frontieres-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      any aux frontières :
+    options:
+      - Est plus sûr que unknown
+      - Désactive le contrôle de types en cascade
+      - Est équivalent à unknown
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Opt-out du type system.
+    skills:
+      - runtime
+  - id: typescript-26-unknown-aux-frontieres-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le workflow sûr est :
+    options:
+      - as T immédiat
+      - unknown → validate/narrow → T
+      - any → usage
+      - Désactiver TS
+    answer:
+      - 1
+    explanation: |
+      Pattern standard.
+    skills:
+      - runtime

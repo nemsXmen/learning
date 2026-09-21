@@ -1,0 +1,64 @@
+id: typescript-23-fonctions-declarees-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-fonctions-declarees-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans un .d.ts, une fonction est déclarée par :
+    options:
+      - Son corps complet
+      - Sa signature (declare function / export function)
+      - Uniquement un enum
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Signature seule.
+    skills:
+      - declaration-files
+  - id: typescript-23-fonctions-declarees-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut déclarer des overloads dans un .d.ts.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-fonctions-declarees-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’ordre des overloads devrait aller :
+    options:
+      - Du plus général au plus spécifique
+      - Du plus spécifique au plus général
+      - Par ordre alphabétique uniquement
+      - N’importe comment
+    answer:
+      - 1
+    explanation: |
+      TypeScript choisit la première compatible.
+    skills:
+      - declaration-files
+  - id: typescript-23-fonctions-declarees-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer un callback en any dans un .d.ts :
+    options:
+      - Est idéal
+      - Réduit la valeur des types pour les consommateurs
+      - Est obligatoire
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Préférer des signatures précises.
+    skills:
+      - declaration-files

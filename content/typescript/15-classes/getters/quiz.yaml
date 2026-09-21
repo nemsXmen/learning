@@ -1,0 +1,64 @@
+id: typescript-15-getters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-getters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment accède-t-on à un getter `fullName` ?
+    options:
+      - obj.fullName()
+      - obj.fullName
+      - obj.getFullName
+      - fullName(obj)
+    answer:
+      - 1
+    explanation: |
+      Comme une propriété, sans parenthèses.
+    skills:
+      - classes
+  - id: typescript-15-getters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un getter peut exposer une valeur calculée à partir de champs privés.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est un usage classique.
+    skills:
+      - classes
+  - id: typescript-15-getters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que faut-il éviter dans un getter ?
+    options:
+      - Les calculs légers
+      - Les effets de bord lourds
+      - Le typage du retour
+      - L’encapsulation
+    answer:
+      - 1
+    explanation: |
+      Un getter doit rester prévisible et peu coûteux.
+    skills:
+      - classes
+  - id: typescript-15-getters-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe d’un getter est :
+    options:
+      - function get name()
+      - '{"get name()":"Type { ... }"}'
+      - getter name()
+      - name get()
+    answer:
+      - 1
+    explanation: |
+      Mot-clé get suivi du nom.
+    skills:
+      - classes

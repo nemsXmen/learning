@@ -1,0 +1,64 @@
+id: typescript-25-skip-lib-check-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-skip-lib-check-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      skipLibCheck saute la vérification de :
+    options:
+      - Tout le code source
+      - Les fichiers .d.ts
+      - Uniquement tsconfig
+      - Les tests seulement
+    answer:
+      - 1
+    explanation: |
+      Déclarations de libs.
+    skills:
+      - tsconfig
+  - id: typescript-25-skip-lib-check-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Avec skipLibCheck, ton code applicatif reste type-checké.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-skip-lib-check-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un bénéfice principal est :
+    options:
+      - Types plus stricts sur les libs
+      - Compile plus rapide / moins d’erreurs tiers
+      - Suppression de node_modules
+      - Activation de strict
+    answer:
+      - 1
+    explanation: |
+      Perf et pragmatisme.
+    skills:
+      - tsconfig
+  - id: typescript-25-skip-lib-check-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un risque est de :
+    options:
+      - Rien
+      - Masquer des problèmes dans des .d.ts locaux importants
+      - Forcer any partout
+      - Casser target
+    answer:
+      - 1
+    explanation: |
+      À connaître.
+    skills:
+      - tsconfig

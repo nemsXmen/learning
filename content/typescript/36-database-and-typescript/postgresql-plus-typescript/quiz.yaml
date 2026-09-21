@@ -1,0 +1,64 @@
+id: typescript-36-postgresql-plus-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-postgresql-plus-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      pool.query<T> permet de :
+    options:
+      - Compiler le CSS
+      - Annoter le type des rows
+      - Remplacer PostgreSQL
+      - Désactiver SQL
+    answer:
+      - 1
+    explanation: |
+      Générique de résultat.
+    skills:
+      - database
+  - id: typescript-36-postgresql-plus-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les paramètres $1, $2 aident à prévenir les injections SQL.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-postgresql-plus-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une colonne jsonb devrait souvent être :
+    options:
+      - Trustée comme User
+      - unknown puis validée
+      - never
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Contenu libre.
+    skills:
+      - database
+  - id: typescript-36-postgresql-plus-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Prisma/Drizzle vs pg brut :
+    options:
+      - Identiques en typage
+      - Les ORM offrent plus d’inférence / sécurité de schema
+      - pg est toujours plus typé
+      - Les ORM interdisent TypeScript
+    answer:
+      - 1
+    explanation: |
+      DX typée.
+    skills:
+      - database

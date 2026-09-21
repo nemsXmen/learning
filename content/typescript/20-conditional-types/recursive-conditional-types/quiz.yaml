@@ -1,0 +1,64 @@
+id: typescript-20-recursive-conditional-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-recursive-conditional-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un conditional type récursif nécessite :
+    options:
+      - Aucun cas de base
+      - Un cas de base pour terminer
+      - Uniquement des strings
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Sinon profondeur excessive.
+    skills:
+      - conditional-types
+  - id: typescript-20-recursive-conditional-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Flatten d’un tableau imbriqué est un cas classique de récursion de types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - conditional-types
+  - id: typescript-20-recursive-conditional-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      « Type instantiation is excessively deep » indique :
+    options:
+      - Un succès
+      - Une récursion de types trop profonde
+      - Une erreur runtime
+      - Un problème de réseau
+    answer:
+      - 1
+    explanation: |
+      Limite du compilateur.
+    skills:
+      - conditional-types
+  - id: typescript-20-recursive-conditional-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      DeepReadonly combine souvent :
+    options:
+      - Uniquement infer
+      - Mapped type + conditional récursif
+      - Uniquement enum
+      - class + interface
+    answer:
+      - 1
+    explanation: |
+      Pattern standard.
+    skills:
+      - conditional-types

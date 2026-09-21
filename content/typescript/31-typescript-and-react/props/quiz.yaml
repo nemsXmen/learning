@@ -1,0 +1,64 @@
+id: typescript-31-props-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-props-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      variant?: boolean signifie que variant est :
+    options:
+      - Obligatoire
+      - Optionnelle
+      - Toujours true
+      - never
+    answer:
+      - 1
+    explanation: |
+      ?.
+    skills:
+      - react
+  - id: typescript-31-props-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      "info" | "error" est utile pour typer des variantes UI.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-props-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ComponentProps<"button"> permet de :
+    options:
+      - Remplacer React
+      - Réutiliser les attributs HTML du bouton
+      - Désactiver JSX
+      - Typer uniquement le CSS
+    answer:
+      - 1
+    explanation: |
+      Props natives.
+    skills:
+      - react
+  - id: typescript-31-props-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Étendre les props HTML se fait souvent avec :
+    options:
+      - "|"
+      - "&"
+      - extends runtime
+      - enum only
+    answer:
+      - 1
+    explanation: |
+      Intersection de types.
+    skills:
+      - react

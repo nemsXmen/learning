@@ -1,0 +1,64 @@
+id: typescript-39-presentation-layer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-presentation-layer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La couche présentation gère :
+    options:
+      - L’ORM surtout
+      - Le transport externe (HTTP, UI, CLI)
+      - Uniquement les migrations
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Delivery.
+    skills:
+      - architecture
+  - id: typescript-39-presentation-layer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un controller mince appelle un use case.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-presentation-layer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Logique métier dans le controller :
+    options:
+      - Est idéale
+      - Va à l’encontre de Clean Architecture
+      - Active Prisma
+      - Est imposée
+    answer:
+      - 1
+    explanation: |
+      Déplacer vers application/domain.
+    skills:
+      - architecture
+  - id: typescript-39-presentation-layer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      toUserResponse(user) sert à :
+    options:
+      - Mapper domain → DTO de sortie
+      - Exécuter SQL
+      - Compiler TS
+      - Configurer Docker
+    answer:
+      - 0
+    explanation: |
+      Mapping sortant.
+    skills:
+      - architecture

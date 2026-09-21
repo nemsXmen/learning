@@ -1,0 +1,64 @@
+id: typescript-43-emission-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-emission-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      declaration: true demande l’émission de :
+    options:
+      - Uniquement du CSS
+      - Fichiers .d.ts
+      - Une base Postgres
+      - Des images
+    answer:
+      - 1
+    explanation: |
+      Types publics.
+    skills:
+      - compiler
+  - id: typescript-43-emission-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      noEmitOnError peut bloquer l’écriture des sorties.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-emission-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      emitDeclarationOnly est utile pour :
+    options:
+      - Des packages types-only / libs
+      - Exécuter le JS
+      - Bundler le CSS
+      - skipLibCheck only
+    answer:
+      - 0
+    explanation: |
+      d.ts sans JS.
+    skills:
+      - compiler
+  - id: typescript-43-emission-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      sourceMap aide à :
+    options:
+      - Mapper le JS émis vers le source TS
+      - Accélérer SQL
+      - Remplacer Git
+      - Désactiver strict
+    answer:
+      - 0
+    explanation: |
+      Debug.
+    skills:
+      - compiler

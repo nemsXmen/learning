@@ -1,0 +1,64 @@
+id: typescript-19-deep-mapped-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-deep-mapped-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un mapped type deep s’appuie sur :
+    options:
+      - Uniquement keyof
+      - Récursion via conditional (extends object ?)
+      - Un enum
+      - any
+    answer:
+      - 1
+    explanation: |
+      Pattern récursif.
+    skills:
+      - mapped-types
+  - id: typescript-19-deep-mapped-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Il faut un cas de base pour arrêter la récursion.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-deep-mapped-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un risque des deep mapped types est :
+    options:
+      - Aucun
+      - Profondeur excessive / structures récursives problématiques
+      - Interdiction par TS
+      - Runtime crash uniquement
+    answer:
+      - 1
+    explanation: |
+      Limites du compilateur.
+    skills:
+      - mapped-types
+  - id: typescript-19-deep-mapped-types-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      DeepPartial et DeepReadonly sont des :
+    options:
+      - Enums
+      - Mapped types récursifs
+      - Classes
+      - Décorateurs
+    answer:
+      - 1
+    explanation: |
+      Applications du pattern deep.
+    skills:
+      - mapped-types

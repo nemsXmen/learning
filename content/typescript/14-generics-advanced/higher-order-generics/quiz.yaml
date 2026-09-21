@@ -1,0 +1,64 @@
+id: typescript-14-higher-order-generics-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-higher-order-generics-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un higher-order generic abstrait typiquement sur :
+    options:
+      - Uniquement des nombres
+      - D’autres types / fonctions / constructeurs génériques
+      - Uniquement des strings
+      - Des fichiers
+    answer:
+      - 1
+    explanation: |
+      Abstraction sur des types paramétrés.
+    skills:
+      - generics
+  - id: typescript-14-higher-order-generics-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `ReturnType` et `InstanceType` sont utiles dans ce contexte.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-higher-order-generics-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le risque des higher-order generics est :
+    options:
+      - Aucun
+      - Complexité et inférence fragile
+      - Interdiction par TypeScript
+      - Runtime plus lent uniquement
+    answer:
+      - 1
+    explanation: |
+      À utiliser avec mesure.
+    skills:
+      - generics
+  - id: typescript-14-higher-order-generics-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `InstanceType<T>` extrait :
+    options:
+      - Les paramètres d’une fonction
+      - Le type d’instance d’un constructeur
+      - Uniquement string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Type d’instance produit par new.
+    skills:
+      - generics

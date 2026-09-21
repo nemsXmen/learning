@@ -1,0 +1,64 @@
+id: typescript-36-champs-nullable-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-champs-nullable-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une colonne SQL NULL se type souvent :
+    options:
+      - string seulement
+      - string | null
+      - never
+      - Buffer
+    answer:
+      - 1
+    explanation: |
+      Nullability.
+    skills:
+      - database
+  - id: typescript-36-champs-nullable-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      strictNullChecks aide à gérer les champs nullable.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-champs-nullable-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Oublier | null sur un champ nullable :
+    options:
+      - Est sans risque
+      - Peut crasher à runtime
+      - Active Zod
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Accès non protégés.
+    skills:
+      - database
+  - id: typescript-36-champs-nullable-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      null vs undefined :
+    options:
+      - Sont toujours interchangeables sans convention
+      - Méritent une convention de mapping claire
+      - Sont interdits en TS
+      - Remplacent SQL
+    answer:
+      - 1
+    explanation: |
+      Cohérence API/DB.
+    skills:
+      - database

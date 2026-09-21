@@ -1,0 +1,64 @@
+id: typescript-14-api-responses-generiques-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-api-responses-generiques-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans `ApiResponse<T>`, T représente souvent :
+    options:
+      - Le status HTTP
+      - Le payload de succès
+      - Uniquement string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Le type des données retournées.
+    skills:
+      - generics
+  - id: typescript-14-api-responses-generiques-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une discriminated union est adaptée pour succès / erreur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-api-responses-generiques-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi éviter `any` pour les réponses API ?
+    options:
+      - Parce que c’est plus long à écrire
+      - Parce qu’on perd la sécurité et l’autocomplétion sur le payload
+      - Parce que fetch l’interdit
+      - Parce que JSON n’existe pas
+    answer:
+      - 1
+    explanation: |
+      Le typage du payload est précieux.
+    skills:
+      - generics
+  - id: typescript-14-api-responses-generiques-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      En production, on complète souvent le typage API par :
+    options:
+      - Rien
+      - Une validation runtime (Zod, io-ts…)
+      - Uniquement des comments
+      - Des any supplémentaires
+    answer:
+      - 1
+    explanation: |
+      Les types ne valident pas le runtime.
+    skills:
+      - generics

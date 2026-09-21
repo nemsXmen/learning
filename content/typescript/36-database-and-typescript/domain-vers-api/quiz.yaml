@@ -1,0 +1,64 @@
+id: typescript-36-domain-vers-api-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-domain-vers-api-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Domain → API produit typiquement :
+    options:
+      - Des rows SQL
+      - Des DTOs JSON-friendly
+      - Des migrations
+      - Des fichiers CSS
+    answer:
+      - 1
+    explanation: |
+      Contrat public.
+    skills:
+      - database
+  - id: typescript-36-domain-vers-api-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les dates API sont souvent sérialisées en strings ISO.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-domain-vers-api-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exposer une class domain non sérialisable :
+    options:
+      - Est idéal
+      - Peut produire du JSON incorrect / vide
+      - Active Prisma
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Mapper en objets plain.
+    skills:
+      - database
+  - id: typescript-36-domain-vers-api-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le mapper sortant se place plutôt :
+    options:
+      - Au fond du SQL
+      - Dans la couche delivery (controller/handler)
+      - Dans le CSS
+      - Nulle part
+    answer:
+      - 1
+    explanation: |
+      Boundary API.
+    skills:
+      - database

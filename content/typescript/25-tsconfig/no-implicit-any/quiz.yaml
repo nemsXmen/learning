@@ -1,0 +1,64 @@
+id: typescript-25-no-implicit-any-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-no-implicit-any-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      noImplicitAny interdit :
+    options:
+      - Les strings
+      - Les any implicites
+      - Les generics
+      - Les modules
+    answer:
+      - 1
+    explanation: |
+      Annotation requise si pas d’inférence.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-implicit-any-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      noImplicitAny fait partie de strict.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-implicit-any-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sous noImplicitAny, function f(x) {} :
+    options:
+      - Compile toujours
+      - '{"Erreur":"paramètre implicitement any"}'
+      - Devient generic auto
+      - Est transformé en string
+    answer:
+      - 1
+    explanation: |
+      Annotation requise.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-implicit-any-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mettre any explicite pour contourner :
+    options:
+      - Respecte l’esprit de l’option
+      - Contourne l’intention de noImplicitAny
+      - Active strict plus fort
+      - Est impossible
+    answer:
+      - 1
+    explanation: |
+      Préférer un vrai type.
+    skills:
+      - tsconfig

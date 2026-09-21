@@ -1,0 +1,64 @@
+id: typescript-34-schema-validation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-schema-validation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un schema de validation sert à :
+    options:
+      - Compiler le CSS
+      - Décrire et vérifier une forme de données à runtime
+      - Remplacer le routeur
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Contrat runtime.
+    skills:
+      - validation
+  - id: typescript-34-schema-validation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Zod et Valibot sont des libs de schema TS-friendly.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-schema-validation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Idéalement le schema est :
+    options:
+      - Dupliqué avec un type manuel divergent
+      - La source de vérité (type inféré)
+      - Uniquement documentaire
+      - Interdit en prod
+    answer:
+      - 1
+    explanation: |
+      DRY types/validation.
+    skills:
+      - validation
+  - id: typescript-34-schema-validation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Valider trop tard dans le domaine :
+    options:
+      - Est idéal
+      - Laisse du code tourner sur des données invalides
+      - Active les guards DOM
+      - Remplace parse
+    answer:
+      - 1
+    explanation: |
+      Valider aux frontières.
+    skills:
+      - validation

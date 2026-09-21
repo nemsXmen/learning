@@ -1,0 +1,64 @@
+id: typescript-22-quand-utiliser-les-assertions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-22-quand-utiliser-les-assertions-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      as const est :
+    options:
+      - Toujours dangereux
+      - Un usage légitime et courant des assertions
+      - Interdit
+      - Identique à as any
+    answer:
+      - 1
+    explanation: |
+      Littéraux + readonly.
+    skills:
+      - type-assertions
+  - id: typescript-22-quand-utiliser-les-assertions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Après une validation Zod, un typage précis est fondé.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, la forme a été vérifiée.
+    skills:
+      - type-assertions
+  - id: typescript-22-quand-utiliser-les-assertions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une question utile avant d’assertir est :
+    options:
+      - « Est-ce plus court ? »
+      - « Qu’est-ce qui prouve ce type ? »
+      - « Puis-je utiliser any ? »
+      - « Puis-je désactiver strict ? »
+    answer:
+      - 1
+    explanation: |
+      Fondement de l’assertion.
+    skills:
+      - type-assertions
+  - id: typescript-22-quand-utiliser-les-assertions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Adapter une lib mal typée avec une assertion :
+    options:
+      - Est idéal à long terme
+      - Peut être un pis-aller temporaire et isolé
+      - Remplace les tests
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Temporaire + documenté.
+    skills:
+      - type-assertions

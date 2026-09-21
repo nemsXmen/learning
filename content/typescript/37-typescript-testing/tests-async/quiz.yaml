@@ -1,0 +1,64 @@
+id: typescript-37-tests-async-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-tests-async-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un test async se déclare souvent :
+    options:
+      - it("...", async () => { ... })
+      - it("...", () => number)
+      - only avec CSS
+      - sans fonction
+    answer:
+      - 0
+    explanation: |
+      async callback.
+    skills:
+      - testing
+  - id: typescript-37-tests-async-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Oublier await peut faire passer un test trop tôt.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-tests-async-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      expect(p).rejects.toThrow sert à :
+    options:
+      - Tester un succès
+      - Tester un rejet de Promise
+      - Compiler
+      - Mock le CSS
+    answer:
+      - 1
+    explanation: |
+      Erreurs async.
+    skills:
+      - testing
+  - id: typescript-37-tests-async-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      expect(p).resolves.toBe(x) vérifie :
+    options:
+      - Un rejet
+      - La valeur résolue
+      - Un type never
+      - Un fichier
+    answer:
+      - 1
+    explanation: |
+      Succès async.
+    skills:
+      - testing

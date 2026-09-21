@@ -1,0 +1,64 @@
+id: typescript-17-conditional-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-conditional-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La forme d’un conditional type est :
+    options:
+      - T if U then X else Y
+      - '{"T extends U ? X":"Y"}'
+      - '{"T == U ? X":"Y"}'
+      - T extends U | X | Y
+    answer:
+      - 1
+    explanation: |
+      Syntaxe officielle.
+    skills:
+      - advanced-types
+  - id: typescript-17-conditional-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `NonNullable` peut s’exprimer avec un conditional type.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - advanced-types
+  - id: typescript-17-conditional-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T extends string ? true : false` pour T = "hello" vaut :
+    options:
+      - "false"
+      - "true"
+      - string
+      - never
+    answer:
+      - 1
+    explanation: |
+      "hello" extends string.
+    skills:
+      - advanced-types
+  - id: typescript-17-conditional-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les conditional types sont la base de :
+    options:
+      - Uniquement les enums
+      - Exclude, Extract, NonNullable et bien d’autres utilitaires
+      - Uniquement les classes
+      - La compilation en JS
+    answer:
+      - 1
+    explanation: |
+      Beaucoup d’utilitaires TS s’appuient dessus.
+    skills:
+      - advanced-types

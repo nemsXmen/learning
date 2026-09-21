@@ -1,0 +1,64 @@
+id: typescript-23-declarations-globales-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-declarations-globales-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour typer window.myApp, on augmente souvent :
+    options:
+      - Document
+      - Interface Window
+      - Array
+      - Promise
+    answer:
+      - 1
+    explanation: |
+      Augmentation d’interface.
+    skills:
+      - declaration-files
+  - id: typescript-23-declarations-globales-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Dans un module, on utilise declare global pour toucher au scope global.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-declarations-globales-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un fichier .d.ts sans import/export est traité comme :
+    options:
+      - Un module ES
+      - Un script ambient (global)
+      - Un fichier CSS
+      - Un test
+    answer:
+      - 1
+    explanation: |
+      Scope global.
+    skills:
+      - declaration-files
+  - id: typescript-23-declarations-globales-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Trop de globals typés peut :
+    options:
+      - Améliorer toujours l’architecture
+      - Créer des conflits et du couplage
+      - Remplacer les modules
+      - Accélérer le runtime
+    answer:
+      - 1
+    explanation: |
+      Préférer les modules.
+    skills:
+      - declaration-files

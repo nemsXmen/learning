@@ -1,0 +1,64 @@
+id: typescript-42-recursive-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-recursive-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      DeepPartial applique Partial :
+    options:
+      - Uniquement au top-level
+      - Récursivement aux objets imbriqués
+      - Au CSS
+      - À process.env
+    answer:
+      - 1
+    explanation: |
+      Récursion.
+    skills:
+      - type-level
+  - id: typescript-42-recursive-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un cas de base est nécessaire pour stopper la récursion.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-recursive-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      « Instantiation excessively deep » indique :
+    options:
+      - Un succès
+      - Une récursion trop profonde pour tsc
+      - Un problème CSS
+      - Une erreur Docker
+    answer:
+      - 1
+    explanation: |
+      Limite compilateur.
+    skills:
+      - type-level
+  - id: typescript-42-recursive-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Borner la profondeur avec un tuple compteur :
+    options:
+      - Est impossible
+      - Est une technique courante
+      - Remplace TypeScript
+      - Est interdite
+    answer:
+      - 1
+    explanation: |
+      Contrôle de récursion.
+    skills:
+      - type-level

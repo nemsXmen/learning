@@ -1,0 +1,64 @@
+id: typescript-17-typeof-dans-les-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-typeof-dans-les-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      En position de type, `typeof config` :
+    options:
+      - Exécute du code
+      - Extrait le type de la valeur config
+      - Retourne une string runtime
+      - Crée une classe
+    answer:
+      - 1
+    explanation: |
+      Opérateur de type compile-time.
+    skills:
+      - advanced-types
+  - id: typescript-17-typeof-dans-les-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `typeof` type-level se combine bien avec `as const`.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, pour des littéraux précis.
+    skills:
+      - advanced-types
+  - id: typescript-17-typeof-dans-les-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `ReturnType<typeof fn>` permet de :
+    options:
+      - Appeler fn
+      - Extraire le type de retour de fn
+      - Convertir fn en any
+      - Supprimer fn
+    answer:
+      - 1
+    explanation: |
+      Pattern très courant.
+    skills:
+      - advanced-types
+  - id: typescript-17-typeof-dans-les-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’intérêt de dériver un type via typeof est :
+    options:
+      - D’avoir deux sources de vérité
+      - D’avoir une seule source de vérité (la valeur)
+      - D’interdire les objets
+      - D’activer strict
+    answer:
+      - 1
+    explanation: |
+      Moins de duplication.
+    skills:
+      - advanced-types

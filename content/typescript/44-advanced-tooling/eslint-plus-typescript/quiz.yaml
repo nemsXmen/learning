@@ -1,0 +1,64 @@
+id: typescript-44-eslint-plus-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-eslint-plus-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      typescript-eslint permet surtout de :
+    options:
+      - Bundler le CSS
+      - Linter du TypeScript (éventuellement type-aware)
+      - Héberger une DB
+      - Remplacer tsc
+    answer:
+      - 1
+    explanation: |
+      Lint TS.
+    skills:
+      - tooling
+  - id: typescript-44-eslint-plus-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      no-floating-promises est une règle type-aware utile.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-eslint-plus-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      projectService / project dans parserOptions sert à :
+    options:
+      - Désactiver TypeScript
+      - Brancher le type checker pour les règles
+      - Compiler Docker
+      - Minifier images
+    answer:
+      - 1
+    explanation: |
+      Type-aware lint.
+    skills:
+      - tooling
+  - id: typescript-44-eslint-plus-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Laisser le formatage à Prettier évite :
+    options:
+      - Toute qualité de code
+      - Les conflits de règles style ESLint
+      - Les tests
+      - Git
+    answer:
+      - 1
+    explanation: |
+      Séparation des rôles.
+    skills:
+      - tooling

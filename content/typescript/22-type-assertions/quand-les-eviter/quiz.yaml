@@ -1,0 +1,64 @@
+id: typescript-22-quand-les-eviter-quiz
+kind: QUIZ
+questions:
+  - id: typescript-22-quand-les-eviter-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      À la place d’une assertion sur une union, on préfère souvent :
+    options:
+      - as any
+      - Un narrowing (typeof, etc.)
+      - Une double assertion
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Check runtime + typage sûr.
+    skills:
+      - type-assertions
+  - id: typescript-22-quand-les-eviter-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les données externes devraient être validées avant d’être traitées comme un type précis.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-assertions
+  - id: typescript-22-quand-les-eviter-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      as any pour faire compiler est :
+    options:
+      - Une bonne habitude
+      - Un anti-pattern
+      - Obligatoire en production
+      - Équivalent à as const
+    answer:
+      - 1
+    explanation: |
+      Masque les erreurs.
+    skills:
+      - type-assertions
+  - id: typescript-22-quand-les-eviter-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une culture de typage saine traite le compilateur comme :
+    options:
+      - Un obstacle à contourner
+      - Un allié qui signale des problèmes réels
+      - Un outil optionnel
+      - Un linter de style uniquement
+    answer:
+      - 1
+    explanation: |
+      Les erreurs de type ont souvent du sens.
+    skills:
+      - type-assertions

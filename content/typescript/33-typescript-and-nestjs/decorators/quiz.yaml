@@ -1,0 +1,64 @@
+id: typescript-33-decorators-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-decorators-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      @Get() sur une méthode de controller :
+    options:
+      - Définit une route HTTP GET
+      - Compile le CSS
+      - Crée une base de données
+      - Désactive TypeScript
+    answer:
+      - 0
+    explanation: |
+      Routing déclaratif.
+    skills:
+      - nestjs
+  - id: typescript-33-decorators-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Nest s’appuie sur reflect-metadata pour lire les décorateurs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-decorators-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans experimentalDecorators, Nest :
+    options:
+      - Fonctionne identiquement
+      - Peut casser DI / routing basés sur métadonnées
+      - Active strict only
+      - Remplace les modules
+    answer:
+      - 1
+    explanation: |
+      Décorateurs requis.
+    skills:
+      - nestjs
+  - id: typescript-33-decorators-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      @Body() est un décorateur de :
+    options:
+      - Classe module
+      - Paramètre de méthode
+      - Fichier CSS
+      - tsconfig
+    answer:
+      - 1
+    explanation: |
+      Param decorator.
+    skills:
+      - nestjs

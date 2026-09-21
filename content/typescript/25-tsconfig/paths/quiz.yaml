@@ -1,0 +1,64 @@
+id: typescript-25-paths-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-paths-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      paths permet de :
+    options:
+      - Changer target
+      - Définir des alias d’import
+      - Désactiver strict
+      - Ignorer les modules
+    answer:
+      - 1
+    explanation: |
+      Mapping de préfixes.
+    skills:
+      - tsconfig
+  - id: typescript-25-paths-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      paths est relatif à baseUrl.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-paths-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans config bundler équivalente, un alias paths peut :
+    options:
+      - Toujours marcher à runtime
+      - Fonctionner en TS mais échouer au runtime
+      - Remplacer node_modules
+      - Activer DOM
+    answer:
+      - 1
+    explanation: |
+      Sync build tools requise.
+    skills:
+      - tsconfig
+  - id: typescript-25-paths-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un alias courant est :
+    options:
+      - "@/* → src/*"
+      - strict → true
+      - target → ES3
+      - skipLibCheck → paths
+    answer:
+      - 0
+    explanation: |
+      Pattern très répandu.
+    skills:
+      - tsconfig

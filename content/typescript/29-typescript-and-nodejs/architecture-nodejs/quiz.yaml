@@ -1,0 +1,64 @@
+id: typescript-29-architecture-nodejs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-architecture-nodejs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le domaine métier devrait :
+    options:
+      - Importer fs et process.env partout
+      - Rester isolé des détails infra
+      - Contenir le serveur HTTP seulement
+      - Remplacer la config
+    answer:
+      - 1
+    explanation: |
+      Pureté du domaine.
+    skills:
+      - nodejs
+  - id: typescript-29-architecture-nodejs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les interfaces (ports) permettent de mocker l’infra dans les tests.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-architecture-nodejs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      loadConfig appartient plutôt à :
+    options:
+      - domain profond
+      - config / boot
+      - Un fichier CSS
+      - lib.dom
+    answer:
+      - 1
+    explanation: |
+      Démarrage applicatif.
+    skills:
+      - nodejs
+  - id: typescript-29-architecture-nodejs-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un « god » main.ts qui fait tout :
+    options:
+      - Est idéal
+      - Nuit à la testabilité et aux frontières
+      - Active strict
+      - Remplace les modules
+    answer:
+      - 1
+    explanation: |
+      Préférer composition claire.
+    skills:
+      - nodejs

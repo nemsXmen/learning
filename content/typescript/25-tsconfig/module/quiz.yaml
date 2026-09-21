@@ -1,0 +1,64 @@
+id: typescript-25-module-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-module-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’option module contrôle :
+    options:
+      - Uniquement target
+      - Le format des modules émis
+      - Les strict flags seulement
+      - Les paths uniquement
+    answer:
+      - 1
+    explanation: |
+      ESM / CJS / Node…
+    skills:
+      - tsconfig
+  - id: typescript-25-module-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Node16 / NodeNext sont des valeurs de module adaptées à Node moderne.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-module-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      module et moduleResolution doivent être :
+    options:
+      - Ignorés
+      - Cohérents entre eux
+      - Toujours CommonJS
+      - Identiques à target
+    answer:
+      - 1
+    explanation: |
+      Émission + résolution.
+    skills:
+      - tsconfig
+  - id: typescript-25-module-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un bundler moderne, on choisit souvent :
+    options:
+      - AMD uniquement
+      - ESNext
+      - None
+      - System
+    answer:
+      - 1
+    explanation: |
+      ESM moderne.
+    skills:
+      - tsconfig

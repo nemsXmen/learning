@@ -1,0 +1,64 @@
+id: typescript-19-introduction-aux-mapped-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-introduction-aux-mapped-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe de base d’un mapped type est :
+    options:
+      - '{"K of T":"..."}'
+      - '{"[ K in keyof T ]":"..."}'
+      - map T to ...
+      - T.map(K => ...)
+    answer:
+      - 1
+    explanation: |
+      Itération type-level sur les clés.
+    skills:
+      - mapped-types
+  - id: typescript-19-introduction-aux-mapped-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Partial et Readonly sont construits avec des mapped types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-introduction-aux-mapped-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans `[K in keyof T]`, K représente :
+    options:
+      - Uniquement des numbers
+      - Chaque clé de T tour à tour
+      - Le type de retour
+      - never
+    answer:
+      - 1
+    explanation: |
+      Variable de clé.
+    skills:
+      - mapped-types
+  - id: typescript-19-introduction-aux-mapped-types-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les mapped types servent à :
+    options:
+      - Exécuter du code runtime
+      - Transformer des types objets à la compilation
+      - Créer des classes
+      - Remplacer les fonctions
+    answer:
+      - 1
+    explanation: |
+      Pure type-level.
+    skills:
+      - mapped-types

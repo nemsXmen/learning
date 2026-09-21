@@ -1,0 +1,64 @@
+id: typescript-24-module-boundaries-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-module-boundaries-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les frontières de modules servent à :
+    options:
+      - Ralentir la compile
+      - Contrôler qui peut importer quoi
+      - Remplacer TypeScript
+      - Interdire les exports
+    answer:
+      - 1
+    explanation: |
+      Architecture d’imports.
+    skills:
+      - modules
+  - id: typescript-24-module-boundaries-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut automatiser les règles d’import avec ESLint / Nx / dependency-cruiser.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - modules
+  - id: typescript-24-module-boundaries-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une règle typique est :
+    options:
+      - Tout le monde importe tout
+      - domain n’importe pas ui
+      - ui doit importer database directement
+      - Aucune règle n’est utile
+    answer:
+      - 1
+    explanation: |
+      Séparation des couches.
+    skills:
+      - modules
+  - id: typescript-24-module-boundaries-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des barrels globaux mal conçus peuvent :
+    options:
+      - Renforcer les frontières
+      - Casser les frontières en ré-exportant trop largement
+      - Remplacer tsconfig
+      - Désactiver ESLint
+    answer:
+      - 1
+    explanation: |
+      Surface trop large.
+    skills:
+      - modules

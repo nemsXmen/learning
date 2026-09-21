@@ -1,0 +1,64 @@
+id: typescript-33-dtos-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-dtos-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un DTO Nest sert surtout à :
+    options:
+      - Styliser l’UI
+      - Typer et valider les données entrantes
+      - Remplacer la base de données
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Contrat d’entrée.
+    skills:
+      - nestjs
+  - id: typescript-33-dtos-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      class-validator s’appuie sur des décorateurs sur des classes.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-dtos-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une interface TypeScript seule pour le body :
+    options:
+      - Active la validation runtime auto
+      - N’offre pas de validation runtime
+      - Remplace ValidationPipe
+      - Est interdite par TS
+    answer:
+      - 1
+    explanation: |
+      Type erasure.
+    skills:
+      - nestjs
+  - id: typescript-33-dtos-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exposer l’entity ORM directement en DTO public :
+    options:
+      - Est souvent une mauvaise idée
+      - Est toujours idéal
+      - Active strict
+      - Est imposé par Nest
+    answer:
+      - 0
+    explanation: |
+      Fuite de champs internes.
+    skills:
+      - nestjs

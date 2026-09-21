@@ -1,0 +1,64 @@
+id: typescript-36-db-vers-domain-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-db-vers-domain-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      toUser(row) sert à :
+    options:
+      - Compiler SQL
+      - Convertir une row vers le modèle domaine
+      - Remplacer les migrations
+      - Styliser l’API
+    answer:
+      - 1
+    explanation: |
+      Mapping.
+    skills:
+      - database
+  - id: typescript-36-db-vers-domain-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les value objects peuvent renforcer des invariants (Email, Money…).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-db-vers-domain-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le domaine devrait dépendre de :
+    options:
+      - Prisma Client partout
+      - Ses propres types / ports
+      - Uniquement des strings SQL
+      - document.cookie
+    answer:
+      - 1
+    explanation: |
+      Découplage.
+    skills:
+      - database
+  - id: typescript-36-db-vers-domain-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mapping au boundary repository :
+    options:
+      - Est une mauvaise idée
+      - Limite la propagation des types DB
+      - Active skipLibCheck
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Frontière claire.
+    skills:
+      - database

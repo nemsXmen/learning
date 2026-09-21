@@ -1,0 +1,64 @@
+id: typescript-37-tests-derreurs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-tests-derreurs-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour un throw synchrone on utilise souvent :
+    options:
+      - expect(fn())
+      - expect(() => fn()).toThrow(...)
+      - expect.soft CSS
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Wrapper fonction.
+    skills:
+      - testing
+  - id: typescript-37-tests-derreurs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      toBeInstanceOf(NotFoundError) vérifie le type d’erreur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-tests-derreurs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      S’appuyer uniquement sur le message d’erreur :
+    options:
+      - Est très robuste
+      - Est fragile aux reformulations
+      - Active Vitest
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Préférer classe/code.
+    skills:
+      - testing
+  - id: typescript-37-tests-derreurs-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      rejects.toBeInstanceOf s’applique aux :
+    options:
+      - Erreurs sync only
+      - Promises rejetées
+      - Fichiers CSS
+      - Types never
+    answer:
+      - 1
+    explanation: |
+      Async errors.
+    skills:
+      - testing

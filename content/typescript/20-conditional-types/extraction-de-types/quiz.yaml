@@ -1,0 +1,64 @@
+id: typescript-20-extraction-de-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-extraction-de-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’extraction de types s’appuie surtout sur :
+    options:
+      - Les enums
+      - Conditional types + infer
+      - Les classes uniquement
+      - any
+    answer:
+      - 1
+    explanation: |
+      Pattern central.
+    skills:
+      - conditional-types
+  - id: typescript-20-extraction-de-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Parameters et ReturnType sont des extractions de types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - conditional-types
+  - id: typescript-20-extraction-de-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour extraire U de Promise<U>, on utilise :
+    options:
+      - keyof
+      - infer dans T extends Promise<infer U>
+      - Un enum
+      - class
+    answer:
+      - 1
+    explanation: |
+      Motif Promise.
+    skills:
+      - conditional-types
+  - id: typescript-20-extraction-de-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un motif trop strict peut :
+    options:
+      - Rien
+      - Ne jamais matcher et toujours tomber dans never / branche else
+      - Accélérer le runtime
+      - Créer des classes
+    answer:
+      - 1
+    explanation: |
+      Attention à la forme exacte.
+    skills:
+      - conditional-types

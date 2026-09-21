@@ -1,0 +1,64 @@
+id: typescript-13-keyof-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-keyof-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `keyof { a: number; b: string }` produit :
+    options:
+      - string
+      - '"a" | "b"'
+      - number | string
+      - any
+    answer:
+      - 1
+    explanation: |
+      Union des noms de propriétés.
+    skills:
+      - generics
+  - id: typescript-13-keyof-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `K extends keyof T` restreint K aux clés de T.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-13-keyof-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans `getProperty<T, K extends keyof T>(obj: T, key: K): T[K]`, T[K] représente :
+    options:
+      - Toujours string
+      - Le type de la propriété K de T
+      - any
+      - keyof T
+    answer:
+      - 1
+    explanation: |
+      Indexed access type.
+    skills:
+      - generics
+  - id: typescript-13-keyof-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi ne pas typer la clé en `string` plutôt qu’en `keyof T` ?
+    options:
+      - string est plus précis
+      - string autoriserait des clés inexistantes et perdrait le typage de la valeur
+      - keyof n’existe pas
+      - Aucune différence
+    answer:
+      - 1
+    explanation: |
+      keyof + T[K] donnent sécurité et précision.
+    skills:
+      - generics

@@ -1,0 +1,64 @@
+id: typescript-25-es-module-interop-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-es-module-interop-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      esModuleInterop facilite :
+    options:
+      - Uniquement les paths
+      - L’interop ESM / CommonJS
+      - Les décorateurs
+      - Le DOM
+    answer:
+      - 1
+    explanation: |
+      Imports default plus naturels.
+    skills:
+      - tsconfig
+  - id: typescript-25-es-module-interop-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Avec esModuleInterop, import fs from "fs" devient souvent possible.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui pour beaucoup de modules CJS.
+    skills:
+      - tsconfig
+  - id: typescript-25-es-module-interop-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      esModuleInterop est :
+    options:
+      - Déprécié
+      - Recommandé dans la plupart des projets
+      - Identique à strict
+      - Uniquement pour browsers
+    answer:
+      - 1
+    explanation: |
+      Default de bon sens.
+    skills:
+      - tsconfig
+  - id: typescript-25-es-module-interop-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Il est souvent associé à :
+    options:
+      - noEmit
+      - allowSyntheticDefaultImports
+      - exactOptionalPropertyTypes uniquement
+      - skipLibCheck désactivé forcé
+    answer:
+      - 1
+    explanation: |
+      Options d’interop liées.
+    skills:
+      - tsconfig

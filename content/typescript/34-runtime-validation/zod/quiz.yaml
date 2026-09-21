@@ -1,0 +1,64 @@
+id: typescript-34-zod-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-zod-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Zod est principalement :
+    options:
+      - Un bundler
+      - Une lib de schema validation TS-first
+      - Un framework CSS
+      - Un ORM
+    answer:
+      - 1
+    explanation: |
+      Validation runtime.
+    skills:
+      - validation
+  - id: typescript-34-zod-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      safeParse ne throw pas ; il retourne un résultat success/error.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-zod-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      z.string().email() valide :
+    options:
+      - Uniquement la longueur
+      - Un format email
+      - Un UUID
+      - Un nombre
+    answer:
+      - 1
+    explanation: |
+      Refine email.
+    skills:
+      - validation
+  - id: typescript-34-zod-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      UserSchema.parse(input) si invalide :
+    options:
+      - Retourne null
+      - Throw ZodError
+      - Ignore les erreurs
+      - Compile le projet
+    answer:
+      - 1
+    explanation: |
+      Exception.
+    skills:
+      - validation

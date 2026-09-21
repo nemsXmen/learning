@@ -1,0 +1,64 @@
+id: typescript-34-type-safety-e2e-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-type-safety-e2e-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La type safety E2E vise à :
+    options:
+      - Supprimer les tests
+      - Réduire les trous de typage UI → API → DB
+      - Désactiver Zod
+      - Compiler uniquement le CSS
+    answer:
+      - 1
+    explanation: |
+      Chaîne cohérente.
+    skills:
+      - validation
+  - id: typescript-34-type-safety-e2e-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      tRPC est un exemple d’approche visant le typage bout en bout.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-type-safety-e2e-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un `as User` injustifié dans la chaîne :
+    options:
+      - Renforce la sûreté
+      - Introduit un trou de confiance
+      - Remplace les schemas
+      - Est obligatoire
+    answer:
+      - 1
+    explanation: |
+      Assertion non vérifiée.
+    skills:
+      - validation
+  - id: typescript-34-type-safety-e2e-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les tests de contrat servent à :
+    options:
+      - Styliser l’UI
+      - Vérifier que front et back respectent le même contrat
+      - Remplacer TypeScript
+      - Gérer process.env only
+    answer:
+      - 1
+    explanation: |
+      Alignement API.
+    skills:
+      - validation

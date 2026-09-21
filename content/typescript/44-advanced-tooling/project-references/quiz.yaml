@@ -1,0 +1,64 @@
+id: typescript-44-project-references-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-project-references-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      composite: true est requis pour :
+    options:
+      - Prettier
+      - Être référencé comme project reference
+      - Docker
+      - CSS modules only
+    answer:
+      - 1
+    explanation: |
+      Build mode.
+    skills:
+      - tooling
+  - id: typescript-44-project-references-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      tsc -b build le graphe de references.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-project-references-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un cycle de project references :
+    options:
+      - Est idéal
+      - Pose problème
+      - Active ESLint
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Graphe acyclique.
+    skills:
+      - tooling
+  - id: typescript-44-project-references-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      declaration: true avec composite sert à :
+    options:
+      - Fournir des types aux projets dépendants
+      - Minifier le JS always
+      - Remplacer npm
+      - skipLibCheck
+    answer:
+      - 0
+    explanation: |
+      API typée inter-projets.
+    skills:
+      - tooling

@@ -1,0 +1,64 @@
+id: typescript-36-typeorm-plus-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-typeorm-plus-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      TypeORM mappe souvent via :
+    options:
+      - Uniquement du CSS
+      - Classes + décorateurs
+      - process.env only
+      - Des fichiers HTML
+    answer:
+      - 1
+    explanation: |
+      Entities décorées.
+    skills:
+      - database
+  - id: typescript-36-typeorm-plus-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      @Column décorateur TypeORM sur une propriété d’entity.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-typeorm-plus-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      synchronize: true en production :
+    options:
+      - Est recommandé
+      - Est risqué
+      - Est obligatoire
+      - Remplace les backups
+    answer:
+      - 1
+    explanation: |
+      Préférer migrations.
+    skills:
+      - database
+  - id: typescript-36-typeorm-plus-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      userRepo.find est typé grâce à :
+    options:
+      - Un random
+      - Le générique du repository / entity
+      - Uniquement ESLint
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Repository<User>.
+    skills:
+      - database

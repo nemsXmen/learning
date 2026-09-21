@@ -1,0 +1,64 @@
+id: typescript-21-api-route-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-api-route-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `${"GET"|"POST"} ${"/users"}` produit :
+    options:
+      - string
+      - '"GET /users" | "POST /users"'
+      - GETPOST
+      - never
+    answer:
+      - 1
+    explanation: |
+      Combinaisons méthode + path.
+    skills:
+      - template-literal-types
+  - id: typescript-21-api-route-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une map "GET /users" → User[] permet de typer la réponse.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-api-route-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’intérêt d’un client API typé est :
+    options:
+      - Aucun
+      - Autocomplétion et détection d’erreurs path/réponse
+      - Remplacer le réseau
+      - Interdire fetch
+    answer:
+      - 1
+    explanation: |
+      DX et sécurité.
+    skills:
+      - template-literal-types
+  - id: typescript-21-api-route-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer les réponses en any :
+    options:
+      - Est idéal
+      - Annule le bénéfice du typage des routes
+      - Est obligatoire
+      - Accélère la compile
+    answer:
+      - 1
+    explanation: |
+      Il faut lier path → réponse.
+    skills:
+      - template-literal-types

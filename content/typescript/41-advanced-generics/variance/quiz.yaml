@@ -1,0 +1,64 @@
+id: typescript-41-variance-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-variance-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La covariance concerne surtout :
+    options:
+      - Les positions de sortie (production)
+      - Uniquement le CSS
+      - process.env
+      - Les imports Docker
+    answer:
+      - 0
+    explanation: |
+      Outputs.
+    skills:
+      - generics
+  - id: typescript-41-variance-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Les paramètres de fonction sont plutôt contravariants (en mode strict).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-variance-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une structure mutable lue et écrite est souvent :
+    options:
+      - Covariante pure
+      - Invariante
+      - Sans type
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Lecture + écriture.
+    skills:
+      - generics
+  - id: typescript-41-variance-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      strictFunctionTypes aide à :
+    options:
+      - Désactiver les checks
+      - Appliquer une contravariance plus sûre des params
+      - Compiler le CSS
+      - Remplacer les génériques
+    answer:
+      - 1
+    explanation: |
+      Sûreté des fonctions.
+    skills:
+      - generics

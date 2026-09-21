@@ -1,0 +1,64 @@
+id: typescript-31-events-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-events-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour un input onChange, on utilise souvent :
+    options:
+      - React.MouseEvent
+      - React.ChangeEvent<HTMLInputElement>
+      - EventEmitter
+      - KeyboardEvent only always
+    answer:
+      - 1
+    explanation: |
+      Change events.
+    skills:
+      - react
+  - id: typescript-31-events-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      React.FormEvent sert typiquement au submit de formulaire.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-events-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le générique de MouseEvent<HTMLButtonElement> affine :
+    options:
+      - Le type de e.currentTarget
+      - Uniquement le CSS
+      - process.env
+      - Le router
+    answer:
+      - 0
+    explanation: |
+      Élément courant.
+    skills:
+      - react
+  - id: typescript-31-events-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer les handlers en any :
+    options:
+      - Est recommandé
+      - Fait perdre autocomplétion et checks
+      - Active strict
+      - Est imposé par React
+    answer:
+      - 1
+    explanation: |
+      À éviter.
+    skills:
+      - react

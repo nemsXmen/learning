@@ -1,0 +1,64 @@
+id: typescript-33-generics-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-generics-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ApiResponse<T> permet de :
+    options:
+      - Fixer T = any seulement
+      - Réutiliser une enveloppe de réponse pour tout T
+      - Remplacer les controllers
+      - Désactiver la DI
+    answer:
+      - 1
+    explanation: |
+      Générique d’enveloppe.
+    skills:
+      - nestjs
+  - id: typescript-33-generics-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un repository générique peut être typé Repository<T>.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-generics-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sur-abstraire avec des generics trop tôt :
+    options:
+      - Est toujours bénéfique
+      - Peut nuire à la lisibilité
+      - Est imposé par Nest
+      - Active ValidationPipe
+    answer:
+      - 1
+    explanation: |
+      YAGNI.
+    skills:
+      - nestjs
+  - id: typescript-33-generics-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Page<T> = { items: T[]; total: number } est un exemple de :
+    options:
+      - Enum runtime
+      - Type générique utile pour la pagination
+      - Middleware
+      - Décorateur HTTP
+    answer:
+      - 1
+    explanation: |
+      Pattern courant.
+    skills:
+      - nestjs

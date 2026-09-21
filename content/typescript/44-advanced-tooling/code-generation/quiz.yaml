@@ -1,0 +1,64 @@
+id: typescript-44-code-generation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-code-generation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      openapi-typescript génère surtout :
+    options:
+      - Du CSS
+      - Des types TypeScript depuis OpenAPI
+      - Une base SQL
+      - Des images
+    answer:
+      - 1
+    explanation: |
+      Codegen types.
+    skills:
+      - tooling
+  - id: typescript-44-code-generation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Prisma generate produit un client typé.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-code-generation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Éditer à la main un fichier généré :
+    options:
+      - Est durable
+      - Sera écrasé à la régénération
+      - Est imposé
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Source de vérité ailleurs.
+    skills:
+      - tooling
+  - id: typescript-44-code-generation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Vérifier le drift en CI signifie :
+    options:
+      - Ignorer generate
+      - Échouer si les fichiers générés ne matchent pas
+      - Désactiver tsc
+      - Formater Docker
+    answer:
+      - 1
+    explanation: |
+      Contrats à jour.
+    skills:
+      - tooling

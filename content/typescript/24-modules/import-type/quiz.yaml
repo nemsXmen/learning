@@ -1,0 +1,64 @@
+id: typescript-24-import-type-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-import-type-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      import type importe :
+    options:
+      - Des valeurs runtime
+      - Uniquement des types
+      - Des fichiers CSS
+      - Des tests
+    answer:
+      - 1
+    explanation: |
+      Type-only.
+    skills:
+      - modules
+  - id: typescript-24-import-type-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut écrire import { type User, createUser } from "./user".
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, forme inline.
+    skills:
+      - modules
+  - id: typescript-24-import-type-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Utiliser un symbole import type comme valeur :
+    options:
+      - Fonctionne toujours
+      - Est une erreur (pas de runtime binding)
+      - Active strict
+      - Convertit en any
+    answer:
+      - 1
+    explanation: |
+      Effacé à la compile.
+    skills:
+      - modules
+  - id: typescript-24-import-type-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      import type aide avec :
+    options:
+      - Le styling CSS
+      - isolatedModules / absence de dépendance runtime
+      - Uniquement les enums
+      - La désactivation de TS
+    answer:
+      - 1
+    explanation: |
+      Séparation type/valeur.
+    skills:
+      - modules

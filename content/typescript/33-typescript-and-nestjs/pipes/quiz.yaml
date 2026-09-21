@@ -1,0 +1,64 @@
+id: typescript-33-pipes-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-pipes-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ValidationPipe sert surtout à :
+    options:
+      - Styliser les réponses
+      - Valider / transformer les inputs
+      - Créer des modules
+      - Compiler TypeScript
+    answer:
+      - 1
+    explanation: |
+      Pipe de validation.
+    skills:
+      - nestjs
+  - id: typescript-33-pipes-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      ParseIntPipe convertit un param string en number (ou erreur).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-pipes-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      whitelist: true dans ValidationPipe :
+    options:
+      - Autorise tout
+      - Retire les props non décorées du DTO
+      - Désactive la validation
+      - Active le DOM
+    answer:
+      - 1
+    explanation: |
+      Sécurité payload.
+    skills:
+      - nestjs
+  - id: typescript-33-pipes-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans pipe de validation, un DTO typé :
+    options:
+      - Valide quand même le runtime
+      - Reste une annotation compile-time seulement
+      - Remplace class-validator
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Types ≠ validation.
+    skills:
+      - nestjs

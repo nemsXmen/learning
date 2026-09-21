@@ -1,0 +1,64 @@
+id: typescript-19-conditional-mapped-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-conditional-mapped-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour exclure les props fonction, on utilise souvent :
+    options:
+      - Partial uniquement
+      - Conditional + as never
+      - Uniquement Readonly
+      - any
+    answer:
+      - 1
+    explanation: |
+      Filtrage par key remapping.
+    skills:
+      - mapped-types
+  - id: typescript-19-conditional-mapped-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut transformer le type de chaque valeur avec un conditional.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-conditional-mapped-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `{ [K in keyof T]: T[K] | null }` produit :
+    options:
+      - T inchangé
+      - Toutes les props nullables
+      - Uniquement les strings
+      - never
+    answer:
+      - 1
+    explanation: |
+      Union avec null sur chaque valeur.
+    skills:
+      - mapped-types
+  - id: typescript-19-conditional-mapped-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mapped + conditional permet de :
+    options:
+      - Uniquement renommer
+      - Filtrer et transformer selon le type des valeurs
+      - Exécuter du code
+      - Créer des classes
+    answer:
+      - 1
+    explanation: |
+      Transformations conditionnelles riches.
+    skills:
+      - mapped-types

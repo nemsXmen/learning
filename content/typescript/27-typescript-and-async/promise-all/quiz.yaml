@@ -1,0 +1,64 @@
+id: typescript-27-promise-all-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-promise-all-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Promise.all réussit quand :
+    options:
+      - Au moins une promesse réussit
+      - Toutes les promesses réussissent
+      - La première réussit
+      - Aucune ne s’exécute
+    answer:
+      - 1
+    explanation: |
+      Toutes.
+    skills:
+      - async
+  - id: typescript-27-promise-all-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TypeScript peut inférer un tuple de résultats pour Promise.all.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui avec un littéral.
+    skills:
+      - async
+  - id: typescript-27-promise-all-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Si une promesse rejette dans Promise.all :
+    options:
+      - Les autres résultats sont quand même retournés
+      - Tout rejette (fail-fast)
+      - Le rejet est ignoré
+      - On obtient never
+    answer:
+      - 1
+    explanation: |
+      Échec global.
+    skills:
+      - async
+  - id: typescript-27-promise-all-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Promise.all est idéal pour :
+    options:
+      - Ignorer les erreurs
+      - Paralléliser des appels indépendants qui doivent tous réussir
+      - Remplacer async
+      - Typer des enums
+    answer:
+      - 1
+    explanation: |
+      Parallel success.
+    skills:
+      - async
