@@ -47,3 +47,32 @@ Définir un schéma, les types, les champs manquants, l'interdiction d'inventer 
 
 ## À retenir
 Le prompt est une partie versionnée du logiciel, pas une formule magique.
+
+
+## Introduction
+
+Un prompt de production est un contrat entre le produit et le modèle.
+
+## Concept
+
+Instructions, contexte, entrée utilisateur et format de sortie doivent être séparés.
+
+## Exemple
+
+Un prompt versionné peut être testé sur un dataset avant déploiement.
+
+## Comment ça fonctionne
+
+contrat → contexte → génération → validation → feedback
+
+## Questions d'entretien
+
+- Pourquoi versionner les prompts ?
+
+  :::indice
+  Considère toujours la frontière entre génération et logique déterministe.
+  :::
+
+  :::reponse
+  Pour reproduire les sorties et détecter les régressions.
+  :::
