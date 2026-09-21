@@ -1,0 +1,26 @@
+id: ai-11-infrastructure-serving-quiz
+kind: QUIZ
+questions:
+  - id: ai-11-infrastructure-serving-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Pourquoi limiter la concurrence d'un service AI ?"
+    options: ["Pour protéger les ressources","Pour supprimer les tests","Pour rendre les modèles déterministes","Pour éviter les métriques"]
+    answer: [0]
+    explanation: "Une limite de concurrence évite qu'un pic épuise CPU, GPU, mémoire ou quotas."
+    skills: [ai-infrastructure]
+  - id: ai-11-infrastructure-serving-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quelles métriques sont utiles pour l'infrastructure AI ?"
+    options: ["Latence","Taux d'erreur","Saturation","Couleur du logo"]
+    answer: [0, 1, 2]
+    explanation: "Ces mesures décrivent le comportement opérationnel."
+    skills: [ai-infrastructure]
+  - id: ai-11-infrastructure-serving-q3
+    type: true_false
+    difficulty: 1
+    question: "Une moyenne de charge suffit toujours pour dimensionner une infrastructure."
+    answer: false
+    explanation: "Les pics et la variabilité doivent être pris en compte."
+    skills: [ai-infrastructure]
