@@ -54,3 +54,32 @@ Hypothèses : surapprentissage ou changement de distribution. Vérifications : c
 ## À retenir
 
 Un score n'a de sens que si le protocole de validation représente correctement l'usage futur.
+
+
+## Introduction
+
+Une validation correcte mesure la généralisation, pas la mémorisation.
+
+## Concept
+
+Train, validation et test ont des rôles distincts ; les splits temporels ou par groupe évitent des fuites spécifiques.
+
+## Exemple
+
+Un modèle de fraude doit souvent séparer les périodes plutôt que mélanger aléatoirement toutes les transactions.
+
+## Comment ça fonctionne
+
+données → split adapté → entraînement → tuning → test final
+
+## Questions d'entretien
+
+- Pourquoi le test ne doit-il pas servir au tuning ?
+
+  :::indice
+  Pense au risque de mesure trompeuse et à la généralisation.
+  :::
+
+  :::reponse
+  Parce qu'il cesserait d'être une estimation indépendante de la généralisation.
+  :::
