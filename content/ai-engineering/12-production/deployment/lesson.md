@@ -1,56 +1,45 @@
 ---
-id: ai-12-production-deployment
-title: "Deployment & migrations"
+id: ai-12-deployment
+title: "Déploiement d'applications IA"
 slug: deployment
 technology: ai-engineering
 level: advanced
 module: 12-production
 order: 1
-estimatedMinutes: 45
+estimatedMinutes: 75
 difficulty: 4
-xp: 130
-prerequisites: []
-skills:
-  - ai-production
-tags: [ai, production, product]
+xp: 160
+prerequisites: [ai-11-serving]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre Deployment & migrations.
-- L'intégrer dans une architecture de production.
-- Définir des mesures et des critères d'acceptation.
+- déployer API, workers et modèles ;
+- gérer configuration et secrets ;
+- créer des releases reproductibles ;
+- prévoir rollback.
 
-## Concept
-Passer d'un prototype AI à un produit exige des garanties opérationnelles. **Deployment & migrations** relie le comportement du modèle aux préoccupations classiques du logiciel : disponibilité, latence, erreurs, coûts, sécurité et expérience utilisateur.
+## Architecture
+```text
+web -> API -> queue -> workers
+          |        |
+       database   model service
+```
 
-Un service de production doit avoir des limites explicites et des comportements de dégradation. Lorsqu'une dépendance devient indisponible, le système doit soit utiliser un fallback maîtrisé, soit échouer rapidement avec une réponse compréhensible.
+Sépare les responsabilités pour pouvoir scaler chaque composant selon sa charge.
 
-## Méthode
-- Définir les SLI pertinents : latence, disponibilité, erreurs, qualité.
-- Fixer des seuils et une procédure d'alerte.
-- Instrumenter les appels sans journaliser inutilement les données sensibles.
-- Tester timeouts, retries bornés et idempotence.
-- Documenter les incidents et les décisions.
+## Reproductibilité
+Pin les dépendances, versionne les artefacts et garde la configuration hors du code.
 
-## Erreurs fréquentes
-- Mesurer uniquement la disponibilité HTTP.
-- Ignorer les erreurs de qualité.
-- Ajouter un retry sans budget.
-- Ne pas distinguer incident technique et dérive du comportement AI.
-- Déployer sans procédure de rollback.
+## Rollback
+Une release doit pouvoir revenir à une version connue sans perdre les données compatibles.
 
 ## Exercice
-Définis un mini runbook pour **Deployment & migrations** : métriques, seuils, alerte, fallback, rollback et données à conserver pour diagnostiquer un incident.
+Une nouvelle version du modèle augmente les erreurs après déploiement. Quelle procédure ?
 
-:::indice
-Un système observable permet de répondre à trois questions : que s'est-il passé, pour qui, et depuis quand ?
-:::
-
-:::solution
-Le runbook doit relier métriques et actions. Il précise les seuils, les responsables, les mécanismes de dégradation et la procédure de retour à une version connue.
-:::
+### Solution
+Stopper ou réduire le trafic, comparer métriques, conserver l'ancienne version et effectuer un rollback si le seuil critique est dépassé.
 
 ## À retenir
-- La qualité AI est aussi une propriété opérationnelle.
-- Les fallbacks et limites doivent être conçus avant l'incident.
-- Un produit AI doit être mesurable de bout en bout.
+Un déploiement IA doit être réversible et observable.
