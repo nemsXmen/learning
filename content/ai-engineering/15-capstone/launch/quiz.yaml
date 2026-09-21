@@ -1,0 +1,26 @@
+id: ai-15-capstone-launch-quiz
+kind: QUIZ
+questions:
+  - id: ai-15-capstone-launch-q1
+    type: multiple_choice
+    difficulty: 3
+    question: "Qu'est-ce qui distingue un prototype d'un système AI de production ?"
+    options: ["Tests, observabilité, sécurité et procédures opérationnelles","Une interface plus colorée","Un modèle toujours plus grand","L'absence de limites"]
+    answer: [0]
+    explanation: "La production exige des garanties opérationnelles en plus de la démonstration fonctionnelle."
+    skills: [ai-capstone]
+  - id: ai-15-capstone-launch-q2
+    type: multiple_answer
+    difficulty: 3
+    question: "Quels livrables doivent accompagner le capstone ?"
+    options: ["Architecture","Suite d'évaluation","Runbook","Procédure de rollback"]
+    answer: [0, 1, 2, 3]
+    explanation: "Ces artefacts rendent le système maintenable et exploitable."
+    skills: [ai-capstone]
+  - id: ai-15-capstone-launch-q3
+    type: true_false
+    difficulty: 2
+    question: "Une démo réussie suffit pour déclarer un AI SaaS prêt pour la production."
+    answer: false
+    explanation: "Il faut également démontrer qualité, sécurité, fiabilité, observabilité et maîtrise des coûts."
+    skills: [ai-capstone]
