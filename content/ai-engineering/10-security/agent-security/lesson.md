@@ -44,3 +44,32 @@ Sandbox isolée, timeout, quotas CPU/mémoire, filesystem restreint, réseau con
 
 ## À retenir
 L'autonomie augmente la surface d'attaque ; les privilèges doivent rester bornés.
+
+
+## Introduction
+
+Un agent augmente la surface d'attaque lorsqu'il peut appeler des outils.
+
+## Concept
+
+Least privilege, sandbox, secrets courts et audit réduisent l'impact d'une compromission.
+
+## Exemple
+
+Un outil shell doit être isolé ou remplacé par une API spécialisée lorsque cela suffit.
+
+## Comment ça fonctionne
+
+request → policy → sandbox/tool → audit
+
+## Questions d'entretien
+
+- Quel est le principe de least privilege pour un agent ?
+
+  :::indice
+  Pense aux contrôles qui restent fiables même si le modèle se trompe.
+  :::
+
+  :::reponse
+  Accorder uniquement les permissions nécessaires à la tâche et pour la durée nécessaire.
+  :::
