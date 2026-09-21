@@ -8,7 +8,7 @@ questions:
     options: ["Moins de mémoire avec un risque qualité", "Plus de mémoire sans risque", "Plus de données d'entraînement", "Suppression du batching"]
     answer: [0]
     explanation: "La réduction de précision peut diminuer la mémoire mais affecter la qualité."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
 
   - id: ai-14-advanced-efficient-q2
     type: true_false
@@ -16,7 +16,7 @@ questions:
     question: "Augmenter le batching peut améliorer le throughput tout en dégradant la latence individuelle."
     answer: true
     explanation: "Les files d'attente et tailles de batch influencent le compromis."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
 
   - id: ai-14-advanced-efficient-q3
     type: multiple_choice
@@ -25,7 +25,7 @@ questions:
     options: ["Qualité, latence et coût", "Seulement la taille du modèle", "Seulement la VRAM", "Seulement le nombre de paramètres"]
     answer: [0]
     explanation: "L'optimisation est un compromis système."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
 
   - id: ai-14-advanced-efficient-q4
     type: multiple_choice
@@ -34,4 +34,4 @@ questions:
     options: ["Transférer une capacité d'un modèle enseignant vers un modèle plus petit", "Ajouter une base vectorielle", "Créer un tenant", "Chiffrer un secret"]
     answer: [0]
     explanation: "La distillation vise notamment des modèles plus efficaces."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
