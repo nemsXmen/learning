@@ -1,0 +1,6 @@
+slug: agents
+title: "AI Agents"
+order: 8
+part: agents
+description: >
+  Outils, orchestration, mémoire et garde-fous.
