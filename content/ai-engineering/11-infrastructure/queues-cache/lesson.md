@@ -10,8 +10,8 @@ estimatedMinutes: 75
 difficulty: 4
 xp: 160
 prerequisites: [ai-11-serving]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-infrastructure]
+tags: [infrastructure, inference, ai]
 ---
 
 ## Objectifs
@@ -30,16 +30,16 @@ API -> queue -> worker -> result store
 ```
 
 ## Cache
-Cache les résultats déterministes ou suffisamment stables. Définis TTL, invalidation et clé tenant-safe.
+Définis TTL, invalidation et clé tenant-safe. Ne mets pas en cache un résultat sensible sans isoler les tenants.
 
 ## Retry
 Utilise backoff et nombre maximal d'essais. Une tâche non idempotente ne doit pas être rejouée aveuglément.
 
 ## Exercice
-Un worker tombe après avoir effectué l'action mais avant d'accuser réception. Que prévoir ?
+Un worker tombe après l'action mais avant l'accusé de réception. Que prévoir ?
 
 ### Solution
 Une clé d'idempotence et un état transactionnel permettent de reprendre sans doubler l'effet de bord.
 
 ## À retenir
-Queues et cache améliorent la résilience seulement avec des contrats d'idempotence et de cohérence.
+Queues et cache nécessitent des contrats d'idempotence et de cohérence.
