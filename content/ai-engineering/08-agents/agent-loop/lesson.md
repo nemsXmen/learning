@@ -40,3 +40,32 @@ Détection de répétition/no-progress, limite d'itérations et arrêt contrôl�
 
 ## À retenir
 L'autonomie doit être bornée par un runtime déterministe.
+
+
+## Introduction
+
+Un agent répète perception, décision et action jusqu'à atteindre un objectif ou une limite.
+
+## Concept
+
+L'état doit être explicite et les budgets empêchent les boucles incontrôlées.
+
+## Exemple
+
+Limiter steps, tokens, durée et coût protège le système lorsqu'un tool échoue ou qu'une décision se répète.
+
+## Comment ça fonctionne
+
+state → observe → decide → act → observe
+
+## Questions d'entretien
+
+- Pourquoi imposer un nombre maximal d'étapes ?
+
+  :::indice
+  Cherche la frontière entre décision du modèle et contrôle déterministe.
+  :::
+
+  :::reponse
+  Pour garantir une borne sur coût, durée et effets de bord.
+  :::
