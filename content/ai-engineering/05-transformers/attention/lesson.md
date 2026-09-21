@@ -1,56 +1,65 @@
 ---
-id: ai-05-transformers-attention
-title: "Attention & transformers"
+id: ai-05-attention
+title: "Attention et multi-head attention"
 slug: attention
 technology: ai-engineering
 level: intermediate
 module: 05-transformers
-order: 1
-estimatedMinutes: 40
-difficulty: 3
-xp: 110
-prerequisites: []
-skills:
-  - ai-transformers
-tags: [ai, llm, transformers]
+order: 2
+estimatedMinutes: 65
+difficulty: 4
+xp: 140
+prerequisites: [ai-05-tokenisation]
+skills: [ai-transformers]
+tags: [transformers, llm]
 ---
 
 ## Objectifs
-- Comprendre Attention & transformers.
-- Savoir l'intégrer dans une chaîne d'inférence ou d'entraînement.
-- Mesurer qualité, coût et limites.
+- comprendre l'attention comme mécanisme de recherche pondérée ;
+- calculer conceptuellement Q, K et V ;
+- comprendre le rôle du masque ;
+- distinguer self-attention et multi-head attention.
 
-## Concept
-Les modèles modernes sont des systèmes statistiques : leurs sorties dépendent des données, de l'architecture et de la configuration d'exécution. Attention & transformers doit donc être abordé avec des mesures reproductibles et des cas de test représentatifs.
+## Intuition
+Pour chaque token, le modèle cherche quelles autres positions sont pertinentes pour construire sa représentation.
 
-Un pipeline LLM typique sépare tokenisation, représentation, calcul du modèle, décodage puis post-traitement. Cette séparation permet d'observer où apparaissent les erreurs et où se trouve le coût.
+On projette les représentations en Query, Key et Value :
 
-## Pratique
-- Inspecte les entrées et sorties à chaque étape.
-- Compare une baseline avant toute optimisation.
-- Mesure latence, mémoire et qualité.
-- Teste les limites : contexte long, entrées invalides et contenu ambigu.
-- Versionne modèle et configuration.
+```text
+Q = X Wq
+K = X Wk
+V = X Wv
+scores = Q K^T / sqrt(dk)
+attention = softmax(scores) V
+```
 
-## Erreurs fréquentes
-- Croire que davantage de paramètres garantit une meilleure réponse pour tout problème.
-- Oublier la limite de contexte.
-- Comparer deux modèles avec des prompts différents.
-- Ignorer le coût d'inférence.
-- Confondre score de benchmark et qualité réelle du produit.
+Les scores indiquent la compatibilité entre une requête et les clés.
+
+## Pourquoi diviser par sqrt(dk) ?
+Lorsque la dimension augmente, les produits scalaires peuvent devenir grands. La mise à l'échelle aide à garder les logits dans une plage favorable au softmax.
+
+## Masque causal
+Dans un modèle autoregressif, un token ne doit pas voir les futurs tokens pendant la génération.
+
+```text
+position 1 : voit 1
+position 2 : voit 1,2
+position 3 : voit 1,2,3
+```
+
+Le masque transforme les positions interdites en scores qui ne contribuent pas au softmax.
+
+## Multi-head attention
+Plusieurs têtes apprennent des projections différentes. Elles peuvent capturer des relations différentes puis sont combinées.
+
+## Limitation
+L'attention dense compare potentiellement toutes les positions entre elles, ce qui rend son coût dépendant fortement de la longueur de séquence.
 
 ## Exercice
-Construis une petite expérience sur **Attention & transformers**. Définis six cas, une métrique de qualité, une mesure de latence et une observation sur le coût ou la mémoire.
+Dans une génération autoregressive, pourquoi la position 5 ne doit-elle pas utiliser directement le token réel de position 6 ?
 
-:::indice
-Mesure séparément qualité et ressources : une amélioration de l'une peut dégrader l'autre.
-:::
-
-:::solution
-La solution doit conserver une baseline, utiliser les mêmes cas pour comparer les variantes et rapporter au moins qualité, latence et ressources.
-:::
+### Solution
+Cela introduirait une information future absente au moment réel de la génération et provoquerait une fuite de cible pendant l'entraînement.
 
 ## À retenir
-- L'architecture et la représentation influencent directement le comportement du modèle.
-- Les benchmarks ne remplacent pas l'évaluation de ton cas d'usage.
-- Qualité et coût doivent être mesurés ensemble.
+L'attention n'est pas une simple moyenne : elle produit une combinaison pondérée des valeurs selon les compatibilités calculées entre requêtes et clés.
