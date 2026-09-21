@@ -1,0 +1,26 @@
+id: ai-03-machine-learning-validation-quiz
+kind: QUIZ
+questions:
+  - id: ai-03-machine-learning-validation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: "Pourquoi conserver une baseline ?"
+    options: ["Pour mesurer les améliorations","Pour éviter les tests","Pour choisir automatiquement le plus gros modèle","Pour supprimer les données"]
+    answer: [0]
+    explanation: "La baseline fournit un point de comparaison stable."
+    skills: [ai-model-selection]
+  - id: ai-03-machine-learning-validation-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quelles pratiques réduisent les erreurs d'évaluation ?"
+    options: ["Séparer train/validation/test","Analyser les erreurs","Versionner la configuration","Modifier la métrique après chaque résultat"]
+    answer: [0, 1, 2]
+    explanation: "La séparation, l'analyse et la reproductibilité rendent la mesure plus fiable."
+    skills: [ai-model-selection]
+  - id: ai-03-machine-learning-validation-q3
+    type: true_false
+    difficulty: 1
+    question: "Le jeu de test doit servir à choisir les hyperparamètres."
+    answer: false
+    explanation: "Le test sert à mesurer la généralisation finale, pas à piloter les choix."
+    skills: [ai-model-selection]
