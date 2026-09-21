@@ -3,24 +3,35 @@ kind: QUIZ
 questions:
   - id: ai-13-product-problem-q1
     type: multiple_choice
-    difficulty: 2
-    question: "Quelle propriété distingue une observabilité utile ?"
-    options: ["Elle relie une mesure à une action","Elle collecte tout sans filtrer","Elle supprime les alertes","Elle mesure seulement le nombre de requêtes"]
+    difficulty: 3
+    question: "Quel élément doit précéder le choix du modèle ?"
+    options: ["Le problème utilisateur et son outcome", "Le fournisseur le plus récent", "Le prompt final", "Le nombre de tokens"]
     answer: [0]
-    explanation: "Une métrique utile permet de détecter et diagnostiquer un problème."
+    explanation: "Le problème et son outcome définissent la valeur recherchée."
     skills: [ai-product]
+
   - id: ai-13-product-problem-q2
-    type: multiple_answer
-    difficulty: 2
-    question: "Quels sujets doivent être prévus avant un déploiement AI ?"
-    options: ["Rollback","Timeouts","Métriques","Fallbacks"]
-    answer: [0, 1, 2, 3]
-    explanation: "Ces mécanismes réduisent le risque opérationnel."
-    skills: [ai-product]
-  - id: ai-13-product-problem-q3
     type: true_false
-    difficulty: 1
-    question: "La disponibilité HTTP suffit à mesurer la santé d'une fonctionnalité AI."
-    answer: false
-    explanation: "Une réponse HTTP 200 peut contenir une réponse AI incorrecte."
+    difficulty: 2
+    question: "Une baseline non-IA permet de mesurer la valeur réellement apportée par l'IA."
+    answer: true
+    explanation: "La baseline sert de référence."
+    skills: [ai-product]
+
+  - id: ai-13-product-problem-q3
+    type: multiple_choice
+    difficulty: 3
+    question: "Quel indicateur est le plus proche d'un outcome produit ?"
+    options: ["Nombre de prompts", "Temps gagné sur la tâche", "Nombre de tokens", "Nombre de modèles"]
+    answer: [1]
+    explanation: "Il mesure directement un résultat utilisateur."
+    skills: [ai-product]
+
+  - id: ai-13-product-problem-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Que faire si aucun problème utilisateur clair n'est identifié ?"
+    options: ["Commencer par identifier le job-to-be-done", "Ajouter un agent", "Fine-tuner immédiatement", "Augmenter le contexte"]
+    answer: [0]
+    explanation: "La technologie ne remplace pas le problème produit."
     skills: [ai-product]
