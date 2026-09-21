@@ -48,3 +48,32 @@ Comparer tokens d'entrée/sortie, contexte récupéré, retries, latence, taille
 
 ## À retenir
 Le lancement n'est pas la fin du capstone : c'est le début de son cycle d'exploitation.
+
+
+## Introduction
+
+Le lancement transforme le capstone en système exploité par de vrais utilisateurs.
+
+## Concept
+
+CI/CD, staging, rollout progressif, monitoring, quotas et rollback sont indispensables.
+
+## Exemple
+
+Un changement de modèle peut être déployé à une petite cohorte avant généralisation.
+
+## Comment ça fonctionne
+
+staging → cohort → monitor → rollout/rollback
+
+## Questions d'entretien
+
+- Que surveiller après lancement ?
+
+  :::indice
+  Pense à la responsabilité de chaque couche et au contrôle des risques.
+  :::
+
+  :::reponse
+  Qualité, erreurs, latence, coût par tâche, consommation et incidents de sécurité.
+  :::
