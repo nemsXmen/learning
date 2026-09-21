@@ -77,7 +77,11 @@ Ne jamais committer une clé API ou un mot de passe. Si un secret a fuité, le r
 
 Définis un manifeste minimal pour une évaluation RAG.
 
-### Solution
+:::indice
+Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
+:::
+
+:::solution
 
 ```json
 {
@@ -91,6 +95,8 @@ Définis un manifeste minimal pour une évaluation RAG.
   "environment": "python-3.12"
 }
 ```
+
+:::
 
 ## À retenir
 
