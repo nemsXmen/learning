@@ -37,8 +37,14 @@ Une version ne doit pas seulement « sembler meilleure ». Elle doit respecter d
 ## Exercice
 Une nouvelle version améliore la qualité moyenne mais échoue davantage sur les requêtes sensibles. Que montre l'évaluation ?
 
-### Solution
+:::indice
+Décompose le système en responsabilités et vérifie chaque frontière avant le lancement.
+:::
+
+:::solution
 La moyenne masque une régression sur un segment critique. Il faut segmenter les résultats et bloquer la release si le seuil de sécurité est dépassé.
+
+:::
 
 ## À retenir
 L'évaluation doit représenter les vrais risques du produit, pas seulement sa moyenne.
