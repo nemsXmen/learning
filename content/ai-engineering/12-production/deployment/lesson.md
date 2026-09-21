@@ -38,8 +38,14 @@ Une release doit pouvoir revenir à une version connue sans perdre les données 
 ## Exercice
 Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
 
-### Solution
+:::indice
+Raisonne en détection → mitigation → récupération → vérification.
+:::
+
+:::solution
 Réduire le trafic, comparer les métriques, conserver l'ancienne version et effectuer un rollback si nécessaire.
+
+:::
 
 ## À retenir
 Un déploiement IA doit être réversible et observable.
