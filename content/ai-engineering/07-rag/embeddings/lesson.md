@@ -4,7 +4,7 @@ title: "Embeddings et index vectoriels"
 slug: embeddings
 technology: ai-engineering
 level: intermediate
-module: 07-rag
+module: rag
 order: 3
 estimatedMinutes: 70
 difficulty: 4
