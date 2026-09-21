@@ -38,3 +38,32 @@ Réduire batch/contexte, utiliser une précision adaptée, libérer les buffers 
 
 ## À retenir
 La capacité IA dépend autant de mémoire et débit que du nombre de paramètres.
+
+
+## Introduction
+
+Les workloads AI sont souvent limités par mémoire, calcul et transfert de données.
+
+## Concept
+
+VRAM, précision numérique, batch et taille de modèle déterminent la capacité d'un GPU.
+
+## Exemple
+
+Un modèle qui tient en FP16 peut nécessiter une stratégie différente en quantification lorsqu'il dépasse la VRAM.
+
+## Comment ça fonctionne
+
+model → memory estimate → precision → GPU scheduling
+
+## Questions d'entretien
+
+- Pourquoi la VRAM est-elle critique ?
+
+  :::indice
+  Relie performance et fiabilité au comportement sous charge.
+  :::
+
+  :::reponse
+  Elle limite les modèles, contextes et batches pouvant être chargés simultanément.
+  :::
