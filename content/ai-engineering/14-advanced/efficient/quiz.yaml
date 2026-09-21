@@ -1,0 +1,19 @@
+id: ai-14-advanced-efficient-quiz
+kind: QUIZ
+questions:
+  - id: ai-14-advanced-efficient-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quand introduire une technique AI plus complexe ?"
+    options: ["Après avoir mesuré une baseline","Dès le prototype","Uniquement parce qu'elle est récente","Sans métrique"]
+    answer: [0]
+    explanation: "La baseline permet de démontrer la valeur de la complexité ajoutée."
+    skills: [ai-finetuning]
+  - id: ai-14-advanced-efficient-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels éléments appartiennent à un contrat produit AI ?"
+    options: ["Utilisateur cible","Critères de succès","Limites","Plan de contrôle humain"]
+    answer: [0, 1, 2, 3]
+    explanation: "Ces éléments relient la capacité AI au besoin réel."
+    skills: [ai-finetuning]
