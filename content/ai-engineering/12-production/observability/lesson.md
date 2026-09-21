@@ -10,8 +10,8 @@ estimatedMinutes: 80
 difficulty: 5
 xp: 180
 prerequisites: [ai-12-deployment]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-production]
+tags: [production, reliability, observability]
 ---
 
 ## Objectifs
@@ -30,16 +30,13 @@ request -> trace -> model call -> tool calls -> response
 ```
 
 ## SLO
-Définis objectifs sur disponibilité, latence et erreurs. Pour l'IA, ajoute des signaux qualité lorsque leur calcul est compatible avec la confidentialité.
-
-## Alertes
-Alerte sur hausse d'erreurs, latence, coûts ou baisse de métriques critiques.
+Définis objectifs sur disponibilité, latence et erreurs. Ajoute des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
 
 ## Exercice
 Le coût par requête double sans hausse de trafic. Où chercher ?
 
 ### Solution
-Comparer tokens entrée/sortie, modèle routé, retries, contexte, outils et changement de prompt.
+Comparer tokens, modèle routé, retries, contexte, outils et changement de prompt.
 
 ## À retenir
 Sans corrélation entre version, requête et métriques, une régression IA est difficile à expliquer.
