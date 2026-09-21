@@ -9,7 +9,7 @@ order: 1
 estimatedMinutes: 55
 difficulty: 3
 xp: 120
-prerequisites: [ai-probability, ai-data-quality]
+prerequisites: [ai-maths-fondations, ai-data-quality]
 skills: [ai-ml-basics]
 tags: [machine-learning, supervised, classification, regression]
 ---
