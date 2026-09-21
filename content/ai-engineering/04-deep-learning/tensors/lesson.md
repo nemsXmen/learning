@@ -65,3 +65,31 @@ assert y.shape == (32, 128)
 
 ## À retenir
 Shape, dtype, device et gradients sont quatre notions essentielles au debugging d'un réseau neuronal.
+
+## Introduction
+
+Les tenseurs sont la structure numérique fondamentale des calculs PyTorch.
+
+## Concept
+
+Shape, dtype, device et broadcasting déterminent la compatibilité et le coût des opérations.
+
+## Exemple
+
+Une erreur de shape sur une couche linéaire peut être détectée avant l'entraînement avec un petit batch de test.
+
+## Comment ça fonctionne
+
+entrée → tenseurs → opérations → autograd → sortie
+
+## Questions d'entretien
+
+- Pourquoi contrôler dtype et device ?
+
+  :::indice
+  Relie la question au comportement réel d'un entraînement.
+  :::
+
+  :::reponse
+  Un mauvais dtype ou un déplacement CPU/GPU inutile peut provoquer erreur ou dégradation de performance.
+  :::
