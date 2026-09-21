@@ -1,57 +1,45 @@
 ---
-id: ai-08-agents-memory
-title: "Memory & context management"
+id: ai-08-memory
+title: "Mémoire agentique et contexte"
 slug: memory
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 08-agents
-order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-agents
-tags: [ai, evaluation, agents]
+order: 2
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-08-agent-loop]
+skills: [ai-agents]
+tags: [agents, tools, orchestration, safety]
 ---
 
 ## Objectifs
-- Comprendre Memory & context management.
-- Concevoir un comportement contrôlable.
-- Mesurer qualité et risques.
+- distinguer contexte de session et mémoire persistante ;
+- contrôler ce qui est mémorisé ;
+- éviter la croissance infinie du contexte ;
+- respecter permissions et rétention.
 
-## Concept
-Un système agentique combine un modèle, un état et des outils. **Memory & context management** doit donc être traité comme un problème d'orchestration logicielle. Le modèle ne doit jamais obtenir implicitement une permission que le produit n'a pas explicitement accordée.
+## Types de mémoire
+Mémoire de travail : état de la tâche actuelle. Mémoire conversationnelle : historique utile. Mémoire persistante : informations conservées entre sessions.
 
-Une évaluation AI doit partir de cas représentatifs, avec des attentes explicites. Les juges automatiques peuvent accélérer la mesure, mais ils doivent eux-mêmes être contrôlés et complétés par des vérifications déterministes ou humaines lorsque l'enjeu le justifie.
+## Sélection
+Ne verse pas tout l'historique dans chaque requête. Résume, récupère et filtre selon la tâche.
 
-## Méthode
-- Définir les états possibles.
-- Définir les transitions autorisées.
-- Limiter le nombre d'étapes.
-- Donner à chaque outil le minimum de permissions.
-- Journaliser les décisions utiles sans exposer de secrets.
-- Construire un dataset d'évaluation versionné.
+```text
+request -> relevant memory retrieval -> context -> model
+                         ^
+                    memory store
+```
 
-## Erreurs fréquentes
-- Laisser le modèle inventer des permissions.
-- Confondre mémoire utile et accumulation de contexte.
-- Utiliser uniquement un score global.
-- Évaluer sur les mêmes exemples que ceux ayant servi à ajuster le système.
-- Faire confiance à un juge automatique sans calibration.
+## Sécurité
+Une mémoire persistante peut contenir des données sensibles. Applique ACL, chiffrement selon le contexte, suppression et durée de rétention.
 
 ## Exercice
-Construis un agent ou une suite d'évaluation minimale. Définis dix cas, leurs attentes, les limites d'exécution et la procédure de comparaison entre deux versions.
+Un utilisateur demande la suppression de ses données mémorisées. Que doit faire le système ?
 
-:::indice
-Une métrique doit aider à prendre une décision technique. Si elle ne change jamais une décision, elle est probablement mal choisie.
-:::
-
-:::solution
-La solution doit séparer état, outils et règles, puis utiliser un dataset versionné avec des critères observables. Les contrôles critiques doivent être déterministes lorsque possible.
-:::
+### Solution
+Identifier les enregistrements concernés, supprimer ou anonymiser selon la politique applicable, invalider les caches puis journaliser l'opération.
 
 ## À retenir
-- Les agents sont des systèmes à états et permissions.
-- L'évaluation est un produit logiciel versionné.
-- Les juges automatiques sont des outils, pas une vérité absolue.
+La mémoire est une fonctionnalité de données, avec cycle de vie et gouvernance, pas une simple liste de messages.
