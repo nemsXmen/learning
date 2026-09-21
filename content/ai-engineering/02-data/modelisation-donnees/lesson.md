@@ -9,7 +9,7 @@ order: 1
 estimatedMinutes: 50
 difficulty: 3
 xp: 110
-prerequisites: [ai-python]
+prerequisites: [ai-python-fondamentaux]
 skills: [ai-data-modeling]
 tags: [data, schema, database, ai]
 ---
