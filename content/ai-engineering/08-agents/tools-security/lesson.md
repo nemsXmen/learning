@@ -39,8 +39,14 @@ Journalise acteur, outil, paramètres minimisés, décision d'autorisation, rés
 ## Exercice
 Un agent propose un remboursement. Quelle frontière appliquer ?
 
-### Solution
+:::indice
+Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+:::
+
+:::solution
 Valider identité, montant, règles métier et idempotence dans le backend ; l'agent ne fait que proposer ou déclencher un outil déjà autorisé.
+
+:::
 
 ## À retenir
 Un agent puissant doit rester moins privilégié que le système qu'il pilote.
