@@ -36,8 +36,14 @@ Scale horizontalement lorsque la charge et les contraintes de mémoire le justif
 ## Exercice
 Le throughput augmente mais p99 devient mauvais après activation du batching. Quelle analyse ?
 
-### Solution
+:::indice
+Compare la baseline et mesure explicitement le compromis avant d'adopter l'optimisation.
+:::
+
+:::solution
 Mesurer taille des batches, attente du scheduler, distribution de longueur des requêtes et saturation GPU.
+
+:::
 
 ## À retenir
 L'inférence avancée est une optimisation de système complète, pas seulement un choix de GPU.
