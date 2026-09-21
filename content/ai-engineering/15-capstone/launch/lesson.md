@@ -43,8 +43,14 @@ Après lancement, les changements de prompts, modèles, retrieval et tools doive
 ## Exercice
 Le coût par tâche double après un changement de modèle alors que la qualité reste stable. Que vérifier ?
 
-### Solution
+:::indice
+Décompose le système en responsabilités et vérifie chaque frontière avant le lancement.
+:::
+
+:::solution
 Comparer tokens d'entrée/sortie, contexte récupéré, retries, latence, taille des réponses et tarif fournisseur. Corriger la cause avant de généraliser le changement.
+
+:::
 
 ## À retenir
 Le lancement n'est pas la fin du capstone : c'est le début de son cycle d'exploitation.
