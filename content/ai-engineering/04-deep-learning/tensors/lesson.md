@@ -4,13 +4,13 @@ title: "Tenseurs et calcul différentiable"
 slug: tensors
 technology: ai-engineering
 level: beginner
-module: 04-deep-learning
+module: deep-learning
 order: 1
 estimatedMinutes: 60
 difficulty: 3
 xp: 130
 prerequisites: [ai-linear-algebra]
-skills: [ai-deep-learning]
+skills: [ai-pytorch]
 tags: [deep-learning, pytorch]
 ---
 
