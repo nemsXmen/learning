@@ -1,60 +1,56 @@
 ---
-id: ai-03-machine-learning-validation
-title: "Validation & model selection"
+id: ai-ml-validation
+title: "Validation, généralisation et sélection de modèles"
 slug: validation
 technology: ai-engineering
 level: intermediate
-module: 03-machine-learning
-order: 1
-estimatedMinutes: 40
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-model-selection
-tags: [ai, machine-learning]
+module: machine-learning
+order: 3
+estimatedMinutes: 60
+difficulty: 4
+xp: 130
+prerequisites: [ai-ml-basics, ai-experimentation]
+skills: [ai-model-selection]
+tags: [validation, cross-validation, leakage, generalization]
 ---
 
 ## Objectifs
-- Comprendre Validation & model selection.
-- Relier la théorie à une implémentation testable.
-- Savoir diagnostiquer les erreurs et compromis.
 
-## Introduction
-En AI engineering, un modèle n'est qu'une partie du système. Validation & model selection devient utile lorsqu'il est relié à des données contrôlées, une méthode d'évaluation et un contrat d'exécution.
+- séparer entraînement, validation et test ;
+- comprendre overfitting et underfitting ;
+- utiliser la cross-validation lorsque le contexte le permet ;
+- éviter de contaminer le test.
 
-## Concept
-Travaille avec une séparation nette entre données, entraînement, évaluation et inférence. Une baseline simple sert de point de comparaison. Les jeux d'entraînement, validation et test doivent avoir des rôles distincts afin d'éviter la fuite d'information.
+## Généralisation
 
-Pour les réseaux de neurones, pense en termes de tenseurs, fonction de perte, gradients, optimiseur et boucle d'entraînement. Pour la sélection de modèles, compare les mêmes données et la même métrique plutôt que des impressions visuelles.
+Le but est une bonne performance sur une distribution future, pas une excellente note sur train. Un grand écart train/validation peut signaler surapprentissage ou changement de distribution.
 
-## Pratique
-1. Définis les données et leur schéma.
-2. Construis une baseline.
-3. Entraîne ou évalue un modèle.
-4. Mesure sur des données jamais utilisées pour ajuster le modèle.
-5. Analyse les erreurs par catégorie.
-6. Versionne la configuration.
+## Split
 
-## Erreurs fréquentes
-- Utiliser le test pour choisir les hyperparamètres.
-- Comparer des modèles avec des jeux de données différents.
-- Ignorer les classes rares.
-- Optimiser une métrique qui ne correspond pas au produit.
-- Déboguer uniquement le modèle alors que le problème vient des données.
+Le split dépend des données. Pour des observations temporelles, un split aléatoire peut laisser le futur influencer le passé. Pour des groupes liés, séparer les lignes peut aussi créer une fuite.
+
+## Cross-validation
+
+La cross-validation entraîne plusieurs fois sur des partitions différentes et donne une estimation plus robuste dans les contextes où ses hypothèses sont satisfaites. Elle ne doit pas être appliquée aveuglément aux séries temporelles ou données dépendantes.
+
+## Hyperparamètres
+
+Les hyperparamètres sont sélectionnés avec validation ou une procédure de recherche. Le test reste réservé à l'estimation finale.
+
+Comparer de nombreux modèles sur le test puis choisir le meilleur transforme le test en outil de tuning.
+
+## Calibration
+
+Une classification peut bien classer tout en étant mal calibrée. Une probabilité de 0.8 devrait correspondre approximativement à 80 % de positifs dans le contexte mesuré si le modèle est correctement calibré.
 
 ## Exercice
-Crée une expérience minimale liée à **Validation & model selection**. Documente la baseline, les données utilisées, la métrique, les erreurs observées et une modification que tu pourrais tester ensuite.
 
-:::indice
-Une expérience utile permet de distinguer une amélioration réelle d'une variation due aux données ou au hasard.
-:::
+Un modèle obtient 99 % sur train et 72 % sur validation. Donne deux hypothèses et trois vérifications.
 
-:::solution
-Conserve une baseline immuable, sépare les jeux de données, fixe les paramètres importants et compare les résultats avec la même procédure.
-:::
+### Solution
+
+Hypothèses : surapprentissage ou changement de distribution. Vérifications : comparer les distributions, inspecter erreurs, vérifier doublons/fuites et tester une baseline simple.
 
 ## À retenir
-- Les données et l'évaluation déterminent la qualité de l'expérience.
-- Une baseline rend les améliorations mesurables.
-- Les erreurs doivent être analysées avant de complexifier le modèle.
+
+Un score n'a de sens que si le protocole de validation représente correctement l'usage futur.
