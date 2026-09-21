@@ -4,7 +4,7 @@ title: "Boucle agentique et état"
 slug: agent-loop
 technology: ai-engineering
 level: advanced
-module: 08-agents
+module: agents
 order: 1
 estimatedMinutes: 75
 difficulty: 5
