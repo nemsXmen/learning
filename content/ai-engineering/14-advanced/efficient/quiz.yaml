@@ -3,17 +3,35 @@ kind: QUIZ
 questions:
   - id: ai-14-advanced-efficient-q1
     type: multiple_choice
-    difficulty: 2
-    question: "Quand introduire une technique AI plus complexe ?"
-    options: ["Après avoir mesuré une baseline","Dès le prototype","Uniquement parce qu'elle est récente","Sans métrique"]
+    difficulty: 3
+    question: "Quel compromis apporte souvent la quantification ?"
+    options: ["Moins de mémoire avec un risque qualité", "Plus de mémoire sans risque", "Plus de données d'entraînement", "Suppression du batching"]
     answer: [0]
-    explanation: "La baseline permet de démontrer la valeur de la complexité ajoutée."
+    explanation: "La réduction de précision peut diminuer la mémoire mais affecter la qualité."
     skills: [ai-finetuning]
+
   - id: ai-14-advanced-efficient-q2
-    type: multiple_answer
+    type: true_false
     difficulty: 2
-    question: "Quels éléments appartiennent à un contrat produit AI ?"
-    options: ["Utilisateur cible","Critères de succès","Limites","Plan de contrôle humain"]
-    answer: [0, 1, 2, 3]
-    explanation: "Ces éléments relient la capacité AI au besoin réel."
+    question: "Augmenter le batching peut améliorer le throughput tout en dégradant la latence individuelle."
+    answer: true
+    explanation: "Les files d'attente et tailles de batch influencent le compromis."
+    skills: [ai-finetuning]
+
+  - id: ai-14-advanced-efficient-q3
+    type: multiple_choice
+    difficulty: 3
+    question: "Que mesure un benchmark d'optimisation ?"
+    options: ["Qualité, latence et coût", "Seulement la taille du modèle", "Seulement la VRAM", "Seulement le nombre de paramètres"]
+    answer: [0]
+    explanation: "L'optimisation est un compromis système."
+    skills: [ai-finetuning]
+
+  - id: ai-14-advanced-efficient-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Quel objectif correspond à la distillation ?"
+    options: ["Transférer une capacité d'un modèle enseignant vers un modèle plus petit", "Ajouter une base vectorielle", "Créer un tenant", "Chiffrer un secret"]
+    answer: [0]
+    explanation: "La distillation vise notamment des modèles plus efficaces."
     skills: [ai-finetuning]
