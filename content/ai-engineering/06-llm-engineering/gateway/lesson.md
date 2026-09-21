@@ -55,3 +55,32 @@ Détecter les erreurs éligibles, respecter un timeout global, sélectionner un 
 
 ## À retenir
 Un gateway rend les appels LLM contrôlables, observables et remplaçables.
+
+
+## Introduction
+
+Un AI gateway centralise les appels aux fournisseurs de modèles.
+
+## Concept
+
+Timeout, retry limité, fallback, rate limit, coût et observabilité doivent être cohérents.
+
+## Exemple
+
+Une interface interne stable permet de changer de fournisseur sans modifier chaque feature.
+
+## Comment ça fonctionne
+
+application → gateway → provider → normalized response
+
+## Questions d'entretien
+
+- Pourquoi mettre les secrets dans le gateway ?
+
+  :::indice
+  Considère toujours la frontière entre génération et logique déterministe.
+  :::
+
+  :::reponse
+  Pour empêcher le frontend et les prompts de devenir des frontières de confiance.
+  :::
