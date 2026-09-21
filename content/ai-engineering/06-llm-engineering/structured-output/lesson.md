@@ -52,3 +52,32 @@ Rejeter la sortie via un invariant métier, journaliser le cas puis appliquer un
 
 ## À retenir
 Une sortie LLM devient fiable pour l'application seulement après validation déterministe.
+
+
+## Introduction
+
+Une sortie structurée rend l'interface du modèle exploitable par du logiciel.
+
+## Concept
+
+JSON syntaxiquement valide ne signifie pas données correctes ; un schéma runtime reste nécessaire.
+
+## Exemple
+
+Valider un objet avec Zod avant toute écriture en base sépare génération et exécution.
+
+## Comment ça fonctionne
+
+génération → parse → schema validation → retry/fallback → exécution
+
+## Questions d'entretien
+
+- Pourquoi ne jamais exécuter directement une sortie LLM ?
+
+  :::indice
+  Considère toujours la frontière entre génération et logique déterministe.
+  :::
+
+  :::reponse
+  Parce que le modèle n'est pas une frontière d'autorisation et sa sortie peut être invalide ou malveillante.
+  :::
