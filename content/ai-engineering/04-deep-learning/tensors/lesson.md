@@ -1,60 +1,67 @@
 ---
-id: ai-04-deep-learning-tensors
-title: "Tensors & neural networks"
+id: ai-dl-tensors
+title: "Tenseurs et calcul différentiable"
 slug: tensors
 technology: ai-engineering
-level: intermediate
+level: beginner
 module: 04-deep-learning
 order: 1
-estimatedMinutes: 40
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-neural-networks
-tags: [ai, machine-learning]
+estimatedMinutes: 60
+difficulty: 3
+xp: 130
+prerequisites: [ai-linear-algebra]
+skills: [ai-deep-learning]
+tags: [deep-learning, pytorch]
 ---
 
 ## Objectifs
-- Comprendre Tensors & neural networks.
-- Relier la théorie à une implémentation testable.
-- Savoir diagnostiquer les erreurs et compromis.
+- comprendre tenseur, shape, dtype et device ;
+- manipuler les dimensions ;
+- comprendre l'autodifférentiation.
 
-## Introduction
-En AI engineering, un modèle n'est qu'une partie du système. Tensors & neural networks devient utile lorsqu'il est relié à des données contrôlées, une méthode d'évaluation et un contrat d'exécution.
+## Tenseur
+Un tenseur généralise vecteurs et matrices. Dans PyTorch, il possède notamment une shape, un dtype et un device.
 
-## Concept
-Travaille avec une séparation nette entre données, entraînement, évaluation et inférence. Une baseline simple sert de point de comparaison. Les jeux d'entraînement, validation et test doivent avoir des rôles distincts afin d'éviter la fuite d'information.
+```python
+import torch
+x = torch.tensor([[1., 2., 3.], [4., 5., 6.]])
+print(x.shape)
+print(x.dtype)
+```
 
-Pour les réseaux de neurones, pense en termes de tenseurs, fonction de perte, gradients, optimiseur et boucle d'entraînement. Pour la sélection de modèles, compare les mêmes données et la même métrique plutôt que des impressions visuelles.
+## Broadcasting
+Certaines dimensions compatibles sont étendues implicitement. Une opération valide peut néanmoins être sémantiquement incorrecte : vérifie toujours les shapes.
 
-## Pratique
-1. Définis les données et leur schéma.
-2. Construis une baseline.
-3. Entraîne ou évalue un modèle.
-4. Mesure sur des données jamais utilisées pour ajuster le modèle.
-5. Analyse les erreurs par catégorie.
-6. Versionne la configuration.
+```python
+x = torch.ones(4, 3)
+bias = torch.zeros(3)
+y = x + bias
+```
 
-## Erreurs fréquentes
-- Utiliser le test pour choisir les hyperparamètres.
-- Comparer des modèles avec des jeux de données différents.
-- Ignorer les classes rares.
-- Optimiser une métrique qui ne correspond pas au produit.
-- Déboguer uniquement le modèle alors que le problème vient des données.
+## Device
+```python
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+x = x.to(device)
+```
+
+## Autodiff
+```python
+w = torch.tensor(2.0, requires_grad=True)
+loss = (w - 5) ** 2
+loss.backward()
+print(w.grad)
+```
 
 ## Exercice
-Crée une expérience minimale liée à **Tensors & neural networks**. Documente la baseline, les données utilisées, la métrique, les erreurs observées et une modification que tu pourrais tester ensuite.
+Crée un tenseur (32, 128), ajoute un biais (128,), puis vérifie la shape.
 
-:::indice
-Une expérience utile permet de distinguer une amélioration réelle d'une variation due aux données ou au hasard.
-:::
-
-:::solution
-Conserve une baseline immuable, sépare les jeux de données, fixe les paramètres importants et compare les résultats avec la même procédure.
-:::
+### Solution
+```python
+x = torch.randn(32, 128)
+bias = torch.zeros(128)
+y = x + bias
+assert y.shape == (32, 128)
+```
 
 ## À retenir
-- Les données et l'évaluation déterminent la qualité de l'expérience.
-- Une baseline rend les améliorations mesurables.
-- Les erreurs doivent être analysées avant de complexifier le modèle.
+Shape, dtype, device et gradients sont quatre notions essentielles au debugging d'un réseau neuronal.
