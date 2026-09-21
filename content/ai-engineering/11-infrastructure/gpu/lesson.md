@@ -1,57 +1,43 @@
 ---
-id: ai-11-infrastructure-gpu
-title: "GPU/CPU capacity & performance"
+id: ai-11-gpu
+title: "GPU, mémoire et calcul IA"
 slug: gpu
 technology: ai-engineering
-level: intermediate
+level: advanced
 module: 11-infrastructure
 order: 1
-estimatedMinutes: 45
-difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-infrastructure
-tags: [ai, infrastructure]
+estimatedMinutes: 75
+difficulty: 4
+xp: 160
+prerequisites: [ai-04-pytorch]
+skills: [ai-engineering]
+tags: [ai, production, engineering]
 ---
 
 ## Objectifs
-- Comprendre GPU/CPU capacity & performance.
-- Choisir une architecture adaptée à la charge.
-- Mesurer fiabilité, latence et coût.
+- comprendre CPU, GPU et VRAM ;
+- identifier les principaux coûts mémoire ;
+- raisonner sur batch et précision ;
+- diagnostiquer les limites matérielles.
 
-## Concept
-L'infrastructure AI doit isoler les ressources coûteuses et les dépendances externes du reste de l'application. **GPU/CPU capacity & performance** se conçoit avec des limites explicites : concurrence, taille des requêtes, mémoire, durée d'exécution, quotas et capacité.
+## Mémoire
+Pour un modèle entraîné, la mémoire inclut poids, gradients, états de l'optimiseur et activations. L'inférence consomme surtout poids et activations intermédiaires.
 
-Une architecture robuste accepte les pics et les erreurs. Les files permettent de découpler les traitements longs, les caches réduisent les appels répétitifs et les limites empêchent une demande d'épuiser les ressources.
+```text
+VRAM ~= weights + activations + runtime buffers + cache
+```
 
-## Méthode
-1. Mesurer le trafic attendu.
-2. Définir un budget de latence et de coût.
-3. Déterminer les limites de concurrence.
-4. Ajouter timeouts, retries bornés et rate limits.
-5. Observer saturation CPU/GPU, mémoire et files.
-6. Tester sous charge avant production.
+## Précision
+FP32, FP16 et BF16 offrent des compromis différents entre mémoire, vitesse et stabilité.
 
-## Erreurs fréquentes
-- Dimensionner sur une moyenne au lieu d'un pic.
-- Mettre un cache sans stratégie d'invalidation.
-- Utiliser des retries qui amplifient la charge.
-- Ignorer la taille des vecteurs ou de l'index.
-- Confondre capacité théorique et débit réellement mesuré.
+## Batch
+Augmenter le batch peut améliorer le débit mais augmente généralement la mémoire nécessaire.
 
 ## Exercice
-Dessine une architecture pour **GPU/CPU capacity & performance**. Donne au moins une limite de capacité, une métrique de saturation, une stratégie de reprise et une estimation du coût.
+Une inférence échoue par OOM alors que le modèle tient presque en VRAM. Quels leviers tester ?
 
-:::indice
-Chaque ressource partagée doit avoir un propriétaire, une limite et une métrique.
-:::
-
-:::solution
-Une architecture acceptable explicite les ressources, limites, files éventuelles, métriques de saturation et comportements en cas de panne ou de surcharge.
-:::
+### Solution
+Réduire batch/contexte, utiliser une précision adaptée, libérer les buffers inutiles et envisager quantification ou modèle plus petit.
 
 ## À retenir
-- L'infrastructure est une partie du produit AI.
-- Les limites protègent coût et disponibilité.
-- Il faut mesurer avant de dimensionner.
+La capacité d'un système IA dépend autant de la mémoire et du débit que du nombre de paramètres.
