@@ -41,3 +41,32 @@ Elle peut masquer une régression sur un sous-groupe. Il faut segmenter les rés
 
 ## À retenir
 La qualité doit être testée comme une propriété versionnée du logiciel.
+
+
+## Introduction
+
+Une suite de régression empêche une amélioration locale de casser un comportement existant.
+
+## Concept
+
+Golden cases, seuils et comparaison de versions constituent une release gate.
+
+## Exemple
+
+Après changement de prompt, rejouer automatiquement les cas critiques révèle les régressions avant production.
+
+## Comment ça fonctionne
+
+change → eval suite → compare → gate → release
+
+## Questions d'entretien
+
+- Que doit faire une release gate ?
+
+  :::indice
+  Une bonne métrique doit être reliée à une décision.
+  :::
+
+  :::reponse
+  Bloquer ou signaler une version lorsque des seuils critiques sont dépassés.
+  :::
