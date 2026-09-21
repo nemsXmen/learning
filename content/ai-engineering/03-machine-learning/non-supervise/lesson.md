@@ -9,7 +9,7 @@ order: 2
 estimatedMinutes: 50
 difficulty: 3
 xp: 110
-prerequisites: [ai-ml-basics]
+prerequisites: [ai-ml-supervised]
 skills: [ai-ml-basics]
 tags: [clustering, dimensionality-reduction, anomaly]
 ---
