@@ -43,3 +43,32 @@ Réduire le trafic, comparer les métriques, conserver l'ancienne version et eff
 
 ## À retenir
 Un déploiement IA doit être réversible et observable.
+
+
+## Introduction
+
+Le déploiement AI doit rendre code, configuration et modèles reproductibles.
+
+## Concept
+
+Environnements, artefacts, migrations et rollback forment un même processus.
+
+## Exemple
+
+Une release peut référencer explicitement version du modèle, prompt et image applicative.
+
+## Comment ça fonctionne
+
+build → artifact → staging → verification → production
+
+## Questions d'entretien
+
+- Pourquoi garder un rollback prêt ?
+
+  :::indice
+  Pense aux conséquences d'une panne sous trafic réel.
+  :::
+
+  :::reponse
+  Parce qu'une régression peut apparaître uniquement avec le trafic réel.
+  :::
