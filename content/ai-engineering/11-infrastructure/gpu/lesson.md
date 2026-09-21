@@ -33,8 +33,14 @@ FP32, FP16 et BF16 offrent des compromis entre mémoire, vitesse et stabilité.
 ## Exercice
 Une inférence échoue par OOM alors que le modèle tient presque en VRAM. Quels leviers tester ?
 
-### Solution
+:::indice
+Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
+:::
+
+:::solution
 Réduire batch/contexte, utiliser une précision adaptée, libérer les buffers et envisager quantification ou modèle plus petit.
+
+:::
 
 ## À retenir
 La capacité IA dépend autant de mémoire et débit que du nombre de paramètres.
