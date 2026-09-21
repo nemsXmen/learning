@@ -52,3 +52,31 @@ Comparer modèle plus petit, weight decay différent et dropout différent en ga
 
 ## À retenir
 La régularisation est une réponse à un problème observé. Elle doit être expérimentée et mesurée.
+
+## Introduction
+
+La régularisation cherche à améliorer la généralisation du réseau.
+
+## Concept
+
+Dropout, weight decay, normalisation, early stopping et augmentation agissent sur des mécanismes différents.
+
+## Exemple
+
+Si la loss train baisse tandis que validation stagne, une stratégie de régularisation peut être pertinente.
+
+## Comment ça fonctionne
+
+training → validation → diagnostic → régularisation → comparaison
+
+## Questions d'entretien
+
+- Que révèle un écart train/validation important ?
+
+  :::indice
+  Relie la question au comportement réel d'un entraînement.
+  :::
+
+  :::reponse
+  Il peut indiquer un surapprentissage et nécessite d'analyser données, capacité du modèle et régularisation.
+  :::
