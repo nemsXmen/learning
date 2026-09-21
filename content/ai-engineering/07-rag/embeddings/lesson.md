@@ -45,3 +45,32 @@ Non dans un index homogène. Créer un nouvel index compatible et réindexer les
 
 ## À retenir
 Un embedding est un signal de recherche ; il ne garantit ni vérité ni autorisation.
+
+
+## Introduction
+
+Les embeddings représentent des contenus dans un espace numérique pour permettre la recherche sémantique.
+
+## Concept
+
+Dimension, modèle, distance et normalisation doivent rester cohérents entre indexation et requête.
+
+## Exemple
+
+Changer de modèle d'embedding nécessite généralement une stratégie de migration et de réindexation.
+
+## Comment ça fonctionne
+
+text → embedding model → vector → index → nearest neighbors
+
+## Questions d'entretien
+
+- Pourquoi filtrer les métadonnées avant ou pendant le retrieval ?
+
+  :::indice
+  Sépare toujours les erreurs de retrieval des erreurs de génération.
+  :::
+
+  :::reponse
+  Pour respecter tenant, ACL, type ou version et éviter de récupérer des données interdites.
+  :::
