@@ -135,3 +135,32 @@ def build_documents(items: list[tuple[str, str]]) -> list[dict]:
 ## À retenir
 
 Python pour l'IA demande une vraie rigueur d'ingénierie. Structures, erreurs, environnements et flux de données deviennent des briques réutilisées dans tous les modules suivants.
+
+
+## Introduction
+
+Python fournit l'environnement généraliste de l'AI Engineer : manipulation de données, orchestration, API et tooling.
+
+## Concept
+
+Un pipeline Python robuste sépare données, logique métier et intégrations externes.
+
+## Exemple
+
+Exemple : isoler une fonction de normalisation pure permet de la tester sans modèle ni base de données.
+
+## Comment ça fonctionne
+
+Le flux typique est ingestion → transformation → validation → sortie. Les erreurs et dépendances sont contrôlées à chaque frontière.
+
+## Questions d'entretien
+
+- Explique comment concevoir un pipeline Python reproductible.
+
+  :::indice
+  Relie le concept à un problème concret de production AI.
+  :::
+
+  :::reponse
+  Réponse : isoler les étapes, versionner les dépendances, valider les entrées et tester les transformations indépendamment.
+  :::
