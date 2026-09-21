@@ -112,7 +112,11 @@ Le générateur évite de charger tout le fichier en mémoire.
 
 Construis un pipeline qui lit des textes, les normalise, supprime les doublons, retourne id/text/length et lève une erreur pour un texte vide.
 
-### Solution
+:::indice
+Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
+:::
+
+:::solution
 
 ```python
 def normalize_text(text: str) -> str:
@@ -131,6 +135,8 @@ def build_documents(items: list[tuple[str, str]]) -> list[dict]:
         documents.append({"id": doc_id, "text": text, "length": len(text)})
     return documents
 ```
+
+:::
 
 ## À retenir
 
