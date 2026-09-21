@@ -40,3 +40,32 @@ Identifier le job-to-be-done, le coût actuel et un indicateur de résultat avan
 
 ## À retenir
 L'IA est un moyen produit ; la métrique de valeur précède le modèle.
+
+
+## Introduction
+
+Un produit AI commence par un problème utilisateur mesurable, pas par un modèle.
+
+## Concept
+
+Le job-to-be-done, le coût actuel, la fréquence et le risque définissent la valeur potentielle.
+
+## Exemple
+
+Comparer une baseline non-IA à la solution AI permet d'isoler la valeur réellement créée.
+
+## Comment ça fonctionne
+
+problem → baseline → AI capability → metric → outcome
+
+## Questions d'entretien
+
+- Que faut-il définir avant le modèle ?
+
+  :::indice
+  Relie la métrique à une décision produit concrète.
+  :::
+
+  :::reponse
+  Le problème, l'utilisateur, la baseline et la métrique de succès.
+  :::
