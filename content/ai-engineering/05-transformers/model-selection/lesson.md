@@ -62,3 +62,32 @@ Mesurer qualité sur données réelles, coût total, p50/p95 de latence, taux d'
 
 ## À retenir
 Le choix de modèle est une décision d'ingénierie mesurable. Commence par les contraintes et les tâches réelles, puis benchmarke.
+
+
+## Introduction
+
+Choisir un modèle est une décision système autant qu'une décision de qualité.
+
+## Concept
+
+Qualité, contexte, latence, coût, confidentialité, outils et contraintes de déploiement doivent être comparés.
+
+## Exemple
+
+Un petit modèle spécialisé peut être préférable à un modèle général très coûteux sur une tâche étroite.
+
+## Comment ça fonctionne
+
+besoin → candidats → benchmark → coût/latence → choix contrôlé
+
+## Questions d'entretien
+
+- Pourquoi un benchmark interne est-il nécessaire ?
+
+  :::indice
+  Pense au lien entre comportement du modèle et contraintes de production.
+  :::
+
+  :::reponse
+  Parce que les performances générales ne garantissent pas le comportement sur les tâches réelles du produit.
+  :::
