@@ -40,8 +40,14 @@ Le vecteur ne remplace pas les filtres métier : tenant, ACL, langue, type de do
 ## Exercice
 Un index attend 768 dimensions mais le nouveau modèle produit 1536. Peut-on mélanger les deux ?
 
-### Solution
+:::indice
+Sépare retrieval, contexte et génération pour localiser l'erreur.
+:::
+
+:::solution
 Non dans un index homogène. Créer un nouvel index compatible et réindexer les contenus concernés.
+
+:::
 
 ## À retenir
 Un embedding est un signal de recherche ; il ne garantit ni vérité ni autorisation.
