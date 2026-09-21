@@ -4,7 +4,7 @@ title: "Vector stores et architecture de recherche"
 slug: vector-store
 technology: ai-engineering
 level: advanced
-module: 11-infrastructure
+module: infrastructure
 order: 4
 estimatedMinutes: 75
 difficulty: 5
