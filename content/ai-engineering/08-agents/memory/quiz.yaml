@@ -1,0 +1,26 @@
+id: ai-08-agents-memory-quiz
+kind: QUIZ
+questions:
+  - id: ai-08-agents-memory-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quel principe doit guider les permissions d'un agent ?"
+    options: ["Le moindre privilège","Accès administrateur par défaut","Aucune limite","Permissions décidées par le modèle"]
+    answer: [0]
+    explanation: "Un agent ne doit recevoir que les permissions nécessaires."
+    skills: [ai-agents]
+  - id: ai-08-agents-memory-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Que doit contenir un bon jeu d'évaluation ?"
+    options: ["Cas représentatifs","Cas limites","Attentes explicites","Uniquement les exemples faciles"]
+    answer: [0, 1, 2]
+    explanation: "La diversité et les attentes explicites rendent l'évaluation utile."
+    skills: [ai-agents]
+  - id: ai-08-agents-memory-q3
+    type: true_false
+    difficulty: 1
+    question: "Un juge automatique est toujours fiable sans calibration."
+    answer: false
+    explanation: "Les juges doivent être validés et complétés lorsque nécessaire."
+    skills: [ai-agents]
