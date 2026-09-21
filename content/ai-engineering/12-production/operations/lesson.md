@@ -33,8 +33,14 @@ Suivre coût par modèle, tenant, fonctionnalité et période. Budgets et quotas
 ## Exercice
 Un agent boucle et génère une facture inattendue. Que faire ?
 
-### Solution
+:::indice
+Raisonne en détection → mitigation → récupération → vérification.
+:::
+
+:::solution
 Limiter trafic ou quotas, arrêter la boucle, identifier la version fautive, corriger puis analyser la cause racine.
+
+:::
 
 ## À retenir
 Les systèmes IA ont besoin des mêmes disciplines opérationnelles que les systèmes critiques.
