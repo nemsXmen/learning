@@ -43,3 +43,32 @@ Identifier les enregistrements concernés, supprimer ou anonymiser selon la poli
 
 ## À retenir
 La mémoire est une fonctionnalité de données, avec cycle de vie et gouvernance, pas une simple liste de messages.
+
+
+## Introduction
+
+La mémoire d'un agent doit distinguer contexte de session et connaissance persistante.
+
+## Concept
+
+Mémoire de travail, session et persistance ont des politiques de rétention et d'accès différentes.
+
+## Exemple
+
+Une préférence utilisateur persistante doit être stockée avec tenant, provenance et possibilité de suppression.
+
+## Comment ça fonctionne
+
+input → retrieve memory → reason → update memory
+
+## Questions d'entretien
+
+- Pourquoi une mémoire persistante nécessite-t-elle des ACL ?
+
+  :::indice
+  Cherche la frontière entre décision du modèle et contrôle déterministe.
+  :::
+
+  :::reponse
+  Parce qu'elle peut contenir des données personnelles ou appartenant à un tenant.
+  :::
