@@ -1,0 +1,6 @@
+slug: rag
+title: "RAG"
+order: 7
+part: rag
+description: >
+  Retrieval, embeddings, reranking et génération ancrée.
