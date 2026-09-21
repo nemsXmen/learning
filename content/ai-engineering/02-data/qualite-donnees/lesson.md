@@ -74,13 +74,19 @@ Versionne les règles et leurs seuils.
 
 Définis cinq règles de qualité pour un corpus documentaire RAG.
 
-### Solution
+:::indice
+Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
+:::
+
+:::solution
 
 1. text non vide ;
 2. taille dans une plage raisonnable ;
 3. source_id unique par version ;
 4. langue supportée ;
 5. source et date de mise à jour présentes.
+
+:::
 
 ## À retenir
 
