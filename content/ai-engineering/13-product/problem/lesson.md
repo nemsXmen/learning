@@ -35,8 +35,14 @@ Commence par la solution non-IA la plus simple. Elle permet de mesurer la valeur
 ## Exercice
 Une équipe veut ajouter un chatbot sans problème utilisateur identifié. Que mesurer d'abord ?
 
-### Solution
+:::indice
+Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+:::
+
+:::solution
 Identifier le job-to-be-done, le coût actuel et un indicateur de résultat avant de choisir la technologie.
+
+:::
 
 ## À retenir
 L'IA est un moyen produit ; la métrique de valeur précède le modèle.
