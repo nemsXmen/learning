@@ -41,3 +41,32 @@ Mesurer taille des batches, attente du scheduler, distribution de longueur des r
 
 ## À retenir
 L'inférence avancée est une optimisation de système complète, pas seulement un choix de GPU.
+
+
+## Introduction
+
+L'inférence avancée optimise un système complet sous contrainte de concurrence.
+
+## Concept
+
+KV cache, batching dynamique, scheduler et parallélisme influencent throughput et tail latency.
+
+## Exemple
+
+Un batching plus grand peut améliorer le throughput tout en augmentant le temps d'attente individuel.
+
+## Comment ça fonctionne
+
+requests → scheduler → batching → GPU → streaming
+
+## Questions d'entretien
+
+- Pourquoi suivre p99 après optimisation ?
+
+  :::indice
+  Pense en compromis mesurables plutôt qu'en optimisation absolue.
+  :::
+
+  :::reponse
+  Une optimisation de throughput peut dégrader fortement les requêtes les plus lentes.
+  :::
