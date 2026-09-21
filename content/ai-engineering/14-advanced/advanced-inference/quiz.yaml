@@ -8,7 +8,7 @@ questions:
     options: ["Éviter certains recalculs d'attention", "Augmenter la qualité des labels", "Créer des embeddings", "Remplacer l'auth"]
     answer: [0]
     explanation: "Le cache conserve des états utiles pendant la génération."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
 
   - id: ai-14-advanced-advanced-inference-q2
     type: true_false
@@ -16,7 +16,7 @@ questions:
     question: "Le batching dynamique peut améliorer le throughput."
     answer: true
     explanation: "Il augmente l'utilisation du matériel lorsqu'il est correctement dimensionné."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
 
   - id: ai-14-advanced-advanced-inference-q3
     type: multiple_choice
@@ -25,7 +25,7 @@ questions:
     options: ["p99", "Moyenne seule", "Nombre de paramètres", "Accuracy seule"]
     answer: [0]
     explanation: "p99 décrit la queue de distribution."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
 
   - id: ai-14-advanced-advanced-inference-q4
     type: multiple_choice
@@ -34,4 +34,4 @@ questions:
     options: ["Attente scheduler, taille des batches et saturation", "Seulement le prompt", "Seulement le nombre de tenants", "Uniquement les embeddings"]
     answer: [0]
     explanation: "La dégradation peut venir de files d'attente ou de saturation."
-    skills: [ai-finetuning]
+    skills: [ai-infrastructure]
