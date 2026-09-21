@@ -42,3 +42,32 @@ La moyenne masque une régression sur un segment critique. Il faut segmenter les
 
 ## À retenir
 L'évaluation doit représenter les vrais risques du produit, pas seulement sa moyenne.
+
+
+## Introduction
+
+L'évaluation finale doit couvrir qualité, coût, latence et sécurité.
+
+## Concept
+
+Golden dataset, tests d'intégration et critères de release rendent le capstone mesurable.
+
+## Exemple
+
+Une régression sur une catégorie sensible doit rester visible même si la moyenne générale augmente.
+
+## Comment ça fonctionne
+
+cases → system run → metrics → segmented analysis → release gate
+
+## Questions d'entretien
+
+- Pourquoi segmenter le golden dataset ?
+
+  :::indice
+  Pense à la responsabilité de chaque couche et au contrôle des risques.
+  :::
+
+  :::reponse
+  Pour révéler les régressions masquées par une moyenne globale.
+  :::
