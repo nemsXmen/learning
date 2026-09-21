@@ -44,6 +44,13 @@ Afficher les sources disponibles, permettre correction/régénération et rendre
 
 :::
 
+## Erreurs fréquentes
+
+- choisir une technologie avant de définir le problème ;
+- mesurer une moyenne sans regarder les cas critiques ;
+- confondre une sortie plausible avec une sortie validée ;
+- oublier coût, sécurité et opérations dans la conception.
+
 ## À retenir
 Une bonne UX IA transforme l'incertitude en information et contrôle utilisateur.
 
