@@ -10,8 +10,8 @@ estimatedMinutes: 75
 difficulty: 5
 xp: 170
 prerequisites: [ai-10-prompt-injection]
-skills: [ai-engineering]
-tags: [ai, production, engineering]
+skills: [ai-security]
+tags: [security, ai, llm]
 ---
 
 ## Objectifs
@@ -21,7 +21,7 @@ tags: [ai, production, engineering]
 - tracer les flux sensibles.
 
 ## Data minimization
-N'envoie au modèle que les champs nécessaires. Masque ou pseudonymise les informations qui n'ont pas besoin d'être exposées.
+N'envoie au modèle que les champs nécessaires. Masque ou pseudonymise les informations inutiles.
 
 ## Multi-tenant
 ```text
@@ -30,16 +30,16 @@ tenant -> authorization -> retrieval -> model
                     filtered data
 ```
 
-L'isolation doit être appliquée avant retrieval et avant toute opération d'écriture.
+L'isolation doit être appliquée avant retrieval et avant toute écriture.
 
 ## Rétention
-Définis durée de conservation, suppression, backups et logs. Les données d'observabilité peuvent elles-mêmes contenir des informations sensibles.
+Définis durée de conservation, suppression, backups et logs. Les données d'observabilité peuvent elles-mêmes être sensibles.
 
 ## Exercice
 Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
 
 ### Solution
-Le log devient une copie de données sensibles. Réduire les données journalisées, masquer les champs sensibles et définir une politique de rétention.
+Le log devient une copie de données sensibles. Réduire les données journalisées et définir une rétention adaptée.
 
 ## À retenir
 La confidentialité concerne tout le pipeline, pas uniquement le fournisseur LLM.
