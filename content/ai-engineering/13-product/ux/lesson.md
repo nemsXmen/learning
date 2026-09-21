@@ -1,57 +1,42 @@
 ---
-id: ai-13-product-ux
-title: "AI UX & human control"
+id: ai-13-ux
+title: "UX des produits génératifs"
 slug: ux
 technology: ai-engineering
 level: advanced
 module: 13-product
-order: 1
-estimatedMinutes: 50
+order: 3
+estimatedMinutes: 70
 difficulty: 4
-xp: 140
-prerequisites: []
-skills:
-  - ai-product
-tags: [ai, product, advanced]
+xp: 150
+prerequisites: [ai-13-architecture]
+skills: [ai-product]
+tags: [product, ux, analytics, ai]
 ---
 
 ## Objectifs
-- Comprendre AI UX & human control.
-- Choisir une approche proportionnée au problème.
-- Construire des critères de succès mesurables.
+- concevoir une UX adaptée à l'incertitude ;
+- afficher provenance et états ;
+- gérer streaming et erreurs ;
+- donner un contrôle à l'utilisateur.
 
-## Concept
-Une fonctionnalité AI doit résoudre un problème utilisateur, pas simplement exposer un modèle. **AI UX & human control** doit être relié à un contrat produit : qui utilise la fonctionnalité, quelle décision elle aide, quel niveau d'erreur est acceptable et quelle action humaine reste possible.
+## UX
+L'utilisateur doit comprendre si le système réfléchit, récupère des données, appelle un outil ou attend une action externe.
 
-Les techniques avancées ne doivent être introduites qu'après une baseline. Fine-tuning, adaptation efficace ou compression ajoutent des coûts de données, calcul et maintenance ; leur intérêt doit être démontré par une mesure.
+```text
+request -> progress -> evidence -> result -> user control
+```
 
-## Méthode
-1. Définir le problème utilisateur.
-2. Établir une baseline.
-3. Définir les métriques produit et techniques.
-4. Tester sur des cas réels représentatifs.
-5. Mesurer l'effet de la modification.
-6. Documenter les limites et le rollback.
+Pour une réponse sensible, afficher sources, niveau de confiance utile ou possibilité de corriger.
 
-## Erreurs fréquentes
-- Construire une démo sans critère de succès.
-- Remplacer l'humain dans une décision sensible sans garde-fou.
-- Fine-tuner avant d'avoir établi une baseline.
-- Optimiser un benchmark sans bénéfice produit.
-- Oublier la maintenance d'un artefact spécialisé.
+## Erreurs
+Une réponse indisponible doit être explicite. Prévois retry, édition, annulation et reprise quand pertinent.
 
 ## Exercice
-Écris une fiche produit pour **AI UX & human control** : utilisateur cible, problème, baseline, métriques, risques, contrôle humain et critères de lancement.
+Une réponse générée contient une erreur factuelle. Quelle UX aide l'utilisateur ?
 
-:::indice
-Une fonctionnalité AI réussie améliore une tâche mesurable ; elle n'a pas besoin d'utiliser la technique la plus complexe.
-:::
-
-:::solution
-La fiche doit relier besoin, métriques et risques. Elle doit également expliquer pourquoi l'approche choisie est préférable à une baseline plus simple.
-:::
+### Solution
+Afficher les sources disponibles, permettre correction/régénération et rendre la limite du système visible plutôt que présenter la réponse comme certaine.
 
 ## À retenir
-- Produit et modèle doivent être évalués ensemble.
-- Les techniques avancées ont un coût de maintenance.
-- L'humain doit rester dans la boucle lorsque le risque le justifie.
+Une bonne UX IA transforme l'incertitude en information et contrôle utilisateur.
