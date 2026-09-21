@@ -1,0 +1,19 @@
+id: ai-05-transformers-attention-quiz
+kind: QUIZ
+questions:
+  - id: ai-05-transformers-attention-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quel mécanisme permet à un token de pondérer l'information provenant d'autres tokens ?"
+    options: ["Attention","DNS","Compression ZIP","Rate limiting"]
+    answer: [0]
+    explanation: "Le mécanisme d'attention calcule des pondérations entre représentations."
+    skills: [ai-transformers]
+  - id: ai-05-transformers-attention-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels éléments sont associés à l'attention moderne ?"
+    options: ["Queries","Keys","Values","Cookies HTTP"]
+    answer: [0, 1, 2]
+    explanation: "L'attention utilise queries, keys et values."
+    skills: [ai-transformers]
