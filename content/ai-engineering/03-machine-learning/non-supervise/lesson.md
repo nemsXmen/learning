@@ -43,9 +43,15 @@ Les embeddings permettent aussi regroupement et recherche sémantique. Le résul
 
 Tu observes trois clusters de clients. Comment vérifier qu'ils sont utiles ?
 
-### Solution
+:::indice
+Commence par définir la métrique et la baseline avant de choisir une technique.
+:::
+
+:::solution
 
 Comparer stabilité, caractéristiques, séparation selon plusieurs métriques et utilité pour une décision réelle. Ne pas conclure uniquement depuis une visualisation.
+
+:::
 
 ## À retenir
 
