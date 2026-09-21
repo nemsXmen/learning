@@ -33,8 +33,14 @@ Ne dégrade pas silencieusement la qualité pour gagner quelques millisecondes. 
 ## Exercice
 Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
 
-### Solution
+:::indice
+Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
+:::
+
+:::solution
 Segmenter les tâches, mesurer la qualité minimale requise et tester un modèle moins coûteux sur les cas compatibles.
+
+:::
 
 ## À retenir
 L'optimisation est un problème multi-objectifs mesuré.
