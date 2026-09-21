@@ -4,7 +4,7 @@ title: "Tokenisation et embeddings"
 slug: tokenisation
 technology: ai-engineering
 level: intermediate
-module: 05-transformers
+module: transformers
 order: 1
 estimatedMinutes: 50
 difficulty: 3
