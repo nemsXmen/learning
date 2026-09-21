@@ -59,3 +59,31 @@ Parce que le coût et la fenêtre de contexte sont mesurés en tokens. Une langu
 
 ## À retenir
 Tokeniser est une étape d'ingénierie : mesure les tokens, la couverture linguistique et les limites de contexte avant de dimensionner une application.
+
+## Introduction
+
+La tokenisation transforme du texte en unités manipulables par un modèle de langage.
+
+## Concept
+
+Tokens, IDs, embeddings et contexte définissent le chemin du texte vers le modèle.
+
+## Exemple
+
+Le même texte peut consommer un nombre différent de tokens selon le tokenizer et la langue.
+
+## Comment ça fonctionne
+
+texte → tokenizer → token IDs → embeddings → modèle
+
+## Questions d'entretien
+
+- Pourquoi le nombre de tokens compte-t-il ?
+
+  :::indice
+  Pense au lien entre comportement du modèle et contraintes de production.
+  :::
+
+  :::reponse
+  Il influence fenêtre de contexte, latence, coût et quantité d'information traitée.
+  :::
