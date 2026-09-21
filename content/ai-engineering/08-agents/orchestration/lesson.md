@@ -44,3 +44,32 @@ Centraliser l'autorisation et l'écriture, utiliser verrou/version optimiste ou 
 
 ## À retenir
 Le multi-agent est une architecture, pas un objectif. Mesure son bénéfice contre sa complexité.
+
+
+## Introduction
+
+Plusieurs agents peuvent être orchestrés mais chaque agent supplémentaire augmente la complexité.
+
+## Concept
+
+Les contrats d'entrée/sortie et la responsabilité de chaque rôle doivent être explicites.
+
+## Exemple
+
+Un planner peut déléguer une recherche à un worker spécialisé puis agréger les résultats.
+
+## Comment ça fonctionne
+
+planner → specialist → result → synthesis
+
+## Questions d'entretien
+
+- Quand éviter le multi-agent ?
+
+  :::indice
+  Cherche la frontière entre décision du modèle et contrôle déterministe.
+  :::
+
+  :::reponse
+  Lorsque le workflow déterministe ou un seul agent répond au besoin avec moins de complexité.
+  :::
