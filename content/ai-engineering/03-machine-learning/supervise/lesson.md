@@ -58,3 +58,32 @@ Un recall élevé peut augmenter les faux positifs. Mesure aussi precision et in
 ## À retenir
 
 Le ML supervisé relie données, cible, modèle, métrique et décision. Le choix de l'algorithme vient après la définition correcte de cette chaîne.
+
+
+## Introduction
+
+Le ML supervisé apprend une relation entre entrées et cibles connues.
+
+## Concept
+
+Régression et classification utilisent des fonctions de perte adaptées au type de cible.
+
+## Exemple
+
+Une classification binaire peut comparer précision, rappel et coût des faux négatifs.
+
+## Comment ça fonctionne
+
+données labellisées → split → entraînement → validation → prédiction
+
+## Questions d'entretien
+
+- Pourquoi commencer par une baseline ?
+
+  :::indice
+  Pense au risque de mesure trompeuse et à la généralisation.
+  :::
+
+  :::reponse
+  Elle fournit une référence simple pour mesurer la valeur réelle du modèle.
+  :::
