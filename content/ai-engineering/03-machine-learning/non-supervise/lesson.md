@@ -50,3 +50,32 @@ Comparer stabilité, caractéristiques, séparation selon plusieurs métriques e
 ## À retenir
 
 Le non supervisé sert à explorer et représenter. Une structure calculée doit être confrontée aux données et au contexte avant utilisation.
+
+
+## Introduction
+
+L'apprentissage non supervisé cherche des structures sans cible fournie.
+
+## Concept
+
+Clustering, réduction de dimension et détection d'anomalies répondent à des objectifs différents.
+
+## Exemple
+
+K-means regroupe des points autour de centroïdes mais son résultat dépend du choix de k et de l'échelle.
+
+## Comment ça fonctionne
+
+données → représentation → algorithme → analyse → validation métier
+
+## Questions d'entretien
+
+- Pourquoi normaliser certaines features avant clustering ?
+
+  :::indice
+  Pense au risque de mesure trompeuse et à la généralisation.
+  :::
+
+  :::reponse
+  Parce que les distances seraient sinon dominées par les variables à grande échelle.
+  :::
