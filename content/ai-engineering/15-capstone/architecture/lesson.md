@@ -55,3 +55,32 @@ Les outils ayant des effets de bord, accès aux données sensibles ou coût impo
 
 ## À retenir
 Le capstone doit être conçu comme un produit logiciel distribué, pas comme un simple prompt.
+
+
+## Introduction
+
+Le capstone assemble les briques de la formation dans un AI SaaS complet.
+
+## Concept
+
+Frontend, API, gateway, RAG, agents, Postgres, Redis, vector store, observability et billing ont des responsabilités distinctes.
+
+## Exemple
+
+Le backend contrôle auth, quotas, validation et effets de bord tandis que le modèle fournit des sorties probabilistes.
+
+## Comment ça fonctionne
+
+request → auth → AI gateway → retrieval/agent → validation → persistence → trace
+
+## Questions d'entretien
+
+- Où placer les autorisations ?
+
+  :::indice
+  Pense à la responsabilité de chaque couche et au contrôle des risques.
+  :::
+
+  :::reponse
+  Dans les services déterministes côté serveur, avant les opérations sensibles.
+  :::
