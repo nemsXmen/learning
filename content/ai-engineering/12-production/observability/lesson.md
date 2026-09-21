@@ -40,3 +40,32 @@ Comparer tokens, modèle routé, retries, contexte, outils et changement de prom
 
 ## À retenir
 Sans corrélation entre version, requête et métriques, une régression IA est difficile à expliquer.
+
+
+## Introduction
+
+L'observabilité relie une requête utilisateur à ses appels modèles et outils.
+
+## Concept
+
+Traces, métriques, logs, coûts et p95/p99 permettent de diagnostiquer les incidents.
+
+## Exemple
+
+Une trace peut montrer qu'une réponse lente vient de retrieval plutôt que du modèle.
+
+## Comment ça fonctionne
+
+request trace → retrieval → model → tools → response metrics
+
+## Questions d'entretien
+
+- Que doit contenir une trace AI utile ?
+
+  :::indice
+  Pense aux conséquences d'une panne sous trafic réel.
+  :::
+
+  :::reponse
+  Identifiants corrélés, latence, erreurs, étapes et métadonnées minimisées sans exposer inutilement des données sensibles.
+  :::
