@@ -1,0 +1,19 @@
+id: ai-05-transformers-llm-architecture-quiz
+kind: QUIZ
+questions:
+  - id: ai-05-transformers-llm-architecture-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quel facteur augmente généralement le coût d'une requête LLM ?"
+    options: ["Un contexte plus long","Un nom de variable plus court","La couleur de l'interface","Un fichier README plus long"]
+    answer: [0]
+    explanation: "Le contexte augmente la quantité de tokens traités."
+    skills: [ai-llm]
+  - id: ai-05-transformers-llm-architecture-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels éléments peuvent être mesurés pendant l'inférence ?"
+    options: ["Latence","Consommation mémoire","Débit","Couleur du bouton"]
+    answer: [0, 1, 2]
+    explanation: "Ces mesures caractérisent le comportement opérationnel."
+    skills: [ai-llm]
