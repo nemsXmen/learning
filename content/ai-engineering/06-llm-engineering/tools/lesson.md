@@ -1,56 +1,50 @@
 ---
-id: ai-06-llm-engineering-tools
-title: "Tool calling & streaming"
+id: ai-06-tools
+title: "Tool calling et exécution contrôlée"
 slug: tools
 technology: ai-engineering
 level: intermediate
 module: 06-llm-engineering
-order: 1
-estimatedMinutes: 40
-difficulty: 3
-xp: 110
-prerequisites: []
-skills:
-  - ai-llm-apps
-tags: [ai, llm, production]
+order: 3
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-06-structured-output]
+skills: [ai-llm-engineering]
+tags: [llm, ai-engineering]
 ---
 
+
 ## Objectifs
-- Comprendre Tool calling & streaming.
-- Construire un composant LLM testable.
-- Maîtriser validation, erreurs et limites opérationnelles.
+- comprendre le tool calling ;
+- définir des outils avec des contrats minimaux ;
+- contrôler autorisation et effets de bord ;
+- limiter les boucles agentiques.
 
-## Concept
-Une application LLM doit traiter le modèle comme une dépendance non déterministe. Le logiciel autour du modèle impose donc des contrats : entrées validées, sorties structurées, timeouts, limites de taille, gestion des erreurs et journalisation sans données sensibles.
+## Modèle mental
+```text
+LLM -> tool request -> validation -> authorization -> execution -> result -> LLM
+```
 
-Pour **Tool calling & streaming**, sépare l'orchestration de l'interface fournisseur. Un gateway permet de centraliser authentification, quotas, retries, fallback, budget et métriques.
+Le LLM propose une action ; le serveur reste responsable de la validation et de l'autorisation.
 
-## Pratique
-1. Définis un schéma d'entrée.
-2. Définis un schéma de sortie.
-3. Valide la réponse avant de la transmettre au reste du système.
-4. Ajoute timeout et limite de retry.
-5. Mesure tokens, latence, erreurs et coût.
+## Contrats
+Un outil expose nom, description, schéma d'entrée et résultat. Préfère des outils ciblés comme get_invoice(invoiceId) à une primitive générique permettant des commandes arbitraires.
 
-## Erreurs fréquentes
-- Faire confiance à une sortie texte quand un contrat structuré est nécessaire.
-- Réessayer sans limite une requête coûteuse.
-- Exposer les secrets au client.
-- Logger des prompts contenant des données sensibles.
-- Coupler toute l'application à une API fournisseur.
+## Effets de bord
+Pour paiement, suppression ou modification de compte, exige une autorisation indépendante du modèle. Ajoute idempotence, limites et audit logs.
+
+## Boucle
+Limite nombre d'appels et temps total. Détecte répétitions, erreurs et absence de progrès.
+
+## Tool output
+Le résultat d'un service externe est une donnée non fiable. Il ne doit pas devenir automatiquement une instruction système.
 
 ## Exercice
-Conçois un service tools avec une interface fournisseur indépendante. Décris ses entrées, sorties, erreurs, timeout, politique de retry et métriques.
+Un agent consulte une facture puis envoie un email. Pourquoi séparer les outils ?
 
-:::indice
-Le modèle peut échouer ou répondre dans un format inattendu : le système doit rester contrôlable.
-:::
-
-:::solution
-Un service robuste valide les entrées, impose un format de sortie, limite les retries, protège les secrets et expose des métriques permettant d'observer qualité, latence et coût.
-:::
+### Solution
+La lecture et l'effet de bord ont des risques différents. La séparation permet autorisation, confirmation, idempotence et audit.
 
 ## À retenir
-- Le modèle est une dépendance ; l'application doit en contrôler les frontières.
-- Les sorties doivent être validées avant usage métier.
-- Les limites opérationnelles sont des fonctionnalités, pas des détails.
+Le tool calling relie un composant probabiliste à des opérations déterministes. Les contrôles restent dans le code.
