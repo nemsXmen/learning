@@ -55,3 +55,31 @@ Vérifie données, labels, valeurs extrêmes, learning rate, gradients, mixed pr
 
 ## À retenir
 Entraîner un réseau est une expérience contrôlée. Chaque changement doit être mesuré et relié à une hypothèse.
+
+## Introduction
+
+L'entraînement ajuste les paramètres pour réduire une fonction de perte.
+
+## Concept
+
+Forward, loss, backward et optimizer.step constituent la boucle fondamentale.
+
+## Exemple
+
+Un gradient NaN impose de vérifier données, learning rate, opérations instables et précision numérique.
+
+## Comment ça fonctionne
+
+batch → forward → loss → backward → update → metrics
+
+## Questions d'entretien
+
+- Pourquoi sauvegarder des checkpoints ?
+
+  :::indice
+  Relie la question au comportement réel d'un entraînement.
+  :::
+
+  :::reponse
+  Pour reprendre, comparer des états et revenir à une version connue du modèle.
+  :::
