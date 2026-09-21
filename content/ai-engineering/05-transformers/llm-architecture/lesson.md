@@ -64,8 +64,14 @@ La latence dépend notamment de la taille du modèle, de la longueur du contexte
 ## Exercice
 Pourquoi une température élevée peut-elle rendre une génération plus variée ?
 
-### Solution
+:::indice
+Relie le concept à la chaîne tokens → représentation → modèle → sortie.
+:::
+
+:::solution
 Elle a tendance à aplatir la distribution des logits avant le sampling, donnant davantage de chances aux tokens moins probables.
+
+:::
 
 ## À retenir
 Un LLM n'est pas seulement un prompt et une réponse : tokenizer, contexte, architecture, logits et stratégie de génération font partie du système.
