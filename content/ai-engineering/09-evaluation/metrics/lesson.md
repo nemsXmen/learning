@@ -33,8 +33,14 @@ metric = quality + reliability + cost + latency
 ## Exercice
 Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
 
-### Solution
+:::indice
+Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
+:::
+
+:::solution
 Le tableau d'évaluation doit intégrer le coût par requête ou par tâche, avec une mesure de qualité comparable.
+
+:::
 
 ## À retenir
 Aucune métrique unique ne résume un système LLM.
