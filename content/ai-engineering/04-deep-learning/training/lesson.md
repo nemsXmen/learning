@@ -1,60 +1,57 @@
 ---
-id: ai-04-deep-learning-training
-title: "Losses, gradients & optimization"
+id: ai-dl-training
+title: "Entraîner un réseau : loss, backpropagation et optimisation"
 slug: training
 technology: ai-engineering
 level: intermediate
 module: 04-deep-learning
-order: 1
-estimatedMinutes: 40
-difficulty: 2
-xp: 100
-prerequisites: []
-skills:
-  - ai-pytorch
-tags: [ai, machine-learning]
+order: 2
+estimatedMinutes: 70
+difficulty: 4
+xp: 150
+prerequisites: [ai-deep-learning]
+skills: [ai-deep-learning]
+tags: [deep-learning, pytorch]
 ---
 
 ## Objectifs
-- Comprendre Losses, gradients & optimization.
-- Relier la théorie à une implémentation testable.
-- Savoir diagnostiquer les erreurs et compromis.
+- comprendre forward, loss, backward et update ;
+- choisir une loss adaptée ;
+- comprendre learning rate et batch size ;
+- diagnostiquer un entraînement instable.
 
-## Introduction
-En AI engineering, un modèle n'est qu'une partie du système. Losses, gradients & optimization devient utile lorsqu'il est relié à des données contrôlées, une méthode d'évaluation et un contrat d'exécution.
+## Boucle d'entraînement
+```text
+batch -> forward -> loss -> backward -> optimizer.step()
+```
 
-## Concept
-Travaille avec une séparation nette entre données, entraînement, évaluation et inférence. Une baseline simple sert de point de comparaison. Les jeux d'entraînement, validation et test doivent avoir des rôles distincts afin d'éviter la fuite d'information.
+```python
+optimizer.zero_grad()
+predictions = model(inputs)
+loss = criterion(predictions, targets)
+loss.backward()
+optimizer.step()
+```
 
-Pour les réseaux de neurones, pense en termes de tenseurs, fonction de perte, gradients, optimiseur et boucle d'entraînement. Pour la sélection de modèles, compare les mêmes données et la même métrique plutôt que des impressions visuelles.
+zero_grad évite l'accumulation involontaire des gradients.
 
-## Pratique
-1. Définis les données et leur schéma.
-2. Construis une baseline.
-3. Entraîne ou évalue un modèle.
-4. Mesure sur des données jamais utilisées pour ajuster le modèle.
-5. Analyse les erreurs par catégorie.
-6. Versionne la configuration.
+## Fonction de perte
+Classification multi-classe : cross-entropy. Régression : MSE ou MAE selon l'objectif. Une loss basse n'est pas automatiquement une bonne métrique métier.
 
-## Erreurs fréquentes
-- Utiliser le test pour choisir les hyperparamètres.
-- Comparer des modèles avec des jeux de données différents.
-- Ignorer les classes rares.
-- Optimiser une métrique qui ne correspond pas au produit.
-- Déboguer uniquement le modèle alors que le problème vient des données.
+## Learning rate
+Trop grand : divergence possible. Trop petit : convergence lente. Surveille train et validation.
+
+## Backpropagation
+La rétropropagation applique la règle de chaîne pour calculer les dérivées. L'optimiseur transforme ces gradients en mises à jour.
+
+## Diagnostic
+Surveille NaN, gradients explosifs, stagnation, validation qui se dégrade et utilisation GPU.
 
 ## Exercice
-Crée une expérience minimale liée à **Losses, gradients & optimization**. Documente la baseline, les données utilisées, la métrique, les erreurs observées et une modification que tu pourrais tester ensuite.
+Un entraînement devient NaN. Donne une stratégie de diagnostic.
 
-:::indice
-Une expérience utile permet de distinguer une amélioration réelle d'une variation due aux données ou au hasard.
-:::
-
-:::solution
-Conserve une baseline immuable, sépare les jeux de données, fixe les paramètres importants et compare les résultats avec la même procédure.
-:::
+### Solution
+Vérifie données, labels, valeurs extrêmes, learning rate, gradients, mixed precision et opérations produisant inf/NaN. Reproduis avec un petit batch déterministe.
 
 ## À retenir
-- Les données et l'évaluation déterminent la qualité de l'expérience.
-- Une baseline rend les améliorations mesurables.
-- Les erreurs doivent être analysées avant de complexifier le modèle.
+Entraîner un réseau est une expérience contrôlée. Chaque changement doit être mesuré et relié à une hypothèse.
