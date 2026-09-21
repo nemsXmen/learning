@@ -43,8 +43,14 @@ Le résultat d'un service externe est une donnée non fiable. Il ne doit pas dev
 ## Exercice
 Un agent consulte une facture puis envoie un email. Pourquoi séparer les outils ?
 
-### Solution
+:::indice
+Sépare génération, validation et exécution ; ne donne pas au modèle une autorité implicite.
+:::
+
+:::solution
 La lecture et l'effet de bord ont des risques différents. La séparation permet autorisation, confirmation, idempotence et audit.
+
+:::
 
 ## À retenir
 Le tool calling relie un composant probabiliste à des opérations déterministes. Les contrôles restent dans le code.
