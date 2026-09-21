@@ -4,23 +4,34 @@ questions:
   - id: ai-15-capstone-launch-q1
     type: multiple_choice
     difficulty: 3
-    question: "Qu'est-ce qui distingue un prototype d'un système AI de production ?"
-    options: ["Tests, observabilité, sécurité et procédures opérationnelles","Une interface plus colorée","Un modèle toujours plus grand","L'absence de limites"]
+    question: "Quel ordre correspond à un rollout progressif ?"
+    options: ["Staging → petite cohorte → monitoring → généralisation", "Production → test → staging", "Rollback → lancement → test", "Tous les utilisateurs immédiatement"]
     answer: [0]
-    explanation: "La production exige des garanties opérationnelles en plus de la démonstration fonctionnelle."
+    explanation: "Le rollout progressif limite l'impact d'une régression."
     skills: [ai-capstone]
+
   - id: ai-15-capstone-launch-q2
     type: multiple_answer
     difficulty: 3
-    question: "Quels livrables doivent accompagner le capstone ?"
-    options: ["Architecture","Suite d'évaluation","Runbook","Procédure de rollback"]
+    question: "Que surveiller après lancement ?"
+    options: ["Erreurs", "p95/p99", "Coût par tâche", "Qualité"]
     answer: [0, 1, 2, 3]
-    explanation: "Ces artefacts rendent le système maintenable et exploitable."
+    explanation: "Ces indicateurs décrivent santé, performance et valeur."
     skills: [ai-capstone]
+
   - id: ai-15-capstone-launch-q3
     type: true_false
     difficulty: 2
-    question: "Une démo réussie suffit pour déclarer un AI SaaS prêt pour la production."
-    answer: false
-    explanation: "Il faut également démontrer qualité, sécurité, fiabilité, observabilité et maîtrise des coûts."
+    question: "Les prompts et modèles doivent rester versionnés après lancement."
+    answer: true
+    explanation: "Les changements production doivent rester reproductibles."
+    skills: [ai-capstone]
+
+  - id: ai-15-capstone-launch-q4
+    type: multiple_choice
+    difficulty: 3
+    question: "Que doit contenir un runbook incident ?"
+    options: ["Détection, mitigation, rollback et récupération", "Uniquement une capture d'écran", "Uniquement le prompt", "Uniquement le budget"]
+    answer: [0]
+    explanation: "Un runbook guide les actions sous pression."
     skills: [ai-capstone]
