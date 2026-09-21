@@ -37,7 +37,7 @@ const arr = [1, 2, 3] as const;
 let x = "hello" as const; // type "hello"
 ```
 
-## Exemple – dériver une union
+## Exemple
 
 ```ts
 const METHODS = ["GET", "POST", "PUT"] as const;
@@ -66,6 +66,10 @@ La const assertion :
 
 1. À partir d’un objet `as const` de routes, dérive le type des valeurs.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const routes = { home: "/", about: "/about" } as const;
@@ -75,8 +79,14 @@ La const assertion :
 
 ## Questions d'entretien
 
+
 1. Que signifie une const assertion en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est l’utilisation de `as const` pour forcer l’inférence la plus étroite possible (literal types + readonly). Elle n’existe qu’à la compilation.
    :::
+

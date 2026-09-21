@@ -1,57 +1,64 @@
-- id: typescript-10-control-flow-analysis-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Le control-flow analysis permet à TypeScript de :
-  options:
-    - Exécuter le code
-    - Affiner les types selon les branches du code
-    - Créer des classes
-    - Valider le runtime
-  answer: [1]
-  explanation: >
-    Il suit le flux pour narrow les types.
-  skills: [type-narrowing]
-
-- id: typescript-10-control-flow-analysis-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Un early return après un test null contribue au narrowing.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, le code suivant sait que la valeur n’est plus null.
-  skills: [type-narrowing]
-
-- id: typescript-10-control-flow-analysis-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    TypeScript suit-il les assignations successives pour affiner les types ?
-  options:
-    - Non
-    - Oui
-    - Uniquement pour les const
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Oui, dans une certaine mesure.
-  skills: [type-narrowing]
-
-- id: typescript-10-control-flow-analysis-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pour un bon narrowing, les conditions doivent être de préférence :
-  options:
-    - Très complexes et indirectes
-    - Simples et locales
-    - Uniquement dans des fonctions séparées
-    - Basées sur any
-  answer: [1]
-  explanation: >
-    Des tests clairs sont mieux analysés.
-  skills: [type-narrowing]
+id: control-flow-analysis-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-control-flow-analysis-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le control-flow analysis permet à TypeScript de :
+    options:
+      - Exécuter le code
+      - Affiner les types selon les branches du code
+      - Créer des classes
+      - Valider le runtime
+    answer:
+      - 1
+    explanation: |
+      Il suit le flux pour narrow les types.
+    skills:
+      - type-narrowing
+  - id: typescript-10-control-flow-analysis-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un early return après un test null contribue au narrowing.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, le code suivant sait que la valeur n’est plus null.
+    skills:
+      - type-narrowing
+  - id: typescript-10-control-flow-analysis-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TypeScript suit-il les assignations successives pour affiner les types ?
+    options:
+      - Non
+      - Oui
+      - Uniquement pour les const
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      Oui, dans une certaine mesure.
+    skills:
+      - type-narrowing
+  - id: typescript-10-control-flow-analysis-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un bon narrowing, les conditions doivent être de préférence :
+    options:
+      - Très complexes et indirectes
+      - Simples et locales
+      - Uniquement dans des fonctions séparées
+      - Basées sur any
+    answer:
+      - 1
+    explanation: |
+      Des tests clairs sont mieux analysés.
+    skills:
+      - type-narrowing

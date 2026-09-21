@@ -78,6 +78,10 @@ Chaque niveau est un type objet classique. TypeScript suit les accès `user.addr
 
 1. Type un objet `Order` avec un `customer` qui a `name` et `email`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Customer = { name: string; email: string };
@@ -87,8 +91,14 @@ Chaque niveau est un type objet classique. TypeScript suit les accès `user.addr
 
 ## Questions d'entretien
 
+
 1. Comment évites-tu les types objets imbriqués illisibles ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En extrayant chaque niveau significatif dans un type ou une interface nommée. Cela rend le code plus documenté et réutilisable.
    :::
+

@@ -84,6 +84,10 @@ type Route = (typeof routes)[keyof typeof routes]; // "/" | "/about"
 
 1. Déclare un tableau de thèmes avec `as const` et dérive le type d’union.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const themes = ["light", "dark"] as const;
@@ -93,8 +97,14 @@ type Route = (typeof routes)[keyof typeof routes]; // "/" | "/about"
 
 ## Questions d'entretien
 
+
 1. À quoi sert `as const` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    À demander l’inférence la plus précise possible : les valeurs restent des literal types et les structures deviennent readonly. C’est très utile pour les constantes et pour dériver des unions de types.
    :::
+

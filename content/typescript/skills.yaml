@@ -15,10 +15,6 @@ skills:
     name: Objects
     importance: 4
     requires: [primitive-types]
-  - id: functions
-    name: Functions
-    importance: 5
-    requires: [primitive-types]
   - id: type-aliases
     name: Type Aliases
     importance: 4
@@ -202,4 +198,4 @@ skills:
   - id: projects
     name: Projets TypeScript
     importance: 5
-    requires: [production, fullstack]
+    requires: [production]

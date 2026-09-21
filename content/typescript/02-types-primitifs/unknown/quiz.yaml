@@ -1,57 +1,65 @@
-- id: typescript-02-unknown-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle est la principale différence entre `any` et `unknown` ?
-  options:
-    - Aucune différence
-    - unknown force à vérifier le type avant utilisation, any non
-    - any est plus sûr que unknown
-    - unknown n’existe qu’en mode strict
-  answer: [1]
-  explanation: >
-    unknown exige un narrowing. any laisse tout passer.
-  skills: [primitive-types]
-
-- id: typescript-02-unknown-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut appeler des méthodes directement sur une variable de type unknown.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Il faut d’abord narrow le type (typeof, etc.).
-  skills: [primitive-types]
-
-- id: typescript-02-unknown-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans quel cas `unknown` est-il particulièrement recommandé ?
-  options:
-    - Pour toutes les variables locales
-    - Pour les données externes (JSON, API, input utilisateur)
-    - Pour remplacer string
-    - Pour les constantes
-  answer: [1]
-  explanation: >
-    Les données qui arrivent de l’extérieur n’ont pas de garantie de type à compile-time.
-  skills: [primitive-types]
-
-- id: typescript-02-unknown-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Comment rendre une valeur `unknown` utilisable comme string ?
-  options:
-    - value as any
-    - if (typeof value === "string") { ... }
-    - value.toString() directement
-    - String(value) sans vérification
-  answer: [1]
-  explanation: >
-    Le narrowing avec typeof (ou un type guard) est la façon sûre.
-  skills: [primitive-types]
+id: unknown-quiz
+kind: QUIZ
+questions:
+  - id: typescript-02-unknown-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quelle est la principale différence entre `any` et `unknown` ?
+    options:
+      - Aucune différence
+      - unknown force à vérifier le type avant utilisation, any non
+      - any est plus sûr que unknown
+      - unknown n’existe qu’en mode strict
+    answer:
+      - 1
+    explanation: |
+      unknown exige un narrowing. any laisse tout passer.
+    skills:
+      - primitive-types
+  - id: typescript-02-unknown-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut appeler des méthodes directement sur une variable de type unknown.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Il faut d’abord narrow le type (typeof, etc.).
+    skills:
+      - primitive-types
+  - id: typescript-02-unknown-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans quel cas `unknown` est-il particulièrement recommandé ?
+    options:
+      - Pour toutes les variables locales
+      - Pour les données externes (JSON, API, input utilisateur)
+      - Pour remplacer string
+      - Pour les constantes
+    answer:
+      - 1
+    explanation: >
+      Les données qui arrivent de l’extérieur n’ont pas de garantie de type à
+      compile-time.
+    skills:
+      - primitive-types
+  - id: typescript-02-unknown-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Comment rendre une valeur `unknown` utilisable comme string ?
+    options:
+      - value as any
+      - if (typeof value === "string") { ... }
+      - value.toString() directement
+      - String(value) sans vérification
+    answer:
+      - 1
+    explanation: |
+      Le narrowing avec typeof (ou un type guard) est la façon sûre.
+    skills:
+      - primitive-types

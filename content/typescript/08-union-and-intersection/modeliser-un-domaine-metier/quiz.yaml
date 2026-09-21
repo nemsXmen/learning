@@ -1,57 +1,66 @@
-- id: typescript-08-modeliser-un-domaine-metier-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pour modéliser des états avec des données différentes, on préfère souvent :
-  options:
-    - Un seul objet avec beaucoup de champs optionnels
-    - Une discriminated union
-    - any
-    - Uniquement des classes
-  answer: [1]
-  explanation: >
-    Chaque variante n’expose que les champs pertinents.
-  skills: [unions-intersections]
-
-- id: typescript-08-modeliser-un-domaine-metier-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Les literal unions sont utiles pour les ensembles fermés de valeurs métier (statuts, devises…).
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [unions-intersections]
-
-- id: typescript-08-modeliser-un-domaine-metier-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel avantage y a-t-il à modéliser le domaine avec des unions plutôt qu’avec des champs optionnels ?
-  options:
-    - Aucun
-    - Les états invalides deviennent impossibles à représenter
-    - Le code est plus lent
-    - On perd le narrowing
-  answer: [1]
-  explanation: >
-    On ne peut plus construire d’états incohérents.
-  skills: [unions-intersections]
-
-- id: typescript-08-modeliser-un-domaine-metier-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans un modèle de commande avec statuts, que garantit un switch exhaustif ?
-  options:
-    - Rien
-    - Que tous les statuts sont traités (sinon erreur de compilation)
-    - Que le runtime est plus rapide
-    - Que les données sont validées à runtime
-  answer: [1]
-  explanation: >
-    L’exhaustiveness checking protège contre les oublis.
-  skills: [unions-intersections]
+id: modeliser-un-domaine-metier-quiz
+kind: QUIZ
+questions:
+  - id: typescript-08-modeliser-un-domaine-metier-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pour modéliser des états avec des données différentes, on préfère souvent :
+    options:
+      - Un seul objet avec beaucoup de champs optionnels
+      - Une discriminated union
+      - any
+      - Uniquement des classes
+    answer:
+      - 1
+    explanation: |
+      Chaque variante n’expose que les champs pertinents.
+    skills:
+      - unions-intersections
+  - id: typescript-08-modeliser-un-domaine-metier-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Les literal unions sont utiles pour les ensembles fermés de valeurs métier
+      (statuts, devises…).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - unions-intersections
+  - id: typescript-08-modeliser-un-domaine-metier-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel avantage y a-t-il à modéliser le domaine avec des unions plutôt
+      qu’avec des champs optionnels ?
+    options:
+      - Aucun
+      - Les états invalides deviennent impossibles à représenter
+      - Le code est plus lent
+      - On perd le narrowing
+    answer:
+      - 1
+    explanation: |
+      On ne peut plus construire d’états incohérents.
+    skills:
+      - unions-intersections
+  - id: typescript-08-modeliser-un-domaine-metier-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans un modèle de commande avec statuts, que garantit un switch exhaustif ?
+    options:
+      - Rien
+      - Que tous les statuts sont traités (sinon erreur de compilation)
+      - Que le runtime est plus rapide
+      - Que les données sont validées à runtime
+    answer:
+      - 1
+    explanation: |
+      L’exhaustiveness checking protège contre les oublis.
+    skills:
+      - unions-intersections

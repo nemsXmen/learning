@@ -73,6 +73,10 @@ Si la propriété testée n’existe que sur certains membres de l’union, Type
 
 1. Narrow une union `{ a: number } | { b: string }` avec `in`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function f(x: { a: number } | { b: string }) {
@@ -84,8 +88,14 @@ Si la propriété testée n’existe que sur certains membres de l’union, Type
 
 ## Questions d'entretien
 
+
 1. Quand préfères-tu `in` à un discriminant `kind` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand les objets ont déjà des propriétés distinctives et qu’on ne veut pas ajouter de champ technique. Pour les modèles métier clairs, un discriminant explicite reste souvent plus lisible.
    :::
+

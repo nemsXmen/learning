@@ -1,57 +1,64 @@
-- id: typescript-12-membres-d-enum-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment accède-t-on à un membre d’enum ?
-  options:
-    - Enum->Member
-    - Enum.Member
-    - Enum[Member]
-    - Member only
-  answer: [1]
-  explanation: >
-    La notation point est standard.
-  skills: [enums]
-
-- id: typescript-12-membres-d-enum-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut typer un paramètre avec le nom de l’enum (ex. status: Status).
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, le nom de l’enum est aussi un type.
-  skills: [enums]
-
-- id: typescript-12-membres-d-enum-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Les membres calculés sont surtout disponibles pour :
-  options:
-    - Les string enums uniquement
-    - Les numeric enums
-    - Les const enums uniquement
-    - Les type aliases
-  answer: [1]
-  explanation: >
-    Les expressions numériques calculées sont le cas classique.
-  skills: [enums]
-
-- id: typescript-12-membres-d-enum-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `Status.Loading` est :
-  options:
-    - Un type uniquement
-    - Une valeur (et le type Status accepte cette valeur)
-    - Uniquement un string
-    - Un décorateur
-  answer: [1]
-  explanation: >
-    C’est une valeur de l’enum.
-  skills: [enums]
+id: membres-d-enum-quiz
+kind: QUIZ
+questions:
+  - id: typescript-12-membres-d-enum-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment accède-t-on à un membre d’enum ?
+    options:
+      - Enum->Member
+      - Enum.Member
+      - Enum[Member]
+      - Member only
+    answer:
+      - 1
+    explanation: |
+      La notation point est standard.
+    skills:
+      - enums
+  - id: typescript-12-membres-d-enum-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut typer un paramètre avec le nom de l’enum (ex. status: Status).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, le nom de l’enum est aussi un type.
+    skills:
+      - enums
+  - id: typescript-12-membres-d-enum-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les membres calculés sont surtout disponibles pour :
+    options:
+      - Les string enums uniquement
+      - Les numeric enums
+      - Les const enums uniquement
+      - Les type aliases
+    answer:
+      - 1
+    explanation: |
+      Les expressions numériques calculées sont le cas classique.
+    skills:
+      - enums
+  - id: typescript-12-membres-d-enum-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `Status.Loading` est :
+    options:
+      - Un type uniquement
+      - Une valeur (et le type Status accepte cette valeur)
+      - Uniquement un string
+      - Un décorateur
+    answer:
+      - 1
+    explanation: |
+      C’est une valeur de l’enum.
+    skills:
+      - enums

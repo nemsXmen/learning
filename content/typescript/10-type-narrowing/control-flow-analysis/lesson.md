@@ -75,6 +75,10 @@ Le compilateur construit un graphe de flux et propage les types affinisés dans 
 
 1. Utilise un early return pour narrow `string | null`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function f(x: string | null) {
@@ -86,8 +90,14 @@ Le compilateur construit un graphe de flux et propage les types affinisés dans 
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce que le control-flow analysis en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est la capacité du compilateur à suivre les branches du code (conditions, returns, throws…) pour restreindre les types au fur et à mesure de l’exécution possible.
    :::
+

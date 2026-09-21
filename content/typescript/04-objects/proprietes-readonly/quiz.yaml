@@ -1,57 +1,66 @@
-- id: typescript-04-proprietes-readonly-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que fait le modificateur `readonly` sur une propriété ?
-  options:
-    - Il la rend optionnelle
-    - Il empêche sa réaffectation après initialisation (à la compilation)
-    - Il la rend privée
-    - Il la convertit en string
-  answer: [1]
-  explanation: >
-    readonly empêche l’affectation ultérieure au niveau des types.
-  skills: [objects]
-
-- id: typescript-04-proprietes-readonly-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `readonly` protège aussi la valeur à runtime.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. C’est uniquement une protection de compilation.
-  skills: [objects]
-
-- id: typescript-04-proprietes-readonly-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans quel cas `readonly` est-il particulièrement utile ?
-  options:
-    - Pour toutes les propriétés
-    - Pour les identifiants, configurations et valeurs qui ne doivent pas changer
-    - Uniquement pour les tableaux
-    - Pour désactiver le type-checking
-  answer: [1]
-  explanation: >
-    On l’utilise quand on veut exprimer une intention d’immutabilité.
-  skills: [objects]
-
-- id: typescript-04-proprietes-readonly-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Les objets imbriqués sont-ils automatiquement readonly si le parent l’est ?
-  options:
-    - Oui en profondeur
-    - Non, readonly est superficiel par défaut
-    - Uniquement avec strict
-    - Oui si on utilise const
-  answer: [1]
-  explanation: >
-    Il faut explicitement marquer les propriétés imbriquées ou utiliser des utilitaires comme DeepReadonly.
-  skills: [objects]
+id: proprietes-readonly-quiz
+kind: QUIZ
+questions:
+  - id: typescript-04-proprietes-readonly-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que fait le modificateur `readonly` sur une propriété ?
+    options:
+      - Il la rend optionnelle
+      - Il empêche sa réaffectation après initialisation (à la compilation)
+      - Il la rend privée
+      - Il la convertit en string
+    answer:
+      - 1
+    explanation: |
+      readonly empêche l’affectation ultérieure au niveau des types.
+    skills:
+      - objects
+  - id: typescript-04-proprietes-readonly-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `readonly` protège aussi la valeur à runtime.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. C’est uniquement une protection de compilation.
+    skills:
+      - objects
+  - id: typescript-04-proprietes-readonly-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans quel cas `readonly` est-il particulièrement utile ?
+    options:
+      - Pour toutes les propriétés
+      - Pour les identifiants, configurations et valeurs qui ne doivent pas
+        changer
+      - Uniquement pour les tableaux
+      - Pour désactiver le type-checking
+    answer:
+      - 1
+    explanation: |
+      On l’utilise quand on veut exprimer une intention d’immutabilité.
+    skills:
+      - objects
+  - id: typescript-04-proprietes-readonly-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Les objets imbriqués sont-ils automatiquement readonly si le parent l’est ?
+    options:
+      - Oui en profondeur
+      - Non, readonly est superficiel par défaut
+      - Uniquement avec strict
+      - Oui si on utilise const
+    answer:
+      - 1
+    explanation: >
+      Il faut explicitement marquer les propriétés imbriquées ou utiliser des
+      utilitaires comme DeepReadonly.
+    skills:
+      - objects

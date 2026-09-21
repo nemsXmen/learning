@@ -72,6 +72,10 @@ Chaque alias peut utiliser d’autres aliases dans sa définition. TypeScript r�
 
 1. Crée `Name` (first + last), puis `Person` qui l’utilise avec un age.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Name = { first: string; last: string };
@@ -81,8 +85,14 @@ Chaque alias peut utiliser d’autres aliases dans sa définition. TypeScript r�
 
 ## Questions d'entretien
 
+
 1. Comment organises-tu des types objets imbriqués avec des aliases ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En extrayant chaque concept métier dans son propre type alias, puis en les composant. Cela rend le modèle lisible et maintenable.
    :::
+

@@ -81,6 +81,10 @@ L’équilibre idéal est : **contrats explicites aux frontières, inférence à
 
 1. Pour chaque ligne, dis si tu annoterais ou non :
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
 ```ts
 const port = 3000;
 function startServer(p) { ... }
@@ -88,15 +92,27 @@ let result;
 ```
 
    :::solution
+
    - `const port = 3000` → non (inférence)
+
+
    - `function startServer(p)` → oui, annoter `p`
+
+
    - `let result` → oui, annoter le type
+
    :::
 
 ## Questions d'entretien
 
+
 1. Quelle règle suis-tu pour décider d’annoter un type ou de laisser l’inférence ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    J’annote les frontières (paramètres, retours publics, données externes) et les cas où je veux restreindre le type. À l’intérieur des fonctions, je laisse l’inférence travailler. Cela garde le code lisible tout en conservant des contrats clairs.
    :::
+

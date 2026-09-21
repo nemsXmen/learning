@@ -69,6 +69,10 @@ L’appelant peut passer un `string[]` classique (compatible) mais la fonction s
 
 1. Déclare un tableau readonly de strings et tente un push (observe l’erreur).
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const tags: readonly string[] = ["ts"];
@@ -78,8 +82,14 @@ L’appelant peut passer un `string[]` classique (compatible) mais la fonction s
 
 ## Questions d'entretien
 
+
 1. Peut-on passer un `string[]` à une fonction qui attend `readonly string[]` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Oui. Un tableau mutable est compatible avec un paramètre readonly (on promet juste de ne pas le muter). L’inverse n’est pas vrai.
    :::
+

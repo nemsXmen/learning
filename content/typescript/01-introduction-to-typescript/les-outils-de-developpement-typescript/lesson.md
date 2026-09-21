@@ -77,14 +77,24 @@ Le language service de TypeScript (le même moteur que `tsc`) tourne en arrière
 
 1. Ouvre un projet TypeScript dans VS Code et survole une variable pour voir son type inféré.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Le hover affiche le type calculé par le language service.
    :::
 
 ## Questions d'entretien
 
+
 1. Quels outils utilises-tu au quotidien pour développer en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    VS Code avec le language service TypeScript intégré, ESLint avec les règles @typescript-eslint, Prettier pour le formatage, et souvent tsx pour l’exécution rapide en développement. Pour la validation runtime j’ajoute Zod ou un équivalent.
    :::
+

@@ -62,6 +62,10 @@ Pour les objets, `&` fusionne les propriétés. Si deux propriétés ont des typ
 
 1. Compose un type `Admin` à partir de `{ id: number; name: string }` et `{ role: "admin" }`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Admin = { id: number; name: string } & { role: "admin" };
@@ -70,8 +74,14 @@ Pour les objets, `&` fusionne les propriétés. Si deux propriétés ont des typ
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre union (`|`) et intersection (`&`) ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    L’union représente « l’un ou l’autre ». L’intersection représente « les deux à la fois » (toutes les propriétés combinées pour les objets).
    :::
+

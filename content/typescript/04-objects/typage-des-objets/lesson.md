@@ -74,6 +74,10 @@ TypeScript vérifie que l’objet fourni possède au minimum les propriétés d�
 
 1. Type un objet `product` avec `id: number` et `title: string`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const product: { id: number; title: string } = {
@@ -85,8 +89,14 @@ TypeScript vérifie que l’objet fourni possède au minimum les propriétés d�
 
 ## Questions d'entretien
 
+
 1. Comment type-t-on un objet en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Soit avec une annotation inline `{ prop: Type }`, soit plus proprement avec un `type` ou une `interface` nommée. TypeScript vérifie ensuite que les valeurs respectent cette forme (typage structurel).
    :::
+

@@ -74,6 +74,10 @@ C’est une protection contre les fautes de frappe et les propriétés oubliées
 
 1. Pourquoi ce code échoue-t-il et comment le faire passer intentionnellement ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
 ```ts
 type Point = { x: number };
 const p: Point = { x: 1, y: 2 };
@@ -85,8 +89,14 @@ const p: Point = { x: 1, y: 2 };
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce que le excess property checking ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est une vérification supplémentaire de TypeScript qui refuse les propriétés inconnues sur les objets littéraux assignés à un type. Elle ne s’applique pas de la même façon aux variables déjà typées (typage structurel classique).
    :::
+

@@ -1,57 +1,65 @@
-- id: typescript-03-tableaux-readonly-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que permet `readonly number[]` ?
-  options:
-    - D’accélérer les accès
-    - D’interdire les mutations (push, réaffectation d’index…) à la compilation
-    - De rendre les numbers immuables à runtime
-    - Rien de spécial
-  answer: [1]
-  explanation: >
-    Les méthodes mutantes disparaissent du type.
-  skills: [arrays-tuples]
-
-- id: typescript-03-tableaux-readonly-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut faire `ids.push(4)` sur un `readonly number[]`.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. push n’existe plus sur le type readonly.
-  skills: [arrays-tuples]
-
-- id: typescript-03-tableaux-readonly-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    `ReadonlyArray<string>` est équivalent à :
-  options:
-    - string[]
-    - readonly string[]
-    - Array<readonly string>
-    - string
-  answer: [1]
-  explanation: >
-    Ce sont deux écritures du même concept.
-  skills: [arrays-tuples]
-
-- id: typescript-03-tableaux-readonly-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Peut-on passer un `string[]` à une fonction qui attend `readonly string[]` ?
-  options:
-    - Non
-    - Oui
-    - Uniquement en mode non-strict
-    - Uniquement avec un cast
-  answer: [1]
-  explanation: >
-    Oui, un tableau mutable est compatible avec un paramètre readonly.
-  skills: [arrays-tuples]
+id: tableaux-readonly-quiz
+kind: QUIZ
+questions:
+  - id: typescript-03-tableaux-readonly-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que permet `readonly number[]` ?
+    options:
+      - D’accélérer les accès
+      - D’interdire les mutations (push, réaffectation d’index…) à la compilation
+      - De rendre les numbers immuables à runtime
+      - Rien de spécial
+    answer:
+      - 1
+    explanation: |
+      Les méthodes mutantes disparaissent du type.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-tableaux-readonly-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut faire `ids.push(4)` sur un `readonly number[]`.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. push n’existe plus sur le type readonly.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-tableaux-readonly-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `ReadonlyArray<string>` est équivalent à :
+    options:
+      - string[]
+      - readonly string[]
+      - Array<readonly string>
+      - string
+    answer:
+      - 1
+    explanation: |
+      Ce sont deux écritures du même concept.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-tableaux-readonly-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Peut-on passer un `string[]` à une fonction qui attend `readonly string[]`
+      ?
+    options:
+      - Non
+      - Oui
+      - Uniquement en mode non-strict
+      - Uniquement avec un cast
+    answer:
+      - 1
+    explanation: |
+      Oui, un tableau mutable est compatible avec un paramètre readonly.
+    skills:
+      - arrays-tuples

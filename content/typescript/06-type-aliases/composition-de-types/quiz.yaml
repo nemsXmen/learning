@@ -1,57 +1,64 @@
-- id: typescript-06-composition-de-types-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que produit `type C = A & B` ?
-  options:
-    - Une union de A et B
-    - Une intersection (combinaison des propriétés)
-    - Un tableau
-    - Un type never systématiquement
-  answer: [1]
-  explanation: >
-    & crée une intersection de types.
-  skills: [type-aliases]
-
-- id: typescript-06-composition-de-types-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `|` représente une union (« l’un ou l’autre »).
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [type-aliases]
-
-- id: typescript-06-composition-de-types-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il avec `{ a: string } & { a: number }` ?
-  options:
-    - Un type valide avec a: string | number
-    - Souvent never (conflit de propriétés)
-    - Une erreur de syntaxe
-    - Un type any
-  answer: [1]
-  explanation: >
-    Les propriétés incompatibles mènent généralement à never.
-  skills: [type-aliases]
-
-- id: typescript-06-composition-de-types-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pourquoi composer des type aliases plutôt que tout écrire inline ?
-  options:
-    - Pour accélérer le runtime
-    - Pour la lisibilité, la réutilisation et la modularité du modèle
-    - Parce que TypeScript l’oblige
-    - Pour désactiver le typage
-  answer: [1]
-  explanation: >
-    Les aliases nommés rendent le modèle de domaine clair et maintenable.
-  skills: [type-aliases]
+id: composition-de-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-06-composition-de-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que produit `type C = A & B` ?
+    options:
+      - Une union de A et B
+      - Une intersection (combinaison des propriétés)
+      - Un tableau
+      - Un type never systématiquement
+    answer:
+      - 1
+    explanation: |
+      & crée une intersection de types.
+    skills:
+      - type-aliases
+  - id: typescript-06-composition-de-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `|` représente une union (« l’un ou l’autre »).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-aliases
+  - id: typescript-06-composition-de-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que se passe-t-il avec `{ a: string } & { a: number }` ?
+    options:
+      - '{"Un type valide avec a":"string | number"}'
+      - Souvent never (conflit de propriétés)
+      - Une erreur de syntaxe
+      - Un type any
+    answer:
+      - 1
+    explanation: |
+      Les propriétés incompatibles mènent généralement à never.
+    skills:
+      - type-aliases
+  - id: typescript-06-composition-de-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi composer des type aliases plutôt que tout écrire inline ?
+    options:
+      - Pour accélérer le runtime
+      - Pour la lisibilité, la réutilisation et la modularité du modèle
+      - Parce que TypeScript l’oblige
+      - Pour désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Les aliases nommés rendent le modèle de domaine clair et maintenable.
+    skills:
+      - type-aliases

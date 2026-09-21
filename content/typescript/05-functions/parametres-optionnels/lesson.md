@@ -70,6 +70,10 @@ function createUser(name: string, age?: number) {
 
 1. Écris une fonction `log` qui prend un message obligatoire et un niveau optionnel.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function log(message: string, level?: string) {
@@ -80,8 +84,14 @@ function createUser(name: string, age?: number) {
 
 ## Questions d'entretien
 
+
 1. Peut-on avoir un paramètre obligatoire après un paramètre optionnel ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. Les paramètres optionnels doivent être placés après les paramètres obligatoires.
    :::
+

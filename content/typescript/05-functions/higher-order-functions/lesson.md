@@ -99,6 +99,11 @@ On combine des function types pour décrire les entrées et sorties. Les generic
 
 1. Qu’est-ce qu’une higher-order function ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::reponse
    Une fonction qui prend une ou plusieurs fonctions en paramètre et/ou retourne une fonction. Exemples : map, filter, createMultiplier, middlewares.
    :::
+

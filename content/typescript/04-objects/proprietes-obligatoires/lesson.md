@@ -63,6 +63,10 @@ TypeScript exige la présence de chaque propriété non optionnelle lors de l’
 
 1. Crée un type `Book` avec `title` et `pages` obligatoires.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Book = {
@@ -74,8 +78,14 @@ TypeScript exige la présence de chaque propriété non optionnelle lors de l’
 
 ## Questions d'entretien
 
+
 1. Que se passe-t-il si une propriété obligatoire est absente ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    TypeScript émet une erreur de compilation indiquant que la propriété est manquante.
    :::
+

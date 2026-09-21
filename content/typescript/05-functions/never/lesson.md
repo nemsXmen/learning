@@ -1,7 +1,7 @@
 ---
 id: typescript-05-never
 title: never
-slug: never
+slug: never-functions
 technology: typescript
 level: beginner
 module: 05-functions
@@ -36,7 +36,7 @@ function infiniteLoop(): never {
 }
 ```
 
-## Exemple – exhaustiveness
+## Exemple
 
 ```ts
 function assertNever(x: never): never {
@@ -72,6 +72,10 @@ function area(shape: Shape): number {
 
 1. Écris une fonction `raise` qui throw toujours et est typée `never`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function raise(msg: string): never {
@@ -82,8 +86,14 @@ function area(shape: Shape): number {
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre une fonction qui retourne `void` et une qui retourne `never` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `void` signifie « pas de valeur utile » (la fonction se termine). `never` signifie que la fonction ne se termine jamais normalement (throw ou boucle infinie).
    :::
+

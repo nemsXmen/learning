@@ -1,57 +1,60 @@
-- id: typescript-10-narrowing-egalite-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Les tests `===` / `!==` peuvent-ils narrow un type ?
-  options:
-    - Non
-    - Oui
-    - Uniquement pour les nombres
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Oui, TypeScript les prend en compte dans le control-flow analysis.
-  skills: [type-narrowing]
+id: narrowing-egalite-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-narrowing-egalite-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Les tests `===` / `!==` peuvent-ils narrow un type ?
+    options:
+      - "Non"
+      - "Oui"
+      - "Uniquement pour les nombres"
+      - "Uniquement en mode non-strict"
+    answer: [1]
+    explanation: >
+      Oui, TypeScript les prend en compte dans le control-flow analysis.
+    skills: [type-narrowing]
 
-- id: typescript-10-narrowing-egalite-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Après `if (value !== null)`, value n’est plus null dans le bloc.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui (sous strictNullChecks).
-  skills: [type-narrowing]
+  - id: typescript-10-narrowing-egalite-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Après `if (value !== null)`, value n’est plus null dans le bloc.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Oui (sous strictNullChecks).
+    skills: [type-narrowing]
 
-- id: typescript-10-narrowing-egalite-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Le narrowing par égalité peut concerner :
-  options:
-    - Une seule variable uniquement
-    - Plusieurs variables à la fois dans certains cas
-    - Uniquement les classes
-    - Uniquement les tableaux
-  answer: [1]
-  explanation: >
-    TypeScript peut restreindre les deux côtés d’une égalité.
-  skills: [type-narrowing]
+  - id: typescript-10-narrowing-egalite-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Le narrowing par égalité peut concerner :
+    options:
+      - Une seule variable uniquement
+      - Plusieurs variables à la fois dans certains cas
+      - Uniquement les classes
+      - Uniquement les tableaux
+    answer: [1]
+    explanation: >
+      TypeScript peut restreindre les deux côtés d’une égalité.
+    skills: [type-narrowing]
 
-- id: typescript-10-narrowing-egalite-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pourquoi préférer `===` à `==` pour le narrowing ?
-  options:
-    - Aucune différence
-    - `===` est plus strict et plus prévisible pour l’analyse de types
-    - `==` est interdit
-    - `===` est plus lent
-  answer: [1]
-  explanation: >
-    Les comparaisons strictes sont mieux comprises par le type-checker.
-  skills: [type-narrowing]
+  - id: typescript-10-narrowing-egalite-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi préférer `===` à `==` pour le narrowing ?
+    options:
+      - Aucune différence
+      - "`===` est plus strict et plus prévisible pour l’analyse de types"
+      - "`==` est interdit"
+      - "`===` est plus lent"
+    answer: [1]
+    explanation: >
+      Les comparaisons strictes sont mieux comprises par le type-checker.
+    skills: [type-narrowing]

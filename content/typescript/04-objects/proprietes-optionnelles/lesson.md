@@ -66,6 +66,10 @@ function getEmail(user: User): string {
 
 1. Ajoute une propriété optionnelle `nickname` à un type User.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type User = {
@@ -78,8 +82,14 @@ function getEmail(user: User): string {
 
 ## Questions d'entretien
 
+
 1. Quel est le type réel d’une propriété `email?: string` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `string | undefined`. La propriété peut être absente ou contenir une string (ou explicitement undefined).
    :::
+

@@ -40,7 +40,7 @@ function process(value: string | null) {
 }
 ```
 
-## Exemple – asserts sur un type
+## Exemple
 
 ```ts
 function assertIsString(value: unknown): asserts value is string {
@@ -69,6 +69,10 @@ Après l’appel à une assertion function, TypeScript considère que la conditi
 
 1. Écris une assertion function `assertDefined` pour exclure null/undefined.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function assertDefined<T>(value: T): asserts value is NonNullable<T> {
@@ -81,8 +85,14 @@ Après l’appel à une assertion function, TypeScript considère que la conditi
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre un type guard (`is`) et une assertion function (`asserts`) ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Un type guard retourne un boolean et permet un narrowing dans un if. Une assertion function throw en cas d’échec et narrow le type pour tout le code qui suit l’appel (si elle ne throw pas).
    :::
+

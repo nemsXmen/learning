@@ -1,7 +1,7 @@
 ---
 id: typescript-02-null
-title: null
-slug: null
+title: "null"
+slug: null-type
 technology: typescript
 level: beginner
 module: 02-types-primitifs
@@ -11,7 +11,7 @@ difficulty: 2
 xp: 45
 prerequisites: [typescript-02-boolean]
 skills: [primitive-types]
-tags: [typescript, null, primitifs]
+tags: [typescript, null-type, primitifs]
 ---
 
 ## Objectifs
@@ -86,6 +86,10 @@ C’est l’une des options les plus importantes de TypeScript pour éviter les 
 
 1. Écris une fonction `getLength(str: string | null): number` qui retourne 0 si null, sinon la longueur.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function getLength(str: string | null): number {
@@ -97,8 +101,14 @@ C’est l’une des options les plus importantes de TypeScript pour éviter les 
 
 ## Questions d'entretien
 
+
 1. Que change l’option `strictNullChecks` concernant `null` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Elle rend `null` non assignable aux autres types. On doit alors utiliser des unions (`string | null`) et faire des vérifications (narrowing) avant d’utiliser la valeur. C’est l’une des protections les plus importantes contre les erreurs runtime liées à null.
    :::
+

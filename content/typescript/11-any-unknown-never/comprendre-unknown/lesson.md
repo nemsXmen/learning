@@ -68,6 +68,10 @@ function parseJSON(text: string): unknown {
 
 1. Déclare une variable `unknown` et narrow-la en string avant usage.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const data: unknown = "hello";
@@ -79,8 +83,14 @@ function parseJSON(text: string): unknown {
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce que `unknown` et en quoi diffère-t-il de `any` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `unknown` représente une valeur de type inconnu mais reste type-safe : on doit la narrow avant de l’utiliser. `any` désactive purement et simplement le contrôle de types.
    :::
+

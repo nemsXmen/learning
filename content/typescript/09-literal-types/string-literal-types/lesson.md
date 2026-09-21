@@ -67,6 +67,10 @@ Chaque littéral string est un type distinct, sous-type de `string`. TypeScript 
 
 1. Crée un type `Theme` pour `"light" | "dark"`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Theme = "light" | "dark";
@@ -75,8 +79,14 @@ Chaque littéral string est un type distinct, sous-type de `string`. TypeScript 
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre le type `string` et le type `"hello"` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `string` accepte n’importe quelle chaîne. `"hello"` n’accepte que la valeur exacte `"hello"`. Les string literal types permettent de restreindre les valeurs possibles.
    :::
+

@@ -46,7 +46,7 @@ function area(shape: Shape): number {
 
 Après `case "circle"`, TypeScript sait que `shape` a un `radius`.
 
-## Exemple – Result
+## Exemple
 
 ```ts
 type Result<T> =
@@ -82,6 +82,10 @@ Le discriminant (souvent `kind`, `type`, `tag`, `ok`…) est une propriété de 
 
 1. Modélise un type `NetworkState` avec "loading", "success" (data: string) et "error" (message: string).
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type NetworkState =
@@ -93,8 +97,14 @@ Le discriminant (souvent `kind`, `type`, `tag`, `ok`…) est une propriété de 
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce qu’une discriminated union et pourquoi est-elle utile ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est une union d’objets partageant une propriété littérale (discriminant). Elle permet à TypeScript de narrow automatiquement le type dans chaque branche d’un switch ou d’un if, rendant le code à la fois sûr et expressif.
    :::
+

@@ -1,57 +1,65 @@
-- id: typescript-04-proprietes-optionnelles-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment déclare-t-on une propriété optionnelle ?
-  options:
-    - email: string?
-    - email?: string
-    - optional email: string
-    - email: string | optional
-  answer: [1]
-  explanation: >
-    Le ? se place après le nom de la propriété.
-  skills: [objects]
-
-- id: typescript-04-proprietes-optionnelles-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Une propriété `email?: string` peut être omise lors de la création de l’objet.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est le but de l’optionalité.
-  skills: [objects]
-
-- id: typescript-04-proprietes-optionnelles-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est le type de `user.email` si email est optionnel ?
-  options:
-    - string
-    - string | undefined
-    - string | null
-    - any
-  answer: [1]
-  explanation: >
-    prop?: T équivaut à prop: T | undefined.
-  skills: [objects]
-
-- id: typescript-04-proprietes-optionnelles-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Comment accéder proprement à une propriété optionnelle ?
-  options:
-    - user.email.toLowerCase() directement
-    - Avec optional chaining ou un test (user.email?.toLowerCase() ou if)
-    - En utilisant any
-    - En la rendant obligatoire
-  answer: [1]
-  explanation: >
-    Il faut protéger l’accès car la valeur peut être undefined.
-  skills: [objects]
+id: proprietes-optionnelles-quiz
+kind: QUIZ
+questions:
+  - id: typescript-04-proprietes-optionnelles-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment déclare-t-on une propriété optionnelle ?
+    options:
+      - '{"email":"string?"}'
+      - '{"email?":"string"}'
+      - '{"optional email":"string"}'
+      - '{"email":"string | optional"}'
+    answer:
+      - 1
+    explanation: |
+      Le ? se place après le nom de la propriété.
+    skills:
+      - objects
+  - id: typescript-04-proprietes-optionnelles-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Une propriété `email?: string` peut être omise lors de la création de
+      l’objet.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est le but de l’optionalité.
+    skills:
+      - objects
+  - id: typescript-04-proprietes-optionnelles-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est le type de `user.email` si email est optionnel ?
+    options:
+      - string
+      - string | undefined
+      - string | null
+      - any
+    answer:
+      - 1
+    explanation: |
+      prop?: T équivaut à prop: T | undefined.
+    skills:
+      - objects
+  - id: typescript-04-proprietes-optionnelles-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Comment accéder proprement à une propriété optionnelle ?
+    options:
+      - user.email.toLowerCase() directement
+      - Avec optional chaining ou un test (user.email?.toLowerCase() ou if)
+      - En utilisant any
+      - En la rendant obligatoire
+    answer:
+      - 1
+    explanation: |
+      Il faut protéger l’accès car la valeur peut être undefined.
+    skills:
+      - objects

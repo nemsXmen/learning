@@ -1,57 +1,71 @@
-- id: typescript-01-comprendre-les-erreurs-de-compilation-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que signifie généralement l’erreur « Type 'X' is not assignable to type 'Y' » ?
-  options:
-    - Une erreur de syntaxe JavaScript
-    - Une incompatibilité de types détectée par TypeScript
-    - Un problème de réseau
-    - Une erreur runtime uniquement
-  answer: [1]
-  explanation: >
-    C’est l’erreur classique de TypeScript quand une valeur d’un type est utilisée là où un autre type est attendu.
-  skills: [typescript-basics]
-
-- id: typescript-01-comprendre-les-erreurs-de-compilation-q2
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que contient typiquement un message d’erreur TypeScript ?
-  options:
-    - Uniquement un code d’erreur
-    - Le fichier, la position (ligne:colonne), un code TS et un message
-    - Uniquement la ligne de code fautive
-    - Un stack trace runtime
-  answer: [1]
-  explanation: >
-    Les diagnostics TypeScript sont très précis : fichier, position, code d’erreur (ex. TS2322) et message clair.
-  skills: [typescript-basics]
-
-- id: typescript-01-comprendre-les-erreurs-de-compilation-q3
-  type: true_false
-  difficulty: 1
-  question: >
-    Ajouter `// @ts-ignore` ou `as any` est une bonne pratique pour faire disparaître les erreurs.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Cela masque le problème et crée de la dette technique. Il vaut mieux corriger la cause.
-  skills: [typescript-basics]
-
-- id: typescript-01-comprendre-les-erreurs-de-compilation-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que signifie l’erreur « Object literal may only specify known properties » ?
-  options:
-    - On a utilisé une propriété qui n’existe pas sur le type cible
-    - On a oublié une propriété obligatoire
-    - Le fichier n’est pas un module
-    - Il y a une erreur de syntaxe JSON
-  answer: [0]
-  explanation: >
-    TypeScript signale qu’une propriété en trop a été fournie dans un objet littéral par rapport au type attendu.
-  skills: [typescript-basics]
+id: comprendre-les-erreurs-de-compilation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-comprendre-les-erreurs-de-compilation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Que signifie généralement l’erreur « Type 'X' is not assignable to type
+      'Y' » ?
+    options:
+      - Une erreur de syntaxe JavaScript
+      - Une incompatibilité de types détectée par TypeScript
+      - Un problème de réseau
+      - Une erreur runtime uniquement
+    answer:
+      - 1
+    explanation: >
+      C’est l’erreur classique de TypeScript quand une valeur d’un type est
+      utilisée là où un autre type est attendu.
+    skills:
+      - typescript-basics
+  - id: typescript-01-comprendre-les-erreurs-de-compilation-q2
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que contient typiquement un message d’erreur TypeScript ?
+    options:
+      - Uniquement un code d’erreur
+      - Le fichier, la position (ligne:colonne), un code TS et un message
+      - Uniquement la ligne de code fautive
+      - Un stack trace runtime
+    answer:
+      - 1
+    explanation: >
+      Les diagnostics TypeScript sont très précis : fichier, position, code
+      d’erreur (ex. TS2322) et message clair.
+    skills:
+      - typescript-basics
+  - id: typescript-01-comprendre-les-erreurs-de-compilation-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      Ajouter `// @ts-ignore` ou `as any` est une bonne pratique pour faire
+      disparaître les erreurs.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Faux. Cela masque le problème et crée de la dette technique. Il vaut mieux
+      corriger la cause.
+    skills:
+      - typescript-basics
+  - id: typescript-01-comprendre-les-erreurs-de-compilation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que signifie l’erreur « Object literal may only specify known properties »
+      ?
+    options:
+      - On a utilisé une propriété qui n’existe pas sur le type cible
+      - On a oublié une propriété obligatoire
+      - Le fichier n’est pas un module
+      - Il y a une erreur de syntaxe JSON
+    answer:
+      - 0
+    explanation: >
+      TypeScript signale qu’une propriété en trop a été fournie dans un objet
+      littéral par rapport au type attendu.
+    skills:
+      - typescript-basics

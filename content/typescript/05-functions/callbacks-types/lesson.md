@@ -66,6 +66,10 @@ On utilise un function type (ou un type alias) pour décrire la signature attend
 
 1. Écris une fonction `forEach` typée qui prend un tableau de strings et un callback `(s: string) => void`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function forEach(items: string[], cb: (s: string) => void): void {
@@ -76,8 +80,14 @@ On utilise un function type (ou un type alias) pour décrire la signature attend
 
 ## Questions d'entretien
 
+
 1. Comment type-t-on un paramètre callback en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Avec un function type, par exemple `(value: number) => boolean`, ou via un type alias. Cela documente les arguments et le retour attendus.
    :::
+

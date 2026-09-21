@@ -1,57 +1,64 @@
-- id: typescript-03-elements-optionnels-tuples-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment marque-t-on un élément de tuple comme optionnel ?
-  options:
-    - [string, number?]
-    - [string, number | optional]
-    - [string, ?number]
-    - [string, number optional]
-  answer: [0]
-  explanation: >
-    On ajoute ? après le type : number?
-  skills: [arrays-tuples]
-
-- id: typescript-03-elements-optionnels-tuples-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Les éléments optionnels peuvent être placés n’importe où dans le tuple.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Ils doivent être à la fin.
-  skills: [arrays-tuples]
-
-- id: typescript-03-elements-optionnels-tuples-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que permet `[string, number?]` ?
-  options:
-    - Uniquement les tuples à exactement 2 éléments
-    - Des tuples d’un ou deux éléments (le second étant number | undefined)
-    - Uniquement un élément
-    - Un nombre illimité d’éléments
-  answer: [1]
-  explanation: >
-    La longueur peut être 1 ou 2.
-  skills: [arrays-tuples]
-
-- id: typescript-03-elements-optionnels-tuples-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est le type de l’élément optionnel `number?` ?
-  options:
-    - number
-    - number | undefined
-    - number | null
-    - any
-  answer: [1]
-  explanation: >
-    Le ? ajoute | undefined.
-  skills: [arrays-tuples]
+id: elements-optionnels-tuples-quiz
+kind: QUIZ
+questions:
+  - id: typescript-03-elements-optionnels-tuples-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment marque-t-on un élément de tuple comme optionnel ?
+    options:
+      - '["string","number?"]'
+      - '["string","number | optional"]'
+      - '["string","?number"]'
+      - '["string","number optional"]'
+    answer:
+      - 0
+    explanation: |
+      On ajoute ? après le type : number?
+    skills:
+      - arrays-tuples
+  - id: typescript-03-elements-optionnels-tuples-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les éléments optionnels peuvent être placés n’importe où dans le tuple.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Ils doivent être à la fin.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-elements-optionnels-tuples-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que permet `[string, number?]` ?
+    options:
+      - Uniquement les tuples à exactement 2 éléments
+      - Des tuples d’un ou deux éléments (le second étant number | undefined)
+      - Uniquement un élément
+      - Un nombre illimité d’éléments
+    answer:
+      - 1
+    explanation: |
+      La longueur peut être 1 ou 2.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-elements-optionnels-tuples-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est le type de l’élément optionnel `number?` ?
+    options:
+      - number
+      - number | undefined
+      - number | null
+      - any
+    answer:
+      - 1
+    explanation: |
+      Le ? ajoute | undefined.
+    skills:
+      - arrays-tuples

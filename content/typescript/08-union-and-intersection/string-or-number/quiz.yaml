@@ -1,57 +1,64 @@
-- id: typescript-08-string-or-number-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment narrow-t-on typiquement une union `string | number` ?
-  options:
-    - Avec un cast any
-    - Avec typeof
-    - Avec new
-    - Avec delete
-  answer: [1]
-  explanation: >
-    typeof est le narrowing classique pour les primitifs.
-  skills: [unions-intersections]
-
-- id: typescript-08-string-or-number-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Après `if (typeof id === "string")`, id est de type string dans le bloc.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est le narrowing.
-  skills: [unions-intersections]
-
-- id: typescript-08-string-or-number-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Peut-on appeler `toUpperCase()` directement sur un `string | number` ?
-  options:
-    - Oui
-    - Non, il faut d’abord narrow
-    - Uniquement en mode non-strict
-    - Uniquement avec as string
-  answer: [1]
-  explanation: >
-    Non, toUpperCase n’existe pas sur number.
-  skills: [unions-intersections]
-
-- id: typescript-08-string-or-number-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `string | number` est un exemple de :
-  options:
-    - Intersection
-    - Union
-    - Tuple
-    - Enum
-  answer: [1]
-  explanation: >
-    C’est une union de deux types.
-  skills: [unions-intersections]
+id: string-or-number-quiz
+kind: QUIZ
+questions:
+  - id: typescript-08-string-or-number-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment narrow-t-on typiquement une union `string | number` ?
+    options:
+      - Avec un cast any
+      - Avec typeof
+      - Avec new
+      - Avec delete
+    answer:
+      - 1
+    explanation: |
+      typeof est le narrowing classique pour les primitifs.
+    skills:
+      - unions-intersections
+  - id: typescript-08-string-or-number-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Après `if (typeof id === "string")`, id est de type string dans le bloc.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est le narrowing.
+    skills:
+      - unions-intersections
+  - id: typescript-08-string-or-number-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Peut-on appeler `toUpperCase()` directement sur un `string | number` ?
+    options:
+      - Oui
+      - Non, il faut d’abord narrow
+      - Uniquement en mode non-strict
+      - Uniquement avec as string
+    answer:
+      - 1
+    explanation: |
+      Non, toUpperCase n’existe pas sur number.
+    skills:
+      - unions-intersections
+  - id: typescript-08-string-or-number-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `string | number` est un exemple de :
+    options:
+      - Intersection
+      - Union
+      - Tuple
+      - Enum
+    answer:
+      - 1
+    explanation: |
+      C’est une union de deux types.
+    skills:
+      - unions-intersections

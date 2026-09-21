@@ -91,6 +91,10 @@ La précision des flottants reste celle de JavaScript (attention à `0.1 + 0.2 !
 
 1. Écris une fonction `average(a: number, b: number): number` qui retourne la moyenne.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function average(a: number, b: number): number {
@@ -99,7 +103,12 @@ La précision des flottants reste celle de JavaScript (attention à `0.1 + 0.2 !
    ```
    :::
 
+
 2. Pourquoi `typeof NaN` vaut `"number"` et comment TypeScript le voit-il ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::solution
    `NaN` est techniquement de type `number` en JavaScript et en TypeScript. Pour le détecter on utilise `Number.isNaN()`.
@@ -107,8 +116,14 @@ La précision des flottants reste celle de JavaScript (attention à `0.1 + 0.2 !
 
 ## Questions d'entretien
 
+
 1. Existe-t-il un type entier distinct de `number` en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. TypeScript (comme JavaScript) n’a qu’un type numérique primitif : `number`. Il représente les entiers et les flottants selon la norme IEEE 754. Pour des entiers plus grands on utilise `bigint`.
    :::
+

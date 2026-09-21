@@ -74,6 +74,10 @@ TypeScript utilise le test `instanceof` pour restreindre le type à la classe co
 
 1. Narrow une union `Date | string` pour formater la date ou afficher la string.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function format(value: Date | string): string {
@@ -85,8 +89,14 @@ TypeScript utilise le test `instanceof` pour restreindre le type à la classe co
 
 ## Questions d'entretien
 
+
 1. Quand utilises-tu `instanceof` plutôt que `typeof` ou `in` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand on travaille avec des instances de classes (Error, Date, classes métier). `typeof` est pour les primitifs, `in` pour la présence de propriétés sur des objets structurels.
    :::
+

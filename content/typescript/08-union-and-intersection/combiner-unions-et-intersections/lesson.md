@@ -70,6 +70,10 @@ type Result = Success | Failure;
 
 1. Crée un type qui est soit `{ type: "a"; a: number }` soit `{ type: "b"; b: string }`, les deux ayant un `id: string` commun via intersection.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Base = { id: string };
@@ -81,8 +85,14 @@ type Result = Success | Failure;
 
 ## Questions d'entretien
 
+
 1. Comment combine-t-on unions et intersections de façon lisible ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En parenthésant explicitement et en nommant les briques intermédiaires avec des type aliases. On évite les expressions trop longues inline.
    :::
+

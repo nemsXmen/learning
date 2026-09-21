@@ -142,6 +142,7 @@ Il complète ces pratiques. Les équipes qui tirent le maximum de TypeScript com
    - Utiliser un tableau à la place d’un objet (ou inversement)
    :::
 
+
 2. Pourquoi TypeScript n’est-il **pas** suffisant pour sécuriser les données venant d’une API REST ?
 
    :::indice
@@ -168,6 +169,7 @@ Il complète ces pratiques. Les équipes qui tirent le maximum de TypeScript com
    - Possibilité de migrer progressivement un codebase JavaScript existant
    :::
 
+
 2. Dans quels types de projets recommanderais-tu *de ne pas* utiliser TypeScript ?
 
    :::indice
@@ -179,5 +181,7 @@ Il complète ces pratiques. Les équipes qui tirent le maximum de TypeScript com
    - Projets personnels minuscules où la vitesse d’écriture prime totalement
    - Équipes qui refusent d’investir dans l’apprentissage des types
    - Certains environnements très spécifiques où le tooling TypeScript est trop limité
+
    Dans la majorité des projets professionnels modernes, TypeScript est un excellent choix.
    :::
+

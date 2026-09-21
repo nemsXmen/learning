@@ -65,6 +65,10 @@ Chaque niveau de `[]` ajoute une dimension. TypeScript suit les accès par index
 
 1. Déclare une grille 2×2 de booléens.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const grid: boolean[][] = [
@@ -76,8 +80,14 @@ Chaque niveau de `[]` ajoute une dimension. TypeScript suit les accès par index
 
 ## Questions d'entretien
 
+
 1. Comment type-t-on une matrice de nombres en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `number[][]` ou `Array<Array<number>>`. Chaque élément du tableau externe est lui-même un tableau de numbers.
    :::
+

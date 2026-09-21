@@ -70,6 +70,10 @@ Les arrow functions n’ont pas leur propre `this` (elles capturent celui du sco
 
 1. Réécris une fonction `isEven` en arrow function.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const isEven = (n: number): boolean => n % 2 === 0;
@@ -78,8 +82,14 @@ Les arrow functions n’ont pas leur propre `this` (elles capturent celui du sco
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence de comportement de `this` entre une arrow function et une function classique ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Une function classique a son propre `this` (déterminé à l’appel). Une arrow function capture le `this` lexical du scope englobant et ne le redéfinit pas.
    :::
+

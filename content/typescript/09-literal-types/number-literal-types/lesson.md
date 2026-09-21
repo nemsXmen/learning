@@ -60,6 +60,10 @@ Chaque littéral numérique est un sous-type de `number`. Les unions forment des
 
 1. Crée un type `HttpError` pour 400 | 401 | 403 | 404 | 500.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type HttpError = 400 | 401 | 403 | 404 | 500;
@@ -68,8 +72,14 @@ Chaque littéral numérique est un sous-type de `number`. Les unions forment des
 
 ## Questions d'entretien
 
+
 1. Dans quels cas utilises-tu des number literal types ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Pour des ensembles fermés de nombres : codes HTTP, faces de dé, ports connus, niveaux, etc. Cela documente et restreint les valeurs acceptées.
    :::
+

@@ -1,57 +1,65 @@
-- id: typescript-05-parametres-optionnels-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment déclare-t-on un paramètre optionnel ?
-  options:
-    - name: string?
-    - name?: string
-    - optional name: string
-    - name: string | optional
-  answer: [1]
-  explanation: >
-    On place ? après le nom du paramètre.
-  skills: [functions]
-
-- id: typescript-05-parametres-optionnels-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Un paramètre optionnel peut être placé avant un paramètre obligatoire.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Les optionnels doivent être en fin de liste.
-  skills: [functions]
-
-- id: typescript-05-parametres-optionnels-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est le type d’un paramètre `title?: string` ?
-  options:
-    - string
-    - string | undefined
-    - string | null
-    - any
-  answer: [1]
-  explanation: >
-    Le ? ajoute | undefined.
-  skills: [functions]
-
-- id: typescript-05-parametres-optionnels-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Peut-on omettre un argument correspondant à un paramètre optionnel à l’appel ?
-  options:
-    - Non
-    - Oui
-    - Uniquement si la fonction est async
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Oui, c’est le but des paramètres optionnels.
-  skills: [functions]
+id: parametres-optionnels-quiz
+kind: QUIZ
+questions:
+  - id: typescript-05-parametres-optionnels-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment déclare-t-on un paramètre optionnel ?
+    options:
+      - '{"name":"string?"}'
+      - '{"name?":"string"}'
+      - '{"optional name":"string"}'
+      - '{"name":"string | optional"}'
+    answer:
+      - 1
+    explanation: |
+      On place ? après le nom du paramètre.
+    skills:
+      - functions
+  - id: typescript-05-parametres-optionnels-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un paramètre optionnel peut être placé avant un paramètre obligatoire.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Les optionnels doivent être en fin de liste.
+    skills:
+      - functions
+  - id: typescript-05-parametres-optionnels-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est le type d’un paramètre `title?: string` ?
+    options:
+      - string
+      - string | undefined
+      - string | null
+      - any
+    answer:
+      - 1
+    explanation: |
+      Le ? ajoute | undefined.
+    skills:
+      - functions
+  - id: typescript-05-parametres-optionnels-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Peut-on omettre un argument correspondant à un paramètre optionnel à
+      l’appel ?
+    options:
+      - Non
+      - Oui
+      - Uniquement si la fonction est async
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      Oui, c’est le but des paramètres optionnels.
+    skills:
+      - functions

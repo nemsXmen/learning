@@ -80,6 +80,10 @@ L’index signature dit : « toute propriété dont la clé est de ce type aura 
 
 1. Crée un type pour un dictionnaire de nombres indexé par string.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type NumberMap = {
@@ -90,8 +94,14 @@ L’index signature dit : « toute propriété dont la clé est de ce type aura 
 
 ## Questions d'entretien
 
+
 1. À quoi sert une index signature ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    À typer des objets dont les noms de propriétés ne sont pas connus à l’avance (dictionnaires, maps dynamiques). Elle indique le type des clés et le type des valeurs associées.
    :::
+

@@ -79,6 +79,10 @@ Le type alias d’objet se comporte comme une annotation inline, mais nommée et
 
 1. Crée un type `Address` avec `street` et `city`, puis un type `User` qui l’utilise.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Address = { street: string; city: string };
@@ -88,8 +92,14 @@ Le type alias d’objet se comporte comme une annotation inline, mais nommée et
 
 ## Questions d'entretien
 
+
 1. Pourquoi préférer un type alias nommé à une annotation d’objet inline répétée ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Pour éviter la duplication, nommer clairement le concept métier, et faciliter les évolutions (un seul endroit à modifier).
    :::
+

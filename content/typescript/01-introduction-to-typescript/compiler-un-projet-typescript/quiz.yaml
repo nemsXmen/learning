@@ -1,59 +1,69 @@
-- id: typescript-01-compiler-un-projet-typescript-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment lance-t-on la compilation d’un projet TypeScript qui possède un tsconfig.json ?
-  options:
-    - npx tsc monfichier.ts
-    - npx tsc
-    - node tsconfig.json
-    - npm start
-  answer: [1]
-  explanation: >
-    Sans argument, `tsc` cherche le tsconfig.json et compile le projet entier.
-  skills: [typescript-basics]
-
-- id: typescript-01-compiler-un-projet-typescript-q2
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    À quoi servent principalement `rootDir` et `outDir` ?
-  options:
-    - À définir les types globaux
-    - À contrôler la structure des fichiers générés
-    - À installer les dépendances
-    - À activer le mode strict
-  answer: [1]
-  explanation: >
-    `rootDir` indique la racine des sources, `outDir` le dossier où écrire les .js.
-    La structure relative est préservée.
-  skills: [typescript-basics]
-
-- id: typescript-01-compiler-un-projet-typescript-q3
-  type: true_false
-  difficulty: 1
-  question: >
-    Un projet TypeScript peut se passer de tsconfig.json dès qu’il a plus de deux fichiers.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Dès qu’on a plusieurs fichiers, un tsconfig.json devient quasi indispensable
-    pour contrôler include, outDir, strict, etc.
-  skills: [typescript-basics]
-
-- id: typescript-01-compiler-un-projet-typescript-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que fait l’option `"include": ["src/**/*"]` ?
-  options:
-    - Elle exclut le dossier src
-    - Elle indique à tsc quels fichiers source prendre en compte
-    - Elle définit le dossier de sortie
-    - Elle active le mode watch
-  answer: [1]
-  explanation: >
-    `include` liste les patterns de fichiers qui font partie du projet TypeScript.
-  skills: [typescript-basics]
+id: compiler-un-projet-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-compiler-un-projet-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Comment lance-t-on la compilation d’un projet TypeScript qui possède un
+      tsconfig.json ?
+    options:
+      - npx tsc monfichier.ts
+      - npx tsc
+      - node tsconfig.json
+      - npm start
+    answer:
+      - 1
+    explanation: |
+      Sans argument, `tsc` cherche le tsconfig.json et compile le projet entier.
+    skills:
+      - typescript-basics
+  - id: typescript-01-compiler-un-projet-typescript-q2
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      À quoi servent principalement `rootDir` et `outDir` ?
+    options:
+      - À définir les types globaux
+      - À contrôler la structure des fichiers générés
+      - À installer les dépendances
+      - À activer le mode strict
+    answer:
+      - 1
+    explanation: >
+      `rootDir` indique la racine des sources, `outDir` le dossier où écrire les
+      .js. La structure relative est préservée.
+    skills:
+      - typescript-basics
+  - id: typescript-01-compiler-un-projet-typescript-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      Un projet TypeScript peut se passer de tsconfig.json dès qu’il a plus de
+      deux fichiers.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Faux. Dès qu’on a plusieurs fichiers, un tsconfig.json devient quasi
+      indispensable pour contrôler include, outDir, strict, etc.
+    skills:
+      - typescript-basics
+  - id: typescript-01-compiler-un-projet-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que fait l’option `"include": ["src/**/*"]` ?
+    options:
+      - Elle exclut le dossier src
+      - Elle indique à tsc quels fichiers source prendre en compte
+      - Elle définit le dossier de sortie
+      - Elle active le mode watch
+    answer:
+      - 1
+    explanation: >
+      `include` liste les patterns de fichiers qui font partie du projet
+      TypeScript.
+    skills:
+      - typescript-basics

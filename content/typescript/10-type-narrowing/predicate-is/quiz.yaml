@@ -1,57 +1,64 @@
-- id: typescript-10-predicate-is-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    La syntaxe `x is string` dans un type de retour est un :
-  options:
-    - Cast
-    - Type predicate
-    - Décorateur
-    - Enum
-  answer: [1]
-  explanation: >
-    C’est un type predicate.
-  skills: [type-narrowing]
-
-- id: typescript-10-predicate-is-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Un prédicat `is` permet à filter de produire un tableau plus précis.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [type-narrowing]
-
-- id: typescript-10-predicate-is-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Le prédicat s’applique à :
-  options:
-    - N’importe quelle variable du scope
-    - L’argument nommé dans la signature (ex. x dans `x is Type`)
-    - Uniquement aux classes
-    - Uniquement aux tableaux
-  answer: [1]
-  explanation: >
-    Le nom dans le prédicat doit correspondre à un paramètre.
-  skills: [type-narrowing]
-
-- id: typescript-10-predicate-is-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il si la logique du prédicat est incorrecte ?
-  options:
-    - TypeScript corrige automatiquement
-    - Le narrowing peut être faux (responsabilité du développeur)
-    - Erreur de compilation systématique
-    - Conversion en never
-  answer: [1]
-  explanation: >
-    TypeScript fait confiance au prédicat.
-  skills: [type-narrowing]
+id: predicate-is-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-predicate-is-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe `x is string` dans un type de retour est un :
+    options:
+      - Cast
+      - Type predicate
+      - Décorateur
+      - Enum
+    answer:
+      - 1
+    explanation: |
+      C’est un type predicate.
+    skills:
+      - type-narrowing
+  - id: typescript-10-predicate-is-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un prédicat `is` permet à filter de produire un tableau plus précis.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-narrowing
+  - id: typescript-10-predicate-is-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le prédicat s’applique à :
+    options:
+      - N’importe quelle variable du scope
+      - L’argument nommé dans la signature (ex. x dans `x is Type`)
+      - Uniquement aux classes
+      - Uniquement aux tableaux
+    answer:
+      - 1
+    explanation: |
+      Le nom dans le prédicat doit correspondre à un paramètre.
+    skills:
+      - type-narrowing
+  - id: typescript-10-predicate-is-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que se passe-t-il si la logique du prédicat est incorrecte ?
+    options:
+      - TypeScript corrige automatiquement
+      - Le narrowing peut être faux (responsabilité du développeur)
+      - Erreur de compilation systématique
+      - Conversion en never
+    answer:
+      - 1
+    explanation: |
+      TypeScript fait confiance au prédicat.
+    skills:
+      - type-narrowing

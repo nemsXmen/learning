@@ -1,57 +1,60 @@
-- id: typescript-01-premier-fichier-ts-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle est l’extension standard d’un fichier source TypeScript ?
-  options:
-    - .js
-    - .ts
-    - .tsx uniquement
-    - .typescript
-  answer: [1]
-  explanation: >
-    Les fichiers TypeScript portent l’extension .ts (et .tsx quand ils contiennent du JSX).
-  skills: [typescript-basics]
+id: premier-fichier-ts-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-premier-fichier-ts-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle est l’extension standard d’un fichier source TypeScript ?
+    options:
+      - .js
+      - .ts
+      - .tsx uniquement
+      - .typescript
+    answer: [1]
+    explanation: >
+      Les fichiers TypeScript portent l’extension .ts (et .tsx quand ils contiennent du JSX).
+    skills: [typescript-basics]
 
-- id: typescript-01-premier-fichier-ts-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Après compilation, les annotations de types sont toujours présentes dans le fichier .js.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Les annotations sont effacées (type erasure). Le .js ne contient que du JavaScript standard.
-  skills: [typescript-basics]
+  - id: typescript-01-premier-fichier-ts-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Après compilation, les annotations de types sont toujours présentes dans le fichier .js.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: >
+      Faux. Les annotations sont effacées (type erasure). Le .js ne contient que du JavaScript standard.
+    skills: [typescript-basics]
 
-- id: typescript-01-premier-fichier-ts-q3
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle commande compile un fichier `hello.ts` ?
-  options:
-    - node hello.ts
-    - npx tsc hello.ts
-    - npm run hello.ts
-    - tsc --run hello.ts
-  answer: [1]
-  explanation: >
-    `npx tsc hello.ts` lance le compilateur TypeScript sur ce fichier et produit `hello.js`.
-  skills: [typescript-basics]
+  - id: typescript-01-premier-fichier-ts-q3
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle commande compile un fichier `hello.ts` ?
+    options:
+      - node hello.ts
+      - npx tsc hello.ts
+      - npm run hello.ts
+      - tsc --run hello.ts
+    answer: [1]
+    explanation: >
+      `npx tsc hello.ts` lance le compilateur TypeScript sur ce fichier et produit `hello.js`.
+    skills: [typescript-basics]
 
-- id: typescript-01-premier-fichier-ts-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il si tu écris `const message: string = 42;` ?
-  options:
-    - Le code compile et s’exécute normalement
-    - `tsc` affiche une erreur de type et n’émet généralement pas de fichier
-    - Node.js convertit automatiquement le nombre en string
-    - TypeScript ignore l’annotation
-  answer: [1]
-  explanation: >
-    Type 'number' is not assignable to type 'string'. C’est une erreur de compilation.
-  skills: [typescript-basics]
+  - id: typescript-01-premier-fichier-ts-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il si tu écris `const message: string = 42;` ?
+    options:
+      - Le code compile et s’exécute normalement
+      - "`tsc` affiche une erreur de type et n’émet généralement pas de fichier"
+      - Node.js convertit automatiquement le nombre en string
+      - TypeScript ignore l’annotation
+    answer: [1]
+    explanation: >
+      Type 'number' is not assignable to type 'string'. C’est une erreur de compilation.
+    skills: [typescript-basics]

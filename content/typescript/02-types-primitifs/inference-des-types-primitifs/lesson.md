@@ -66,14 +66,24 @@ L’inférence dépend de la mutabilité (`let` vs `const`) et du contexte. Les 
 
 1. Quel type est inféré pour `const role = "admin";` ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Le literal type `"admin"`.
    :::
 
 ## Questions d'entretien
 
+
 1. Pourquoi `const x = "hello"` a-t-il un type plus précis que `let x = "hello"` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Parce que `const` ne peut pas être réassigné. TypeScript peut donc inférer le literal type exact `"hello"`. Avec `let`, la variable peut recevoir n’importe quelle string, donc le type est élargi à `string`.
    :::
+

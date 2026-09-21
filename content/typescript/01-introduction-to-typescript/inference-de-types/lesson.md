@@ -101,11 +101,20 @@ TypeScript analyse le côté droit de l’affectation et les instructions de ret
 
 1. Sans annotation explicite, quel type TypeScript infère-t-il pour `const list = [1, "two", true];` ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    `(string | number | boolean)[]`
    :::
 
+
 2. Pourquoi ce code pose-t-il problème en mode strict ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
 ```ts
 let x;
@@ -119,8 +128,14 @@ x = "hello";
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce que l’inférence de types en TypeScript et pourquoi est-elle importante ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est la capacité du compilateur à deviner le type d’une variable ou d’une expression sans annotation explicite. Elle réduit la verbosité tout en conservant la sécurité. La bonne pratique est d’annoter les frontières (paramètres, retours publics) et de laisser l’inférence à l’intérieur.
    :::
+

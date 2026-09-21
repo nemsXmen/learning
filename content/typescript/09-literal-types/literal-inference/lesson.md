@@ -77,14 +77,24 @@ Avec `const`, TypeScript peut inférer le littéral exact. Avec `let`, il élarg
 
 1. Explique la différence de type entre `const x = "a"` et `let y = "a"`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    `x` a le type `"a"`. `y` a le type `string` car il peut être réassigné.
    :::
 
 ## Questions d'entretien
 
+
 1. Pourquoi `const x = "hello"` a-t-il un type plus précis que `let x = "hello"` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Parce que `const` ne peut pas être réassigné, TypeScript peut inférer le literal type exact `"hello"`. Avec `let`, la variable peut recevoir d’autres strings, donc le type est élargi à `string`.
    :::
+

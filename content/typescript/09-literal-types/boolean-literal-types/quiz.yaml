@@ -1,57 +1,65 @@
-- id: typescript-09-boolean-literal-types-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `true` en tant que type accepte :
-  options:
-    - true et false
-    - Uniquement true
-    - N’importe quel boolean
-    - null
-  answer: [1]
-  explanation: >
-    C’est un boolean literal type.
-  skills: [literal-types]
-
-- id: typescript-09-boolean-literal-types-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `true | false` est équivalent à `boolean`.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [literal-types]
-
-- id: typescript-09-boolean-literal-types-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans `{ ok: true; value: string } | { ok: false; error: string }`, `ok` sert de :
-  options:
-    - Méthode
-    - Discriminant
-    - Index signature
-    - Décorateur
-  answer: [1]
-  explanation: >
-    Les littéraux true/false discriminent les membres de l’union.
-  skills: [literal-types]
-
-- id: typescript-09-boolean-literal-types-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Peut-on utiliser true/false comme types dans des annotations ?
-  options:
-    - Non
-    - Oui
-    - Uniquement en mode non-strict
-    - Uniquement avec des classes
-  answer: [1]
-  explanation: >
-    Oui, ce sont des literal types à part entière.
-  skills: [literal-types]
+id: boolean-literal-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-09-boolean-literal-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `true` en tant que type accepte :
+    options:
+      - true et false
+      - Uniquement true
+      - N’importe quel boolean
+      - "null"
+    answer:
+      - 1
+    explanation: |
+      C’est un boolean literal type.
+    skills:
+      - literal-types
+  - id: typescript-09-boolean-literal-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `true | false` est équivalent à `boolean`.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - literal-types
+  - id: typescript-09-boolean-literal-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans `{ ok: true; value: string } | { ok: false; error: string }`, `ok`
+      sert de :
+    options:
+      - Méthode
+      - Discriminant
+      - Index signature
+      - Décorateur
+    answer:
+      - 1
+    explanation: |
+      Les littéraux true/false discriminent les membres de l’union.
+    skills:
+      - literal-types
+  - id: typescript-09-boolean-literal-types-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Peut-on utiliser true/false comme types dans des annotations ?
+    options:
+      - Non
+      - Oui
+      - Uniquement en mode non-strict
+      - Uniquement avec des classes
+    answer:
+      - 1
+    explanation: |
+      Oui, ce sont des literal types à part entière.
+    skills:
+      - literal-types

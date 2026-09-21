@@ -77,6 +77,10 @@ Le type de retour `never` informe le control-flow analysis que l’exécution ne
 
 1. Utilise une fonction `never` pour éliminer le cas null.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function ensure<T>(value: T | null): T {
@@ -88,8 +92,14 @@ Le type de retour `never` informe le control-flow analysis que l’exécution ne
 
 ## Questions d'entretien
 
+
 1. Quel effet une fonction `: never` a-t-elle sur le code qui la suit ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    TypeScript considère que l’exécution ne continue pas après l’appel. Cela permet d’éliminer des cas (null, branches impossibles) et d’affiner les types dans la suite du flux.
    :::
+

@@ -70,6 +70,10 @@ Un paramètre avec valeur par défaut est automatiquement optionnel à l’appel
 
 1. Écris une fonction `power` avec un exposant par défaut à 2.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function power(base: number, exp = 2): number {
@@ -80,8 +84,14 @@ Un paramètre avec valeur par défaut est automatiquement optionnel à l’appel
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre un paramètre optionnel (`?`) et un paramètre avec valeur par défaut ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Les deux rendent le paramètre omissible. Avec `?` la valeur est `undefined` si omise. Avec une valeur par défaut, on obtient cette valeur au lieu de `undefined`.
    :::
+

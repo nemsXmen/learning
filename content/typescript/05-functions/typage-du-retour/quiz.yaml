@@ -1,57 +1,60 @@
-- id: typescript-05-typage-du-retour-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Où place-t-on l’annotation de type de retour ?
-  options:
-    - Avant le nom de la fonction
-    - Après la liste des paramètres : function f(): Type
-    - Après le corps de la fonction
-    - Uniquement dans un type alias
-  answer: [1]
-  explanation: >
-    La syntaxe est function name(params): ReturnType { ... }.
-  skills: [functions]
+id: typage-du-retour-quiz
+kind: QUIZ
+questions:
+  - id: typescript-05-typage-du-retour-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Où place-t-on l’annotation de type de retour ?
+    options:
+      - Avant le nom de la fonction
+      - "Après la liste des paramètres : function f(): Type"
+      - Après le corps de la fonction
+      - Uniquement dans un type alias
+    answer: [1]
+    explanation: >
+      La syntaxe est function name(params): ReturnType { ... }.
+    skills: [functions]
 
-- id: typescript-05-typage-du-retour-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    TypeScript peut inférer le type de retour sans annotation explicite.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, dans la majorité des cas l’inférence fonctionne bien.
-  skills: [functions]
+  - id: typescript-05-typage-du-retour-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      TypeScript peut inférer le type de retour sans annotation explicite.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Oui, dans la majorité des cas l’inférence fonctionne bien.
+    skills: [functions]
 
-- id: typescript-05-typage-du-retour-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il si une branche retourne un type incompatible avec l’annotation de retour ?
-  options:
-    - Rien
-    - Erreur de compilation
-    - Conversion silencieuse
-    - Le type devient any
-  answer: [1]
-  explanation: >
-    TypeScript exige la cohérence de tous les retours.
-  skills: [functions]
+  - id: typescript-05-typage-du-retour-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il si une branche retourne un type incompatible avec l’annotation de retour ?
+    options:
+      - Rien
+      - Erreur de compilation
+      - Conversion silencieuse
+      - Le type devient any
+    answer: [1]
+    explanation: >
+      TypeScript exige la cohérence de tous les retours.
+    skills: [functions]
 
-- id: typescript-05-typage-du-retour-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Pourquoi annoter parfois le retour explicitement ?
-  options:
-    - Uniquement pour les fonctions async
-    - Pour documenter le contrat et détecter les retours accidentels
-    - Parce que l’inférence est toujours fausse
-    - Pour activer strictNullChecks
-  answer: [1]
-  explanation: >
-    Cela clarifie l’API et protège contre les régressions.
-  skills: [functions]
+  - id: typescript-05-typage-du-retour-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Pourquoi annoter parfois le retour explicitement ?
+    options:
+      - Uniquement pour les fonctions async
+      - Pour documenter le contrat et détecter les retours accidentels
+      - Parce que l’inférence est toujours fausse
+      - Pour activer strictNullChecks
+    answer: [1]
+    explanation: >
+      Cela clarifie l’API et protège contre les régressions.
+    skills: [functions]

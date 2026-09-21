@@ -1,57 +1,67 @@
-- id: typescript-05-function-overloads-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Combien de signatures d’implémentation une fonction overloadée possède-t-elle ?
-  options:
-    - Autant que d’overloads
-    - Une seule
-    - Zéro
-    - Deux obligatoirement
-  answer: [1]
-  explanation: >
-    Il y a une seule implementation signature, plus large.
-  skills: [functions]
-
-- id: typescript-05-function-overloads-q2
-  type: true_false
-  difficulty: 2
-  question: >
-    L’implementation signature est visible par les appelants de la fonction.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Seules les overload signatures sont exposées.
-  skills: [functions]
-
-- id: typescript-05-function-overloads-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans quel ordre doit-on déclarer les overloads ?
-  options:
-    - Du plus général au plus spécifique
-    - Du plus spécifique au plus général
-    - Dans n’importe quel ordre
-    - Uniquement par ordre alphabétique
-  answer: [1]
-  explanation: >
-    TypeScript choisit la première signature compatible ; on met donc les plus spécifiques en premier.
-  skills: [functions]
-
-- id: typescript-05-function-overloads-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quand préférer une union ou des generics plutôt que des overloads ?
-  options:
-    - Jamais
-    - Quand ils expriment le même comportement de façon plus simple
-    - Uniquement pour les fonctions async
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Les overloads sont puissants mais plus verbeux ; unions et generics suffisent souvent.
-  skills: [functions]
+id: function-overloads-quiz
+kind: QUIZ
+questions:
+  - id: typescript-05-function-overloads-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Combien de signatures d’implémentation une fonction overloadée
+      possède-t-elle ?
+    options:
+      - Autant que d’overloads
+      - Une seule
+      - Zéro
+      - Deux obligatoirement
+    answer:
+      - 1
+    explanation: |
+      Il y a une seule implementation signature, plus large.
+    skills:
+      - functions
+  - id: typescript-05-function-overloads-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      L’implementation signature est visible par les appelants de la fonction.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Seules les overload signatures sont exposées.
+    skills:
+      - functions
+  - id: typescript-05-function-overloads-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans quel ordre doit-on déclarer les overloads ?
+    options:
+      - Du plus général au plus spécifique
+      - Du plus spécifique au plus général
+      - Dans n’importe quel ordre
+      - Uniquement par ordre alphabétique
+    answer:
+      - 1
+    explanation: >
+      TypeScript choisit la première signature compatible ; on met donc les plus
+      spécifiques en premier.
+    skills:
+      - functions
+  - id: typescript-05-function-overloads-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quand préférer une union ou des generics plutôt que des overloads ?
+    options:
+      - Jamais
+      - Quand ils expriment le même comportement de façon plus simple
+      - Uniquement pour les fonctions async
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: >
+      Les overloads sont puissants mais plus verbeux ; unions et generics
+      suffisent souvent.
+    skills:
+      - functions

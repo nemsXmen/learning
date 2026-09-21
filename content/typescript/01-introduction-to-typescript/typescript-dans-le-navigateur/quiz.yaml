@@ -1,56 +1,67 @@
-- id: typescript-01-typescript-dans-le-navigateur-q1
-  type: true_false
-  difficulty: 1
-  question: >
-    Le navigateur peut exécuter nativement des fichiers .ts.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Le navigateur ne comprend que le JavaScript. TypeScript doit être transpilé.
-  skills: [typescript-basics]
-
-- id: typescript-01-typescript-dans-le-navigateur-q2
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quel outil est aujourd’hui le plus courant pour développer une application TypeScript destinée au navigateur ?
-  options:
-    - Un simple fichier HTML avec <script src="app.ts">
-    - Un outil de build comme Vite, webpack ou Parcel
-    - Le compilateur tsc uniquement, sans bundler
-    - Internet Explorer
-  answer: [1]
-  explanation: >
-    Les outils de build modernes (Vite en tête) gèrent la transpilation, le HMR et le bundling.
-  skills: [typescript-basics]
-
-- id: typescript-01-typescript-dans-le-navigateur-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Qui s’occupe généralement du type-checking quand on utilise Vite ou esbuild ?
-  options:
-    - Le navigateur
-    - Souvent `tsc --noEmit` ou le language service de l’éditeur
-    - Le serveur HTTP
-    - npm
-  answer: [1]
-  explanation: >
-    Les transpileurs ultra-rapides (esbuild, SWC) ne font pas toujours le type-checking.
-    On laisse ce rôle à tsc ou à l’éditeur.
-  skills: [typescript-basics]
-
-- id: typescript-01-typescript-dans-le-navigateur-q4
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut inclure un fichier .ts directement avec une balise <script src="app.ts">.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Le navigateur ne sait pas parser les annotations TypeScript.
-  skills: [typescript-basics]
+id: typescript-dans-le-navigateur-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-typescript-dans-le-navigateur-q1
+    type: true_false
+    difficulty: 1
+    question: |
+      Le navigateur peut exécuter nativement des fichiers .ts.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Faux. Le navigateur ne comprend que le JavaScript. TypeScript doit être
+      transpilé.
+    skills:
+      - typescript-basics
+  - id: typescript-01-typescript-dans-le-navigateur-q2
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quel outil est aujourd’hui le plus courant pour développer une application
+      TypeScript destinée au navigateur ?
+    options:
+      - Un simple fichier HTML avec <script src="app.ts">
+      - Un outil de build comme Vite, webpack ou Parcel
+      - Le compilateur tsc uniquement, sans bundler
+      - Internet Explorer
+    answer:
+      - 1
+    explanation: >
+      Les outils de build modernes (Vite en tête) gèrent la transpilation, le
+      HMR et le bundling.
+    skills:
+      - typescript-basics
+  - id: typescript-01-typescript-dans-le-navigateur-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Qui s’occupe généralement du type-checking quand on utilise Vite ou
+      esbuild ?
+    options:
+      - Le navigateur
+      - Souvent `tsc --noEmit` ou le language service de l’éditeur
+      - Le serveur HTTP
+      - npm
+    answer:
+      - 1
+    explanation: >
+      Les transpileurs ultra-rapides (esbuild, SWC) ne font pas toujours le
+      type-checking. On laisse ce rôle à tsc ou à l’éditeur.
+    skills:
+      - typescript-basics
+  - id: typescript-01-typescript-dans-le-navigateur-q4
+    type: true_false
+    difficulty: 1
+    question: >
+      On peut inclure un fichier .ts directement avec une balise <script
+      src="app.ts">.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Le navigateur ne sait pas parser les annotations TypeScript.
+    skills:
+      - typescript-basics

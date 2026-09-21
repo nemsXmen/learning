@@ -1,62 +1,72 @@
-- id: typescript-01-javascript-vs-typescript-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle affirmation est correcte ?
-  options:
-    - TypeScript remplace complètement JavaScript à l’exécution
-    - Tout code JavaScript valide est du TypeScript valide
-    - TypeScript ne peut pas utiliser les modules ES
-    - Les types TypeScript existent toujours à runtime
-  answer: [1]
-  explanation: >
-    TypeScript est un superset : la syntaxe JavaScript est acceptée. Les types
-    sont optionnels et sont effacés à la compilation.
-  skills: [typescript-basics]
-
-- id: typescript-01-javascript-vs-typescript-q2
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel outil TypeScript utilise-t-il principalement pour vérifier les types ?
-  options:
-    - Le moteur JavaScript du navigateur
-    - Le compilateur `tsc` (ou un outil équivalent)
-    - ESLint uniquement
-    - Node.js
-  answer: [1]
-  explanation: >
-    C’est le compilateur TypeScript (`tsc`) qui effectue le type-checking
-    avant d’émettre du JavaScript.
-  skills: [typescript-basics]
-
-- id: typescript-01-javascript-vs-typescript-q3
-  type: true_false
-  difficulty: 1
-  question: >
-    Une fois compilé, le code TypeScript s’exécute plus rapidement que le code JavaScript équivalent.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Le JavaScript généré a les mêmes performances. TypeScript n’ajoute
-    aucune optimisation runtime liée aux types.
-  skills: [typescript-basics]
-
-- id: typescript-01-javascript-vs-typescript-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quelle est la principale différence de typage entre JavaScript et TypeScript ?
-  options:
-    - JavaScript a un typage statique, TypeScript un typage dynamique
-    - JavaScript a un typage dynamique, TypeScript ajoute un typage statique à la compilation
-    - Les deux ont uniquement un typage dynamique
-    - TypeScript interdit tout typage dynamique
-  answer: [1]
-  explanation: >
-    JavaScript est dynamiquement typé. TypeScript ajoute une couche de typage
-    statique vérifiée à la compilation, tout en laissant le typage dynamique
-    de JavaScript opérer à runtime.
-  skills: [typescript-basics]
+id: javascript-vs-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-javascript-vs-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quelle affirmation est correcte ?
+    options:
+      - TypeScript remplace complètement JavaScript à l’exécution
+      - Tout code JavaScript valide est du TypeScript valide
+      - TypeScript ne peut pas utiliser les modules ES
+      - Les types TypeScript existent toujours à runtime
+    answer:
+      - 1
+    explanation: >
+      TypeScript est un superset : la syntaxe JavaScript est acceptée. Les types
+      sont optionnels et sont effacés à la compilation.
+    skills:
+      - typescript-basics
+  - id: typescript-01-javascript-vs-typescript-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel outil TypeScript utilise-t-il principalement pour vérifier les types ?
+    options:
+      - Le moteur JavaScript du navigateur
+      - Le compilateur `tsc` (ou un outil équivalent)
+      - ESLint uniquement
+      - Node.js
+    answer:
+      - 1
+    explanation: >
+      C’est le compilateur TypeScript (`tsc`) qui effectue le type-checking
+      avant d’émettre du JavaScript.
+    skills:
+      - typescript-basics
+  - id: typescript-01-javascript-vs-typescript-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      Une fois compilé, le code TypeScript s’exécute plus rapidement que le code
+      JavaScript équivalent.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Faux. Le JavaScript généré a les mêmes performances. TypeScript n’ajoute
+      aucune optimisation runtime liée aux types.
+    skills:
+      - typescript-basics
+  - id: typescript-01-javascript-vs-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle est la principale différence de typage entre JavaScript et
+      TypeScript ?
+    options:
+      - JavaScript a un typage statique, TypeScript un typage dynamique
+      - JavaScript a un typage dynamique, TypeScript ajoute un typage statique à
+        la compilation
+      - Les deux ont uniquement un typage dynamique
+      - TypeScript interdit tout typage dynamique
+    answer:
+      - 1
+    explanation: >
+      JavaScript est dynamiquement typé. TypeScript ajoute une couche de typage
+      statique vérifiée à la compilation, tout en laissant le typage dynamique
+      de JavaScript opérer à runtime.
+    skills:
+      - typescript-basics

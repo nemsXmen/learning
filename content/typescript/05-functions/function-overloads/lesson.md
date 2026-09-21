@@ -94,6 +94,11 @@ TypeScript choisit la première overload signature compatible avec l’appel. L�
 
 1. Quelle est la différence entre les overload signatures et l’implementation signature ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::reponse
    Les overload signatures sont les signatures visibles par les appelants. L’implementation signature est plus large, sert uniquement à typer le corps de la fonction, et n’est pas proposée à l’autocomplétion des appelants.
    :::
+

@@ -70,6 +70,10 @@ Un function type décrit les paramètres et le retour sans fournir d’implémen
 
 1. Crée un type `Predicate<T>` pour une fonction `(value: T) => boolean`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Predicate<T> = (value: T) => boolean;
@@ -78,8 +82,14 @@ Un function type décrit les paramètres et le retour sans fournir d’implémen
 
 ## Questions d'entretien
 
+
 1. Comment déclare-t-on un type de fonction en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Avec la syntaxe `(param: Type) => ReturnType`, souvent encapsulée dans un type alias ou une interface avec call signature.
    :::
+

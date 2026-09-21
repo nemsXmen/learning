@@ -1,57 +1,64 @@
-- id: typescript-03-string-array-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle est la syntaxe correcte pour un tableau de strings ?
-  options:
-    - string[]
-    - String[]
-    - strings[]
-    - Array of string
-  answer: [0]
-  explanation: >
-    string[] (primitif) est la forme idiomatique.
-  skills: [arrays-tuples]
-
-- id: typescript-03-string-array-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `fruits.map(f => f.toUpperCase())` sur un string[] retourne un string[].
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, map conserve le fait que chaque élément est une string transformée.
-  skills: [arrays-tuples]
-
-- id: typescript-03-string-array-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que retourne `names.find(n => n.startsWith("A"))` si names est string[] ?
-  options:
-    - string
-    - string | undefined
-    - boolean
-    - string[]
-  answer: [1]
-  explanation: >
-    find peut ne rien trouver, donc le type est string | undefined.
-  skills: [arrays-tuples]
-
-- id: typescript-03-string-array-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment ajoute-t-on un élément à un string[] de façon typée ?
-  options:
-    - names.add("Alice")
-    - names.push("Alice")
-    - names.append("Alice")
-    - names.insert("Alice")
-  answer: [1]
-  explanation: >
-    push est la méthode standard et elle est correctement typée.
-  skills: [arrays-tuples]
+id: string-array-quiz
+kind: QUIZ
+questions:
+  - id: typescript-03-string-array-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quelle est la syntaxe correcte pour un tableau de strings ?
+    options:
+      - string[]
+      - String[]
+      - strings[]
+      - Array of string
+    answer:
+      - 0
+    explanation: |
+      string[] (primitif) est la forme idiomatique.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-string-array-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `fruits.map(f => f.toUpperCase())` sur un string[] retourne un string[].
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, map conserve le fait que chaque élément est une string transformée.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-string-array-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que retourne `names.find(n => n.startsWith("A"))` si names est string[] ?
+    options:
+      - string
+      - string | undefined
+      - boolean
+      - string[]
+    answer:
+      - 1
+    explanation: |
+      find peut ne rien trouver, donc le type est string | undefined.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-string-array-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment ajoute-t-on un élément à un string[] de façon typée ?
+    options:
+      - names.add("Alice")
+      - names.push("Alice")
+      - names.append("Alice")
+      - names.insert("Alice")
+    answer:
+      - 1
+    explanation: |
+      push est la méthode standard et elle est correctement typée.
+    skills:
+      - arrays-tuples

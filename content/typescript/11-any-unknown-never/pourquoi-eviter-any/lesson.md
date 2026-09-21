@@ -67,6 +67,10 @@ L’équipe perd progressivement la confiance dans le type-checker si les `any` 
 
 1. Remplace un paramètre `any` par un type plus précis dans une petite fonction.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    // avant : function greet(user: any)
@@ -78,8 +82,14 @@ L’équipe perd progressivement la confiance dans le type-checker si les `any` 
 
 ## Questions d'entretien
 
+
 1. Pourquoi évite-t-on `any` dans un projet TypeScript sérieux ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Parce qu’il désactive les garanties du compilateur, propage l’insécurité, réduit l’autocomplétion et repousse les erreurs au runtime. Des alternatives comme `unknown` ou des types précis existent.
    :::
+

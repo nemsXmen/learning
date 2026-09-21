@@ -1,57 +1,60 @@
-- id: typescript-06-alias-fonctions-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle est une syntaxe correcte d’alias de fonction ?
-  options:
-    - type Fn = function(a: number): number
-    - type Fn = (a: number) => number
-    - type Fn = number => number
-    - type Fn = (a: number) -> number
-  answer: [1]
-  explanation: >
-    La forme standard est (params) => ReturnType.
-  skills: [type-aliases]
+id: alias-fonctions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-06-alias-fonctions-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle est une syntaxe correcte d’alias de fonction ?
+    options:
+      - "type Fn = function(a: number): number"
+      - "type Fn = (a: number) => number"
+      - "type Fn = number => number"
+      - "type Fn = (a: number) -> number"
+    answer: [1]
+    explanation: >
+      La forme standard est (params) => ReturnType.
+    skills: [type-aliases]
 
-- id: typescript-06-alias-fonctions-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut utiliser un type alias de fonction pour typer un callback.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est un cas d’usage très courant.
-  skills: [type-aliases]
+  - id: typescript-06-alias-fonctions-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      On peut utiliser un type alias de fonction pour typer un callback.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Oui, c’est un cas d’usage très courant.
+    skills: [type-aliases]
 
-- id: typescript-06-alias-fonctions-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel avantage principal apporte un alias de fonction nommé ?
-  options:
-    - Il accélère le runtime
-    - Il améliore la lisibilité et la réutilisation
-    - Il crée un nouveau type nominal
-    - Il désactive le typage
-  answer: [1]
-  explanation: >
-    Lisibilité et réutilisation sont les gains principaux.
-  skills: [type-aliases]
+  - id: typescript-06-alias-fonctions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel avantage principal apporte un alias de fonction nommé ?
+    options:
+      - Il accélère le runtime
+      - Il améliore la lisibilité et la réutilisation
+      - Il crée un nouveau type nominal
+      - Il désactive le typage
+    answer: [1]
+    explanation: >
+      Lisibilité et réutilisation sont les gains principaux.
+    skills: [type-aliases]
 
-- id: typescript-06-alias-fonctions-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `type Predicate<T> = (value: T) => boolean` est un exemple de :
-  options:
-    - Classe générique
-    - Type alias de fonction générique
-    - Interface uniquement
-    - Enum
-  answer: [1]
-  explanation: >
-    C’est un type alias de fonction paramétré par T.
-  skills: [type-aliases]
+  - id: typescript-06-alias-fonctions-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      `type Predicate<T> = (value: T) => boolean` est un exemple de :
+    options:
+      - Classe générique
+      - Type alias de fonction générique
+      - Interface uniquement
+      - Enum
+    answer: [1]
+    explanation: >
+      C’est un type alias de fonction paramétré par T.
+    skills: [type-aliases]

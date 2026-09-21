@@ -1,57 +1,65 @@
-- id: typescript-09-readonly-tuples-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que permet `readonly [number, number]` ?
-  options:
-    - La mutation libre
-    - D’interdire push et la réaffectation d’index (à la compilation)
-    - De convertir en objet
-    - Rien de spécial
-  answer: [1]
-  explanation: >
-    Les méthodes mutantes disparaissent du type.
-  skills: [literal-types]
-
-- id: typescript-09-readonly-tuples-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `[10, 20] as const` produit un tuple readonly avec des number literal types.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui : readonly [10, 20].
-  skills: [literal-types]
-
-- id: typescript-09-readonly-tuples-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    readonly sur un tuple protège-t-il à runtime ?
-  options:
-    - Oui
-    - Non (uniquement à la compilation)
-    - Uniquement en mode strict
-    - Uniquement avec Object.freeze
-  answer: [1]
-  explanation: >
-    C’est une protection de type-checking.
-  skills: [literal-types]
-
-- id: typescript-09-readonly-tuples-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quel est un bon cas d’usage des readonly tuples ?
-  options:
-    - Listes de longueur variable mutables
-    - Constantes ordonnées (coordonnées, RGB, paires fixes)
-    - Remplacer les objets
-    - Désactiver le typage
-  answer: [1]
-  explanation: >
-    Structures fixes et immuables au niveau des types.
-  skills: [literal-types]
+id: readonly-tuples-quiz
+kind: QUIZ
+questions:
+  - id: typescript-09-readonly-tuples-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que permet `readonly [number, number]` ?
+    options:
+      - La mutation libre
+      - D’interdire push et la réaffectation d’index (à la compilation)
+      - De convertir en objet
+      - Rien de spécial
+    answer:
+      - 1
+    explanation: |
+      Les méthodes mutantes disparaissent du type.
+    skills:
+      - literal-types
+  - id: typescript-09-readonly-tuples-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      `[10, 20] as const` produit un tuple readonly avec des number literal
+      types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui : readonly [10, 20].
+    skills:
+      - literal-types
+  - id: typescript-09-readonly-tuples-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      readonly sur un tuple protège-t-il à runtime ?
+    options:
+      - Oui
+      - Non (uniquement à la compilation)
+      - Uniquement en mode strict
+      - Uniquement avec Object.freeze
+    answer:
+      - 1
+    explanation: |
+      C’est une protection de type-checking.
+    skills:
+      - literal-types
+  - id: typescript-09-readonly-tuples-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quel est un bon cas d’usage des readonly tuples ?
+    options:
+      - Listes de longueur variable mutables
+      - Constantes ordonnées (coordonnées, RGB, paires fixes)
+      - Remplacer les objets
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Structures fixes et immuables au niveau des types.
+    skills:
+      - literal-types

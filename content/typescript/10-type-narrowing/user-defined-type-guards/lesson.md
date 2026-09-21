@@ -71,6 +71,10 @@ Si la fonction retourne `true`, TypeScript considère que le prédicat est vrai 
 
 1. Écris un type guard `isNumber` pour `unknown`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function isNumber(value: unknown): value is number {
@@ -81,8 +85,14 @@ Si la fonction retourne `true`, TypeScript considère que le prédicat est vrai 
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce qu’un user-defined type guard ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Une fonction qui retourne un type predicate (`arg is Type`). Quand elle retourne true, TypeScript narrow l’argument vers Type. Cela permet d’encapsuler des logiques de discrimination personnalisées.
    :::
+

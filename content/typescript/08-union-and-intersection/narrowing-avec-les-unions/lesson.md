@@ -95,6 +95,10 @@ TypeScript analyse le flux de contrôle (control-flow analysis) et restreint les
 
 1. Écris une fonction qui narrow une union `string | string[]` et retourne la longueur totale.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function totalLength(value: string | string[]): number {
@@ -106,8 +110,14 @@ TypeScript analyse le flux de contrôle (control-flow analysis) et restreint les
 
 ## Questions d'entretien
 
+
 1. Quelles techniques de narrowing utilises-tu sur les unions ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    typeof pour les primitifs, in pour les objets, les discriminants (kind/type), les tests d’égalité et la truthiness. Le control-flow analysis de TypeScript réduit ensuite le type dans chaque branche.
    :::
+

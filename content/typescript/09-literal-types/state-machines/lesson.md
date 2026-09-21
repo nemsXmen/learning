@@ -77,6 +77,10 @@ Les discriminants (`status`, `type`) permettent le narrowing. On peut aller plus
 
 1. Ajoute un état `"retrying"` et une transition depuis `"error"` via un event `"RETRY"`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    // Étendre State avec { status: "retrying" }
@@ -87,8 +91,14 @@ Les discriminants (`status`, `type`) permettent le narrowing. On peut aller plus
 
 ## Questions d'entretien
 
+
 1. Comment modélises-tu une state machine simple en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Avec des discriminated unions pour les états et les événements, des littéraux pour les discriminants, et une fonction de transition qui utilise le narrowing et l’exhaustivité pour ne gérer que les transitions valides.
    :::
+

@@ -72,6 +72,10 @@ TypeScript analyse le test `typeof x === "..."` et restreint le type de `x` dans
 
 1. Écris une fonction qui accepte `string | number | boolean` et retourne une description textuelle selon le type.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function describe(value: string | number | boolean): string {
@@ -84,8 +88,14 @@ TypeScript analyse le test `typeof x === "..."` et restreint le type de `x` dans
 
 ## Questions d'entretien
 
+
 1. Quand utilises-tu `typeof` pour le narrowing ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Principalement pour discriminer les types primitifs dans une union (string, number, boolean, function, undefined, bigint, symbol). Ce n’est pas adapté pour distinguer des formes d’objets.
    :::
+

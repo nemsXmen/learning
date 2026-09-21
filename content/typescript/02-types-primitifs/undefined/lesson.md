@@ -88,6 +88,10 @@ function greet(name?: string) {
 
 1. Écris une fonction `getLabel(value?: string): string` qui retourne `"aucun"` si undefined, sinon la valeur.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function getLabel(value?: string): string {
@@ -99,8 +103,14 @@ function greet(name?: string) {
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence conceptuelle entre `null` et `undefined` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `null` exprime une absence intentionnelle de valeur (souvent un retour de fonction). `undefined` signifie qu’une variable n’a pas encore été assignée ou qu’un paramètre/propriété est absent. En TypeScript strict les deux sont des types distincts.
    :::
+

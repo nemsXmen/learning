@@ -1,57 +1,64 @@
-- id: typescript-10-discriminated-unions-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Le narrowing sur une discriminated union s’appuie sur :
-  options:
-    - Un cast
-    - Un discriminant (propriété littérale)
-    - any
-    - Un décorateur
-  answer: [1]
-  explanation: >
-    Le discriminant guide le narrowing.
-  skills: [type-narrowing]
-
-- id: typescript-10-discriminated-unions-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Après `if (shape.kind === "circle")`, shape a le type du membre circle.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [type-narrowing]
-
-- id: typescript-10-discriminated-unions-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Un bon discriminant est souvent :
-  options:
-    - Une propriété de type string trop large
-    - Une propriété de type littéral (string/number/boolean literal)
-    - Une méthode
-    - Un tableau
-  answer: [1]
-  explanation: >
-    Les littéraux permettent de distinguer nettement les membres.
-  skills: [type-narrowing]
-
-- id: typescript-10-discriminated-unions-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Les discriminated unions sont idéales pour :
-  options:
-    - Les tableaux uniquement
-    - États, résultats, messages variants
-    - Remplacer les primitives
-    - Désactiver le typage
-  answer: [1]
-  explanation: >
-    Cas d’usage classiques.
-  skills: [type-narrowing]
+id: discriminated-unions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-discriminated-unions-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le narrowing sur une discriminated union s’appuie sur :
+    options:
+      - Un cast
+      - Un discriminant (propriété littérale)
+      - any
+      - Un décorateur
+    answer:
+      - 1
+    explanation: |
+      Le discriminant guide le narrowing.
+    skills:
+      - type-narrowing
+  - id: typescript-10-discriminated-unions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Après `if (shape.kind === "circle")`, shape a le type du membre circle.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-narrowing
+  - id: typescript-10-discriminated-unions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un bon discriminant est souvent :
+    options:
+      - Une propriété de type string trop large
+      - Une propriété de type littéral (string/number/boolean literal)
+      - Une méthode
+      - Un tableau
+    answer:
+      - 1
+    explanation: |
+      Les littéraux permettent de distinguer nettement les membres.
+    skills:
+      - type-narrowing
+  - id: typescript-10-discriminated-unions-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les discriminated unions sont idéales pour :
+    options:
+      - Les tableaux uniquement
+      - États, résultats, messages variants
+      - Remplacer les primitives
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Cas d’usage classiques.
+    skills:
+      - type-narrowing

@@ -67,6 +67,10 @@ Le modificateur `readonly` est vérifié uniquement par le type-checker. À runt
 
 1. Crée un type `Id` avec une propriété `value` readonly de type string.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Id = {
@@ -77,8 +81,14 @@ Le modificateur `readonly` est vérifié uniquement par le type-checker. À runt
 
 ## Questions d'entretien
 
+
 1. `readonly` garantit-il l’immutabilité à runtime ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. C’est une contrainte du système de types. Le JavaScript généré reste mutable. Pour une immutabilité runtime il faut d’autres mécanismes (Object.freeze, structures immuables…).
    :::
+

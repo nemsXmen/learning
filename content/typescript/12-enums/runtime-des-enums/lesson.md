@@ -71,14 +71,24 @@ Le compilateur émet une IIFE qui construit l’objet. Les const enums n’émet
 
 1. Explique ce que contient l’objet runtime d’un numeric enum simple à 2 membres.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Des propriétés nom → valeur (Up: 0) et valeur → nom (0: "Up") grâce au reverse mapping.
    :::
 
 ## Questions d'entretien
 
+
 1. Les enums TypeScript existent-ils à runtime ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Les enums classiques oui : le compilateur génère un objet JavaScript. Les const enums non : leurs valeurs sont inlinées et aucun objet n’est émis.
    :::
+

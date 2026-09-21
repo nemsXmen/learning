@@ -26,6 +26,8 @@ Unions et intersections sont des outils de modélisation. On les utilise pour ex
 
 ## Concept
 
+## Exemple
+
 Exemple : un système de commandes.
 
 ```ts
@@ -87,6 +89,10 @@ On combine :
 
 1. Modélise un `Payment` qui peut être "card" (last4) ou "paypal" (email).
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Payment =
@@ -97,8 +103,14 @@ On combine :
 
 ## Questions d'entretien
 
+
 1. Comment utilises-tu les unions pour modéliser un domaine métier ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En privilégiant les discriminated unions pour les états et variantes, les literal unions pour les ensembles fermés de valeurs, et les intersections pour les champs communs. Cela rend les transitions et les données associées explicites et vérifiées par le compilateur.
    :::
+

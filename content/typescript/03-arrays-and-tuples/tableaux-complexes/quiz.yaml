@@ -1,57 +1,65 @@
-- id: typescript-03-tableaux-complexes-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que signifie `(string | number)[]` ?
-  options:
-    - Soit une string, soit un tableau de numbers
-    - Un tableau dont chaque élément est string ou number
-    - Un tableau de strings uniquement
-    - Un type invalide
-  answer: [1]
-  explanation: >
-    Les parenthèses forcent l’union à s’appliquer à chaque élément du tableau.
-  skills: [arrays-tuples]
-
-- id: typescript-03-tableaux-complexes-q2
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment type-t-on un tableau d’objets User ?
-  options:
-    - User[]
-    - [User]
-    - Array of User
-    - Users
-  answer: [0]
-  explanation: >
-    User[] (ou Array<User>) est la forme standard.
-  skills: [arrays-tuples]
-
-- id: typescript-03-tableaux-complexes-q3
-  type: true_false
-  difficulty: 2
-  question: >
-    `string | number[]` est identique à `(string | number)[]`.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. La priorité des opérateurs change le sens.
-  skills: [arrays-tuples]
-
-- id: typescript-03-tableaux-complexes-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il si un objet littéral a une propriété en trop par rapport à l’interface du tableau ?
-  options:
-    - Rien
-    - Excess property checking : erreur de compilation
-    - La propriété est ignorée
-    - Conversion en any
-  answer: [1]
-  explanation: >
-    TypeScript signale les propriétés inconnues sur les objets littéraux.
-  skills: [arrays-tuples]
+id: tableaux-complexes-quiz
+kind: QUIZ
+questions:
+  - id: typescript-03-tableaux-complexes-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que signifie `(string | number)[]` ?
+    options:
+      - Soit une string, soit un tableau de numbers
+      - Un tableau dont chaque élément est string ou number
+      - Un tableau de strings uniquement
+      - Un type invalide
+    answer:
+      - 1
+    explanation: |
+      Les parenthèses forcent l’union à s’appliquer à chaque élément du tableau.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-tableaux-complexes-q2
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment type-t-on un tableau d’objets User ?
+    options:
+      - User[]
+      - '["User"]'
+      - Array of User
+      - Users
+    answer:
+      - 0
+    explanation: |
+      User[] (ou Array<User>) est la forme standard.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-tableaux-complexes-q3
+    type: true_false
+    difficulty: 2
+    question: |
+      `string | number[]` est identique à `(string | number)[]`.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. La priorité des opérateurs change le sens.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-tableaux-complexes-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il si un objet littéral a une propriété en trop par rapport
+      à l’interface du tableau ?
+    options:
+      - Rien
+      - '{"Excess property checking":"erreur de compilation"}'
+      - La propriété est ignorée
+      - Conversion en any
+    answer:
+      - 1
+    explanation: |
+      TypeScript signale les propriétés inconnues sur les objets littéraux.
+    skills:
+      - arrays-tuples

@@ -106,8 +106,19 @@ Les outils comme ts-node et tsx enregistrent un *hook* ou un loader qui intercep
 
 1. Quelles sont les principales façons d’exécuter du TypeScript avec Node.js ?
 
-   :::reponse
-   - Compiler avec `tsc` puis lancer le `.js` avec `node`
-   - Utiliser `ts-node` ou `tsx` pour une exécution à la volée en développement
-   - Utiliser un bundler (esbuild, etc.) qui produit du JavaScript exécutable
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
    :::
+
+   :::reponse
+
+   - Compiler avec `tsc` puis lancer le `.js` avec `node`
+
+
+   - Utiliser `ts-node` ou `tsx` pour une exécution à la volée en développement
+
+
+   - Utiliser un bundler (esbuild, etc.) qui produit du JavaScript exécutable
+
+   :::
+

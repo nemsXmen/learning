@@ -79,6 +79,10 @@ Les type aliases servent de briques nommées pour ces compositions.
 
 1. Compose un type `Admin` à partir de `User` et `{ role: "admin" }`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type User = { id: number; name: string };
@@ -88,8 +92,14 @@ Les type aliases servent de briques nommées pour ces compositions.
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre union (`|`) et intersection (`&`) ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    L’union (`|`) représente « l’un ou l’autre » (valeur compatible avec au moins un des types). L’intersection (`&`) représente « les deux à la fois » (valeur qui satisfait toutes les formes combinées).
    :::
+

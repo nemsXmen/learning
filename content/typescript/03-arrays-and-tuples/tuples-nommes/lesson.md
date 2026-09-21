@@ -65,6 +65,10 @@ Les labels sont purement informatifs pour le type-checker et l’éditeur. À ru
 
 1. Déclare un tuple nommé pour une couleur RGB.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type RGB = [r: number, g: number, b: number];
@@ -74,8 +78,14 @@ Les labels sont purement informatifs pour le type-checker et l’éditeur. À ru
 
 ## Questions d'entretien
 
+
 1. Les labels des tuples nommés existent-ils à runtime ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. Ce sont uniquement des annotations de type pour la lisibilité et l’autocomplétion. À runtime le tuple reste un tableau indexé numériquement.
    :::
+

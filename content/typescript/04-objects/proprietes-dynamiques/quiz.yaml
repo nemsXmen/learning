@@ -1,57 +1,60 @@
-- id: typescript-04-proprietes-dynamiques-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel type utilise-t-on souvent pour une clé dynamique type-safe sur un objet T ?
-  options:
-    - string
-    - keyof T
-    - any
-    - object
-  answer: [1]
-  explanation: >
-    keyof T produit l’union des noms de propriétés de T.
-  skills: [objects]
+id: proprietes-dynamiques-quiz
+kind: QUIZ
+questions:
+  - id: typescript-04-proprietes-dynamiques-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel type utilise-t-on souvent pour une clé dynamique type-safe sur un objet T ?
+    options:
+      - string
+      - keyof T
+      - any
+      - object
+    answer: [1]
+    explanation: >
+      keyof T produit l’union des noms de propriétés de T.
+    skills: [objects]
 
-- id: typescript-04-proprietes-dynamiques-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut toujours faire `obj[key]` avec `key: string` sur n’importe quel objet typé.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Sans index signature, TypeScript refuse souvent les clés string arbitraires.
-  skills: [objects]
+  - id: typescript-04-proprietes-dynamiques-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      On peut toujours faire `obj[key]` avec `key: string` sur n’importe quel objet typé.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: >
+      Faux. Sans index signature, TypeScript refuse souvent les clés string arbitraires.
+    skills: [objects]
 
-- id: typescript-04-proprietes-dynamiques-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que produit `keyof { name: string; age: number }` ?
-  options:
-    - string
-    - "name" | "age"
-    - number
-    - any
-  answer: [1]
-  explanation: >
-    keyof retourne l’union des littéraux de clés.
-  skills: [objects]
+  - id: typescript-04-proprietes-dynamiques-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que produit `keyof { name: string; age: number }` ?
+    options:
+      - string
+      - '"name" | "age"'
+      - number
+      - any
+    answer: [1]
+    explanation: >
+      keyof retourne l’union des littéraux de clés.
+    skills: [objects]
 
-- id: typescript-04-proprietes-dynamiques-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    À quoi sert une index signature dans le contexte des propriétés dynamiques ?
-  options:
-    - À interdire les clés dynamiques
-    - À autoriser et typer les accès avec des clés non connues à l’avance
-    - À rendre toutes les propriétés readonly
-    - À convertir l’objet en tableau
-  answer: [1]
-  explanation: >
-    Elle ouvre et type les propriétés dynamiques.
-  skills: [objects]
+  - id: typescript-04-proprietes-dynamiques-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      À quoi sert une index signature dans le contexte des propriétés dynamiques ?
+    options:
+      - À interdire les clés dynamiques
+      - À autoriser et typer les accès avec des clés non connues à l’avance
+      - À rendre toutes les propriétés readonly
+      - À convertir l’objet en tableau
+    answer: [1]
+    explanation: >
+      Elle ouvre et type les propriétés dynamiques.
+    skills: [objects]

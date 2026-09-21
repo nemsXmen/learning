@@ -75,6 +75,10 @@ Le type de l’élément peut être n’importe quel type TypeScript valide : in
 
 1. Déclare un tableau d’objets `{ title: string; done: boolean }`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    interface Task {
@@ -89,9 +93,15 @@ Le type de l’élément peut être n’importe quel type TypeScript valide : in
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre `(string | number)[]` et `string | number[]` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `(string | number)[]` est un tableau dont chaque élément est string ou number.  
    `string | number[]` est soit une string, soit un tableau de numbers. Les parenthèses changent tout.
    :::
+

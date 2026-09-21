@@ -77,18 +77,42 @@ Il n’y a pas de règle absolue. L’objectif est la clarté pour le lecteur su
 ## Exercices
 
 1. Pour chaque cas, choisis alias ou inline :
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    - Un point {x, y} utilisé dans 5 fonctions
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    - Un callback unique `(n: number) => void` dans une seule fonction
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
+
    - Point → alias
+
+
    - Callback unique → inline (ou type local si vraiment utile)
+
    :::
 
 ## Questions d'entretien
 
+
 1. Quand crées-tu un type alias plutôt qu’un type inline ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand le type est réutilisé, qu’il représente un concept clair, ou que sa complexité justifie un nom. Pour les formes simples et locales, l’inline reste souvent plus lisible.
    :::
+

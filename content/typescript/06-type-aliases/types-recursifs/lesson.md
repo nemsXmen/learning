@@ -76,6 +76,10 @@ TypeScript autorise la récursion dans les type aliases tant que le type est « 
 
 1. Déclare un type `FileSystemEntry` qui peut être un fichier (name + size) ou un dossier (name + children récursifs).
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type FileSystemEntry =
@@ -86,8 +90,14 @@ TypeScript autorise la récursion dans les type aliases tant que le type est « 
 
 ## Questions d'entretien
 
+
 1. Comment TypeScript gère-t-il les types récursifs ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Via les type aliases (et les interfaces) qui peuvent se référencer eux-mêmes. Il faut un cas de base pour que le type soit productif. Exemples courants : structures JSON, arbres, listes chaînées.
    :::
+

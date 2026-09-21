@@ -74,6 +74,10 @@ Les deux restreignent les valeurs. Les unions s’intègrent mieux au reste du s
 
 1. Réécris un string enum Status en literal union + objet `as const`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Status = "idle" | "loading" | "success";
@@ -87,8 +91,14 @@ Les deux restreignent les valeurs. Les unions s’intègrent mieux au reste du s
 
 ## Questions d'entretien
 
+
 1. Enum ou literal union : que choisis-tu pour un ensemble de statuts string ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Souvent une literal union (éventuellement avec un objet `as const` pour les constantes). C’est plus léger, mieux tree-shakeable et aligné avec le reste du système de types. Les enums restent valides si on a besoin d’un objet runtime ou de reverse mapping.
    :::
+

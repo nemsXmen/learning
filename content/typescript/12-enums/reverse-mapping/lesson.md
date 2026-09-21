@@ -66,6 +66,10 @@ L’objet runtime contient les deux directions. Les string enums n’ont pas ce 
 
 1. Affiche le nom d’un membre à partir de sa valeur numérique.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    enum Status { Idle, Active }
@@ -75,8 +79,14 @@ L’objet runtime contient les deux directions. Les string enums n’ont pas ce 
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce que le reverse mapping d’un enum ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Pour les numeric enums, l’objet runtime mappe aussi les valeurs numériques vers les noms de membres (`Direction[0] === "Up"`). Les string enums n’ont pas ce reverse mapping.
    :::
+

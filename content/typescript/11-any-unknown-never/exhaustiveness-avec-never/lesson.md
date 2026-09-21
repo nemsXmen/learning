@@ -68,6 +68,10 @@ Dans le default, si tout a été couvert, `e` est `never`. Sinon TypeScript erro
 
 1. Ajoute assertNever à un switch sur une literal union à 3 valeurs.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function f(x: "a" | "b" | "c") {
@@ -83,8 +87,14 @@ Dans le default, si tout a été couvert, `e` est `never`. Sinon TypeScript erro
 
 ## Questions d'entretien
 
+
 1. Comment never aide-t-il à maintenir l’exhaustivité quand une union évolue ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En forçant le type restant dans le default à être never. Tout nouveau membre non géré rend ce type non-never et provoque une erreur de compilation, signalant qu’il faut mettre à jour le handler.
    :::
+

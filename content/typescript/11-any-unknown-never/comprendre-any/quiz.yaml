@@ -1,57 +1,65 @@
-- id: typescript-11-comprendre-any-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que permet le type `any` ?
-  options:
-    - Une sécurité maximale
-    - De désactiver le contrôle de types pour une valeur
-    - Uniquement les strings
-    - Uniquement les nombres
-  answer: [1]
-  explanation: >
-    any court-circuite le type-checker.
-  skills: [any-unknown-never]
-
-- id: typescript-11-comprendre-any-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut appeler n’importe quelle méthode sur une valeur typée any sans erreur de compilation.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est le problème.
-  skills: [any-unknown-never]
-
-- id: typescript-11-comprendre-any-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    L’option `noImplicitAny` sert à :
-  options:
-    - Autoriser plus d’any
-    - Refuser les any implicites (paramètres non annotés, etc.)
-    - Convertir any en unknown
-    - Désactiver strict
-  answer: [1]
-  explanation: >
-    Elle force l’annotation ou un contexte suffisant.
-  skills: [any-unknown-never]
-
-- id: typescript-11-comprendre-any-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `any` est-il assignable à tous les types ?
-  options:
-    - Non
-    - Oui
-    - Uniquement aux objets
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    any est compatible dans les deux sens.
-  skills: [any-unknown-never]
+id: comprendre-any-quiz
+kind: QUIZ
+questions:
+  - id: typescript-11-comprendre-any-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que permet le type `any` ?
+    options:
+      - Une sécurité maximale
+      - De désactiver le contrôle de types pour une valeur
+      - Uniquement les strings
+      - Uniquement les nombres
+    answer:
+      - 1
+    explanation: |
+      any court-circuite le type-checker.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-comprendre-any-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      On peut appeler n’importe quelle méthode sur une valeur typée any sans
+      erreur de compilation.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est le problème.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-comprendre-any-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’option `noImplicitAny` sert à :
+    options:
+      - Autoriser plus d’any
+      - Refuser les any implicites (paramètres non annotés, etc.)
+      - Convertir any en unknown
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Elle force l’annotation ou un contexte suffisant.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-comprendre-any-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `any` est-il assignable à tous les types ?
+    options:
+      - Non
+      - Oui
+      - Uniquement aux objets
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      any est compatible dans les deux sens.
+    skills:
+      - any-unknown-never

@@ -67,6 +67,10 @@ TypeScript exclut les types qui ne peuvent être que falsy (ou les parties falsy
 
 1. Montre un cas où le truthiness narrowing est problématique avec un `number | undefined`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function f(n: number | undefined) {
@@ -79,8 +83,14 @@ TypeScript exclut les types qui ne peuvent être que falsy (ou les parties falsy
 
 ## Questions d'entretien
 
+
 1. Quel est le risque du truthiness narrowing avec des numbers ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `0` est falsy : un test `if (n)` exclut `0` en plus de `undefined`/`null`, ce qui peut être incorrect si `0` est une valeur métier valide.
    :::
+

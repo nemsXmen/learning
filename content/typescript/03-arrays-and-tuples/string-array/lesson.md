@@ -65,6 +65,10 @@ Toutes les méthodes d’Array sont typées. `filter`, `map`, `find`, `includes`
 
 1. Écris une fonction qui prend un `string[]` et retourne le nombre d’éléments non vides.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function countNonEmpty(items: string[]): number {
@@ -75,8 +79,14 @@ Toutes les méthodes d’Array sont typées. `filter`, `map`, `find`, `includes`
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre `string[]` et `String[]` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `string[]` est un tableau du primitif string. `String[]` serait un tableau d’objets String (wrapper), ce qu’on évite presque toujours.
    :::
+

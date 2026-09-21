@@ -1,57 +1,66 @@
-- id: typescript-05-arrow-functions-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle est la syntaxe de base d’une arrow function ?
-  options:
-    - function (a) => a
-    - (a) => a
-    - a -> a
-    - => (a) a
-  answer: [1]
-  explanation: >
-    La forme standard est (params) => expression ou bloc.
-  skills: [functions]
-
-- id: typescript-05-arrow-functions-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Les arrow functions ont leur propre `this`.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Elles capturent le this lexical.
-  skills: [functions]
-
-- id: typescript-05-arrow-functions-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pourquoi les arrow functions sont-elles pratiques dans les callbacks (map, filter…) ?
-  options:
-    - Parce qu’elles sont plus lentes
-    - Grâce au contextual typing et à leur concision
-    - Parce qu’elles désactivent le typage
-    - Uniquement pour les tableaux de strings
-  answer: [1]
-  explanation: >
-    TypeScript infère souvent les types des paramètres grâce au contexte, et la syntaxe est courte.
-  skills: [functions]
-
-- id: typescript-05-arrow-functions-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Peut-on omettre le `return` et les accolades pour une expression simple ?
-  options:
-    - Non
-    - Oui (return implicite)
-    - Uniquement avec async
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Oui : (a, b) => a + b.
-  skills: [functions]
+id: arrow-functions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-05-arrow-functions-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quelle est la syntaxe de base d’une arrow function ?
+    options:
+      - function (a) => a
+      - (a) => a
+      - a -> a
+      - => (a) a
+    answer:
+      - 1
+    explanation: |
+      La forme standard est (params) => expression ou bloc.
+    skills:
+      - functions
+  - id: typescript-05-arrow-functions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les arrow functions ont leur propre `this`.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Elles capturent le this lexical.
+    skills:
+      - functions
+  - id: typescript-05-arrow-functions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi les arrow functions sont-elles pratiques dans les callbacks (map,
+      filter…) ?
+    options:
+      - Parce qu’elles sont plus lentes
+      - Grâce au contextual typing et à leur concision
+      - Parce qu’elles désactivent le typage
+      - Uniquement pour les tableaux de strings
+    answer:
+      - 1
+    explanation: >
+      TypeScript infère souvent les types des paramètres grâce au contexte, et
+      la syntaxe est courte.
+    skills:
+      - functions
+  - id: typescript-05-arrow-functions-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Peut-on omettre le `return` et les accolades pour une expression simple ?
+    options:
+      - Non
+      - Oui (return implicite)
+      - Uniquement avec async
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      Oui : (a, b) => a + b.
+    skills:
+      - functions

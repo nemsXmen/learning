@@ -65,6 +65,10 @@ function first<T>(items: Array<T>): T | undefined {
 
 1. Réécris `let ids: number[] = []` avec la forme générique.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    let ids: Array<number> = [];
@@ -73,8 +77,14 @@ function first<T>(items: Array<T>): T | undefined {
 
 ## Questions d'entretien
 
+
 1. Y a-t-il une différence de comportement entre `string[]` et `Array<string>` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. Ce sont deux syntaxes pour le même type. `T[]` est du sucre syntaxique pour `Array<T>`.
    :::
+

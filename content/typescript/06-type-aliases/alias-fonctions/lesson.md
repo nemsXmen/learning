@@ -69,6 +69,10 @@ Le type alias encapsule la syntaxe `(params) => ReturnType` sous un nom réutili
 
 1. Crée un type `Mapper<T, U>` pour `(value: T) => U`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Mapper<T, U> = (value: T) => U;
@@ -77,8 +81,14 @@ Le type alias encapsule la syntaxe `(params) => ReturnType` sous un nom réutili
 
 ## Questions d'entretien
 
+
 1. Pourquoi créer un type alias pour une signature de fonction ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Pour documenter l’intention, réutiliser la signature à plusieurs endroits, et éviter les annotations inline répétitives et moins lisibles.
    :::
+

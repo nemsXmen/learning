@@ -1,57 +1,66 @@
-- id: typescript-09-state-machines-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pour modéliser les états d’une machine, on utilise souvent :
-  options:
-    - Un seul objet avec beaucoup d’optionnels
-    - Une discriminated union de littéraux
-    - any
-    - Uniquement des classes
-  answer: [1]
-  explanation: >
-    Chaque état a sa propre forme.
-  skills: [literal-types]
-
-- id: typescript-09-state-machines-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Les events d’une state machine peuvent aussi être modélisés avec une discriminated union.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est un pattern courant.
-  skills: [literal-types]
-
-- id: typescript-09-state-machines-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel avantage y a-t-il à typer les états ainsi ?
-  options:
-    - Aucun
-    - Les états invalides et beaucoup de transitions incorrectes deviennent impossibles à représenter
-    - Le code est plus lent
-    - On perd le narrowing
-  answer: [1]
-  explanation: >
-    Le type guide les transitions possibles.
-  skills: [literal-types]
-
-- id: typescript-09-state-machines-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    L’exhaustiveness checking dans une fonction de transition sert à :
-  options:
-    - Rien
-    - Garantir que tous les états (ou events) sont traités
-    - Accélérer le runtime
-    - Valider les données externes
-  answer: [1]
-  explanation: >
-    On détecte les cas oubliés à la compilation.
-  skills: [literal-types]
+id: state-machines-quiz
+kind: QUIZ
+questions:
+  - id: typescript-09-state-machines-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour modéliser les états d’une machine, on utilise souvent :
+    options:
+      - Un seul objet avec beaucoup d’optionnels
+      - Une discriminated union de littéraux
+      - any
+      - Uniquement des classes
+    answer:
+      - 1
+    explanation: |
+      Chaque état a sa propre forme.
+    skills:
+      - literal-types
+  - id: typescript-09-state-machines-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Les events d’une state machine peuvent aussi être modélisés avec une
+      discriminated union.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est un pattern courant.
+    skills:
+      - literal-types
+  - id: typescript-09-state-machines-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel avantage y a-t-il à typer les états ainsi ?
+    options:
+      - Aucun
+      - Les états invalides et beaucoup de transitions incorrectes deviennent
+        impossibles à représenter
+      - Le code est plus lent
+      - On perd le narrowing
+    answer:
+      - 1
+    explanation: |
+      Le type guide les transitions possibles.
+    skills:
+      - literal-types
+  - id: typescript-09-state-machines-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’exhaustiveness checking dans une fonction de transition sert à :
+    options:
+      - Rien
+      - Garantir que tous les états (ou events) sont traités
+      - Accélérer le runtime
+      - Valider les données externes
+    answer:
+      - 1
+    explanation: |
+      On détecte les cas oubliés à la compilation.
+    skills:
+      - literal-types

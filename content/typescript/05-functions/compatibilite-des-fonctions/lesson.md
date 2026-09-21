@@ -74,14 +74,24 @@ TypeScript vérifie la compatibilité paramètre par paramètre et sur le retour
 
 1. Explique pourquoi `const f: (x: string) => void = (x: string | number) => {}` est valide.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Le paramètre de la source (`string | number`) est plus large que `string`. En contravariance, c’est acceptable : la fonction peut gérer tout ce que l’appelant lui passera.
    :::
 
 ## Questions d'entretien
 
+
 1. Que signifie la contravariance des paramètres de fonctions en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Une fonction source est assignable à un type cible si ses paramètres sont plus larges (ou égaux) que ceux de la cible. Ainsi elle peut accepter tout argument que l’appelant pourrait fournir. C’est le comportement activé par `strictFunctionTypes`.
    :::
+

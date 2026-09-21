@@ -1,57 +1,64 @@
-- id: typescript-12-enum-vs-union-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Une alternative moderne aux string enums est :
-  options:
-    - any
-    - Les literal unions (éventuellement + as const)
-    - Les classes uniquement
-    - Les interfaces uniquement
-  answer: [1]
-  explanation: >
-    Les literal unions couvrent le même besoin.
-  skills: [enums]
-
-- id: typescript-12-enum-vs-union-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Les literal unions n’imposent pas d’objet runtime.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, contrairement aux enums classiques.
-  skills: [enums]
-
-- id: typescript-12-enum-vs-union-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel avantage ont souvent les literal unions sur les enums ?
-  options:
-    - Reverse mapping automatique
-    - Meilleur tree-shaking et intégration au système de types
-    - Syntaxe plus courte uniquement
-    - Support de l’héritage
-  answer: [1]
-  explanation: >
-    Moins de code généré, plus de flexibilité type-level.
-  skills: [enums]
-
-- id: typescript-12-enum-vs-union-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quand un enum reste-t-il pertinent ?
-  options:
-    - Jamais
-    - Besoin d’objet runtime ou de reverse mapping (numeric)
-    - Uniquement pour les strings
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Ces besoins justifient encore un enum.
-  skills: [enums]
+id: enum-vs-union-quiz
+kind: QUIZ
+questions:
+  - id: typescript-12-enum-vs-union-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une alternative moderne aux string enums est :
+    options:
+      - any
+      - Les literal unions (éventuellement + as const)
+      - Les classes uniquement
+      - Les interfaces uniquement
+    answer:
+      - 1
+    explanation: |
+      Les literal unions couvrent le même besoin.
+    skills:
+      - enums
+  - id: typescript-12-enum-vs-union-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les literal unions n’imposent pas d’objet runtime.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, contrairement aux enums classiques.
+    skills:
+      - enums
+  - id: typescript-12-enum-vs-union-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel avantage ont souvent les literal unions sur les enums ?
+    options:
+      - Reverse mapping automatique
+      - Meilleur tree-shaking et intégration au système de types
+      - Syntaxe plus courte uniquement
+      - Support de l’héritage
+    answer:
+      - 1
+    explanation: |
+      Moins de code généré, plus de flexibilité type-level.
+    skills:
+      - enums
+  - id: typescript-12-enum-vs-union-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quand un enum reste-t-il pertinent ?
+    options:
+      - Jamais
+      - Besoin d’objet runtime ou de reverse mapping (numeric)
+      - Uniquement pour les strings
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      Ces besoins justifient encore un enum.
+    skills:
+      - enums

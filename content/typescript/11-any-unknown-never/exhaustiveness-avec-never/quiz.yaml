@@ -1,57 +1,65 @@
-- id: typescript-11-exhaustiveness-avec-never-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Le pattern assertNever dans un default sert à :
-  options:
-    - Ignorer les erreurs
-    - Garantir l’exhaustivité d’une union
-    - Convertir en any
-    - Accélérer le runtime
-  answer: [1]
-  explanation: >
-    Il détecte les cas non gérés.
-  skills: [any-unknown-never]
-
-- id: typescript-11-exhaustiveness-avec-never-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Si un nouveau membre est ajouté à l’union sans case, assertNever provoque une erreur de compilation.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [any-unknown-never]
-
-- id: typescript-11-exhaustiveness-avec-never-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pourquoi typer le paramètre d’assertNever en never (et non any) ?
-  options:
-    - Pour la performance
-    - Pour conserver la détection d’exhaustivité
-    - any est interdit
-    - never est plus court
-  answer: [1]
-  explanation: >
-    any masquerait les oublis.
-  skills: [any-unknown-never]
-
-- id: typescript-11-exhaustiveness-avec-never-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Ce pattern est surtout utile pour :
-  options:
-    - Les variables locales simples
-    - Les unions discriminées et literal unions qui évoluent
-    - Les imports
-    - Les commentaires
-  answer: [1]
-  explanation: >
-    C’est là qu’il apporte le plus de valeur.
-  skills: [any-unknown-never]
+id: exhaustiveness-avec-never-quiz
+kind: QUIZ
+questions:
+  - id: typescript-11-exhaustiveness-avec-never-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le pattern assertNever dans un default sert à :
+    options:
+      - Ignorer les erreurs
+      - Garantir l’exhaustivité d’une union
+      - Convertir en any
+      - Accélérer le runtime
+    answer:
+      - 1
+    explanation: |
+      Il détecte les cas non gérés.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-exhaustiveness-avec-never-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Si un nouveau membre est ajouté à l’union sans case, assertNever provoque
+      une erreur de compilation.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-exhaustiveness-avec-never-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi typer le paramètre d’assertNever en never (et non any) ?
+    options:
+      - Pour la performance
+      - Pour conserver la détection d’exhaustivité
+      - any est interdit
+      - never est plus court
+    answer:
+      - 1
+    explanation: |
+      any masquerait les oublis.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-exhaustiveness-avec-never-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Ce pattern est surtout utile pour :
+    options:
+      - Les variables locales simples
+      - Les unions discriminées et literal unions qui évoluent
+      - Les imports
+      - Les commentaires
+    answer:
+      - 1
+    explanation: |
+      C’est là qu’il apporte le plus de valeur.
+    skills:
+      - any-unknown-never

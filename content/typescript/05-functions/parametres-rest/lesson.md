@@ -64,6 +64,10 @@ function log(message: string, ...details: unknown[]) {
 
 1. Écris une fonction `max` qui prend au moins un number et un rest de numbers, et retourne le maximum.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function max(first: number, ...rest: number[]): number {
@@ -74,8 +78,14 @@ function log(message: string, ...details: unknown[]) {
 
 ## Questions d'entretien
 
+
 1. Où doit se trouver le paramètre rest dans une signature de fonction ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Toujours en dernière position. TypeScript (et JavaScript) n’autorise qu’un seul rest parameter et il doit être à la fin.
    :::
+

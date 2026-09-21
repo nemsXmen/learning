@@ -84,14 +84,24 @@ La discipline collective + les options strictes + le linting maintiennent la qua
 
 1. Liste 3 actions concrètes pour réduire les `any` dans un projet existant.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Activer noImplicitAny / strict ; ajouter la règle ESLint no-explicit-any ; remplacer les retours JSON par unknown + validation.
    :::
 
 ## Questions d'entretien
 
+
 1. Quelle stratégie recommandes-tu pour éviter les `any` dans un projet TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Activer le mode strict (notamment noImplicitAny), interdire any explicite via ESLint, utiliser unknown pour les données inconnues, valider les frontières runtime, et isoler/documenter les rares exceptions restantes.
    :::
+

@@ -68,6 +68,10 @@ TypeScript infère souvent `true` ou `false` avec `as const` ou sur des constant
 
 1. Déclare un type Result avec un discriminant booléen `success`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Result =
@@ -78,8 +82,14 @@ TypeScript infère souvent `true` ou `false` avec `as const` ou sur des constant
 
 ## Questions d'entretien
 
+
 1. Pourquoi utilise-t-on parfois `true` ou `false` comme type plutôt que `boolean` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Pour restreindre à une seule valeur (ex. une fonction qui n’accepte que `true`) ou comme discriminant dans une union (`ok: true` vs `ok: false`), ce qui permet un narrowing très précis.
    :::
+

@@ -59,6 +59,10 @@ Chaque membre de l’union est un literal type. TypeScript refuse les valeurs ho
 
 1. Crée un type `ButtonVariant` : "primary" | "secondary" | "danger".
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type ButtonVariant = "primary" | "secondary" | "danger";
@@ -67,8 +71,14 @@ Chaque membre de l’union est un literal type. TypeScript refuse les valeurs ho
 
 ## Questions d'entretien
 
+
 1. Pourquoi préférer une literal union à un `string` pour un statut ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Parce qu’elle documente les valeurs autorisées, active l’autocomplétion, détecte les fautes de frappe et permet un narrowing / une exhaustivité fiables.
    :::
+

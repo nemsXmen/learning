@@ -83,6 +83,10 @@ On combine literal unions pour les champs fermés et `as const` pour figer les v
 
 1. Type une config avec `theme: "light" | "dark"` et `locale: "fr" | "en"`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type AppConfig = {
@@ -94,8 +98,14 @@ On combine literal unions pour les champs fermés et `as const` pour figer les v
 
 ## Questions d'entretien
 
+
 1. Comment types-tu une configuration d’application en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En utilisant des literal unions pour les champs à ensemble fermé (env, logLevel, theme…), éventuellement `as const` pour les valeurs par défaut, et un type/interface nommé pour le contrat global de la config.
    :::
+

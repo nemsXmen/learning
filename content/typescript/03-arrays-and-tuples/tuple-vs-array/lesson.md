@@ -33,7 +33,7 @@ Tuple et Array se ressemblent à runtime mais n’ont pas le même rôle au nive
 | Accès                | Index numérique            | Index + types positionnels     |
 | Cas d’usage          | Listes                    | Coordonnées, retours multiples, paires |
 
-## Exemple de choix
+## Exemple
 
 ```ts
 // Liste de scores → Array
@@ -66,20 +66,51 @@ function divide(a: number, b: number): [number, number] {
 ## Exercices
 
 1. Pour chacune des situations, choisis Array ou Tuple :
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    - Liste d’utilisateurs
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    - Paire latitude/longitude
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    - Résultat + reste d’une division
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
+
    - Liste d’utilisateurs → Array
+
+
    - Latitude/longitude → Tuple (ou mieux un objet)
+
+
    - Résultat + reste → Tuple
+
    :::
 
 ## Questions d'entretien
 
+
 1. Quand préfères-tu un tuple à un tableau classique ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand la longueur est fixe (ou semi-fixe) et que chaque position a un rôle/type distinct : coordonnées, retours multiples, paires ordonnées. Pour les listes homogènes de longueur variable, on reste sur un Array.
    :::
+

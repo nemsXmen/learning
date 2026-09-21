@@ -1,57 +1,65 @@
-- id: typescript-10-assertion-functions-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Une assertion function typique :
-  options:
-    - Retourne toujours true
-    - Throw si la condition est fausse et narrow ensuite
-    - Convertit en any
-    - Crée une classe
-  answer: [1]
-  explanation: >
-    Elle valide et throw, ce qui permet le narrowing.
-  skills: [type-narrowing]
-
-- id: typescript-10-assertion-functions-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Le type de retour peut être `asserts condition` ou `asserts arg is Type`.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [type-narrowing]
-
-- id: typescript-10-assertion-functions-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Après `assert(value !== null)`, que sait TypeScript ?
-  options:
-    - Rien
-    - Que value n’est plus null dans la suite
-    - Que value est any
-    - Que value est never
-  answer: [1]
-  explanation: >
-    L’assertion a narrow le type.
-  skills: [type-narrowing]
-
-- id: typescript-10-assertion-functions-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quelle est la différence clé avec un type guard classique ?
-  options:
-    - Aucune
-    - L’assertion throw au lieu de retourner false ; le narrowing s’applique à la suite du code
-    - L’assertion est plus lente
-    - L’assertion n’existe qu’en mode non-strict
-  answer: [1]
-  explanation: >
-    Throw vs boolean + portée du narrowing.
-  skills: [type-narrowing]
+id: assertion-functions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-assertion-functions-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une assertion function typique :
+    options:
+      - Retourne toujours true
+      - Throw si la condition est fausse et narrow ensuite
+      - Convertit en any
+      - Crée une classe
+    answer:
+      - 1
+    explanation: |
+      Elle valide et throw, ce qui permet le narrowing.
+    skills:
+      - type-narrowing
+  - id: typescript-10-assertion-functions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le type de retour peut être `asserts condition` ou `asserts arg is Type`.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-narrowing
+  - id: typescript-10-assertion-functions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Après `assert(value !== null)`, que sait TypeScript ?
+    options:
+      - Rien
+      - Que value n’est plus null dans la suite
+      - Que value est any
+      - Que value est never
+    answer:
+      - 1
+    explanation: |
+      L’assertion a narrow le type.
+    skills:
+      - type-narrowing
+  - id: typescript-10-assertion-functions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quelle est la différence clé avec un type guard classique ?
+    options:
+      - Aucune
+      - L’assertion throw au lieu de retourner false ; le narrowing s’applique à
+        la suite du code
+      - L’assertion est plus lente
+      - L’assertion n’existe qu’en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      Throw vs boolean + portée du narrowing.
+    skills:
+      - type-narrowing

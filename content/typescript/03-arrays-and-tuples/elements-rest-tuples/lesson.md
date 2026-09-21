@@ -63,6 +63,10 @@ function logPair(pair: [string, ...number[]]) {
 
 1. Déclare un tuple qui commence par un string suivi d’un nombre quelconque de numbers.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type HeadAndNumbers = [string, ...number[]];
@@ -72,8 +76,14 @@ function logPair(pair: [string, ...number[]]) {
 
 ## Questions d'entretien
 
+
 1. Où doit se trouver l’élément rest dans un tuple ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Toujours en dernière position. TypeScript n’autorise pas de rest au milieu ou au début d’un tuple (sauf cas très avancés avec des variadic tuples).
    :::
+

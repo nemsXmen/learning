@@ -56,7 +56,7 @@ function setStatus(s: Status) {}
 setStatus(Status.Loading); // toujours valide
 ```
 
-## Exemple – étape intermédiaire
+## Exemple
 
 On peut garder l’enum le temps de migrer les call sites, puis basculer le type.
 
@@ -82,6 +82,10 @@ On peut garder l’enum le temps de migrer les call sites, puis basculer le type
 
 1. Migre un string enum `Role` (Admin, User) vers union + const object.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Role = "admin" | "user";
@@ -91,8 +95,14 @@ On peut garder l’enum le temps de migrer les call sites, puis basculer le type
 
 ## Questions d'entretien
 
+
 1. Comment migres-tu un string enum vers une literal union sans tout casser ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En introduisant le type union et un objet `as const` homonyme pour les constantes, en migrant progressivement les annotations de type, puis en supprimant l’enum une fois tous les call sites à jour.
    :::
+

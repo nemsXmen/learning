@@ -71,6 +71,10 @@ type Status = "loading" | "success" | "error";
 
 1. Crée un type `Result` qui peut être `string` ou `Error`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Result = string | Error;
@@ -79,8 +83,14 @@ type Status = "loading" | "success" | "error";
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce qu’un type union en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Un type qui représente une valeur pouvant être l’un ou l’autre de plusieurs types, écrit avec `|`. Seules les opérations communes sont autorisées tant qu’on n’a pas fait de narrowing.
    :::
+

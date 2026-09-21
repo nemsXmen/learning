@@ -1,57 +1,64 @@
-- id: typescript-10-narrowing-typeof-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `typeof` est surtout utile pour narrow :
-  options:
-    - Les classes uniquement
-    - Les types primitifs
-    - Les tableaux uniquement
-    - Les enums uniquement
-  answer: [1]
-  explanation: >
-    typeof fonctionne bien sur les primitifs.
-  skills: [type-narrowing]
-
-- id: typescript-10-narrowing-typeof-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Après `if (typeof x === "string")`, x est de type string dans le bloc.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [type-narrowing]
-
-- id: typescript-10-narrowing-typeof-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que retourne `typeof null` en JavaScript/TypeScript ?
-  options:
-    - "null"
-    - "object"
-    - "undefined"
-    - "string"
-  answer: [1]
-  explanation: >
-    C’est un piège historique de JavaScript.
-  skills: [type-narrowing]
-
-- id: typescript-10-narrowing-typeof-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    `typeof` est-il adapté pour distinguer deux interfaces d’objets ?
-  options:
-    - Oui parfaitement
-    - Non, préférer in, discriminant ou type guards
-    - Uniquement en mode strict
-    - Uniquement avec des classes
-  answer: [1]
-  explanation: >
-    typeof ne distingue pas les formes d’objets.
-  skills: [type-narrowing]
+id: narrowing-typeof-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-narrowing-typeof-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `typeof` est surtout utile pour narrow :
+    options:
+      - Les classes uniquement
+      - Les types primitifs
+      - Les tableaux uniquement
+      - Les enums uniquement
+    answer:
+      - 1
+    explanation: |
+      typeof fonctionne bien sur les primitifs.
+    skills:
+      - type-narrowing
+  - id: typescript-10-narrowing-typeof-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Après `if (typeof x === "string")`, x est de type string dans le bloc.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-narrowing
+  - id: typescript-10-narrowing-typeof-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que retourne `typeof null` en JavaScript/TypeScript ?
+    options:
+      - "null"
+      - object
+      - undefined
+      - string
+    answer:
+      - 1
+    explanation: |
+      C’est un piège historique de JavaScript.
+    skills:
+      - type-narrowing
+  - id: typescript-10-narrowing-typeof-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `typeof` est-il adapté pour distinguer deux interfaces d’objets ?
+    options:
+      - Oui parfaitement
+      - Non, préférer in, discriminant ou type guards
+      - Uniquement en mode strict
+      - Uniquement avec des classes
+    answer:
+      - 1
+    explanation: |
+      typeof ne distingue pas les formes d’objets.
+    skills:
+      - type-narrowing

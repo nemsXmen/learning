@@ -80,6 +80,10 @@ C’est particulièrement utile pour les données externes (JSON.parse, réponse
 
 1. Écris une fonction qui accepte `unknown` et retourne la longueur si c’est une string, sinon 0.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function getLength(value: unknown): number {
@@ -91,8 +95,14 @@ C’est particulièrement utile pour les données externes (JSON.parse, réponse
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre `any` et `unknown` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `any` désactive le type-checking. `unknown` force à faire un narrowing avant d’utiliser la valeur. `unknown` est donc beaucoup plus sûr et devrait être préféré dès qu’on ne connaît pas le type exact d’une donnée.
    :::
+

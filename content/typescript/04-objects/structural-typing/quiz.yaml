@@ -1,57 +1,68 @@
-- id: typescript-04-structural-typing-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    TypeScript utilise principalement quel genre de typage ?
-  options:
-    - Nominal
-    - Structurel
-    - Dynamique uniquement
-    - Aucun
-  answer: [1]
-  explanation: >
-    TypeScript est structurellement typé.
-  skills: [objects]
-
-- id: typescript-04-structural-typing-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Un objet avec plus de propriétés que demandé peut être assigné à un type qui n’en exige que certaines.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, grâce au typage structurel (sous réserve du excess property checking sur les littéraux).
-  skills: [objects]
-
-- id: typescript-04-structural-typing-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quelle est la différence principale avec un typage nominal (Java, C#) ?
-  options:
-    - Aucune
-    - En nominal le nom du type compte ; en structurel c’est la forme qui compte
-    - TypeScript est plus lent
-    - Le typage structurel interdit les interfaces
-  answer: [1]
-  explanation: >
-    C’est la distinction fondamentale.
-  skills: [objects]
-
-- id: typescript-04-structural-typing-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pourquoi le typage structurel est-il bien adapté à JavaScript ?
-  options:
-    - Parce que JavaScript est nominal
-    - Parce que JavaScript manipule des objets par leur forme, sans classes nominales obligatoires
-    - Parce qu’il force les classes
-    - Parce qu’il désactive les types
-  answer: [1]
-  explanation: >
-    JavaScript est déjà orienté « duck typing » ; TypeScript formalise cela.
-  skills: [objects]
+id: structural-typing-quiz
+kind: QUIZ
+questions:
+  - id: typescript-04-structural-typing-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      TypeScript utilise principalement quel genre de typage ?
+    options:
+      - Nominal
+      - Structurel
+      - Dynamique uniquement
+      - Aucun
+    answer:
+      - 1
+    explanation: |
+      TypeScript est structurellement typé.
+    skills:
+      - objects
+  - id: typescript-04-structural-typing-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Un objet avec plus de propriétés que demandé peut être assigné à un type
+      qui n’en exige que certaines.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: >
+      Oui, grâce au typage structurel (sous réserve du excess property checking
+      sur les littéraux).
+    skills:
+      - objects
+  - id: typescript-04-structural-typing-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quelle est la différence principale avec un typage nominal (Java, C#) ?
+    options:
+      - Aucune
+      - En nominal le nom du type compte ; en structurel c’est la forme qui
+        compte
+      - TypeScript est plus lent
+      - Le typage structurel interdit les interfaces
+    answer:
+      - 1
+    explanation: |
+      C’est la distinction fondamentale.
+    skills:
+      - objects
+  - id: typescript-04-structural-typing-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi le typage structurel est-il bien adapté à JavaScript ?
+    options:
+      - Parce que JavaScript est nominal
+      - Parce que JavaScript manipule des objets par leur forme, sans classes
+        nominales obligatoires
+      - Parce qu’il force les classes
+      - Parce qu’il désactive les types
+    answer:
+      - 1
+    explanation: |
+      JavaScript est déjà orienté « duck typing » ; TypeScript formalise cela.
+    skills:
+      - objects

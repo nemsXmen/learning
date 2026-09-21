@@ -75,6 +75,10 @@ const result = setTitle("Mon app"); // result est de type void
 
 1. Annote correctement une fonction qui affiche un message et ne retourne rien.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function print(msg: string): void {
@@ -85,8 +89,14 @@ const result = setTitle("Mon app"); // result est de type void
 
 ## Questions d'entretien
 
+
 1. Quand utilises-tu `void` comme type de retour ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand la fonction effectue une action (effet de bord) et que l’appelant n’est pas censé utiliser de valeur de retour. Exemples : loggers, setters, gestionnaires d’événements.
    :::
+

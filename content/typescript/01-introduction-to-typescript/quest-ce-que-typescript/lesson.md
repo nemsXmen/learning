@@ -5,7 +5,7 @@ slug: quest-ce-que-typescript
 technology: typescript
 level: beginner
 module: 01-introduction-to-typescript
-order: sn1
+order: 1
 estimatedMinutes: 15
 difficulty: 1
 xp: 40
@@ -116,8 +116,10 @@ Le type-checking est **statique** : il se produit *avant* l’exécution. TypeSc
    TypeScript désigne à la fois :
    - le **langage** (la syntaxe et le système de types que tu utilises dans tes fichiers `.ts`)
    - le **compilateur** (`tsc`) qui vérifie les types et produit du JavaScript.
+
    Le langage est ce que tu écris ; le compilateur est l’outil qui le traite.
    :::
+
 
 2. Pourquoi dit-on que « tout JavaScript valide est du TypeScript valide » ?
 

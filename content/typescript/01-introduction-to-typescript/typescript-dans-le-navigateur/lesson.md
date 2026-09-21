@@ -77,14 +77,24 @@ Les outils de build utilisent soit le compilateur TypeScript, soit des transpile
 
 1. Pourquoi ne peut-on pas faire `<script src="app.ts">` dans une page HTML classique ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Parce que le navigateur ne parse que le JavaScript. L’extension `.ts` et les annotations de types ne sont pas supportées nativement.
    :::
 
 ## Questions d'entretien
 
+
 1. Comment fait-on pour utiliser TypeScript dans une application frontend destinée au navigateur ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    On utilise un outil de build (Vite, webpack, etc.) qui transpile le TypeScript en JavaScript pendant le développement et produit un bundle optimisé pour la production. Le type-checking est assuré par le compilateur TypeScript ou le language service de l’éditeur.
    :::
+

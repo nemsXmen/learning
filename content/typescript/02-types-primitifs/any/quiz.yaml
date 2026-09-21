@@ -1,57 +1,65 @@
-- id: typescript-02-any-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que fait le type `any` ?
-  options:
-    - Il force une valeur à être un nombre
-    - Il désactive le type-checking pour cette valeur
-    - Il représente l’absence de valeur
-    - Il est équivalent à unknown
-  answer: [1]
-  explanation: >
-    any dit à TypeScript de ne plus vérifier cette valeur.
-  skills: [primitive-types]
-
-- id: typescript-02-any-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Utiliser `any` est généralement considéré comme une bonne pratique.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. any devrait être évité au profit de types plus précis ou de unknown.
-  skills: [primitive-types]
-
-- id: typescript-02-any-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quelle alternative plus sûre préfère-t-on souvent à `any` ?
-  options:
-    - Object
-    - unknown
-    - never
-    - void
-  answer: [1]
-  explanation: >
-    unknown force à faire un narrowing avant d’utiliser la valeur.
-  skills: [primitive-types]
-
-- id: typescript-02-any-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il si on appelle une méthode inexistante sur une variable `any` ?
-  options:
-    - Erreur de compilation
-    - Aucune erreur de compilation (risque d’erreur runtime)
-    - Conversion automatique
-    - TypeScript remplace any par never
-  answer: [1]
-  explanation: >
-    any désactive les vérifications, donc pas d’erreur à la compilation.
-  skills: [primitive-types]
+id: any-quiz
+kind: QUIZ
+questions:
+  - id: typescript-02-any-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que fait le type `any` ?
+    options:
+      - Il force une valeur à être un nombre
+      - Il désactive le type-checking pour cette valeur
+      - Il représente l’absence de valeur
+      - Il est équivalent à unknown
+    answer:
+      - 1
+    explanation: |
+      any dit à TypeScript de ne plus vérifier cette valeur.
+    skills:
+      - primitive-types
+  - id: typescript-02-any-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Utiliser `any` est généralement considéré comme une bonne pratique.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. any devrait être évité au profit de types plus précis ou de unknown.
+    skills:
+      - primitive-types
+  - id: typescript-02-any-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quelle alternative plus sûre préfère-t-on souvent à `any` ?
+    options:
+      - Object
+      - unknown
+      - never
+      - void
+    answer:
+      - 1
+    explanation: |
+      unknown force à faire un narrowing avant d’utiliser la valeur.
+    skills:
+      - primitive-types
+  - id: typescript-02-any-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il si on appelle une méthode inexistante sur une variable
+      `any` ?
+    options:
+      - Erreur de compilation
+      - Aucune erreur de compilation (risque d’erreur runtime)
+      - Conversion automatique
+      - TypeScript remplace any par never
+    answer:
+      - 1
+    explanation: |
+      any désactive les vérifications, donc pas d’erreur à la compilation.
+    skills:
+      - primitive-types

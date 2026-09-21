@@ -65,6 +65,10 @@ type Origin = typeof origin; // readonly [0, 0]
 
 1. Déclare un tuple readonly RGB avec `as const`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const red = [255, 0, 0] as const;
@@ -74,8 +78,14 @@ type Origin = typeof origin; // readonly [0, 0]
 
 ## Questions d'entretien
 
+
 1. Comment obtient-on un tuple readonly avec des littéraux précis ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En utilisant `as const` sur un tableau littéral, ou en annotant explicitement `readonly [Type1, Type2, ...]`.
    :::
+

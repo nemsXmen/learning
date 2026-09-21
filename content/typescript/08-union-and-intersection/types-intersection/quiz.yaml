@@ -1,57 +1,65 @@
-- id: typescript-08-types-intersection-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que produit `type C = A & B` pour des objets ?
-  options:
-    - Une alternative entre A et B
-    - Un type qui combine les propriétés de A et B
-    - Un tableau
-    - never systématiquement
-  answer: [1]
-  explanation: >
-    L’intersection fusionne les formes.
-  skills: [unions-intersections]
-
-- id: typescript-08-types-intersection-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Le symbole de l’intersection est `&`.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [unions-intersections]
-
-- id: typescript-08-types-intersection-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il en cas de propriétés conflictuelles dans une intersection ?
-  options:
-    - Rien
-    - La propriété devient souvent never
-    - La dernière gagne toujours
-    - Erreur de syntaxe uniquement
-  answer: [1]
-  explanation: >
-    Des types incompatibles mènent à never pour cette propriété.
-  skills: [unions-intersections]
-
-- id: typescript-08-types-intersection-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    L’intersection est particulièrement utile pour :
-  options:
-    - Les alternatives exclusives
-    - Combiner des capacités / mixins de types
-    - Remplacer les classes
-    - Désactiver le typage
-  answer: [1]
-  explanation: >
-    On compose des formes pour obtenir un type plus riche.
-  skills: [unions-intersections]
+id: types-intersection-quiz
+kind: QUIZ
+questions:
+  - id: typescript-08-types-intersection-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que produit `type C = A & B` pour des objets ?
+    options:
+      - Une alternative entre A et B
+      - Un type qui combine les propriétés de A et B
+      - Un tableau
+      - never systématiquement
+    answer:
+      - 1
+    explanation: |
+      L’intersection fusionne les formes.
+    skills:
+      - unions-intersections
+  - id: typescript-08-types-intersection-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le symbole de l’intersection est `&`.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - unions-intersections
+  - id: typescript-08-types-intersection-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il en cas de propriétés conflictuelles dans une
+      intersection ?
+    options:
+      - Rien
+      - La propriété devient souvent never
+      - La dernière gagne toujours
+      - Erreur de syntaxe uniquement
+    answer:
+      - 1
+    explanation: |
+      Des types incompatibles mènent à never pour cette propriété.
+    skills:
+      - unions-intersections
+  - id: typescript-08-types-intersection-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’intersection est particulièrement utile pour :
+    options:
+      - Les alternatives exclusives
+      - Combiner des capacités / mixins de types
+      - Remplacer les classes
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      On compose des formes pour obtenir un type plus riche.
+    skills:
+      - unions-intersections

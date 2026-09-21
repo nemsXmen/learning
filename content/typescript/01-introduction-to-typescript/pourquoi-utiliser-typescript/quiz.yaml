@@ -1,61 +1,72 @@
-- id: typescript-01-pourquoi-utiliser-typescript-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quel est l’un des principaux avantages de TypeScript ?
-  options:
-    - Il accélère l’exécution du code JavaScript
-    - Il détecte de nombreuses erreurs de types avant l’exécution
-    - Il remplace complètement les tests unitaires
-    - Il permet d’exécuter TypeScript nativement dans le navigateur
-  answer: [1]
-  explanation: >
-    TypeScript brille par la détection d’erreurs de types à la compilation.
-    Il n’accélère pas le runtime et ne remplace pas les tests.
-  skills: [typescript-basics]
-
-- id: typescript-01-pourquoi-utiliser-typescript-q2
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pourquoi TypeScript seul ne suffit-il pas à sécuriser les données reçues d’une API ?
-  options:
-    - Parce que les types sont effacés à la compilation (type erasure)
-    - Parce que TypeScript ne supporte pas les objets JSON
-    - Parce que les APIs sont toujours en JavaScript
-    - Parce que le compilateur est trop lent
-  answer: [0]
-  explanation: >
-    Les annotations de types disparaissent complètement après compilation.
-    Le JSON reçu reste du JavaScript non typé. Une validation runtime est nécessaire.
-  skills: [typescript-basics]
-
-- id: typescript-01-pourquoi-utiliser-typescript-q3
-  type: true_false
-  difficulty: 1
-  question: >
-    TypeScript peut être adopté progressivement dans un projet JavaScript existant.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui. Grâce à `allowJs`, `checkJs` et la possibilité de renommer les fichiers
-    un par un, la migration peut se faire fichier par fichier.
-  skills: [typescript-basics]
-
-- id: typescript-01-pourquoi-utiliser-typescript-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans quel cas TypeScript apporte généralement le plus de valeur ?
-  options:
-    - Scripts one-shot de 20 lignes
-    - Projets de taille moyenne à grande, surtout en équipe
-    - Prototypes jetables d’une demi-journée
-    - Fichiers de configuration JSON
-  answer: [1]
-  explanation: >
-    Le ROI de TypeScript est maximal sur les projets qui vivent longtemps et
-    impliquent plusieurs développeurs, grâce au refactoring sûr et aux contrats de types.
-  skills: [typescript-basics]
+id: pourquoi-utiliser-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-pourquoi-utiliser-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quel est l’un des principaux avantages de TypeScript ?
+    options:
+      - Il accélère l’exécution du code JavaScript
+      - Il détecte de nombreuses erreurs de types avant l’exécution
+      - Il remplace complètement les tests unitaires
+      - Il permet d’exécuter TypeScript nativement dans le navigateur
+    answer:
+      - 1
+    explanation: >
+      TypeScript brille par la détection d’erreurs de types à la compilation. Il
+      n’accélère pas le runtime et ne remplace pas les tests.
+    skills:
+      - typescript-basics
+  - id: typescript-01-pourquoi-utiliser-typescript-q2
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi TypeScript seul ne suffit-il pas à sécuriser les données reçues
+      d’une API ?
+    options:
+      - Parce que les types sont effacés à la compilation (type erasure)
+      - Parce que TypeScript ne supporte pas les objets JSON
+      - Parce que les APIs sont toujours en JavaScript
+      - Parce que le compilateur est trop lent
+    answer:
+      - 0
+    explanation: >
+      Les annotations de types disparaissent complètement après compilation. Le
+      JSON reçu reste du JavaScript non typé. Une validation runtime est
+      nécessaire.
+    skills:
+      - typescript-basics
+  - id: typescript-01-pourquoi-utiliser-typescript-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      TypeScript peut être adopté progressivement dans un projet JavaScript
+      existant.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: >
+      Oui. Grâce à `allowJs`, `checkJs` et la possibilité de renommer les
+      fichiers un par un, la migration peut se faire fichier par fichier.
+    skills:
+      - typescript-basics
+  - id: typescript-01-pourquoi-utiliser-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans quel cas TypeScript apporte généralement le plus de valeur ?
+    options:
+      - Scripts one-shot de 20 lignes
+      - Projets de taille moyenne à grande, surtout en équipe
+      - Prototypes jetables d’une demi-journée
+      - Fichiers de configuration JSON
+    answer:
+      - 1
+    explanation: >
+      Le ROI de TypeScript est maximal sur les projets qui vivent longtemps et
+      impliquent plusieurs développeurs, grâce au refactoring sûr et aux
+      contrats de types.
+    skills:
+      - typescript-basics

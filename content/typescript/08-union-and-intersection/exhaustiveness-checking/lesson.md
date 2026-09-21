@@ -78,6 +78,10 @@ Dans le `default`, si tous les cas sont couverts, le type restant est `never`. P
 
 1. Ajoute un `default: assertNever(...)` à un switch sur une literal union.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function f(x: "a" | "b"): number {
@@ -92,8 +96,14 @@ Dans le `default`, si tous les cas sont couverts, le type restant est `never`. P
 
 ## Questions d'entretien
 
+
 1. Comment garantis-tu qu’un switch sur une union est exhaustif en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En utilisant un `default` qui appelle une fonction `assertNever(x: never)`. Si un cas n’est pas géré, le type n’est pas `never` et TypeScript émet une erreur.
    :::
+

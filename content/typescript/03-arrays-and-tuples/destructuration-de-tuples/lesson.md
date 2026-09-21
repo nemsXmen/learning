@@ -69,6 +69,10 @@ TypeScript propage le type de chaque position du tuple vers la variable correspo
 
 1. Destructure un tuple `[string, number, boolean]` en trois variables.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const data: [string, number, boolean] = ["ok", 200, true];
@@ -78,8 +82,14 @@ TypeScript propage le type de chaque position du tuple vers la variable correspo
 
 ## Questions d'entretien
 
+
 1. Les types sont-ils conservés lors de la destructuration d’un tuple ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Oui. Chaque variable reçoit le type de la position correspondante du tuple.
    :::
+

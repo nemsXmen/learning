@@ -85,6 +85,10 @@ Chaque appel à `Symbol()` produit une valeur unique. TypeScript type ces valeur
 
 1. Crée deux symboles avec la même description et vérifie qu’ils sont différents.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const a = Symbol("x");
@@ -95,8 +99,14 @@ Chaque appel à `Symbol()` produit une valeur unique. TypeScript type ces valeur
 
 ## Questions d'entretien
 
+
 1. À quoi servent principalement les symbols en TypeScript/JavaScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    À créer des identifiants uniques, souvent utilisés comme clés de propriétés d’objets pour éviter les collisions de noms, et pour les well-known symbols du langage (iterator, etc.).
    :::
+

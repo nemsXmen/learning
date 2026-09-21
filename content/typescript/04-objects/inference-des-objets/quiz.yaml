@@ -1,57 +1,60 @@
-- id: typescript-04-inference-des-objets-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quel type est inféré pour `const user = { name: "Alice", age: 30 }` ?
-  options:
-    - any
-    - { name: string; age: number }
-    - { name: "Alice"; age: 30 }
-    - object
-  answer: [1]
-  explanation: >
-    Sans as const, les littéraux sont élargis.
-  skills: [objects]
+id: inference-des-objets-quiz
+kind: QUIZ
+questions:
+  - id: typescript-04-inference-des-objets-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quel type est inféré pour `const user = { name: "Alice", age: 30 }` ?
+    options:
+      - any
+      - "{ name: string; age: number }"
+      - "{ name: \"Alice\"; age: 30 }"
+      - object
+    answer: [1]
+    explanation: >
+      Sans as const, les littéraux sont élargis.
+    skills: [objects]
 
-- id: typescript-04-inference-des-objets-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `as const` rend les propriétés readonly et conserve les literal types.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est l’effet principal de as const sur un objet.
-  skills: [objects]
+  - id: typescript-04-inference-des-objets-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      `as const` rend les propriétés readonly et conserve les literal types.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Oui, c’est l’effet principal de as const sur un objet.
+    skills: [objects]
 
-- id: typescript-04-inference-des-objets-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Pourquoi utilise-t-on parfois `as const` ?
-  options:
-    - Pour désactiver le typage
-    - Pour obtenir des literal types précis et des propriétés readonly
-    - Pour rendre l’objet mutable
-    - Pour convertir en any
-  answer: [1]
-  explanation: >
-    as const demande l’inférence la plus précise.
-  skills: [objects]
+  - id: typescript-04-inference-des-objets-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi utilise-t-on parfois `as const` ?
+    options:
+      - Pour désactiver le typage
+      - Pour obtenir des literal types précis et des propriétés readonly
+      - Pour rendre l’objet mutable
+      - Pour convertir en any
+    answer: [1]
+    explanation: >
+      as const demande l’inférence la plus précise.
+    skills: [objects]
 
-- id: typescript-04-inference-des-objets-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    L’inférence d’objets littéraux est-elle généralement fiable ?
-  options:
-    - Non
-    - Oui
-    - Uniquement avec des interfaces
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Oui, TypeScript infère correctement la forme dans la grande majorité des cas.
-  skills: [objects]
+  - id: typescript-04-inference-des-objets-q4
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      L’inférence d’objets littéraux est-elle généralement fiable ?
+    options:
+      - Non
+      - Oui
+      - Uniquement avec des interfaces
+      - Uniquement en mode non-strict
+    answer: [1]
+    explanation: >
+      Oui, TypeScript infère correctement la forme dans la grande majorité des cas.
+    skills: [objects]

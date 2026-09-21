@@ -67,6 +67,10 @@ Après un test `typeof`, TypeScript restreint le type dans le bloc correspondant
 
 1. Écris une fonction qui accepte `string | number` et retourne sa longueur (nombre de caractères ou nombre de chiffres).
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function lengthOf(value: string | number): number {
@@ -78,8 +82,14 @@ Après un test `typeof`, TypeScript restreint le type dans le bloc correspondant
 
 ## Questions d'entretien
 
+
 1. Comment accède-t-on à des méthodes spécifiques sur une union `string | number` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En faisant un narrowing (par exemple avec `typeof`) pour réduire l’union à un seul membre dans chaque branche.
    :::
+

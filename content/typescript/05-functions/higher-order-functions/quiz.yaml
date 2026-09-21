@@ -1,57 +1,66 @@
-- id: typescript-05-higher-order-functions-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Qu’est-ce qu’une higher-order function ?
-  options:
-    - Une fonction qui ne prend aucun argument
-    - Une fonction qui prend ou retourne des fonctions
-    - Une fonction async uniquement
-    - Une fonction qui retourne never
-  answer: [1]
-  explanation: >
-    C’est la définition classique.
-  skills: [functions]
-
-- id: typescript-05-higher-order-functions-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `Array.prototype.map` est une higher-order function.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, elle prend une fonction en argument.
-  skills: [functions]
-
-- id: typescript-05-higher-order-functions-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel outil TypeScript est particulièrement utile pour typer les higher-order functions ?
-  options:
-    - any uniquement
-    - Les function types et les generics
-    - Les enums
-    - Les namespaces
-  answer: [1]
-  explanation: >
-    Ils permettent de décrire précisément les signatures d’entrée et de sortie.
-  skills: [functions]
-
-- id: typescript-05-higher-order-functions-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    `createMultiplier(factor)` qui retourne `(n) => n * factor` est un exemple de :
-  options:
-    - Fonction pure uniquement
-    - Higher-order function (elle retourne une fonction)
-    - Classe
-    - Tuple
-  answer: [1]
-  explanation: >
-    Elle retourne une fonction, donc c’est une higher-order function.
-  skills: [functions]
+id: higher-order-functions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-05-higher-order-functions-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Qu’est-ce qu’une higher-order function ?
+    options:
+      - Une fonction qui ne prend aucun argument
+      - Une fonction qui prend ou retourne des fonctions
+      - Une fonction async uniquement
+      - Une fonction qui retourne never
+    answer:
+      - 1
+    explanation: |
+      C’est la définition classique.
+    skills:
+      - functions
+  - id: typescript-05-higher-order-functions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `Array.prototype.map` est une higher-order function.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, elle prend une fonction en argument.
+    skills:
+      - functions
+  - id: typescript-05-higher-order-functions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel outil TypeScript est particulièrement utile pour typer les
+      higher-order functions ?
+    options:
+      - any uniquement
+      - Les function types et les generics
+      - Les enums
+      - Les namespaces
+    answer:
+      - 1
+    explanation: >
+      Ils permettent de décrire précisément les signatures d’entrée et de sortie.
+    skills:
+      - functions
+  - id: typescript-05-higher-order-functions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      `createMultiplier(factor)` qui retourne `(n) => n * factor` est un exemple
+      de :
+    options:
+      - Fonction pure uniquement
+      - Higher-order function (elle retourne une fonction)
+      - Classe
+      - Tuple
+    answer:
+      - 1
+    explanation: |
+      Elle retourne une fonction, donc c’est une higher-order function.
+    skills:
+      - functions

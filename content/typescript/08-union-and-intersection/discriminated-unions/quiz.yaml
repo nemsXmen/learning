@@ -1,57 +1,64 @@
-- id: typescript-08-discriminated-unions-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Qu’est-ce qu’un discriminant dans une discriminated union ?
-  options:
-    - Une méthode
-    - Une propriété de type littéral commune aux membres
-    - Un type any
-    - Un décorateur
-  answer: [1]
-  explanation: >
-    C’est la propriété qui permet de distinguer les membres.
-  skills: [unions-intersections]
-
-- id: typescript-08-discriminated-unions-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Après un switch sur le discriminant, TypeScript narrow le type de l’objet.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est le principal bénéfice.
-  skills: [unions-intersections]
-
-- id: typescript-08-discriminated-unions-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel nom de propriété est souvent utilisé comme discriminant ?
-  options:
-    - data
-    - kind / type / status / tag
-    - value uniquement
-    - id uniquement
-  answer: [1]
-  explanation: >
-    kind, type, status, tag sont des conventions courantes.
-  skills: [unions-intersections]
-
-- id: typescript-08-discriminated-unions-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Les discriminated unions sont particulièrement adaptées pour :
-  options:
-    - Les tableaux uniquement
-    - Les états, résultats et messages variants
-    - Remplacer toutes les classes
-    - Les primitifs uniquement
-  answer: [1]
-  explanation: >
-    Elles excellent pour modéliser des variantes exclusives.
-  skills: [unions-intersections]
+id: discriminated-unions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-08-discriminated-unions-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Qu’est-ce qu’un discriminant dans une discriminated union ?
+    options:
+      - Une méthode
+      - Une propriété de type littéral commune aux membres
+      - Un type any
+      - Un décorateur
+    answer:
+      - 1
+    explanation: |
+      C’est la propriété qui permet de distinguer les membres.
+    skills:
+      - unions-intersections
+  - id: typescript-08-discriminated-unions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Après un switch sur le discriminant, TypeScript narrow le type de l’objet.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est le principal bénéfice.
+    skills:
+      - unions-intersections
+  - id: typescript-08-discriminated-unions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel nom de propriété est souvent utilisé comme discriminant ?
+    options:
+      - data
+      - kind / type / status / tag
+      - value uniquement
+      - id uniquement
+    answer:
+      - 1
+    explanation: |
+      kind, type, status, tag sont des conventions courantes.
+    skills:
+      - unions-intersections
+  - id: typescript-08-discriminated-unions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les discriminated unions sont particulièrement adaptées pour :
+    options:
+      - Les tableaux uniquement
+      - Les états, résultats et messages variants
+      - Remplacer toutes les classes
+      - Les primitifs uniquement
+    answer:
+      - 1
+    explanation: |
+      Elles excellent pour modéliser des variantes exclusives.
+    skills:
+      - unions-intersections

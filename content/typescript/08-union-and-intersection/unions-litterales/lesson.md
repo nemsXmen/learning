@@ -71,6 +71,10 @@ Chaque littéral est un type à part entière. Leur union forme un ensemble ferm
 
 1. Crée un type `HttpMethod` pour "GET" | "POST" | "PUT" | "DELETE".
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
@@ -79,8 +83,14 @@ Chaque littéral est un type à part entière. Leur union forme un ensemble ferm
 
 ## Questions d'entretien
 
+
 1. Quel est l’intérêt des literal unions par rapport à un simple `string` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Elles restreignent les valeurs possibles à un ensemble connu, améliorent l’autocomplétion, permettent un narrowing précis et détectent les fautes de frappe à la compilation.
    :::
+

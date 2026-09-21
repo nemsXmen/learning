@@ -133,6 +133,11 @@ let name: string = null;
 
 2. Comment TypeScript gère-t-il les template literals ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::reponse
    Un template literal classique est inféré comme `string`. TypeScript propose aussi les *template literal types* (ex. `` `hello-${string}` ``) qui permettent de manipuler les chaînes au niveau des types, mais c’est un sujet plus avancé.
    :::
+

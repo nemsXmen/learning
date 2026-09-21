@@ -79,6 +79,10 @@ function printConfig(config: { readonly host: string; readonly port: number }) {
 
 1. Déclare un tableau readonly de strings et essaie de le modifier (observe l’erreur).
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const tags: readonly string[] = ["ts", "js"];
@@ -88,8 +92,14 @@ function printConfig(config: { readonly host: string; readonly port: number }) {
 
 ## Questions d'entretien
 
+
 1. `readonly` garantit-il l’immutabilité à runtime ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. C’est uniquement une protection au niveau du type-checker. Le JavaScript généré reste mutable. Pour une immutabilité runtime il faut d’autres techniques (Object.freeze, structures persistantes, etc.).
    :::
+

@@ -45,7 +45,7 @@ function assertNever(x: never): never {
 }
 ```
 
-## Exemple – exhaustiveness check
+## Exemple
 
 ```ts
 type Shape = "circle" | "square";
@@ -85,6 +85,10 @@ Si tu ajoutes `"triangle"` à `Shape` sans gérer le cas, TypeScript errora sur 
 
 1. Écris une fonction `throwError(msg: string): never`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function throwError(msg: string): never {
@@ -95,8 +99,14 @@ Si tu ajoutes `"triangle"` à `Shape` sans gérer le cas, TypeScript errora sur 
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre `never` et `void` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `void` signifie qu’une fonction ne retourne pas de valeur utile (elle peut implicitement retourner undefined). `never` signifie que la fonction ne retourne *jamais* : elle throw ou ne se termine pas. `never` est aussi utilisé pour l’exhaustivité des unions.
    :::
+

@@ -75,6 +75,10 @@ function parseBad(input: string): any {
 
 1. Remplace un retour `any` par `unknown` et ajoute un narrowing.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function load(): unknown {
@@ -89,8 +93,14 @@ function parseBad(input: string): any {
 
 ## Questions d'entretien
 
+
 1. Quand choisir `unknown` plutôt que `any` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Dès que possible. `unknown` conserve la sécurité en exigeant un narrowing ; `any` désactive le typage. On réserve `any` aux cas extrêmes (migration progressive, typings manquants difficiles).
    :::
+

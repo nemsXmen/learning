@@ -65,6 +65,10 @@ Chaque paramètre peut recevoir une annotation `: Type`. TypeScript vérifie ens
 
 1. Écris une fonction `multiply` qui prend deux numbers et retourne leur produit.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function multiply(a: number, b: number): number {
@@ -75,8 +79,14 @@ Chaque paramètre peut recevoir une annotation `: Type`. TypeScript vérifie ens
 
 ## Questions d'entretien
 
+
 1. Pourquoi est-il important de typer les paramètres de fonctions ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Parce qu’ils constituent le contrat d’entrée. Un typage correct permet au compilateur et à l’éditeur de détecter les appels incorrects, d’améliorer l’autocomplétion et de documenter l’intention.
    :::
+

@@ -76,14 +76,24 @@ Sans annotation, TypeScript élargit les littéraux (`"Alice"` → `string`). `a
 
 1. Quel est le type inféré de `const p = { x: 1, y: 2 }` ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    `{ x: number; y: number }`
    :::
 
 ## Questions d'entretien
 
+
 1. À quoi sert `as const` sur un objet littéral ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Il demande l’inférence la plus étroite possible : les propriétés deviennent readonly et les valeurs littérales gardent leur type littéral exact au lieu d’être élargies (string, number…).
    :::
+

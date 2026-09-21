@@ -1,57 +1,64 @@
-- id: typescript-06-alias-tableaux-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Comment crée-t-on un alias pour un tableau de numbers ?
-  options:
-    - type Scores = number
-    - type Scores = number[]
-    - type Scores = Array
-    - type Scores = [number]
-  answer: [1]
-  explanation: >
-    number[] (ou Array<number>) est la forme correcte.
-  skills: [type-aliases]
-
-- id: typescript-06-alias-tableaux-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `type Ids = string[]` et `type Ids = Array<string>` sont équivalents.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, les deux formes désignent le même type.
-  skills: [type-aliases]
-
-- id: typescript-06-alias-tableaux-q3
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Un type alias de tableau ajoute-t-il un comportement à runtime ?
-  options:
-    - Oui
-    - Non
-    - Uniquement en mode strict
-    - Uniquement pour les objets
-  answer: [1]
-  explanation: >
-    Non, c’est purement un alias de compilation.
-  skills: [type-aliases]
-
-- id: typescript-06-alias-tableaux-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans quel cas un alias de tableau est-il le plus utile ?
-  options:
-    - Pour tous les number[]
-    - Quand la liste a un sens métier clair (UserIds, Tags…)
-    - Uniquement pour les tuples
-    - Jamais
-  answer: [1]
-  explanation: >
-    Le nom apporte de la clarté métier.
-  skills: [type-aliases]
+id: alias-tableaux-quiz
+kind: QUIZ
+questions:
+  - id: typescript-06-alias-tableaux-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment crée-t-on un alias pour un tableau de numbers ?
+    options:
+      - type Scores = number
+      - type Scores = number[]
+      - type Scores = Array
+      - type Scores = [number]
+    answer:
+      - 1
+    explanation: |
+      number[] (ou Array<number>) est la forme correcte.
+    skills:
+      - type-aliases
+  - id: typescript-06-alias-tableaux-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `type Ids = string[]` et `type Ids = Array<string>` sont équivalents.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, les deux formes désignent le même type.
+    skills:
+      - type-aliases
+  - id: typescript-06-alias-tableaux-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un type alias de tableau ajoute-t-il un comportement à runtime ?
+    options:
+      - Oui
+      - Non
+      - Uniquement en mode strict
+      - Uniquement pour les objets
+    answer:
+      - 1
+    explanation: |
+      Non, c’est purement un alias de compilation.
+    skills:
+      - type-aliases
+  - id: typescript-06-alias-tableaux-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans quel cas un alias de tableau est-il le plus utile ?
+    options:
+      - Pour tous les number[]
+      - Quand la liste a un sens métier clair (UserIds, Tags…)
+      - Uniquement pour les tuples
+      - Jamais
+    answer:
+      - 1
+    explanation: |
+      Le nom apporte de la clarté métier.
+    skills:
+      - type-aliases

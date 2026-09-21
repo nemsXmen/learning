@@ -1,57 +1,64 @@
-- id: typescript-10-narrowing-instanceof-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `instanceof` sert principalement à narrow :
-  options:
-    - Les primitifs
-    - Les instances de classes
-    - Les tableaux uniquement
-    - Les literal types
-  answer: [1]
-  explanation: >
-    Il teste la chaîne de prototypes.
-  skills: [type-narrowing]
-
-- id: typescript-10-narrowing-instanceof-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `instanceof` fonctionne bien sur les interfaces pures (sans classe).
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Les interfaces n’existent pas à runtime.
-  skills: [type-narrowing]
-
-- id: typescript-10-narrowing-instanceof-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est un bon cas d’usage de `instanceof` ?
-  options:
-    - Distinguer string et number
-    - Distinguer Error et string dans une union
-    - Tester la présence d’une propriété
-    - Créer des literal types
-  answer: [1]
-  explanation: >
-    Error est une classe ; instanceof est adapté.
-  skills: [type-narrowing]
-
-- id: typescript-10-narrowing-instanceof-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    `instanceof` dépend de :
-  options:
-    - Uniquement du nom du type
-    - La chaîne de prototypes à runtime
-    - Uniquement de la compilation
-    - De strictNullChecks
-  answer: [1]
-  explanation: >
-    C’est un test runtime sur le prototype.
-  skills: [type-narrowing]
+id: narrowing-instanceof-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-narrowing-instanceof-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `instanceof` sert principalement à narrow :
+    options:
+      - Les primitifs
+      - Les instances de classes
+      - Les tableaux uniquement
+      - Les literal types
+    answer:
+      - 1
+    explanation: |
+      Il teste la chaîne de prototypes.
+    skills:
+      - type-narrowing
+  - id: typescript-10-narrowing-instanceof-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `instanceof` fonctionne bien sur les interfaces pures (sans classe).
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Les interfaces n’existent pas à runtime.
+    skills:
+      - type-narrowing
+  - id: typescript-10-narrowing-instanceof-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est un bon cas d’usage de `instanceof` ?
+    options:
+      - Distinguer string et number
+      - Distinguer Error et string dans une union
+      - Tester la présence d’une propriété
+      - Créer des literal types
+    answer:
+      - 1
+    explanation: |
+      Error est une classe ; instanceof est adapté.
+    skills:
+      - type-narrowing
+  - id: typescript-10-narrowing-instanceof-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `instanceof` dépend de :
+    options:
+      - Uniquement du nom du type
+      - La chaîne de prototypes à runtime
+      - Uniquement de la compilation
+      - De strictNullChecks
+    answer:
+      - 1
+    explanation: |
+      C’est un test runtime sur le prototype.
+    skills:
+      - type-narrowing

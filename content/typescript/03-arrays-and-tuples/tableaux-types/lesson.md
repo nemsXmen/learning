@@ -66,6 +66,10 @@ Le type `T[]` signifie « tableau dont chaque élément est de type T ». TypeSc
 
 1. Déclare un tableau de booléens et ajoute deux valeurs.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const flags: boolean[] = [true, false];
@@ -75,8 +79,14 @@ Le type `T[]` signifie « tableau dont chaque élément est de type T ». TypeSc
 
 ## Questions d'entretien
 
+
 1. Que vérifie TypeScript sur un tableau typé `number[]` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Il s’assure que tous les éléments ajoutés ou assignés sont bien des `number`. Les méthodes comme `map` et `filter` propagent aussi le type correctement.
    :::
+

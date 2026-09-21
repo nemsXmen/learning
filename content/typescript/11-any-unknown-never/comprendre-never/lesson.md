@@ -65,6 +65,10 @@ type T = string | never; // string
 
 1. Déclare une fonction qui throw toujours et est typée `never`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function panic(msg: string): never {
@@ -75,8 +79,14 @@ type T = string | never; // string
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce que le type `never` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est le bottom type : il représente des valeurs qui n’existent pas. On l’utilise pour les fonctions qui ne retournent jamais (throw, boucle infinie) et pour vérifier l’exhaustivité des unions.
    :::
+

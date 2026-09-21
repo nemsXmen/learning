@@ -68,6 +68,10 @@ On peut unionner des aliases entre eux, des littéraux, des objets, etc. Le nom 
 
 1. Crée un type `HttpMethod` pour les littéraux "GET" | "POST" | "PUT" | "DELETE".
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
@@ -76,8 +80,14 @@ On peut unionner des aliases entre eux, des littéraux, des objets, etc. Le nom 
 
 ## Questions d'entretien
 
+
 1. Pourquoi encapsuler une union dans un type alias ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Pour donner un nom clair au concept (Status, Role, Result…), éviter de répéter l’union partout, et faciliter les évolutions futures.
    :::
+

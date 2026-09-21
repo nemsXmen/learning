@@ -71,6 +71,10 @@ L’annotation explicite force TypeScript à vérifier la compatibilité. Elle s
 
 1. Annoter correctement une variable qui sera assignée plus tard.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    let total: number;
@@ -80,8 +84,14 @@ L’annotation explicite force TypeScript à vérifier la compatibilité. Elle s
 
 ## Questions d'entretien
 
+
 1. Dans quels cas annotes-tu explicitement un type primitif plutôt que de laisser l’inférence ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand la variable n’est pas initialisée immédiatement, quand je veux restreindre à un literal type, et systématiquement pour les paramètres et retours des API publiques.
    :::
+

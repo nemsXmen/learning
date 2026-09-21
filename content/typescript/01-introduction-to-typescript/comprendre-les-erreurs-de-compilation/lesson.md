@@ -91,6 +91,10 @@ Le compilateur construit un graphe de types et vérifie chaque affectation, chaq
 
 1. Explique cette erreur :
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
 ```
 Type 'null' is not assignable to type 'string'.
 ```
@@ -101,8 +105,14 @@ Type 'null' is not assignable to type 'string'.
 
 ## Questions d'entretien
 
+
 1. Comment abordes-tu une erreur TypeScript que tu ne comprends pas immédiatement ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Je lis le message complet, je regarde le fichier et la ligne indiqués, je vérifie les types des variables impliquées (via le hover de l’éditeur), et je cherche le code d’erreur TS si nécessaire. Je résous la cause racine plutôt que d’utiliser `any` ou `@ts-ignore`.
    :::
+

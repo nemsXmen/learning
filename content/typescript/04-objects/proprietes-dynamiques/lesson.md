@@ -75,6 +75,10 @@ Sans index signature, TypeScript n’autorise l’accès dynamique que si la cl�
 
 1. Écris une fonction qui prend un User et une clé `keyof User` et retourne la valeur.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function getUserProp(user: User, key: keyof User) {
@@ -85,8 +89,14 @@ Sans index signature, TypeScript n’autorise l’accès dynamique que si la cl�
 
 ## Questions d'entretien
 
+
 1. Comment accède-t-on de façon type-safe à une propriété via une variable ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En typant la clé avec `keyof T` (ou un sous-ensemble de clés). Ainsi TypeScript sait quelles propriétés sont autorisées et quel type de valeur on obtient.
    :::
+

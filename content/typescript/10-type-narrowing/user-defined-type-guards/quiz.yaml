@@ -1,57 +1,65 @@
-- id: typescript-10-user-defined-type-guards-q1
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quelle est la syntaxe d’un type predicate ?
-  options:
-    - value as Type
-    - value is Type
-    - value: Type
-    - value instanceof Type
-  answer: [1]
-  explanation: >
-    On écrit `arg is Type` comme type de retour.
-  skills: [type-narrowing]
-
-- id: typescript-10-user-defined-type-guards-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Un type guard personnalisé permet de narrow dans le code appelant.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est son rôle.
-  skills: [type-narrowing]
-
-- id: typescript-10-user-defined-type-guards-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que se passe-t-il si on oublie le prédicat `is` et qu’on retourne seulement boolean ?
-  options:
-    - Le narrowing fonctionne quand même
-    - La fonction ne narrow plus le type, elle retourne juste un boolean
-    - Erreur de compilation systématique
-    - Conversion en any
-  answer: [1]
-  explanation: >
-    Sans `is`, ce n’est plus un type guard.
-  skills: [type-narrowing]
-
-- id: typescript-10-user-defined-type-guards-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Qui est responsable de la correction d’un type guard ?
-  options:
-    - Uniquement le compilateur
-    - Le développeur (le runtime doit correspondre au prédicat)
-    - Le runtime JavaScript uniquement
-    - ESLint
-  answer: [1]
-  explanation: >
-    TypeScript fait confiance au prédicat ; la logique doit être correcte.
-  skills: [type-narrowing]
+id: user-defined-type-guards-quiz
+kind: QUIZ
+questions:
+  - id: typescript-10-user-defined-type-guards-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quelle est la syntaxe d’un type predicate ?
+    options:
+      - value as Type
+      - value is Type
+      - '{"value":"Type"}'
+      - value instanceof Type
+    answer:
+      - 1
+    explanation: |
+      On écrit `arg is Type` comme type de retour.
+    skills:
+      - type-narrowing
+  - id: typescript-10-user-defined-type-guards-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un type guard personnalisé permet de narrow dans le code appelant.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est son rôle.
+    skills:
+      - type-narrowing
+  - id: typescript-10-user-defined-type-guards-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que se passe-t-il si on oublie le prédicat `is` et qu’on retourne
+      seulement boolean ?
+    options:
+      - Le narrowing fonctionne quand même
+      - La fonction ne narrow plus le type, elle retourne juste un boolean
+      - Erreur de compilation systématique
+      - Conversion en any
+    answer:
+      - 1
+    explanation: |
+      Sans `is`, ce n’est plus un type guard.
+    skills:
+      - type-narrowing
+  - id: typescript-10-user-defined-type-guards-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Qui est responsable de la correction d’un type guard ?
+    options:
+      - Uniquement le compilateur
+      - Le développeur (le runtime doit correspondre au prédicat)
+      - Le runtime JavaScript uniquement
+      - ESLint
+    answer:
+      - 1
+    explanation: |
+      TypeScript fait confiance au prédicat ; la logique doit être correcte.
+    skills:
+      - type-narrowing

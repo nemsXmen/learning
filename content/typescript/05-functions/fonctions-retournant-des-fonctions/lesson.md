@@ -67,6 +67,10 @@ La fonction interne capture les variables de la fonction externe (closure). Type
 
 1. Écris une fonction `createCounter` qui retourne une fonction sans argument incrémentant un compteur interne.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function createCounter(): () => number {
@@ -78,8 +82,14 @@ La fonction interne capture les variables de la fonction externe (closure). Type
 
 ## Questions d'entretien
 
+
 1. Comment type-t-on une fonction qui retourne une autre fonction ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En utilisant un function type comme type de retour, par exemple `: (name: string) => string` ou un type alias équivalent.
    :::
+

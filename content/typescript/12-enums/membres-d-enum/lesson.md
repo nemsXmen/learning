@@ -77,6 +77,10 @@ Chaque membre est une propriété de l’objet enum (sauf const enum). Le type `
 
 1. Utilise un enum `Mode` avec On / Off dans une signature de fonction.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    enum Mode { On, Off }
@@ -87,8 +91,14 @@ Chaque membre est une propriété de l’objet enum (sauf const enum). Le type `
 
 ## Questions d'entretien
 
+
 1. Peut-on avoir des membres calculés dans un enum ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Oui, principalement dans les numeric enums, avec des expressions constantes (décalages de bits, références à d’autres membres, etc.).
    :::
+

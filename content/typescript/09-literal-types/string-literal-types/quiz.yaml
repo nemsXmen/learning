@@ -1,57 +1,65 @@
-- id: typescript-09-string-literal-types-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Que représente le type `"north"` ?
-  options:
-    - N’importe quelle string
-    - Uniquement la valeur "north"
-    - Un tableau de strings
-    - Un enum
-  answer: [1]
-  explanation: >
-    C’est un string literal type.
-  skills: [literal-types]
-
-- id: typescript-09-string-literal-types-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut assigner n’importe quelle string à une variable de type `"left" | "right"`.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. Seules "left" et "right" sont acceptées.
-  skills: [literal-types]
-
-- id: typescript-09-string-literal-types-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est un avantage des string literal types ?
-  options:
-    - Ils accélèrent le runtime
-    - Autocomplétion et détection des valeurs invalides à la compilation
-    - Ils créent des classes
-    - Ils désactivent strict
-  answer: [1]
-  explanation: >
-    Ils restreignent et documentent les valeurs possibles.
-  skills: [literal-types]
-
-- id: typescript-09-string-literal-types-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `"hello"` est un sous-type de :
-  options:
-    - number
-    - string
-    - boolean
-    - never
-  answer: [1]
-  explanation: >
-    Tout string literal type est un sous-type de string.
-  skills: [literal-types]
+id: string-literal-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-09-string-literal-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Que représente le type `"north"` ?
+    options:
+      - N’importe quelle string
+      - Uniquement la valeur "north"
+      - Un tableau de strings
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      C’est un string literal type.
+    skills:
+      - literal-types
+  - id: typescript-09-string-literal-types-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      On peut assigner n’importe quelle string à une variable de type `"left" |
+      "right"`.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Seules "left" et "right" sont acceptées.
+    skills:
+      - literal-types
+  - id: typescript-09-string-literal-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est un avantage des string literal types ?
+    options:
+      - Ils accélèrent le runtime
+      - Autocomplétion et détection des valeurs invalides à la compilation
+      - Ils créent des classes
+      - Ils désactivent strict
+    answer:
+      - 1
+    explanation: |
+      Ils restreignent et documentent les valeurs possibles.
+    skills:
+      - literal-types
+  - id: typescript-09-string-literal-types-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `"hello"` est un sous-type de :
+    options:
+      - number
+      - string
+      - boolean
+      - never
+    answer:
+      - 1
+    explanation: |
+      Tout string literal type est un sous-type de string.
+    skills:
+      - literal-types

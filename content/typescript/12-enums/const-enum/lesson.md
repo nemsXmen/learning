@@ -73,6 +73,10 @@ Le compilateur inline les valeurs. Cela réduit la taille du bundle mais impose 
 
 1. Déclare un const enum `Color` avec Red, Green, Blue.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const enum Color {
@@ -85,8 +89,14 @@ Le compilateur inline les valeurs. Cela réduit la taille du bundle mais impose 
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre `enum` et `const enum` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Un enum classique génère un objet JavaScript à runtime. Un const enum est entièrement inliné : les références sont remplacées par les valeurs littérales et aucun objet n’est émis.
    :::
+

@@ -78,6 +78,10 @@ Un enum numérique est compilé en un objet JavaScript (sauf `const enum`). Les 
 
 1. Crée un enum `Priority` avec Low = 1, Medium = 2, High = 3.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    enum Priority {
@@ -90,8 +94,14 @@ Un enum numérique est compilé en un objet JavaScript (sauf `const enum`). Les 
 
 ## Questions d'entretien
 
+
 1. Comment fonctionnent les valeurs d’un enum numérique sans initialisation explicite ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    TypeScript assigne 0 au premier membre, puis incrémente de 1 pour chaque membre suivant. On peut aussi fixer une valeur de départ ; les suivants s’incrémentent à partir de celle-ci.
    :::
+

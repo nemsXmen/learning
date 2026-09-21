@@ -85,6 +85,10 @@ On applique les mêmes techniques de narrowing que pour les unions, en partant d
 
 1. Narrow un `unknown` en `{ id: number }` avec un type guard simple.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function isIdObject(v: unknown): v is { id: number } {
@@ -95,8 +99,14 @@ On applique les mêmes techniques de narrowing que pour les unions, en partant d
 
 ## Questions d'entretien
 
+
 1. Comment traites-tu une valeur `unknown` de façon sûre ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En la narrowant avec typeof, in, Array.isArray ou des type guards personnalisés, éventuellement complétés par une validation runtime (Zod, etc.) pour les données externes. On évite le cast direct non validé.
    :::
+

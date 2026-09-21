@@ -74,6 +74,10 @@ TypeScript vérifie que toutes les branches de retour sont compatibles avec le t
 
 1. Annoter le retour d’une fonction qui retourne true si un nombre est pair.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function isEven(n: number): boolean {
@@ -84,8 +88,14 @@ TypeScript vérifie que toutes les branches de retour sont compatibles avec le t
 
 ## Questions d'entretien
 
+
 1. Quand annotes-tu explicitement le type de retour ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Sur les fonctions publiques, quand le retour n’est pas évident, ou pour documenter clairement le contrat. À l’intérieur des modules, l’inférence suffit souvent.
    :::
+

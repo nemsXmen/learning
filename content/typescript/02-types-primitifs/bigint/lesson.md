@@ -77,6 +77,10 @@ function factorial(n: bigint): bigint {
 
 1. Déclare deux bigint et calcule leur produit.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const a = 12345678901234567890n;
@@ -87,8 +91,14 @@ function factorial(n: bigint): bigint {
 
 ## Questions d'entretien
 
+
 1. Quand utiliser `bigint` plutôt que `number` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand on a besoin d’entiers plus grands que Number.MAX_SAFE_INTEGER (2^53 - 1), par exemple en cryptographie, pour des IDs très grands ou des calculs d’entiers exacts de grande taille.
    :::
+

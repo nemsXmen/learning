@@ -144,6 +144,10 @@ Le JavaScript généré ressemble très fort au TypeScript d’origine, sans les
 
 1. Prends ce code JavaScript et ajoute les annotations TypeScript minimales pour le rendre sûr :
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
 ```js
 function formatUser(user) {
   return user.firstName + " " + user.lastName;
@@ -168,6 +172,10 @@ function formatUser(user) {
    :::
 
 2. Explique pourquoi ce code TypeScript compile sans erreur alors qu’il peut planter à runtime :
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
 ```ts
 function getLength(obj: { length: number }) {

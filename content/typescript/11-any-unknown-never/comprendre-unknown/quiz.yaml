@@ -1,57 +1,64 @@
-- id: typescript-11-comprendre-unknown-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Peut-on appeler librement des méthodes sur une valeur `unknown` ?
-  options:
-    - Oui
-    - Non, il faut d’abord narrow
-    - Uniquement en mode non-strict
-    - Uniquement avec des classes
-  answer: [1]
-  explanation: >
-    unknown exige un narrowing.
-  skills: [any-unknown-never]
-
-- id: typescript-11-comprendre-unknown-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Tout est assignable à `unknown`.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui.
-  skills: [any-unknown-never]
-
-- id: typescript-11-comprendre-unknown-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est un bon cas d’usage de `unknown` ?
-  options:
-    - Variables locales triviales
-    - Données externes (JSON, input utilisateur, réponses API)
-    - Remplacer tous les string
-    - Désactiver le typage
-  answer: [1]
-  explanation: >
-    On capture l’incertitude sans perdre la sécurité.
-  skills: [any-unknown-never]
-
-- id: typescript-11-comprendre-unknown-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    `unknown` est-il type-safe ?
-  options:
-    - Non
-    - Oui
-    - Uniquement pour les nombres
-    - Uniquement en mode non-strict
-  answer: [1]
-  explanation: >
-    Oui, contrairement à any.
-  skills: [any-unknown-never]
+id: comprendre-unknown-quiz
+kind: QUIZ
+questions:
+  - id: typescript-11-comprendre-unknown-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Peut-on appeler librement des méthodes sur une valeur `unknown` ?
+    options:
+      - Oui
+      - Non, il faut d’abord narrow
+      - Uniquement en mode non-strict
+      - Uniquement avec des classes
+    answer:
+      - 1
+    explanation: |
+      unknown exige un narrowing.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-comprendre-unknown-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Tout est assignable à `unknown`.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-comprendre-unknown-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est un bon cas d’usage de `unknown` ?
+    options:
+      - Variables locales triviales
+      - Données externes (JSON, input utilisateur, réponses API)
+      - Remplacer tous les string
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      On capture l’incertitude sans perdre la sécurité.
+    skills:
+      - any-unknown-never
+  - id: typescript-11-comprendre-unknown-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `unknown` est-il type-safe ?
+    options:
+      - Non
+      - Oui
+      - Uniquement pour les nombres
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      Oui, contrairement à any.
+    skills:
+      - any-unknown-never

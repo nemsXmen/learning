@@ -70,14 +70,24 @@ Moins d’enums = moins de concepts, moins de code généré, plus de cohérence
 
 1. Pour un statut "pending" | "done", choisis enum ou union et justifie.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Literal union : pas besoin d’objet runtime, ensemble simple de strings.
    :::
 
 ## Questions d'entretien
 
+
 1. Dans quels cas évites-tu les enums TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand une literal union suffit, quand on privilégie le tree-shaking et un modèle purement type-level, ou quand les numeric enums rendraient les valeurs moins lisibles. Les enums restent utiles pour un objet runtime partagé ou un reverse mapping.
    :::
+

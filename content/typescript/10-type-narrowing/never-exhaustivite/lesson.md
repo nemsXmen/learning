@@ -78,6 +78,10 @@ Quand tous les membres ont été éliminés par narrowing, le type restant est `
 
 1. Applique assertNever sur un switch de `"on" | "off"`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function f(state: "on" | "off") {
@@ -92,8 +96,14 @@ Quand tous les membres ont été éliminés par narrowing, le type restant est `
 
 ## Questions d'entretien
 
+
 1. Comment utilises-tu `never` pour vérifier l’exhaustivité d’un switch ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En plaçant dans le `default` un appel à une fonction `assertNever(x: never)`. Si un cas n’est pas géré, le type n’est pas `never` et TypeScript émet une erreur, signalant l’oubli.
    :::
+

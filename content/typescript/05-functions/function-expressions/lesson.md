@@ -69,6 +69,10 @@ Une function expression produit une valeur de type fonction. Elle peut être ass
 
 1. Écris une function expression `isPositive` qui prend un number et retourne un boolean.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const isPositive = function (n: number): boolean {
@@ -79,8 +83,14 @@ Une function expression produit une valeur de type fonction. Elle peut être ass
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence principale entre une function declaration et une function expression ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Les function declarations sont hoistées (disponibles avant leur ligne dans le scope). Les function expressions ne le sont pas ; elles suivent les règles de la variable à laquelle elles sont assignées (`const`/`let`).
    :::
+

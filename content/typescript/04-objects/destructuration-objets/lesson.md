@@ -75,6 +75,10 @@ TypeScript propage le type de chaque propriété vers la variable correspondante
 
 1. Destructure `name` et `age` d’un objet User dans une fonction.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function show({ name, age }: User) {
@@ -85,8 +89,14 @@ TypeScript propage le type de chaque propriété vers la variable correspondante
 
 ## Questions d'entretien
 
+
 1. Les types sont-ils conservés lors de la destructuration d’un objet ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Oui. Chaque variable reçoit le type de la propriété correspondante.
    :::
+

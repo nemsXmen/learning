@@ -67,14 +67,24 @@ TypeScript compare les membres. C’est l’opposé des langages à typage nomin
 
 1. Pourquoi peut-on assigner un Point3D à une variable Point2D ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    Parce que Point3D possède au minimum les propriétés x et y de Point2D (typage structurel).
    :::
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce que le typage structurel en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    La compatibilité des types se base sur leur structure (les propriétés et leurs types), pas sur le nom du type. Si un objet a au moins les membres requis, il est compatible.
    :::
+

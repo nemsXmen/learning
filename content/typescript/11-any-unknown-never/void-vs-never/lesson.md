@@ -73,14 +73,24 @@ console.log("inatteignable");
 
 1. Pour chaque fonction, choisis void ou never : logger, throw Error, boucle infinie, setter.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    logger → void ; throw → never ; boucle → never ; setter → void
    :::
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence entre une fonction `: void` et une fonction `: never` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    `void` : la fonction se termine mais ne produit pas de valeur utile pour l’appelant. `never` : la fonction ne se termine jamais normalement (exception ou boucle infinie), donc aucun code après l’appel n’est atteignable.
    :::
+

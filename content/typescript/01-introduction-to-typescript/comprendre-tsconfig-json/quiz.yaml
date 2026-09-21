@@ -1,57 +1,69 @@
-- id: typescript-01-comprendre-tsconfig-json-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle option active l’ensemble des vérifications strictes de TypeScript ?
-  options:
-    - "target": "ES2020"
-    - "strict": true
-    - "noEmit": true
-    - "skipLibCheck": true
-  answer: [1]
-  explanation: >
-    `"strict": true` active noImplicitAny, strictNullChecks et plusieurs autres options de sécurité.
-  skills: [typescript-basics]
-
-- id: typescript-01-comprendre-tsconfig-json-q2
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle commande génère un tsconfig.json de base ?
-  options:
-    - npx tsc --init
-    - npx tsc --create
-    - npm init typescript
-    - tsc --config
-  answer: [0]
-  explanation: >
-    `npx tsc --init` crée un tsconfig.json commenté avec les options les plus courantes.
-  skills: [typescript-basics]
-
-- id: typescript-01-comprendre-tsconfig-json-q3
-  type: true_false
-  difficulty: 1
-  question: >
-    L’option `"skipLibCheck": true` accélère la compilation en ignorant le type-checking des .d.ts des dépendances.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui. C’est une option très courante pour gagner du temps, surtout sur les gros projets.
-  skills: [typescript-basics]
-
-- id: typescript-01-comprendre-tsconfig-json-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que contrôle principalement l’option `"target"` ?
-  options:
-    - Le système de modules (CommonJS / ESM)
-    - La version d’ECMAScript du JavaScript généré
-    - Le dossier de sortie
-    - L’activation du mode strict
-  answer: [1]
-  explanation: >
-    `target` définit jusqu’à quelle version d’ECMAScript le code doit être rétro-compilé (ES5, ES2020…).
-  skills: [typescript-basics]
+id: comprendre-tsconfig-json-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-comprendre-tsconfig-json-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quelle option active l’ensemble des vérifications strictes de TypeScript ?
+    options:
+      - '{"target":"ES2020"}'
+      - '{"strict":true}'
+      - '{"noEmit":true}'
+      - '{"skipLibCheck":true}'
+    answer:
+      - 1
+    explanation: >
+      `"strict": true` active noImplicitAny, strictNullChecks et plusieurs
+      autres options de sécurité.
+    skills:
+      - typescript-basics
+  - id: typescript-01-comprendre-tsconfig-json-q2
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quelle commande génère un tsconfig.json de base ?
+    options:
+      - npx tsc --init
+      - npx tsc --create
+      - npm init typescript
+      - tsc --config
+    answer:
+      - 0
+    explanation: >
+      `npx tsc --init` crée un tsconfig.json commenté avec les options les plus
+      courantes.
+    skills:
+      - typescript-basics
+  - id: typescript-01-comprendre-tsconfig-json-q3
+    type: true_false
+    difficulty: 1
+    question: >
+      L’option `"skipLibCheck": true` accélère la compilation en ignorant le
+      type-checking des .d.ts des dépendances.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: >
+      Oui. C’est une option très courante pour gagner du temps, surtout sur les
+      gros projets.
+    skills:
+      - typescript-basics
+  - id: typescript-01-comprendre-tsconfig-json-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que contrôle principalement l’option `"target"` ?
+    options:
+      - Le système de modules (CommonJS / ESM)
+      - La version d’ECMAScript du JavaScript généré
+      - Le dossier de sortie
+      - L’activation du mode strict
+    answer:
+      - 1
+    explanation: >
+      `target` définit jusqu’à quelle version d’ECMAScript le code doit être
+      rétro-compilé (ES5, ES2020…).
+    skills:
+      - typescript-basics

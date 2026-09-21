@@ -69,6 +69,10 @@ L’alias n’est qu’un nom pour `T[]` (ou `Array<T>`). Il n’ajoute pas de c
 
 1. Crée un type `Tags` pour un tableau de strings.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Tags = string[];
@@ -77,8 +81,14 @@ L’alias n’est qu’un nom pour `T[]` (ou `Array<T>`). Il n’ajoute pas de c
 
 ## Questions d'entretien
 
+
 1. Quand est-il pertinent de créer un type alias pour un tableau ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand la liste représente un concept métier clair (ex. UserIds, Tags, Cart) et que le nom améliore la lisibilité du code.
    :::
+

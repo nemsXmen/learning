@@ -102,6 +102,10 @@ L’annotation force TypeScript à vérifier que la valeur assignée ou retourn�
 
 1. Annoter correctement cette fonction :
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
 ```ts
 function multiply(a, b) {
   return a * b;
@@ -118,8 +122,14 @@ function multiply(a, b) {
 
 ## Questions d'entretien
 
+
 1. Quand dois-tu annoter explicitement un type plutôt que de laisser l’inférence ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Principalement aux frontières : paramètres de fonctions, valeurs de retour publiques, variables non initialisées, et partout où l’inférence produirait un type trop large (any) ou imprécis. À l’intérieur des fonctions, l’inférence est généralement préférable.
    :::
+

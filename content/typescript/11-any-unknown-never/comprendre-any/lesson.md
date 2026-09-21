@@ -62,6 +62,10 @@ function log(x: any) {
 
 1. Montre une opération dangereuse possible avec `any` mais refusée avec un type précis.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const a: any = 42;
@@ -71,8 +75,14 @@ function log(x: any) {
 
 ## Questions d'entretien
 
+
 1. Que signifie le type `any` en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est un type qui désactive le contrôle de types pour la valeur concernée. N’importe quelle valeur peut y être assignée, et on peut y accéder comme on veut sans vérification du compilateur.
    :::
+

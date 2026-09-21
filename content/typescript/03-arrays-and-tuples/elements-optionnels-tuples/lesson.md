@@ -62,6 +62,10 @@ Un élément optionnel ajoute `| undefined` à son type et rend la longueur vari
 
 1. Déclare un tuple `[id: number, name?: string]`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type UserTuple = [id: number, name?: string];
@@ -72,8 +76,14 @@ Un élément optionnel ajoute `| undefined` à son type et rend la longueur vari
 
 ## Questions d'entretien
 
+
 1. Peut-on avoir un élément obligatoire après un élément optionnel dans un tuple ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. Les éléments optionnels doivent être regroupés à la fin (avant un éventuel élément rest).
    :::
+

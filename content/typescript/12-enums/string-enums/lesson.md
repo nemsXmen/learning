@@ -69,6 +69,10 @@ Les string enums sont plus lisibles dans les logs et le debug (on voit `"UP"` pl
 
 1. Crée un string enum `Role` avec Admin = "admin", User = "user".
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    enum Role {
@@ -80,8 +84,14 @@ Les string enums sont plus lisibles dans les logs et le debug (on voit `"UP"` pl
 
 ## Questions d'entretien
 
+
 1. Quel avantage principal ont les string enums sur les numeric enums ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    La lisibilité à runtime : les valeurs affichées dans les logs ou le debug sont des chaînes significatives plutôt que des nombres opaques. Ils évitent aussi les reverse mappings parfois surprenants.
    :::
+

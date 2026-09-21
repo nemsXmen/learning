@@ -64,6 +64,10 @@ L’alias donne un nom stable au tuple, ce qui documente l’intention (coordonn
 
 1. Crée un type `RGB` pour un tuple de 3 numbers avec labels.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type RGB = [r: number, g: number, b: number];
@@ -72,8 +76,14 @@ L’alias donne un nom stable au tuple, ce qui documente l’intention (coordonn
 
 ## Questions d'entretien
 
+
 1. Pourquoi aliaser un tuple plutôt que de l’écrire inline ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Pour documenter le sens des positions (ex. Point, Range, HttpResult) et réutiliser la même forme à plusieurs endroits.
    :::
+

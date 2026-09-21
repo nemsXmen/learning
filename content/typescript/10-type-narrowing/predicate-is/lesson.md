@@ -69,6 +69,10 @@ Le type de retour `arg is Type` indique au compilateur : « si je retourne true,
 
 1. Écris un prédicat `isDefined` pour exclure null et undefined.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function isDefined<T>(value: T | null | undefined): value is T {
@@ -79,8 +83,14 @@ Le type de retour `arg is Type` indique au compilateur : « si je retourne true,
 
 ## Questions d'entretien
 
+
 1. Pourquoi `Array.filter(isString)` produit-il un `string[]` plutôt qu’un `(string | number)[]` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Parce que `isString` a un type predicate `x is string`. TypeScript utilise cette information pour typ er le tableau filtré.
    :::
+

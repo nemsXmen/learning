@@ -73,6 +73,10 @@ TypeScript traite les tuples comme des tableaux avec des types positionnels. L�
 
 1. Déclare un tuple représentant une coordonnée (x: number, y: number).
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    const point: [number, number] = [10, 20];
@@ -81,8 +85,14 @@ TypeScript traite les tuples comme des tableaux avec des types positionnels. L�
 
 ## Questions d'entretien
 
+
 1. Quelle est la différence principale entre un tuple et un tableau classique ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Un tableau classique a un type d’élément unique et une longueur variable. Un tuple a une longueur fixe et un type potentiellement différent à chaque position.
    :::
+

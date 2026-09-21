@@ -68,6 +68,10 @@ Après un appel réussi (sans throw), TypeScript applique le narrowing décrit p
 
 1. Écris `assertIsArray` pour `unknown`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function assertIsArray(value: unknown): asserts value is unknown[] {
@@ -80,8 +84,14 @@ Après un appel réussi (sans throw), TypeScript applique le narrowing décrit p
 
 ## Questions d'entretien
 
+
 1. À quoi sert le mot-clé `asserts` dans une signature de fonction ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Il indique que la fonction est une assertion function : si elle retourne normalement, la condition ou le prédicat de type est considéré comme vrai pour la suite du flux de contrôle.
    :::
+

@@ -1,57 +1,66 @@
-- id: typescript-04-destructuration-objets-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Après `const { name } = user` où user est `{ name: string; age: number }`, quel est le type de name ?
-  options:
-    - any
-    - string
-    - string | number
-    - unknown
-  answer: [1]
-  explanation: >
-    Le type de la propriété est propagé.
-  skills: [objects]
-
-- id: typescript-04-destructuration-objets-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    On peut destructurer un objet directement dans les paramètres d’une fonction.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est un pattern très courant.
-  skills: [objects]
-
-- id: typescript-04-destructuration-objets-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Comment renomme-t-on une propriété lors de la destructuration ?
-  options:
-    - { name as userName }
-    - { name: userName }
-    - { name -> userName }
-    - { rename name userName }
-  answer: [1]
-  explanation: >
-    La syntaxe est { prop: newName }.
-  skills: [objects]
-
-- id: typescript-04-destructuration-objets-q4
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Peut-on fournir une valeur par défaut lors de la destructuration ?
-  options:
-    - Non
-    - Oui (ex. { age = 0 })
-    - Uniquement avec null
-    - Uniquement en mode strict
-  answer: [1]
-  explanation: >
-    Oui, la syntaxe { prop = defaultValue } est supportée.
-  skills: [objects]
+id: destructuration-objets-quiz
+kind: QUIZ
+questions:
+  - id: typescript-04-destructuration-objets-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Après `const { name } = user` où user est `{ name: string; age: number }`,
+      quel est le type de name ?
+    options:
+      - any
+      - string
+      - string | number
+      - unknown
+    answer:
+      - 1
+    explanation: |
+      Le type de la propriété est propagé.
+    skills:
+      - objects
+  - id: typescript-04-destructuration-objets-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      On peut destructurer un objet directement dans les paramètres d’une
+      fonction.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, c’est un pattern très courant.
+    skills:
+      - objects
+  - id: typescript-04-destructuration-objets-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Comment renomme-t-on une propriété lors de la destructuration ?
+    options:
+      - '{"name as userName":null}'
+      - '{"name":"userName"}'
+      - '{"name -> userName":null}'
+      - '{"rename name userName":null}'
+    answer:
+      - 1
+    explanation: |
+      La syntaxe est { prop: newName }.
+    skills:
+      - objects
+  - id: typescript-04-destructuration-objets-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Peut-on fournir une valeur par défaut lors de la destructuration ?
+    options:
+      - Non
+      - Oui (ex. { age = 0 })
+      - Uniquement avec null
+      - Uniquement en mode strict
+    answer:
+      - 1
+    explanation: |
+      Oui, la syntaxe { prop = defaultValue } est supportée.
+    skills:
+      - objects

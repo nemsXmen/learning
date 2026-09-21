@@ -476,6 +476,27 @@ skills:
     importance: 5
     requires: [network-performance-debugging]
 
+  # Partie 9 — Tests
+  - id: test-structure
+    name: Structure des tests
+    importance: 5
+    requires: []
+
+  - id: test-doubles
+    name: Doubles de test
+    importance: 4
+    requires: [test-structure]
+
+  - id: testing-levels
+    name: Niveaux de tests
+    importance: 4
+    requires: [test-structure]
+
+  - id: vitest-assertions
+    name: Assertions Vitest
+    importance: 5
+    requires: [test-structure]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

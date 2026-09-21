@@ -1,63 +1,71 @@
-- id: typescript-01-quest-ce-que-typescript-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Qu’est-ce que TypeScript ?
-  options:
-    - Un framework JavaScript concurrent de React
-    - Un superset de JavaScript qui ajoute un système de types statiques
-    - Un runtime JavaScript alternatif à Node.js
-    - Un linter pour JavaScript
-  answer: [1]
-  explanation: >
-    TypeScript est un superset de JavaScript. Il ajoute des annotations de types
-    qui sont vérifiées à la compilation, puis disparaît complètement pour ne
-    laisser que du JavaScript standard.
-  skills: [typescript-basics]
-
-- id: typescript-01-quest-ce-que-typescript-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Les types TypeScript existent encore à l’exécution dans le navigateur ou Node.js.
-  options:
-    - "true"
-    - "false"
-  answer: [1]
-  explanation: >
-    Faux. TypeScript applique une type erasure : toutes les informations de types
-    sont supprimées lors de la compilation. Seul le JavaScript reste.
-  skills: [typescript-basics]
-
-- id: typescript-01-quest-ce-que-typescript-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est le rôle principal du compilateur TypeScript (`tsc`) ?
-  options:
-    - Exécuter le code TypeScript directement
-    - Vérifier les types et transformer le TypeScript en JavaScript
-    - Remplacer Node.js
-    - Gérer les dépendances npm
-  answer: [1]
-  explanation: >
-    `tsc` effectue le type-checking puis émet du JavaScript. Il ne s’agit pas
-    d’un runtime.
-  skills: [typescript-basics]
-
-- id: typescript-01-quest-ce-que-typescript-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Que signifie le terme « type erasure » en TypeScript ?
-  options:
-    - Les types sont convertis en commentaires
-    - Les annotations de types sont entièrement supprimées à la compilation
-    - Les types sont vérifiés une seconde fois à runtime
-    - Les types sont stockés dans un fichier séparé
-  answer: [1]
-  explanation: >
-    Type erasure signifie que toutes les informations de types sont effacées
-    lors de la compilation. Le fichier JavaScript généré ne contient plus aucune
-    annotation de type.
-  skills: [typescript-basics]
+id: quest-ce-que-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-01-quest-ce-que-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Qu’est-ce que TypeScript ?
+    options:
+      - Un framework JavaScript concurrent de React
+      - Un superset de JavaScript qui ajoute un système de types statiques
+      - Un runtime JavaScript alternatif à Node.js
+      - Un linter pour JavaScript
+    answer:
+      - 1
+    explanation: >
+      TypeScript est un superset de JavaScript. Il ajoute des annotations de
+      types qui sont vérifiées à la compilation, puis disparaît complètement
+      pour ne laisser que du JavaScript standard.
+    skills:
+      - typescript-basics
+  - id: typescript-01-quest-ce-que-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Les types TypeScript existent encore à l’exécution dans le navigateur ou
+      Node.js.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Faux. TypeScript applique une type erasure : toutes les informations de
+      types sont supprimées lors de la compilation. Seul le JavaScript reste.
+    skills:
+      - typescript-basics
+  - id: typescript-01-quest-ce-que-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est le rôle principal du compilateur TypeScript (`tsc`) ?
+    options:
+      - Exécuter le code TypeScript directement
+      - Vérifier les types et transformer le TypeScript en JavaScript
+      - Remplacer Node.js
+      - Gérer les dépendances npm
+    answer:
+      - 1
+    explanation: >
+      `tsc` effectue le type-checking puis émet du JavaScript. Il ne s’agit pas
+      d’un runtime.
+    skills:
+      - typescript-basics
+  - id: typescript-01-quest-ce-que-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Que signifie le terme « type erasure » en TypeScript ?
+    options:
+      - Les types sont convertis en commentaires
+      - Les annotations de types sont entièrement supprimées à la compilation
+      - Les types sont vérifiés une seconde fois à runtime
+      - Les types sont stockés dans un fichier séparé
+    answer:
+      - 1
+    explanation: >
+      Type erasure signifie que toutes les informations de types sont effacées
+      lors de la compilation. Le fichier JavaScript généré ne contient plus
+      aucune annotation de type.
+    skills:
+      - typescript-basics

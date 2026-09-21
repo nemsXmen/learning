@@ -80,6 +80,10 @@ Le type `boolean` est strict. TypeScript ne fait pas de conversion automatique d
 
 1. Écris une fonction `isAdult(age: number): boolean` qui retourne true si age >= 18.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function isAdult(age: number): boolean {
@@ -90,8 +94,14 @@ Le type `boolean` est strict. TypeScript ne fait pas de conversion automatique d
 
 ## Questions d'entretien
 
+
 1. Peut-on passer `1` ou `0` à une fonction qui attend un `boolean` en TypeScript ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Non. TypeScript refuse les types incompatibles. Contrairement à JavaScript où 1 est truthy, le type `boolean` n’accepte que `true` et `false`.
    :::
+

@@ -73,6 +73,10 @@ function log(value: any) {
 
 1. Pourquoi ce code ne produit-il aucune erreur alors qu’il est dangereux ?
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
 ```ts
 let data: any = "hello";
 console.log(data.toFixed(2));
@@ -84,8 +88,14 @@ console.log(data.toFixed(2));
 
 ## Questions d'entretien
 
+
 1. Pourquoi considère-t-on généralement `any` comme une mauvaise pratique ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Parce qu’il désactive complètement le type-checking pour la valeur concernée. Les erreurs qui auraient été attrapées à la compilation ne le sont plus et risquent d’apparaître à runtime. On préfère `unknown` ou des types précis.
    :::
+

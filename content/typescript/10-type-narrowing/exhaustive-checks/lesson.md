@@ -75,6 +75,10 @@ Quand toutes les possibilités sont éliminées, le type restant est `never`. On
 
 1. Écris un switch exhaustif sur `"red" | "green" | "blue"`.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function colorCode(c: "red" | "green" | "blue"): string {
@@ -89,8 +93,14 @@ Quand toutes les possibilités sont éliminées, le type restant est `never`. On
 
 ## Questions d'entretien
 
+
 1. Comment évites-tu d’oublier un cas quand une union évolue ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    En visant des switch/if exhaustifs et en utilisant le pattern `assertNever` / `never` dans le default pour que l’ajout d’un membre provoque une erreur de compilation.
    :::
+

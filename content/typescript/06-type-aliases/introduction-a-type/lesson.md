@@ -71,6 +71,10 @@ function setStatus(status: Status) {
 
 1. Crée un type alias `Email` pour `string` et utilise-le dans une fonction.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    type Email = string;
@@ -82,8 +86,14 @@ function setStatus(status: Status) {
 
 ## Questions d'entretien
 
+
 1. Qu’est-ce qu’un type alias et à quoi sert-il ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    C’est un nom donné à un type via `type Nom = Type`. Il sert à documenter, réutiliser et éviter la duplication de formes de types complexes.
    :::
+

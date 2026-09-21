@@ -1,57 +1,60 @@
-- id: typescript-04-index-signatures-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Quelle est la syntaxe d’une index signature pour des clés string vers number ?
-  options:
-    - { key: string: number }
-    - { [key: string]: number }
-    - { string: number }
-    - { index string: number }
-  answer: [1]
-  explanation: >
-    On utilise [key: string]: Type.
-  skills: [objects]
+id: index-signatures-quiz
+kind: QUIZ
+questions:
+  - id: typescript-04-index-signatures-q1
+    type: multiple_choice
+    difficulty: 1
+    question: >
+      Quelle est la syntaxe d’une index signature pour des clés string vers number ?
+    options:
+      - "{ key: string: number }"
+      - "{ [key: string]: number }"
+      - "{ string: number }"
+      - "{ index string: number }"
+    answer: [1]
+    explanation: >
+      On utilise [key: string]: Type.
+    skills: [objects]
 
-- id: typescript-04-index-signatures-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    Une index signature permet de typer des propriétés dynamiques dont le nom n’est pas connu à l’avance.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, c’est son rôle principal.
-  skills: [objects]
+  - id: typescript-04-index-signatures-q2
+    type: true_false
+    difficulty: 1
+    question: >
+      Une index signature permet de typer des propriétés dynamiques dont le nom n’est pas connu à l’avance.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: >
+      Oui, c’est son rôle principal.
+    skills: [objects]
 
-- id: typescript-04-index-signatures-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Les propriétés nommées explicites doivent-elles être compatibles avec l’index signature ?
-  options:
-    - Non
-    - Oui
-    - Uniquement en mode strict
-    - Uniquement pour les strings
-  answer: [1]
-  explanation: >
-    Oui, toutes les propriétés doivent respecter le type de l’index signature.
-  skills: [objects]
+  - id: typescript-04-index-signatures-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Les propriétés nommées explicites doivent-elles être compatibles avec l’index signature ?
+    options:
+      - Non
+      - Oui
+      - Uniquement en mode strict
+      - Uniquement pour les strings
+    answer: [1]
+    explanation: >
+      Oui, toutes les propriétés doivent respecter le type de l’index signature.
+    skills: [objects]
 
-- id: typescript-04-index-signatures-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel type de clé est le plus courant dans une index signature ?
-  options:
-    - boolean
-    - string
-    - object
-    - null
-  answer: [1]
-  explanation: >
-    Les clés d’objet JavaScript sont principalement des strings (ou symbols).
-  skills: [objects]
+  - id: typescript-04-index-signatures-q4
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel type de clé est le plus courant dans une index signature ?
+    options:
+      - boolean
+      - string
+      - object
+      - "null"
+    answer: [1]
+    explanation: >
+      Les clés d’objet JavaScript sont principalement des strings (ou symbols).
+    skills: [objects]

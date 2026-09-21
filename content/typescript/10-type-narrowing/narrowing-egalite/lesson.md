@@ -73,6 +73,10 @@ TypeScript analyse les égalités et restreint les types des deux côtés quand 
 
 1. Narrow une valeur `string | null | undefined` pour n’afficher que les strings non vides.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function show(value: string | null | undefined) {
@@ -85,8 +89,14 @@ TypeScript analyse les égalités et restreint les types des deux côtés quand 
 
 ## Questions d'entretien
 
+
 1. Comment le narrowing par égalité aide-t-il avec `null` et `undefined` ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Les tests `value !== null` et `value != null` (ou des gardes équivalentes) permettent à TypeScript d’exclure null/undefined et d’autoriser les opérations sur le type restant.
    :::
+

@@ -1,7 +1,7 @@
 ---
 id: typescript-05-void
 title: void
-slug: void
+slug: void-functions
 technology: typescript
 level: beginner
 module: 05-functions
@@ -61,6 +61,10 @@ function setTitle(title: string): void {
 
 1. Annote une fonction qui affiche un message.
 
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
+
    :::solution
    ```ts
    function print(msg: string): void {
@@ -71,8 +75,14 @@ function setTitle(title: string): void {
 
 ## Questions d'entretien
 
+
 1. Quand utilises-tu `void` comme type de retour ?
+
+   :::indice
+   Reprends les exemples de la lecon et verifie le type de chaque valeur avant de proposer ta reponse.
+   :::
 
    :::reponse
    Quand la fonction effectue un effet de bord et que l’appelant n’est pas censé utiliser de valeur de retour.
    :::
+

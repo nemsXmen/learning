@@ -1,57 +1,64 @@
-- id: typescript-03-introduction-aux-tuples-q1
-  type: multiple_choice
-  difficulty: 1
-  question: >
-    Qu’est-ce qu’un tuple en TypeScript ?
-  options:
-    - Un tableau de longueur variable d’un seul type
-    - Un tableau de longueur fixe avec des types par position
-    - Un objet
-    - Un type any
-  answer: [1]
-  explanation: >
-    Le tuple fixe la longueur et le type de chaque index.
-  skills: [arrays-tuples]
-
-- id: typescript-03-introduction-aux-tuples-q2
-  type: true_false
-  difficulty: 1
-  question: >
-    `[string, number]` accepte `["Alice", 30]` mais refuse `[30, "Alice"]`.
-  options:
-    - "true"
-    - "false"
-  answer: [0]
-  explanation: >
-    Oui, l’ordre des types est significatif.
-  skills: [arrays-tuples]
-
-- id: typescript-03-introduction-aux-tuples-q3
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Quel est le type de `pair[0]` si `pair` est `[string, number]` ?
-  options:
-    - string | number
-    - string
-    - number
-    - any
-  answer: [1]
-  explanation: >
-    L’accès par index littéral 0 donne exactement string.
-  skills: [arrays-tuples]
-
-- id: typescript-03-introduction-aux-tuples-q4
-  type: multiple_choice
-  difficulty: 2
-  question: >
-    Dans quel cas un tuple est-il particulièrement utile ?
-  options:
-    - Pour stocker une liste illimitée d’éléments du même type
-    - Pour retourner plusieurs valeurs de types différents depuis une fonction
-    - Pour remplacer toutes les interfaces
-    - Pour désactiver le typage
-  answer: [1]
-  explanation: >
-    Les retours multiples (ex. [result, error]) sont un cas d’usage classique.
-  skills: [arrays-tuples]
+id: introduction-aux-tuples-quiz
+kind: QUIZ
+questions:
+  - id: typescript-03-introduction-aux-tuples-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Qu’est-ce qu’un tuple en TypeScript ?
+    options:
+      - Un tableau de longueur variable d’un seul type
+      - Un tableau de longueur fixe avec des types par position
+      - Un objet
+      - Un type any
+    answer:
+      - 1
+    explanation: |
+      Le tuple fixe la longueur et le type de chaque index.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-introduction-aux-tuples-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `[string, number]` accepte `["Alice", 30]` mais refuse `[30, "Alice"]`.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, l’ordre des types est significatif.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-introduction-aux-tuples-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Quel est le type de `pair[0]` si `pair` est `[string, number]` ?
+    options:
+      - string | number
+      - string
+      - number
+      - any
+    answer:
+      - 1
+    explanation: |
+      L’accès par index littéral 0 donne exactement string.
+    skills:
+      - arrays-tuples
+  - id: typescript-03-introduction-aux-tuples-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans quel cas un tuple est-il particulièrement utile ?
+    options:
+      - Pour stocker une liste illimitée d’éléments du même type
+      - Pour retourner plusieurs valeurs de types différents depuis une fonction
+      - Pour remplacer toutes les interfaces
+      - Pour désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Les retours multiples (ex. [result, error]) sont un cas d’usage classique.
+    skills:
+      - arrays-tuples
