@@ -4,7 +4,7 @@ title: "Retrieval et recherche sémantique"
 slug: retrieval
 technology: ai-engineering
 level: intermediate
-module: 07-rag
+module: rag
 order: 1
 estimatedMinutes: 65
 difficulty: 4
