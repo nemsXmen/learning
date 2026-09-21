@@ -1,0 +1,26 @@
+id: ai-06-llm-engineering-tools-quiz
+kind: QUIZ
+questions:
+  - id: ai-06-llm-engineering-tools-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Pourquoi valider une sortie LLM ?"
+    options: ["Pour garantir le contrat attendu","Pour rendre le modèle plus intelligent","Pour supprimer toute latence","Pour éviter les tests"]
+    answer: [0]
+    explanation: "La validation protège le reste de l'application contre une sortie inattendue."
+    skills: [ai-llm-apps]
+  - id: ai-06-llm-engineering-tools-q2
+    type: multiple_answer
+    difficulty: 2
+    question: "Quels contrôles sont utiles autour d'un appel LLM ?"
+    options: ["Timeout","Limite de retries","Validation de sortie","Secret exposé au navigateur"]
+    answer: [0, 1, 2]
+    explanation: "Ces contrôles rendent l'intégration plus prévisible et sûre."
+    skills: [ai-llm-apps]
+  - id: ai-06-llm-engineering-tools-q3
+    type: true_false
+    difficulty: 1
+    question: "Un retry illimité est une bonne stratégie pour une API LLM."
+    answer: false
+    explanation: "Il peut amplifier latence et coût ; les retries doivent être bornés."
+    skills: [ai-llm-apps]
