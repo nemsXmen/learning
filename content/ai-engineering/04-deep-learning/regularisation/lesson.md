@@ -4,13 +4,13 @@ title: "Régularisation et stabilité de l'entraînement"
 slug: regularisation
 technology: ai-engineering
 level: intermediate
-module: 04-deep-learning
+module: deep-learning
 order: 4
 estimatedMinutes: 60
 difficulty: 4
 xp: 140
 prerequisites: [ai-dl-training]
-skills: [ai-deep-learning]
+skills: [ai-pytorch]
 tags: [deep-learning, pytorch]
 ---
 
