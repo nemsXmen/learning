@@ -48,3 +48,32 @@ La lecture et l'effet de bord ont des risques différents. La séparation permet
 
 ## À retenir
 Le tool calling relie un composant probabiliste à des opérations déterministes. Les contrôles restent dans le code.
+
+
+## Introduction
+
+Le tool calling relie raisonnement probabiliste et opérations déterministes.
+
+## Concept
+
+Un tool possède contrat, validation, autorisation, limites et journalisation.
+
+## Exemple
+
+Un tool de remboursement doit vérifier indépendamment identité, permissions, montant et idempotence.
+
+## Comment ça fonctionne
+
+modèle → tool request → validation → authorization → execution → result
+
+## Questions d'entretien
+
+- Qui doit autoriser un effet de bord ?
+
+  :::indice
+  Considère toujours la frontière entre génération et logique déterministe.
+  :::
+
+  :::reponse
+  Le système déterministe côté serveur, pas le modèle seul.
+  :::
