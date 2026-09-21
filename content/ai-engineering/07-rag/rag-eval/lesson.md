@@ -44,8 +44,14 @@ Conserve un jeu fixe de tests et compare les versions de chunking, embeddings, r
 ## Exercice
 Après changement d'embedding, la satisfaction humaine monte mais recall@5 baisse. Que faire ?
 
-### Solution
+:::indice
+Sépare retrieval, contexte et génération pour localiser l'erreur.
+:::
+
+:::solution
 Examiner les cas gagnés et perdus. Ne pas conclure avec une seule métrique : identifier le compromis selon les objectifs produit.
+
+:::
 
 ## À retenir
 Évaluer RAG signifie mesurer séparément récupération, réponse et contraintes opérationnelles.
