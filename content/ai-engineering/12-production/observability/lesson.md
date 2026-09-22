@@ -10,7 +10,7 @@ estimatedMinutes: 80
 difficulty: 5
 xp: 180
 prerequisites: [ai-12-deployment]
-skills: [ai-production]
+skills: [ai-observability]
 tags: [production, reliability, observability]
 ---
 
@@ -41,6 +41,32 @@ Définis objectifs sur disponibilité, latence et erreurs. Ajoute des signaux qu
 :::solution
 Compare la composition du coût avant et après le changement.
 :::
+## Lab pratique : trace exploitable sans fuite de données
+
+Définis un événement de trace minimal pour une requête AI :
+
+```json
+{
+  "requestId": "req_123",
+  "tenantId": "tenant_42",
+  "feature": "document-answer",
+  "model": "model-version",
+  "promptVersion": "answer-v7",
+  "inputTokens": 1200,
+  "outputTokens": 180,
+  "latencyMs": 840,
+  "status": "ok"
+}
+```
+
+Ne stocke pas automatiquement le prompt, la réponse ou les documents complets. Si leur conservation est réellement nécessaire pour une évaluation, définis une politique de redaction, d'accès et de rétention distincte.
+
+Critères de réussite :
+- une requête peut être corrélée à ses appels internes ;
+- coût et latence sont calculables par fonctionnalité et tenant ;
+- la version du modèle et du prompt est identifiable ;
+- les données sensibles ne sont pas présentes par défaut dans les logs.
+
 ## Erreurs fréquentes
 
 Le flow est : request → trace → retrieval/tools → model call → response → metrics. Ajoute des SLO de disponibilité et de latence, puis des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
