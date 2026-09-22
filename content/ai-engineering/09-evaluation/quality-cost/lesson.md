@@ -30,7 +30,7 @@ quality
 
 Ne dégrade pas silencieusement la qualité pour gagner quelques millisecondes. Compare sur le même dataset.
 
-## Exercice
+## Exercices
 Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
 
 :::indice
