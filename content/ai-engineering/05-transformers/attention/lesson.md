@@ -67,6 +67,13 @@ Cela introduirait une information future absente au moment réel de la générat
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 L'attention n'est pas une simple moyenne : elle produit une combinaison pondérée des valeurs selon les compatibilités calculées entre requêtes et clés.
 
