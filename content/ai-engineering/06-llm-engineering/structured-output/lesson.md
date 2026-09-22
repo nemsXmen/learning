@@ -51,6 +51,31 @@ Le schéma seul ne suffit pas : il faut un invariant métier.
 :::solution
 Rejeter la sortie, journaliser le cas et appliquer une stratégie contrôlée. Le modèle ne doit pas pouvoir contourner la règle métier en générant une autre valeur.
 :::
+## Lab pratique : contrat déterministe
+
+Construis un endpoint qui reçoit une sortie LLM et refuse toute donnée qui ne respecte pas le contrat métier.
+
+```typescript
+const Payment = z.object({
+  currency: z.enum(["EUR", "USD"]),
+  amount: z.number().positive().finite(),
+  recipientId: z.string().min(1),
+})
+
+const parsed = Payment.safeParse(modelOutput)
+if (!parsed.success) {
+  throw new Error("INVALID_MODEL_OUTPUT")
+}
+```
+
+Ajoute ensuite une règle métier indépendante du schéma : un montant supérieur à la limite du tenant doit être refusé même si le JSON est parfaitement valide.
+
+Critères de réussite :
+- aucune sortie non validée n'atteint le service métier ;
+- les erreurs de validation sont traçables sans exposer les données sensibles ;
+- un retry est borné et ne contourne jamais une règle métier ;
+- un effet de bord possède une clé d'idempotence.
+
 ## Erreurs fréquentes
 
 Il est dangereux de laisser une sortie LLM déclencher directement un effet de bord. Pour une opération financière, ajoute autorisation indépendante, idempotency key et audit. Un retry aveugle peut également créer des doublons.
