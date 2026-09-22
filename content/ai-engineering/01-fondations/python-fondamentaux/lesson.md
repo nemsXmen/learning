@@ -110,7 +110,7 @@ Le générateur évite de charger tout le fichier en mémoire.
 
 ## Exercices
 
-Construis un pipeline qui lit des textes, les normalise, supprime les doublons, retourne id/text/length et lève une erreur pour un texte vide.
+- Construis un pipeline qui lit des textes, les normalise, supprime les doublons, retourne id/text/length et lève une erreur pour un texte vide.
 
 :::indice
 Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
