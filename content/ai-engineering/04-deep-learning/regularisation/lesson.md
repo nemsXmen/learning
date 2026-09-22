@@ -43,17 +43,15 @@ Le clipping peut masquer une cause racine : inspecte aussi gradients et données
 Surveille une métrique de validation et conserve le meilleur checkpoint. Définis patience et métrique avant l'expérience.
 
 ## Exercices
-
 - La validation se dégrade alors que le train continue de progresser. Propose trois expériences contrôlées.
 
 :::indice
 Chaque expérience doit répondre à une hypothèse précise et modifier idéalement un facteur principal.
-:::
+::
 
 :::solution
 Comparer un modèle plus petit, une valeur différente de weight decay et une valeur différente de dropout, en conservant le reste du protocole comparable.
-:::
-
+::
 ## Erreurs fréquentes
 
 Changer simultanément dropout, learning rate, batch size et architecture empêche d'attribuer l'effet observé. Garde le dataset, la seed, le protocole et le budget comparables.
@@ -79,13 +77,12 @@ Dropout désactive aléatoirement certaines activations pendant l'entraînement.
 Flow expérimental : training → validation → diagnostic → modification contrôlée → comparaison. Le gradient clipping peut limiter des gradients trop grands, mais il ne doit pas masquer une cause racine. L'early stopping conserve le meilleur checkpoint selon une métrique définie à l'avance.
 
 ## Questions d'entretien
-
-Que révèle un écart train/validation important ?
+- Que révèle un écart train/validation important ?
 
 :::indice
 Relie ta réponse au fonctionnement concret du système.
-:::
+::
 
 :::reponse
 Il peut signaler du surapprentissage, mais aussi un changement de distribution, un problème de données ou un protocole de validation inadéquat. Il faut diagnostiquer avant de choisir une correction.
-:::
+::
