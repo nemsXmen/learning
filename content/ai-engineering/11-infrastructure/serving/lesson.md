@@ -38,11 +38,10 @@ Une queue bornée et des réponses de surcharge protègent le système lorsque l
 
 :::indice
 - La latence p99 explose pendant les pics. Quelles hypothèses tester ?
-::
-
+:::
 :::solution
 Sépare queue, prétraitement et calcul modèle.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : requêtes → admission → scheduler/batcher → workers GPU → réponse → métriques. Une queue bornée et une politique de surcharge évitent qu'une saturation se transforme en cascade failure.
@@ -72,8 +71,7 @@ Un service peut avoir une moyenne de 400 ms tout en ayant un p99 de plusieurs se
 
 :::indice
 Relie ta réponse à une métrique et à une contrainte système.
-::
-
+:::
 :::reponse
 Pourquoi suivre p99 ?
-::
+:::
