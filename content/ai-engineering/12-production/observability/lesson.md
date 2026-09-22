@@ -32,7 +32,7 @@ request -> trace -> model call -> tool calls -> response
 ## SLO
 Définis objectifs sur disponibilité, latence et erreurs. Ajoute des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
 
-## Exercice
+## Exercices
 Le coût par requête double sans hausse de trafic. Où chercher ?
 
 :::indice
