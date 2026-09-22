@@ -1,7 +1,7 @@
 ---
 id: ai-15-architecture
 title: "Capstone : architecture d'un AI SaaS production"
-slug: architecture
+slug: capstone-architecture
 technology: ai-engineering
 level: expert
 module: capstone
