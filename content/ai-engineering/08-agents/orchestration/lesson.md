@@ -48,6 +48,13 @@ Centraliser l'autorisation et l'écriture, utiliser verrou/version optimiste ou 
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Le multi-agent est une architecture, pas un objectif. Mesure son bénéfice contre sa complexité.
 
