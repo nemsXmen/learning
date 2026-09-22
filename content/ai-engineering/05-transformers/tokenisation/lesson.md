@@ -50,17 +50,15 @@ Pour une application réelle, mesure les tokens du texte effectivement envoyé a
 Une même information peut nécessiter des nombres de tokens très différents selon la langue, le tokenizer et l'écriture. Pour un produit international, teste le tokenizer sur les langues réellement supportées.
 
 ## Exercices
-
 - Pourquoi un long texte peut-il être coûteux même s'il contient relativement peu de mots ?
 
 :::indice
 Pense à l'unité réellement consommée par le modèle.
-:::
+::
 
 :::solution
 Le coût et la fenêtre de contexte sont mesurés en tokens. Un texte peut donc produire beaucoup de sous-tokens.
-:::
-
+::
 ## Erreurs fréquentes
 
 Compter les mots pour estimer le coût est une approximation fragile. Il faut mesurer les tokens réels. Il faut aussi tester les formats particuliers, les URLs, le code et les langues du produit.
@@ -86,13 +84,12 @@ Pour un texte comme « internationalisation », le tokenizer peut choisir une ou
 Le flow est : texte → tokenizer → token IDs → embeddings → Transformer. Des méthodes comme BPE construisent des unités fréquentes afin de gérer un vocabulaire ouvert. Le nombre de tokens influence mémoire, latence et coût. En multilingue, mesure les langues réellement supportées car une même quantité de texte peut produire des nombres de tokens différents.
 
 ## Questions d'entretien
-
-Pourquoi le nombre de tokens compte-t-il ?
+- Pourquoi le nombre de tokens compte-t-il ?
 
 :::indice
 Relie ta réponse au fonctionnement concret du modèle.
-:::
+::
 
 :::reponse
 Il influence la fenêtre de contexte, la latence, le coût et la quantité d'information traitée.
-:::
+::
