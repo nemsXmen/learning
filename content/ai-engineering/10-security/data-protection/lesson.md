@@ -35,7 +35,7 @@ L'isolation doit être appliquée avant retrieval et avant toute écriture.
 ## Rétention
 Définis durée de conservation, suppression, backups et logs. Les données d'observabilité peuvent elles-mêmes être sensibles.
 
-## Exercice
+## Exercices
 Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
 
 :::indice
