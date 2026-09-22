@@ -33,52 +33,49 @@ Ne masque pas une panne par des retries illimités. Les budgets de temps doivent
 Une fonctionnalité peut passer en recherche lexicale, modèle plus petit, réponse différée ou lecture seule selon le produit.
 
 ## Exercices
-- Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
+
+Les retries illimités amplifient congestion et coût. Un fallback mal choisi peut aussi produire une qualité trompeuse ; il faut donc définir ce qui est acceptable pour chaque mode dégradé.
 
 :::indice
-Raisonne en détection → mitigation → récupération → vérification.
+- Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
 :::
 
 :::solution
-Conserver les fonctions déterministes disponibles et retourner un état dégradé explicite ou router vers un modèle compatible.
-
+Identifie d'abord les capacités qui restent fiables.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : failure → detect → timeout/circuit breaker → fallback ou dégradation → réponse observable → recovery. Les budgets de temps doivent traverser toute la chaîne.
 
 ## À retenir
-La résilience consiste à prévoir comment le système se comporte quand ses dépendances échouent.
 
+Conserver les fonctions déterministes disponibles et retourner un état dégradé explicite ou router vers un modèle compatible, avec métriques et limites.
 
 ## Introduction
 
-La fiabilité consiste à prévoir les défaillances plutôt qu'à espérer leur absence.
+Concevoir pour les pannes plutôt que pour le chemin nominal
 
 ## Concept
 
-Timeout, retry limité, fallback, circuit breaker et dégradation contrôlée répondent à des pannes différentes.
+Un système AI dépend souvent de plusieurs services : provider LLM, vector store, queue, base, stockage et APIs externes. Chacun peut timeout, refuser une requête ou devenir lent.
 
 ## Exemple
 
-Si le provider principal échoue, un fallback peut produire une réponse simplifiée plutôt qu'une erreur totale.
+Un fallback doit être explicite. Selon le produit, on peut utiliser un modèle compatible, une recherche lexicale, une réponse différée, une lecture seule ou une fonctionnalité déterministe.
 
 ## Comment ça fonctionne
 
-failure → detect → fallback/degrade → recover
+Si le provider principal tombe mais que la recherche interne fonctionne, retourner une information déterministe ou un état dégradé peut être préférable à multiplier les retries vers une dépendance indisponible.
 
 ## Questions d'entretien
 
-- Pourquoi limiter les retries ?
+La résilience décrit le comportement attendu lorsque les dépendances échouent.
 
-  :::indice
-  Pense aux conséquences d'une panne sous trafic réel.
-  :::
+:::indice
+Relie ta réponse à une contrainte opérationnelle concrète.
+:::
 
-  :::reponse
-  Parce que des retries illimités amplifient congestion et coût.
-  :::
+:::reponse
+Pourquoi limiter les retries ?
+:::
