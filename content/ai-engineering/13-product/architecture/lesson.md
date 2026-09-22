@@ -37,7 +37,7 @@ Utilise des interfaces internes stables pour prompts, modèles et tools afin de 
 ## Données
 Sépare données métier, documents, embeddings, traces et artefacts d'évaluation.
 
-## Exercice
+## Exercices
 Le produit dépend directement de trois SDK fournisseurs dans dix modules. Quel risque ?
 
 :::indice
