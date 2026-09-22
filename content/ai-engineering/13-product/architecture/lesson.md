@@ -38,52 +38,49 @@ Utilise des interfaces internes stables pour prompts, modèles et tools afin de 
 Sépare données métier, documents, embeddings, traces et artefacts d'évaluation.
 
 ## Exercices
-Le produit dépend directement de trois SDK fournisseurs dans dix modules. Quel risque ?
+
+Une abstraction trop complexe peut devenir une nouvelle dette. Le contrat doit exposer les capacités nécessaires au produit sans masquer les contraintes importantes du fournisseur.
 
 :::indice
-Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+Le produit dépend directement de trois SDK fournisseurs dans dix modules. Quel risque ?
 :::
 
 :::solution
-Le couplage rend migrations et tests difficiles. Centraliser les appels derrière un gateway réduit la surface de changement.
-
+Cherche le coût d'un changement de fournisseur.
 :::
 
 ## Erreurs fréquentes
 
-- choisir une technologie avant de définir le problème ;
-- mesurer une moyenne sans regarder les cas critiques ;
-- confondre une sortie plausible avec une sortie validée ;
-- oublier coût, sécurité et opérations dans la conception.
+Le flow est : frontend → API → gateway → services AI → persistence/observability. Les données métier, documents, embeddings, traces et artefacts d'évaluation ont des cycles de vie distincts.
 
 ## À retenir
-Une architecture AI-first garde les responsabilités déterministes hors du modèle.
 
+Le couplage rend migrations et tests difficiles. Centraliser les appels derrière un gateway réduit la surface de changement.
 
 ## Introduction
 
-Une architecture AI-first sépare interface, API, gateway, retrieval, modèles et outils.
+Construire une architecture qui garde le contrôle
 
 ## Concept
 
-Les contrats internes permettent de changer fournisseurs et composants indépendamment.
+Un produit AI robuste sépare les responsabilités : interface, API, gateway, retrieval, workers, stockage et fournisseurs de modèles. Cette séparation permet de faire évoluer chaque partie sans donner au modèle des responsabilités qu'il ne doit pas posséder.
 
 ## Exemple
 
-Le backend conserve auth, quotas et effets de bord hors du modèle.
+Le backend reste responsable de l'identité, des permissions, quotas, validation et effets de bord. Un gateway interne fournit un contrat stable pour les modèles, prompts et tools.
 
 ## Comment ça fonctionne
 
-frontend → API → gateway → AI services → persistence/observability
+Si dix modules appellent directement trois SDK fournisseurs, chaque migration devient une modification distribuée. Une abstraction interne réduit le couplage et centralise timeout, coût, sécurité et observabilité.
 
 ## Questions d'entretien
 
-- Pourquoi centraliser les appels modèles ?
+Une architecture AI-first garde les responsabilités déterministes hors du modèle.
 
-  :::indice
-  Relie la métrique à une décision produit concrète.
-  :::
+:::indice
+Relie ta réponse à une décision produit mesurable.
+:::
 
-  :::reponse
-  Pour maîtriser sécurité, coût, timeout, observabilité et migrations de fournisseur.
-  :::
+:::reponse
+Pourquoi centraliser les appels modèles ?
+:::
