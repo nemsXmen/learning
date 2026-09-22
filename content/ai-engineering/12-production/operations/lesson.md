@@ -42,6 +42,13 @@ Limiter trafic ou quotas, arrêter la boucle, identifier la version fautive, cor
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Les systèmes IA ont besoin des mêmes disciplines opérationnelles que les systèmes critiques.
 
