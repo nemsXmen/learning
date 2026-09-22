@@ -15,9 +15,8 @@ tags: [deep-learning, pytorch]
 ---
 
 ## Objectifs
-- comprendre tenseur, shape, dtype et device ;
-- manipuler les dimensions ;
-- comprendre l'autodifférentiation.
+
+À la fin de ce chapitre, tu dois pouvoir lire une shape de tenseur, choisir un dtype et un device adaptés, comprendre le broadcasting et expliquer comment PyTorch calcule automatiquement les gradients.
 
 ## Tenseur
 Un tenseur généralise vecteurs et matrices. Dans PyTorch, il possède notamment une shape, un dtype et un device.
@@ -53,56 +52,49 @@ print(w.grad)
 ```
 
 ## Exercices
-Crée un tenseur (32, 128), ajoute un biais (128,), puis vérifie la shape.
+
+- Crée un tenseur de shape (32, 128), ajoute un biais de shape (128,) et vérifie la shape obtenue.
 
 :::indice
-Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+Lis les dimensions comme une phrase : 32 exemples, chacun avec 128 features.
 :::
 
 :::solution
-```python
-x = torch.randn(32, 128)
-bias = torch.zeros(128)
-y = x + bias
-assert y.shape == (32, 128)
-```
-
+Le résultat doit conserver la shape (32, 128), car le biais est appliqué à chaque exemple.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Une erreur classique consiste à corriger une shape sans comprendre ce que représente chaque dimension. Évite aussi les transferts CPU/GPU inutiles et ne confonds pas broadcasting et transformation métier.
 
 ## À retenir
-Shape, dtype, device et gradients sont quatre notions essentielles au debugging d'un réseau neuronal.
+
+Pour debugger PyTorch, commence par quatre questions : quelle est la shape, quel est le dtype, sur quel device se trouve le tenseur et quelles dérivées sont suivies ?
 
 ## Introduction
 
-Les tenseurs sont la structure numérique fondamentale des calculs PyTorch.
+En deep learning, presque tout finit par devenir un tableau de nombres : une image, une séquence de tokens, un batch de transactions ou les activations d'un réseau. PyTorch représente ces données avec des tenseurs.
 
 ## Concept
 
-Shape, dtype, device et broadcasting déterminent la compatibilité et le coût des opérations.
+Un tenseur possède notamment une shape, un dtype et un device. Un tenseur de shape (32, 128) représente naturellement 32 exemples ayant chacun 128 features. Une erreur de shape signifie souvent que les dimensions attendues par deux composants ne correspondent pas.
 
 ## Exemple
 
-Une erreur de shape sur une couche linéaire peut être détectée avant l'entraînement avec un petit batch de test.
+Supposons un batch de 32 exemples et un biais de 128 valeurs. Le broadcasting permet d'ajouter ce biais à chaque exemple. L'opération peut être valide mathématiquement sans être correcte selon ton intention métier.
 
 ## Comment ça fonctionne
 
-entrée → tenseurs → opérations → autograd → sortie
+Le device indique où le calcul est exécuté. Pour utiliser un GPU, les tenseurs et paramètres concernés doivent être sur le même device. L'autodifférentiation construit le graphe nécessaire aux gradients. Flow : paramètres → forward → loss → autograd → gradients → optimizer.
 
 ## Questions d'entretien
 
-- Pourquoi contrôler dtype et device ?
+Pourquoi contrôler le dtype et le device d'un tenseur ?
 
-  :::indice
-  Relie la question au comportement réel d'un entraînement.
-  :::
+:::indice
+Relie ta réponse au fonctionnement concret du système.
+:::
 
-  :::reponse
-  Un mauvais dtype ou un déplacement CPU/GPU inutile peut provoquer erreur ou dégradation de performance.
-  :::
+:::reponse
+Un dtype inadapté peut provoquer des erreurs ou une perte de précision, tandis qu'un mauvais device peut empêcher une opération ou provoquer des transferts coûteux.
+:::
