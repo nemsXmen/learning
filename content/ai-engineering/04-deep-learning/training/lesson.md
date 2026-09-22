@@ -59,6 +59,13 @@ Vérifie données, labels, valeurs extrêmes, learning rate, gradients, mixed pr
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Entraîner un réseau est une expérience contrôlée. Chaque changement doit être mesuré et relié à une hypothèse.
 
