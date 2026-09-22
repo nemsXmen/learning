@@ -37,17 +37,15 @@ Chaque agent doit avoir un contrat clair : entrée, sortie, outils et budget.
 Si une fonction déterministe ou un seul appel suffit, ajouter des agents augmente latence, coûts et surface d'erreur.
 
 ## Exercices
-
-Deux agents qui modifient simultanément la même ressource peuvent créer une course. Utilise version optimiste, verrou, idempotence ou un service d'écriture central selon le cas.
+- Deux agents qui modifient simultanément la même ressource peuvent créer une course. Utilise version optimiste, verrou, idempotence ou un service d'écriture central selon le cas.
 
 :::indice
 - Deux agents modifient la même ressource simultanément. Comment prévenir les conflits ?
-:::
+::
 
 :::solution
 Cherche une source d'autorité unique pour l'écriture.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow peut être : orchestrator → specialist → résultat structuré → verifier → synthèse. Les échanges doivent être bornés et les résultats validés. Lorsqu'une ressource partagée est modifiée, l'écriture doit passer par une autorité clairement définie.
@@ -73,13 +71,12 @@ Un orchestrateur peut déléguer à des spécialistes : retrieval, analyse, gén
 Par exemple, un planner peut demander à un agent de recherche de collecter les sources, puis à un vérificateur de contrôler les affirmations avant la synthèse finale. Si le même résultat peut être obtenu par une fonction déterministe, cette orchestration serait inutile.
 
 ## Questions d'entretien
-
-Le multi-agent est une architecture à justifier par un bénéfice mesurable, pas un objectif en soi.
+- Le multi-agent est une architecture à justifier par un bénéfice mesurable, pas un objectif en soi.
 
 :::indice
 Pense à la séparation entre modèle, runtime et système d'autorisation.
-:::
+::
 
 :::reponse
 Quand éviter le multi-agent ?
-:::
+::
