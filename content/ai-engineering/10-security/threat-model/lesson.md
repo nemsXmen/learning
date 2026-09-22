@@ -34,17 +34,15 @@ Les risques incluent injection, exfiltration, abus d'outils, fuite de données, 
 Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, sandbox, logging et approbation.
 
 ## Exercices
-
-Un prompt plus strict ne remplace pas une autorisation serveur. Une défense utile reste efficace même lorsque le modèle produit une sortie inattendue.
+- Un prompt plus strict ne remplace pas une autorisation serveur. Une défense utile reste efficace même lorsque le modèle produit une sortie inattendue.
 
 :::indice
 - Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
-:::
+::
 
 :::solution
 Le document doit être considéré comme une donnée non fiable.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : actifs → frontières de confiance → menaces → impact → contrôles → risque résiduel. Les contrôles peuvent inclure ACL, validation, sandbox, rate limit, approbation et logging.
@@ -70,13 +68,12 @@ Cartographie prompts, documents, secrets, modèles, bases, embeddings, outils et
 Dans un RAG multi-tenant, les documents, embeddings et identités sont des actifs distincts. Une erreur d'isolation peut permettre à une requête d'un tenant de récupérer des informations d'un autre.
 
 ## Questions d'entretien
-
-Le threat modeling relie chaque menace à un contrôle vérifiable et à un risque résiduel.
+- Le threat modeling relie chaque menace à un contrôle vérifiable et à un risque résiduel.
 
 :::indice
 Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
-:::
+::
 
 :::reponse
 Pourquoi modéliser les frontières de confiance ?
-:::
+::
