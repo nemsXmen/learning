@@ -38,17 +38,15 @@ Utilise des interfaces internes stables pour prompts, modèles et tools afin de 
 Sépare données métier, documents, embeddings, traces et artefacts d'évaluation.
 
 ## Exercices
-
-Une abstraction trop complexe peut devenir une nouvelle dette. Le contrat doit exposer les capacités nécessaires au produit sans masquer les contraintes importantes du fournisseur.
+- Une abstraction trop complexe peut devenir une nouvelle dette. Le contrat doit exposer les capacités nécessaires au produit sans masquer les contraintes importantes du fournisseur.
 
 :::indice
 Le produit dépend directement de trois SDK fournisseurs dans dix modules. Quel risque ?
-:::
+::
 
 :::solution
 Cherche le coût d'un changement de fournisseur.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : frontend → API → gateway → services AI → persistence/observability. Les données métier, documents, embeddings, traces et artefacts d'évaluation ont des cycles de vie distincts.
@@ -74,13 +72,12 @@ Le backend reste responsable de l'identité, des permissions, quotas, validation
 Si dix modules appellent directement trois SDK fournisseurs, chaque migration devient une modification distribuée. Une abstraction interne réduit le couplage et centralise timeout, coût, sécurité et observabilité.
 
 ## Questions d'entretien
-
-Une architecture AI-first garde les responsabilités déterministes hors du modèle.
+- Une architecture AI-first garde les responsabilités déterministes hors du modèle.
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-:::
+::
 
 :::reponse
 Pourquoi centraliser les appels modèles ?
-:::
+::
