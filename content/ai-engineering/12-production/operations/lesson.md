@@ -30,7 +30,7 @@ Les runbooks indiquent commandes, dashboards, seuils et rollback.
 ## Coûts
 Suivre coût par modèle, tenant, fonctionnalité et période. Budgets et quotas évitent les consommations illimitées.
 
-## Exercice
+## Exercices
 Un agent boucle et génère une facture inattendue. Que faire ?
 
 :::indice
