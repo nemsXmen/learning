@@ -54,7 +54,7 @@ Une grande fenêtre ne signifie pas automatiquement meilleure compréhension. Te
 ## Modèles spécialisés
 Pour certaines tâches, un petit modèle spécialisé peut être plus adapté qu'un modèle généraliste : classification, extraction structurée, reranking ou génération très contrainte.
 
-## Exercice
+## Exercices
 Une application reçoit 100 000 requêtes par jour. Quelles dimensions mesurer avant de choisir un modèle ?
 
 :::indice
