@@ -30,6 +30,13 @@ dataset -> runner -> system version -> metrics -> error analysis
 ## Rubrique
 Pour une réponse libre, une grille explicite peut évaluer exactitude, couverture, conformité et style. Pour un JSON, privilégie d'abord des assertions déterministes.
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Une évaluation utile permet de comparer deux versions sans dépendre d'une impression ponctuelle.
 
