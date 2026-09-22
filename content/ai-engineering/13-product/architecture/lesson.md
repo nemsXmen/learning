@@ -4,7 +4,7 @@ title: "Architecture d'un produit AI-first"
 slug: architecture
 technology: ai-engineering
 level: advanced
-module: 13-product
+module: product
 order: 2
 estimatedMinutes: 80
 difficulty: 5
