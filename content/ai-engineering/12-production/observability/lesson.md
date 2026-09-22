@@ -37,11 +37,10 @@ Définis objectifs sur disponibilité, latence et erreurs. Ajoute des signaux qu
 
 :::indice
 - Le coût par requête double sans hausse de trafic. Où chercher ?
-::
-
+:::
 :::solution
 Compare la composition du coût avant et après le changement.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : request → trace → retrieval/tools → model call → response → metrics. Ajoute des SLO de disponibilité et de latence, puis des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
@@ -71,8 +70,7 @@ Une requête lente peut avoir un temps modèle normal mais attendre longtemps da
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-::
-
+:::
 :::reponse
 Que doit contenir une trace AI utile ?
-::
+:::
