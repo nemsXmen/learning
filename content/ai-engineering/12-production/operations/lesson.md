@@ -35,11 +35,10 @@ Suivre coût par modèle, tenant, fonctionnalité et période. Budgets et quotas
 
 :::indice
 - Un agent boucle et génère une facture inattendue. Que faire ?
-::
-
+:::
 :::solution
 Commence par arrêter l'hémorragie.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : detect → triage → contain → mitigate → recover → review. Pendant l'incident, distingue panne fournisseur, panne applicative et problème de données pour éviter de corriger le mauvais composant.
@@ -69,8 +68,7 @@ Un agent boucle et multiplie les appels LLM. Sans budget de steps, quota ou limi
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-::
-
+:::
 :::reponse
 Pourquoi un runbook doit-il être écrit avant incident ?
-::
+:::
