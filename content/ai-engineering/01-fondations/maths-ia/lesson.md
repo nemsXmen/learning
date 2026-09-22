@@ -94,7 +94,7 @@ Une fuite de données entre ces ensembles peut produire une métrique artificiel
 
 ## Exercices
 
-Calcule la similarité cosinus de a=[1,0] et b=[0.8,0.6].
+- Calcule la similarité cosinus de a=[1,0] et b=[0.8,0.6].
 
 :::indice
 Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
