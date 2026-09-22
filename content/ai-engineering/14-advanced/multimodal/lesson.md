@@ -34,7 +34,7 @@ Pour une analyse visuelle, précise les tâches attendues : classification, extr
 ## Audio
 Sépare transcription, diarisation éventuelle et compréhension. Une erreur de transcription peut devenir une erreur de raisonnement.
 
-## Exercice
+## Exercices
 Un document scanné contient une information critique dans une image. Que faut-il tester ?
 
 :::indice
