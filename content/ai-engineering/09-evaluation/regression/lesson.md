@@ -38,11 +38,10 @@ Un changement peut être bloqué si une métrique critique baisse au-delà d'un 
 
 :::indice
 - Le score global reste stable mais les requêtes en français régressent. Que montre la moyenne ?
-::
-
+:::
 :::solution
 Cherche ce que l'agrégation peut masquer.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : changement → suite d'évaluation → comparaison → analyse par segment → release gate → déploiement. Une gate peut bloquer une release si une métrique critique descend sous un seuil défini.
@@ -72,8 +71,7 @@ Après chaque changement de modèle, prompt, chunking ou outil, la suite rejoue 
 
 :::indice
 Relie ta réponse à une décision concrète de qualité, coût ou release.
-::
-
+:::
 :::reponse
 Que doit faire une release gate ?
-::
+:::
