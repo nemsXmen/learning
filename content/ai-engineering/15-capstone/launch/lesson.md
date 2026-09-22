@@ -40,7 +40,7 @@ Chaque incident important doit avoir une procédure : détection, mitigation, d�
 ## Évolution
 Après lancement, les changements de prompts, modèles, retrieval et tools doivent rester versionnés et évalués.
 
-## Exercice
+## Exercices
 Le coût par tâche double après un changement de modèle alors que la qualité reste stable. Que vérifier ?
 
 :::indice
