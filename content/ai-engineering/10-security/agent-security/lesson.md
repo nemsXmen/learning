@@ -37,17 +37,15 @@ Injecte les credentials uniquement dans le composant qui doit les utiliser. Évi
 Trace appels d'outils, décisions de politique, erreurs et request IDs sans enregistrer inutilement des données sensibles.
 
 ## Exercices
-
-Même un agent correctement configuré peut produire une action inattendue. Les contrôles doivent donc limiter l'impact maximal d'une erreur ou d'une compromission.
+- Même un agent correctement configuré peut produire une action inattendue. Les contrôles doivent donc limiter l'impact maximal d'une erreur ou d'une compromission.
 
 :::indice
 - Un agent peut exécuter du Python arbitraire. Quelles protections minimales ?
-:::
+::
 
 :::solution
 Pense en termes d'isolation et de limites de ressources.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : request → policy → sandbox/tool → validation du résultat → audit. Les secrets doivent rester dans le composant qui appelle réellement le service, pas dans le contexte du modèle.
@@ -73,13 +71,12 @@ Le principe de least privilege consiste à donner uniquement les permissions né
 Pour un agent capable d'exécuter Python arbitraire, il ne suffit pas de vérifier le prompt. Il faut isoler le processus, limiter CPU et mémoire, contrôler le filesystem et le réseau et imposer un timeout.
 
 ## Questions d'entretien
-
-L'autonomie augmente la surface d'attaque ; les privilèges et les ressources doivent rester bornés.
+- L'autonomie augmente la surface d'attaque ; les privilèges et les ressources doivent rester bornés.
 
 :::indice
 Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
-:::
+::
 
 :::reponse
 Quel est le principe de least privilege pour un agent ?
-:::
+::
