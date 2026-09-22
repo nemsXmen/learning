@@ -70,6 +70,13 @@ Vérifier changement de distribution, preprocessing train/production, seuil, qua
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 
 Le modèle n'est qu'un composant. L'AI Engineer construit contrats, versioning, serving, monitoring et rollback autour de lui.
