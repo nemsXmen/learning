@@ -31,52 +31,49 @@ metric = quality + reliability + cost + latency
 ```
 
 ## Exercices
-- Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
+
+Une moyenne globale peut masquer une régression sur une langue, une intention ou un tenant. Segmente donc les résultats selon les risques importants avant de conclure.
 
 :::indice
-Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
+- Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
 :::
 
 :::solution
-Le tableau d'évaluation doit intégrer le coût par requête ou par tâche, avec une mesure de qualité comparable.
-
+Cherche la contrainte opérationnelle absente du tableau.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : outputs → métriques → segmentation → seuils → décision. Un LLM-as-judge peut évaluer des propriétés difficiles à formaliser, mais il doit lui aussi être testé pour biais de longueur, formulation ou préférence de modèle.
 
 ## À retenir
-Aucune métrique unique ne résume un système LLM.
 
+Le coût par requête ou par tâche doit être mesuré avec une qualité comparable, ainsi que la latence si elle affecte l'expérience.
 
 ## Introduction
 
-Les métriques doivent correspondre au risque réel du système.
+Choisir des métriques qui expliquent réellement le système
 
 ## Concept
 
-Exact match, précision, rappel, groundedness, latence et coût ne mesurent pas la même chose.
+Il n'existe pas une métrique universelle pour un système LLM. Une classification, une extraction JSON, un RAG et un chatbot n'ont pas les mêmes critères de réussite.
 
 ## Exemple
 
-Un système de classification sensible peut privilégier le rappel alors qu'une autre tâche privilégie la précision.
+Precision, recall et F1 répondent à des questions différentes. Exact match convient à certaines sorties exactes ; la validation de schéma vérifie une structure ; recall@k évalue le retrieval ; groundedness examine le support des affirmations. Latence, erreurs, tokens et coût complètent la vue système.
 
 ## Comment ça fonctionne
 
-outputs → metrics → segments → thresholds
+Une réponse peut être parfaite mais dix fois plus chère. Si l'équipe ne mesure que la qualité, elle ignore une contrainte opérationnelle essentielle. Inversement, une baisse de coût n'est utile que si la qualité reste acceptable.
 
 ## Questions d'entretien
 
-- Pourquoi segmenter les métriques ?
+Les métriques servent à prendre des décisions ; elles doivent être reliées au risque réel et analysées par segment.
 
-  :::indice
-  Une bonne métrique doit être reliée à une décision.
-  :::
+:::indice
+Relie ta réponse à une décision concrète de qualité, coût ou release.
+:::
 
-  :::reponse
-  Une moyenne peut masquer une régression importante sur une population ou un type de requête.
-  :::
+:::reponse
+Pourquoi segmenter les métriques ?
+:::
