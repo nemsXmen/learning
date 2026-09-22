@@ -34,7 +34,7 @@ Mesure qualité, groundedness, exactitude structurée, latence, coût et taux d'
 ## Release gate
 Une version ne doit pas seulement « sembler meilleure ». Elle doit respecter des seuils définis sur les métriques critiques et ne pas introduire de régression de sécurité.
 
-## Exercice
+## Exercices
 Une nouvelle version améliore la qualité moyenne mais échoue davantage sur les requêtes sensibles. Que montre l'évaluation ?
 
 :::indice
