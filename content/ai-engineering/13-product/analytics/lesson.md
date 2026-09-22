@@ -33,7 +33,7 @@ Combine signaux explicites, erreurs, corrections et résultats métier. Anonymis
 ## Expérimentation
 Versionne prompt, modèle et configuration. Compare des cohortes comparables et définis les métriques avant l'expérience.
 
-## Exercice
+## Exercices
 Les utilisateurs génèrent beaucoup mais valident rarement les résultats. Quelle hypothèse tester ?
 
 :::indice
