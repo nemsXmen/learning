@@ -103,32 +103,29 @@ Pour les agents, évalue également les trajectoires : nombre d'étapes, tools a
 - ne pas avoir de seuils de release explicites.
 
 ## Exercices
-
-Une nouvelle version améliore la qualité moyenne mais échoue davantage sur les requêtes sensibles. Que montre l'évaluation ?
+- Une nouvelle version améliore la qualité moyenne mais échoue davantage sur les requêtes sensibles. Que montre l'évaluation ?
 
 :::indice
 Segmente les résultats et compare chaque catégorie à ses seuils, plutôt que de regarder uniquement la moyenne.
-:::
+::
 
 :::solution
 La moyenne masque une régression sur un segment critique. Il faut analyser les cas concernés, identifier la cause et appliquer le release gate défini pour la sécurité. Une amélioration globale ne compense pas automatiquement une violation d'un seuil critique.
-:::
-
+::
 ## À retenir
 
 L'évaluation finale doit rendre les compromis visibles et empêcher qu'une moyenne favorable masque un risque critique.
 
 ## Questions d'entretien
-
 - Pourquoi segmenter un golden dataset ?
-- Quand utiliser un LLM-as-judge ?
-- Comment évaluer un agent au-delà de sa réponse finale ?
-- Que faut-il versionner dans une évaluation ?
+  - Quand utiliser un LLM-as-judge ?
+  - Comment évaluer un agent au-delà de sa réponse finale ?
+  - Que faut-il versionner dans une évaluation ?
 
 :::indice
 Pense à la reproductibilité et à la localisation des erreurs.
-:::
+::
 
 :::reponse
 La segmentation révèle les régressions cachées. Un judge est utile pour des propriétés difficiles à vérifier par règles, mais doit être contrôlé. Un agent s'évalue aussi sur sa trajectoire et ses actions. Modèle, prompt, retrieval, paramètres, dataset et résultats doivent être versionnés.
-:::
+::
