@@ -74,11 +74,19 @@ Prenons une question comme « quel est le plafond de remboursement de la carte G
 
 ## Questions d'entretien
 - Pourquoi mesurer recall@k ?
-- Pourquoi séparer la qualité du retrieval de celle de la génération ?
 
 :::indice
 Relie recall@k au risque de ne jamais fournir au modèle le passage nécessaire.
 :::
 :::reponse
-Recall@k mesure la proportion des informations ou documents pertinents retrouvés dans les k premiers résultats. Il permet de distinguer un problème de recherche d'un problème de génération. Un bon générateur ne peut pas répondre correctement si le contexte pertinent n'a jamais été récupéré.
+Recall@k mesure la proportion des informations ou documents pertinents retrouvés dans les k premiers résultats. Il permet de vérifier si les éléments nécessaires à la réponse arrivent effectivement dans les k premiers résultats.
+:::
+
+- Pourquoi séparer la qualité du retrieval de celle de la génération ?
+
+:::indice
+Demande-toi ce qui se passe si le bon passage n'est jamais transmis au modèle.
+:::
+:::reponse
+Le retrieval et la génération sont deux étapes distinctes. Un générateur ne peut pas produire une réponse fondée sur un passage qui n'a jamais été récupéré. Les évaluer séparément permet donc de distinguer un défaut de recherche d'un défaut de génération.
 :::
