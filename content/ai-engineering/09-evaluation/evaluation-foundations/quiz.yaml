@@ -1,0 +1,27 @@
+id: ai-09-evaluation-foundations-quiz
+kind: QUIZ
+questions:
+  - id: ai-09-evaluation-foundations-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Pourquoi versionner un dataset d'évaluation ?"
+    options: ["Pour augmenter automatiquement la qualité","Pour rendre les comparaisons historiques interprétables","Pour éviter toute erreur du modèle","Pour supprimer les tests online"]
+    answer: [1]
+    explanation: "Le versionnage permet de distinguer une évolution du système d'une modification de la population évaluée."
+    skills: [ai-evaluation]
+  - id: ai-09-evaluation-foundations-q2
+    type: multiple_choice
+    difficulty: 3
+    question: "Que permet une slice d'évaluation ?"
+    options: ["Réduire toujours le coût","Détecter une régression dans une sous-population spécifique","Garantir la factualité","Remplacer le golden set"]
+    answer: [1]
+    explanation: "Une slice segmente les résultats selon des dimensions comme domaine, langue, risque ou type de tâche."
+    skills: [ai-evaluation]
+  - id: ai-09-evaluation-foundations-q3
+    type: multiple_choice
+    difficulty: 3
+    question: "Quelle affirmation est correcte ?"
+    options: ["Une moyenne globale suffit toujours","Un score est indépendant du dataset","Une métrique doit être interprétée avec son protocole et sa population","Le coût n'est jamais une dimension d'évaluation"]
+    answer: [2]
+    explanation: "La signification d'un score dépend notamment du dataset, des critères et du protocole."
+    skills: [ai-evaluation]
