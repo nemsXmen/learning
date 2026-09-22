@@ -16,79 +16,92 @@ tags: [clustering, dimensionality-reduction, anomaly]
 
 ## Objectifs
 
-- comprendre clustering et réduction de dimension ;
-- distinguer exploration et prédiction ;
-- détecter des anomalies avec prudence ;
-- valider un cluster avec le contexte métier.
-
-## Clustering
-
-K-means cherche des centroïdes minimisant la distance intra-cluster. Le nombre de clusters est un choix de modélisation, pas une vérité automatiquement découverte.
-
-Les groupes doivent être interprétés avec leurs caractéristiques et leur stabilité.
-
-## Réduction de dimension
-
-PCA projette les données vers des directions expliquant une partie de la variance. Une projection 2D aide à visualiser mais ne prouve pas que la structure réelle est bidimensionnelle.
-
-## Anomalies
-
-Une observation inhabituelle n'est pas nécessairement une fraude ou une erreur. Distingue détection statistique et interprétation métier.
-
-## Embeddings
-
-Les embeddings permettent aussi regroupement et recherche sémantique. Le résultat dépend du modèle, des données et de la métrique.
-
-## Exercices
-
-- Tu observes trois clusters de clients. Comment vérifier qu'ils sont utiles ?
-
-:::indice
-Commence par définir la métrique et la baseline avant de choisir une technique.
-:::
-
-:::solution
-
-Comparer stabilité, caractéristiques, séparation selon plusieurs métriques et utilité pour une décision réelle. Ne pas conclure uniquement depuis une visualisation.
-
-:::
-
-## Erreurs fréquentes
-
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
-
-## À retenir
-
-Le non supervisé sert à explorer et représenter. Une structure calculée doit être confrontée aux données et au contexte avant utilisation.
-
+À la fin de ce chapitre, tu dois pouvoir expliquer ce que cherche un algorithme non supervisé, comprendre K-means et PCA, et surtout savoir pourquoi une structure trouvée par un algorithme doit être interprétée avant d'être utilisée.
 
 ## Introduction
 
-L'apprentissage non supervisé cherche des structures sans cible fournie.
+Dans beaucoup de projets, les données ne possèdent pas de label fiable. Tu peux avoir des milliers de clients et leurs comportements, sans savoir à l'avance quelles catégories devraient exister.
+
+Le non supervisé inverse alors la question. Au lieu de demander « quelle est la bonne réponse ? », on demande « quelle structure semble présente dans ces données ? ».
 
 ## Concept
 
-Clustering, réduction de dimension et détection d'anomalies répondent à des objectifs différents.
+Le clustering cherche à regrouper des observations qui se ressemblent selon une représentation et une mesure de distance données.
+
+Avec K-means, on choisit un nombre de groupes $k$. L'algorithme initialise des centroïdes, affecte chaque point au centroïde le plus proche, recalcule les centroïdes, puis répète jusqu'à stabilisation.
+
+```text
+données
+  ↓
+représentation
+  ↓
+choix de k
+  ↓
+affectation aux centroïdes
+  ↓
+recalcul des centroïdes
+  ↓
+répétition
+  ↓
+clusters
+```
+
+Le point important est que le cluster n'est pas une vérité découverte par magie. Il dépend des features, de leur échelle, de la distance et du choix de $k$.
 
 ## Exemple
 
-K-means regroupe des points autour de centroïdes mais son résultat dépend du choix de k et de l'échelle.
+Supposons que tu regroupes des clients selon le montant dépensé et le nombre de commandes. Si le montant varie de 0 à 100 000 alors que le nombre de commandes varie de 0 à 20, une distance brute peut être dominée par le montant.
+
+Une normalisation peut donc être nécessaire avant le clustering. Ensuite, il faut examiner les caractéristiques de chaque groupe et vérifier s'ils correspondent à une décision utile.
 
 ## Comment ça fonctionne
 
-données → représentation → algorithme → analyse → validation métier
+La réduction de dimension répond à un autre problème. PCA cherche des directions qui expliquent une grande partie de la variance et projette les données sur ces directions.
+
+```text
+features nombreuses
+       ↓
+      PCA
+       ↓
+représentation réduite
+       ↓
+visualisation / modèle
+```
+
+Une visualisation 2D peut être très utile pour explorer les données, mais elle ne prouve pas que la structure réelle du problème est bidimensionnelle.
+
+La détection d'anomalies suit encore une autre logique. Une observation rare ou éloignée peut être intéressante, mais « inhabituel » ne signifie pas automatiquement « fraude ». L'interprétation métier reste indispensable.
+
+Les embeddings peuvent aussi servir à regrouper ou rechercher des contenus. Dans ce cas, la qualité dépend du modèle d'embedding, des données et de la métrique utilisée.
+
+## Erreurs fréquentes
+
+Il est dangereux de donner un nom métier à un cluster uniquement parce qu'il apparaît sur un graphique. Il faut aussi éviter de changer l'échelle des variables sans comprendre l'effet sur les distances et de considérer le nombre de clusters comme une vérité objective.
+
+## Exercices
+
+- Tu observes trois clusters de clients. Décris comment tu vérifierais qu'ils sont stables et réellement utiles.
+
+:::indice
+Ne regarde pas seulement le graphique. Compare la structure avec plusieurs métriques et avec une décision métier réelle.
+:::
+
+:::solution
+Tester la stabilité sur plusieurs échantillons ou initialisations, examiner la séparation avec des métriques adaptées, profiler les caractéristiques des groupes et vérifier qu'ils permettent une action ou une décision utile.
+:::
+
+## À retenir
+
+Le non supervisé est avant tout un outil d'exploration et de représentation. L'algorithme produit une structure ; l'ingénieur doit ensuite déterminer si cette structure est robuste et pertinente.
 
 ## Questions d'entretien
 
-- Pourquoi normaliser certaines features avant clustering ?
+- Pourquoi normaliser certaines features avant un clustering basé sur une distance ?
 
-  :::indice
-  Pense au risque de mesure trompeuse et à la généralisation.
-  :::
+:::indice
+Imagine deux variables dont les ordres de grandeur sont très différents.
+:::
 
-  :::reponse
-  Parce que les distances seraient sinon dominées par les variables à grande échelle.
-  :::
+:::reponse
+Sans normalisation, une variable de grande amplitude peut dominer la distance et donc influencer presque entièrement les groupes obtenus.
+:::
