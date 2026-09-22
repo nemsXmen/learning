@@ -57,11 +57,10 @@ Pour certaines tâches, un petit modèle spécialisé peut être plus adapté qu
 
 :::indice
 Sépare qualité, performance opérationnelle, coût et contraintes produit.
-::
-
+:::
 :::solution
 Qualité réelle, coût total, p50/p95, taux d'erreur, tokens consommés, limites de débit, confidentialité et respect du contrat de sortie.
-::
+:::
 ## Erreurs fréquentes
 
 Une grande fenêtre de contexte ne garantit pas une meilleure compréhension. Teste aussi la récupération d'information à différentes positions. De même, ne choisis pas un modèle uniquement sur un benchmark public si les données de ton produit sont différentes.
@@ -91,8 +90,7 @@ Le flow est : besoin → candidats → benchmark contrôlé → analyse qualité
 
 :::indice
 Relie ta réponse au fonctionnement concret du modèle.
-::
-
+:::
 :::reponse
 Parce que les performances générales ne garantissent pas le comportement sur les tâches, langues et contraintes réelles du produit.
-::
+:::
