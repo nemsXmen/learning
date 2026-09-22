@@ -47,7 +47,7 @@ Le streaming améliore souvent le temps avant le premier token perçu mais compl
 ## Secrets
 Les clés fournisseurs restent côté serveur.
 
-## Exercice
+## Exercices
 Un fournisseur devient indisponible. Décris un fallback propre.
 
 :::indice
