@@ -33,7 +33,7 @@ Pour les modèles autoregressifs, le cache d'attention peut réduire le recalcul
 ## Scalabilité
 Scale horizontalement lorsque la charge et les contraintes de mémoire le justifient. Un autoscaling mal calibré peut provoquer des cold starts et coûts excessifs.
 
-## Exercice
+## Exercices
 Le throughput augmente mais p99 devient mauvais après activation du batching. Quelle analyse ?
 
 :::indice
