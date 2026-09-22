@@ -16,10 +16,8 @@ tags: [llm, ai-engineering]
 
 
 ## Objectifs
-- comprendre le tool calling ;
-- définir des outils avec des contrats minimaux ;
-- contrôler autorisation et effets de bord ;
-- limiter les boucles agentiques.
+
+Tool calling et exécution contrôlée
 
 ## Modèle mental
 ```text
@@ -41,52 +39,49 @@ Limite nombre d'appels et temps total. Détecte répétitions, erreurs et absenc
 Le résultat d'un service externe est une donnée non fiable. Il ne doit pas devenir automatiquement une instruction système.
 
 ## Exercices
-Un agent consulte une facture puis envoie un email. Pourquoi séparer les outils ?
+
+- Un agent consulte une facture puis envoie un email. Pourquoi séparer les outils ?
 
 :::indice
-Sépare génération, validation et exécution ; ne donne pas au modèle une autorité implicite.
+Compare le risque d'une lecture avec celui d'un effet de bord.
 :::
 
 :::solution
-La lecture et l'effet de bord ont des risques différents. La séparation permet autorisation, confirmation, idempotence et audit.
-
+La séparation permet d'appliquer des permissions, une confirmation éventuelle, des limites, l'idempotence et un audit différents pour la lecture et l'envoi.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le résultat d'un service externe est lui aussi une donnée non fiable. Il ne doit pas devenir automatiquement une nouvelle instruction système. Il faut également prévoir les erreurs, timeouts et outils indisponibles.
 
 ## À retenir
-Le tool calling relie un composant probabiliste à des opérations déterministes. Les contrôles restent dans le code.
 
+Le tool calling relie probabilités et opérations déterministes ; les contrôles doivent rester dans le code serveur.
 
 ## Introduction
 
-Le tool calling relie raisonnement probabiliste et opérations déterministes.
+Le tool calling permet à un modèle de demander l'exécution d'une opération externe. Cela rend les LLM utiles dans des workflows, mais introduit une frontière de sécurité supplémentaire.
 
 ## Concept
 
-Un tool possède contrat, validation, autorisation, limites et journalisation.
+Le modèle propose un appel d'outil avec des arguments. Le serveur valide ces arguments, vérifie l'autorisation puis exécute l'opération. Le modèle ne reçoit donc jamais une autorité implicite.
 
 ## Exemple
 
-Un tool de remboursement doit vérifier indépendamment identité, permissions, montant et idempotence.
+Pour une facture, un outil get_invoice(invoiceId) est préférable à une primitive générique capable d'exécuter une commande arbitraire. Un outil ciblé réduit la surface d'attaque et rend l'autorisation compréhensible.
 
 ## Comment ça fonctionne
 
-modèle → tool request → validation → authorization → execution → result
+Le flow est : LLM → tool request → validation → authorization → execution → résultat → LLM. Limite le nombre d'appels, le temps total et les répétitions. Pour un paiement, remboursement ou suppression, l'autorisation doit rester indépendante du modèle et l'action doit être idempotente et auditée.
 
 ## Questions d'entretien
 
-- Qui doit autoriser un effet de bord ?
+Qui doit autoriser un effet de bord ?
 
-  :::indice
-  Considère toujours la frontière entre génération et logique déterministe.
-  :::
+:::indice
+Relie ta réponse à la frontière entre modèle et application.
+:::
 
-  :::reponse
-  Le système déterministe côté serveur, pas le modèle seul.
-  :::
+:::reponse
+Le système déterministe côté serveur doit vérifier les permissions et politiques avant l'exécution.
+:::
