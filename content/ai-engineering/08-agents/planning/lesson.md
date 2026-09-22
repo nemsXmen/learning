@@ -20,6 +20,23 @@ tags: [agents, planning, orchestration, reliability]
 - rendre les étapes observables et reprenables ;
 - éviter les plans trop longs ou inutiles.
 
+
+## Introduction
+
+La planification transforme un objectif complexe en une suite d'étapes exécutables et vérifiables. Elle sert surtout lorsque les dépendances, les décisions intermédiaires ou les reprises deviennent difficiles à gérer dans une simple boucle agentique.
+
+## Concept
+
+Un plan est une représentation intermédiaire entre l'intention utilisateur et l'exécution. Chaque étape doit préciser son entrée, sa sortie attendue, ses dépendances et ses limites. Le plan n'accorde aucune permission : le runtime conserve le contrôle des outils et des effets de bord.
+
+## Exemple
+
+Pour produire un rapport financier, l'agent peut planifier : récupérer les données → vérifier leur fraîcheur → calculer les agrégats → générer le rapport → contrôler le résultat → publier. Si une vérification échoue, l'exécution s'arrête ou replanifie au lieu de poursuivre aveuglément.
+
+## Comment ça fonctionne
+
+Le runtime charge l'objectif, produit ou reçoit un plan, valide ses étapes, exécute uniquement les actions autorisées, observe les résultats puis décide de poursuivre, reprendre, replanifier ou arrêter. Les budgets, timeouts et conditions de fin sont appliqués indépendamment du modèle.
+
 ## Pourquoi planifier
 
 Une tâche complexe peut être décomposée en étapes dépendantes. La planification donne une représentation intermédiaire avant l'exécution des actions.
