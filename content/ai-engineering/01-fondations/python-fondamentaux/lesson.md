@@ -6,90 +6,152 @@ technology: ai-engineering
 level: beginner
 module: fondations
 order: 1
-estimatedMinutes: 45
+estimatedMinutes: 60
 difficulty: 2
 xp: 100
 prerequisites: []
 skills: [ai-python]
-tags: [python, data, ai]
+tags: [python, data, pipelines]
 ---
 
 ## Objectifs
 
-- écrire un script Python lisible et testable ;
-- choisir entre listes, dictionnaires, tuples, ensembles et générateurs ;
-- utiliser fonctions, exceptions et compréhensions ;
-- isoler un environnement avec venv ;
-- structurer un pipeline de données sans effets de bord inutiles.
+À la fin de cette leçon, tu dois pouvoir :
 
-## Pourquoi Python est central en AI Engineering
+- écrire des fonctions Python courtes, testables et lisibles ;
+- choisir une structure de données selon le problème ;
+- gérer explicitement les erreurs ;
+- comprendre la différence entre itération en mémoire et traitement en flux ;
+- construire un petit pipeline dont chaque étape possède un contrat clair.
 
-Python sert à assembler ingestion, nettoyage, appels de modèles, évaluation, API, jobs et automatisation. Un AI Engineer doit donc maîtriser le Python de production : modules, typage, erreurs, tests, environnements et observabilité.
+## Pourquoi Python est une compétence d'ingénieur IA
 
-## Modèle mental
+En IA, Python n'est pas seulement le langage dans lequel on entraîne un modèle. Il relie presque toutes les briques du système :
 
-Une variable référence un objet. Deux noms peuvent référencer la même liste :
+```text
+données → transformation → modèle → évaluation → API/job → observabilité
+```
+
+Un prototype peut tenir dans un notebook. Un produit IA doit survivre à des données absentes, des entrées inattendues, des volumes importants, des erreurs réseau et plusieurs versions de dépendances.
+
+L'objectif est donc de passer de « je sais écrire du Python » à « je sais utiliser Python pour construire un composant fiable ».
+
+## Modèle mental : les noms référencent des objets
+
+Une variable Python n'est pas une boîte contenant une valeur : c'est un nom qui référence un objet.
 
 ```python
 documents = ["doc-1", "doc-2"]
 alias = documents
+
 alias.append("doc-3")
+
 print(documents)
+# ["doc-1", "doc-2", "doc-3"]
 ```
 
-Pour une copie superficielle, utiliser copy().
+`documents` et `alias` référencent ici la même liste. Cette distinction devient importante lorsqu'une étape de pipeline modifie une structure reçue d'une autre étape.
 
-## Structures utiles en IA
+Si tu veux éviter une mutation accidentelle, crée explicitement une copie adaptée au besoin.
 
-| Structure | Usage |
-| --- | --- |
-| list | séquence ordonnée de documents |
-| dict | métadonnées et configuration |
-| tuple | résultat ou clé composite |
-| set | déduplication et appartenance |
-| générateur | flux de données sans tout charger |
+## Structures de données utiles en IA
 
-## Fonctions et contrats
+| Structure | Quand l'utiliser | Exemple IA |
+| --- | --- | --- |
+| `list` | séquence ordonnée | liste de chunks |
+| `dict` | association clé → valeur | métadonnées d'un document |
+| `set` | appartenance / déduplication | IDs déjà vus |
+| `tuple` | petit résultat immuable | `(id, score)` |
+| générateur | traitement progressif | lecture d'un gros corpus |
 
-Une étape de pipeline doit avoir une responsabilité claire :
+Le bon choix n'est pas « la structure la plus moderne ». C'est celle qui exprime correctement le contrat et le coût du traitement.
+
+## Fonctions : une étape, une responsabilité
+
+Une bonne fonction répond à une question précise.
 
 ```python
 def normalize_text(text: str) -> str:
     return " ".join(text.lower().split())
 ```
 
-Un type hint documente et aide les outils statiques ; il ne constitue pas une validation runtime complète.
+Cette fonction ne lit pas une base, n'appelle pas un LLM et n'écrit pas de fichier. C'est une fonction presque pure : son résultat dépend de son entrée.
 
-Sépare par exemple load_documents, normalize_text et chunk_document au lieu de créer une fonction qui lit, transforme, appelle un LLM et écrit en base.
+Cette propriété facilite les tests.
 
-## Exceptions
+À l'inverse, une fonction comme `process_document()` qui télécharge un PDF, le parse, appelle un modèle, écrit en PostgreSQL et envoie un événement est difficile à tester et à diagnostiquer.
 
-Conserver la cause originale :
+Une architecture plus saine sépare :
+
+```text
+load → parse → normalize → validate → enrich → persist
+```
+
+Chaque frontière devient testable et observable.
+
+## Types : documentation, pas validation runtime
+
+Les annotations rendent les contrats visibles :
+
+```python
+def chunk_text(text: str, size: int) -> list[str]:
+    ...
+```
+
+Elles aident l'IDE et les outils statiques, mais elles n'empêchent pas à elles seules une donnée invalide d'arriver au runtime.
+
+Pour une entrée externe, il faut une vraie validation :
+
+```text
+entrée externe
+    ↓
+validation
+    ↓
+objet interne fiable
+    ↓
+logique métier
+```
+
+C'est une distinction fondamentale en AI Engineering : le modèle, l'utilisateur et les documents récupérés sont des sources de données non fiables.
+
+## Exceptions : ne pas masquer la cause
+
+Évite :
+
+```python
+try:
+    result = run_pipeline()
+except Exception:
+    return None
+```
+
+Tu viens de transformer une erreur explicable en résultat ambigu.
+
+Préfère une erreur contextualisée :
 
 ```python
 try:
     config = load_config()
 except FileNotFoundError as exc:
-    raise RuntimeError("Configuration absente") from exc
+    raise RuntimeError("Configuration IA absente") from exc
 ```
 
-Dans un système AI, distinguer erreur d'entrée, réseau, fournisseur, validation et erreur interne permet ensuite de choisir correctement retry ou fallback.
+En production, distingue au minimum :
 
-## Environnement reproductible
+- erreur d'entrée ;
+- erreur de validation ;
+- erreur réseau ;
+- erreur du fournisseur de modèle ;
+- timeout ;
+- erreur interne.
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-```
+Cette classification déterminera plus tard s'il faut corriger l'entrée, retenter, basculer vers un autre fournisseur ou arrêter le traitement.
 
-Sous Windows PowerShell : .venv/Scripts/Activate.ps1.
+## Mémoire : liste ou générateur ?
 
-Le code, les dépendances et la configuration nécessaire doivent pouvoir être reconstruits.
+Charger 5 millions de lignes dans une liste peut devenir un problème de mémoire.
 
-## Itérateurs et mémoire
-
-Pour un gros corpus :
+Un générateur permet de traiter progressivement :
 
 ```python
 def read_lines(path: str):
@@ -98,24 +160,31 @@ def read_lines(path: str):
             yield line.rstrip("\n")
 ```
 
-Le générateur évite de charger tout le fichier en mémoire.
+Le générateur ne fabrique pas toutes les lignes à l'avance. Il produit la prochaine valeur quand le consommateur la demande.
 
-## Erreurs fréquentes
+Ce principe reviendra avec les datasets ML, les queues, les streams et les pipelines de documents.
 
-- attraper Exception partout et perdre la cause ;
-- muter une collection partagée sans le documenter ;
-- installer les dépendances globalement ;
-- charger tout un corpus alors qu'un flux suffit ;
-- mélanger ingestion, transformation et appel modèle.
+## Environnement reproductible
 
-## Exercices
-- Construis un pipeline qui lit des textes, les normalise, supprime les doublons, retourne id/text/length et lève une erreur pour un texte vide.
+Crée un environnement isolé :
 
-:::indice
-Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
-:::
+```bash
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+```
 
-:::solution
+Sous PowerShell :
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Un environnement reproductible doit permettre à un autre ingénieur de reconstruire le même contexte logiciel à partir du dépôt et des dépendances déclarées.
+
+## Construire un pipeline avec des contrats
+
+Prenons des documents entrants sous la forme `(id, texte)`.
 
 ```python
 def normalize_text(text: str) -> str:
@@ -123,49 +192,74 @@ def normalize_text(text: str) -> str:
 
 def build_documents(items: list[tuple[str, str]]) -> list[dict]:
     documents = []
-    seen = set()
+    seen: set[str] = set()
+
     for doc_id, raw in items:
         text = normalize_text(raw)
+
         if not text:
-            raise ValueError(f"Document vide: {doc_id}")
+            raise ValueError(f"Document vide : {doc_id}")
+
         if doc_id in seen:
             continue
+
         seen.add(doc_id)
-        documents.append({"id": doc_id, "text": text, "length": len(text)})
+        documents.append({
+            "id": doc_id,
+            "text": text,
+            "length": len(text),
+        })
+
     return documents
 ```
 
+Observe le contrat :
+
+1. une entrée possède un ID et un texte ;
+2. le texte est normalisé ;
+3. un texte vide est refusé ;
+4. un ID est traité une seule fois ;
+5. la sortie possède une forme stable.
+
+Ce sont ces contrats, plus que la quantité de code, qui rendent un pipeline maintenable.
+
+## Erreurs fréquentes
+
+- attraper `Exception` partout et perdre la cause réelle ;
+- muter des objets partagés sans l'indiquer ;
+- confondre type hint et validation ;
+- charger tout un corpus alors qu'un traitement en flux suffit ;
+- mélanger logique métier et appels réseau ;
+- écrire des fonctions tellement grandes qu'on ne sait plus quelle étape a échoué.
+
+## Exercices
+
+- Construis une fonction qui reçoit des documents `(id, texte)`, normalise les textes, supprime les doublons et rejette les textes vides.
+- Modifie-la pour traiter un itérateur au lieu d'une liste complète.
+- Ajoute une distinction entre « document vide » et « document dupliqué ».
+
+:::indice
+Commence par écrire le contrat de la fonction avant son implémentation : type d'entrée, invariants et forme de sortie.
+:::
+
+:::solution
+Une solution correcte sépare la normalisation, la validation et la déduplication. Pour un gros corpus, fais produire les résultats progressivement avec `yield` plutôt que de construire une liste complète.
 :::
 
 ## À retenir
 
-Python pour l'IA demande une vraie rigueur d'ingénierie. Structures, erreurs, environnements et flux de données deviennent des briques réutilisées dans tous les modules suivants.
-
-
-## Introduction
-
-Python fournit l'environnement généraliste de l'AI Engineer : manipulation de données, orchestration, API et tooling.
-
-## Concept
-
-Un pipeline Python robuste sépare données, logique métier et intégrations externes.
-
-## Exemple
-
-Exemple : isoler une fonction de normalisation pure permet de la tester sans modèle ni base de données.
-
-## Comment ça fonctionne
-
-Le flux typique est ingestion → transformation → validation → sortie. Les erreurs et dépendances sont contrôlées à chaque frontière.
+Python devient une compétence d'AI Engineer lorsqu'il sert à construire des composants prévisibles : fonctions petites, contrats explicites, erreurs conservées, mémoire maîtrisée et environnement reproductible.
 
 ## Questions d'entretien
 
-- Explique comment concevoir un pipeline Python reproductible.
+- Pourquoi une fonction pure est-elle intéressante dans un pipeline IA ?
+- Quelle différence fais-tu entre une annotation de type et une validation runtime ?
+- Dans quel cas utiliserais-tu un générateur pour un pipeline de données ?
 
-  :::indice
-  Relie le concept à un problème concret de production AI.
-  :::
+:::indice
+Ne réponds pas seulement avec une définition Python : relie chaque concept à un problème de production IA.
+:::
 
-  :::reponse
-  Réponse : isoler les étapes, versionner les dépendances, valider les entrées et tester les transformations indépendamment.
-  :::
+:::reponse
+Une fonction pure est facile à tester et à reproduire. Une annotation documente et aide les outils statiques mais ne protège pas une entrée externe au runtime. Un générateur est utile lorsqu'un volume important peut être traité progressivement sans tout charger en mémoire.
+:::
