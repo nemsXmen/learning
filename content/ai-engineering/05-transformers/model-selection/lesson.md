@@ -15,10 +15,8 @@ tags: [transformers, llm]
 ---
 
 ## Objectifs
-- choisir un modèle selon une tâche et des contraintes ;
-- distinguer qualité, latence, coût et contexte ;
-- comprendre local, API et modèles spécialisés ;
-- construire un protocole de comparaison reproductible.
+
+Choisir un modèle selon une tâche réelle et comparer qualité, latence, coût, contexte, confidentialité et capacités d'intégration.
 
 ## Les critères
 Pour sélectionner un modèle, mesure séparément :
@@ -55,52 +53,49 @@ Une grande fenêtre ne signifie pas automatiquement meilleure compréhension. Te
 Pour certaines tâches, un petit modèle spécialisé peut être plus adapté qu'un modèle généraliste : classification, extraction structurée, reranking ou génération très contrainte.
 
 ## Exercices
-Une application reçoit 100 000 requêtes par jour. Quelles dimensions mesurer avant de choisir un modèle ?
+
+- Une application reçoit 100 000 requêtes par jour. Quelles dimensions mesurer avant de choisir un modèle ?
 
 :::indice
-Relie le concept à la chaîne tokens → représentation → modèle → sortie.
+Sépare qualité, performance opérationnelle, coût et contraintes produit.
 :::
 
 :::solution
-Mesurer qualité sur données réelles, coût total, p50/p95 de latence, taux d'erreur, limites de débit, consommation de tokens, exigences de confidentialité et capacité à respecter le contrat de sortie.
-
+Qualité réelle, coût total, p50/p95, taux d'erreur, tokens consommés, limites de débit, confidentialité et respect du contrat de sortie.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Une grande fenêtre de contexte ne garantit pas une meilleure compréhension. Teste aussi la récupération d'information à différentes positions. De même, ne choisis pas un modèle uniquement sur un benchmark public si les données de ton produit sont différentes.
 
 ## À retenir
-Le choix de modèle est une décision d'ingénierie mesurable. Commence par les contraintes et les tâches réelles, puis benchmarke.
 
+Le choix de modèle est une décision d'ingénierie mesurable. Commence par les contraintes réelles, puis benchmarke.
 
 ## Introduction
 
-Choisir un modèle est une décision système autant qu'une décision de qualité.
+Le meilleur modèle abstrait n'est pas nécessairement celui qui convient à ton application. Une application de support, une extraction JSON et une génération de code n'ont pas les mêmes contraintes.
 
 ## Concept
 
-Qualité, contexte, latence, coût, confidentialité, outils et contraintes de déploiement doivent être comparés.
+Commence par définir les tâches et contraintes. Mesure ensuite qualité, p50/p95 de latence, coût, contexte utile, taux d'erreur, limites de débit, confidentialité, tool calling et sortie structurée.
 
 ## Exemple
 
-Un petit modèle spécialisé peut être préférable à un modèle général très coûteux sur une tâche étroite.
+Construis un dataset représentatif de la production. Envoie les mêmes cas, avec le même protocole, aux candidats puis compare les mêmes métriques. Les cas difficiles sont particulièrement importants car une moyenne peut masquer des régressions.
 
 ## Comment ça fonctionne
 
-besoin → candidats → benchmark → coût/latence → choix contrôlé
+Le flow est : besoin → candidats → benchmark contrôlé → analyse qualité/coût/latence → déploiement limité → monitoring. Un modèle local donne plus de contrôle mais demande infrastructure et maintenance ; une API réduit l'exploitation mais ajoute dépendance fournisseur et coûts variables.
 
 ## Questions d'entretien
 
-- Pourquoi un benchmark interne est-il nécessaire ?
+Pourquoi un benchmark interne est-il nécessaire ?
 
-  :::indice
-  Pense au lien entre comportement du modèle et contraintes de production.
-  :::
+:::indice
+Relie ta réponse au fonctionnement concret du modèle.
+:::
 
-  :::reponse
-  Parce que les performances générales ne garantissent pas le comportement sur les tâches réelles du produit.
-  :::
+:::reponse
+Parce que les performances générales ne garantissent pas le comportement sur les tâches, langues et contraintes réelles du produit.
+:::
