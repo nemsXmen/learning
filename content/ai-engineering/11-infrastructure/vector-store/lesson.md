@@ -37,52 +37,49 @@ Les filtres d'autorisation doivent être intégrés au retrieval et testés comm
 Changer dimension ou modèle d'embedding implique souvent un nouvel index et une réindexation contrôlée.
 
 ## Exercices
-- Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
+
+Teste recall@k, latence, mémoire et isolation tenant. Une optimisation de recherche qui dégrade la sécurité ou le rappel n'est pas une amélioration globale.
 
 :::indice
-Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
+- Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
 :::
 
 :::solution
-L'isolation d'autorisation au retrieval. Le filtre tenant doit être imposé côté serveur.
-
+Cherche le contrôle qui doit précéder la remise du résultat au modèle.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : query → embedding → ANN → metadata/ACL filter → top-k → reranking éventuel. Lors d'un changement de modèle d'embedding ou de dimension, une nouvelle génération d'index et une réindexation contrôlée peuvent être nécessaires.
 
 ## À retenir
-Un vector store est une infrastructure de données avec contraintes de sécurité et performance.
 
+L'isolation d'autorisation au retrieval a échoué. Le filtre tenant doit être imposé côté serveur et couvert par des tests.
 
 ## Introduction
 
-Un vector store permet de rechercher efficacement dans des embeddings.
+Concevoir une recherche vectorielle exploitable
 
 ## Concept
 
-ANN, index, filtres metadata et migrations déterminent les performances et la sécurité.
+Un vector store n'est pas seulement une base de nombres. Il doit stocker des vecteurs avec leurs métadonnées, appliquer des filtres, répondre avec une latence prévisible et permettre des migrations sans casser le retrieval.
 
 ## Exemple
 
-Un index multi-tenant doit appliquer le filtre d'accès au même moment que la recherche.
+La recherche ANN (Approximate Nearest Neighbor) accélère la recherche en acceptant un compromis contrôlé entre rappel, mémoire et latence. Les métadonnées servent notamment à filtrer tenant, document, langue ou version.
 
 ## Comment ça fonctionne
 
-query vector → ANN → metadata filter → ranked results
+Supposons deux tenants qui utilisent le même index. Une similarité élevée ne suffit jamais pour décider qu'un chunk est accessible : le filtre d'autorisation doit être imposé par le serveur.
 
 ## Questions d'entretien
 
-- Pourquoi les migrations d'embeddings sont-elles coûteuses ?
+Un vector store est une infrastructure de données avec des contraintes simultanées de recherche, sécurité et exploitation.
 
-  :::indice
-  Relie performance et fiabilité au comportement sous charge.
-  :::
+:::indice
+Relie ta réponse à une métrique et à une contrainte système.
+:::
 
-  :::reponse
-  Changer de modèle peut imposer de recalculer et réindexer tout le corpus.
-  :::
+:::reponse
+Pourquoi les migrations d'embeddings sont-elles coûteuses ?
+:::
