@@ -37,17 +37,15 @@ Ne donne pas les clés API directement au contexte du modèle. Le serveur appell
 Journalise acteur, outil, paramètres minimisés, décision d'autorisation, résultat, request ID et timestamp.
 
 ## Exercices
-
-Un audit utile conserve qui a demandé l'action, quel outil a été appelé, quelle décision d'autorisation a été prise et quel résultat est arrivé, tout en minimisant les données sensibles enregistrées.
+- Un audit utile conserve qui a demandé l'action, quel outil a été appelé, quelle décision d'autorisation a été prise et quel résultat est arrivé, tout en minimisant les données sensibles enregistrées.
 
 :::indice
 - Un agent propose un remboursement. Quelle frontière appliquer ?
-:::
+::
 
 :::solution
 Sépare la proposition du modèle de l'autorisation métier.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : agent → proposition d'action → policy check → authorization → tool → side effect → audit. Les secrets restent côté serveur. Pour du code ou des opérations risquées, ajoute sandbox, timeout, quotas CPU/mémoire, filesystem restreint et réseau contrôlé.
@@ -73,13 +71,12 @@ Le principe central est le least privilege : l'agent reçoit uniquement les capa
 Pour un agent de support, lire une facture peut être autorisé automatiquement alors qu'un remboursement nécessite une vérification supplémentaire. Le modèle peut préparer la proposition, mais un service déterministe contrôle identité, montant, règles métier et idempotence.
 
 ## Questions d'entretien
-
-Un agent puissant doit rester moins privilégié que le système qu'il pilote.
+- Un agent puissant doit rester moins privilégié que le système qu'il pilote.
 
 :::indice
 Pense à la séparation entre modèle, runtime et système d'autorisation.
-:::
+::
 
 :::reponse
 Pourquoi l'autorisation doit-elle rester hors du prompt ?
-:::
+::
