@@ -109,7 +109,7 @@ Le générateur évite de charger tout le fichier en mémoire.
 - mélanger ingestion, transformation et appel modèle.
 
 ## Exercices
-
+- 
 - Construis un pipeline qui lit des textes, les normalise, supprime les doublons, retourne id/text/length et lève une erreur pour un texte vide.
 
 :::indice
