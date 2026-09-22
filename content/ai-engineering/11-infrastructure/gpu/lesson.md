@@ -30,7 +30,7 @@ VRAM ~= weights + activations + runtime buffers + cache
 ## Précision
 FP32, FP16 et BF16 offrent des compromis entre mémoire, vitesse et stabilité.
 
-## Exercice
+## Exercices
 Une inférence échoue par OOM alors que le modèle tient presque en VRAM. Quels leviers tester ?
 
 :::indice
