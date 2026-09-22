@@ -42,11 +42,10 @@ Une page web ou un document peut contenir des instructions malveillantes. Sépar
 
 :::indice
 Pense au prompt comme à une version de code.
-::
-
+:::
 :::solution
 Créer une nouvelle version, exécuter un jeu de tests représentatif, comparer les métriques avec la version précédente puis déployer progressivement si les résultats sont acceptables.
-::
+:::
 ## Erreurs fréquentes
 
 Une page web ou un document peut contenir des instructions malveillantes. Les données récupérées doivent donc rester des données non fiables. Le modèle ne doit jamais pouvoir transformer un texte externe en autorisation applicative. Versionne le prompt, son changelog et son dataset d'évaluation.
@@ -76,8 +75,7 @@ Le flow devient : contrat → contexte → entrée → génération → validati
 
 :::indice
 Relie ta réponse à la frontière entre modèle et application.
-::
-
+:::
 :::reponse
 Pour reproduire les sorties, comparer les changements et identifier quelle version a produit une régression.
-::
+:::
