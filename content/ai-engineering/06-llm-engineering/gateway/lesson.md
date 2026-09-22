@@ -16,10 +16,8 @@ tags: [llm, ai-engineering]
 
 
 ## Objectifs
-- centraliser les appels LLM ;
-- gérer timeout, retry et rate limit ;
-- contrôler coûts et observabilité ;
-- faciliter le changement de fournisseur.
+
+LLM gateway
 
 ## Architecture
 ```text
@@ -48,52 +46,49 @@ Le streaming améliore souvent le temps avant le premier token perçu mais compl
 Les clés fournisseurs restent côté serveur.
 
 ## Exercices
-Un fournisseur devient indisponible. Décris un fallback propre.
+
+- Un fournisseur devient indisponible. Décris un fallback propre.
 
 :::indice
-Sépare génération, validation et exécution ; ne donne pas au modèle une autorité implicite.
+Commence par distinguer les erreurs réellement récupérables des erreurs définitives.
 :::
 
 :::solution
-Détecter les erreurs éligibles, respecter un timeout global, sélectionner un fournisseur compatible, tracer le changement et éviter les retries en cascade.
-
+Détecter une erreur éligible, respecter un timeout global, choisir un fournisseur compatible, tracer le fallback et empêcher les retries en cascade.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Un retry ne corrige pas toutes les erreurs. Une erreur d'autorisation, un input invalide ou une violation de quota ne doit pas être relancée aveuglément. Le streaming ajoute aussi des cas particuliers : annulation, reconnexion et comptage des tokens.
 
 ## À retenir
-Un gateway rend les appels LLM contrôlables, observables et remplaçables.
 
+Un gateway transforme des appels LLM dispersés en un contrat contrôlable, observable et remplaçable.
 
 ## Introduction
 
-Un AI gateway centralise les appels aux fournisseurs de modèles.
+Un gateway devient utile dès que plusieurs fonctionnalités doivent appeler des modèles sans répéter partout les mêmes règles de sécurité, timeout, coût et observabilité.
 
 ## Concept
 
-Timeout, retry limité, fallback, rate limit, coût et observabilité doivent être cohérents.
+Le gateway impose un contrat interne stable entre l'application et les fournisseurs. L'application demande une génération selon ce contrat ; le gateway choisit le fournisseur, applique les politiques et normalise la réponse.
 
 ## Exemple
 
-Une interface interne stable permet de changer de fournisseur sans modifier chaque feature.
+Imagine une application qui commence avec un seul fournisseur puis doit ajouter un modèle moins coûteux pour les tâches simples. Sans abstraction, chaque feature contient son propre code fournisseur. Avec un gateway, le changement reste concentré dans une couche.
 
 ## Comment ça fonctionne
 
-application → gateway → provider → normalized response
+Le flow est : application → gateway → sélection du provider → appel → validation → réponse normalisée. Le gateway peut appliquer un timeout global, des retries limités, un circuit breaker, un fallback compatible et un rate limit. Il enregistre aussi request ID, modèle, tokens, durée, statut et coût estimé.
 
 ## Questions d'entretien
 
-- Pourquoi mettre les secrets dans le gateway ?
+Pourquoi centraliser les clés et politiques LLM dans un gateway ?
 
-  :::indice
-  Considère toujours la frontière entre génération et logique déterministe.
-  :::
+:::indice
+Relie ta réponse à la frontière entre modèle et application.
+:::
 
-  :::reponse
-  Pour empêcher le frontend et les prompts de devenir des frontières de confiance.
-  :::
+:::reponse
+Pour garder les secrets côté serveur et appliquer les règles de coût, sécurité, rate limit et résilience de façon cohérente.
+:::
