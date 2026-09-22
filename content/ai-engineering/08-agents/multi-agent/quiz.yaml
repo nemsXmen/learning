@@ -1,29 +1,27 @@
 id: ai-08-multi-agent-quiz
+kind: QUIZ
 questions:
   - id: ai-08-multi-agent-q1
+    type: multiple_choice
+    difficulty: 3
     question: "Quel est un avantage architectural d'un contrat inter-agent explicite ?"
-    options:
-      - "Il permet à chaque agent d'accéder à toutes les données."
-      - "Il limite et structure les données, contraintes et responsabilités transmises."
-      - "Il supprime le besoin de validation runtime."
-      - "Il garantit que le modèle ne peut pas se tromper."
-    answer: 1
+    options: ["Accès implicite à toutes les données","Structure des données, contraintes et responsabilités transmises","Suppression de la validation runtime","Garantie d'absence d'erreur du modèle"]
+    answer: [1]
     explanation: "Un contrat explicite réduit le couplage et permet d'appliquer le moindre privilège, des budgets et des formats vérifiables."
+    skills: [ai-agents]
   - id: ai-08-multi-agent-q2
+    type: multiple_choice
+    difficulty: 3
     question: "Pourquoi faut-il limiter la profondeur de délégation ?"
-    options:
-      - "Pour empêcher toute exécution parallèle."
-      - "Pour réduire uniquement la taille des prompts."
-      - "Pour éviter les boucles et une explosion imprévisible des coûts et de la latence."
-      - "Pour rendre les modèles déterministes."
-    answer: 2
+    options: ["Pour empêcher toute exécution parallèle","Pour réduire uniquement la taille des prompts","Pour éviter les boucles et une explosion imprévisible des coûts et de la latence","Pour rendre les modèles déterministes"]
+    answer: [2]
     explanation: "Une délégation récursive peut créer des cycles et augmenter rapidement le nombre d'appels."
+    skills: [ai-agents]
   - id: ai-08-multi-agent-q3
+    type: multiple_choice
+    difficulty: 3
     question: "Qui doit conserver l'autorité finale sur une action sensible ?"
-    options:
-      - "Le dernier agent ayant répondu."
-      - "Le superviseur uniquement."
-      - "Le runtime et les systèmes d'autorité qui appliquent permissions, politiques et contrôles."
-      - "Le modèle qui possède le plus grand contexte."
-    answer: 2
+    options: ["Le dernier agent ayant répondu","Le superviseur uniquement","Le runtime et les systèmes d'autorité qui appliquent permissions, politiques et contrôles","Le modèle qui possède le plus grand contexte"]
+    answer: [2]
     explanation: "Une sortie de modèle est une proposition. L'autorité finale doit rester dans une couche contrôlable et auditable."
+    skills: [ai-agents]
