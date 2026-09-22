@@ -53,7 +53,7 @@ Elle doit être disponible au moment de la prédiction. Une feature calculée av
 
 Les transformations apprises doivent être identiques entre entraînement et prédiction. Versionne donc la logique de transformation et évite les traitements manuels non reproductibles.
 
-## Exercice
+## Exercices
 
 Conçois un pipeline d'ingestion relançable sans duplication de chunks.
 
