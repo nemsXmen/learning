@@ -44,6 +44,13 @@ Conserver les fonctions déterministes disponibles et retourner un état dégrad
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 La résilience consiste à prévoir comment le système se comporte quand ses dépendances échouent.
 
