@@ -58,7 +58,7 @@ import hashlib
 digest = hashlib.sha256(data).hexdigest()
 ```
 
-## Exercice
+## Exercices
 
 Conçois le manifeste d'une version de dataset.
 
