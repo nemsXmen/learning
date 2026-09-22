@@ -15,10 +15,8 @@ tags: [deep-learning, pytorch]
 ---
 
 ## Objectifs
-- reconnaître overfitting et instabilité ;
-- comprendre dropout et weight decay ;
-- distinguer régularisation et normalisation ;
-- utiliser early stopping et checkpoints.
+
+À la fin de ce chapitre, tu dois pouvoir reconnaître un surapprentissage, expliquer dropout et weight decay, et construire une expérience permettant de comparer des stratégies de régularisation.
 
 ## Overfitting
 Si train progresse alors que validation se dégrade, le modèle peut mémoriser les particularités du train. Solutions possibles : plus de données, augmentation adaptée, modèle plus simple, weight decay, dropout ou arrêt anticipé.
@@ -45,51 +43,49 @@ Le clipping peut masquer une cause racine : inspecte aussi gradients et données
 Surveille une métrique de validation et conserve le meilleur checkpoint. Définis patience et métrique avant l'expérience.
 
 ## Exercices
-Validation dégradée, train excellent, modèle très grand. Propose trois expériences contrôlées.
+
+- La validation se dégrade alors que le train continue de progresser. Propose trois expériences contrôlées.
 
 :::indice
-Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+Chaque expérience doit répondre à une hypothèse précise et modifier idéalement un facteur principal.
 :::
 
 :::solution
-Comparer modèle plus petit, weight decay différent et dropout différent en gardant dataset, seed, protocole et budget constants.
-
+Comparer un modèle plus petit, une valeur différente de weight decay et une valeur différente de dropout, en conservant le reste du protocole comparable.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Changer simultanément dropout, learning rate, batch size et architecture empêche d'attribuer l'effet observé. Garde le dataset, la seed, le protocole et le budget comparables.
 
 ## À retenir
-La régularisation est une réponse à un problème observé. Elle doit être expérimentée et mesurée.
+
+La régularisation est un outil de généralisation. Elle doit partir d'un diagnostic et être évaluée avec une expérience reproductible.
 
 ## Introduction
 
-La régularisation cherche à améliorer la généralisation du réseau.
+Imagine un modèle dont la performance sur train progresse alors que celle de validation se dégrade. Le modèle apprend les données connues mais généralise moins bien. C'est le signal classique d'un surapprentissage.
 
 ## Concept
 
-Dropout, weight decay, normalisation, early stopping et augmentation agissent sur des mécanismes différents.
+La régularisation cherche à améliorer la généralisation. Les leviers sont différents : davantage de données, augmentation adaptée, modèle plus simple, dropout, weight decay ou early stopping.
 
 ## Exemple
 
-Si la loss train baisse tandis que validation stagne, une stratégie de régularisation peut être pertinente.
+Dropout désactive aléatoirement certaines activations pendant l'entraînement. Weight decay pénalise les poids selon la règle de l'optimiseur. BatchNorm et LayerNorm répondent à des problématiques de normalisation différentes.
 
 ## Comment ça fonctionne
 
-training → validation → diagnostic → régularisation → comparaison
+Flow expérimental : training → validation → diagnostic → modification contrôlée → comparaison. Le gradient clipping peut limiter des gradients trop grands, mais il ne doit pas masquer une cause racine. L'early stopping conserve le meilleur checkpoint selon une métrique définie à l'avance.
 
 ## Questions d'entretien
 
-- Que révèle un écart train/validation important ?
+Que révèle un écart train/validation important ?
 
-  :::indice
-  Relie la question au comportement réel d'un entraînement.
-  :::
+:::indice
+Relie ta réponse au fonctionnement concret du système.
+:::
 
-  :::reponse
-  Il peut indiquer un surapprentissage et nécessite d'analyser données, capacité du modèle et régularisation.
-  :::
+:::reponse
+Il peut signaler du surapprentissage, mais aussi un changement de distribution, un problème de données ou un protocole de validation inadéquat. Il faut diagnostiquer avant de choisir une correction.
+:::
