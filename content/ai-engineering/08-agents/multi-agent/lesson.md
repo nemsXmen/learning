@@ -152,6 +152,12 @@ Cherchez des limites structurelles, pas seulement un meilleur prompt.
 Limiter la profondeur de délégation, conserver un taskId et un graphe des appels, imposer un budget global et détecter les cycles ou répétitions de tâches. Une deadline et un circuit breaker complètent le contrôle.
 :::
 
+## À retenir
+
+Une architecture multi-agents doit être justifiée par une séparation réelle des responsabilités, des contextes ou des politiques. Chaque délégation doit rester bornée, observable et reprenable.
+
+Le modèle peut décider de proposer une délégation, mais le runtime conserve l'autorité sur les permissions, les budgets et les effets de bord. Si un pipeline déterministe suffit, il est généralement inutile d'ajouter la complexité de plusieurs agents.
+
 ## Questions d'entretien
 
 1. **Quand faut-il préférer un pipeline à une architecture multi-agents ?**
