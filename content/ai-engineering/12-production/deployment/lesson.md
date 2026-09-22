@@ -36,7 +36,7 @@ Pin les dépendances, versionne les artefacts et garde la configuration hors du 
 Une release doit pouvoir revenir à une version connue sans perdre les données compatibles.
 
 ## Exercices
-Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
+- Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
 
 :::indice
 Raisonne en détection → mitigation → récupération → vérification.
