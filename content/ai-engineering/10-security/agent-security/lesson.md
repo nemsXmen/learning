@@ -36,7 +36,7 @@ Injecte les credentials uniquement dans le composant qui doit les utiliser. Évi
 ## Audit
 Trace appels d'outils, décisions de politique, erreurs et request IDs sans enregistrer inutilement des données sensibles.
 
-## Exercice
+## Exercices
 Un agent peut exécuter du code Python arbitraire. Quelles protections minimales ?
 
 :::indice
