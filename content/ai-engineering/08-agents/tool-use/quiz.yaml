@@ -1,0 +1,26 @@
+id: ai-08-tool-use-quiz
+kind: QUIZ
+questions:
+  - id: ai-08-tool-use-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Qui décide en dernier ressort si un tool peut être exécuté ?"
+    options: ["Le modèle","Le prompt système","Le runtime avec ses contrôles métier","L'utilisateur dans le texte de la requête"]
+    answer: [2]
+    explanation: "Le runtime doit valider le schéma, les permissions et les contraintes d'exécution."
+    skills: [ai-agents]
+  - id: ai-08-tool-use-q2
+    type: multiple_answer
+    difficulty: 3
+    question: "Quels contrôles sont pertinents avant une mutation ?"
+    options: ["Validation du schéma","Autorisation métier","Idempotence","Augmenter arbitrairement le contexte"]
+    answer: [0, 1, 2]
+    explanation: "Une mutation doit être validée, autorisée et protégée contre les duplications."
+    skills: [ai-agents]
+  - id: ai-08-tool-use-q3
+    type: true_false
+    difficulty: 2
+    question: "Une description précise du tool suffit à empêcher un appel non autorisé."
+    answer: false
+    explanation: "Les permissions doivent être imposées côté runtime, pas seulement décrites au modèle."
+    skills: [ai-agents]
