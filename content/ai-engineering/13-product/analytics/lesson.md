@@ -34,17 +34,15 @@ Combine signaux explicites, erreurs, corrections et résultats métier. Anonymis
 Versionne prompt, modèle et configuration. Compare des cohortes comparables et définis les métriques avant l'expérience.
 
 ## Exercices
-
-Les cohortes doivent être comparables et les métriques définies avant l'expérience. Minimise aussi les données collectées dans les événements analytics.
+- Les cohortes doivent être comparables et les métriques définies avant l'expérience. Minimise aussi les données collectées dans les événements analytics.
 
 :::indice
 Les utilisateurs génèrent beaucoup mais valident rarement les résultats. Quelle hypothèse tester ?
-:::
+::
 
 :::solution
 Observe ce qui arrive après la génération.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : activation → task → AI result → accepted/edited → outcome. Versionne modèle, prompt et configuration afin de relier une évolution du produit à ses effets.
@@ -70,13 +68,12 @@ Un funnel utile peut suivre activation, tâche commencée, résultat AI, accepta
 Si les utilisateurs génèrent beaucoup mais valident rarement, le problème peut venir de la qualité, du workflow ou du manque de confiance. Il faut mesurer le taux d'acceptation et de correction plutôt que conclure à partir du volume.
 
 ## Questions d'entretien
-
-L'analytics AI doit relier usage, qualité et outcome métier.
+- L'analytics AI doit relier usage, qualité et outcome métier.
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-:::
+::
 
 :::reponse
 Pourquoi ne pas utiliser seulement le nombre de générations ?
-:::
+::
