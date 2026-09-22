@@ -44,7 +44,7 @@ Le clipping peut masquer une cause racine : inspecte aussi gradients et données
 ## Early stopping
 Surveille une métrique de validation et conserve le meilleur checkpoint. Définis patience et métrique avant l'expérience.
 
-## Exercice
+## Exercices
 Validation dégradée, train excellent, modèle très grand. Propose trois expériences contrôlées.
 
 :::indice
