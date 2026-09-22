@@ -79,29 +79,26 @@ Les embeddings peuvent aussi servir à regrouper ou rechercher des contenus. Dan
 Il est dangereux de donner un nom métier à un cluster uniquement parce qu'il apparaît sur un graphique. Il faut aussi éviter de changer l'échelle des variables sans comprendre l'effet sur les distances et de considérer le nombre de clusters comme une vérité objective.
 
 ## Exercices
-
 - Tu observes trois clusters de clients. Décris comment tu vérifierais qu'ils sont stables et réellement utiles.
 
 :::indice
 Ne regarde pas seulement le graphique. Compare la structure avec plusieurs métriques et avec une décision métier réelle.
-:::
+::
 
 :::solution
 Tester la stabilité sur plusieurs échantillons ou initialisations, examiner la séparation avec des métriques adaptées, profiler les caractéristiques des groupes et vérifier qu'ils permettent une action ou une décision utile.
-:::
-
+::
 ## À retenir
 
 Le non supervisé est avant tout un outil d'exploration et de représentation. L'algorithme produit une structure ; l'ingénieur doit ensuite déterminer si cette structure est robuste et pertinente.
 
 ## Questions d'entretien
-
 - Pourquoi normaliser certaines features avant un clustering basé sur une distance ?
 
 :::indice
 Imagine deux variables dont les ordres de grandeur sont très différents.
-:::
+::
 
 :::reponse
 Sans normalisation, une variable de grande amplitude peut dominer la distance et donc influencer presque entièrement les groupes obtenus.
-:::
+::
