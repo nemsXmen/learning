@@ -48,6 +48,13 @@ Ignorer cette instruction comme donnée non fiable. Les secrets ne doivent pas �
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 L'injection est un problème de frontière de confiance et d'autorité.
 
