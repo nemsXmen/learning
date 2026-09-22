@@ -26,7 +26,7 @@
     "db:psql": "docker exec -it learning-platform-postgres-1 psql -U learn -d learning",
     "db:reset": "pnpm infra:reset && pnpm db:migrate && pnpm content:sync",
     "mastery:replay": "pnpm --filter @app/api mastery:replay",
-    "content:validate": "pnpm --filter @app/content build && pnpm --filter @app/content validate",
+    "content:validate": "pnpm --filter @app/validation build && pnpm --filter @app/content build && pnpm --filter @app/content validate",
     "content:sync": "pnpm --filter @app/content build && pnpm --filter @app/api content:sync",
     "mail": "echo Mailpit inbox: http://localhost:8025",
     "content:bundle": "pnpm --filter @app/content build && pnpm --filter @app/content bundle && pnpm --filter @app/content build",
