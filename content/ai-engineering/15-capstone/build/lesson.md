@@ -38,7 +38,7 @@ Versionne les schémas d'entrée/sortie. Valide côté serveur les réponses str
 ## Tests
 Combine unit tests, integration tests, API tests et tests d'évaluation IA. Les effets de bord doivent être testables sans appeler réellement des services coûteux.
 
-## Exercice
+## Exercices
 Pourquoi construire d'abord un gateway abstrait plutôt que disperser les appels LLM ?
 
 :::indice
