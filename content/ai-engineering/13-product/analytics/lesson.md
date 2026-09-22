@@ -38,11 +38,10 @@ Versionne prompt, modèle et configuration. Compare des cohortes comparables et 
 
 :::indice
 Les utilisateurs génèrent beaucoup mais valident rarement les résultats. Quelle hypothèse tester ?
-::
-
+:::
 :::solution
 Observe ce qui arrive après la génération.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : activation → task → AI result → accepted/edited → outcome. Versionne modèle, prompt et configuration afin de relier une évolution du produit à ses effets.
@@ -72,8 +71,7 @@ Si les utilisateurs génèrent beaucoup mais valident rarement, le problème peu
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-::
-
+:::
 :::reponse
 Pourquoi ne pas utiliser seulement le nombre de générations ?
-::
+:::
