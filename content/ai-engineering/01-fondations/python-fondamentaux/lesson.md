@@ -108,7 +108,7 @@ Le générateur évite de charger tout le fichier en mémoire.
 - charger tout un corpus alors qu'un flux suffit ;
 - mélanger ingestion, transformation et appel modèle.
 
-## Exercice
+## Exercices
 
 Construis un pipeline qui lit des textes, les normalise, supprime les doublons, retourne id/text/length et lève une erreur pour un texte vide.
 
