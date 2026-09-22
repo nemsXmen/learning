@@ -22,6 +22,47 @@ tags: [agents, guardrails, safety, policy, reliability]
 - interrompre proprement un agent en cas de dérive ;
 - rendre les décisions de sécurité observables.
 
+## Introduction
+
+Les guardrails sont les frontières de contrôle qui empêchent un agent de transformer une sortie probabiliste en effet non autorisé. Ils ne remplacent ni l'authentification, ni l'autorisation métier, ni les contrôles d'infrastructure : ils les orchestrent autour du cycle agentique.
+
+Le principe central est de traiter le modèle comme un composant qui propose des décisions, tandis que le runtime conserve l'autorité sur les données, les outils et les effets de bord.
+
+## Concept
+
+Un guardrail est un contrôle explicite, déterministe autant que possible, placé avant ou après une étape à risque. Il peut vérifier une entrée, isoler un contexte non fiable, valider une sortie structurée, appliquer une policy ou bloquer une action.
+
+On peut modéliser le flux ainsi :
+
+```text
+entrée -> contexte -> raisonnement -> proposition -> policy -> effet
+                         |                |
+                         +-> validation -+
+```
+
+Le modèle peut proposer une action, mais il ne doit jamais obtenir par ce seul mécanisme une permission supplémentaire.
+
+## Exemple
+
+Pour un agent capable de rembourser un paiement, le modèle peut proposer `refundPayment(orderId, amount)`. Le runtime valide le schéma, authentifie le principal, vérifie les droits, contrôle le montant et l'état de la commande, applique l'idempotence puis décide si l'action peut être exécutée automatiquement ou doit être approuvée.
+
+Même si le modèle produit un JSON parfaitement valide, le remboursement reste interdit si la policy le refuse.
+
+## Comment ça fonctionne
+
+Un système robuste applique plusieurs contrôles :
+
+1. vérifier l'entrée et sa taille ;
+2. distinguer les instructions de confiance des données externes ;
+3. valider la sortie du modèle ;
+4. résoudre l'outil uniquement depuis une registry autorisée ;
+5. appliquer identité, permissions, policy et budgets ;
+6. exécuter avec timeout et idempotence ;
+7. journaliser la décision sans exposer inutilement les données sensibles ;
+8. interrompre, reprendre ou demander une approbation selon le résultat.
+
+Cette séparation permet de garder les règles critiques dans le code plutôt que de les confier au comportement attendu du modèle.
+
 ## Pourquoi un guardrail n'est pas un prompt
 
 Un prompt peut demander au modèle de respecter une règle, mais il ne constitue pas une frontière de sécurité. Un agent peut produire une sortie inattendue, recevoir une instruction injectée depuis un document ou choisir un outil de manière incorrecte.
@@ -181,7 +222,20 @@ Tester les règles comme du code :
 
 Un bon test vérifie aussi que le système **refuse réellement l'effet**, pas seulement qu'il affiche un message d'erreur.
 
-## Exercice 1 — Remboursement
+## Erreurs fréquentes
+
+- mettre toute la sécurité dans le prompt système ;
+- considérer un document RAG comme une instruction de confiance ;
+- valider uniquement le JSON sans vérifier les invariants métier ;
+- laisser le modèle choisir librement les permissions d'un outil ;
+- oublier l'idempotence sur les mutations ;
+- journaliser des secrets ou des données personnelles dans les traces ;
+- traiter une approbation humaine comme une simple phrase du prompt ;
+- avoir des budgets différents mais aucun mécanisme central d'arrêt.
+
+## Exercices
+
+### Exercice 1 — Remboursement
 
 Un agent de support reçoit la demande « rembourse 500 € ». Conçois les étapes entre la sortie du modèle et le remboursement effectif.
 
@@ -193,7 +247,7 @@ Sépare intention, identité, policy, idempotence et effet financier.
 Le modèle produit une proposition structurée. Le backend authentifie le principal, vérifie que la ressource appartient au bon client, applique les règles de montant et de rôle, exige une approbation si nécessaire, attribue une clé d'idempotence puis appelle le service de paiement. Chaque étape critique est auditée.
 :::
 
-## Exercice 2 — Document hostile
+### Exercice 2 — Document hostile
 
 Un document RAG contient une instruction demandant d'exfiltrer une clé API.
 
