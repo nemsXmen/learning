@@ -16,6 +16,11 @@ tags: [pipelines, features, batch, streaming, leakage]
 
 ## Objectifs
 
+## Exemple
+
+Un pipeline de features peut suivre : source → validation → transformation → feature versionnée → entraînement ou serving. La même logique de transformation doit être contrôlée pour éviter le training-serving skew.
+
+
 À la fin de cette leçon, tu dois pouvoir découper un pipeline en étapes fiables, expliquer l'idempotence, distinguer batch et streaming et construire des features disponibles au bon moment.
 
 ## Introduction
