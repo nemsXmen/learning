@@ -15,85 +15,111 @@ tags: [capstone, architecture, rag, agents, production]
 ---
 
 ## Objectifs
-- concevoir un AI SaaS complet ;
-- définir les frontières de responsabilité ;
-- intégrer données, modèles et outils ;
-- préparer sécurité, observabilité et billing.
+- concevoir l'architecture d'un AI SaaS complet ;
+- définir les responsabilités de chaque couche ;
+- intégrer auth, RAG, agents, données et modèles ;
+- préparer sécurité, observabilité, quotas et billing ;
+- identifier les trust boundaries avant d'écrire du code.
 
-## Architecture cible
-```text
+## Introduction
+
+Le capstone assemble les briques de la formation dans un produit SaaS réel : un utilisateur authentifié soumet une tâche, le système récupère éventuellement du contexte, appelle un modèle, peut utiliser des outils, valide le résultat, persiste les données et expose des métriques.
+
+La difficulté vient moins du LLM que des frontières entre composants. Une architecture senior doit empêcher qu'une sortie probabiliste devienne directement une action sensible.
+
+## Concept
+
+Une architecture cible peut être organisée ainsi :
+
+~~~text
 Next.js
    |
 API / Auth / Quotas
    |
-AI Gateway ---- Evaluation
- |  |  LLM RAG  Agents
- |   |     |
-Postgres Redis Vector Store
+AI Gateway -------- Evaluation
+ |      |              |
+LLM    RAG           Traces
+ |      |
+Agents  Vector Store
    |
-Workers / Object Storage
-```
+Postgres / Redis / Object Storage
+   |
+Workers
+~~~
 
-Le frontend ne doit pas appeler directement les fournisseurs de modèles. Le backend contrôle identité, permissions, quotas, validation et effets de bord.
-
-## Flux principal
-1. authentification ;
-2. création d'une tâche ;
-3. récupération de contexte ;
-4. appel du modèle ;
-5. validation structurée ;
-6. tool call éventuel ;
-7. persistance ;
-8. trace d'observabilité ;
-9. facturation.
-
-## Exercices
-Dessine les trust boundaries et indique quelles opérations nécessitent une autorisation indépendante du modèle.
-
-:::indice
-Décompose le système en responsabilités et vérifie chaque frontière avant le lancement.
-:::
-
-:::solution
-Les outils ayant des effets de bord, accès aux données sensibles ou coût important doivent être protégés par le backend et non par une simple instruction du prompt.
-
-:::
-
-## Erreurs fréquentes
-
-- choisir une technologie avant de définir le problème ;
-- mesurer une moyenne sans regarder les cas critiques ;
-- confondre une sortie plausible avec une sortie validée ;
-- oublier coût, sécurité et opérations dans la conception.
-
-## À retenir
-Le capstone doit être conçu comme un produit logiciel distribué, pas comme un simple prompt.
-
-
-## Introduction
-
-Le capstone assemble les briques de la formation dans un AI SaaS complet.
-
-## Concept
-
-Frontend, API, gateway, RAG, agents, Postgres, Redis, vector store, observability et billing ont des responsabilités distinctes.
+Le frontend ne parle pas directement aux fournisseurs de modèles. L'API contrôle identité, tenant, permissions, quotas et contrats. Le gateway centralise les appels IA. Les workers traitent les tâches longues. Postgres conserve l'état métier ; Redis sert aux usages nécessitant faible latence ; le vector store sert au retrieval.
 
 ## Exemple
 
-Le backend contrôle auth, quotas, validation et effets de bord tandis que le modèle fournit des sorties probabilistes.
+Pour une question sur des documents privés :
+
+~~~text
+request
+  ↓
+authentication
+  ↓
+tenant + authorization
+  ↓
+retrieval avec ACL
+  ↓
+LLM
+  ↓
+structured validation
+  ↓
+tool policy si nécessaire
+  ↓
+persistence
+  ↓
+trace + usage + billing
+~~~
+
+Le modèle peut proposer un tool call, mais il ne décide pas seul si cette action est autorisée.
 
 ## Comment ça fonctionne
 
-request → auth → AI gateway → retrieval/agent → validation → persistence → trace
+Définis d'abord les contrats internes : entrée métier, contexte récupéré, réponse du gateway, demande d'outil, usage et événement d'audit.
+
+Sépare les responsabilités déterministes des responsabilités probabilistes. L'IA peut résumer, classifier ou proposer. L'application décide des permissions, de la validation métier et de l'écriture finale.
+
+Les trust boundaries doivent être explicites : navigateur → API, API → fournisseur LLM, retrieval → modèle, modèle → tools, worker → stockage.
+
+## Erreurs fréquentes
+
+- laisser le frontend appeler directement le fournisseur LLM ;
+- faire confiance au modèle pour l'autorisation ;
+- mélanger état métier et historique de conversation ;
+- oublier l'isolation multi-tenant ;
+- ne pas versionner prompts et modèles ;
+- ajouter des agents alors qu'un workflow déterministe suffit ;
+- intégrer le billing sans enregistrer l'usage réel.
+
+## Exercices
+
+Dessine les trust boundaries et indique quelles opérations nécessitent une autorisation indépendante du modèle.
+
+:::indice
+Repère les données privées, les effets de bord et les opérations coûteuses. Pour chacun, demande : « qui décide si cette action est permise ? ».
+:::
+
+:::solution
+Les accès aux données privées, écritures métier, paiements, envois et appels à privilèges doivent être contrôlés côté serveur par une politique déterministe. Le modèle peut proposer une action, mais l'API ou un policy engine vérifie identité, tenant, permissions, paramètres et limites avant exécution.
+:::
+
+## À retenir
+
+Un AI SaaS production est un système distribué avec une couche IA, pas un simple wrapper autour d'un LLM.
 
 ## Questions d'entretien
 
 - Où placer les autorisations ?
+- Pourquoi centraliser les appels LLM dans un gateway ?
+- Quelles responsabilités doivent rester déterministes ?
+- Comment isoler plusieurs tenants ?
 
-  :::indice
-  Pense à la responsabilité de chaque couche et au contrôle des risques.
-  :::
+:::indice
+Réponds en termes de responsabilités, de trust boundaries et de contrôles vérifiables.
+:::
 
-  :::reponse
-  Dans les services déterministes côté serveur, avant les opérations sensibles.
-  :::
+:::reponse
+Les autorisations doivent être appliquées côté serveur avant les effets de bord. Un gateway centralise contrats, timeouts, retries, observabilité et coûts. Les permissions et invariants métier restent déterministes. L'isolation multi-tenant doit être appliquée dans les requêtes, le retrieval, le cache et les outils, pas uniquement dans le prompt.
+:::
