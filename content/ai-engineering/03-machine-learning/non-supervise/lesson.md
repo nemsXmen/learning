@@ -53,6 +53,13 @@ Comparer stabilité, caractéristiques, séparation selon plusieurs métriques e
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 
 Le non supervisé sert à explorer et représenter. Une structure calculée doit être confrontée aux données et au contexte avant utilisation.
