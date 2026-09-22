@@ -141,33 +141,30 @@ Le filtre d'accès doit donc être imposé dans le chemin de retrieval, testé e
 - stocker des données sans réfléchir à leur version et à leur durée de conservation.
 
 ## Exercices
-
 - Conçois le modèle minimal d'un chunk RAG qui permette de retrouver son document, sa version et son tenant.
-- Explique le chemin permettant de retrouver la source d'une citation affichée à l'utilisateur.
-- Identifie le bug de sécurité présent dans un retrieval qui filtre uniquement par similarité.
+  - Explique le chemin permettant de retrouver la source d'une citation affichée à l'utilisateur.
+  - Identifie le bug de sécurité présent dans un retrieval qui filtre uniquement par similarité.
 
 :::indice
 Pour chaque objet, demande-toi : « comment puis-je retrouver son parent exact et vérifier que l'utilisateur a le droit de le voir ? »
-:::
+::
 
 :::solution
 Un chunk peut contenir `id`, `document_id`, `document_version`, `tenant_id`, `position`, `text`, `embedding` et les métadonnées nécessaires. La citation doit pouvoir remonter vers le chunk puis le document, sa version et la source. Un retrieval sans filtre de tenant peut retourner les données d'une autre entreprise.
-:::
-
+::
 ## À retenir
 
 La modélisation des données est une partie de l'architecture IA. Une identité stable, une provenance complète, une version explicite et une frontière d'accès claire rendent les traitements auditables et reconstruisibles.
 
 ## Questions d'entretien
-
 - Pourquoi la provenance est-elle importante dans un système RAG ?
-- Pourquoi isoler les contrats d'un fournisseur LLM du modèle métier ?
-- Pourquoi `tenant_id` peut-il être une donnée de sécurité et pas seulement une métadonnée ?
+  - Pourquoi isoler les contrats d'un fournisseur LLM du modèle métier ?
+  - Pourquoi `tenant_id` peut-il être une donnée de sécurité et pas seulement une métadonnée ?
 
 :::indice
 Explique les conséquences concrètes d'un mauvais modèle de données.
-:::
+::
 
 :::reponse
 La provenance permet de diagnostiquer une réponse et de retrouver les données qui l'ont produite. Un contrat interne limite le couplage et facilite les changements de fournisseur. Le tenant définit une frontière d'accès : l'oublier dans le retrieval peut provoquer une fuite inter-client.
-:::
+::
