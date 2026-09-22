@@ -34,52 +34,49 @@ Combine signaux explicites, erreurs, corrections et résultats métier. Anonymis
 Versionne prompt, modèle et configuration. Compare des cohortes comparables et définis les métriques avant l'expérience.
 
 ## Exercices
-Les utilisateurs génèrent beaucoup mais valident rarement les résultats. Quelle hypothèse tester ?
+
+Les cohortes doivent être comparables et les métriques définies avant l'expérience. Minimise aussi les données collectées dans les événements analytics.
 
 :::indice
-Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+Les utilisateurs génèrent beaucoup mais valident rarement les résultats. Quelle hypothèse tester ?
 :::
 
 :::solution
-Mesurer qualité perçue, taux de correction, temps gagné et raisons d'abandon plutôt que compter uniquement les générations.
-
+Observe ce qui arrive après la génération.
 :::
 
 ## Erreurs fréquentes
 
-- choisir une technologie avant de définir le problème ;
-- mesurer une moyenne sans regarder les cas critiques ;
-- confondre une sortie plausible avec une sortie validée ;
-- oublier coût, sécurité et opérations dans la conception.
+Le flow est : activation → task → AI result → accepted/edited → outcome. Versionne modèle, prompt et configuration afin de relier une évolution du produit à ses effets.
 
 ## À retenir
-L'analytics IA doit relier usage, qualité et outcome métier.
 
+Mesurer qualité perçue, taux de correction, temps gagné et raisons d'abandon plutôt que compter uniquement les générations.
 
 ## Introduction
 
-L'analytics AI mesure adoption, qualité et outcome métier.
+Mesurer l'usage jusqu'à l'outcome
 
 ## Concept
 
-Activation, task completion, acceptance, correction, fallback et coût par tâche sont complémentaires.
+L'analytics d'un produit AI doit relier comportement, qualité et résultat. Compter les appels au modèle mesure une activité technique, pas nécessairement une valeur produit.
 
 ## Exemple
 
-Un volume élevé de générations peut cacher un faible taux d'acceptation.
+Un funnel utile peut suivre activation, tâche commencée, résultat AI, acceptation ou édition, puis outcome. Les signaux explicites doivent être complétés par corrections, erreurs, abandons et résultats métier.
 
 ## Comment ça fonctionne
 
-activation → task → AI result → accepted/edited → outcome
+Si les utilisateurs génèrent beaucoup mais valident rarement, le problème peut venir de la qualité, du workflow ou du manque de confiance. Il faut mesurer le taux d'acceptation et de correction plutôt que conclure à partir du volume.
 
 ## Questions d'entretien
 
-- Pourquoi ne pas utiliser seulement le nombre de générations ?
+L'analytics AI doit relier usage, qualité et outcome métier.
 
-  :::indice
-  Relie la métrique à une décision produit concrète.
-  :::
+:::indice
+Relie ta réponse à une décision produit mesurable.
+:::
 
-  :::reponse
-  Parce qu'une génération n'est pas nécessairement une valeur créée.
-  :::
+:::reponse
+Pourquoi ne pas utiliser seulement le nombre de générations ?
+:::
