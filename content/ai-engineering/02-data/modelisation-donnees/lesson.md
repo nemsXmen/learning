@@ -72,7 +72,7 @@ Un adaptateur traduit ensuite ce contrat vers le fournisseur choisi.
 
 Dans un SaaS, tenant_id doit participer à la frontière de données lorsque les utilisateurs ne doivent pas accéder aux données d'un autre tenant. Le filtre doit être appliqué systématiquement et renforcé si possible par les mécanismes de sécurité de la base.
 
-## Exercice
+## Exercices
 
 Conçois le modèle minimal d'un chunk RAG permettant de retrouver document, version, tenant, texte et embedding.
 
