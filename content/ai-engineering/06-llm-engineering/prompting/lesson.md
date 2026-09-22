@@ -38,17 +38,15 @@ Un prompt de production doit avoir une version, un changelog et un jeu d'évalua
 Une page web ou un document peut contenir des instructions malveillantes. Sépare clairement données et instructions et n'autorise jamais le modèle à contourner les contrôles applicatifs.
 
 ## Exercices
-
 - Tu modifies un prompt utilisé par une feature critique. Comment éviter une régression silencieuse ?
 
 :::indice
 Pense au prompt comme à une version de code.
-:::
+::
 
 :::solution
 Créer une nouvelle version, exécuter un jeu de tests représentatif, comparer les métriques avec la version précédente puis déployer progressivement si les résultats sont acceptables.
-:::
-
+::
 ## Erreurs fréquentes
 
 Une page web ou un document peut contenir des instructions malveillantes. Les données récupérées doivent donc rester des données non fiables. Le modèle ne doit jamais pouvoir transformer un texte externe en autorisation applicative. Versionne le prompt, son changelog et son dataset d'évaluation.
@@ -74,13 +72,12 @@ Pour extraire name, email et amount d'un message client, ne demande pas seulemen
 Le flow devient : contrat → contexte → entrée → génération → validation → évaluation. Quelques exemples peuvent préciser un format, mais ils doivent être représentatifs et testés avec des cas ambigus.
 
 ## Questions d'entretien
-
-Pourquoi versionner les prompts ?
+- Pourquoi versionner les prompts ?
 
 :::indice
 Relie ta réponse à la frontière entre modèle et application.
-:::
+::
 
 :::reponse
 Pour reproduire les sorties, comparer les changements et identifier quelle version a produit une régression.
-:::
+::
