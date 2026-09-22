@@ -31,7 +31,7 @@ Les runbooks indiquent commandes, dashboards, seuils et rollback.
 Suivre coût par modèle, tenant, fonctionnalité et période. Budgets et quotas évitent les consommations illimitées.
 
 ## Exercices
-Un agent boucle et génère une facture inattendue. Que faire ?
+- Un agent boucle et génère une facture inattendue. Que faire ?
 
 :::indice
 Raisonne en détection → mitigation → récupération → vérification.
