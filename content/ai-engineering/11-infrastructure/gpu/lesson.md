@@ -31,52 +31,49 @@ VRAM ~= weights + activations + runtime buffers + cache
 FP32, FP16 et BF16 offrent des compromis entre mémoire, vitesse et stabilité.
 
 ## Exercices
-- Une inférence échoue par OOM alors que le modèle tient presque en VRAM. Quels leviers tester ?
+
+Une quantification peut réduire la mémoire, mais elle doit être évaluée sur la qualité et le débit. Réduire le batch peut résoudre un OOM tout en diminuant le throughput.
 
 :::indice
-Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
+- Une inférence échoue par OOM alors que le modèle tient presque en VRAM. Quels leviers tester ?
 :::
 
 :::solution
-Réduire batch/contexte, utiliser une précision adaptée, libérer les buffers et envisager quantification ou modèle plus petit.
-
+Commence par réduire ce qui varie avec la requête.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : modèle → estimation mémoire → précision → batch/contexte → scheduling GPU → métriques. Compare toujours mémoire utilisée, throughput, p95/p99 et concurrence.
 
 ## À retenir
-La capacité IA dépend autant de mémoire et débit que du nombre de paramètres.
 
+Réduire batch et contexte, choisir une précision adaptée, libérer les buffers inutiles, puis tester quantification ou modèle plus petit avec des mesures de qualité et performance.
 
 ## Introduction
 
-Les workloads AI sont souvent limités par mémoire, calcul et transfert de données.
+Les contraintes matérielles avant l'optimisation
 
 ## Concept
 
-VRAM, précision numérique, batch et taille de modèle déterminent la capacité d'un GPU.
+Un workload AI est limité par plusieurs ressources : calcul, VRAM, bande passante mémoire, CPU et transferts. Comprendre ces contraintes permet de choisir une optimisation mesurable plutôt que de changer de matériel au hasard.
 
 ## Exemple
 
-Un modèle qui tient en FP16 peut nécessiter une stratégie différente en quantification lorsqu'il dépasse la VRAM.
+Pendant l'entraînement, la mémoire contient notamment poids, gradients, états de l'optimiseur et activations. En inférence, le besoin dépend surtout des poids, du contexte, des activations et des buffers du runtime.
 
 ## Comment ça fonctionne
 
-model → memory estimate → precision → GPU scheduling
+Un modèle tient en FP16 mais provoque un OOM avec un contexte plus long. Le modèle n'a pas changé : les activations et buffers nécessaires à cette requête ont augmenté.
 
 ## Questions d'entretien
 
-- Pourquoi la VRAM est-elle critique ?
+La capacité d'un système AI dépend autant de la mémoire et du débit que du nombre de paramètres.
 
-  :::indice
-  Relie performance et fiabilité au comportement sous charge.
-  :::
+:::indice
+Relie ta réponse à une métrique et à une contrainte système.
+:::
 
-  :::reponse
-  Elle limite les modèles, contextes et batches pouvant être chargés simultanément.
-  :::
+:::reponse
+Pourquoi la VRAM est-elle critique ?
+:::
