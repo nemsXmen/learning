@@ -43,7 +43,7 @@ Comparer de nombreux modèles sur le test puis choisir le meilleur transforme le
 
 Une classification peut bien classer tout en étant mal calibrée. Une probabilité de 0.8 devrait correspondre approximativement à 80 % de positifs dans le contexte mesuré si le modèle est correctement calibré.
 
-## Exercice
+## Exercices
 
 Un modèle obtient 99 % sur train et 72 % sur validation. Donne deux hypothèses et trois vérifications.
 
