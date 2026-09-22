@@ -30,6 +30,18 @@ dataset -> runner -> system version -> metrics -> error analysis
 ## Rubrique
 Pour une réponse libre, une grille explicite peut évaluer exactitude, couverture, conformité et style. Pour un JSON, privilégie d'abord des assertions déterministes.
 
+## Exercices
+
+- Construis un golden set de 20 cas pour une fonctionnalité de résumé et définis les critères de réussite.
+
+:::indice
+Couvre cas normaux, limites, refus et sorties structurées, puis relie chaque critère à une décision.
+:::
+
+:::solution
+Sépare les cas par catégories, versionne les entrées et leurs attentes, puis définis des assertions déterministes quand elles sont possibles et une grille explicite pour le reste.
+:::
+
 ## Erreurs fréquentes
 
 - négliger les hypothèses et les contrats de données ;
