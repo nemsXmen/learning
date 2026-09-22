@@ -1,0 +1,27 @@
+id: ai-09-datasets-quiz
+kind: QUIZ
+questions:
+  - id: ai-09-datasets-q1
+    type: multiple_choice
+    difficulty: 3
+    question: "Pourquoi conserver un golden set relativement stable ?"
+    options: ["Pour empêcher toute amélioration","Pour permettre des comparaisons fiables entre versions","Pour supprimer les cas difficiles","Pour éviter l'annotation"]
+    answer: [1]
+    explanation: "Un ensemble stable facilite l'attribution des variations de score aux changements du système."
+    skills: [ai-evaluation]
+  - id: ai-09-datasets-q2
+    type: multiple_choice
+    difficulty: 4
+    question: "Que peut indiquer un désaccord récurrent entre annotateurs ?"
+    options: ["Que le modèle est nécessairement mauvais","Qu'un critère ou une rubrique peut être ambigu","Que les labels sont toujours inutiles","Que le dataset doit être supprimé"]
+    answer: [1]
+    explanation: "Un désaccord systématique peut révéler une définition insuffisamment opérationnelle du critère."
+    skills: [ai-evaluation]
+  - id: ai-09-datasets-q3
+    type: multiple_choice
+    difficulty: 4
+    question: "Quel risque pose la contamination d'un benchmark ?"
+    options: ["Elle garantit la généralisation","Elle peut rendre le score peu représentatif de la généralisation","Elle réduit toujours la latence","Elle empêche toute annotation"]
+    answer: [1]
+    explanation: "Si les exemples sont mémorisés ou utilisés pour optimiser le système, le benchmark peut surestimer la capacité de généralisation."
+    skills: [ai-evaluation]
