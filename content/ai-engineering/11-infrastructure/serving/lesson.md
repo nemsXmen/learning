@@ -34,7 +34,7 @@ Le batching peut augmenter le débit mais ajouter de l'attente. Mesure p50, p95 
 Une queue bornée et des réponses de surcharge protègent le système lorsque la demande dépasse la capacité.
 
 ## Exercices
-La latence p99 explose pendant les pics. Quelles hypothèses tester ?
+- La latence p99 explose pendant les pics. Quelles hypothèses tester ?
 
 :::indice
 Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
