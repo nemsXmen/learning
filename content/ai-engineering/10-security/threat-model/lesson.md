@@ -34,52 +34,49 @@ Les risques incluent injection, exfiltration, abus d'outils, fuite de données, 
 Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, sandbox, logging et approbation.
 
 ## Exercices
-- Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
+
+Un prompt plus strict ne remplace pas une autorisation serveur. Une défense utile reste efficace même lorsque le modèle produit une sortie inattendue.
 
 :::indice
-Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
+- Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
 :::
 
 :::solution
-Traiter le document comme donnée non fiable et placer une autorisation déterministe avant toute écriture.
-
+Le document doit être considéré comme une donnée non fiable.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : actifs → frontières de confiance → menaces → impact → contrôles → risque résiduel. Les contrôles peuvent inclure ACL, validation, sandbox, rate limit, approbation et logging.
 
 ## À retenir
-La sécurité commence par les frontières de confiance, pas par le prompt seul.
 
+Le document peut influencer le raisonnement, mais l'autorisation d'écriture doit être décidée par un contrôle déterministe côté serveur.
 
 ## Introduction
 
-La sécurité AI commence par identifier actifs, acteurs, trust boundaries et scénarios d'abus.
+Commencer par les frontières de confiance
 
 ## Concept
 
-Threat modeling relie menaces à contrôles concrets.
+Un système AI combine utilisateur, modèle, données, outils et services externes. Avant de choisir une défense, il faut savoir quels actifs existent et où une donnée change de niveau de confiance.
 
 ## Exemple
 
-Un système RAG doit considérer documents, prompts, embeddings, secrets et données tenant comme actifs distincts.
+Cartographie prompts, documents, secrets, modèles, bases, embeddings, outils et actions métier. Pour chaque élément, demande qui peut le lire, le modifier et le faire agir.
 
 ## Comment ça fonctionne
 
-assets → threats → controls → verification
+Dans un RAG multi-tenant, les documents, embeddings et identités sont des actifs distincts. Une erreur d'isolation peut permettre à une requête d'un tenant de récupérer des informations d'un autre.
 
 ## Questions d'entretien
 
-- Pourquoi modéliser les frontières de confiance ?
+Le threat modeling relie chaque menace à un contrôle vérifiable et à un risque résiduel.
 
-  :::indice
-  Pense aux contrôles qui restent fiables même si le modèle se trompe.
-  :::
+:::indice
+Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
+:::
 
-  :::reponse
-  Pour savoir où authentifier, autoriser, valider et journaliser.
-  :::
+:::reponse
+Pourquoi modéliser les frontières de confiance ?
+:::
