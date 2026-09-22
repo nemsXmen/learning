@@ -16,117 +16,65 @@ tags: [data-quality, preprocessing, leakage]
 
 ## Objectifs
 
-- définir une donnée « de qualité » pour une tâche donnée ;
-- mesurer complétude, validité, unicité, fraîcheur et cohérence ;
-- choisir un preprocessing sans détruire l'information ;
-- détecter la fuite de données ;
-- transformer les contrôles en garde-fous automatisés.
+À la fin de cette leçon, tu dois pouvoir définir les critères de qualité d'un dataset, mesurer les défauts importants, choisir un preprocessing adapté à la tâche et détecter les principales formes de fuite de données.
 
-## Qualité : par rapport à quoi ?
+## Introduction
 
-Il n'existe pas une donnée « propre » dans l'absolu.
+Un modèle ne peut pas compenser indéfiniment une donnée mal définie.
 
-Un texte contenant des emojis peut être parfaitement acceptable pour un chatbot et problématique pour un pipeline qui attend un vocabulaire strict.
+Prenons un corpus documentaire contenant des titres vides, des documents dupliqués et des pages obsolètes. Le pipeline peut parfaitement réussir à créer des embeddings et remplir une base vectorielle. Pourtant, le système final peut récupérer de mauvais passages.
 
-La bonne question est :
+C'est pourquoi la qualité des données doit être traitée comme une propriété mesurable du pipeline, et non comme une étape de nettoyage esthétique.
 
-> « Cette donnée respecte-t-elle les invariants nécessaires à cette étape ? »
+## Concept
 
-## Les dimensions à mesurer
+On peut examiner plusieurs dimensions :
 
 | Dimension | Question |
 | --- | --- |
-| Complétude | Les champs nécessaires sont-ils présents ? |
-| Validité | Respectent-ils le schéma attendu ? |
-| Unicité | Avons-nous des doublons indésirables ? |
-| Fraîcheur | Les données sont-elles assez récentes ? |
-| Cohérence | Les relations métier sont-elles compatibles ? |
+| Complétude | Les informations nécessaires sont-elles présentes ? |
+| Validité | Les valeurs respectent-elles le schéma ? |
+| Unicité | Existe-t-il des doublons indésirables ? |
+| Fraîcheur | Les données sont-elles suffisamment récentes ? |
+| Cohérence | Les relations métier restent-elles compatibles ? |
 | Couverture | Les cas importants sont-ils représentés ? |
 
-Ces mesures deviennent des signaux de pipeline.
+Il n'existe pas de seuil universel. Un taux de doublons acceptable pour une analyse exploratoire peut être inacceptable pour un index RAG où chaque doublon augmente le bruit et le coût.
 
-## Preprocessing : moins n'est pas toujours mieux
+## Exemple
 
-Prenons :
+Une normalisation simple peut être utile :
 
 ```python
 def normalize(text: str) -> str:
     return " ".join(text.replace("\r", " ").split())
 ```
 
-Cette transformation retire certains espaces inutiles, mais elle ne prétend pas résoudre tous les problèmes.
+Mais cela ne signifie pas que toute normalisation est bénéfique.
 
-Supprimer systématiquement :
+Supprimer les accents peut dégrader une recherche multilingue. Supprimer les nombres peut détruire des références de factures. Supprimer toute ponctuation peut modifier le sens de certaines expressions.
 
-- ponctuation ;
-- accents ;
-- majuscules ;
-- nombres ;
-- structure Markdown ;
+Le bon preprocessing est donc celui dont l'effet est mesuré sur la tâche réelle.
 
-peut détruire une information utile.
+## Comment ça fonctionne
 
-Le preprocessing doit donc être justifié par la tâche et mesuré sur un jeu d'évaluation.
-
-## Valeurs manquantes
-
-Une valeur manquante peut signifier plusieurs choses :
+Un contrôle de qualité suit généralement ce flux :
 
 ```text
-inconnue
-non applicable
-non collectée
-perdue
-volontairement absente
+source
+  ↓
+profilage
+  ↓
+règles de qualité
+  ↓
+rapport
+  ↓
+acceptation ou rejet
+  ↓
+dataset versionné
 ```
 
-Remplacer tout par une moyenne sans comprendre la cause peut introduire un biais.
-
-Pour certaines tâches, « missing » est lui-même une information.
-
-## Doublons et quasi-doublons
-
-Deux documents identiques peuvent être supprimés avec une empreinte de contenu.
-
-Les quasi-doublons demandent une méthode plus sophistiquée.
-
-Dans un RAG, les doublons peuvent :
-
-- gaspiller le budget d'indexation ;
-- augmenter le bruit du retrieval ;
-- faire apparaître plusieurs fois la même information ;
-- donner une fausse impression de confiance.
-
-## Fuite de données : le piège silencieux
-
-Supposons que tu calcules une normalisation en utilisant la moyenne de tout le dataset, puis que tu évalues sur le test.
-
-Le test a alors influencé la transformation.
-
-La règle :
-
-```text
-fit sur train
-↓
-transform train
-transform validation
-transform test
-```
-
-Le test doit rester indépendant de la construction du système.
-
-La fuite peut aussi être temporelle :
-
-```text
-prédire lundi
-avec une information créée mardi
-```
-
-Le modèle paraît excellent pendant l'évaluation et échoue lorsqu'il rencontre la réalité.
-
-## Contrôles automatisés
-
-Un pipeline peut produire un rapport :
+Par exemple :
 
 ```json
 {
@@ -138,54 +86,89 @@ Un pipeline peut produire un rapport :
 }
 ```
 
-Mais un nombre n'est utile que s'il possède un seuil et une action associée.
+Le nombre n'a de sens que si une règle lui est associée. Si `duplicate_rate > 0.02`, le pipeline peut bloquer l'indexation, créer une alerte et conserver le rapport pour audit.
 
-Exemple :
+## Valeurs manquantes
+
+Une valeur absente n'a pas toujours la même signification.
 
 ```text
-duplicate_rate > 2%
-→ bloquer l'indexation
-→ créer une alerte
-→ conserver le rapport
+inconnue
+non applicable
+non collectée
+perdue
+volontairement absente
 ```
+
+Remplacer toutes les valeurs manquantes par une moyenne sans comprendre leur origine peut introduire un biais.
+
+Dans certains modèles, le fait qu'une valeur soit absente constitue même une information prédictive. La décision doit donc dépendre de la tâche et de la cause de l'absence.
+
+## Fuite de données
+
+La fuite apparaît lorsqu'une information qui ne devrait pas être disponible au moment de la prédiction influence l'entraînement ou l'évaluation.
+
+Une erreur classique consiste à calculer une statistique sur train et test ensemble :
+
+```text
+train + test
+    ↓
+statistiques
+    ↓
+transformation
+```
+
+La bonne séquence est :
+
+```text
+train
+  ↓
+fit transformation
+  ↓
+transform train
+transform validation
+transform test
+```
+
+Il existe aussi une fuite temporelle. Si nous prédisons l'état d'une transaction au lundi et utilisons une information créée le mardi, notre évaluation est artificiellement optimiste.
 
 ## Erreurs fréquentes
 
 - nettoyer mécaniquement sans mesurer l'effet ;
-- considérer toutes les valeurs manquantes comme équivalentes ;
-- calculer des statistiques sur train + test ;
-- oublier les fuites temporelles ;
-- utiliser des seuils sans définir l'action associée ;
+- traiter toutes les valeurs manquantes de la même manière ;
+- calculer des statistiques à partir du test ;
+- ignorer les contraintes temporelles ;
+- définir des seuils sans définir l'action correspondante ;
 - confondre dataset volumineux et dataset représentatif.
 
 ## Exercices
 
-- Définis cinq contrôles de qualité pour un corpus RAG.
+- Définis cinq règles de qualité pour un corpus RAG.
 - Donne un exemple de fuite temporelle.
-- Un dataset possède 1 % de doublons. Est-ce automatiquement acceptable ?
+- Un dataset possède 1 % de doublons. Peut-on conclure qu'il est de bonne qualité ?
 
 :::indice
-Il n'existe pas de seuil universel : relie chaque contrôle au risque métier et à l'étape du pipeline.
+Un seuil n'est jamais une vérité universelle. Relie chaque règle au risque qu'elle cherche à contrôler.
 :::
 
 :::solution
-Un corpus RAG peut contrôler texte non vide, taille raisonnable, source/version présents, langue supportée et unicité. Une fuite temporelle consiste par exemple à utiliser l'état d'un compte connu après la date de prédiction. 1 % de doublons n'est ni automatiquement bon ni mauvais : il faut connaître le coût, la nature des doublons et le seuil acceptable pour le système.
+Un corpus RAG peut contrôler texte non vide, taille raisonnable, source/version présents, langue supportée et unicité. Une fuite temporelle consiste à utiliser une information apparue après le moment où la prédiction aurait réellement été faite. 1 % de doublons ne permet pas à lui seul de conclure : il faut connaître la nature des doublons, leur impact et les exigences du système.
 :::
 
 ## À retenir
 
-La qualité des données se définit par rapport à un usage. Mesurer, comprendre la cause, agir et vérifier l'effet est plus robuste que « nettoyer jusqu'à ce que ça ait l'air propre ».
+La qualité des données commence par une définition claire de ce que le système attend. On mesure ensuite, on agit sur les défauts importants et on vérifie que le nettoyage améliore réellement la tâche.
 
 ## Questions d'entretien
 
-- Pourquoi le preprocessing peut-il dégrader un modèle ?
-- Comment détecter une fuite de données ?
-- Pourquoi versionner les règles de qualité ?
+- Pourquoi un preprocessing peut-il dégrader un système IA ?
+- Comment reconnais-tu une fuite de données ?
+- Pourquoi un seuil de qualité doit-il être associé à une action ?
 
 :::indice
-Relie chaque réponse à la possibilité de régression.
+Pense au pipeline complet : donnée, transformation, modèle, production.
 :::
 
 :::reponse
-Un preprocessing peut supprimer une information utile. Une fuite se détecte en examinant la disponibilité temporelle des variables et le pipeline de séparation train/validation/test. Versionner les règles permet d'expliquer pourquoi un dataset a été accepté ou refusé à une date donnée.
+Un preprocessing peut supprimer une information utile. Une fuite se reconnaît lorsqu'une information indisponible au moment réel de la prédiction influence le système. Un seuil doit déclencher une décision claire comme accepter, bloquer, alerter ou demander une correction.
 :::
