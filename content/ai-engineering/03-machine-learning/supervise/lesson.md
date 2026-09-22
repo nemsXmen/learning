@@ -61,6 +61,13 @@ Un recall élevé peut augmenter les faux positifs. Mesure aussi precision et in
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 
 Le ML supervisé relie données, cible, modèle, métrique et décision. Le choix de l'algorithme vient après la définition correcte de cette chaîne.
