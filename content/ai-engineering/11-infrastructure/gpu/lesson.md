@@ -31,17 +31,15 @@ VRAM ~= weights + activations + runtime buffers + cache
 FP32, FP16 et BF16 offrent des compromis entre mémoire, vitesse et stabilité.
 
 ## Exercices
-
-Une quantification peut réduire la mémoire, mais elle doit être évaluée sur la qualité et le débit. Réduire le batch peut résoudre un OOM tout en diminuant le throughput.
+- Une quantification peut réduire la mémoire, mais elle doit être évaluée sur la qualité et le débit. Réduire le batch peut résoudre un OOM tout en diminuant le throughput.
 
 :::indice
 - Une inférence échoue par OOM alors que le modèle tient presque en VRAM. Quels leviers tester ?
-:::
+::
 
 :::solution
 Commence par réduire ce qui varie avec la requête.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : modèle → estimation mémoire → précision → batch/contexte → scheduling GPU → métriques. Compare toujours mémoire utilisée, throughput, p95/p99 et concurrence.
@@ -67,13 +65,12 @@ Pendant l'entraînement, la mémoire contient notamment poids, gradients, états
 Un modèle tient en FP16 mais provoque un OOM avec un contexte plus long. Le modèle n'a pas changé : les activations et buffers nécessaires à cette requête ont augmenté.
 
 ## Questions d'entretien
-
-La capacité d'un système AI dépend autant de la mémoire et du débit que du nombre de paramètres.
+- La capacité d'un système AI dépend autant de la mémoire et du débit que du nombre de paramètres.
 
 :::indice
 Relie ta réponse à une métrique et à une contrainte système.
-:::
+::
 
 :::reponse
 Pourquoi la VRAM est-elle critique ?
-:::
+::

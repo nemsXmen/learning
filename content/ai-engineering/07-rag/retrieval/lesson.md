@@ -40,17 +40,15 @@ Une recherche hybride combine signaux lexicaux et vectoriels, notamment pour des
 Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées.
 
 ## Exercices
-
-Un score de similarité élevé ne prouve ni que le passage est vrai ni que l'utilisateur a le droit de le lire. Les ACL, tenant, langue et version restent des contraintes métier.
+- Un score de similarité élevé ne prouve ni que le passage est vrai ni que l'utilisateur a le droit de le lire. Les ACL, tenant, langue et version restent des contraintes métier.
 
 :::indice
 - Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
-:::
+::
 
 :::solution
 Cherche à exploiter à la fois les termes exacts et le sens de la requête.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : requête → génération des candidats → ranking → top-k → contexte. Le retrieval doit être mesuré indépendamment de la réponse finale avec recall@k, precision@k et latence.
@@ -76,13 +74,12 @@ La recherche lexicale regarde surtout les termes présents dans la requête. La 
 Prenons une question comme « quel est le plafond de remboursement de la carte GOLD ? ». Une recherche vectorielle peut retrouver le passage parlant de plafond, tandis que BM25 peut mieux exploiter un identifiant exact ou un terme rare.
 
 ## Questions d'entretien
-
-Le retrieval est une étape de sélection mesurable : sa qualité conditionne directement la qualité du contexte fourni au LLM.
+- Le retrieval est une étape de sélection mesurable : sa qualité conditionne directement la qualité du contexte fourni au LLM.
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-:::
+::
 
 :::reponse
 Pourquoi mesurer recall@k ?
-:::
+::

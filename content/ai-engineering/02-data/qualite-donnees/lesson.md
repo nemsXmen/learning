@@ -142,33 +142,30 @@ Il existe aussi une fuite temporelle. Si nous prédisons l'état d'une transacti
 - confondre dataset volumineux et dataset représentatif.
 
 ## Exercices
-
 - Définis cinq règles de qualité pour un corpus RAG.
-- Donne un exemple de fuite temporelle.
-- Un dataset possède 1 % de doublons. Peut-on conclure qu'il est de bonne qualité ?
+  - Donne un exemple de fuite temporelle.
+  - Un dataset possède 1 % de doublons. Peut-on conclure qu'il est de bonne qualité ?
 
 :::indice
 Un seuil n'est jamais une vérité universelle. Relie chaque règle au risque qu'elle cherche à contrôler.
-:::
+::
 
 :::solution
 Un corpus RAG peut contrôler texte non vide, taille raisonnable, source/version présents, langue supportée et unicité. Une fuite temporelle consiste à utiliser une information apparue après le moment où la prédiction aurait réellement été faite. 1 % de doublons ne permet pas à lui seul de conclure : il faut connaître la nature des doublons, leur impact et les exigences du système.
-:::
-
+::
 ## À retenir
 
 La qualité des données commence par une définition claire de ce que le système attend. On mesure ensuite, on agit sur les défauts importants et on vérifie que le nettoyage améliore réellement la tâche.
 
 ## Questions d'entretien
-
 - Pourquoi un preprocessing peut-il dégrader un système IA ?
-- Comment reconnais-tu une fuite de données ?
-- Pourquoi un seuil de qualité doit-il être associé à une action ?
+  - Comment reconnais-tu une fuite de données ?
+  - Pourquoi un seuil de qualité doit-il être associé à une action ?
 
 :::indice
 Pense au pipeline complet : donnée, transformation, modèle, production.
-:::
+::
 
 :::reponse
 Un preprocessing peut supprimer une information utile. Une fuite se reconnaît lorsqu'une information indisponible au moment réel de la prédiction influence le système. Un seuil doit déclencher une décision claire comme accepter, bloquer, alerter ou demander une correction.
-:::
+::

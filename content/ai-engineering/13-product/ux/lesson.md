@@ -4,7 +4,7 @@ title: "UX des produits génératifs"
 slug: ux
 technology: ai-engineering
 level: advanced
-module: 13-product
+module: product
 order: 3
 estimatedMinutes: 70
 difficulty: 4
@@ -33,17 +33,15 @@ Pour une réponse sensible, afficher sources, niveau de confiance utile ou possi
 Une réponse indisponible doit être explicite. Prévois retry, édition, annulation et reprise quand pertinent.
 
 ## Exercices
-
-Évite le faux indicateur de confiance. Un pourcentage généré par le modèle n'est pas automatiquement une probabilité calibrée.
+- Évite le faux indicateur de confiance. Un pourcentage généré par le modèle n'est pas automatiquement une probabilité calibrée.
 
 :::indice
 Une réponse générée contient une erreur factuelle. Quelle UX aide l'utilisateur ?
-:::
+::
 
 :::solution
 Donne des moyens de vérification et de correction.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : request → progress → evidence → result → user control. Les actions à effet de bord doivent avoir une frontière de confirmation adaptée au risque.
@@ -69,13 +67,12 @@ Les états peuvent distinguer génération, retrieval, appel d'outil, attente ex
 Une réponse factuelle comporte une erreur. Afficher les sources disponibles, permettre la correction et rendre les limites visibles donne à l'utilisateur des moyens de vérifier au lieu de transformer une sortie probabiliste en vérité implicite.
 
 ## Questions d'entretien
-
-Une bonne UX AI transforme l'incertitude en information et contrôle utilisateur.
+- Une bonne UX AI transforme l'incertitude en information et contrôle utilisateur.
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-:::
+::
 
 :::reponse
 Pourquoi afficher les sources lorsque c'est possible ?
-:::
+::

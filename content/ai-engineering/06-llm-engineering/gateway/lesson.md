@@ -46,17 +46,15 @@ Le streaming améliore souvent le temps avant le premier token perçu mais compl
 Les clés fournisseurs restent côté serveur.
 
 ## Exercices
-
 - Un fournisseur devient indisponible. Décris un fallback propre.
 
 :::indice
 Commence par distinguer les erreurs réellement récupérables des erreurs définitives.
-:::
+::
 
 :::solution
 Détecter une erreur éligible, respecter un timeout global, choisir un fournisseur compatible, tracer le fallback et empêcher les retries en cascade.
-:::
-
+::
 ## Erreurs fréquentes
 
 Un retry ne corrige pas toutes les erreurs. Une erreur d'autorisation, un input invalide ou une violation de quota ne doit pas être relancée aveuglément. Le streaming ajoute aussi des cas particuliers : annulation, reconnexion et comptage des tokens.
@@ -82,13 +80,12 @@ Imagine une application qui commence avec un seul fournisseur puis doit ajouter 
 Le flow est : application → gateway → sélection du provider → appel → validation → réponse normalisée. Le gateway peut appliquer un timeout global, des retries limités, un circuit breaker, un fallback compatible et un rate limit. Il enregistre aussi request ID, modèle, tokens, durée, statut et coût estimé.
 
 ## Questions d'entretien
-
-Pourquoi centraliser les clés et politiques LLM dans un gateway ?
+- Pourquoi centraliser les clés et politiques LLM dans un gateway ?
 
 :::indice
 Relie ta réponse à la frontière entre modèle et application.
-:::
+::
 
 :::reponse
 Pour garder les secrets côté serveur et appliquer les règles de coût, sécurité, rate limit et résilience de façon cohérente.
-:::
+::

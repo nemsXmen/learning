@@ -53,17 +53,15 @@ Une grande fenêtre ne signifie pas automatiquement meilleure compréhension. Te
 Pour certaines tâches, un petit modèle spécialisé peut être plus adapté qu'un modèle généraliste : classification, extraction structurée, reranking ou génération très contrainte.
 
 ## Exercices
-
 - Une application reçoit 100 000 requêtes par jour. Quelles dimensions mesurer avant de choisir un modèle ?
 
 :::indice
 Sépare qualité, performance opérationnelle, coût et contraintes produit.
-:::
+::
 
 :::solution
 Qualité réelle, coût total, p50/p95, taux d'erreur, tokens consommés, limites de débit, confidentialité et respect du contrat de sortie.
-:::
-
+::
 ## Erreurs fréquentes
 
 Une grande fenêtre de contexte ne garantit pas une meilleure compréhension. Teste aussi la récupération d'information à différentes positions. De même, ne choisis pas un modèle uniquement sur un benchmark public si les données de ton produit sont différentes.
@@ -89,13 +87,12 @@ Construis un dataset représentatif de la production. Envoie les mêmes cas, ave
 Le flow est : besoin → candidats → benchmark contrôlé → analyse qualité/coût/latence → déploiement limité → monitoring. Un modèle local donne plus de contrôle mais demande infrastructure et maintenance ; une API réduit l'exploitation mais ajoute dépendance fournisseur et coûts variables.
 
 ## Questions d'entretien
-
-Pourquoi un benchmark interne est-il nécessaire ?
+- Pourquoi un benchmark interne est-il nécessaire ?
 
 :::indice
 Relie ta réponse au fonctionnement concret du modèle.
-:::
+::
 
 :::reponse
 Parce que les performances générales ne garantissent pas le comportement sur les tâches, langues et contraintes réelles du produit.
-:::
+::

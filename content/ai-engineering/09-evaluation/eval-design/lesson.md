@@ -31,17 +31,15 @@ dataset -> runner -> system version -> metrics -> error analysis
 Pour une réponse libre, une grille explicite peut évaluer exactitude, couverture, conformité et style. Pour un JSON, privilégie d'abord des assertions déterministes.
 
 ## Exercices
-
-Une métrique peut être excellente tout en mesurant la mauvaise chose. Il faut donc relier chaque critère à un risque ou une décision produit et conserver les versions du dataset et des règles d'évaluation.
+- Une métrique peut être excellente tout en mesurant la mauvaise chose. Il faut donc relier chaque critère à un risque ou une décision produit et conserver les versions du dataset et des règles d'évaluation.
 
 :::indice
 - Construis un golden set de 20 cas pour une fonctionnalité de résumé.
-:::
+::
 
 :::solution
 Couvre cas normaux, limites, refus et documents variés.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : dataset versionné → runner → version du système → métriques → analyse d'erreurs → décision. Utilise des assertions déterministes lorsqu'elles existent, puis un judge ou une grille humaine pour les propriétés plus ouvertes.
@@ -67,13 +65,12 @@ Commence par un golden set représentatif : cas normaux, limites, refus, adversa
 Pour une fonctionnalité de résumé, vingt exemples peuvent couvrir plusieurs longueurs de documents, des informations critiques et des cas où le système doit signaler une information absente plutôt que l'inventer.
 
 ## Questions d'entretien
-
-Une bonne évaluation permet de comparer deux versions sans dépendre d'une impression ponctuelle.
+- Une bonne évaluation permet de comparer deux versions sans dépendre d'une impression ponctuelle.
 
 :::indice
 Relie ta réponse à une décision concrète de qualité, coût ou release.
-:::
+::
 
 :::reponse
 Pourquoi versionner le dataset d'évaluation ?
-:::
+::

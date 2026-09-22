@@ -33,17 +33,15 @@ request -> trace -> model call -> tool calls -> response
 Définis objectifs sur disponibilité, latence et erreurs. Ajoute des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
 
 ## Exercices
-
-Éviter le log complet des prompts et réponses par défaut. Préfère métadonnées minimisées, redaction, accès restreint et rétention définie.
+- Éviter le log complet des prompts et réponses par défaut. Préfère métadonnées minimisées, redaction, accès restreint et rétention définie.
 
 :::indice
 - Le coût par requête double sans hausse de trafic. Où chercher ?
-:::
+::
 
 :::solution
 Compare la composition du coût avant et après le changement.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : request → trace → retrieval/tools → model call → response → metrics. Ajoute des SLO de disponibilité et de latence, puis des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
@@ -69,13 +67,12 @@ Une trace utile possède un requestId corrélé, le statut, les durées, le mod�
 Une requête lente peut avoir un temps modèle normal mais attendre longtemps dans retrieval ou une queue. Une trace distribuée permet de localiser cette attente.
 
 ## Questions d'entretien
-
-Sans corrélation entre version, requête et métriques, une régression AI est difficile à expliquer.
+- Sans corrélation entre version, requête et métriques, une régression AI est difficile à expliquer.
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-:::
+::
 
 :::reponse
 Que doit contenir une trace AI utile ?
-:::
+::

@@ -37,17 +37,15 @@ Les filtres d'autorisation doivent être intégrés au retrieval et testés comm
 Changer dimension ou modèle d'embedding implique souvent un nouvel index et une réindexation contrôlée.
 
 ## Exercices
-
-Teste recall@k, latence, mémoire et isolation tenant. Une optimisation de recherche qui dégrade la sécurité ou le rappel n'est pas une amélioration globale.
+- Teste recall@k, latence, mémoire et isolation tenant. Une optimisation de recherche qui dégrade la sécurité ou le rappel n'est pas une amélioration globale.
 
 :::indice
 - Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
-:::
+::
 
 :::solution
 Cherche le contrôle qui doit précéder la remise du résultat au modèle.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : query → embedding → ANN → metadata/ACL filter → top-k → reranking éventuel. Lors d'un changement de modèle d'embedding ou de dimension, une nouvelle génération d'index et une réindexation contrôlée peuvent être nécessaires.
@@ -73,13 +71,12 @@ La recherche ANN (Approximate Nearest Neighbor) accélère la recherche en accep
 Supposons deux tenants qui utilisent le même index. Une similarité élevée ne suffit jamais pour décider qu'un chunk est accessible : le filtre d'autorisation doit être imposé par le serveur.
 
 ## Questions d'entretien
-
-Un vector store est une infrastructure de données avec des contraintes simultanées de recherche, sécurité et exploitation.
+- Un vector store est une infrastructure de données avec des contraintes simultanées de recherche, sécurité et exploitation.
 
 :::indice
 Relie ta réponse à une métrique et à une contrainte système.
-:::
+::
 
 :::reponse
 Pourquoi les migrations d'embeddings sont-elles coûteuses ?
-:::
+::

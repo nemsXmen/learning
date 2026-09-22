@@ -33,17 +33,15 @@ Définis budget de tokens, nombre maximal d'étapes, timeout, outils autorisés 
 Une reprise peut répéter une action. Les opérations à effet de bord doivent donc utiliser des clés d'idempotence et des contrôles métier.
 
 ## Exercices
-
-L'autonomie ne doit jamais signifier absence de limites. Un agent peut échouer, tourner en boucle ou répéter une action après un retry réseau. Les garde-fous appartiennent au runtime, pas uniquement au prompt.
+- L'autonomie ne doit jamais signifier absence de limites. Un agent peut échouer, tourner en boucle ou répéter une action après un retry réseau. Les garde-fous appartiennent au runtime, pas uniquement au prompt.
 
 :::indice
 - Un agent appelle cinq fois la même recherche sans progresser. Quel mécanisme ajouter ?
-:::
+::
 
 :::solution
 Cherche un signal de no-progress et une borne d'exécution.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : input → state → model → tool request → validation → execution → observation → state. Ajoute nombre maximal d'étapes, timeout global, budget de tokens/coût et détection de répétition. Les actions à effet de bord doivent être idempotentes.
@@ -69,13 +67,12 @@ L'état doit être explicite : objectif, observations, actions déjà réalisée
 Imagine un agent qui doit retrouver une facture puis préparer une réponse. Il peut rechercher, observer le résultat, décider de préciser la recherche, puis produire une proposition. Si la même recherche est répétée sans progrès, le runtime doit pouvoir arrêter la boucle.
 
 ## Questions d'entretien
-
-L'autonomie agentique est bornée par un runtime déterministe : état explicite, budgets, permissions et conditions d'arrêt.
+- L'autonomie agentique est bornée par un runtime déterministe : état explicite, budgets, permissions et conditions d'arrêt.
 
 :::indice
 Pense à la séparation entre modèle, runtime et système d'autorisation.
-:::
+::
 
 :::reponse
 Pourquoi imposer un nombre maximal d'étapes ?
-:::
+::

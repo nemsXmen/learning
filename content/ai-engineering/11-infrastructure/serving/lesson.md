@@ -34,17 +34,15 @@ Le batching peut augmenter le débit mais ajouter de l'attente. Mesure p50, p95 
 Une queue bornée et des réponses de surcharge protègent le système lorsque la demande dépasse la capacité.
 
 ## Exercices
-
-Le batching augmente souvent le throughput, mais peut augmenter la latence. Mesure p50, p95 et p99 séparément et observe aussi le temps passé en queue.
+- Le batching augmente souvent le throughput, mais peut augmenter la latence. Mesure p50, p95 et p99 séparément et observe aussi le temps passé en queue.
 
 :::indice
 - La latence p99 explose pendant les pics. Quelles hypothèses tester ?
-:::
+::
 
 :::solution
 Sépare queue, prétraitement et calcul modèle.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : requêtes → admission → scheduler/batcher → workers GPU → réponse → métriques. Une queue bornée et une politique de surcharge évitent qu'une saturation se transforme en cascade failure.
@@ -70,13 +68,12 @@ Le serveur d'inférence reçoit une requête, prépare les entrées, planifie le
 Un service peut avoir une moyenne de 400 ms tout en ayant un p99 de plusieurs secondes lors d'un pic. Les requêtes lentes peuvent attendre dans la queue avant même d'entrer sur le GPU.
 
 ## Questions d'entretien
-
-Le model serving est un problème de système distribué autant qu'un problème ML.
+- Le model serving est un problème de système distribué autant qu'un problème ML.
 
 :::indice
 Relie ta réponse à une métrique et à une contrainte système.
-:::
+::
 
 :::reponse
 Pourquoi suivre p99 ?
-:::
+::

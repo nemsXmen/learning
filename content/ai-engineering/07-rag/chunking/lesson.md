@@ -40,17 +40,15 @@ Un document modifié doit pouvoir être réindexé sans conserver des chunks obs
 Ne récupère jamais un chunk uniquement parce qu'il est similaire : applique les autorisations au retrieval.
 
 ## Exercices
-
-Lorsqu'un document est modifié, les anciens chunks ne doivent pas rester silencieusement mélangés aux nouveaux. Utilise des identifiants déterministes, une version de contenu et une stratégie d'upsert ou de suppression.
+- Lorsqu'un document est modifié, les anciens chunks ne doivent pas rester silencieusement mélangés aux nouveaux. Utilise des identifiants déterministes, une version de contenu et une stratégie d'upsert ou de suppression.
 
 :::indice
 - Un manuel est réindexé après modification de deux pages. Comment éviter les doublons ?
-:::
+::
 
 :::solution
 Pense en termes de version de document et d'identifiants déterministes.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : document → parsing → normalisation → chunks sémantiques → métadonnées → embeddings → index. Chaque chunk doit conserver source, documentId, section, version, langue et permissions utiles au retrieval.
@@ -76,13 +74,12 @@ Un chunk trop petit perd des relations entre phrases. Un chunk trop grand contie
 Pour un manuel technique, découper selon les titres et sous-sections conserve mieux le sens qu'une coupe aveugle tous les 500 caractères. Les tableaux, listes et blocs de code peuvent nécessiter des règles spécifiques.
 
 ## Questions d'entretien
-
-La qualité RAG commence avant le modèle : parsing, chunking, métadonnées, versioning et ACL font partie du pipeline.
+- La qualité RAG commence avant le modèle : parsing, chunking, métadonnées, versioning et ACL font partie du pipeline.
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-:::
+::
 
 :::reponse
 Pourquoi conserver la version du document dans les chunks ?
-:::
+::

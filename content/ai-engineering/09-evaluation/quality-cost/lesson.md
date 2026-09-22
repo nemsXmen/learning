@@ -31,17 +31,15 @@ quality
 Ne dégrade pas silencieusement la qualité pour gagner quelques millisecondes. Compare sur le même dataset.
 
 ## Exercices
-
-Optimiser avant de mesurer conduit facilement à une fausse économie. Une baisse de coût qui augmente les erreurs critiques peut être plus coûteuse pour le produit qu'elle ne l'est dans la facture fournisseur.
+- Optimiser avant de mesurer conduit facilement à une fausse économie. Une baisse de coût qui augmente les erreurs critiques peut être plus coûteuse pour le produit qu'elle ne l'est dans la facture fournisseur.
 
 :::indice
 - Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
-:::
+::
 
 :::solution
 Ne remplace pas directement le modèle : commence par segmenter les tâches.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : requête → classification/routing → modèle → mesure qualité/coût/latence → comparaison avec baseline. Chaque optimisation doit isoler autant que possible une variable afin de comprendre son effet.
@@ -67,13 +65,12 @@ Les leviers sont différents : réduire le contexte inutile agit sur tokens et l
 Une application de support peut utiliser un modèle léger pour les demandes simples et réserver un modèle plus coûteux aux cas complexes. Mais cette décision doit être validée sur le même dataset d'évaluation.
 
 ## Questions d'entretien
-
-L'optimisation doit être mesurée contre une baseline et considérée comme un arbitrage multi-objectifs.
+- L'optimisation doit être mesurée contre une baseline et considérée comme un arbitrage multi-objectifs.
 
 :::indice
 Relie ta réponse à une décision concrète de qualité, coût ou release.
-:::
+::
 
 :::reponse
 Pourquoi mesurer le coût par tâche plutôt que seulement par requête ?
-:::
+::

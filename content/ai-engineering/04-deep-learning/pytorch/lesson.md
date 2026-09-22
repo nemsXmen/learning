@@ -51,17 +51,15 @@ torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(), "e
 Pour reprendre, conserve aussi configuration, métriques et état d'un scheduler/scaler s'ils existent.
 
 ## Exercices
-
 - Conçois le contenu minimal d'un checkpoint permettant de reprendre un entraînement après interruption.
 
 :::indice
 Distingue les paramètres appris de l'état de l'expérience.
-:::
+::
 
 :::solution
 Conserve model.state_dict(), optimizer.state_dict(), epoch ou step, puis configuration et, si nécessaire, scheduler/scaler et métriques.
-:::
-
+::
 ## Erreurs fréquentes
 
 Sauvegarder uniquement les poids peut être insuffisant pour reprendre exactement un entraînement. Évite aussi de mélanger le preprocessing de train et celui de validation.
@@ -87,13 +85,12 @@ Avant un long entraînement, teste le pipeline sur quelques exemples. Flow : sou
 train et eval ne sont pas interchangeables. Dropout et batch normalization changent notamment de comportement. Pour reprendre une expérience, conserve les poids, l'état de l'optimiseur, l'epoch ou le step et, selon le pipeline, scheduler, scaler, configuration et métriques.
 
 ## Questions d'entretien
-
-Pourquoi séparer model.train() et model.eval() ?
+- Pourquoi séparer model.train() et model.eval() ?
 
 :::indice
 Relie ta réponse au fonctionnement concret du système.
-:::
+::
 
 :::reponse
 Dropout et batch normalization se comportent différemment pendant l'entraînement et l'évaluation. Le mauvais mode peut donc fausser les résultats.
-:::
+::

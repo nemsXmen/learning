@@ -106,32 +106,29 @@ Les tests doivent couvrir :
 - oublier les migrations et la reproductibilité.
 
 ## Exercices
-
-Pourquoi construire d'abord un gateway abstrait plutôt que disperser les appels LLM dans les services ?
+- Pourquoi construire d'abord un gateway abstrait plutôt que disperser les appels LLM dans les services ?
 
 :::indice
 Liste les préoccupations qui doivent rester identiques même si le fournisseur ou le modèle change.
-:::
+::
 
 :::solution
 Le gateway centralise le contrat fournisseur, timeout, retry borné, fallback éventuel, streaming, mesure des tokens, coût, logs et gestion des erreurs. Les services métier restent ainsi indépendants du SDK d'un fournisseur.
-:::
-
+::
 ## À retenir
 
 Construis verticalement, versionne les contrats et rends les dépendances externes remplaçables et testables.
 
 ## Questions d'entretien
-
 - Pourquoi construire verticalement ?
-- Pourquoi mocker les fournisseurs LLM ?
-- Quels tests sont indispensables pour un agent ?
-- Quand une abstraction devient-elle prématurée ?
+  - Pourquoi mocker les fournisseurs LLM ?
+  - Quels tests sont indispensables pour un agent ?
+  - Quand une abstraction devient-elle prématurée ?
 
 :::indice
 Relie chaque décision à la vitesse de feedback et au risque introduit.
-:::
+::
 
 :::reponse
 Le vertical slice valide tôt le flux réel. Les mocks rendent les tests déterministes et contrôlent coût et latence. Un agent doit tester policy, outils, limites, erreurs et résultats inattendus. Une abstraction est prématurée lorsqu'elle ne protège encore aucun contrat ou variation réellement nécessaire.
-:::
+::

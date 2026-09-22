@@ -4,7 +4,7 @@ title: "AI Product : choisir un problème qui mérite de l'IA"
 slug: problem
 technology: ai-engineering
 level: advanced
-module: 13-product
+module: product
 order: 1
 estimatedMinutes: 65
 difficulty: 3
@@ -33,17 +33,15 @@ Une solution IA est pertinente lorsque l'incertitude ou la compréhension du lan
 Commence par la solution non-IA la plus simple. Elle permet de mesurer la valeur réellement apportée.
 
 ## Exercices
-
-Un taux de génération élevé ne prouve pas la valeur. Il faut aussi considérer qualité, coût, sécurité, latence et taux de réussite de la tâche.
+- Un taux de génération élevé ne prouve pas la valeur. Il faut aussi considérer qualité, coût, sécurité, latence et taux de réussite de la tâche.
 
 :::indice
 Une équipe veut ajouter un chatbot sans problème utilisateur identifié. Que mesurer d'abord ?
-:::
+::
 
 :::solution
 Commence par le job-to-be-done.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : problème → baseline → capacité AI → métrique → outcome. Pour chaque capacité, demande si elle réduit réellement une friction ou améliore un résultat.
@@ -69,13 +67,12 @@ Décris le job-to-be-done, la tâche actuelle, sa fréquence, son coût, les don
 Une équipe veut ajouter un chatbot mais ne sait pas quel problème il résout. La première étape est de mesurer les demandes actuelles, leur coût, leur délai et leur taux de résolution.
 
 ## Questions d'entretien
-
-L'IA est un moyen produit ; la métrique de valeur précède le modèle.
+- L'IA est un moyen produit ; la métrique de valeur précède le modèle.
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-:::
+::
 
 :::reponse
 Que faut-il définir avant le modèle ?
-:::
+::

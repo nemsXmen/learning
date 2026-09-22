@@ -16,6 +16,23 @@ tags: [python, data, pipelines]
 
 ## Objectifs
 
+## Introduction
+
+Python est le langage d'orchestration central de nombreux systèmes IA : préparation des données, expérimentation, entraînement, évaluation et services.
+
+## Concept
+
+Un AI Engineer raisonne en contrats : types d'entrée, invariants, gestion des erreurs, consommation mémoire et séparation des responsabilités.
+
+## Exemple
+
+Un pipeline fiable peut suivre le flow : données → validation → transformation → modèle → évaluation. Chaque étape doit pouvoir être testée indépendamment.
+
+## Comment ça fonctionne
+
+Les fonctions transforment des données, les exceptions rendent les échecs explicites et les générateurs permettent de traiter de gros volumes progressivement.
+
+
 À la fin de cette leçon, tu dois pouvoir :
 
 - écrire des fonctions Python courtes, testables et lisibles ;
@@ -233,33 +250,30 @@ Ce sont ces contrats, plus que la quantité de code, qui rendent un pipeline mai
 - écrire des fonctions tellement grandes qu'on ne sait plus quelle étape a échoué.
 
 ## Exercices
-
 - Construis une fonction qui reçoit des documents `(id, texte)`, normalise les textes, supprime les doublons et rejette les textes vides.
-- Modifie-la pour traiter un itérateur au lieu d'une liste complète.
-- Ajoute une distinction entre « document vide » et « document dupliqué ».
+  - Modifie-la pour traiter un itérateur au lieu d'une liste complète.
+  - Ajoute une distinction entre « document vide » et « document dupliqué ».
 
 :::indice
 Commence par écrire le contrat de la fonction avant son implémentation : type d'entrée, invariants et forme de sortie.
-:::
+::
 
 :::solution
 Une solution correcte sépare la normalisation, la validation et la déduplication. Pour un gros corpus, fais produire les résultats progressivement avec `yield` plutôt que de construire une liste complète.
-:::
-
+::
 ## À retenir
 
 Python devient une compétence d'AI Engineer lorsqu'il sert à construire des composants prévisibles : fonctions petites, contrats explicites, erreurs conservées, mémoire maîtrisée et environnement reproductible.
 
 ## Questions d'entretien
-
 - Pourquoi une fonction pure est-elle intéressante dans un pipeline IA ?
-- Quelle différence fais-tu entre une annotation de type et une validation runtime ?
-- Dans quel cas utiliserais-tu un générateur pour un pipeline de données ?
+  - Quelle différence fais-tu entre une annotation de type et une validation runtime ?
+  - Dans quel cas utiliserais-tu un générateur pour un pipeline de données ?
 
 :::indice
 Ne réponds pas seulement avec une définition Python : relie chaque concept à un problème de production IA.
-:::
+::
 
 :::reponse
 Une fonction pure est facile à tester et à reproduire. Une annotation documente et aide les outils statiques mais ne protège pas une entrée externe au runtime. Un générateur est utile lorsqu'un volume important peut être traité progressivement sans tout charger en mémoire.
-:::
+::

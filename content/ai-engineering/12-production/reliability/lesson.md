@@ -33,17 +33,15 @@ Ne masque pas une panne par des retries illimités. Les budgets de temps doivent
 Une fonctionnalité peut passer en recherche lexicale, modèle plus petit, réponse différée ou lecture seule selon le produit.
 
 ## Exercices
-
-Les retries illimités amplifient congestion et coût. Un fallback mal choisi peut aussi produire une qualité trompeuse ; il faut donc définir ce qui est acceptable pour chaque mode dégradé.
+- Les retries illimités amplifient congestion et coût. Un fallback mal choisi peut aussi produire une qualité trompeuse ; il faut donc définir ce qui est acceptable pour chaque mode dégradé.
 
 :::indice
 - Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
-:::
+::
 
 :::solution
 Identifie d'abord les capacités qui restent fiables.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : failure → detect → timeout/circuit breaker → fallback ou dégradation → réponse observable → recovery. Les budgets de temps doivent traverser toute la chaîne.
@@ -69,13 +67,12 @@ Un fallback doit être explicite. Selon le produit, on peut utiliser un modèle 
 Si le provider principal tombe mais que la recherche interne fonctionne, retourner une information déterministe ou un état dégradé peut être préférable à multiplier les retries vers une dépendance indisponible.
 
 ## Questions d'entretien
-
-La résilience décrit le comportement attendu lorsque les dépendances échouent.
+- La résilience décrit le comportement attendu lorsque les dépendances échouent.
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-:::
+::
 
 :::reponse
 Pourquoi limiter les retries ?
-:::
+::

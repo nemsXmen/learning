@@ -16,6 +16,23 @@ tags: [git, reproducibility, experiments]
 
 ## Objectifs
 
+## Introduction
+
+Une expérience IA doit être traçable au-delà du simple code source : données, modèle, paramètres et environnement influencent le résultat.
+
+## Concept
+
+Git versionne principalement le code et les fichiers du dépôt. La reproductibilité complète exige d'identifier les autres dépendances de l'expérience.
+
+## Exemple
+
+Un run peut conserver le commit, la version du dataset, le modèle, les hyperparamètres, le seed et le jeu d'évaluation.
+
+## Comment ça fonctionne
+
+Les commits et branches structurent l'historique, tandis que des métadonnées d'expérience permettent de comparer des runs et de diagnostiquer une régression.
+
+
 - comprendre commit, branche et historique ;
 - produire des changements petits et traçables ;
 - relier code, configuration et expérience ;
@@ -145,33 +162,30 @@ Pour que cela fonctionne, il faut un test fiable qui dise « bon » ou « mauvai
 - réécrire l'historique partagé sans coordination.
 
 ## Exercices
-
 - Définis les métadonnées minimales à conserver pour comparer deux expériences de classification.
-- Une régression apparaît après dix commits. Quel outil Git peut aider à identifier le commit fautif ?
-- Pourquoi un même commit peut-il produire des résultats différents sur deux machines ?
+  - Une régression apparaît après dix commits. Quel outil Git peut aider à identifier le commit fautif ?
+  - Pourquoi un même commit peut-il produire des résultats différents sur deux machines ?
 
 :::indice
 Liste séparément ce qui vient du code et ce qui vient de l'environnement, des données et du modèle.
-:::
+::
 
 :::solution
 Conserve au minimum la version du code, du dataset, du modèle, les hyperparamètres et les informations nécessaires sur l'environnement. `git bisect` permet de rechercher une régression dans l'historique. Deux machines peuvent différer par les dépendances, le matériel, les bibliothèques numériques ou le comportement non déterministe.
-:::
-
+::
 ## À retenir
 
 En AI Engineering, une expérience sans trace exploitable est difficile à comparer et presque impossible à auditer. Git est le socle de traçabilité du code ; la reproductibilité complète demande de versionner aussi les données, modèles, paramètres et résultats pertinents.
 
 ## Questions d'entretien
-
 - Pourquoi un commit Git ne suffit-il pas à reproduire une expérience LLM ?
-- Dans quel cas utiliser git bisect ?
-- Que faut-il conserver pour comparer proprement deux runs d'évaluation ?
+  - Dans quel cas utiliser git bisect ?
+  - Que faut-il conserver pour comparer proprement deux runs d'évaluation ?
 
 :::indice
 Pense au système complet, pas uniquement au dépôt Git.
-:::
+::
 
 :::reponse
 Un commit ne fixe pas forcément les données, dépendances, modèle ou paramètres d'exécution. `git bisect` est utile pour isoler une régression introduite dans l'historique. Pour comparer deux runs, il faut au minimum identifier le code, les données, le modèle, les paramètres et le jeu d'évaluation.
-:::
+::

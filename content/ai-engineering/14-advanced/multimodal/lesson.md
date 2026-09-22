@@ -99,32 +99,29 @@ Traite les fichiers et leur contenu comme non fiables. Une phrase dans un PDF pe
 - évaluer uniquement la réponse finale sans tester les étapes intermédiaires.
 
 ## Exercices
-
-Un document scanné contient une information critique uniquement dans une image. Que faut-il tester avant de conclure que le modèle « comprend mal » le document ?
+- Un document scanné contient une information critique uniquement dans une image. Que faut-il tester avant de conclure que le modèle « comprend mal » le document ?
 
 :::indice
 Décompose la chaîne : acquisition, OCR, localisation de l'information, extraction puis validation.
-:::
+::
 
 :::solution
 Tester la qualité de l'image, la détection de page, l'OCR, la localisation du texte critique et l'extraction structurée. Comparer chaque étape à une vérité de référence avant d'évaluer la réponse finale du modèle.
-:::
-
+::
 ## À retenir
 
 Un système multimodal est une chaîne de transformations. Mesurer chaque modalité et chaque étape permet de localiser les erreurs et de contrôler les données non fiables.
 
 ## Questions d'entretien
-
 - Pourquoi tester l'OCR séparément du LLM ?
-- Quels risques particuliers apporte un document utilisateur ?
-- Comment évaluer un pipeline audio ?
-- Pourquoi conserver la provenance ?
+  - Quels risques particuliers apporte un document utilisateur ?
+  - Comment évaluer un pipeline audio ?
+  - Pourquoi conserver la provenance ?
 
 :::indice
 Pense à la diagnosticabilité, à la sécurité et à la possibilité de vérifier la sortie.
-:::
+::
 
 :::reponse
 L'OCR peut être la cause principale d'une erreur. Un document utilisateur peut contenir des données ou instructions non fiables. L'audio se mesure au moins sur transcription puis compréhension. La provenance permet de relier une sortie à sa source et de diagnostiquer ou vérifier le résultat.
-:::
+::

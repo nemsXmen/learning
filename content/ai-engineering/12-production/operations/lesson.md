@@ -31,17 +31,15 @@ Les runbooks indiquent commandes, dashboards, seuils et rollback.
 Suivre coût par modèle, tenant, fonctionnalité et période. Budgets et quotas évitent les consommations illimitées.
 
 ## Exercices
-
-Un quota n'est pas une stratégie de correction : il limite l'impact. Après containment, il faut identifier la version et la cause, corriger, vérifier puis documenter.
+- Un quota n'est pas une stratégie de correction : il limite l'impact. Après containment, il faut identifier la version et la cause, corriger, vérifier puis documenter.
 
 :::indice
 - Un agent boucle et génère une facture inattendue. Que faire ?
-:::
+::
 
 :::solution
 Commence par arrêter l'hémorragie.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : detect → triage → contain → mitigate → recover → review. Pendant l'incident, distingue panne fournisseur, panne applicative et problème de données pour éviter de corriger le mauvais composant.
@@ -67,13 +65,12 @@ Un runbook décrit signaux, seuils, dashboards, actions sûres, escalade et roll
 Un agent boucle et multiplie les appels LLM. Sans budget de steps, quota ou limite de dépense, une erreur de contrôle peut devenir un incident financier.
 
 ## Questions d'entretien
-
-Les opérations AI combinent fiabilité classique, contrôle des coûts et maîtrise des comportements non déterministes.
+- Les opérations AI combinent fiabilité classique, contrôle des coûts et maîtrise des comportements non déterministes.
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-:::
+::
 
 :::reponse
 Pourquoi un runbook doit-il être écrit avant incident ?
-:::
+::
