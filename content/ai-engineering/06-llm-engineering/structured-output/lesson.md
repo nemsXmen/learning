@@ -44,7 +44,7 @@ Prévois retry limité, fallback, réponse partielle explicitement marquée ou e
 ## Effets de bord
 Si une sortie déclenche une action externe, utilise autorisation, idempotency key et audit avant l'exécution.
 
-## Exercice
+## Exercices
 Le modèle produit un montant négatif alors que le métier l'interdit.
 
 :::indice
