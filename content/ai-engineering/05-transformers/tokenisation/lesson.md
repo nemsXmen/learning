@@ -51,7 +51,7 @@ Pour une application réelle, mesure les tokens du texte effectivement envoyé a
 ## Cas multilingue
 Une même information peut nécessiter des nombres de tokens très différents selon la langue, le tokenizer et l'écriture. Pour un produit international, teste le tokenizer sur les langues réellement supportées.
 
-## Exercice
+## Exercices
 Pourquoi un long texte peut-il être coûteux même s'il contient relativement peu de mots ?
 
 :::indice
