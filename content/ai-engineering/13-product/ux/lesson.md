@@ -33,52 +33,49 @@ Pour une réponse sensible, afficher sources, niveau de confiance utile ou possi
 Une réponse indisponible doit être explicite. Prévois retry, édition, annulation et reprise quand pertinent.
 
 ## Exercices
-Une réponse générée contient une erreur factuelle. Quelle UX aide l'utilisateur ?
+
+Évite le faux indicateur de confiance. Un pourcentage généré par le modèle n'est pas automatiquement une probabilité calibrée.
 
 :::indice
-Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+Une réponse générée contient une erreur factuelle. Quelle UX aide l'utilisateur ?
 :::
 
 :::solution
-Afficher les sources disponibles, permettre correction/régénération et rendre la limite du système visible plutôt que présenter la réponse comme certaine.
-
+Donne des moyens de vérification et de correction.
 :::
 
 ## Erreurs fréquentes
 
-- choisir une technologie avant de définir le problème ;
-- mesurer une moyenne sans regarder les cas critiques ;
-- confondre une sortie plausible avec une sortie validée ;
-- oublier coût, sécurité et opérations dans la conception.
+Le flow est : request → progress → evidence → result → user control. Les actions à effet de bord doivent avoir une frontière de confirmation adaptée au risque.
 
 ## À retenir
-Une bonne UX IA transforme l'incertitude en information et contrôle utilisateur.
 
+Afficher les sources disponibles, permettre correction/régénération et rendre la limite du système visible plutôt que présenter la réponse comme certaine.
 
 ## Introduction
 
-L'UX générative doit rendre visible l'incertitude et donner du contrôle.
+Concevoir une UX pour un système probabiliste
 
 ## Concept
 
-Streaming, états d'attente, citations, édition et approbation répondent à des risques différents.
+Une interface générative doit aider l'utilisateur à comprendre ce que le système fait et ce qu'il sait réellement. Une réponse fluide ne doit pas donner une impression de certitude injustifiée.
 
 ## Exemple
 
-Une action financière peut nécessiter confirmation humaine même si le modèle propose l'action.
+Les états peuvent distinguer génération, retrieval, appel d'outil, attente externe, succès et erreur. Selon le cas, sources, citations, édition, annulation, confirmation ou régénération sont utiles.
 
 ## Comment ça fonctionne
 
-request → progress → evidence → result → user control
+Une réponse factuelle comporte une erreur. Afficher les sources disponibles, permettre la correction et rendre les limites visibles donne à l'utilisateur des moyens de vérifier au lieu de transformer une sortie probabiliste en vérité implicite.
 
 ## Questions d'entretien
 
-- Pourquoi afficher les sources lorsque c'est possible ?
+Une bonne UX AI transforme l'incertitude en information et contrôle utilisateur.
 
-  :::indice
-  Relie la métrique à une décision produit concrète.
-  :::
+:::indice
+Relie ta réponse à une décision produit mesurable.
+:::
 
-  :::reponse
-  Pour aider l'utilisateur à vérifier la réponse et calibrer sa confiance.
-  :::
+:::reponse
+Pourquoi afficher les sources lorsque c'est possible ?
+:::
