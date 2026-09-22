@@ -49,7 +49,7 @@ MAE mesure l'erreur absolue moyenne. RMSE amplifie davantage les grosses erreurs
 
 ## Exercices
 
-Pour un filtre anti-spam, explique pourquoi recall seul ne suffit pas.
+- Pour un filtre anti-spam, explique pourquoi recall seul ne suffit pas.
 
 :::indice
 Commence par définir la métrique et la baseline avant de choisir une technique.
