@@ -4,7 +4,7 @@ title: "Capstone : architecture d'un AI SaaS production"
 slug: architecture
 technology: ai-engineering
 level: expert
-module: 15-capstone
+module: capstone
 order: 1
 estimatedMinutes: 100
 difficulty: 5
