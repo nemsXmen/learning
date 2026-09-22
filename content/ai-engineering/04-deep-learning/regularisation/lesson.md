@@ -56,6 +56,13 @@ Comparer modèle plus petit, weight decay différent et dropout différent en ga
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 La régularisation est une réponse à un problème observé. Elle doit être expérimentée et mesurée.
 
