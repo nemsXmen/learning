@@ -1,0 +1,34 @@
+id: ai-09-llm-as-judge-quiz
+kind: QUIZ
+questions:
+  - id: ai-09-llm-as-judge-q1
+    type: multiple_choice
+    difficulty: 4
+    question: "Quel élément réduit le mieux l’ambiguïté d’un LLM-as-a-Judge ?"
+    options: ["Une note libre sans consigne","Une rubrique avec critères observables","Un prompt plus long uniquement","Le nombre de tokens de la réponse"]
+    answer: [1]
+    explanation: "Une rubrique explicite transforme le jugement en critères observables et reproductibles."
+    skills: [ai-evaluation]
+  - id: ai-09-llm-as-judge-q2
+    type: multiple_choice
+    difficulty: 5
+    question: "Comment tester un biais de position dans un judge pairwise ?"
+    options: ["Toujours afficher A en premier","Supprimer la référence","Inverser A/B et comparer les décisions","Augmenter uniquement la température"]
+    answer: [2]
+    explanation: "La permutation A/B permet de mesurer l’influence de la position."
+    skills: [ai-evaluation]
+  - id: ai-09-llm-as-judge-q3
+    type: multiple_answer
+    difficulty: 5
+    question: "Quels éléments sont utiles pour valider un judge avant une release gate ?"
+    options: ["Annotations humaines","Tests de biais","Stabilité sur répétition","Uniquement son score moyen"]
+    answer: [0, 1, 2]
+    explanation: "Le score moyen seul peut masquer des faiblesses sur des slices critiques."
+    skills: [ai-evaluation]
+  - id: ai-09-llm-as-judge-q4
+    type: true_false
+    difficulty: 4
+    question: "Un judge ayant 95 % d’accord global est nécessairement fiable sur tous les cas."
+    answer: false
+    explanation: "Un accord global peut masquer des désaccords importants sur certaines slices."
+    skills: [ai-evaluation]
