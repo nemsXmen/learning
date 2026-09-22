@@ -41,7 +41,7 @@ question -> retrieved context -> answer
 ## Régression
 Conserve un jeu fixe de tests et compare les versions de chunking, embeddings, reranker et prompt.
 
-## Exercice
+## Exercices
 Après changement d'embedding, la satisfaction humaine monte mais recall@5 baisse. Que faire ?
 
 :::indice
