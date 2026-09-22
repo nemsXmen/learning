@@ -74,7 +74,6 @@ Prenons une question comme « quel est le plafond de remboursement de la carte G
 
 ## Questions d'entretien
 - Pourquoi mesurer recall@k ?
-
 :::indice
 Relie recall@k au risque de ne jamais fournir au modèle le passage nécessaire.
 :::
@@ -83,7 +82,6 @@ Recall@k mesure la proportion des informations ou documents pertinents retrouvé
 :::
 
 - Pourquoi séparer la qualité du retrieval de celle de la génération ?
-
 :::indice
 Demande-toi ce qui se passe si le bon passage n'est jamais transmis au modèle.
 :::
