@@ -98,11 +98,10 @@ Les trust boundaries doivent être explicites : navigateur → API, API → four
 
 :::indice
 Repère les données privées, les effets de bord et les opérations coûteuses. Pour chacun, demande : « qui décide si cette action est permise ? ».
-::
-
+:::
 :::solution
 Les accès aux données privées, écritures métier, paiements, envois et appels à privilèges doivent être contrôlés côté serveur par une politique déterministe. Le modèle peut proposer une action, mais l'API ou un policy engine vérifie identité, tenant, permissions, paramètres et limites avant exécution.
-::
+:::
 ## À retenir
 
 Un AI SaaS production est un système distribué avec une couche IA, pas un simple wrapper autour d'un LLM.
@@ -115,8 +114,7 @@ Un AI SaaS production est un système distribué avec une couche IA, pas un simp
 
 :::indice
 Réponds en termes de responsabilités, de trust boundaries et de contrôles vérifiables.
-::
-
+:::
 :::reponse
 Les autorisations doivent être appliquées côté serveur avant les effets de bord. Un gateway centralise contrats, timeouts, retries, observabilité et coûts. Les permissions et invariants métier restent déterministes. L'isolation multi-tenant doit être appliquée dans les requêtes, le retrieval, le cache et les outils, pas uniquement dans le prompt.
-::
+:::
