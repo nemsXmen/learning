@@ -16,10 +16,8 @@ tags: [llm, ai-engineering]
 
 
 ## Objectifs
-- construire des prompts testables ;
-- séparer instructions, données et contexte ;
-- réduire ambiguïté et injection ;
-- versionner les prompts.
+
+Prompt engineering comme ingénierie logicielle
 
 ## Prompt comme contrat
 Définis explicitement objectif, contexte, contraintes, format et critères de réussite.
@@ -40,52 +38,49 @@ Un prompt de production doit avoir une version, un changelog et un jeu d'évalua
 Une page web ou un document peut contenir des instructions malveillantes. Sépare clairement données et instructions et n'autorise jamais le modèle à contourner les contrôles applicatifs.
 
 ## Exercices
-Extraire name, email et amount depuis un message client. Quelles contraintes ajouter ?
+
+- Tu modifies un prompt utilisé par une feature critique. Comment éviter une régression silencieuse ?
 
 :::indice
-Sépare génération, validation et exécution ; ne donne pas au modèle une autorité implicite.
+Pense au prompt comme à une version de code.
 :::
 
 :::solution
-Définir un schéma, les types, les champs manquants, l'interdiction d'inventer et des exemples couvrant les cas ambigus.
-
+Créer une nouvelle version, exécuter un jeu de tests représentatif, comparer les métriques avec la version précédente puis déployer progressivement si les résultats sont acceptables.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Une page web ou un document peut contenir des instructions malveillantes. Les données récupérées doivent donc rester des données non fiables. Le modèle ne doit jamais pouvoir transformer un texte externe en autorisation applicative. Versionne le prompt, son changelog et son dataset d'évaluation.
 
 ## À retenir
-Le prompt est une partie versionnée du logiciel, pas une formule magique.
 
+Le prompt fait partie du logiciel : versionne-le et mesure son comportement.
 
 ## Introduction
 
-Un prompt de production est un contrat entre le produit et le modèle.
+Un prompt de production n'est pas une formule magique. C'est une partie du comportement logiciel et il doit donc être conçu, testé et versionné.
 
 ## Concept
 
-Instructions, contexte, entrée utilisateur et format de sortie doivent être séparés.
+Un bon prompt sépare objectif, règles, contexte fiable, données utilisateur et format attendu. Cette séparation réduit l'ambiguïté et permet de raisonner sur les frontières de confiance.
 
 ## Exemple
 
-Un prompt versionné peut être testé sur un dataset avant déploiement.
+Pour extraire name, email et amount d'un message client, ne demande pas seulement « extrais les informations ». Définis les champs, les types, le comportement lorsque l'information manque et l'interdiction d'inventer une valeur.
 
 ## Comment ça fonctionne
 
-contrat → contexte → génération → validation → feedback
+Le flow devient : contrat → contexte → entrée → génération → validation → évaluation. Quelques exemples peuvent préciser un format, mais ils doivent être représentatifs et testés avec des cas ambigus.
 
 ## Questions d'entretien
 
-- Pourquoi versionner les prompts ?
+Pourquoi versionner les prompts ?
 
-  :::indice
-  Considère toujours la frontière entre génération et logique déterministe.
-  :::
+:::indice
+Relie ta réponse à la frontière entre modèle et application.
+:::
 
-  :::reponse
-  Pour reproduire les sorties et détecter les régressions.
-  :::
+:::reponse
+Pour reproduire les sorties, comparer les changements et identifier quelle version a produit une régression.
+:::
