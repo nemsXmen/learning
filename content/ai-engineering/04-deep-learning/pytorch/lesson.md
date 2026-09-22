@@ -55,11 +55,10 @@ Pour reprendre, conserve aussi configuration, métriques et état d'un scheduler
 
 :::indice
 Distingue les paramètres appris de l'état de l'expérience.
-::
-
+:::
 :::solution
 Conserve model.state_dict(), optimizer.state_dict(), epoch ou step, puis configuration et, si nécessaire, scheduler/scaler et métriques.
-::
+:::
 ## Erreurs fréquentes
 
 Sauvegarder uniquement les poids peut être insuffisant pour reprendre exactement un entraînement. Évite aussi de mélanger le preprocessing de train et celui de validation.
@@ -89,8 +88,7 @@ train et eval ne sont pas interchangeables. Dropout et batch normalization chang
 
 :::indice
 Relie ta réponse au fonctionnement concret du système.
-::
-
+:::
 :::reponse
 Dropout et batch normalization se comportent différemment pendant l'entraînement et l'évaluation. Le mauvais mode peut donc fausser les résultats.
-::
+:::
