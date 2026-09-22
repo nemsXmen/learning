@@ -56,7 +56,7 @@ Une dérive de données est un signal d'investigation ; elle ne prouve pas à el
 
 Un modèle doit pouvoir être remplacé rapidement par une version connue. Conserve son identifiant dans les traces lorsque l'audit l'exige.
 
-## Exercice
+## Exercices
 
 Un modèle offline a 92 % de précision mais le taux d'erreur métier augmente après déploiement. Donne quatre pistes.
 
