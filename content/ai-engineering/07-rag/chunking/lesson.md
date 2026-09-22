@@ -40,52 +40,49 @@ Un document modifié doit pouvoir être réindexé sans conserver des chunks obs
 Ne récupère jamais un chunk uniquement parce qu'il est similaire : applique les autorisations au retrieval.
 
 ## Exercices
-Un manuel est réindexé après modification de deux pages. Comment éviter les doublons ?
+
+Lorsqu'un document est modifié, les anciens chunks ne doivent pas rester silencieusement mélangés aux nouveaux. Utilise des identifiants déterministes, une version de contenu et une stratégie d'upsert ou de suppression.
 
 :::indice
-Sépare retrieval, contexte et génération pour localiser l'erreur.
+- Un manuel est réindexé après modification de deux pages. Comment éviter les doublons ?
 :::
 
 :::solution
-Versionner le document et utiliser des IDs déterministes avec upsert/suppression des anciennes versions.
-
+Pense en termes de version de document et d'identifiants déterministes.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : document → parsing → normalisation → chunks sémantiques → métadonnées → embeddings → index. Chaque chunk doit conserver source, documentId, section, version, langue et permissions utiles au retrieval.
 
 ## À retenir
-La qualité RAG commence à l'ingestion : parsing, chunking, métadonnées, versioning et ACL.
 
+Associer chaque chunk à une version du document puis remplacer ou supprimer proprement l'ancienne version avant l'indexation de la nouvelle.
 
 ## Introduction
 
-Le chunking détermine l'unité de connaissance indexée.
+Le chunking comme unité de connaissance
 
 ## Concept
 
-Taille, chevauchement, structure sémantique et métadonnées influencent retrieval et contexte.
+Avant de créer des embeddings, il faut décider quelle portion du document sera indexée. Cette décision paraît technique, mais elle influence directement ce que le système pourra retrouver.
 
 ## Exemple
 
-Un chapitre peut être découpé selon ses sections tout en conservant document_id et version.
+Un chunk trop petit perd des relations entre phrases. Un chunk trop grand contient davantage de bruit et consomme plus de contexte. La structure du document est souvent un meilleur guide qu'une taille fixe arbitraire.
 
 ## Comment ça fonctionne
 
-document → parse → semantic chunks → metadata → index
+Pour un manuel technique, découper selon les titres et sous-sections conserve mieux le sens qu'une coupe aveugle tous les 500 caractères. Les tableaux, listes et blocs de code peuvent nécessiter des règles spécifiques.
 
 ## Questions d'entretien
 
-- Pourquoi conserver la version du document dans les chunks ?
+La qualité RAG commence avant le modèle : parsing, chunking, métadonnées, versioning et ACL font partie du pipeline.
 
-  :::indice
-  Sépare toujours les erreurs de retrieval des erreurs de génération.
-  :::
+:::indice
+Relie ta réponse à la séparation entre retrieval et génération.
+:::
 
-  :::reponse
-  Pour éviter de mélanger des passages provenant de versions incompatibles.
-  :::
+:::reponse
+Pourquoi conserver la version du document dans les chunks ?
+:::
