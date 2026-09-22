@@ -33,52 +33,49 @@ Définis budget de tokens, nombre maximal d'étapes, timeout, outils autorisés 
 Une reprise peut répéter une action. Les opérations à effet de bord doivent donc utiliser des clés d'idempotence et des contrôles métier.
 
 ## Exercices
-Un agent appelle cinq fois la même recherche sans progresser. Quel mécanisme ajouter ?
+
+L'autonomie ne doit jamais signifier absence de limites. Un agent peut échouer, tourner en boucle ou répéter une action après un retry réseau. Les garde-fous appartiennent au runtime, pas uniquement au prompt.
 
 :::indice
-Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+- Un agent appelle cinq fois la même recherche sans progresser. Quel mécanisme ajouter ?
 :::
 
 :::solution
-Détection de répétition/no-progress, limite d'itérations et arrêt contrôlé avec trace exploitable.
-
+Cherche un signal de no-progress et une borne d'exécution.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : input → state → model → tool request → validation → execution → observation → state. Ajoute nombre maximal d'étapes, timeout global, budget de tokens/coût et détection de répétition. Les actions à effet de bord doivent être idempotentes.
 
 ## À retenir
-L'autonomie doit être bornée par un runtime déterministe.
 
+Détecter les appels répétitifs, imposer une limite d'étapes et arrêter proprement avec une trace permettant le diagnostic.
 
 ## Introduction
 
-Un agent répète perception, décision et action jusqu'à atteindre un objectif ou une limite.
+Un agent est une boucle, pas seulement un prompt
 
 ## Concept
 
-L'état doit être explicite et les budgets empêchent les boucles incontrôlées.
+Un agent devient intéressant lorsqu'un modèle doit observer un état, décider d'une prochaine action, utiliser un outil puis interpréter le résultat. La différence avec un simple appel LLM est donc la boucle d'exécution.
 
 ## Exemple
 
-Limiter steps, tokens, durée et coût protège le système lorsqu'un tool échoue ou qu'une décision se répète.
+L'état doit être explicite : objectif, observations, actions déjà réalisées, résultats et budgets restants. Le runtime déterministe décide quand la boucle commence, quand elle s'arrête et quels outils sont disponibles.
 
 ## Comment ça fonctionne
 
-state → observe → decide → act → observe
+Imagine un agent qui doit retrouver une facture puis préparer une réponse. Il peut rechercher, observer le résultat, décider de préciser la recherche, puis produire une proposition. Si la même recherche est répétée sans progrès, le runtime doit pouvoir arrêter la boucle.
 
 ## Questions d'entretien
 
-- Pourquoi imposer un nombre maximal d'étapes ?
+L'autonomie agentique est bornée par un runtime déterministe : état explicite, budgets, permissions et conditions d'arrêt.
 
-  :::indice
-  Cherche la frontière entre décision du modèle et contrôle déterministe.
-  :::
+:::indice
+Pense à la séparation entre modèle, runtime et système d'autorisation.
+:::
 
-  :::reponse
-  Pour garantir une borne sur coût, durée et effets de bord.
-  :::
+:::reponse
+Pourquoi imposer un nombre maximal d'étapes ?
+:::
