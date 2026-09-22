@@ -235,7 +235,7 @@ Un bon test vérifie aussi que le système **refuse réellement l'effet**, pas s
 
 ## Exercices
 
-### Exercice 1 — Remboursement
+1. **Exercice 1 — Remboursement**
 
 Un agent de support reçoit la demande « rembourse 500 € ». Conçois les étapes entre la sortie du modèle et le remboursement effectif.
 
@@ -247,7 +247,7 @@ Sépare intention, identité, policy, idempotence et effet financier.
 Le modèle produit une proposition structurée. Le backend authentifie le principal, vérifie que la ressource appartient au bon client, applique les règles de montant et de rôle, exige une approbation si nécessaire, attribue une clé d'idempotence puis appelle le service de paiement. Chaque étape critique est auditée.
 :::
 
-### Exercice 2 — Document hostile
+2. **Exercice 2 — Document hostile**
 
 Un document RAG contient une instruction demandant d'exfiltrer une clé API.
 
@@ -261,7 +261,7 @@ Isoler le document dans le contexte comme donnée, ne jamais fournir les secrets
 
 ## Questions d'entretien
 
-### Pourquoi un guardrail dans le prompt ne suffit-il pas ?
+1. **Pourquoi un guardrail dans le prompt ne suffit-il pas ?**
 
 :::indice
 Compare une instruction probabiliste avec une autorisation déterministe.
@@ -271,7 +271,7 @@ Compare une instruction probabiliste avec une autorisation déterministe.
 Parce qu'un prompt influence le modèle mais ne constitue pas une barrière d'autorisation. Une action sensible doit être validée par le runtime et le système d'autorisation avant son effet.
 :::
 
-### Quelle différence entre validation de schéma et validation métier ?
+2. **Quelle différence entre validation de schéma et validation métier ?**
 
 :::indice
 La première concerne la structure ; la seconde concerne les invariants.
