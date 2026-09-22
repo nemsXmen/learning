@@ -34,7 +34,7 @@ Ne regarde pas uniquement le score global. Segmente par langue, intention, diffi
 Un changement peut être bloqué si une métrique critique baisse au-delà d'un seuil défini.
 
 ## Exercices
-Le score global reste stable mais les requêtes en français régressent. Que montre une métrique agrégée ?
+- Le score global reste stable mais les requêtes en français régressent. Que montre une métrique agrégée ?
 
 :::indice
 Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
