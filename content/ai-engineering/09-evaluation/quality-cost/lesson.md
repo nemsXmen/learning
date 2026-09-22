@@ -31,52 +31,49 @@ quality
 Ne dégrade pas silencieusement la qualité pour gagner quelques millisecondes. Compare sur le même dataset.
 
 ## Exercices
-- Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
+
+Optimiser avant de mesurer conduit facilement à une fausse économie. Une baisse de coût qui augmente les erreurs critiques peut être plus coûteuse pour le produit qu'elle ne l'est dans la facture fournisseur.
 
 :::indice
-Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
+- Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
 :::
 
 :::solution
-Segmenter les tâches, mesurer la qualité minimale requise et tester un modèle moins coûteux sur les cas compatibles.
-
+Ne remplace pas directement le modèle : commence par segmenter les tâches.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : requête → classification/routing → modèle → mesure qualité/coût/latence → comparaison avec baseline. Chaque optimisation doit isoler autant que possible une variable afin de comprendre son effet.
 
 ## À retenir
-L'optimisation est un problème multi-objectifs mesuré.
 
+Définir le niveau de qualité minimal, segmenter les cas et tester un modèle moins coûteux sur les segments compatibles, puis comparer qualité, latence et coût.
 
 ## Introduction
 
-Optimiser une application AI revient à arbitrer qualité, latence et coût.
+Optimiser sans détruire la qualité
 
 ## Concept
 
-Réduire contexte, choisir un modèle adapté, cacher certaines réponses ou router les requêtes sont des leviers distincts.
+L'optimisation d'une application AI est un problème multi-objectifs : qualité, latence, coût et parfois consommation mémoire ou taux d'erreur évoluent ensemble.
 
 ## Exemple
 
-Un modèle coûteux peut être réservé aux cas complexes tandis qu'un modèle plus léger traite les requêtes simples.
+Les leviers sont différents : réduire le contexte inutile agit sur tokens et latence ; le cache réduit certains appels ; le routing choisit un modèle adapté ; les retries doivent rester bornés ; le batching peut améliorer le débit.
 
 ## Comment ça fonctionne
 
-request → routing → model → quality/cost measurement
+Une application de support peut utiliser un modèle léger pour les demandes simples et réserver un modèle plus coûteux aux cas complexes. Mais cette décision doit être validée sur le même dataset d'évaluation.
 
 ## Questions d'entretien
 
-- Pourquoi mesurer le coût par tâche plutôt que seulement par requête ?
+L'optimisation doit être mesurée contre une baseline et considérée comme un arbitrage multi-objectifs.
 
-  :::indice
-  Une bonne métrique doit être reliée à une décision.
-  :::
+:::indice
+Relie ta réponse à une décision concrète de qualité, coût ou release.
+:::
 
-  :::reponse
-  Parce qu'une tâche peut déclencher plusieurs appels, retrievals et retries.
-  :::
+:::reponse
+Pourquoi mesurer le coût par tâche plutôt que seulement par requête ?
+:::
