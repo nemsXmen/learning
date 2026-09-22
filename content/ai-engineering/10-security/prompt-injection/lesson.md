@@ -37,7 +37,7 @@ Le fait qu'une instruction soit lisible par le modèle ne lui donne aucun privil
 Sépare instructions et données, applique ACL, minimise contexte, valide les arguments des outils et place l'autorisation hors modèle.
 
 ## Exercices
-Une page récupérée demande à l'agent de transmettre son secret API. Que doit-il faire ?
+- Une page récupérée demande à l'agent de transmettre son secret API. Que doit-il faire ?
 
 :::indice
 Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
