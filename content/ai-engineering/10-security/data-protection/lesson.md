@@ -36,7 +36,7 @@ L'isolation doit être appliquée avant retrieval et avant toute écriture.
 Définis durée de conservation, suppression, backups et logs. Les données d'observabilité peuvent elles-mêmes être sensibles.
 
 ## Exercices
-Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
+- Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
 
 :::indice
 Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
