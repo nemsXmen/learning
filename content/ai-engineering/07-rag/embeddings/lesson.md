@@ -38,52 +38,49 @@ Changer de modèle d'embedding peut changer dimension, distribution et qualité.
 Le vecteur ne remplace pas les filtres métier : tenant, ACL, langue, type de document et version peuvent être appliqués avant ou pendant la recherche selon le moteur.
 
 ## Exercices
-Un index attend 768 dimensions mais le nouveau modèle produit 1536. Peut-on mélanger les deux ?
+
+Changer de modèle peut modifier la dimension, la distribution des vecteurs et la qualité du retrieval. Une migration doit donc prévoir un nouvel index ou une stratégie compatible, une réindexation et une nouvelle évaluation.
 
 :::indice
-Sépare retrieval, contexte et génération pour localiser l'erreur.
+- Un index attend 768 dimensions mais le nouveau modèle produit 1536. Peut-on mélanger les deux ?
 :::
 
 :::solution
-Non dans un index homogène. Créer un nouvel index compatible et réindexer les contenus concernés.
-
+Vérifie d'abord le contrat de dimension de l'index.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : texte → modèle d'embedding → vecteur → index → nearest neighbors. L'indexation et la requête doivent utiliser un espace vectoriel compatible, avec une distance cohérente avec le modèle et sa normalisation.
 
 ## À retenir
-Un embedding est un signal de recherche ; il ne garantit ni vérité ni autorisation.
 
+Non dans un index homogène. Il faut créer un index compatible puis réindexer les contenus concernés et comparer les résultats.
 
 ## Introduction
 
-Les embeddings représentent des contenus dans un espace numérique pour permettre la recherche sémantique.
+Embeddings et espace vectoriel
 
 ## Concept
 
-Dimension, modèle, distance et normalisation doivent rester cohérents entre indexation et requête.
+Un embedding transforme un texte en vecteur numérique. L'objectif n'est pas de stocker le texte différemment, mais de créer une représentation permettant de comparer des contenus dans un espace appris par le modèle.
 
 ## Exemple
 
-Changer de modèle d'embedding nécessite généralement une stratégie de migration et de réindexation.
+Deux textes proches selon le modèle produisent généralement des vecteurs proches. Cette propriété permet une recherche sémantique, mais elle ne signifie pas que le vecteur contient une preuve ou une vérité.
 
 ## Comment ça fonctionne
 
-text → embedding model → vector → index → nearest neighbors
+Supposons qu'un index utilise un modèle produisant 768 dimensions. Si un nouveau modèle produit 1536 dimensions, ses vecteurs ne peuvent pas être mélangés directement avec ceux de l'ancien index homogène.
 
 ## Questions d'entretien
 
-- Pourquoi filtrer les métadonnées avant ou pendant le retrieval ?
+Un embedding est un signal de recherche. Il ne remplace ni les règles d'accès, ni la validation métier, ni l'évaluation.
 
-  :::indice
-  Sépare toujours les erreurs de retrieval des erreurs de génération.
-  :::
+:::indice
+Relie ta réponse à la séparation entre retrieval et génération.
+:::
 
-  :::reponse
-  Pour respecter tenant, ACL, type ou version et éviter de récupérer des données interdites.
-  :::
+:::reponse
+Pourquoi réévaluer après un changement de modèle d'embedding ?
+:::
