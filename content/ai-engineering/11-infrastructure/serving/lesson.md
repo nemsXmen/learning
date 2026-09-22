@@ -45,6 +45,13 @@ Vérifier saturation GPU, file d'attente, batching, concurrence et temps de pré
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Servir un modèle est un problème de système distribué.
 
