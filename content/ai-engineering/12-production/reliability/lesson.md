@@ -32,7 +32,7 @@ Ne masque pas une panne par des retries illimités. Les budgets de temps doivent
 ## Dégradation
 Une fonctionnalité peut passer en recherche lexicale, modèle plus petit, réponse différée ou lecture seule selon le produit.
 
-## Exercice
+## Exercices
 Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
 
 :::indice
