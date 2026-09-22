@@ -36,17 +36,15 @@ Pin les dépendances, versionne les artefacts et garde la configuration hors du 
 Une release doit pouvoir revenir à une version connue sans perdre les données compatibles.
 
 ## Exercices
-
-Un déploiement AI peut échouer sans erreur technique visible : qualité, coût ou latence peuvent se dégrader. Les critères de release doivent donc couvrir ces dimensions.
+- Un déploiement AI peut échouer sans erreur technique visible : qualité, coût ou latence peuvent se dégrader. Les critères de release doivent donc couvrir ces dimensions.
 
 :::indice
 - Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
-:::
+::
 
 :::solution
 Commence par contenir l'impact avant de modifier davantage le système.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : build → artefacts versionnés → staging → vérification → canary/rollout → production → rollback. Les migrations de données doivent être conçues pour rester compatibles pendant la transition.
@@ -72,13 +70,12 @@ Un artefact déployable doit figer les dépendances et référencer la version d
 Une nouvelle version du modèle augmente les erreurs après déploiement. Si l'ancienne version est encore disponible, on peut réduire le trafic vers la nouvelle, comparer les métriques puis revenir à la version connue.
 
 ## Questions d'entretien
-
-Un déploiement AI doit être reproductible, observable et réversible.
+- Un déploiement AI doit être reproductible, observable et réversible.
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-:::
+::
 
 :::reponse
 Pourquoi garder un rollback prêt ?
-:::
+::
