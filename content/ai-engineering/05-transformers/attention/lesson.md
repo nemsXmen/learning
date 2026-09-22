@@ -54,17 +54,15 @@ Plusieurs têtes apprennent des projections différentes. Elles peuvent capturer
 L'attention dense compare potentiellement toutes les positions entre elles, ce qui rend son coût dépendant fortement de la longueur de séquence.
 
 ## Exercices
-
 - Dans une génération autoregressive, pourquoi la position 5 ne doit-elle pas voir le token réel de position 6 ?
 
 :::indice
 Relie la question à l'information disponible au moment où le token 5 doit être généré.
-:::
+::
 
 :::solution
 Cela introduirait une information future et créerait une fuite de cible pendant l'entraînement.
-:::
-
+::
 ## Erreurs fréquentes
 
 Penser que l'attention « comprend » automatiquement le texte est trop vague. Il faut aussi surveiller le coût de l'attention dense, qui augmente fortement avec la longueur de séquence.
@@ -90,13 +88,12 @@ Dans « Le client paie la facture », le mot « paie » peut avoir besoin de rel
 Le flow est : Q/K/V → scores → division par √dk → masque éventuel → softmax → combinaison pondérée des V. La division limite l'amplitude des scores lorsque la dimension augmente. Le masque causal interdit les positions futures. Plusieurs têtes permettent d'apprendre plusieurs projections relationnelles en parallèle.
 
 ## Questions d'entretien
-
-Pourquoi utiliser un masque causal ?
+- Pourquoi utiliser un masque causal ?
 
 :::indice
 Relie ta réponse au fonctionnement concret du modèle.
-:::
+::
 
 :::reponse
 Il garantit qu'un modèle autoregressif ne peut pas utiliser des tokens futurs pour prédire le prochain token.
-:::
+::
