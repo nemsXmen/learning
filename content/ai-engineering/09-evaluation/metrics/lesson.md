@@ -31,7 +31,7 @@ metric = quality + reliability + cost + latency
 ```
 
 ## Exercices
-Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
+- Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
 
 :::indice
 Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
