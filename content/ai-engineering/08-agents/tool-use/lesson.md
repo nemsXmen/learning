@@ -20,6 +20,23 @@ tags: [agents, tool-calling, schemas, safety]
 - séparer décision du modèle et autorisation métier ;
 - gérer erreurs, timeouts, retries et résultats structurés.
 
+ 
+## Introduction
+
+Le tool calling permet à un modèle de proposer l'utilisation d'une capacité externe, mais un système de production doit transformer cette proposition en une exécution contrôlée. Le contrat de l'outil est donc une frontière entre le raisonnement probabiliste et le code déterministe.
+
+## Concept
+
+Un outil possède au minimum un nom, un schéma d'entrée, une politique d'autorisation, une sémantique d'erreur et un résultat normalisé. La validation de schéma garantit la forme des arguments ; l'autorisation et les règles métier décident si l'effet est permis.
+
+## Exemple
+
+Pour un outil `refundPayment`, le modèle peut proposer `{ orderId, amount }`. Le runtime valide le schéma, vérifie l'identité et les droits, contrôle les règles de remboursement, applique l'idempotence puis exécute la mutation. Un JSON valide mais non autorisé est refusé.
+
+## Comment ça fonctionne
+
+Le modèle émet un appel → le runtime résout l'outil → valide les arguments → applique l'autorisation et les budgets → exécute avec timeout → normalise le résultat → renvoie uniquement les informations nécessaires au modèle. Les secrets et permissions internes restent hors du contexte du modèle.
+
 ## Un outil est un contrat
 
 Un tool calling robuste expose au modèle un nom, une description, un schéma d'entrée et un format de sortie attendu. Le modèle propose un appel ; le runtime décide ensuite si cet appel est autorisé et comment l'exécuter.
