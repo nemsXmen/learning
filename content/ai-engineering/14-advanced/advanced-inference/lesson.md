@@ -99,11 +99,10 @@ Le scale-out horizontal consiste à répartir les requêtes sur plusieurs worker
 
 :::indice
 Mesure séparément le temps d'attente avant batch, la durée GPU, la taille des batches et la distribution des longueurs.
-::
-
+:::
 :::solution
 Comparer la baseline et la version batchée avec la même charge. Mesurer TTFT, p50/p95/p99, taille des batches, temps d'attente du scheduler, saturation GPU et longueur des contextes. Réduire le délai de batching ou adapter la politique de regroupement si le gain de throughput ne respecte plus le SLO de latence.
-::
+:::
 ## À retenir
 
 L'inférence haute performance est un problème de scheduling, mémoire, concurrence et latence. Une optimisation utile doit améliorer une contrainte sans violer les SLO des utilisateurs.
@@ -116,8 +115,7 @@ L'inférence haute performance est un problème de scheduling, mémoire, concurr
 
 :::indice
 Relie chaque réponse à une contrainte système mesurable.
-::
-
+:::
 :::reponse
 TTFT mesure la réactivité initiale et p99 révèle la queue de distribution. Le KV cache évite des recalculs d'attention au prix de mémoire. Une file non bornée transforme la saturation en latence croissante. Le scale-out devient pertinent lorsque la concurrence, la mémoire ou le débit dépassent la capacité d'un worker et que plusieurs instances peuvent absorber la charge.
-::
+:::
