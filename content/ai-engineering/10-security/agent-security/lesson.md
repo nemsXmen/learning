@@ -37,7 +37,7 @@ Injecte les credentials uniquement dans le composant qui doit les utiliser. Évi
 Trace appels d'outils, décisions de politique, erreurs et request IDs sans enregistrer inutilement des données sensibles.
 
 ## Exercices
-Un agent peut exécuter du code Python arbitraire. Quelles protections minimales ?
+- Un agent peut exécuter du code Python arbitraire. Quelles protections minimales ?
 
 :::indice
 Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
