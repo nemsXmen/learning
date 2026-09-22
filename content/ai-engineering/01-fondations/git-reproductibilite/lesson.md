@@ -75,7 +75,7 @@ Ne jamais committer une clé API ou un mot de passe. Si un secret a fuité, le r
 
 ## Exercices
 
-Définis un manifeste minimal pour une évaluation RAG.
+- Définis un manifeste minimal pour une évaluation RAG.
 
 :::indice
 Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
