@@ -34,52 +34,49 @@ Ne regarde pas uniquement le score global. Segmente par langue, intention, diffi
 Un changement peut être bloqué si une métrique critique baisse au-delà d'un seuil défini.
 
 ## Exercices
-- Le score global reste stable mais les requêtes en français régressent. Que montre une métrique agrégée ?
+
+Le score global est trompeur lorsqu'une population importante masque une petite population critique. Segmente par langue, intention, difficulté, longueur ou catégorie de risque.
 
 :::indice
-Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
+- Le score global reste stable mais les requêtes en français régressent. Que montre la moyenne ?
 :::
 
 :::solution
-Elle peut masquer une régression sur un sous-groupe. Il faut segmenter les résultats.
-
+Cherche ce que l'agrégation peut masquer.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : changement → suite d'évaluation → comparaison → analyse par segment → release gate → déploiement. Une gate peut bloquer une release si une métrique critique descend sous un seuil défini.
 
 ## À retenir
-La qualité doit être testée comme une propriété versionnée du logiciel.
 
+Elle peut cacher une régression importante sur un sous-groupe. Il faut analyser les résultats par segment avant de valider la release.
 
 ## Introduction
 
-Une suite de régression empêche une amélioration locale de casser un comportement existant.
+Transformer l'évaluation en garde-fou de release
 
 ## Concept
 
-Golden cases, seuils et comparaison de versions constituent une release gate.
+Une amélioration locale peut casser un comportement existant. Une suite de régression transforme donc les évaluations en protection continue du produit.
 
 ## Exemple
 
-Après changement de prompt, rejouer automatiquement les cas critiques révèle les régressions avant production.
+Le golden set reste fixe pour permettre la comparaison. Il doit néanmoins évoluer lorsque de nouveaux cas importants apparaissent ; ces changements doivent être versionnés afin de distinguer une modification du système d'une modification du test.
 
 ## Comment ça fonctionne
 
-change → eval suite → compare → gate → release
+Après chaque changement de modèle, prompt, chunking ou outil, la suite rejoue les cas critiques et compare la nouvelle version à une baseline.
 
 ## Questions d'entretien
 
-- Que doit faire une release gate ?
+La qualité devient une propriété versionnée du logiciel lorsqu'elle est testée automatiquement avant les releases.
 
-  :::indice
-  Une bonne métrique doit être reliée à une décision.
-  :::
+:::indice
+Relie ta réponse à une décision concrète de qualité, coût ou release.
+:::
 
-  :::reponse
-  Bloquer ou signaler une version lorsque des seuils critiques sont dépassés.
-  :::
+:::reponse
+Que doit faire une release gate ?
+:::
