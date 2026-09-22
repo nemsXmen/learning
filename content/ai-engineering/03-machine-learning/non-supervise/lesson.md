@@ -41,7 +41,7 @@ Les embeddings permettent aussi regroupement et recherche sémantique. Le résul
 
 ## Exercices
 
-Tu observes trois clusters de clients. Comment vérifier qu'ils sont utiles ?
+- Tu observes trois clusters de clients. Comment vérifier qu'ils sont utiles ?
 
 :::indice
 Commence par définir la métrique et la baseline avant de choisir une technique.
