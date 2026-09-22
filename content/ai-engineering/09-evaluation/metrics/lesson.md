@@ -30,7 +30,7 @@ Un autre modèle peut noter une réponse selon une rubrique. Mais il peut être 
 metric = quality + reliability + cost + latency
 ```
 
-## Exercice
+## Exercices
 Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
 
 :::indice
