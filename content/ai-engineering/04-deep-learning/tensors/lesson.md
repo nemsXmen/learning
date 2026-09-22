@@ -9,7 +9,7 @@ order: 1
 estimatedMinutes: 60
 difficulty: 3
 xp: 130
-prerequisites: [ai-linear-algebra]
+prerequisites: [ai-maths]
 skills: [ai-pytorch]
 tags: [deep-learning, pytorch]
 ---
