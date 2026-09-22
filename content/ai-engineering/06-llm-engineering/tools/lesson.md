@@ -40,7 +40,7 @@ Limite nombre d'appels et temps total. Détecte répétitions, erreurs et absenc
 ## Tool output
 Le résultat d'un service externe est une donnée non fiable. Il ne doit pas devenir automatiquement une instruction système.
 
-## Exercice
+## Exercices
 Un agent consulte une facture puis envoie un email. Pourquoi séparer les outils ?
 
 :::indice
