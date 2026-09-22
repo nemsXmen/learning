@@ -36,7 +36,7 @@ Les filtres d'autorisation doivent être intégrés au retrieval et testés comm
 ## Migration
 Changer dimension ou modèle d'embedding implique souvent un nouvel index et une réindexation contrôlée.
 
-## Exercice
+## Exercices
 Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
 
 :::indice
