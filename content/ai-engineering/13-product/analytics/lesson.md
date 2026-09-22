@@ -4,7 +4,7 @@ title: "Analytics, feedback et boucle d'amélioration"
 slug: analytics
 technology: ai-engineering
 level: advanced
-module: 13-product
+module: product
 order: 4
 estimatedMinutes: 75
 difficulty: 4
