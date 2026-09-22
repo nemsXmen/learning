@@ -51,6 +51,13 @@ Une recherche hybride peut exploiter l'identifiant exact et le sens de la descri
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Le retrieval est une étape de sélection mesurable, pas une fonction magique de base vectorielle.
 
