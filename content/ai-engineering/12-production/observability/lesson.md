@@ -33,52 +33,49 @@ request -> trace -> model call -> tool calls -> response
 Définis objectifs sur disponibilité, latence et erreurs. Ajoute des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
 
 ## Exercices
-- Le coût par requête double sans hausse de trafic. Où chercher ?
+
+Éviter le log complet des prompts et réponses par défaut. Préfère métadonnées minimisées, redaction, accès restreint et rétention définie.
 
 :::indice
-Raisonne en détection → mitigation → récupération → vérification.
+- Le coût par requête double sans hausse de trafic. Où chercher ?
 :::
 
 :::solution
-Comparer tokens, modèle routé, retries, contexte, outils et changement de prompt.
-
+Compare la composition du coût avant et après le changement.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : request → trace → retrieval/tools → model call → response → metrics. Ajoute des SLO de disponibilité et de latence, puis des signaux qualité lorsque leur calcul respecte les contraintes de confidentialité.
 
 ## À retenir
-Sans corrélation entre version, requête et métriques, une régression IA est difficile à expliquer.
 
+Vérifier tokens, modèle routé, retries, taille du contexte, appels d'outils et version du prompt.
 
 ## Introduction
 
-L'observabilité relie une requête utilisateur à ses appels modèles et outils.
+Observer le système sans exposer les données
 
 ## Concept
 
-Traces, métriques, logs, coûts et p95/p99 permettent de diagnostiquer les incidents.
+Une AI en production doit être diagnosable : il faut relier une requête à ses étapes, mesurer latence, erreurs, tokens et coût et savoir quelle version du modèle ou du prompt a été utilisée.
 
 ## Exemple
 
-Une trace peut montrer qu'une réponse lente vient de retrieval plutôt que du modèle.
+Une trace utile possède un requestId corrélé, le statut, les durées, le modèle, la version du prompt, les appels tools et des métriques de tokens. Elle ne doit pas devenir une copie inutile des données métier.
 
 ## Comment ça fonctionne
 
-request trace → retrieval → model → tools → response metrics
+Une requête lente peut avoir un temps modèle normal mais attendre longtemps dans retrieval ou une queue. Une trace distribuée permet de localiser cette attente.
 
 ## Questions d'entretien
 
-- Que doit contenir une trace AI utile ?
+Sans corrélation entre version, requête et métriques, une régression AI est difficile à expliquer.
 
-  :::indice
-  Pense aux conséquences d'une panne sous trafic réel.
-  :::
+:::indice
+Relie ta réponse à une contrainte opérationnelle concrète.
+:::
 
-  :::reponse
-  Identifiants corrélés, latence, erreurs, étapes et métadonnées minimisées sans exposer inutilement des données sensibles.
-  :::
+:::reponse
+Que doit contenir une trace AI utile ?
+:::
