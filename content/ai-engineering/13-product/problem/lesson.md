@@ -4,7 +4,7 @@ title: "AI Product : choisir un problème qui mérite de l'IA"
 slug: problem
 technology: ai-engineering
 level: advanced
-module: 13-product
+module: product
 order: 1
 estimatedMinutes: 65
 difficulty: 3
