@@ -35,7 +35,7 @@ request -> relevant memory retrieval -> context -> model
 ## Sécurité
 Une mémoire persistante peut contenir des données sensibles. Applique ACL, chiffrement selon le contexte, suppression et durée de rétention.
 
-## Exercice
+## Exercices
 Un utilisateur demande la suppression de ses données mémorisées. Que doit faire le système ?
 
 :::indice
