@@ -88,11 +88,10 @@ Mesure au minimum :
 
 :::indice
 Ne compare pas seulement la consommation mémoire. Segmente les régressions et vérifie si une optimisation moins agressive existe.
-::
-
+:::
 :::solution
 Identifier les cas qui régressent, comparer plusieurs niveaux de quantification ou un autre modèle, puis mesurer qualité, latence, mémoire et coût sur le même benchmark. Conserver l'optimisation uniquement si les contraintes métier restent respectées.
-::
+:::
 ## À retenir
 
 L'efficacité IA est un problème multi-objectifs : qualité, mémoire, latence, throughput et coût doivent être mesurés ensemble.
@@ -105,8 +104,7 @@ L'efficacité IA est un problème multi-objectifs : qualité, mémoire, latence,
 
 :::indice
 Explique toujours la métrique gagnée, la métrique potentiellement perdue et le protocole de comparaison.
-::
-
+:::
 :::reponse
 Le batching amortit les coûts GPU mais peut faire attendre une requête. Un cache mal dimensionné peut retourner une réponse d'un mauvais contexte ou tenant. La distillation cherche à transférer des capacités vers un modèle plus petit. Chaque optimisation doit être benchmarkée car son effet dépend du modèle, des données, du matériel et de la charge.
-::
+:::
