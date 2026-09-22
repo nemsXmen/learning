@@ -16,83 +16,85 @@ tags: [validation, cross-validation, leakage, generalization]
 
 ## Objectifs
 
-- séparer entraînement, validation et test ;
-- comprendre overfitting et underfitting ;
-- utiliser la cross-validation lorsque le contexte le permet ;
-- éviter de contaminer le test.
+À la fin de ce chapitre, tu dois pouvoir construire un split cohérent avec le problème, reconnaître un surapprentissage et expliquer pourquoi le jeu de test doit rester indépendant.
 
-## Généralisation
+## Introduction
 
-Le but est une bonne performance sur une distribution future, pas une excellente note sur train. Un grand écart train/validation peut signaler surapprentissage ou changement de distribution.
+Un modèle peut obtenir un excellent score sur les données qu'il a utilisées pour apprendre tout en échouant sur les nouvelles données. Ce n'est pas un détail : la valeur d'un modèle vient précisément de sa capacité à généraliser.
 
-## Split
+La validation sert donc à répondre à une question simple : « que se passera-t-il lorsque le modèle rencontrera des données qu'il n'a pas vues ? »
 
-Le split dépend des données. Pour des observations temporelles, un split aléatoire peut laisser le futur influencer le passé. Pour des groupes liés, séparer les lignes peut aussi créer une fuite.
+## Concept
 
-## Cross-validation
+Un protocole classique sépare les données en trois rôles :
 
-La cross-validation entraîne plusieurs fois sur des partitions différentes et donne une estimation plus robuste dans les contextes où ses hypothèses sont satisfaites. Elle ne doit pas être appliquée aveuglément aux séries temporelles ou données dépendantes.
+```text
+dataset
+  ├── train       → apprendre les paramètres
+  ├── validation  → choisir / régler
+  └── test        → mesurer une fois à la fin
+```
 
-## Hyperparamètres
+Le train sert à apprendre. La validation sert à prendre des décisions de développement. Le test doit rester une estimation finale aussi indépendante que possible.
 
-Les hyperparamètres sont sélectionnés avec validation ou une procédure de recherche. Le test reste réservé à l'estimation finale.
+## Exemple
 
-Comparer de nombreux modèles sur le test puis choisir le meilleur transforme le test en outil de tuning.
+Imaginons un modèle de fraude. Si des transactions du même client apparaissent à la fois dans train et validation, le modèle peut profiter indirectement de caractéristiques propres à ce client.
 
-## Calibration
+Dans une série temporelle, le problème est encore plus évident : mélanger aléatoirement le passé et le futur peut permettre au modèle de bénéficier d'informations qui n'auraient pas été disponibles au moment réel de la prédiction.
 
-Une classification peut bien classer tout en étant mal calibrée. Une probabilité de 0.8 devrait correspondre approximativement à 80 % de positifs dans le contexte mesuré si le modèle est correctement calibré.
+## Comment ça fonctionne
+
+Le choix du split dépend donc de la manière dont les données sont produites.
+
+Pour des données indépendantes, un split aléatoire peut convenir. Pour des groupes liés, on peut séparer par groupe. Pour des données temporelles, on respecte l'ordre du temps.
+
+La cross-validation répète l'entraînement sur plusieurs partitions afin d'obtenir une estimation plus robuste, lorsque ses hypothèses sont compatibles avec le problème.
+
+```text
+fold 1 → train / validation
+fold 2 → train / validation
+fold 3 → train / validation
+        ↓
+agrégation des résultats
+```
+
+Mais la cross-validation n'annule pas les risques de fuite. Une transformation calculée sur tout le dataset avant le split peut déjà avoir contaminé l'évaluation.
+
+Les hyperparamètres doivent être choisis avec une procédure de validation. Si tu compares des dizaines de modèles sur le test et conserves celui qui obtient le meilleur score, le test devient lui-même un outil de tuning.
+
+La calibration ajoute une autre dimension. Un modèle peut correctement classer les exemples tout en produisant des probabilités peu fiables. Si un système annonce 0,8 de probabilité, la signification de cette valeur doit être cohérente avec les observations du contexte concerné.
+
+## Erreurs fréquentes
+
+Le piège le plus courant est de choisir un split uniquement parce qu'il est facile à coder. Il faut plutôt partir de la manière dont les données arriveront en production.
+
+Il faut aussi surveiller les doublons, les variables calculées avec des informations futures et les transformations apprises sur des données qui devraient rester hors du train.
 
 ## Exercices
 
 - Un modèle obtient 99 % sur train et 72 % sur validation. Donne deux hypothèses et trois vérifications.
 
 :::indice
-Commence par définir la métrique et la baseline avant de choisir une technique.
+Le problème peut venir du modèle, des données ou du protocole d'évaluation.
 :::
 
 :::solution
-
-Hypothèses : surapprentissage ou changement de distribution. Vérifications : comparer les distributions, inspecter erreurs, vérifier doublons/fuites et tester une baseline simple.
-
+Deux hypothèses plausibles sont le surapprentissage et un changement de distribution. Vérifier les distributions train/validation, inspecter les erreurs et les doublons, rechercher les fuites et comparer avec une baseline simple.
 :::
-
-## Erreurs fréquentes
-
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
 
 ## À retenir
 
-Un score n'a de sens que si le protocole de validation représente correctement l'usage futur.
-
-
-## Introduction
-
-Une validation correcte mesure la généralisation, pas la mémorisation.
-
-## Concept
-
-Train, validation et test ont des rôles distincts ; les splits temporels ou par groupe évitent des fuites spécifiques.
-
-## Exemple
-
-Un modèle de fraude doit souvent séparer les périodes plutôt que mélanger aléatoirement toutes les transactions.
-
-## Comment ça fonctionne
-
-données → split adapté → entraînement → tuning → test final
+Un score n'a de sens que si le protocole qui l'a produit ressemble à l'usage futur. La qualité de la validation est donc une propriété du système de données, pas seulement du modèle.
 
 ## Questions d'entretien
 
-- Pourquoi le test ne doit-il pas servir au tuning ?
+- Pourquoi le jeu de test ne doit-il pas servir au tuning ?
 
-  :::indice
-  Pense au risque de mesure trompeuse et à la généralisation.
-  :::
+:::indice
+Demande-toi ce que signifie « estimation indépendante ».
+:::
 
-  :::reponse
-  Parce qu'il cesserait d'être une estimation indépendante de la généralisation.
-  :::
+:::reponse
+Parce qu'utiliser le test pour prendre des décisions de sélection finit par adapter le modèle au test. Il ne représente alors plus une mesure indépendante de la généralisation.
+:::
