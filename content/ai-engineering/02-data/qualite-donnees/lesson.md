@@ -70,7 +70,7 @@ Une fuite arrive lorsqu'une information indisponible au moment de la prédiction
 
 Versionne les règles et leurs seuils.
 
-## Exercice
+## Exercices
 
 Définis cinq règles de qualité pour un corpus documentaire RAG.
 
