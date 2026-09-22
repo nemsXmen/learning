@@ -37,52 +37,49 @@ Ne donne pas les clés API directement au contexte du modèle. Le serveur appell
 Journalise acteur, outil, paramètres minimisés, décision d'autorisation, résultat, request ID et timestamp.
 
 ## Exercices
-Un agent propose un remboursement. Quelle frontière appliquer ?
+
+Un audit utile conserve qui a demandé l'action, quel outil a été appelé, quelle décision d'autorisation a été prise et quel résultat est arrivé, tout en minimisant les données sensibles enregistrées.
 
 :::indice
-Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+- Un agent propose un remboursement. Quelle frontière appliquer ?
 :::
 
 :::solution
-Valider identité, montant, règles métier et idempotence dans le backend ; l'agent ne fait que proposer ou déclencher un outil déjà autorisé.
-
+Sépare la proposition du modèle de l'autorisation métier.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : agent → proposition d'action → policy check → authorization → tool → side effect → audit. Les secrets restent côté serveur. Pour du code ou des opérations risquées, ajoute sandbox, timeout, quotas CPU/mémoire, filesystem restreint et réseau contrôlé.
 
 ## À retenir
-Un agent puissant doit rester moins privilégié que le système qu'il pilote.
 
+Le backend valide identité, montant, permissions et idempotence. L'agent ne peut exécuter que l'outil déjà soumis à ces contrôles.
 
 ## Introduction
 
-Les agents rendent les frontières de sécurité plus importantes car ils peuvent déclencher des actions.
+Sécuriser un agent qui peut agir
 
 ## Concept
 
-Least privilege, sandbox, approbation et audit limitent les dommages possibles.
+Plus un agent possède d'outils, plus une erreur de raisonnement ou une donnée malveillante peut avoir des conséquences. La sécurité consiste donc à limiter ce que l'agent peut réellement faire.
 
 ## Exemple
 
-Un agent de support peut lire une facture mais ne doit pas pouvoir rembourser sans politique d'autorisation.
+Le principe central est le least privilege : l'agent reçoit uniquement les capacités nécessaires. Les permissions sont décidées par le système d'autorisation, jamais par une instruction générée par le modèle.
 
 ## Comment ça fonctionne
 
-agent → policy → tool → audit
+Pour un agent de support, lire une facture peut être autorisé automatiquement alors qu'un remboursement nécessite une vérification supplémentaire. Le modèle peut préparer la proposition, mais un service déterministe contrôle identité, montant, règles métier et idempotence.
 
 ## Questions d'entretien
 
-- Pourquoi l'autorisation doit-elle rester hors du prompt ?
+Un agent puissant doit rester moins privilégié que le système qu'il pilote.
 
-  :::indice
-  Cherche la frontière entre décision du modèle et contrôle déterministe.
-  :::
+:::indice
+Pense à la séparation entre modèle, runtime et système d'autorisation.
+:::
 
-  :::reponse
-  Parce qu'une instruction textuelle ne constitue pas un contrôle de sécurité fiable.
-  :::
+:::reponse
+Pourquoi l'autorisation doit-elle rester hors du prompt ?
+:::
