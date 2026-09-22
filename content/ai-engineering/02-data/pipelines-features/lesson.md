@@ -55,7 +55,7 @@ Les transformations apprises doivent être identiques entre entraînement et pr�
 
 ## Exercices
 
-Conçois un pipeline d'ingestion relançable sans duplication de chunks.
+- Conçois un pipeline d'ingestion relançable sans duplication de chunks.
 
 :::indice
 Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
