@@ -76,11 +76,10 @@ Il faut aussi surveiller les doublons, les variables calculées avec des informa
 
 :::indice
 Le problème peut venir du modèle, des données ou du protocole d'évaluation.
-::
-
+:::
 :::solution
 Deux hypothèses plausibles sont le surapprentissage et un changement de distribution. Vérifier les distributions train/validation, inspecter les erreurs et les doublons, rechercher les fuites et comparer avec une baseline simple.
-::
+:::
 ## À retenir
 
 Un score n'a de sens que si le protocole qui l'a produit ressemble à l'usage futur. La qualité de la validation est donc une propriété du système de données, pas seulement du modèle.
@@ -90,8 +89,7 @@ Un score n'a de sens que si le protocole qui l'a produit ressemble à l'usage fu
 
 :::indice
 Demande-toi ce que signifie « estimation indépendante ».
-::
-
+:::
 :::reponse
 Parce qu'utiliser le test pour prendre des décisions de sélection finit par adapter le modèle au test. Il ne représente alors plus une mesure indépendante de la généralisation.
-::
+:::
