@@ -31,51 +31,49 @@ dataset -> runner -> system version -> metrics -> error analysis
 Pour une réponse libre, une grille explicite peut évaluer exactitude, couverture, conformité et style. Pour un JSON, privilégie d'abord des assertions déterministes.
 
 ## Exercices
-- Construis un golden set de 20 cas pour une fonctionnalité de résumé et définis les critères de réussite.
+
+Une métrique peut être excellente tout en mesurant la mauvaise chose. Il faut donc relier chaque critère à un risque ou une décision produit et conserver les versions du dataset et des règles d'évaluation.
 
 :::indice
-Couvre cas normaux, limites, refus et sorties structurées, puis relie chaque critère à une décision.
+- Construis un golden set de 20 cas pour une fonctionnalité de résumé.
 :::
 
 :::solution
-Sépare les cas par catégories, versionne les entrées et leurs attentes, puis définis des assertions déterministes quand elles sont possibles et une grille explicite pour le reste.
+Couvre cas normaux, limites, refus et documents variés.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : dataset versionné → runner → version du système → métriques → analyse d'erreurs → décision. Utilise des assertions déterministes lorsqu'elles existent, puis un judge ou une grille humaine pour les propriétés plus ouvertes.
 
 ## À retenir
-Une évaluation utile permet de comparer deux versions sans dépendre d'une impression ponctuelle.
 
+Versionner les entrées et attentes, définir des assertions déterministes quand possible et une grille explicite pour exactitude, couverture et conformité sur le reste.
 
 ## Introduction
 
-L'évaluation transforme une intuition de qualité en critères mesurables.
+Évaluer avant d'optimiser
 
 ## Concept
 
-Un dataset d'évaluation doit représenter les cas normaux, limites et adversariaux.
+Une application AI ne peut pas être améliorée sérieusement si personne n'a défini ce que « correct » signifie. L'évaluation transforme une impression subjective en critères comparables.
 
 ## Exemple
 
-Un golden set versionné permet de comparer deux prompts ou modèles sur les mêmes entrées.
+Commence par un golden set représentatif : cas normaux, limites, refus, adversariaux et sorties structurées. Chaque cas doit avoir une attente ou une rubrique permettant de décider si le résultat est acceptable.
 
 ## Comment ça fonctionne
 
-dataset → criteria → run → metrics → decision
+Pour une fonctionnalité de résumé, vingt exemples peuvent couvrir plusieurs longueurs de documents, des informations critiques et des cas où le système doit signaler une information absente plutôt que l'inventer.
 
 ## Questions d'entretien
 
-- Pourquoi versionner le dataset d'évaluation ?
+Une bonne évaluation permet de comparer deux versions sans dépendre d'une impression ponctuelle.
 
-  :::indice
-  Une bonne métrique doit être reliée à une décision.
-  :::
+:::indice
+Relie ta réponse à une décision concrète de qualité, coût ou release.
+:::
 
-  :::reponse
-  Pour rendre les comparaisons reproductibles et détecter les changements de couverture.
-  :::
+:::reponse
+Pourquoi versionner le dataset d'évaluation ?
+:::
