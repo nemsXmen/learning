@@ -36,52 +36,49 @@ L'isolation doit être appliquée avant retrieval et avant toute écriture.
 Définis durée de conservation, suppression, backups et logs. Les données d'observabilité peuvent elles-mêmes être sensibles.
 
 ## Exercices
-- Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
+
+Les embeddings ne sont pas automatiquement anonymes. Les données d'observabilité peuvent elles aussi révéler des informations sensibles. Il faut donc définir ce qui est journalisé et combien de temps.
 
 :::indice
-Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
+- Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
 :::
 
 :::solution
-Le log devient une copie de données sensibles. Réduire les données journalisées et définir une rétention adaptée.
-
+Considère le log comme une nouvelle surface de données.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : identité → autorisation → données filtrées → traitement → stockage/logs → rétention/suppression. L'isolation doit être appliquée avant retrieval et avant les écritures.
 
 ## À retenir
-La confidentialité concerne tout le pipeline, pas uniquement le fournisseur LLM.
 
+Le log devient une copie de données sensibles. Il faut minimiser les champs journalisés, protéger l'accès et définir une rétention adaptée.
 
 ## Introduction
 
-Un produit AI traite souvent des données sensibles et doit minimiser ce qu'il collecte.
+Protéger les données sur tout le pipeline
 
 ## Concept
 
-Tenant isolation, ACL, rétention et chiffrement sont des contrôles de données indépendants du modèle.
+La confidentialité ne s'arrête pas au fournisseur LLM. Les prompts, logs, embeddings, caches, bases et outils peuvent tous devenir des copies de données sensibles.
 
 ## Exemple
 
-Une requête d'un tenant ne doit jamais récupérer des embeddings d'un autre tenant.
+La première défense est la minimisation : envoyer uniquement les champs nécessaires. Ensuite viennent isolation tenant, ACL, chiffrement selon le besoin, rétention, suppression et contrôle des accès aux logs.
 
 ## Comment ça fonctionne
 
-identity → authorization → filtered retrieval → processing → retention
+Imagine un log qui conserve le prompt complet d'un client. Même si le modèle est sécurisé, le log devient une nouvelle copie de données sensibles avec ses propres permissions et sa propre durée de conservation.
 
 ## Questions d'entretien
 
-- Pourquoi le filtrage tenant doit-il être côté serveur ?
+La confidentialité est une propriété de pipeline, pas une option ajoutée uniquement lors de l'appel LLM.
 
-  :::indice
-  Pense aux contrôles qui restent fiables même si le modèle se trompe.
-  :::
+:::indice
+Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
+:::
 
-  :::reponse
-  Parce que le client et le modèle ne sont pas des frontières de confiance.
-  :::
+:::reponse
+Pourquoi le filtrage tenant doit-il être côté serveur ?
+:::
