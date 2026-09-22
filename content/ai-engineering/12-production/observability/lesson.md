@@ -44,6 +44,13 @@ Comparer tokens, modèle routé, retries, contexte, outils et changement de prom
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Sans corrélation entre version, requête et métriques, une régression IA est difficile à expliquer.
 
