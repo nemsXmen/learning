@@ -15,10 +15,8 @@ tags: [transformers, llm]
 ---
 
 ## Objectifs
-- comprendre pourquoi un LLM manipule des tokens plutôt que des mots ;
-- distinguer vocabulaire, token IDs et embeddings ;
-- comprendre BPE et les effets du tokenizer sur coût et contexte ;
-- diagnostiquer les problèmes de tokenisation multilingue.
+
+Comprendre pourquoi les LLM utilisent des tokens, distinguer IDs et embeddings et relier tokenisation au coût et à la fenêtre de contexte.
 
 ## Du texte aux IDs
 Un tokenizer transforme une chaîne en séquence d'identifiants entiers.
@@ -52,51 +50,49 @@ Pour une application réelle, mesure les tokens du texte effectivement envoyé a
 Une même information peut nécessiter des nombres de tokens très différents selon la langue, le tokenizer et l'écriture. Pour un produit international, teste le tokenizer sur les langues réellement supportées.
 
 ## Exercices
-Pourquoi un long texte peut-il être coûteux même s'il contient relativement peu de mots ?
+
+- Pourquoi un long texte peut-il être coûteux même s'il contient relativement peu de mots ?
 
 :::indice
-Relie le concept à la chaîne tokens → représentation → modèle → sortie.
+Pense à l'unité réellement consommée par le modèle.
 :::
 
 :::solution
-Parce que le coût et la fenêtre de contexte sont mesurés en tokens. Une langue ou un format mal représenté par le tokenizer peut produire beaucoup de sous-tokens.
-
+Le coût et la fenêtre de contexte sont mesurés en tokens. Un texte peut donc produire beaucoup de sous-tokens.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Compter les mots pour estimer le coût est une approximation fragile. Il faut mesurer les tokens réels. Il faut aussi tester les formats particuliers, les URLs, le code et les langues du produit.
 
 ## À retenir
-Tokeniser est une étape d'ingénierie : mesure les tokens, la couverture linguistique et les limites de contexte avant de dimensionner une application.
+
+Tokeniser est une étape d'ingénierie : mesure les tokens, la couverture linguistique et les limites de contexte avant de dimensionner l'application.
 
 ## Introduction
 
-La tokenisation transforme du texte en unités manipulables par un modèle de langage.
+Avant qu'un Transformer traite du texte, celui-ci doit être transformé en unités numériques. Ces unités ne correspondent pas toujours à des mots complets : un mot peut devenir plusieurs sous-tokens.
 
 ## Concept
 
-Tokens, IDs, embeddings et contexte définissent le chemin du texte vers le modèle.
+Le tokenizer transforme une chaîne en IDs. Les IDs sont des indices de vocabulaire ; ils ne représentent pas directement une signification. Une table d'embeddings transforme ensuite chaque ID en vecteur dense.
 
 ## Exemple
 
-Le même texte peut consommer un nombre différent de tokens selon le tokenizer et la langue.
+Pour un texte comme « internationalisation », le tokenizer peut choisir une ou plusieurs unités selon son vocabulaire. Le nombre obtenu influence directement la quantité de contexte envoyée au modèle.
 
 ## Comment ça fonctionne
 
-texte → tokenizer → token IDs → embeddings → modèle
+Le flow est : texte → tokenizer → token IDs → embeddings → Transformer. Des méthodes comme BPE construisent des unités fréquentes afin de gérer un vocabulaire ouvert. Le nombre de tokens influence mémoire, latence et coût. En multilingue, mesure les langues réellement supportées car une même quantité de texte peut produire des nombres de tokens différents.
 
 ## Questions d'entretien
 
-- Pourquoi le nombre de tokens compte-t-il ?
+Pourquoi le nombre de tokens compte-t-il ?
 
-  :::indice
-  Pense au lien entre comportement du modèle et contraintes de production.
-  :::
+:::indice
+Relie ta réponse au fonctionnement concret du modèle.
+:::
 
-  :::reponse
-  Il influence fenêtre de contexte, latence, coût et quantité d'information traitée.
-  :::
+:::reponse
+Il influence la fenêtre de contexte, la latence, le coût et la quantité d'information traitée.
+:::
