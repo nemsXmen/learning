@@ -33,7 +33,7 @@ Qualité, diversité, cohérence des labels et déduplication sont critiques. É
 ## Evaluation
 Compare au modèle de base sur des cas métier et généraux. Surveille régression, hallucination et comportement hors distribution.
 
-## Exercice
+## Exercices
 Un dataset contient 20 000 exemples presque identiques. Quel risque ?
 
 :::indice
