@@ -41,11 +41,10 @@ Trace appels d'outils, décisions de politique, erreurs et request IDs sans enre
 
 :::indice
 - Un agent peut exécuter du Python arbitraire. Quelles protections minimales ?
-::
-
+:::
 :::solution
 Pense en termes d'isolation et de limites de ressources.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : request → policy → sandbox/tool → validation du résultat → audit. Les secrets doivent rester dans le composant qui appelle réellement le service, pas dans le contexte du modèle.
@@ -75,8 +74,7 @@ Pour un agent capable d'exécuter Python arbitraire, il ne suffit pas de vérifi
 
 :::indice
 Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
-::
-
+:::
 :::reponse
 Quel est le principe de least privilege pour un agent ?
-::
+:::
