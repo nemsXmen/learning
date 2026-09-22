@@ -1,0 +1,64 @@
+id: typescript-38-observer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-observer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Observer/pub-sub sert à :
+    options:
+      - Coupler fortement les modules
+      - Notifier des abonnés d’événements
+      - Compiler SQL
+      - Remplacer les types
+    answer:
+      - 1
+    explanation: |
+      Découplage temporel.
+    skills:
+      - patterns
+  - id: typescript-38-observer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une map Events type les payloads de on/emit.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-observer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      emit("userCreated", payload) avec map typée refuse :
+    options:
+      - Les bons payloads
+      - Un payload incorrect pour cet event
+      - Toute émission
+      - Les listeners
+    answer:
+      - 1
+    explanation: |
+      Sécurité de types.
+    skills:
+      - patterns
+  - id: typescript-38-observer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Ne jamais désabonner les listeners peut :
+    options:
+      - Rien causer
+      - Créer des fuites mémoire
+      - Activer strict
+      - Améliorer les perfs toujours
+    answer:
+      - 1
+    explanation: |
+      Lifecycle.
+    skills:
+      - patterns

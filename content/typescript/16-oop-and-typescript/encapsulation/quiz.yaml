@@ -1,0 +1,64 @@
+id: typescript-16-encapsulation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-encapsulation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’encapsulation vise principalement à :
+    options:
+      - Tout exposer en public
+      - Contrôler l’accès aux détails internes
+      - Remplacer les fonctions
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Cacher l’état, exposer une API contrôlée.
+    skills:
+      - oop
+  - id: typescript-16-encapsulation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      private et les getters sont des outils d’encapsulation en TypeScript.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-encapsulation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un getter/setter sans validation est souvent :
+    options:
+      - Une encapsulation solide
+      - Une fausse encapsulation
+      - Obligatoire
+      - Plus rapide à runtime
+    answer:
+      - 1
+    explanation: |
+      Sans contrôle, on n’apporte pas grand-chose.
+    skills:
+      - oop
+  - id: typescript-16-encapsulation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’encapsulation aide à protéger :
+    options:
+      - Uniquement les noms de variables
+      - Les invariants métier
+      - Uniquement le style de code
+      - Le compilateur
+    answer:
+      - 1
+    explanation: |
+      Les règles du domaine restent cohérentes.
+    skills:
+      - oop

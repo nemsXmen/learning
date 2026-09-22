@@ -1,0 +1,64 @@
+id: typescript-37-jest-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-jest-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ts-jest sert à :
+    options:
+      - Styliser Jest
+      - Transpiler TypeScript pour Jest
+      - Remplacer Node
+      - Gérer le CSS
+    answer:
+      - 1
+    explanation: |
+      Bridge TS.
+    skills:
+      - testing
+  - id: typescript-37-jest-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Jest peut exécuter des tests TypeScript avec la bonne config.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-jest-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      @types/jest fournit :
+    options:
+      - Le runtime Jest
+      - Les types des APIs Jest
+      - Un ORM
+      - Un bundler
+    answer:
+      - 1
+    explanation: |
+      Déclarations.
+    skills:
+      - testing
+  - id: typescript-37-jest-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      moduleNameMapper dans Jest aide pour :
+    options:
+      - Les alias de paths TypeScript
+      - Uniquement le CSS
+      - skipLibCheck
+      - Les migrations
+    answer:
+      - 0
+    explanation: |
+      Résolution modules.
+    skills:
+      - testing

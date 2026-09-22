@@ -1,0 +1,64 @@
+id: typescript-19-modifier-optional-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-modifier-optional-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans un mapped type, `?` après la clé rend la propriété :
+    options:
+      - Obligatoire
+      - Optionnelle
+      - Readonly
+      - never
+    answer:
+      - 1
+    explanation: |
+      Optional modifier.
+    skills:
+      - mapped-types
+  - id: typescript-19-modifier-optional-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `-?` retire l’optionalité.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-modifier-optional-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Required utilise :
+    options:
+      - +?
+      - -?
+      - +readonly
+      - -readonly uniquement
+    answer:
+      - 1
+    explanation: |
+      Suppression de ?.
+    skills:
+      - mapped-types
+  - id: typescript-19-modifier-optional-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Partial ajoute :
+    options:
+      - readonly
+      - L’optionalité sur toutes les props
+      - private
+      - never
+    answer:
+      - 1
+    explanation: |
+      Toutes optionnelles.
+    skills:
+      - mapped-types

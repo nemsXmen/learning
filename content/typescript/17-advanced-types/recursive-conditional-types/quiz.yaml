@@ -1,0 +1,64 @@
+id: typescript-17-recursive-conditional-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-recursive-conditional-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      DeepReadonly s’appuie typiquement sur :
+    options:
+      - Uniquement keyof
+      - Mapped type + conditional type récursif
+      - Un enum
+      - any
+    answer:
+      - 1
+    explanation: |
+      Combinaison classique.
+    skills:
+      - advanced-types
+  - id: typescript-17-recursive-conditional-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TypeScript limite la profondeur d’instanciation des types récursifs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, pour éviter les boucles infinies.
+    skills:
+      - advanced-types
+  - id: typescript-17-recursive-conditional-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans cas de base dans un conditional récursif :
+    options:
+      - Rien
+      - Risque d’erreur « excessively deep » / non-terminaison
+      - Conversion en any
+      - Runtime crash uniquement
+    answer:
+      - 1
+    explanation: |
+      La récursion doit s’arrêter.
+    skills:
+      - advanced-types
+  - id: typescript-17-recursive-conditional-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Flatten d’un tableau imbriqué utilise souvent :
+    options:
+      - infer + récursion
+      - Uniquement string
+      - enum
+      - class
+    answer:
+      - 0
+    explanation: |
+      Pattern courant.
+    skills:
+      - advanced-types

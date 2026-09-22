@@ -1,0 +1,64 @@
+id: typescript-33-exception-filters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-exception-filters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      NotFoundException produit typiquement un status :
+    options:
+      - "200"
+      - "404"
+      - "301"
+      - "100"
+    answer:
+      - 1
+    explanation: |
+      HTTP 404.
+    skills:
+      - nestjs
+  - id: typescript-33-exception-filters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un ExceptionFilter peut uniformiser le JSON d’erreur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-exception-filters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      throw new Error("x") non géré finit souvent en :
+    options:
+      - "200"
+      - "500"
+      - "302"
+      - "204"
+    answer:
+      - 1
+    explanation: |
+      Erreur serveur.
+    skills:
+      - nestjs
+  - id: typescript-33-exception-filters-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      @Catch(HttpException) cible :
+    options:
+      - Toutes les exceptions JS
+      - Les HttpException (et sous-classes selon usage)
+      - Uniquement les pipes
+      - Les fichiers CSS
+    answer:
+      - 1
+    explanation: |
+      Filtre typé.
+    skills:
+      - nestjs

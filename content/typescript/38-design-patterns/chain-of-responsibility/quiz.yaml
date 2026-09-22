@@ -1,0 +1,64 @@
+id: typescript-38-chain-of-responsibility-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-chain-of-responsibility-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Chain of Responsibility fait passer une requête :
+    options:
+      - À un seul handler forcé
+      - Le long d’une chaîne de handlers
+      - Uniquement au CSS
+      - À process.exit
+    answer:
+      - 1
+    explanation: |
+      Chaîne.
+    skills:
+      - patterns
+  - id: typescript-38-chain-of-responsibility-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les middlewares HTTP sont une forme de ce pattern.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-chain-of-responsibility-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Oublier next() :
+    options:
+      - Continue toujours la chaîne
+      - Coupe la chaîne
+      - Active strict
+      - Compile mieux
+    answer:
+      - 1
+    explanation: |
+      Court-circuit.
+    skills:
+      - patterns
+  - id: typescript-38-chain-of-responsibility-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer le contexte T sert à :
+    options:
+      - Rien
+      - Partager une forme sûre entre handlers
+      - Remplacer HTTP
+      - Supprimer TypeScript
+    answer:
+      - 1
+    explanation: |
+      Contexte commun.
+    skills:
+      - patterns

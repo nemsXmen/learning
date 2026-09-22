@@ -1,0 +1,64 @@
+id: typescript-31-useref-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-useref-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      useRef<HTMLInputElement>(null) type current comme :
+    options:
+      - HTMLInputElement seulement
+      - HTMLInputElement | null
+      - never
+      - string
+    answer:
+      - 1
+    explanation: |
+      Null initial.
+    skills:
+      - react
+  - id: typescript-31-useref-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On utilise souvent optional chaining sur ref.current.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-useref-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      useRef peut aussi servir de :
+    options:
+      - Routeur
+      - Boîte mutable typée (compteur de renders…)
+      - Remplacement de CSS
+      - Serveur HTTP
+    answer:
+      - 1
+    explanation: |
+      Mutable ref.
+    skills:
+      - react
+  - id: typescript-31-useref-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans générique sur une ref DOM, on risque :
+    options:
+      - Une meilleure inférence toujours
+      - Un typage trop faible / incorrect
+      - Une activation de strict
+      - Un build CSS
+    answer:
+      - 1
+    explanation: |
+      Annoter le générique.
+    skills:
+      - react

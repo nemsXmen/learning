@@ -1,0 +1,64 @@
+id: typescript-42-manipulation-des-tuples-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-manipulation-des-tuples-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Head<[string, number]> utilise souvent :
+    options:
+      - infer H en première position
+      - Uniquement runtime shift
+      - CSS
+      - Docker
+    answer:
+      - 0
+    explanation: |
+      Pattern tuple.
+    skills:
+      - type-level
+  - id: typescript-42-manipulation-des-tuples-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      T["length"] sur un tuple donne un littéral de longueur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui pour les tuples.
+    skills:
+      - type-level
+  - id: typescript-42-manipulation-des-tuples-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Concat<A, B> se définit bien avec :
+    options:
+      - A | B
+      - '["...A","...B"]'
+      - A & B only
+      - never
+    answer:
+      - 1
+    explanation: |
+      Spread de tuples.
+    skills:
+      - type-level
+  - id: typescript-42-manipulation-des-tuples-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les variadic tuples aident à :
+    options:
+      - Typer des listes de params variables
+      - Remplacer JavaScript
+      - Configurer Webpack only
+      - skipLibCheck
+    answer:
+      - 0
+    explanation: |
+      Params précis.
+    skills:
+      - type-level

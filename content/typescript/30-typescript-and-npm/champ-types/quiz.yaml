@@ -1,0 +1,64 @@
+id: typescript-30-champ-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-champ-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le champ "types" pointe vers :
+    options:
+      - Un exécutable
+      - Un fichier .d.ts d’entrée
+      - Un style CSS
+      - Un fichier de test
+    answer:
+      - 1
+    explanation: |
+      Déclarations.
+    skills:
+      - npm
+  - id: typescript-30-champ-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      "typings" est un alias historique de "types".
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-champ-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un mauvais chemin types :
+    options:
+      - N’a aucun effet
+      - Empêche les consommateurs de résoudre les types
+      - Accélère npm install
+      - Active DOM
+    answer:
+      - 1
+    explanation: |
+      Résolution cassée.
+    skills:
+      - npm
+  - id: typescript-30-champ-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      types doit être cohérent avec :
+    options:
+      - Uniquement ESLint
+      - main / fichiers publiés
+      - Le theme VS Code
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Même package publié.
+    skills:
+      - npm

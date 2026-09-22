@@ -1,0 +1,64 @@
+id: typescript-41-contraintes-complexes-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-contraintes-complexes-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      K extends keyof T garantit que :
+    options:
+      - K est number only
+      - K est une clé de T
+      - T est never
+      - K est un middleware
+    answer:
+      - 1
+    explanation: |
+      Contrainte de clé.
+    skills:
+      - generics
+  - id: typescript-41-contraintes-complexes-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      T extends object borne T aux types objet.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-contraintes-complexes-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      T extends any comme contrainte :
+    options:
+      - Est très stricte
+      - N’apporte presque rien
+      - Active strictNullChecks
+      - Est interdite
+    answer:
+      - 1
+    explanation: |
+      Trop large.
+    skills:
+      - generics
+  - id: typescript-41-contraintes-complexes-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      merge<T extends object, U extends object> retourne souvent :
+    options:
+      - T | U
+      - T & U
+      - never
+      - void
+    answer:
+      - 1
+    explanation: |
+      Intersection.
+    skills:
+      - generics

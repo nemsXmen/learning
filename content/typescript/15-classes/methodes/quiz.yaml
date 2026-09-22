@@ -1,0 +1,64 @@
+id: typescript-15-methodes-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-methodes-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans une méthode d’instance, `this` désigne :
+    options:
+      - La classe
+      - L’instance
+      - Le module
+      - globalThis uniquement
+    answer:
+      - 1
+    explanation: |
+      L’objet courant.
+    skills:
+      - classes
+  - id: typescript-15-methodes-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut typer les paramètres et le retour d’une méthode comme pour une fonction.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - classes
+  - id: typescript-15-methodes-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Risque fréquent en passant une méthode comme callback :
+    options:
+      - Aucun
+      - Perte de this
+      - Erreur de syntaxe systématique
+      - Conversion en any
+    answer:
+      - 1
+    explanation: |
+      Le binding de this peut être perdu.
+    skills:
+      - classes
+  - id: typescript-15-methodes-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une solution pour préserver this dans les callbacks est :
+    options:
+      - Utiliser any
+      - Arrow function / bind / propriété fléchée
+      - Supprimer this
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Plusieurs techniques de binding.
+    skills:
+      - classes

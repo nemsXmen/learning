@@ -1,0 +1,64 @@
+id: typescript-30-packages-npm-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-packages-npm-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans une application, typescript est souvent en :
+    options:
+      - dependency de production obligatoire
+      - devDependency
+      - peer uniquement pour les apps
+      - global système uniquement
+    answer:
+      - 1
+    explanation: |
+      Outil de développement.
+    skills:
+      - npm
+  - id: typescript-30-packages-npm-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une lib JS peut être typée via un package @types séparé.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, DefinitelyTyped.
+    skills:
+      - npm
+  - id: typescript-30-packages-npm-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TypeScript résout les types d’un package via :
+    options:
+      - Uniquement le README
+      - types/typings/exports ou @types
+      - Uniquement le CSS
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Métadonnées package.
+    skills:
+      - npm
+  - id: typescript-30-packages-npm-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      package.json sert notamment de :
+    options:
+      - Fichier de styles
+      - Contrat du package (deps, types, entry)
+      - Remplacement de tsconfig
+      - Binaire Node
+    answer:
+      - 1
+    explanation: |
+      Manifest npm.
+    skills:
+      - npm

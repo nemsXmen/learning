@@ -1,0 +1,64 @@
+id: typescript-27-types-des-fonctions-async-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-types-des-fonctions-async-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le type de retour d’une async function est :
+    options:
+      - Toujours void
+      - Toujours une Promise
+      - Uniquement number
+      - never
+    answer:
+      - 1
+    explanation: |
+      Promise enveloppante.
+    skills:
+      - async
+  - id: typescript-27-types-des-fonctions-async-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Annoter : User sur une async function qui retourne User est incorrect (il faut Promise<User>).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-types-des-fonctions-async-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les paramètres d’une async function sont typés :
+    options:
+      - Comme Promise obligatoirement
+      - Comme des types synchrones normaux
+      - Uniquement en any
+      - Comme never
+    answer:
+      - 1
+    explanation: |
+      Input synchrone.
+    skills:
+      - async
+  - id: typescript-27-types-des-fonctions-async-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      async function f() { return 1 } infère :
+    options:
+      - number
+      - Promise<number>
+      - void
+      - any
+    answer:
+      - 1
+    explanation: |
+      Promise automatique.
+    skills:
+      - async

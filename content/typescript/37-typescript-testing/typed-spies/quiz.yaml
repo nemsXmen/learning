@@ -1,0 +1,64 @@
+id: typescript-37-typed-spies-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-typed-spies-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      vi.spyOn sert à :
+    options:
+      - Compiler
+      - Observer/stubber une méthode
+      - Créer une DB
+      - Minifier le CSS
+    answer:
+      - 1
+    explanation: |
+      Spy.
+    skills:
+      - testing
+  - id: typescript-37-typed-spies-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      toHaveBeenCalledWith vérifie les arguments d’appel.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-typed-spies-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      mockRestore sert à :
+    options:
+      - Rien
+      - Restaurer l’implémentation originale
+      - Supprimer TypeScript
+      - Activer strict
+    answer:
+      - 1
+    explanation: |
+      Cleanup.
+    skills:
+      - testing
+  - id: typescript-37-typed-spies-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un spy bien typé refuse souvent :
+    options:
+      - Les bons arguments
+      - Des arguments incompatibles avec la signature
+      - Les tests
+      - Vitest
+    answer:
+      - 1
+    explanation: |
+      Sécurité de types.
+    skills:
+      - testing

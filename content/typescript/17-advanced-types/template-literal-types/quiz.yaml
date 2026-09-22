@@ -1,0 +1,64 @@
+id: typescript-17-template-literal-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-template-literal-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `` `hello ${"world"}` `` comme type vaut :
+    options:
+      - string
+      - hello world
+      - hello
+      - any
+    answer:
+      - 1
+    explanation: |
+      Template literal type.
+    skills:
+      - advanced-types
+  - id: typescript-17-template-literal-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les unions se distribuent dans les template literal types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, produit cartésien.
+    skills:
+      - advanced-types
+  - id: typescript-17-template-literal-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un cas d’usage classique est :
+    options:
+      - Uniquement les nombres
+      - Noms d’événements / routes typés
+      - Remplacer les classes
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Composition de strings typées.
+    skills:
+      - advanced-types
+  - id: typescript-17-template-literal-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `Capitalize`, `Uppercase` sont des :
+    options:
+      - Classes
+      - Intrinsic string manipulation types
+      - Enums
+      - Décorateurs
+    answer:
+      - 1
+    explanation: |
+      Utilitaires de manipulation de string types.
+    skills:
+      - advanced-types

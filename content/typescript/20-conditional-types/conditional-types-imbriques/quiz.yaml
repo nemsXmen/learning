@@ -1,0 +1,64 @@
+id: typescript-20-conditional-types-imbriques-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-conditional-types-imbriques-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les conditional types imbriqués ressemblent à :
+    options:
+      - Un switch runtime
+      - Des if/else if au niveau des types
+      - Un enum
+      - Une classe
+    answer:
+      - 1
+    explanation: |
+      Chaîne de ternaires type-level.
+    skills:
+      - conditional-types
+  - id: typescript-20-conditional-types-imbriques-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’ordre des conditions dans une chaîne de ternaires de types compte.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - conditional-types
+  - id: typescript-20-conditional-types-imbriques-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour garder la lisibilité, on peut :
+    options:
+      - Tout mettre sur une ligne sans noms
+      - Nommer des types intermédiaires
+      - Utiliser any
+      - Interdire les conditionals
+    answer:
+      - 1
+    explanation: |
+      Clarté d’abord.
+    skills:
+      - conditional-types
+  - id: typescript-20-conditional-types-imbriques-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TypeName style ternaire imbriqué est un exemple de :
+    options:
+      - Runtime check
+      - Classification de types à la compile
+      - Enum uniquement
+      - Décorateur
+    answer:
+      - 1
+    explanation: |
+      Mapping type → littéral descriptif.
+    skills:
+      - conditional-types

@@ -1,0 +1,64 @@
+id: typescript-17-composition-de-types-avances-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-composition-de-types-avances-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La composition de types avancés combine souvent :
+    options:
+      - Uniquement des classes
+      - keyof, mapped types, conditionals, template literals
+      - Uniquement des enums
+      - any et unknown
+    answer:
+      - 1
+    explanation: |
+      Boîte à outils type-level.
+    skills:
+      - advanced-types
+  - id: typescript-17-composition-de-types-avances-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Avoir une source de vérité unique facilite les dérivations de types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - advanced-types
+  - id: typescript-17-composition-de-types-avances-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le key remapping avec template literals permet de :
+    options:
+      - Supprimer TypeScript
+      - Renommer des clés (ex. name → onName)
+      - Uniquement ajouter des numbers
+      - Créer des classes
+    answer:
+      - 1
+    explanation: |
+      Pattern onX classique.
+    skills:
+      - advanced-types
+  - id: typescript-17-composition-de-types-avances-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour garder des types avancés maintenables, on devrait :
+    options:
+      - Tout écrire sur une seule ligne
+      - Nommer les étapes intermédiaires et limiter la complexité
+      - Utiliser any partout
+      - Éviter les utilitaires standards
+    answer:
+      - 1
+    explanation: |
+      Lisibilité d’abord.
+    skills:
+      - advanced-types

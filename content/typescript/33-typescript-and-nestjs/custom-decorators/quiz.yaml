@@ -1,0 +1,64 @@
+id: typescript-33-custom-decorators-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-custom-decorators-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      createParamDecorator sert à :
+    options:
+      - Créer des modules
+      - Créer un décorateur de paramètre custom
+      - Compiler le CSS
+      - Remplacer ValidationPipe
+    answer:
+      - 1
+    explanation: |
+      Extraction de contexte.
+    skills:
+      - nestjs
+  - id: typescript-33-custom-decorators-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      SetMetadata stocke des métadonnées lues ensuite par Reflector.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-custom-decorators-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      @CurrentUser() user: User améliore :
+    options:
+      - Uniquement le CSS
+      - La DX et le typage du handler
+      - La vitesse du GC
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Moins de boilerplate req.user.
+    skills:
+      - nestjs
+  - id: typescript-33-custom-decorators-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      @Roles("admin") est souvent combiné avec :
+    options:
+      - Un guard RolesGuard
+      - Uniquement un pipe CSS
+      - process.exit
+      - Un fichier .d.ts obligatoire
+    answer:
+      - 0
+    explanation: |
+      Metadata → guard.
+    skills:
+      - nestjs

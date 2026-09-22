@@ -1,0 +1,64 @@
+id: typescript-36-modeles-de-donnees-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-modeles-de-donnees-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un modèle de données TypeScript se décline souvent en :
+    options:
+      - Un seul type global any
+      - Row DB, domain, DTO API
+      - Uniquement du CSS
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Couches.
+    skills:
+      - database
+  - id: typescript-36-modeles-de-donnees-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      password_hash ne devrait pas apparaître dans le DTO public.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Fuite de secret.
+    skills:
+      - database
+  - id: typescript-36-modeles-de-donnees-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mapping explicite entre couches :
+    options:
+      - Est inutile
+      - Contrôle les conversions et les champs exposés
+      - Active skipLibCheck
+      - Remplace SQL
+    answer:
+      - 1
+    explanation: |
+      Sécurité + clarté.
+    skills:
+      - database
+  - id: typescript-36-modeles-de-donnees-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un seul type pour DB et API :
+    options:
+      - Est toujours idéal
+      - Coupler et risque de fuites
+      - Est imposé par TS
+      - Remplace les migrations
+    answer:
+      - 1
+    explanation: |
+      Séparer.
+    skills:
+      - database

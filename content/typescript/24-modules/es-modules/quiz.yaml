@@ -1,0 +1,64 @@
+id: typescript-24-es-modules-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-es-modules-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un fichier TS avec export est :
+    options:
+      - Un script global
+      - Un module
+      - Un fichier CSS
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      import/export → module.
+    skills:
+      - modules
+  - id: typescript-24-es-modules-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TypeScript privilégie le modèle ES Modules.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - modules
+  - id: typescript-24-es-modules-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’option tsconfig `module` contrôle :
+    options:
+      - Le thème de l’IDE
+      - Le format de modules émis (ESM, CJS…)
+      - Uniquement le strict
+      - Les décorateurs seulement
+    answer:
+      - 1
+    explanation: |
+      Cible d’émission des modules.
+    skills:
+      - modules
+  - id: typescript-24-es-modules-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Sans import ni export, un fichier est traité comme :
+    options:
+      - Un module ES
+      - Un script (scope global)
+      - Un package npm
+      - Un test
+    answer:
+      - 1
+    explanation: |
+      Script ambient / global.
+    skills:
+      - modules

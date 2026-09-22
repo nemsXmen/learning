@@ -1,0 +1,64 @@
+id: typescript-33-architecture-nestjs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-architecture-nestjs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une bonne pratique Nest est d’avoir des controllers :
+    options:
+      - Très chargés en logique métier
+      - Minces (transport HTTP)
+      - Sans types
+      - Uniquement en JavaScript
+    answer:
+      - 1
+    explanation: |
+      Séparation des responsabilités.
+    skills:
+      - nestjs
+  - id: typescript-33-architecture-nestjs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les feature modules regroupent controller, service, dto d’un domaine.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-architecture-nestjs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La validation des inputs se place idéalement :
+    options:
+      - Au milieu du domaine seulement
+      - Aux bords (DTO + pipes)
+      - Dans le CSS
+      - Nulle part
+    answer:
+      - 1
+    explanation: |
+      Frontières.
+    skills:
+      - nestjs
+  - id: typescript-33-architecture-nestjs-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      God AppModule signifie :
+    options:
+      - Une config idéale
+      - Un module racine surchargé qui nuit à la modularité
+      - Un pattern officiel obligatoire
+      - Un type TypeScript
+    answer:
+      - 1
+    explanation: |
+      À éviter.
+    skills:
+      - nestjs

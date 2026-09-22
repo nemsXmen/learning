@@ -1,0 +1,64 @@
+id: typescript-39-repositories-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-repositories-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      En Clean Architecture, l’interface repository est un :
+    options:
+      - Détail SQL
+      - Port
+      - Fichier CSS
+      - Middleware only
+    answer:
+      - 1
+    explanation: |
+      Abstraction.
+    skills:
+      - architecture
+  - id: typescript-39-repositories-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’implémentation Prisma dépend de l’interface, pas l’inverse.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Dependency inversion.
+    skills:
+      - architecture
+  - id: typescript-39-repositories-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une interface collée à Prisma.findMany :
+    options:
+      - Est idéale
+      - Fuit l’ORM dans le port
+      - Active DI
+      - Est imposée
+    answer:
+      - 1
+    explanation: |
+      Méthodes métier.
+    skills:
+      - architecture
+  - id: typescript-39-repositories-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le use case dépend de :
+    options:
+      - PrismaClient directement
+      - UserRepository (port)
+      - express.Request
+      - document
+    answer:
+      - 1
+    explanation: |
+      Abstraction.
+    skills:
+      - architecture

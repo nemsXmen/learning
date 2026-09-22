@@ -1,0 +1,64 @@
+id: typescript-25-target-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-target-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’option target contrôle :
+    options:
+      - Les types DOM uniquement
+      - La version ECMAScript du JS émis
+      - Uniquement les paths
+      - Le strict mode IDE
+    answer:
+      - 1
+    explanation: |
+      Syntaxe de sortie.
+    skills:
+      - tsconfig
+  - id: typescript-25-target-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      target n’ajoute pas automatiquement les polyfills runtime.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-target-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      target trop bas peut :
+    options:
+      - Rien changer
+      - Downleveler plus de syntaxe (bundles plus transformés)
+      - Activer strict
+      - Supprimer les modules
+    answer:
+      - 1
+    explanation: |
+      Plus de transformations.
+    skills:
+      - tsconfig
+  - id: typescript-25-target-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      target et lib sont :
+    options:
+      - Identiques
+      - Complémentaires mais distincts
+      - Interdits ensemble
+      - Uniquement pour React
+    answer:
+      - 1
+    explanation: |
+      Émission vs types d’API.
+    skills:
+      - tsconfig

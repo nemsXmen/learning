@@ -1,0 +1,64 @@
+id: typescript-20-transformations-d-api-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-transformations-d-api-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour dériver le body d’un endpoint s’il existe, on utilise souvent :
+    options:
+      - Uniquement keyof
+      - "E extends { body: infer B } ? B : never"
+      - any
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Extraction conditionnelle.
+    skills:
+      - conditional-types
+  - id: typescript-20-transformations-d-api-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une map d’endpoints peut servir de source unique pour typer un client API.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - conditional-types
+  - id: typescript-20-transformations-d-api-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’intérêt de lier path → response est :
+    options:
+      - Aucun
+      - Des appels API typés précisément selon le path
+      - D’interdire fetch
+      - De remplacer HTTP
+    answer:
+      - 1
+    explanation: |
+      Autocomplétion et sécurité.
+    skills:
+      - conditional-types
+  - id: typescript-20-transformations-d-api-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dupliquer manuellement les types de réponse risque de :
+    options:
+      - Rien
+      - Divergence et erreurs de typage silencieuses
+      - Meilleure perf runtime
+      - Activer strict automatiquement
+    answer:
+      - 1
+    explanation: |
+      Source unique préférable.
+    skills:
+      - conditional-types

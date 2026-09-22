@@ -1,0 +1,64 @@
+id: typescript-23-at-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-at-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les packages @types/* contiennent :
+    options:
+      - L’implémentation complète des libs
+      - Des fichiers de déclaration (.d.ts)
+      - Uniquement des tests
+      - Du CSS
+    answer:
+      - 1
+    explanation: |
+      Types communautaires.
+    skills:
+      - declaration-files
+  - id: typescript-23-at-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TypeScript résout souvent automatiquement node_modules/@types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, par défaut.
+    skills:
+      - declaration-files
+  - id: typescript-23-at-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      On installe typiquement @types en :
+    options:
+      - dependency de production obligatoire
+      - devDependency
+      - peer obligatoire unique
+      - global système uniquement
+    answer:
+      - 1
+    explanation: |
+      Besoin de développement / compile.
+    skills:
+      - declaration-files
+  - id: typescript-23-at-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un risque avec @types est :
+    options:
+      - Aucun
+      - Désynchronisation avec la version de la lib
+      - Interdiction d’importer la lib
+      - Suppression du JS
+    answer:
+      - 1
+    explanation: |
+      Types pas toujours à jour.
+    skills:
+      - declaration-files

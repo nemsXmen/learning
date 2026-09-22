@@ -1,0 +1,64 @@
+id: typescript-21-template-literal-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-template-literal-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `` `hello ${"world"}` `` comme type vaut :
+    options:
+      - string
+      - hello world
+      - hello
+      - any
+    answer:
+      - 1
+    explanation: |
+      Littéral composé.
+    skills:
+      - template-literal-types
+  - id: typescript-21-template-literal-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les unions se distribuent dans les template literal types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, produit cartésien.
+    skills:
+      - template-literal-types
+  - id: typescript-21-template-literal-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `${"a"|"b"}${"1"|"2"}` produit :
+    options:
+      - string
+      - '"a1" | "a2" | "b1" | "b2"'
+      - '"a"|"b"|"1"|"2"'
+      - never
+    answer:
+      - 1
+    explanation: |
+      Toutes les combinaisons.
+    skills:
+      - template-literal-types
+  - id: typescript-21-template-literal-types-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les template literal types servent à :
+    options:
+      - Exécuter des templates runtime
+      - Typer des strings structurées à la compile
+      - Remplacer les classes
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Pure type-level.
+    skills:
+      - template-literal-types

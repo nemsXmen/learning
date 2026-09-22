@@ -1,0 +1,64 @@
+id: typescript-36-repository-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-repository-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      findById retourne souvent :
+    options:
+      - User toujours
+      - Promise<User | null>
+      - void
+      - Buffer
+    answer:
+      - 1
+    explanation: |
+      Peut être absent.
+    skills:
+      - database
+  - id: typescript-36-repository-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une interface UserRepository aide aux mocks de tests.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-repository-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Retourner des types ORM dans tout le domaine :
+    options:
+      - Est idéal
+      - Couple le domaine à l’infra
+      - Active strict
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Mapper vers domain.
+    skills:
+      - database
+  - id: typescript-36-repository-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un god repository :
+    options:
+      - Est une bonne pratique
+      - Devient trop large et peu clair
+      - Remplace les modules
+      - Est requis par Prisma
+    answer:
+      - 1
+    explanation: |
+      Interfaces ciblées.
+    skills:
+      - database

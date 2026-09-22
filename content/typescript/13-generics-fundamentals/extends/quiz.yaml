@@ -1,0 +1,64 @@
+id: typescript-13-extends-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-extends-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans une contrainte générique, `extends` signifie :
+    options:
+      - Héritage de classe uniquement
+      - Assignabilité (T doit être assignable à la contrainte)
+      - Égalité stricte
+      - Conversion automatique
+    answer:
+      - 1
+    explanation: |
+      C’est une contrainte d’assignabilité.
+    skills:
+      - generics
+  - id: typescript-13-extends-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut contraindre T à une union (ex. string | number).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-13-extends-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T extends object` autorise :
+    options:
+      - Uniquement les classes
+      - Les types objets (non primitifs)
+      - Uniquement les tableaux
+      - any uniquement
+    answer:
+      - 1
+    explanation: |
+      object exclut les primitifs.
+    skills:
+      - generics
+  - id: typescript-13-extends-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `extends` dans une contrainte générique est-il le même concept que `extends` d’une classe ?
+    options:
+      - Exactement le même
+      - Concept proche (relation de sous-type) mais contextes différents
+      - Totalement sans rapport
+      - Uniquement en mode non-strict
+    answer:
+      - 1
+    explanation: |
+      Même idée de sous-typage, usages distincts.
+    skills:
+      - generics

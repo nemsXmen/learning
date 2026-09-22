@@ -1,0 +1,64 @@
+id: typescript-15-public-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-public-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le modificateur de visibilité par défaut est :
+    options:
+      - private
+      - public
+      - protected
+      - readonly
+    answer:
+      - 1
+    explanation: |
+      public est le défaut.
+    skills:
+      - classes
+  - id: typescript-15-public-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un membre public est accessible depuis l’extérieur de la classe.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - classes
+  - id: typescript-15-public-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `name: string` sans modificateur dans une classe est :
+    options:
+      - private
+      - public
+      - protected
+      - static
+    answer:
+      - 1
+    explanation: |
+      Défaut = public.
+    skills:
+      - classes
+  - id: typescript-15-public-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi expliciter parfois `public` ?
+    options:
+      - C’est obligatoire
+      - Pour la clarté (surtout parameter properties)
+      - Pour activer strict
+      - Pour créer un getter
+    answer:
+      - 1
+    explanation: |
+      Lisibilité et intention explicite.
+    skills:
+      - classes

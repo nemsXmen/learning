@@ -1,0 +1,64 @@
+id: typescript-31-usecallback-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-usecallback-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      useCallback mémorise :
+    options:
+      - Uniquement des numbers
+      - Une fonction
+      - Un fichier CSS
+      - Un tsconfig
+    answer:
+      - 1
+    explanation: |
+      Callback stable.
+    skills:
+      - react
+  - id: typescript-31-usecallback-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Des deps incorrectes peuvent créer des closures périmées.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-usecallback-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      useCallback est surtout utile quand :
+    options:
+      - On n’a aucun enfant
+      - L’identité de la fonction compte (mémo enfants)
+      - On veut désactiver TypeScript
+      - On compile du CSS
+    answer:
+      - 1
+    explanation: |
+      Référential equality.
+    skills:
+      - react
+  - id: typescript-31-usecallback-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      useCallback(fn, deps) ≈ :
+    options:
+      - useState(fn)
+      - useMemo(() => fn, deps)
+      - useRef only
+      - createContext
+    answer:
+      - 1
+    explanation: |
+      Équivalence connue.
+    skills:
+      - react

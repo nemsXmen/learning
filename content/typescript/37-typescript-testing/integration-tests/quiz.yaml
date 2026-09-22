@@ -1,0 +1,64 @@
+id: typescript-37-integration-tests-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-integration-tests-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un test d’intégration assemble souvent :
+    options:
+      - Une seule fonction pure isolée
+      - Plusieurs modules / IO réels
+      - Uniquement du CSS
+      - Un type never
+    answer:
+      - 1
+    explanation: |
+      Câblage réel.
+    skills:
+      - testing
+  - id: typescript-37-integration-tests-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les fixtures d’intégration devraient être typées.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-integration-tests-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      État DB partagé sale entre tests :
+    options:
+      - Est idéal
+      - Cause des flaky tests
+      - Active Vitest
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Isolation.
+    skills:
+      - testing
+  - id: typescript-37-integration-tests-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      any sur les réponses HTTP d’intégration :
+    options:
+      - Renforce la sûreté
+      - Affaiblit les assertions
+      - Remplace les schemas
+      - Est obligatoire
+    answer:
+      - 1
+    explanation: |
+      Typer les réponses.
+    skills:
+      - testing

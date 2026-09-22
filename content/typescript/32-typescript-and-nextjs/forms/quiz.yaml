@@ -1,0 +1,64 @@
+id: typescript-32-forms-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-forms-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un form Next peut appeler une Server Action via :
+    options:
+      - href seulement
+      - action={serverAction}
+      - process.env
+      - localStorage
+    answer:
+      - 1
+    explanation: |
+      Attribute action.
+    skills:
+      - nextjs
+  - id: typescript-32-forms-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      La validation serveur reste nécessaire même avec required HTML.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-forms-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      FormData dans l’action est :
+    options:
+      - Déjà un type métier User
+      - Une entrée à parser / valider
+      - Un HTMLElement
+      - never
+    answer:
+      - 1
+    explanation: |
+      Frontière.
+    skills:
+      - nextjs
+  - id: typescript-32-forms-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Progressive enhancement signifie :
+    options:
+      - JS obligatoire
+      - Le form fonctionne aussi sans JS
+      - Pas de serveur
+      - Uniquement CSS
+    answer:
+      - 1
+    explanation: |
+      Action native.
+    skills:
+      - nextjs

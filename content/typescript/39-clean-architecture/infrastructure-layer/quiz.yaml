@@ -1,0 +1,64 @@
+id: typescript-39-infrastructure-layer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-infrastructure-layer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’infrastructure implémente surtout :
+    options:
+      - Les règles métier pures
+      - Les détails techniques (DB, mail, APIs)
+      - Le design CSS
+      - Les types never
+    answer:
+      - 1
+    explanation: |
+      Adapters.
+    skills:
+      - architecture
+  - id: typescript-39-infrastructure-layer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      PrismaUserRepository implements UserRepository est un adapter.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-infrastructure-layer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mettre des règles métier dans le repository :
+    options:
+      - Est idéal
+      - Mélange infra et domain
+      - Active strict
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Garder le domain.
+    skills:
+      - architecture
+  - id: typescript-39-infrastructure-layer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exposer Prisma.User au use case :
+    options:
+      - Est recommandé
+      - Couple l’application à l’ORM
+      - Remplace le port
+      - Est obligatoire
+    answer:
+      - 1
+    explanation: |
+      Mapper vers domain.
+    skills:
+      - architecture

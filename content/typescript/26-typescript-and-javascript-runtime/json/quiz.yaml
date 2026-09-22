@@ -1,0 +1,64 @@
+id: typescript-26-json-quiz
+kind: QUIZ
+questions:
+  - id: typescript-26-json-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Après JSON.parse, on devrait traiter le résultat comme :
+    options:
+      - User garanti
+      - unknown (puis valider)
+      - never
+      - enum
+    answer:
+      - 1
+    explanation: |
+      Non fiable.
+    skills:
+      - runtime
+  - id: typescript-26-json-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      JSON.stringify préserve les instances Date comme objets Date.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Souvent des strings ISO.
+    skills:
+      - runtime
+  - id: typescript-26-json-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      JSON.parse(x) as User :
+    options:
+      - Valide User
+      - Est une assertion sans validation
+      - Est obligatoire
+      - Active Zod
+    answer:
+      - 1
+    explanation: |
+      Risqué.
+    skills:
+      - runtime
+  - id: typescript-26-json-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le JSON transporte :
+    options:
+      - Les types TypeScript
+      - Des données sans types TS
+      - Les interfaces
+      - Le tsconfig
+    answer:
+      - 1
+    explanation: |
+      Structure JS seulement.
+    skills:
+      - runtime

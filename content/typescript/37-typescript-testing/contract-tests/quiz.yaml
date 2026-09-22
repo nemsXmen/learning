@@ -1,0 +1,64 @@
+id: typescript-37-contract-tests-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-contract-tests-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un contract test sur une réponse API vérifie souvent :
+    options:
+      - Le thème IDE
+      - La conformité à un schema/contrat
+      - Uniquement le CSS
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Schema assertion.
+    skills:
+      - testing
+  - id: typescript-37-contract-tests-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Pact est associé aux consumer-driven contracts.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-contract-tests-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Types partagés sans contract tests :
+    options:
+      - Garantissent le runtime multi-services
+      - Ne suffisent pas à prouver le respect runtime du contrat
+      - Remplacent la CI
+      - Sont interdits
+    answer:
+      - 1
+    explanation: |
+      Tests nécessaires.
+    skills:
+      - testing
+  - id: typescript-37-contract-tests-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Fixtures de contrat obsolètes :
+    options:
+      - Restent valides
+      - Donnent une fausse confiance
+      - Activent strict
+      - Sont idéales
+    answer:
+      - 1
+    explanation: |
+      Les maintenir.
+    skills:
+      - testing

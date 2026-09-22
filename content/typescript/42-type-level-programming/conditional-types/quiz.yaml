@@ -1,0 +1,64 @@
+id: typescript-42-conditional-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-conditional-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La forme d’un conditional type est :
+    options:
+      - T maps U
+      - '{"T extends U ? X":"Y"}'
+      - T implements U
+      - T as U
+    answer:
+      - 1
+    explanation: |
+      Branche de types.
+    skills:
+      - type-level
+  - id: typescript-42-conditional-types-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Sur une union, un conditional se distribue souvent membre à membre.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-conditional-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      NonNullable utilise never pour :
+    options:
+      - Ajouter null
+      - Éliminer null | undefined
+      - Créer un array
+      - Compiler CSS
+    answer:
+      - 1
+    explanation: |
+      Filtrage.
+    skills:
+      - type-level
+  - id: typescript-42-conditional-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Wrapper T dans [T] avant extends sert parfois à :
+    options:
+      - Forcer la distribution
+      - Empêcher la distribution
+      - Activer runtime
+      - Remplacer infer
+    answer:
+      - 1
+    explanation: |
+      Tuple mono-élément.
+    skills:
+      - type-level

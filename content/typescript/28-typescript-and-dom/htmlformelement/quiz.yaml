@@ -1,0 +1,64 @@
+id: typescript-28-htmlformelement-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-htmlformelement-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      HTMLFormElement correspond à :
+    options:
+      - <div>
+      - <form>
+      - <input>
+      - window
+    answer:
+      - 1
+    explanation: |
+      Élément formulaire.
+    skills:
+      - dom
+  - id: typescript-28-htmlformelement-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      FormData peut être construit à partir d’un HTMLFormElement.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - dom
+  - id: typescript-28-htmlformelement-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sur submit, on appelle souvent :
+    options:
+      - location.reload forcé
+      - e.preventDefault()
+      - document.write
+      - JSON.parse sur le form
+    answer:
+      - 1
+    explanation: |
+      Éviter le reload natif.
+    skills:
+      - dom
+  - id: typescript-28-htmlformelement-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      form.elements permet d’accéder :
+    options:
+      - Uniquement au CSS
+      - Aux contrôles du formulaire
+      - Aux cookies
+      - Au tsconfig
+    answer:
+      - 1
+    explanation: |
+      Collection de champs.
+    skills:
+      - dom

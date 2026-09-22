@@ -1,0 +1,64 @@
+id: typescript-39-separation-of-concerns-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-separation-of-concerns-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Separation of Concerns vise à :
+    options:
+      - Tout mettre dans un fichier
+      - Isoler des responsabilités distinctes
+      - Supprimer TypeScript
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      SoC.
+    skills:
+      - architecture
+  - id: typescript-39-separation-of-concerns-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un handler HTTP qui contient du SQL mélange des concerns.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-separation-of-concerns-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les frontières entre concerns se traduisent bien par :
+    options:
+      - Des any
+      - Des interfaces / types de contrat
+      - Des fichiers CSS
+      - process.env partout
+    answer:
+      - 1
+    explanation: |
+      Contrats typés.
+    skills:
+      - architecture
+  - id: typescript-39-separation-of-concerns-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un god module :
+    options:
+      - Est idéal
+      - Concentre trop de responsabilités
+      - Active strict
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      À éviter.
+    skills:
+      - architecture

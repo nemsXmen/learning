@@ -1,0 +1,64 @@
+id: typescript-21-routes-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-routes-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `/${"users"|"posts"}` produit :
+    options:
+      - string
+      - '"/users" | "/posts"'
+      - /
+      - never
+    answer:
+      - 1
+    explanation: |
+      Routes littérales.
+    skills:
+      - template-literal-types
+  - id: typescript-21-routes-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut composer des segments de route avec des template literals.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-routes-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer les routes en string large :
+    options:
+      - Est idéal
+      - Perd la précision et l’autocomplétion
+      - Est obligatoire
+      - Remplace les templates
+    answer:
+      - 1
+    explanation: |
+      Préférer des littéraux.
+    skills:
+      - template-literal-types
+  - id: typescript-21-routes-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les template routes préparent souvent :
+    options:
+      - Uniquement le CSS
+      - L’extraction typée des params dynamiques
+      - La suppression de HTTP
+      - Les enums uniquement
+    answer:
+      - 1
+    explanation: |
+      Étape suivante classique.
+    skills:
+      - template-literal-types

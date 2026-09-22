@@ -1,0 +1,64 @@
+id: typescript-23-declarations-de-modules-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-declarations-de-modules-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour typer une lib JS sans types, on utilise souvent :
+    options:
+      - declare class uniquement
+      - declare module "nom-lib" { ... }
+      - Un fichier CSS
+      - any partout sans déclaration
+    answer:
+      - 1
+    explanation: |
+      Module ambient.
+    skills:
+      - declaration-files
+  - id: typescript-23-declarations-de-modules-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      declare module "*.css" permet de typer les imports de fichiers CSS.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, pattern courant.
+    skills:
+      - declaration-files
+  - id: typescript-23-declarations-de-modules-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le nom dans declare module doit :
+    options:
+      - Être quelconque
+      - Matcher le spécificateur d’import
+      - Être toujours "index"
+      - Commencer par @types
+    answer:
+      - 1
+    explanation: |
+      Résolution d’import.
+    skills:
+      - declaration-files
+  - id: typescript-23-declarations-de-modules-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une déclaration de module :
+    options:
+      - Remplace le JS runtime
+      - Fournit les types pour le type-checking des imports
+      - Est exécutée à runtime
+      - Supprime le package
+    answer:
+      - 1
+    explanation: |
+      Types seulement.
+    skills:
+      - declaration-files

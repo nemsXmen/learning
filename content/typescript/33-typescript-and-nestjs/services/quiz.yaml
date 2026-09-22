@@ -1,0 +1,64 @@
+id: typescript-33-services-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-services-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un service Nest est généralement décoré avec :
+    options:
+      - "@Controller"
+      - "@Injectable"
+      - "@Module only"
+      - "@Get"
+    answer:
+      - 1
+    explanation: |
+      Provider injectable.
+    skills:
+      - nestjs
+  - id: typescript-33-services-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les services encapsulent surtout la logique métier / data.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-services-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer le retour des méthodes de service :
+    options:
+      - Est inutile
+      - Documente et sécurise l’API interne
+      - Remplace les tests
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Contrats clairs.
+    skills:
+      - nestjs
+  - id: typescript-33-services-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      HTTP status / routing appartiennent plutôt au :
+    options:
+      - Service pur
+      - Controller
+      - Fichier CSS
+      - tsconfig
+    answer:
+      - 1
+    explanation: |
+      Couche transport.
+    skills:
+      - nestjs

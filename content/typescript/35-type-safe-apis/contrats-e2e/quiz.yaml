@@ -1,0 +1,64 @@
+id: typescript-35-contrats-e2e-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-contrats-e2e-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un test qui fait UserSchema.parse(body) vérifie :
+    options:
+      - Uniquement le CSS
+      - Que la réponse respecte le contrat runtime
+      - La compilation TS seulement
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Assertion de schema.
+    skills:
+      - api
+  - id: typescript-35-contrats-e2e-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les types seuls ne remplacent pas les tests de contrat.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-contrats-e2e-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Consumer-driven contracts (Pact…) servent à :
+    options:
+      - Styliser l’UI
+      - Aligner provider et consumer sur un contrat testé
+      - Remplacer HTTP
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      CDC.
+    skills:
+      - api
+  - id: typescript-35-contrats-e2e-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Fixtures de contrat obsolètes :
+    options:
+      - Restent valides magiquement
+      - Donnent un faux sentiment de sécurité
+      - Activent strict
+      - Sont idéales
+    answer:
+      - 1
+    explanation: |
+      Maintenir les fixtures.
+    skills:
+      - api

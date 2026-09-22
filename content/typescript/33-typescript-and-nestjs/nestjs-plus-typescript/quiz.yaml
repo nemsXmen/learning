@@ -1,0 +1,64 @@
+id: typescript-33-nestjs-plus-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-nestjs-plus-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      NestJS est principalement orienté :
+    options:
+      - PHP
+      - TypeScript
+      - Uniquement Python
+      - CSS only
+    answer:
+      - 1
+    explanation: |
+      Framework TS-first.
+    skills:
+      - nestjs
+  - id: typescript-33-nestjs-plus-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      nest new permet de scaffolder un projet Nest.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-nestjs-plus-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Nest s’appuie fortement sur :
+    options:
+      - Uniquement du CSS
+      - Décorateurs et injection de dépendances
+      - Le DOM navigateur
+      - skipLibCheck only
+    answer:
+      - 1
+    explanation: |
+      Architecture Angular-like.
+    skills:
+      - nestjs
+  - id: typescript-33-nestjs-plus-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      experimentalDecorators / emitDecoratorMetadata dans tsconfig sont :
+    options:
+      - Inutiles pour Nest
+      - Souvent requis pour la DI / réflexion
+      - Uniquement pour le front
+      - Dépréciés et interdits
+    answer:
+      - 1
+    explanation: |
+      Métadonnées de types.
+    skills:
+      - nestjs

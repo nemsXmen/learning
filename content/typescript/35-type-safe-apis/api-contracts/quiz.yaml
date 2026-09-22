@@ -1,0 +1,64 @@
+id: typescript-35-api-contracts-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-api-contracts-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un contrat d’API décrit notamment :
+    options:
+      - Uniquement le CSS
+      - Requêtes, réponses et erreurs attendues
+      - Le thème IDE
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Interface client/serveur.
+    skills:
+      - api
+  - id: typescript-35-api-contracts-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Types partagés + validation renforcent le contrat.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-api-contracts-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Types client et serveur divergents :
+    options:
+      - Sont idéaux
+      - Cassent le contrat
+      - Activent strict
+      - Sont imposés
+    answer:
+      - 1
+    explanation: |
+      Dérive.
+    skills:
+      - api
+  - id: typescript-35-api-contracts-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La source de vérité du contrat devrait être :
+    options:
+      - Prose non vérifiée uniquement
+      - Types/schemas/spec partagés ou générés
+      - Un fichier CSS
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Vérifiable.
+    skills:
+      - api

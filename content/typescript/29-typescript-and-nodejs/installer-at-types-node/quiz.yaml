@@ -1,0 +1,64 @@
+id: typescript-29-installer-at-types-node-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-installer-at-types-node-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      @types/node contient :
+    options:
+      - Le binaire Node
+      - Les déclarations TypeScript de l’API Node
+      - Uniquement npm
+      - Du CSS
+    answer:
+      - 1
+    explanation: |
+      Types ambient Node.
+    skills:
+      - nodejs
+  - id: typescript-29-installer-at-types-node-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On installe généralement @types/node en devDependency.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-installer-at-types-node-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Aligner la version de @types/node avec :
+    options:
+      - La version de React uniquement
+      - La version de Node ciblée
+      - ESLint seulement
+      - Le theme IDE
+    answer:
+      - 1
+    explanation: |
+      Cohérence API.
+    skills:
+      - nodejs
+  - id: typescript-29-installer-at-types-node-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Sans @types/node, process est souvent :
+    options:
+      - Parfaitement typé
+      - Inconnu / any selon config
+      - Un enum
+      - Interdit
+    answer:
+      - 1
+    explanation: |
+      Pas de déclarations.
+    skills:
+      - nodejs

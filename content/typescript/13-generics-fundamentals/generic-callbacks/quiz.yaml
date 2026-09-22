@@ -1,0 +1,64 @@
+id: typescript-13-generic-callbacks-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-generic-callbacks-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans `map<T, U>(items: T[], fn: (item: T) => U)`, le callback reçoit :
+    options:
+      - any
+      - Un item de type T
+      - Uniquement des strings
+      - never
+    answer:
+      - 1
+    explanation: |
+      T est propagé au callback.
+    skills:
+      - generics
+  - id: typescript-13-generic-callbacks-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’inférence contextuelle peut alléger les annotations des callbacks.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-13-generic-callbacks-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer un callback en `Function` ou `any` :
+    options:
+      - Est recommandé
+      - Fait perdre la sécurité et l’autocomplétion
+      - Est obligatoire
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Il faut des signatures précises.
+    skills:
+      - generics
+  - id: typescript-13-generic-callbacks-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les higher-order typescript-basics sont un bon cas d’usage des generics parce que :
+    options:
+      - Elles n’ont pas de types
+      - Elles propagent des types entre entrées, callbacks et sorties
+      - Elles sont toujours any
+      - Elles interdisent les callbacks
+    answer:
+      - 1
+    explanation: |
+      Les generics capturent ces relations.
+    skills:
+      - generics

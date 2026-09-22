@@ -1,0 +1,64 @@
+id: typescript-28-typage-des-formulaires-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-typage-des-formulaires-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      FormData.get("email") retourne :
+    options:
+      - string garanti
+      - FormDataEntryValue | null
+      - number
+      - HTMLInputElement
+    answer:
+      - 1
+    explanation: |
+      string | File | null.
+    skills:
+      - dom
+  - id: typescript-28-typage-des-formulaires-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Il faut souvent convertir et valider les valeurs FormData.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - dom
+  - id: typescript-28-typage-des-formulaires-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      form.elements.namedItem("email") peut nécessiter :
+    options:
+      - Uniquement as any
+      - instanceof HTMLInputElement
+      - JSON.parse
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Affiner le type.
+    skills:
+      - dom
+  - id: typescript-28-typage-des-formulaires-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Après lecture DOM, les données métier devraient être :
+    options:
+      - Utilisées sans check
+      - Validées (schema / guards)
+      - Toujours any
+      - Stockées en CSS
+    answer:
+      - 1
+    explanation: |
+      Frontière → validation.
+    skills:
+      - dom

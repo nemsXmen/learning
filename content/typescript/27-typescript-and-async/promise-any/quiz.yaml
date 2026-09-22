@@ -1,0 +1,64 @@
+id: typescript-27-promise-any-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-promise-any-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Promise.any résout sur :
+    options:
+      - Le premier rejet
+      - Le premier succès
+      - Toutes les promesses
+      - Aucune
+    answer:
+      - 1
+    explanation: |
+      Premier fulfilled.
+    skills:
+      - async
+  - id: typescript-27-promise-any-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Promise.any rejette seulement si toutes les promesses échouent.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-promise-any-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’erreur typique quand tout échoue est :
+    options:
+      - TypeError uniquement
+      - AggregateError
+      - SyntaxError
+      - never
+    answer:
+      - 1
+    explanation: |
+      Agrégat des raisons.
+    skills:
+      - async
+  - id: typescript-27-promise-any-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      any vs race : race se déclenche aussi sur :
+    options:
+      - Uniquement les succès
+      - Un rejet précoce
+      - Uniquement AggregateError
+      - Les enums
+    answer:
+      - 1
+    explanation: |
+      Premier settlement.
+    skills:
+      - async

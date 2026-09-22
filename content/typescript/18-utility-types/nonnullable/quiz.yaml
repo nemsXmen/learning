@@ -1,0 +1,64 @@
+id: typescript-18-nonnullable-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-nonnullable-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      NonNullable retire :
+    options:
+      - Toutes les strings
+      - null et undefined
+      - 0 et ""
+      - never
+    answer:
+      - 1
+    explanation: |
+      Uniquement null | undefined.
+    skills:
+      - utility-types
+  - id: typescript-18-nonnullable-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      NonNullable<string | null> vaut string.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-nonnullable-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      NonNullable est proche de :
+    options:
+      - Partial
+      - Exclude<T, null | undefined>
+      - Record
+      - Pick
+    answer:
+      - 1
+    explanation: |
+      Même idée.
+    skills:
+      - utility-types
+  - id: typescript-18-nonnullable-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      NonNullable conserve-t-il 0 et "" ?
+    options:
+      - Non
+      - Oui
+      - Uniquement 0
+      - Uniquement ""
+    answer:
+      - 1
+    explanation: |
+      Ce ne sont pas null/undefined.
+    skills:
+      - utility-types

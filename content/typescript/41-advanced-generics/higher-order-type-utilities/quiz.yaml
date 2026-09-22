@@ -1,0 +1,64 @@
+id: typescript-41-higher-order-type-utilities-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-higher-order-type-utilities-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Nullable<T> est un exemple d’ :
+    options:
+      - Runtime only
+      - Utilitaire de type qui transforme T
+      - Middleware HTTP
+      - Fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Higher-order type.
+    skills:
+      - generics
+  - id: typescript-41-higher-order-type-utilities-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les mapped types peuvent renommer des clés avec as.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Key remapping.
+    skills:
+      - generics
+  - id: typescript-41-higher-order-type-utilities-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      EventHandlers avec on${Capitalize<...>} utilise :
+    options:
+      - Uniquement des classes
+      - Template literal types
+      - skipLibCheck
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Template types.
+    skills:
+      - generics
+  - id: typescript-41-higher-order-type-utilities-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des utilitaires de types trop complexes :
+    options:
+      - Sont toujours mieux
+      - Peuvent nuire à la DX
+      - Remplacent les tests
+      - Sont imposés
+    answer:
+      - 1
+    explanation: |
+      Équilibre.
+    skills:
+      - generics

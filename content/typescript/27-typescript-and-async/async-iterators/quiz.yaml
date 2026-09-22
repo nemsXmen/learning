@@ -1,0 +1,64 @@
+id: typescript-27-async-iterators-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-async-iterators-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour parcourir un AsyncIterable on utilise :
+    options:
+      - for...of uniquement
+      - for await...of
+      - while synchrone seulement
+      - JSON.parse
+    answer:
+      - 1
+    explanation: |
+      Boucle async.
+    skills:
+      - async
+  - id: typescript-27-async-iterators-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      next() d’un async iterator retourne Promise<IteratorResult<T>>.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-async-iterators-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un cas d’usage typique est :
+    options:
+      - Un enum
+      - Pagination / streams de données
+      - Remplacer les strings
+      - tsconfig
+    answer:
+      - 1
+    explanation: |
+      Flux async.
+    skills:
+      - async
+  - id: typescript-27-async-iterators-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      for...of (sans await) sur un async iterable :
+    options:
+      - Fonctionne parfaitement
+      - Est incorrect / insuffisant
+      - Active strict
+      - Convertit en array
+    answer:
+      - 1
+    explanation: |
+      Il faut for await...of.
+    skills:
+      - async

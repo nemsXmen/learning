@@ -1,0 +1,64 @@
+id: typescript-16-polymorphisme-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-polymorphisme-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le polymorphisme permet de :
+    options:
+      - Avoir un seul type pour tout
+      - Traiter des objets différents via un contrat commun
+      - Supprimer les interfaces
+      - Désactiver le typage
+    answer:
+      - 1
+    explanation: |
+      Même API, comportements différents.
+    skills:
+      - oop
+  - id: typescript-16-polymorphisme-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les interfaces TypeScript sont un outil clé du polymorphisme.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-polymorphisme-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Grâce au typage structurel, un objet peut être un Shape s’il :
+    options:
+      - Hérite obligatoirement de Shape
+      - '{"Possède une forme compatible (ex. area()":"number)"}'
+      - Est déclaré avec any
+      - Est un enum
+    answer:
+      - 1
+    explanation: |
+      La compatibilité de forme suffit.
+    skills:
+      - oop
+  - id: typescript-16-polymorphisme-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Programmer « au contrat » signifie :
+    options:
+      - Dépendre des classes concrètes uniquement
+      - Dépendre d’interfaces / types abstraits plutôt que des implémentations
+      - Éviter toutes les fonctions
+      - Utiliser uniquement any
+    answer:
+      - 1
+    explanation: |
+      Moins de couplage aux détails.
+    skills:
+      - oop

@@ -1,0 +1,64 @@
+id: typescript-23-ambient-declarations-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-ambient-declarations-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une déclaration ambient décrit :
+    options:
+      - Une nouvelle implémentation à émettre
+      - Quelque chose qui existe déjà à runtime
+      - Un style CSS
+      - Un test unitaire
+    answer:
+      - 1
+    explanation: |
+      Description de l’existant.
+    skills:
+      - declaration-files
+  - id: typescript-23-ambient-declarations-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le mot-clé declare est central pour les ambient declarations.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-ambient-declarations-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      lib.dom.d.ts est un exemple de :
+    options:
+      - Code runtime navigateur
+      - Déclarations ambient pour le DOM
+      - Fichier de tests
+      - Config webpack
+    answer:
+      - 1
+    explanation: |
+      Types du DOM fournis par TypeScript.
+    skills:
+      - declaration-files
+  - id: typescript-23-ambient-declarations-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Polluer le scope global avec trop d’ambient :
+    options:
+      - Est toujours souhaitable
+      - Peut créer des conflits et de la confusion
+      - Accélère le runtime
+      - Est imposé par TS
+    answer:
+      - 1
+    explanation: |
+      Préférer des modules quand c’est possible.
+    skills:
+      - declaration-files

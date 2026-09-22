@@ -1,0 +1,64 @@
+id: typescript-44-source-maps-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-source-maps-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une source map relie :
+    options:
+      - CSS et SQL
+      - JS émis et source TS
+      - Docker et npm
+      - Git et DNS
+    answer:
+      - 1
+    explanation: |
+      Debug mapping.
+    skills:
+      - tooling
+  - id: typescript-44-source-maps-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      sourceMap: true demande l’émission de maps.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-source-maps-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Publier les sources en prod via maps :
+    options:
+      - Est toujours anodin
+      - Peut exposer du code sensible
+      - Est imposé
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Politique prod.
+    skills:
+      - tooling
+  - id: typescript-44-source-maps-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      inlineSources inclut :
+    options:
+      - Le contenu source dans la map
+      - Uniquement des hashes Docker
+      - Des règles ESLint
+      - skipLibCheck
+    answer:
+      - 0
+    explanation: |
+      Sources embarquées.
+    skills:
+      - tooling

@@ -1,0 +1,64 @@
+id: typescript-39-dependency-injection-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-dependency-injection-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La composition root :
+    options:
+      - Est un style CSS
+      - Assemble le graphe d’objets au démarrage
+      - Contient les règles métier
+      - Remplace SQL
+    answer:
+      - 1
+    explanation: |
+      Wiring.
+    skills:
+      - architecture
+  - id: typescript-39-dependency-injection-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      new PrismaUserRepository dans un use case viole souvent le design.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Injecter plutôt.
+    skills:
+      - architecture
+  - id: typescript-39-dependency-injection-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Nest Module providers servent notamment à :
+    options:
+      - Styliser
+      - Déclarer le wiring DI
+      - Compiler le CSS
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Container.
+    skills:
+      - architecture
+  - id: typescript-39-dependency-injection-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Service locator répandu partout :
+    options:
+      - Est plus clair que l’injection constructeur
+      - Cache les dépendances et complique les tests
+      - Est imposé par TS
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Préférer constructor injection.
+    skills:
+      - architecture

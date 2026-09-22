@@ -1,0 +1,64 @@
+id: typescript-17-type-level-programming-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-type-level-programming-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le type-level programming s’exécute :
+    options:
+      - À runtime
+      - À la compilation
+      - Uniquement dans le navigateur
+      - Dans la base de données
+    answer:
+      - 1
+    explanation: |
+      Pure compile-time.
+    skills:
+      - advanced-types
+  - id: typescript-17-type-level-programming-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Conditional types, mapped types et infer sont des outils du type-level programming.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - advanced-types
+  - id: typescript-17-type-level-programming-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un risque du type-level programming excessif est :
+    options:
+      - Aucun
+      - Complexité, temps de compile, lisibilité réduite
+      - Interdiction par TypeScript
+      - Bugs runtime uniquement
+    answer:
+      - 1
+    explanation: |
+      Rester pragmatique.
+    skills:
+      - advanced-types
+  - id: typescript-17-type-level-programming-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des bibliothèques comme tRPC / Prisma s’appuient sur :
+    options:
+      - Uniquement any
+      - Du type-level programming avancé
+      - L’absence de types
+      - Uniquement des classes
+    answer:
+      - 1
+    explanation: |
+      Inférence riche de types.
+    skills:
+      - advanced-types

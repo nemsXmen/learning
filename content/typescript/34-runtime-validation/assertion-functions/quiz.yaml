@@ -1,0 +1,64 @@
+id: typescript-34-assertion-typescript-basics-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-assertion-typescript-basics-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      asserts value is User signifie :
+    options:
+      - Toujours true
+      - Après retour normal, value est User (sinon throw)
+      - value devient any
+      - Un décorateur
+    answer:
+      - 1
+    explanation: |
+      Précondition.
+    skills:
+      - validation
+  - id: typescript-34-assertion-typescript-basics-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une assertion function doit throw si la donnée est invalide.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-assertion-typescript-basics-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Différence clé vs type guard :
+    options:
+      - Aucune
+      - Assert échoue par exception ; guard retourne boolean
+      - Assert est compile-time only
+      - Guard est interdit
+    answer:
+      - 1
+    explanation: |
+      Style de contrôle de flux.
+    skills:
+      - validation
+  - id: typescript-34-assertion-typescript-basics-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les assertions sont utiles pour :
+    options:
+      - Le styling
+      - Les préconditions en début de fonction
+      - Remplacer les modules
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Fail fast.
+    skills:
+      - validation

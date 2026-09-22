@@ -1,0 +1,64 @@
+id: typescript-14-generic-factories-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-generic-factories-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une factory générique sert à :
+    options:
+      - Désactiver le typage
+      - Créer des valeurs en préservant leur type
+      - Uniquement créer des classes
+      - Remplacer les enums
+    answer:
+      - 1
+    explanation: |
+      Création + typage précis.
+    skills:
+      - generics
+  - id: typescript-14-generic-factories-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut combiner une factory générique avec des utilitaires comme Omit.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-generic-factories-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `createPair("a", 1)` avec `createPair<T, U>` infère :
+    options:
+      - any, any
+      - string, number
+      - unknown, unknown
+      - never, never
+    answer:
+      - 1
+    explanation: |
+      Inférence à partir des arguments.
+    skills:
+      - generics
+  - id: typescript-14-generic-factories-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le risque principal dans une factory générique est :
+    options:
+      - Aucun
+      - Les casts excessifs qui mentent au compilateur
+      - L’interdiction des generics
+      - La lenteur runtime systématique
+    answer:
+      - 1
+    explanation: |
+      Il faut rester honnête avec les types.
+    skills:
+      - generics

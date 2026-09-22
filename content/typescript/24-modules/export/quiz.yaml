@@ -1,0 +1,64 @@
+id: typescript-24-export-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-export-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour rendre une fonction accessible aux autres modules :
+    options:
+      - On la déclare global
+      - On l’exporte
+      - On utilise any
+      - On la met en private
+    answer:
+      - 1
+    explanation: |
+      export.
+    skills:
+      - modules
+  - id: typescript-24-export-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut exporter des types et des interfaces.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - modules
+  - id: typescript-24-export-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `export { PI, add }` en fin de fichier :
+    options:
+      - Est invalide
+      - Exporte les bindings listés
+      - Crée un default export
+      - Supprime PI et add
+    answer:
+      - 1
+    explanation: |
+      Export groupé.
+    skills:
+      - modules
+  - id: typescript-24-export-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exporter trop de détails internes :
+    options:
+      - Améliore toujours l’API
+      - Élargit inutilement la surface publique
+      - Est imposé par TS
+      - Accélère le runtime
+    answer:
+      - 1
+    explanation: |
+      API minimale préférable.
+    skills:
+      - modules

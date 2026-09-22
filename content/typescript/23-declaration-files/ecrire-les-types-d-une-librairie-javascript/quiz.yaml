@@ -1,0 +1,64 @@
+id: typescript-23-ecrire-les-types-d-une-librairie-javascript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-ecrire-les-types-d-une-librairie-javascript-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour typer une lib JS, on commence souvent par :
+    options:
+      - Réécrire toute la lib en TS
+      - Identifier les exports / points d’entrée publics
+      - Tout mettre en any
+      - Supprimer le JS
+    answer:
+      - 1
+    explanation: |
+      Surface API d’abord.
+    skills:
+      - declaration-files
+  - id: typescript-23-ecrire-les-types-d-une-librairie-javascript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut publier les types dans le package (champ types) ou via @types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-ecrire-les-types-d-une-librairie-javascript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Des types trop lâches (any partout) :
+    options:
+      - Maximisent la sécurité
+      - Réduisent l’intérêt du typage pour les consommateurs
+      - Sont imposés par DefinitelyTyped
+      - Accélèrent le runtime
+    answer:
+      - 1
+    explanation: |
+      Peu de valeur.
+    skills:
+      - declaration-files
+  - id: typescript-23-ecrire-les-types-d-une-librairie-javascript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une bonne pratique est de :
+    options:
+      - Ne jamais tester les .d.ts
+      - Valider les déclarations contre des usages réels
+      - Interdire les generics
+      - Exposer tous les détails privés
+    answer:
+      - 1
+    explanation: |
+      Les types doivent coller à la réalité.
+    skills:
+      - declaration-files

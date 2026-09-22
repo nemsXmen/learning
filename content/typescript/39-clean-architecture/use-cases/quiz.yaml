@@ -1,0 +1,64 @@
+id: typescript-39-use-cases-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-use-cases-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un use case représente :
+    options:
+      - Un style CSS
+      - Une intention applicative
+      - Une table SQL only
+      - Un bundler
+    answer:
+      - 1
+    explanation: |
+      Scénario métier.
+    skills:
+      - architecture
+  - id: typescript-39-use-cases-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Input et Output d’un use case devraient être typés.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-use-cases-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un use case God :
+    options:
+      - Est idéal
+      - Fait trop de choses
+      - Active strict
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Découper.
+    skills:
+      - architecture
+  - id: typescript-39-use-cases-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Retourner Prisma.User depuis un use case :
+    options:
+      - Est recommandé
+      - Couple à l’infra
+      - Est obligatoire
+      - Remplace le domain
+    answer:
+      - 1
+    explanation: |
+      Types application/domain.
+    skills:
+      - architecture

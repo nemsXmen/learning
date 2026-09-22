@@ -1,0 +1,64 @@
+id: typescript-24-re-exports-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-re-exports-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `export { add } from "./math"` :
+    options:
+      - Importe add localement seulement
+      - Ré-exporte add depuis math
+      - Supprime add
+      - Crée un global
+    answer:
+      - 1
+    explanation: |
+      Re-export.
+    skills:
+      - modules
+  - id: typescript-24-re-exports-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `export * from "./utils"` ré-exporte tous les named exports de utils.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui (pas le default selon les règles ESM).
+    skills:
+      - modules
+  - id: typescript-24-re-exports-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un risque des barrels trop agressifs est :
+    options:
+      - Aucun
+      - Cycles et moins bons tree-shaking / perf outils
+      - Interdiction par TypeScript
+      - Suppression des types
+    answer:
+      - 1
+    explanation: |
+      À utiliser avec mesure.
+    skills:
+      - modules
+  - id: typescript-24-re-exports-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les re-exports servent surtout à :
+    options:
+      - Cacher TypeScript
+      - Créer une façade / API publique stable
+      - Remplacer les tests
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Point d’entrée propre.
+    skills:
+      - modules

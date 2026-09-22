@@ -1,0 +1,64 @@
+id: typescript-30-publier-une-librairie-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-publier-une-librairie-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Avant publish, on doit généralement :
+    options:
+      - Rien builder
+      - Builder JS + déclarations
+      - Supprimer package.json
+      - Désactiver TypeScript
+    answer:
+      - 1
+    explanation: |
+      Artefacts consommables.
+    skills:
+      - npm
+  - id: typescript-30-publier-une-librairie-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      npm pack aide à vérifier le contenu publié.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-publier-une-librairie-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le champ files sert à :
+    options:
+      - Lister les auteurs seulement
+      - Inclure uniquement certains chemins dans le package
+      - Configurer ESLint
+      - Définir target
+    answer:
+      - 1
+    explanation: |
+      Contenu publié.
+    skills:
+      - npm
+  - id: typescript-30-publier-une-librairie-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Publier sans .d.ts :
+    options:
+      - Est idéal pour les consommateurs TS
+      - Dégrade l’expérience TypeScript
+      - Active strict
+      - Remplace @types automatiquement
+    answer:
+      - 1
+    explanation: |
+      Types manquants.
+    skills:
+      - npm

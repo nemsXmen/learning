@@ -1,0 +1,64 @@
+id: typescript-14-keyof-avance-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-keyof-avance-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `keyof (A | B)` pour deux types objets produit :
+    options:
+      - L’union de toutes les clés
+      - L’intersection des clés (clés communes)
+      - never
+      - string
+    answer:
+      - 1
+    explanation: |
+      Les clés présentes dans les deux.
+    skills:
+      - generics
+  - id: typescript-14-keyof-avance-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      `Object.keys(obj)` retourne nativement `(keyof T)[]`.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Il retourne string[]. Un cast est souvent nécessaire.
+    skills:
+      - generics
+  - id: typescript-14-keyof-avance-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `keyof any` donne approximativement :
+    options:
+      - never
+      - string | number | symbol
+      - only string
+      - undefined
+    answer:
+      - 1
+    explanation: |
+      any a un keyof très large.
+    skills:
+      - generics
+  - id: typescript-14-keyof-avance-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `keyof` se combine particulièrement bien avec :
+    options:
+      - Uniquement les enums
+      - Les génériques, mapped types et conditional types
+      - Les décorateurs uniquement
+      - Les namespaces
+    answer:
+      - 1
+    explanation: |
+      C’est un pilier du type-level programming.
+    skills:
+      - generics

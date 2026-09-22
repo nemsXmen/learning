@@ -1,0 +1,64 @@
+id: typescript-18-parameters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-parameters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Parameters<T> produit :
+    options:
+      - Le type de retour
+      - Un tuple des types de paramètres
+      - Les props d’un objet
+      - never
+    answer:
+      - 1
+    explanation: |
+      Tuple ordonné des args.
+    skills:
+      - utility-types
+  - id: typescript-18-parameters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Parameters est utile pour typer des wrappers de fonctions.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-parameters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Parameters<(a: string, b: number) => void> vaut :
+    options:
+      - string | number
+      - "[string, number]"
+      - "{ a: string; b: number }"
+      - any[]
+    answer:
+      - 1
+    explanation: |
+      Tuple.
+    skills:
+      - utility-types
+  - id: typescript-18-parameters-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Parameters vs ReturnType :
+    options:
+      - Identiques
+      - Parameters = args ; ReturnType = retour
+      - Parameters = retour uniquement
+      - Aucun rapport
+    answer:
+      - 1
+    explanation: |
+      Complémentaires.
+    skills:
+      - utility-types

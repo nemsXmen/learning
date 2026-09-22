@@ -1,0 +1,64 @@
+id: typescript-43-compiler-api-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-compiler-api-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La Compiler API vit dans le package :
+    options:
+      - eslint
+      - typescript
+      - lodash
+      - webpack-css
+    answer:
+      - 1
+    explanation: |
+      Même moteur.
+    skills:
+      - compiler
+  - id: typescript-43-compiler-api-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      createProgram est le point d’entrée courant.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-compiler-api-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      getPreEmitDiagnostics sert à :
+    options:
+      - Ignorer les erreurs
+      - Collecter syntaxe + types avant emit
+      - Bundler le CSS
+      - Publier npm
+    answer:
+      - 1
+    explanation: |
+      Diagnostics.
+    skills:
+      - compiler
+  - id: typescript-43-compiler-api-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      CompilerHost abstrait surtout :
+    options:
+      - L’UI
+      - FS / IO pour le compilateur
+      - La base SQL
+      - Docker only
+    answer:
+      - 1
+    explanation: |
+      I/O pluggable.
+    skills:
+      - compiler

@@ -1,0 +1,64 @@
+id: typescript-31-context-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-context-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      createContext se type avec :
+    options:
+      - Un enum CSS
+      - Un générique createContext<T>
+      - process.env
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Valeur du context.
+    skills:
+      - react
+  - id: typescript-31-context-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un hook useAuth peut throw si hors Provider.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Pattern courant.
+    skills:
+      - react
+  - id: typescript-31-context-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      createContext sans générique risque :
+    options:
+      - Une meilleure sécurité
+      - unknown/any selon usage et perte de checks
+      - D’activer strict
+      - De remplacer Redux
+    answer:
+      - 1
+    explanation: |
+      Annoter T.
+    skills:
+      - react
+  - id: typescript-31-context-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La value du Provider doit respecter :
+    options:
+      - any
+      - Le type T du context
+      - Uniquement string
+      - Window
+    answer:
+      - 1
+    explanation: |
+      Contrat.
+    skills:
+      - react

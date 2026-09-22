@@ -1,0 +1,64 @@
+id: typescript-21-lowercase-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-lowercase-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Lowercase<"HELLO"> produit :
+    options:
+      - HELLO
+      - hello
+      - string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Minuscules.
+    skills:
+      - template-literal-types
+  - id: typescript-21-lowercase-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Lowercase est un utility type intrinsèque.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-lowercase-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un cas d’usage est :
+    options:
+      - Créer des classes
+      - Normaliser des codes / slugs
+      - Remplacer les objets
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Identifiants en minuscules.
+    skills:
+      - template-literal-types
+  - id: typescript-21-lowercase-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Lowercase<"Foo" | "Bar"> produit :
+    options:
+      - '"Foo" | "Bar"'
+      - '"foo" | "bar"'
+      - string
+      - never
+    answer:
+      - 1
+    explanation: |
+      Distribution.
+    skills:
+      - template-literal-types

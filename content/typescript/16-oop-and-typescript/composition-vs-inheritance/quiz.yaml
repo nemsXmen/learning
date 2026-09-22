@@ -1,0 +1,64 @@
+id: typescript-16-composition-vs-inheritance-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-composition-vs-inheritance-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La recommandation classique est de :
+    options:
+      - Toujours hériter
+      - Favoriser la composition par rapport à l’héritage
+      - Interdire la composition
+      - Utiliser uniquement des static
+    answer:
+      - 1
+    explanation: |
+      Composition over inheritance.
+    skills:
+      - oop
+  - id: typescript-16-composition-vs-inheritance-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      L’héritage exprime une relation is-a.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-composition-vs-inheritance-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Hériter d’une classe uniquement pour réutiliser 2 helpers est souvent :
+    options:
+      - Idéal
+      - Un anti-pattern — préférer composition ou fonctions
+      - Obligatoire en TypeScript
+      - Plus sûr pour les types
+    answer:
+      - 1
+    explanation: |
+      Mauvaise motivation pour l’héritage.
+    skills:
+      - oop
+  - id: typescript-16-composition-vs-inheritance-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un avantage de la composition est :
+    options:
+      - Hiérarchies plus profondes
+      - Combinaison flexible de comportements
+      - Interdiction des interfaces
+      - Moins de tests possibles
+    answer:
+      - 1
+    explanation: |
+      Assemblage libre des capacités.
+    skills:
+      - oop

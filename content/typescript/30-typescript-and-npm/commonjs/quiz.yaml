@@ -1,0 +1,64 @@
+id: typescript-30-commonjs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-commonjs-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      CommonJS utilise principalement :
+    options:
+      - import/export uniquement
+      - require / module.exports
+      - Uniquement des types
+      - fetch navigateur
+    answer:
+      - 1
+    explanation: |
+      API CJS.
+    skills:
+      - npm
+  - id: typescript-30-commonjs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      La condition exports "require" cible CommonJS.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-commonjs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dual publish signifie souvent :
+    options:
+      - Deux noms de package
+      - Artefacts CJS + ESM
+      - Deux tsconfig interdits
+      - Suppression des types
+    answer:
+      - 1
+    explanation: |
+      Compat maximale.
+    skills:
+      - npm
+  - id: typescript-30-commonjs-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      esModuleInterop aide surtout à :
+    options:
+      - Minifier
+      - L’interop default import CJS ↔ ESM
+      - Remplacer path
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Imports default plus naturels.
+    skills:
+      - npm

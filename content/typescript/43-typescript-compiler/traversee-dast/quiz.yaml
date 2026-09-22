@@ -1,0 +1,64 @@
+id: typescript-43-traversee-dast-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-traversee-dast-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un visitor AST TypeScript :
+    options:
+      - Exécute le JS produit
+      - Parcourt/transforme des nœuds
+      - Minifie le CSS
+      - Configure DNS
+    answer:
+      - 1
+    explanation: |
+      Traversée.
+    skills:
+      - compiler
+  - id: typescript-43-traversee-dast-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      visitEachChild continue la visite sur les enfants.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-traversee-dast-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Oublier visitEachChild peut :
+    options:
+      - Accélérer magiquement le check
+      - Sauter des sous-arbres
+      - Activer strict
+      - Générer du SQL
+    answer:
+      - 1
+    explanation: |
+      Visite incomplète.
+    skills:
+      - compiler
+  - id: typescript-43-traversee-dast-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Lister tous les imports se fait typiquement par :
+    options:
+      - Regex uniquement sur node_modules
+      - Traversée AST des ImportDeclaration
+      - Lecture du CSS
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Analyse structurelle.
+    skills:
+      - compiler

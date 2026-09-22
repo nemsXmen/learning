@@ -1,0 +1,64 @@
+id: typescript-39-architecture-modulaire-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-architecture-modulaire-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une architecture modulaire regroupe souvent par :
+    options:
+      - Uniquement le type de fichier technique global
+      - Features / domaines métier
+      - Couleurs CSS
+      - Versions de Node only
+    answer:
+      - 1
+    explanation: |
+      Vertical slices.
+    skills:
+      - architecture
+  - id: typescript-39-architecture-modulaire-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut combiner feature modules et couches Clean Architecture.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - architecture
+  - id: typescript-39-architecture-modulaire-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Cycles d’imports entre modules :
+    options:
+      - Sont idéaux
+      - Sont à éviter
+      - Activent DI
+      - Sont imposés
+    answer:
+      - 1
+    explanation: |
+      Dépendances dirigées.
+    skills:
+      - architecture
+  - id: typescript-39-architecture-modulaire-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ESLint boundaries / paths TS aident à :
+    options:
+      - Styliser
+      - Faire respecter les règles d’import entre couches/modules
+      - Remplacer les tests
+      - Compiler SQL
+    answer:
+      - 1
+    explanation: |
+      Garde-fous.
+    skills:
+      - architecture

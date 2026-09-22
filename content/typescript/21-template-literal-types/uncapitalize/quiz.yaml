@@ -1,0 +1,64 @@
+id: typescript-21-uncapitalize-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-uncapitalize-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Uncapitalize<"Hello"> produit :
+    options:
+      - HELLO
+      - hello
+      - Hello
+      - never
+    answer:
+      - 1
+    explanation: |
+      Première lettre en minuscule.
+    skills:
+      - template-literal-types
+  - id: typescript-21-uncapitalize-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Uncapitalize est l’inverse de Capitalize sur le premier caractère.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-uncapitalize-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour extraire "click" de "onClick", on peut utiliser :
+    options:
+      - Uniquement Uppercase
+      - infer + Uncapitalize
+      - Exclude uniquement
+      - any
+    answer:
+      - 1
+    explanation: |
+      Pattern de parsing.
+    skills:
+      - template-literal-types
+  - id: typescript-21-uncapitalize-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Uncapitalize vs Lowercase :
+    options:
+      - Identiques
+      - Uncapitalize = 1re lettre ; Lowercase = toute la chaîne
+      - Lowercase = 1re lettre uniquement
+      - Aucun rapport
+    answer:
+      - 1
+    explanation: |
+      Portée différente.
+    skills:
+      - template-literal-types

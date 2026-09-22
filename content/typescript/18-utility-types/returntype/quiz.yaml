@@ -1,0 +1,64 @@
+id: typescript-18-returntype-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-returntype-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ReturnType extrait :
+    options:
+      - Les paramètres
+      - Le type de retour d’une fonction
+      - Les props d’un objet
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Type de retour.
+    skills:
+      - utility-types
+  - id: typescript-18-returntype-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On écrit souvent ReturnType<typeof fn>.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, pour partir de la valeur.
+    skills:
+      - utility-types
+  - id: typescript-18-returntype-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ReturnType s’appuie sur :
+    options:
+      - keyof uniquement
+      - infer dans un conditional type
+      - Un enum
+      - Une classe
+    answer:
+      - 1
+    explanation: |
+      Pattern classique.
+    skills:
+      - utility-types
+  - id: typescript-18-returntype-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’intérêt principal est :
+    options:
+      - D’accélérer le runtime
+      - D’éviter de dupliquer le type de retour
+      - De supprimer la fonction
+      - D’activer strict
+    answer:
+      - 1
+    explanation: |
+      Une source de vérité.
+    skills:
+      - utility-types

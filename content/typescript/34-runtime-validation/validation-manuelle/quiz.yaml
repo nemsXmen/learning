@@ -1,0 +1,64 @@
+id: typescript-34-validation-manuelle-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-validation-manuelle-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La validation manuelle s’appuie sur :
+    options:
+      - Uniquement le compilateur
+      - Des checks JS (typeof, in…)
+      - Le CSS
+      - process.exit only
+    answer:
+      - 1
+    explanation: |
+      Runtime checks.
+    skills:
+      - validation
+  - id: typescript-34-validation-manuelle-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Sans type predicate, un if (isUser(x)) n’affine pas forcément x.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Il faut value is User.
+    skills:
+      - validation
+  - id: typescript-34-validation-manuelle-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour des objets imbriqués, la validation manuelle devient :
+    options:
+      - Toujours plus simple
+      - Verbose et fragile
+      - Inutile
+      - Obligatoire vs Zod
+    answer:
+      - 1
+    explanation: |
+      Schemas préférables.
+    skills:
+      - validation
+  - id: typescript-34-validation-manuelle-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’entrée d’une validation devrait être typée :
+    options:
+      - any métier
+      - unknown
+      - User garanti
+      - never
+    answer:
+      - 1
+    explanation: |
+      Frontière.
+    skills:
+      - validation

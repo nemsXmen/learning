@@ -1,0 +1,64 @@
+id: typescript-41-valeurs-par-defaut-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-valeurs-par-defaut-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans type Foo<T = string>, T peut être :
+    options:
+      - Toujours number
+      - Omis (défaut string)
+      - Uniquement never
+      - Interdit
+    answer:
+      - 1
+    explanation: |
+      Default.
+    skills:
+      - generics
+  - id: typescript-41-valeurs-par-defaut-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un défaut any est souvent une mauvaise idée.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Perd la sûreté.
+    skills:
+      - generics
+  - id: typescript-41-valeurs-par-defaut-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les defaults de génériques servent surtout à :
+    options:
+      - Ralentir tsc
+      - L’ergonomie de l’API
+      - Remplacer les tests
+      - Configurer Docker
+    answer:
+      - 1
+    explanation: |
+      DX.
+    skills:
+      - generics
+  - id: typescript-41-valeurs-par-defaut-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      E = { message: string } dans Result/ApiResponse :
+    options:
+      - Force toujours E = never
+      - Fournit un type d’erreur par défaut
+      - Est invalide
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Défaut utile.
+    skills:
+      - generics

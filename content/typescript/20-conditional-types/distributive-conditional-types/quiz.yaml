@@ -1,0 +1,64 @@
+id: typescript-20-distributive-conditional-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-20-distributive-conditional-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un conditional distributif sur string | number avec T[] produit :
+    options:
+      - (string | number)[]
+      - string[] | number[]
+      - any[]
+      - never
+    answer:
+      - 1
+    explanation: |
+      Un tableau par membre.
+    skills:
+      - conditional-types
+  - id: typescript-20-distributive-conditional-types-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      [T] extends [U] désactive la distributivité.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - conditional-types
+  - id: typescript-20-distributive-conditional-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Exclude s’appuie sur la distributivité pour :
+    options:
+      - Ajouter des membres
+      - Retirer de l’union les membres assignables à U
+      - Créer des classes
+      - Rien
+    answer:
+      - 1
+    explanation: |
+      T extends U ? never : T.
+    skills:
+      - conditional-types
+  - id: typescript-20-distributive-conditional-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un naked type parameter est :
+    options:
+      - Toujours any
+      - Un paramètre de type non enveloppé
+      - Un enum
+      - Un décorateur
+    answer:
+      - 1
+    explanation: |
+      Condition de la distribution auto.
+    skills:
+      - conditional-types

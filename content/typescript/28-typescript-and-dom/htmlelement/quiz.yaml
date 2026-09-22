@@ -1,0 +1,64 @@
+id: typescript-28-htmlelement-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-htmlelement-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      HTMLElement expose notamment :
+    options:
+      - value (comme un input)
+      - style, classList, id
+      - Uniquement fetch
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      API élément générique.
+    skills:
+      - dom
+  - id: typescript-28-htmlelement-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      .value n’existe pas sur HTMLElement générique.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Réservé aux éléments de formulaire typés.
+    skills:
+      - dom
+  - id: typescript-28-htmlelement-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un div, le type précis est souvent :
+    options:
+      - HTMLInputElement
+      - HTMLDivElement
+      - Document
+      - Window
+    answer:
+      - 1
+    explanation: |
+      Sous-type de HTMLElement.
+    skills:
+      - dom
+  - id: typescript-28-htmlelement-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      el.style est typé comme :
+    options:
+      - string
+      - CSSStyleDeclaration
+      - any obligatoire
+      - never
+    answer:
+      - 1
+    explanation: |
+      Interface de style.
+    skills:
+      - dom

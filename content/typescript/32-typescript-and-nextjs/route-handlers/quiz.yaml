@@ -1,0 +1,64 @@
+id: typescript-32-route-handlers-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-route-handlers-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un Route Handler App Router vit dans :
+    options:
+      - styles.css
+      - app/api/.../route.ts
+      - public/ only
+      - node_modules
+    answer:
+      - 1
+    explanation: |
+      Convention.
+    skills:
+      - nextjs
+  - id: typescript-32-route-handlers-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      export async function GET() définit un handler GET.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-route-handlers-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      request.json() devrait être traité comme :
+    options:
+      - any métier garanti
+      - unknown à valider
+      - HTMLElement
+      - never
+    answer:
+      - 1
+    explanation: |
+      Frontière HTTP.
+    skills:
+      - nextjs
+  - id: typescript-32-route-handlers-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      NextResponse.json sert à :
+    options:
+      - Compiler TS
+      - Renvoyer une réponse JSON typée côté API
+      - Remplacer Zod
+      - Lire le DOM
+    answer:
+      - 1
+    explanation: |
+      Helper réponse.
+    skills:
+      - nextjs

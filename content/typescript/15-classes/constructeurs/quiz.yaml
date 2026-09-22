@@ -1,0 +1,64 @@
+id: typescript-15-constructeurs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-constructeurs-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le constructeur d’une classe s’appelle :
+    options:
+      - init
+      - constructor
+      - create
+      - new
+    answer:
+      - 1
+    explanation: |
+      Mot-clé constructor.
+    skills:
+      - classes
+  - id: typescript-15-constructeurs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une classe TypeScript peut avoir plusieurs constructeurs d’implémentation.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Une seule implémentation (overloads de types possibles).
+    skills:
+      - classes
+  - id: typescript-15-constructeurs-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Quand le constructeur est-il exécuté ?
+    options:
+      - À l’import du module
+      - À l’instanciation avec new
+      - Uniquement à la compilation
+      - Jamais
+    answer:
+      - 1
+    explanation: |
+      new déclenche le constructeur.
+    skills:
+      - classes
+  - id: typescript-15-constructeurs-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans le constructeur, `this` désigne :
+    options:
+      - La classe
+      - La nouvelle instance
+      - Le module
+      - window uniquement
+    answer:
+      - 1
+    explanation: |
+      L’instance en cours de construction.
+    skills:
+      - classes

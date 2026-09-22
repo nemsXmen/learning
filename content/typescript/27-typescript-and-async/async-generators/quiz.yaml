@@ -1,0 +1,64 @@
+id: typescript-27-async-generators-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-async-generators-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un async generator se déclare avec :
+    options:
+      - function*
+      - async function*
+      - async function seulement
+      - class*
+    answer:
+      - 1
+    explanation: |
+      async + *.
+    skills:
+      - async
+  - id: typescript-27-async-generators-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut await et yield dans un async generator.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-async-generators-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le type de retour typique est :
+    options:
+      - Promise<T>
+      - AsyncGenerator<T>
+      - Array<T>
+      - void
+    answer:
+      - 1
+    explanation: |
+      Générateur async.
+    skills:
+      - async
+  - id: typescript-27-async-generators-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La consommation se fait souvent avec :
+    options:
+      - for...of uniquement
+      - for await...of
+      - JSON only
+      - map synchrone
+    answer:
+      - 1
+    explanation: |
+      Iteration async.
+    skills:
+      - async

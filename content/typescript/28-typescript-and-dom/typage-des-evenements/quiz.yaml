@@ -1,0 +1,64 @@
+id: typescript-28-typage-des-evenements-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-typage-des-evenements-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’inférence du type d’event dans addEventListener s’appuie sur :
+    options:
+      - Un random
+      - Des EventMap (nom → interface)
+      - Uniquement any
+      - Le tsconfig paths
+    answer:
+      - 1
+    explanation: |
+      Mappings lib.dom.
+    skills:
+      - dom
+  - id: typescript-28-typage-des-evenements-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut étendre HTMLElementEventMap pour des events custom.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - dom
+  - id: typescript-28-typage-des-evenements-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Annoter un handler click en (e: Event) seulement :
+    options:
+      - Donne accès à clientX
+      - Peut faire perdre les props MouseEvent
+      - Est plus précis
+      - Active DOM
+    answer:
+      - 1
+    explanation: |
+      Trop large.
+    skills:
+      - dom
+  - id: typescript-28-typage-des-evenements-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      CustomEvent<T> porte souvent le payload dans :
+    options:
+      - e.key
+      - e.detail
+      - e.clientX
+      - e.paths
+    answer:
+      - 1
+    explanation: |
+      detail typé.
+    skills:
+      - dom

@@ -1,0 +1,64 @@
+id: typescript-41-factories-avancees-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-factories-avancees-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      createApiClient(routes) capture TRoutes pour :
+    options:
+      - Ignorer les clés
+      - Typer les appels dérivés
+      - Compiler le CSS
+      - Remplacer HTTP
+    answer:
+      - 1
+    explanation: |
+      Config → types.
+    skills:
+      - generics
+  - id: typescript-41-factories-avancees-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      keyof TRoutes borne les clés acceptées par call.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-factories-avancees-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Retourner any depuis la factory :
+    options:
+      - Préserve la précision
+      - Annule le bénéfice de typage
+      - Est idéal
+      - Active DIP
+    answer:
+      - 1
+    explanation: |
+      Garder le générique.
+    skills:
+      - generics
+  - id: typescript-41-factories-avancees-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      as const sur la config de factory peut :
+    options:
+      - Élargir les littéraux
+      - Préserver les littéraux de clés/valeurs
+      - Supprimer les types
+      - Être interdit
+    answer:
+      - 1
+    explanation: |
+      Inférence fine.
+    skills:
+      - generics

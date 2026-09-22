@@ -1,0 +1,64 @@
+id: typescript-34-type-guards-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-type-guards-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un type predicate s’écrit :
+    options:
+      - value as User
+      - value is User
+      - value == User
+      - '{"value":"User only"}'
+    answer:
+      - 1
+    explanation: |
+      Syntaxe predicate.
+    skills:
+      - validation
+  - id: typescript-34-type-guards-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Après if (isUser(data)), data est affiné en User.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-type-guards-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un guard trop permissif :
+    options:
+      - Est sans risque
+      - Ment au compilateur (faux sentiment de sécurité)
+      - Active Zod
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Honnêteté requise.
+    skills:
+      - validation
+  - id: typescript-34-type-guards-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Array.isArray est :
+    options:
+      - Un schema Zod
+      - Un type guard natif
+      - Un décorateur Nest
+      - Un type never
+    answer:
+      - 1
+    explanation: |
+      Narrowing tableau.
+    skills:
+      - validation

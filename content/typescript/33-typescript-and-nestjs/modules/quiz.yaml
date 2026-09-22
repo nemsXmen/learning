@@ -1,0 +1,64 @@
+id: typescript-33-modules-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-modules-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’unité d’organisation principale Nest est :
+    options:
+      - Un fichier CSS
+      - Le Module (@Module)
+      - Uniquement un script shell
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Feature modules.
+    skills:
+      - nestjs
+  - id: typescript-33-modules-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      exports rend un provider disponible aux modules importateurs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-modules-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un provider non listé dans providers/imports :
+    options:
+      - Est toujours injectable
+      - Ne sera pas résolu par la DI
+      - Active strict
+      - Remplace le controller
+    answer:
+      - 1
+    explanation: |
+      Déclaration requise.
+    skills:
+      - nestjs
+  - id: typescript-33-modules-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      AppModule sert souvent à :
+    options:
+      - Styliser l’UI
+      - Importer les feature modules racine
+      - Compiler le CSS
+      - Remplacer TypeScript
+    answer:
+      - 1
+    explanation: |
+      Root module.
+    skills:
+      - nestjs

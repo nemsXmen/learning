@@ -1,0 +1,64 @@
+id: typescript-32-route-params-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-route-params-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans [id], params.id est typiquement :
+    options:
+      - number
+      - string
+      - boolean
+      - Buffer
+    answer:
+      - 1
+    explanation: |
+      Segment URL.
+    skills:
+      - nextjs
+  - id: typescript-32-route-params-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un catch-all [...slug] produit string[].
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-route-params-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Convertir params.id en number demande :
+    options:
+      - Rien
+      - Parsing + validation
+      - Uniquement as number
+      - Un enum CSS
+    answer:
+      - 1
+    explanation: |
+      NaN possible.
+    skills:
+      - nextjs
+  - id: typescript-32-route-params-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les params viennent de :
+    options:
+      - process.env seulement
+      - La structure des dossiers de route
+      - localStorage
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      File-system routing.
+    skills:
+      - nextjs

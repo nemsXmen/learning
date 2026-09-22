@@ -1,0 +1,64 @@
+id: typescript-19-deeppartial-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-deeppartial-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      DeepPartial rend optionnel :
+    options:
+      - Uniquement le premier niveau
+      - Tous les niveaux d’objets imbriqués
+      - Uniquement les arrays
+      - Rien
+    answer:
+      - 1
+    explanation: |
+      Récursif.
+    skills:
+      - mapped-types
+  - id: typescript-19-deeppartial-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      DeepPartial est utile pour les patches de config imbriquée.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-deeppartial-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Par rapport à Partial, DeepPartial :
+    options:
+      - Est identique
+      - Descend dans les objets imbriqués
+      - Interdit les objets
+      - Est un enum
+    answer:
+      - 1
+    explanation: |
+      Profondeur.
+    skills:
+      - mapped-types
+  - id: typescript-19-deeppartial-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un point d’attention de DeepPartial est :
+    options:
+      - Aucun
+      - Le traitement des tableaux et structures récursives
+      - L’interdiction de ?
+      - Le runtime uniquement
+    answer:
+      - 1
+    explanation: |
+      Arrays / cycles à gérer selon le besoin.
+    skills:
+      - mapped-types

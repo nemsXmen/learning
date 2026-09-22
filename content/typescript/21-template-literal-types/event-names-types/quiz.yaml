@@ -1,0 +1,64 @@
+id: typescript-21-event-names-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-event-names-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `on${Capitalize<"click">}` produit :
+    options:
+      - onclick
+      - onClick
+      - click
+      - string
+    answer:
+      - 1
+    explanation: |
+      Préfixe + capitalisation.
+    skills:
+      - template-literal-types
+  - id: typescript-21-event-names-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut lier chaque handler au bon type d’event via une map.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-event-names-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’intérêt principal est :
+    options:
+      - Rien
+      - Autocomplétion et typage précis des handlers
+      - Remplacer le DOM
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Sécurité + DX.
+    skills:
+      - template-literal-types
+  - id: typescript-21-event-names-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer les handlers en any :
+    options:
+      - Est recommandé
+      - Fait perdre la sécurité de types
+      - Est obligatoire
+      - Accélère le runtime
+    answer:
+      - 1
+    explanation: |
+      À éviter.
+    skills:
+      - template-literal-types

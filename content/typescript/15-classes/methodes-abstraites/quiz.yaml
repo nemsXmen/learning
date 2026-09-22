@@ -1,0 +1,64 @@
+id: typescript-15-methodes-abstraites-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-methodes-abstraites-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une méthode abstraite :
+    options:
+      - A toujours un corps
+      - N’a pas d’implémentation dans la classe de base
+      - Est forcément static
+      - Est privée
+    answer:
+      - 1
+    explanation: |
+      Signature seule, implémentation dans les sous-classes.
+    skills:
+      - classes
+  - id: typescript-15-methodes-abstraites-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une classe concrète qui étend une classe abstraite doit implémenter les méthodes abstraites.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, sinon erreur.
+    skills:
+      - classes
+  - id: typescript-15-methodes-abstraites-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les méthodes abstraites permettent notamment le pattern :
+    options:
+      - Singleton uniquement
+      - Template method
+      - Module uniquement
+      - Enum
+    answer:
+      - 1
+    explanation: |
+      Algorithme dans la base, étapes dans les sous-classes.
+    skills:
+      - classes
+  - id: typescript-15-methodes-abstraites-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Où peut-on déclarer une méthode abstraite ?
+    options:
+      - Dans n’importe quelle classe
+      - Uniquement dans une classe abstraite
+      - Uniquement dans une interface
+      - Uniquement dans un enum
+    answer:
+      - 1
+    explanation: |
+      Réservé aux classes abstraites.
+    skills:
+      - classes

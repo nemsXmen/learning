@@ -1,0 +1,64 @@
+id: typescript-41-recursive-generics-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-recursive-generics-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      type Json qui se référence décrit :
+    options:
+      - Uniquement des strings
+      - Des structures JSON imbriquées
+      - Un middleware
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Récursion.
+    skills:
+      - generics
+  - id: typescript-41-recursive-generics-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      DeepReadonly<T> applique readonly récursivement.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-recursive-generics-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une récursion de types non bornée :
+    options:
+      - Est toujours OK
+      - Peut faire échouer le compilateur
+      - Active DI
+      - Est imposée
+    answer:
+      - 1
+    explanation: |
+      Limites tsc.
+    skills:
+      - generics
+  - id: typescript-41-recursive-generics-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      TreeNode<T> avec children: TreeNode<T>[] est :
+    options:
+      - Invalide
+      - Un type récursif classique
+      - Uniquement runtime
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Arbre.
+    skills:
+      - generics

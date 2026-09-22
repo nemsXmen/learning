@@ -1,0 +1,64 @@
+id: typescript-18-partial-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-partial-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Partial<T> rend les propriétés de T :
+    options:
+      - Obligatoires
+      - Optionnelles
+      - Readonly
+      - Privées
+    answer:
+      - 1
+    explanation: |
+      Toutes optionnelles.
+    skills:
+      - utility-types
+  - id: typescript-18-partial-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Partial est souvent utilisé pour les payloads PATCH / update.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-partial-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Partial<T> est équivalent à :
+    options:
+      - "{ [K in keyof T]-?: T[K] }"
+      - "{ [K in keyof T]?: T[K] }"
+      - Pick<T, never>
+      - Omit<T, keyof T>
+    answer:
+      - 1
+    explanation: |
+      Mapped type avec ?.
+    skills:
+      - utility-types
+  - id: typescript-18-partial-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Partial est un :
+    options:
+      - Enum
+      - Utility type standard
+      - Décorateur
+      - Runtime helper
+    answer:
+      - 1
+    explanation: |
+      Fourni par TypeScript.
+    skills:
+      - utility-types

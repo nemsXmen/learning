@@ -1,0 +1,64 @@
+id: typescript-32-props-des-pages-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-props-des-pages-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une page dynamique reçoit souvent :
+    options:
+      - Uniquement du CSS
+      - params (et parfois searchParams)
+      - process.argv seulement
+      - Un Buffer
+    answer:
+      - 1
+    explanation: |
+      Props de route.
+    skills:
+      - nextjs
+  - id: typescript-32-props-des-pages-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Selon la version de Next, params peut être une Promise.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Évolution récente possible.
+    skills:
+      - nextjs
+  - id: typescript-32-props-des-pages-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typer params comme string directement :
+    options:
+      - Est correct
+      - Est incorrect (objet de segments)
+      - Est imposé
+      - Active le middleware
+    answer:
+      - 1
+    explanation: |
+      { slug: string } etc.
+    skills:
+      - nextjs
+  - id: typescript-32-props-des-pages-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Annoter PageProps sert à :
+    options:
+      - Rien
+      - Sécuriser l’accès params/searchParams
+      - Remplacer le routeur
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Contrats de page.
+    skills:
+      - nextjs

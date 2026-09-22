@@ -1,0 +1,64 @@
+id: typescript-25-no-unused-parameters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-no-unused-parameters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      noUnusedParameters signale :
+    options:
+      - Les types non exportés
+      - Les paramètres de fonction non utilisés
+      - Les fichiers CSS
+      - Les tsconfig invalides
+    answer:
+      - 1
+    explanation: |
+      Params morts.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unused-parameters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le préfixe _ est une convention courante pour un paramètre ignoré.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unused-parameters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Si une interface impose un paramètre inutilisé, on devrait :
+    options:
+      - Casser la signature
+      - Le garder (souvent _name) pour respecter le contrat
+      - Mettre any partout
+      - Désactiver TypeScript
+    answer:
+      - 1
+    explanation: |
+      Compatibilité de signature.
+    skills:
+      - tsconfig
+  - id: typescript-25-no-unused-parameters-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      noUnusedParameters complète :
+    options:
+      - target
+      - noUnusedLocals
+      - lib DOM uniquement
+      - paths
+    answer:
+      - 1
+    explanation: |
+      Hygiène du code.
+    skills:
+      - tsconfig

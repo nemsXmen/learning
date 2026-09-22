@@ -1,0 +1,64 @@
+id: typescript-41-contravariance-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-contravariance-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Consumer<Animal> assignable à Consumer<Dog> illustre :
+    options:
+      - Covariance pure
+      - Contravariance
+      - Un bundler
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Inputs.
+    skills:
+      - generics
+  - id: typescript-41-contravariance-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Un consumer de Dog n’est pas sûr comme consumer d’Animal.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Pourrait recevoir un Cat.
+    skills:
+      - generics
+  - id: typescript-41-contravariance-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      strictFunctionTypes renforce :
+    options:
+      - La bivariance
+      - Les checks de paramètres (contra)
+      - Le CSS
+      - skipLibCheck only
+    answer:
+      - 1
+    explanation: |
+      Sûreté.
+    skills:
+      - generics
+  - id: typescript-41-contravariance-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Contravariance = propagation :
+    options:
+      - Dans le sens inverse du sous-typage pour les inputs
+      - Identique à covariance always
+      - Uniquement pour les strings
+      - Interdite en TS
+    answer:
+      - 0
+    explanation: |
+      Sens inverse.
+    skills:
+      - generics

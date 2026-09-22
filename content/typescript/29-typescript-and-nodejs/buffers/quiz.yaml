@@ -1,0 +1,64 @@
+id: typescript-29-buffers-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-buffers-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Buffer.from("hi", "utf8") produit :
+    options:
+      - string
+      - Buffer
+      - number
+      - "null"
+    answer:
+      - 1
+    explanation: |
+      Données binaires.
+    skills:
+      - nodejs
+  - id: typescript-29-buffers-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      buf.toString("utf8") convertit un Buffer en string.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-buffers-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Buffer est proche de :
+    options:
+      - Un enum
+      - Uint8Array (données binaires)
+      - Une Promise
+      - Un module CSS
+    answer:
+      - 1
+    explanation: |
+      Octets.
+    skills:
+      - nodejs
+  - id: typescript-29-buffers-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      readFile sans encoding retourne souvent :
+    options:
+      - string
+      - Buffer
+      - object JSON
+      - never
+    answer:
+      - 1
+    explanation: |
+      Binaire brut.
+    skills:
+      - nodejs

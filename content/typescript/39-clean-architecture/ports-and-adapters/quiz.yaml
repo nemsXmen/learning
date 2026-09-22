@@ -1,0 +1,64 @@
+id: typescript-39-ports-and-adapters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-ports-and-adapters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un port est :
+    options:
+      - Une lib CSS
+      - Une interface du centre
+      - Un serveur DNS
+      - Un fichier Docker
+    answer:
+      - 1
+    explanation: |
+      Contrat.
+    skills:
+      - architecture
+  - id: typescript-39-ports-and-adapters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un adapter HTTP est typiquement inbound.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Appelle le centre.
+    skills:
+      - architecture
+  - id: typescript-39-ports-and-adapters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un port outbound est appelé par :
+    options:
+      - Uniquement le navigateur
+      - Le centre (use case/domain)
+      - Docker only
+      - Le CSS
+    answer:
+      - 1
+    explanation: |
+      SPI.
+    skills:
+      - architecture
+  - id: typescript-39-ports-and-adapters-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mettre express.Request dans un port :
+    options:
+      - Est idéal
+      - Technique le centre inutilement
+      - Active Prisma
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Ports métier.
+    skills:
+      - architecture

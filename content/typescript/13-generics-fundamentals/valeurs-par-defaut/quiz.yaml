@@ -1,0 +1,64 @@
+id: typescript-13-valeurs-par-defaut-quiz
+kind: QUIZ
+questions:
+  - id: typescript-13-valeurs-par-defaut-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment déclare-t-on un paramètre de type avec défaut ?
+    options:
+      - T default Type
+      - T = Type
+      - '{"T?":"Type"}'
+      - T ~ Type
+    answer:
+      - 1
+    explanation: |
+      Syntaxe T = DefaultType.
+    skills:
+      - generics
+  - id: typescript-13-valeurs-par-defaut-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les paramètres de type avec défaut doivent être après ceux sans défaut.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, comme pour les paramètres de fonction.
+    skills:
+      - generics
+  - id: typescript-13-valeurs-par-defaut-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans `type Result<T, E = Error>`, si on écrit `Result<string>`, E vaut :
+    options:
+      - any
+      - Error
+      - string
+      - unknown
+    answer:
+      - 1
+    explanation: |
+      La valeur par défaut est utilisée.
+    skills:
+      - generics
+  - id: typescript-13-valeurs-par-defaut-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les défauts de paramètres de type sont utiles pour :
+    options:
+      - Rien
+      - Rendre les APIs plus ergonomiques
+      - Désactiver le typage
+      - Créer des enums
+    answer:
+      - 1
+    explanation: |
+      Moins d’arguments de type à fournir à l’usage.
+    skills:
+      - generics

@@ -1,0 +1,64 @@
+id: typescript-16-abstraction-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-abstraction-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’abstraction consiste à :
+    options:
+      - Tout exposer
+      - Exposer l’essentiel et masquer la complexité
+      - Supprimer les types
+      - Utiliser uniquement des classes concrètes
+    answer:
+      - 1
+    explanation: |
+      Séparer le quoi du comment.
+    skills:
+      - oop
+  - id: typescript-16-abstraction-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les interfaces sont un outil d’abstraction en TypeScript.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-abstraction-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dépendre d’une abstraction plutôt que d’une implémentation réduit :
+    options:
+      - La lisibilité uniquement
+      - Le couplage
+      - Le nombre de fichiers uniquement
+      - La sécurité de types
+    answer:
+      - 1
+    explanation: |
+      Moins de dépendance aux détails.
+    skills:
+      - oop
+  - id: typescript-16-abstraction-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Abstraire trop tôt risque de :
+    options:
+      - Rien
+      - Créer des couches inutiles et confuses
+      - Accélérer le développement
+      - Interdire les generics
+    answer:
+      - 1
+    explanation: |
+      Mieux vaut abstraire à partir d’usages réels.
+    skills:
+      - oop

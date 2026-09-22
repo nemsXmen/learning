@@ -1,0 +1,64 @@
+id: typescript-35-pagination-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-pagination-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Page<T> contient souvent :
+    options:
+      - Uniquement un error
+      - '{"items":"T[] et des meta (total…)"}'
+      - Un Buffer
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Liste + meta.
+    skills:
+      - api
+  - id: typescript-35-pagination-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      CursorPage utilise typiquement nextCursor.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-pagination-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      pageSize non borné côté serveur :
+    options:
+      - Est idéal
+      - Risque perf / abus
+      - Active Zod auto
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Limiter.
+    skills:
+      - api
+  - id: typescript-35-pagination-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Page<UserResponse> est un exemple de :
+    options:
+      - Enum
+      - Type générique de pagination
+      - Middleware
+      - Décorateur CSS
+    answer:
+      - 1
+    explanation: |
+      Réutilisation.
+    skills:
+      - api

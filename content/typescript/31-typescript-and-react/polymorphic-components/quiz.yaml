@@ -1,0 +1,64 @@
+id: typescript-31-polymorphic-components-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-polymorphic-components-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un composant polymorphe permet souvent de :
+    options:
+      - Changer d’élément rendu via une prop as
+      - Supprimer TypeScript
+      - Remplacer le routeur seulement
+      - Compiler le CSS
+    answer:
+      - 0
+    explanation: |
+      as="a" | "button"…
+    skills:
+      - react
+  - id: typescript-31-polymorphic-components-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      ComponentPropsWithoutRef<T> fournit les props natives de T.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-polymorphic-components-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      T extends React.ElementType contraint T à :
+    options:
+      - number
+      - Un type d’élément/composant React valide
+      - Un Buffer
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Élément rendable.
+    skills:
+      - react
+  - id: typescript-31-polymorphic-components-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les design systems utilisent le polymorphisme pour :
+    options:
+      - Interdire les liens
+      - Réutiliser styles + sémantique (button vs a)
+      - Désactiver JSX
+      - Remplacer npm
+    answer:
+      - 1
+    explanation: |
+      Flexibilité UI.
+    skills:
+      - react

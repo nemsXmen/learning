@@ -1,0 +1,64 @@
+id: typescript-23-introduction-aux-d-ts-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-introduction-aux-d-ts-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un fichier .d.ts contient principalement :
+    options:
+      - De l’implémentation JavaScript
+      - Des déclarations de types
+      - Du CSS
+      - Des tests
+    answer:
+      - 1
+    explanation: |
+      Types uniquement.
+    skills:
+      - declaration-files
+  - id: typescript-23-introduction-aux-d-ts-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TypeScript n’émet pas de JavaScript à partir d’un .d.ts pur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-introduction-aux-d-ts-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les .d.ts servent surtout à :
+    options:
+      - Remplacer le runtime
+      - Typer du JS existant / des APIs pour TypeScript
+      - Styliser l’UI
+      - Configurer webpack uniquement
+    answer:
+      - 1
+    explanation: |
+      Pont JS ↔ TS.
+    skills:
+      - declaration-files
+  - id: typescript-23-introduction-aux-d-ts-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les packages npm indiquent souvent leurs types via :
+    options:
+      - Un champ types / typings dans package.json
+      - Un fichier CSS
+      - Un script shell
+      - Un enum
+    answer:
+      - 0
+    explanation: |
+      Champ types pointant vers le .d.ts.
+    skills:
+      - declaration-files

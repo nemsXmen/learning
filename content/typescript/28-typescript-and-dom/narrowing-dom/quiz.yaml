@@ -1,0 +1,64 @@
+id: typescript-28-narrowing-dom-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-narrowing-dom-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour affiner Element vers HTMLInputElement, on utilise souvent :
+    options:
+      - as any
+      - instanceof HTMLInputElement
+      - JSON.parse
+      - enum
+    answer:
+      - 1
+    explanation: |
+      Type guard runtime.
+    skills:
+      - dom
+  - id: typescript-28-narrowing-dom-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      instanceof sur les éléments DOM fonctionne à runtime dans le navigateur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - dom
+  - id: typescript-28-narrowing-dom-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Non-null assertion sur getElementById :
+    options:
+      - Est toujours sûre
+      - Est risquée si l’élément peut manquer
+      - Valide le HTML
+      - Active DOM
+    answer:
+      - 1
+    explanation: |
+      Peut crash.
+    skills:
+      - dom
+  - id: typescript-28-narrowing-dom-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le narrowing DOM combine souvent :
+    options:
+      - skipLibCheck
+      - null check + instanceof
+      - Uniquement paths
+      - target ES3
+    answer:
+      - 1
+    explanation: |
+      Présence + type précis.
+    skills:
+      - dom

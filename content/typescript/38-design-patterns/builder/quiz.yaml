@@ -1,0 +1,64 @@
+id: typescript-38-builder-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-builder-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’API fluent d’un builder s’appuie souvent sur :
+    options:
+      - return this
+      - return never
+      - process.exit
+      - Uniquement des static
+    answer:
+      - 0
+    explanation: |
+      Chaînage.
+    skills:
+      - patterns
+  - id: typescript-38-builder-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      build() produit l’objet final.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-builder-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un type-state builder permet de :
+    options:
+      - Ignorer TypeScript
+      - Imposer l’ordre/présence d’étapes via les types
+      - Remplacer SQL
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Typage avancé.
+    skills:
+      - patterns
+  - id: typescript-38-builder-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Valider dans build() sert à :
+    options:
+      - Rien
+      - Garantir un objet cohérent
+      - Désactiver strict
+      - Créer une route HTTP
+    answer:
+      - 1
+    explanation: |
+      Invariants.
+    skills:
+      - patterns

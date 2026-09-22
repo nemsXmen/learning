@@ -1,0 +1,64 @@
+id: typescript-19-key-remapping-avec-as-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-key-remapping-avec-as-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le key remapping utilise :
+    options:
+      - extends
+      - as dans [K in keyof T as ...]
+      - enum
+      - class
+    answer:
+      - 1
+    explanation: |
+      Syntaxe as NewKey.
+    skills:
+      - mapped-types
+  - id: typescript-19-key-remapping-avec-as-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Si le type après as est never, la propriété est omise.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, technique de filtrage.
+    skills:
+      - mapped-types
+  - id: typescript-19-key-remapping-avec-as-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `get${Capitalize<string & K>}` sert à :
+    options:
+      - Rien
+      - Préfixer et capitaliser le nom de clé
+      - Convertir en number
+      - Supprimer la clé
+    answer:
+      - 1
+    explanation: |
+      Pattern getters typés.
+    skills:
+      - mapped-types
+  - id: typescript-19-key-remapping-avec-as-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi `string & K` avant Capitalize ?
+    options:
+      - C’est obligatoire pour tous les types
+      - K peut être number | symbol ; Capitalize attend string
+      - Pour activer strict
+      - Pour créer un enum
+    answer:
+      - 1
+    explanation: |
+      Intersection pour restreindre à string.
+    skills:
+      - mapped-types

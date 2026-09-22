@@ -1,0 +1,64 @@
+id: typescript-29-configuration-typee-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-configuration-typee-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La config devrait être :
+    options:
+      - Lue via process.env partout sans validation
+      - Centralisée, validée, typée
+      - Uniquement en any
+      - Dans le DOM
+    answer:
+      - 1
+    explanation: |
+      Source unique.
+    skills:
+      - nodejs
+  - id: typescript-29-configuration-typee-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Valider la config au démarrage permet un fail fast.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-configuration-typee-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un schema Zod pour la config :
+    options:
+      - Est inutile
+      - Fournit validation + type inféré
+      - Remplace Node
+      - Désactive strict
+    answer:
+      - 1
+    explanation: |
+      Pattern courant.
+    skills:
+      - nodejs
+  - id: typescript-29-configuration-typee-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      process.env dispersé dans tout le code :
+    options:
+      - Est idéal
+      - Complique tests et validation
+      - Active les types magiquement
+      - Est imposé par TS
+    answer:
+      - 1
+    explanation: |
+      Préférer injection de Config.
+    skills:
+      - nodejs

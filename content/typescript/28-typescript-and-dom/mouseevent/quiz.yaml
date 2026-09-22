@@ -1,0 +1,64 @@
+id: typescript-28-mouseevent-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-mouseevent-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      MouseEvent ajoute notamment :
+    options:
+      - key et code
+      - clientX, clientY, button
+      - state de history
+      - status HTTP
+    answer:
+      - 1
+    explanation: |
+      Coordonnées et bouton.
+    skills:
+      - dom
+  - id: typescript-28-mouseevent-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      addEventListener("click", ...) infère souvent MouseEvent.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui via lib.dom.
+    skills:
+      - dom
+  - id: typescript-28-mouseevent-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les événements tactiles se typent plutôt avec :
+    options:
+      - MouseEvent uniquement
+      - TouchEvent
+      - StorageEvent
+      - never
+    answer:
+      - 1
+    explanation: |
+      API touch distincte.
+    skills:
+      - dom
+  - id: typescript-28-mouseevent-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      e.ctrlKey sur MouseEvent indique :
+    options:
+      - Une erreur
+      - Si la touche Ctrl est pressée
+      - Le type d’input
+      - Un path CSS
+    answer:
+      - 1
+    explanation: |
+      Modifier keyboard.
+    skills:
+      - dom

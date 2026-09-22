@@ -1,0 +1,64 @@
+id: typescript-14-generic-repositories-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-generic-repositories-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Dans `Repository<T extends { id: string }>`, T représente :
+    options:
+      - Uniquement string
+      - Le type d’entité
+      - Un callback
+      - never
+    answer:
+      - 1
+    explanation: |
+      L’entité gérée par le repository.
+    skills:
+      - generics
+  - id: typescript-14-generic-repositories-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `Omit<T, "id">` est souvent utilisé pour le payload de création.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, l’id est généré côté serveur.
+    skills:
+      - generics
+  - id: typescript-14-generic-repositories-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `Partial<T>` pour update sert à :
+    options:
+      - Rendre toutes les propriétés obligatoires
+      - Autoriser une mise à jour partielle
+      - Convertir en any
+      - Interdire les updates
+    answer:
+      - 1
+    explanation: |
+      Toutes les propriétés deviennent optionnelles.
+    skills:
+      - generics
+  - id: typescript-14-generic-repositories-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pourquoi contraindre T à `{ id: string }` ?
+    options:
+      - Aucune raison
+      - Pour garantir la présence d’un identifiant dans les opérations
+      - Pour interdire les objets
+      - Pour activer strict
+    answer:
+      - 1
+    explanation: |
+      Les méthodes s’appuient sur id.
+    skills:
+      - generics

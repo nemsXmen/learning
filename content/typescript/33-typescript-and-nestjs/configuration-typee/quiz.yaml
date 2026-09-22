@@ -1,0 +1,64 @@
+id: typescript-33-configuration-typee-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-configuration-typee-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ConfigModule Nest sert à :
+    options:
+      - Styliser l’UI
+      - Centraliser et injecter la configuration
+      - Remplacer les controllers
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Config globale / feature.
+    skills:
+      - nestjs
+  - id: typescript-33-configuration-typee-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Valider la config au démarrage évite les surprises en production.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Fail fast.
+    skills:
+      - nestjs
+  - id: typescript-33-configuration-typee-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      config.get<number>("port") :
+    options:
+      - Garantit runtime number sans validation
+      - Aide le typage ; la validation reste nécessaire
+      - Remplace process.env complètement sans setup
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      get<T> est surtout compile-time.
+    skills:
+      - nestjs
+  - id: typescript-33-configuration-typee-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      isGlobal: true sur ConfigModule :
+    options:
+      - Limite au module courant
+      - Rend la config disponible partout
+      - Désactive TypeScript
+      - Compile les assets
+    answer:
+      - 1
+    explanation: |
+      Import global.
+    skills:
+      - nestjs

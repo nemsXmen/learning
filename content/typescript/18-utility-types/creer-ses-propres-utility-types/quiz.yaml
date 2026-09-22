@@ -1,0 +1,64 @@
+id: typescript-18-creer-ses-propres-utility-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-creer-ses-propres-utility-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Avant de créer un utility custom, on devrait :
+    options:
+      - Toujours tout réécrire
+      - Vérifier les utilitaires standards
+      - Utiliser any
+      - Interdire les mapped types
+    answer:
+      - 1
+    explanation: |
+      Éviter la réinvention.
+    skills:
+      - utility-types
+  - id: typescript-18-creer-ses-propres-utility-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      DeepPartial et Mutable sont des exemples d’utilities custom courants.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-creer-ses-propres-utility-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un bon utility type custom est :
+    options:
+      - Obscur et sans nom
+      - Nommé clairement et motivé par un besoin réel
+      - Toujours récursif à 10 niveaux
+      - Basé sur any
+    answer:
+      - 1
+    explanation: |
+      Clarté + utilité.
+    skills:
+      - utility-types
+  - id: typescript-18-creer-ses-propres-utility-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les tools de base pour des utilities custom sont :
+    options:
+      - Uniquement les classes
+      - Mapped types, conditionals, keyof, infer
+      - Uniquement les enums
+      - Les décorateurs uniquement
+    answer:
+      - 1
+    explanation: |
+      Boîte à outils type-level.
+    skills:
+      - utility-types

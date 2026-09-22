@@ -1,0 +1,64 @@
+id: typescript-31-custom-hooks-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-custom-hooks-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un custom hook est typé comme :
+    options:
+      - Un fichier CSS
+      - Une fonction TypeScript (params + retour)
+      - Uniquement un enum
+      - Un serveur
+    answer:
+      - 1
+    explanation: |
+      Fonction useX.
+    skills:
+      - react
+  - id: typescript-31-custom-hooks-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les custom hooks peuvent être génériques (useFetch<T>).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-custom-hooks-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      as const sur un tuple retourné :
+    options:
+      - Élargit tout en any
+      - Préserve les littéraux / positions
+      - Désactive les hooks
+      - Remplace useState
+    answer:
+      - 1
+    explanation: |
+      Tuple readonly précis.
+    skills:
+      - react
+  - id: typescript-31-custom-hooks-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Retourner any depuis un hook :
+    options:
+      - Est idéal
+      - Réduit la valeur du typage pour les appelants
+      - Active strict
+      - Est imposé par React
+    answer:
+      - 1
+    explanation: |
+      À éviter.
+    skills:
+      - react

@@ -1,0 +1,64 @@
+id: typescript-41-inference-avancee-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-inference-avancee-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      identity(42) infère souvent T comme :
+    options:
+      - string
+      - number
+      - never
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Depuis l’argument.
+    skills:
+      - generics
+  - id: typescript-41-inference-avancee-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      as const peut empêcher l’élargissement des littéraux.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-inference-avancee-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans site d’inférence, T :
+    options:
+      - Est toujours string
+      - Peut exiger une annotation explicite
+      - Devient process.env
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Annotation.
+    skills:
+      - generics
+  - id: typescript-41-inference-avancee-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sur-annoter partout :
+    options:
+      - Améliore toujours l’inférence
+      - Peut empêcher une meilleure inférence
+      - Est imposé
+      - Active DI
+    answer:
+      - 1
+    explanation: |
+      Laisser inférer quand c’est mieux.
+    skills:
+      - generics

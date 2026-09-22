@@ -1,0 +1,64 @@
+id: typescript-21-capitalize-quiz
+kind: QUIZ
+questions:
+  - id: typescript-21-capitalize-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Capitalize<"hello"> produit :
+    options:
+      - HELLO
+      - Hello
+      - hello
+      - never
+    answer:
+      - 1
+    explanation: |
+      Première lettre majuscule.
+    skills:
+      - template-literal-types
+  - id: typescript-21-capitalize-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `on${Capitalize<"click">}` vaut "onClick".
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - template-literal-types
+  - id: typescript-21-capitalize-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Capitalize vs Uppercase :
+    options:
+      - Identiques
+      - Capitalize = 1re lettre ; Uppercase = tout
+      - Uppercase = 1re lettre uniquement
+      - Aucun rapport
+    answer:
+      - 1
+    explanation: |
+      Portée différente.
+    skills:
+      - template-literal-types
+  - id: typescript-21-capitalize-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Capitalize est central pour :
+    options:
+      - Les enums uniquement
+      - Les patterns getX / onX
+      - Remplacer les strings
+      - Le runtime CSS
+    answer:
+      - 1
+    explanation: |
+      Naming de méthodes/handlers.
+    skills:
+      - template-literal-types

@@ -1,0 +1,64 @@
+id: typescript-30-build-de-librairie-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-build-de-librairie-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour générer des .d.ts avec tsc :
+    options:
+      - skipLibCheck suffit
+      - '{"declaration":true}'
+      - '{"noEmit":true}'
+      - '{"strict":false}'
+    answer:
+      - 1
+    explanation: |
+      Option declaration.
+    skills:
+      - npm
+  - id: typescript-30-build-de-librairie-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      tsup/unbuild peuvent émettre ESM + CJS + types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-build-de-librairie-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les consommateurs doivent importer :
+    options:
+      - Uniquement le dossier src non publié
+      - Les artefacts publiés (dist)
+      - node_modules/typescript
+      - Les fichiers de test
+    answer:
+      - 1
+    explanation: |
+      Sortie de build.
+    skills:
+      - npm
+  - id: typescript-30-build-de-librairie-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      declarationMap aide à :
+    options:
+      - Minifier le JS
+      - Naviguer vers les sources depuis les types (IDE)
+      - Désactiver strict
+      - Remplacer exports
+    answer:
+      - 1
+    explanation: |
+      DX debug types.
+    skills:
+      - npm

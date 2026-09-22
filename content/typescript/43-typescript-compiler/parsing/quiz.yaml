@@ -1,0 +1,64 @@
+id: typescript-43-parsing-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-parsing-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      createSourceFile produit :
+    options:
+      - Un binaire natif
+      - Un AST SourceFile
+      - Une DB
+      - Un CSS bundle
+    answer:
+      - 1
+    explanation: |
+      Parse.
+    skills:
+      - compiler
+  - id: typescript-43-parsing-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les erreurs de syntaxe apparaissent avant le type checking.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-parsing-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ScriptTarget contrôle surtout :
+    options:
+      - La version de grammaire / features acceptées
+      - Le thème IDE
+      - La taille du disque
+      - process.env
+    answer:
+      - 0
+    explanation: |
+      Langage cible parse/emit.
+    skills:
+      - compiler
+  - id: typescript-43-parsing-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      JSX sans option jsx appropriée :
+    options:
+      - Est toujours OK
+      - Peut provoquer des erreurs de parse
+      - Active Prisma
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Config requise.
+    skills:
+      - compiler

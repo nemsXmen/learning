@@ -1,0 +1,64 @@
+id: typescript-24-barrel-files-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-barrel-files-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un barrel file est souvent un :
+    options:
+      - styles.css
+      - index.ts qui ré-exporte
+      - tsconfig exclusif
+      - fichier de test
+    answer:
+      - 1
+    explanation: |
+      Point d’entrée du dossier.
+    skills:
+      - modules
+  - id: typescript-24-barrel-files-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les barrels simplifient les imports consommateurs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - modules
+  - id: typescript-24-barrel-files-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un mega-barrel peut entraîner :
+    options:
+      - Aucun effet
+      - Cycles, perf IDE, tree-shaking moins bon
+      - Une interdiction de compiler
+      - La suppression des modules
+    answer:
+      - 1
+    explanation: |
+      À utiliser avec mesure.
+    skills:
+      - modules
+  - id: typescript-24-barrel-files-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans un barrel, on devrait surtout exporter :
+    options:
+      - Tous les détails internes
+      - L’API publique du dossier / package
+      - Les fichiers de test
+      - Les configs secrètes
+    answer:
+      - 1
+    explanation: |
+      Surface contrôlée.
+    skills:
+      - modules

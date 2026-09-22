@@ -51,6 +51,130 @@ modules:
     title: Enums
     order: 12
     part: core
+  - slug: 13-generics-fundamentals
+    title: Generics Fundamentals
+    order: 13
+    part: core
+  - slug: 14-generics-advanced
+    title: Generics Advanced
+    order: 14
+    part: core
+  - slug: 15-classes
+    title: Classes
+    order: 15
+    part: core
+  - slug: 16-oop-and-typescript
+    title: OOP & TypeScript
+    order: 16
+    part: core
+  - slug: 17-advanced-types
+    title: Advanced Types
+    order: 17
+    part: advanced
+  - slug: 18-utility-types
+    title: Utility Types
+    order: 18
+    part: advanced
+  - slug: 19-mapped-types
+    title: Mapped Types
+    order: 19
+    part: advanced
+  - slug: 20-conditional-types
+    title: Conditional Types
+    order: 20
+    part: advanced
+  - slug: 21-template-literal-types
+    title: Template Literal Types
+    order: 21
+    part: advanced
+  - slug: 22-type-assertions
+    title: Type Assertions
+    order: 22
+    part: advanced
+  - slug: 23-declaration-files
+    title: Declaration Files
+    order: 23
+    part: advanced
+  - slug: 24-modules
+    title: Modules
+    order: 24
+    part: advanced
+  - slug: 25-tsconfig
+    title: tsconfig
+    order: 25
+    part: advanced
+  - slug: 26-typescript-and-javascript-runtime
+    title: TypeScript & JavaScript Runtime
+    order: 26
+    part: advanced
+  - slug: 27-typescript-and-async
+    title: TypeScript & Async
+    order: 27
+    part: advanced
+  - slug: 28-typescript-and-dom
+    title: TypeScript & DOM
+    order: 28
+    part: advanced
+  - slug: 29-typescript-and-nodejs
+    title: TypeScript & Node.js
+    order: 29
+    part: advanced
+  - slug: 30-typescript-and-npm
+    title: TypeScript & NPM
+    order: 30
+    part: advanced
+  - slug: 31-typescript-and-react
+    title: TypeScript & React
+    order: 31
+    part: frameworks
+  - slug: 32-typescript-and-nextjs
+    title: TypeScript & Next.js
+    order: 32
+    part: frameworks
+  - slug: 33-typescript-and-nestjs
+    title: TypeScript & NestJS
+    order: 33
+    part: frameworks
+  - slug: 34-runtime-validation
+    title: Runtime Validation
+    order: 34
+    part: advanced
+  - slug: 35-type-safe-apis
+    title: Type-safe APIs
+    order: 35
+    part: advanced
+  - slug: 36-database-and-typescript
+    title: Database & TypeScript
+    order: 36
+    part: advanced
+  - slug: 37-typescript-testing
+    title: TypeScript Testing
+    order: 37
+    part: advanced
+  - slug: 38-design-patterns
+    title: Design Patterns
+    order: 38
+    part: advanced
+  - slug: 39-clean-architecture
+    title: Clean Architecture
+    order: 39
+    part: advanced
+  - slug: 41-advanced-generics
+    title: Advanced Generics
+    order: 41
+    part: advanced
+  - slug: 42-type-level-programming
+    title: Type-level Programming
+    order: 42
+    part: advanced
+  - slug: 43-typescript-compiler
+    title: TypeScript Compiler
+    order: 43
+    part: advanced
+  - slug: 44-advanced-tooling
+    title: Advanced Tooling
+    order: 44
+    part: advanced
 parts:
   - slug: zero
     title: ZERO — Les bases
@@ -64,3 +188,11 @@ parts:
     title: CORE TYPESCRIPT — Cœur du langage
     order: 3
     description: any, unknown, never et enums.
+  - slug: advanced
+    title: ADVANCED TYPESCRIPT — Types avancés et production
+    order: 4
+    description: Generics avancés, types utilitaires, runtime, outillage et architecture.
+  - slug: frameworks
+    title: FRAMEWORKS — TypeScript dans l'écosystème web
+    order: 5
+    description: TypeScript avec React, Next.js et NestJS.

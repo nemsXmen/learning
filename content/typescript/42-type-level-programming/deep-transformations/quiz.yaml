@@ -1,0 +1,64 @@
+id: typescript-42-deep-transformations-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-deep-transformations-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      DeepReadonly vise à :
+    options:
+      - Readonly top-level only
+      - Readonly récursif
+      - Runtime freeze auto always
+      - CSS
+    answer:
+      - 1
+    explanation: |
+      Profondeur.
+    skills:
+      - type-level
+  - id: typescript-42-deep-transformations-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Il faut souvent un cas spécial pour les tableaux.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-deep-transformations-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mapper Date comme un object libre :
+    options:
+      - Est idéal
+      - Peut produire un type absurde
+      - Est imposé
+      - Active Nest
+    answer:
+      - 1
+    explanation: |
+      Opaque built-in.
+    skills:
+      - type-level
+  - id: typescript-42-deep-transformations-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les Deep* utilities sont surtout :
+    options:
+      - Runtime
+      - Type-level
+      - SQL
+      - Docker
+    answer:
+      - 1
+    explanation: |
+      Compile-time.
+    skills:
+      - type-level

@@ -1,0 +1,64 @@
+id: typescript-24-circular-dependencies-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-circular-dependencies-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une dépendance circulaire signifie :
+    options:
+      - Un module sans export
+      - A dépend de B et B dépend de A (chaîne fermée)
+      - Uniquement un default export
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Cycle dans le graphe d’imports.
+    skills:
+      - modules
+  - id: typescript-24-circular-dependencies-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les cycles peuvent provoquer des bindings undefined à l’initialisation.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, selon l’ordre d’évaluation.
+    skills:
+      - modules
+  - id: typescript-24-circular-dependencies-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un cycle purement lié à un type, une solution est :
+    options:
+      - as any
+      - import type / module de types partagé
+      - Supprimer TypeScript
+      - Doubler les fichiers
+    answer:
+      - 1
+    explanation: |
+      Pas de dépendance runtime.
+    skills:
+      - modules
+  - id: typescript-24-circular-dependencies-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les barrels peuvent :
+    options:
+      - Empêcher tout cycle
+      - Masquer ou créer des cycles
+      - Remplacer les modules
+      - Désactiver les imports
+    answer:
+      - 1
+    explanation: |
+      Attention à la structure.
+    skills:
+      - modules

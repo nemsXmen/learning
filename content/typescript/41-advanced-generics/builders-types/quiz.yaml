@@ -1,0 +1,64 @@
+id: typescript-41-builders-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-41-builders-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un type-state builder fait évoluer :
+    options:
+      - Uniquement le runtime sans types
+      - Le type au fil des appels
+      - Le CSS
+      - Docker
+    answer:
+      - 1
+    explanation: |
+      Type state.
+    skills:
+      - generics
+  - id: typescript-41-builders-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      T & { [P in K]: V } accumule des champs.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-41-builders-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Retourner any dans set() :
+    options:
+      - Conserve le type-state
+      - Casse le suivi de type
+      - Est idéal
+      - Active OCP
+    answer:
+      - 1
+    explanation: |
+      Garder le générique.
+    skills:
+      - generics
+  - id: typescript-41-builders-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Empêcher build() trop tôt se fait via :
+    options:
+      - Uniquement runtime
+      - Types conditionnels / états incomplets
+      - skipLibCheck
+      - process.exit only
+    answer:
+      - 1
+    explanation: |
+      Type-level guards.
+    skills:
+      - generics

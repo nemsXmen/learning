@@ -1,0 +1,64 @@
+id: typescript-16-solid-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-solid-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le S de SOLID signifie :
+    options:
+      - Static
+      - Single Responsibility
+      - Strict
+      - Simple
+    answer:
+      - 1
+    explanation: |
+      Une responsabilité / une raison de changer.
+    skills:
+      - oop
+  - id: typescript-16-solid-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Dependency Inversion pousse à dépendre d’abstractions.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-solid-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Interface Segregation recommande :
+    options:
+      - Une seule grosse interface pour tout
+      - Des interfaces petites et spécifiques
+      - Aucune interface
+      - Uniquement des classes
+    answer:
+      - 1
+    explanation: |
+      Éviter de forcer des méthodes inutiles.
+    skills:
+      - oop
+  - id: typescript-16-solid-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Liskov Substitution exige que :
+    options:
+      - Les sous-types cassent les contrats du parent
+      - Les sous-types restent substituables au type de base
+      - On n’utilise jamais l’héritage
+      - Toutes les méthodes soient static
+    answer:
+      - 1
+    explanation: |
+      Substituabilité sans surprise.
+    skills:
+      - oop

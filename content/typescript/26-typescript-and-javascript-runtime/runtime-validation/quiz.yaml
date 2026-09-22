@@ -1,0 +1,64 @@
+id: typescript-26-runtime-validation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-26-runtime-validation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La validation runtime est surtout nécessaire pour :
+    options:
+      - Les constantes internes hardcodées
+      - Les données externes (API, input…)
+      - Uniquement les enums
+      - Le tsconfig
+    answer:
+      - 1
+    explanation: |
+      Frontières non garanties par TS.
+    skills:
+      - runtime
+  - id: typescript-26-runtime-validation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Zod peut inférer un type TypeScript depuis un schema.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, z.infer.
+    skills:
+      - runtime
+  - id: typescript-26-runtime-validation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le pattern classique est :
+    options:
+      - any → usage direct
+      - unknown → validate → T
+      - as T sans check
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Frontière sûre.
+    skills:
+      - runtime
+  - id: typescript-26-runtime-validation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un type guard retourne souvent :
+    options:
+      - void
+      - data is T
+      - any
+      - never uniquement
+    answer:
+      - 1
+    explanation: |
+      Predicate type.
+    skills:
+      - runtime

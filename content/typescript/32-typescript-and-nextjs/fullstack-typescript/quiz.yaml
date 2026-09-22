@@ -1,0 +1,64 @@
+id: typescript-32-fullstack-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-fullstack-typescript-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une stack fullstack TS avec Next partage souvent :
+    options:
+      - Uniquement du CSS
+      - Types / schemas entre UI et serveur
+      - process.browser only
+      - Des fichiers Java
+    answer:
+      - 1
+    explanation: |
+      Contrats communs.
+    skills:
+      - nextjs
+  - id: typescript-32-fullstack-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un schema Zod peut servir à la fois de validation et de source de type.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-fullstack-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dupliquer les types client et serveur risque de :
+    options:
+      - Rien
+      - Dérive et bugs
+      - Meilleure perf runtime
+      - Activer le middleware
+    answer:
+      - 1
+    explanation: |
+      Source unique préférable.
+    skills:
+      - nextjs
+  - id: typescript-32-fullstack-typescript-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les frontières (actions, route handlers) doivent :
+    options:
+      - Faire confiance totale au client
+      - Valider les entrées
+      - Être non typées
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Sécurité + cohérence.
+    skills:
+      - nextjs

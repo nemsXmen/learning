@@ -1,0 +1,64 @@
+id: typescript-22-double-assertions-quiz
+kind: QUIZ
+questions:
+  - id: typescript-22-double-assertions-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une double assertion typique est :
+    options:
+      - as string as number
+      - as unknown as T
+      - as any as never
+      - as const as const
+    answer:
+      - 1
+    explanation: |
+      Passage par unknown.
+    skills:
+      - type-assertions
+  - id: typescript-22-double-assertions-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      as unknown as T contourne la vérification de compatibilité.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-assertions
+  - id: typescript-22-double-assertions-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les double assertions devraient être :
+    options:
+      - Le premier réflexe
+      - Un last resort documenté
+      - Interdites par la syntaxe
+      - Identiques à as const
+    answer:
+      - 1
+    explanation: |
+      Signes d’un problème plus profond souvent.
+    skills:
+      - type-assertions
+  - id: typescript-22-double-assertions-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un cas (relativement) légitime est :
+    options:
+      - Tout typer en any
+      - Adapter une lib legacy mal typée le temps d’améliorer les types
+      - Remplacer tous les type guards
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Temporaire et documenté.
+    skills:
+      - type-assertions

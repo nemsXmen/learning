@@ -1,0 +1,64 @@
+id: typescript-15-setters-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-setters-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un setter est déclenché lors de :
+    options:
+      - La lecture de la propriété
+      - L’assignation à la propriété
+      - L’import du module
+      - La compilation uniquement
+    answer:
+      - 1
+    explanation: |
+      obj.prop = value appelle le setter.
+    skills:
+      - classes
+  - id: typescript-15-setters-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On couple souvent un setter à un champ privé et un getter.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - classes
+  - id: typescript-15-setters-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un usage classique des setters est :
+    options:
+      - Accélérer le runtime
+      - Valider les valeurs à l’écriture
+      - Remplacer les constructeurs
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Encapsulation + validation.
+    skills:
+      - classes
+  - id: typescript-15-setters-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La syntaxe d’un setter est :
+    options:
+      - '{"set name(value":"Type) { ... }"}'
+      - setter name(value)
+      - name set(value)
+      - function set name
+    answer:
+      - 0
+    explanation: |
+      Mot-clé set suivi du nom et d’un paramètre.
+    skills:
+      - classes

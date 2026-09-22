@@ -1,0 +1,64 @@
+id: typescript-24-import-quiz
+kind: QUIZ
+questions:
+  - id: typescript-24-import-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `import { add } from "./math"` est un import :
+    options:
+      - Default
+      - Named
+      - Global
+      - CSS
+    answer:
+      - 1
+    explanation: |
+      Named export.
+    skills:
+      - modules
+  - id: typescript-24-import-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `import * as Math from "./math"` importe le module comme namespace.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - modules
+  - id: typescript-24-import-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La résolution des chemins dépend surtout de :
+    options:
+      - Du thème VS Code
+      - moduleResolution / paths dans tsconfig
+      - Uniquement du runtime navigateur
+      - Des enums
+    answer:
+      - 1
+    explanation: |
+      Config TypeScript.
+    skills:
+      - modules
+  - id: typescript-24-import-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `import lodash from "lodash"` cible :
+    options:
+      - Un fichier relatif obligatoire
+      - Un package (node_modules)
+      - Un global window
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Spécificateur de package.
+    skills:
+      - modules

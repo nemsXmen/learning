@@ -1,0 +1,64 @@
+id: typescript-43-transformations-ast-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-transformations-ast-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ts.factory sert à :
+    options:
+      - Créer des nœuds AST
+      - Lancer un serveur
+      - Bundler le CSS
+      - Gérer Docker
+    answer:
+      - 0
+    explanation: |
+      Construction de nœuds.
+    skills:
+      - compiler
+  - id: typescript-43-transformations-ast-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un TransformerFactory reçoit un TransformationContext.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-transformations-ast-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      before / after désignent :
+    options:
+      - L’ordre relatif aux transforms built-in
+      - Des hooks CSS
+      - Des migrations SQL
+      - Des tags Git
+    answer:
+      - 0
+    explanation: |
+      Pipeline emit.
+    skills:
+      - compiler
+  - id: typescript-43-transformations-ast-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mal gérer les positions peut :
+    options:
+      - Améliorer les source maps
+      - Casser les source maps
+      - Activer strictNullChecks
+      - Remplacer tsc
+    answer:
+      - 1
+    explanation: |
+      Debug impacté.
+    skills:
+      - compiler

@@ -1,0 +1,64 @@
+id: typescript-38-patterns-type-safe-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-patterns-type-safe-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les unions discriminées aident surtout :
+    options:
+      - Le CSS
+      - Strategy / State / Command typés
+      - skipLibCheck
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Variantes sûres.
+    skills:
+      - patterns
+  - id: typescript-38-patterns-type-safe-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un default: never renforce l’exhaustivité d’un switch.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-patterns-type-safe-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Copier un pattern en any :
+    options:
+      - Conserve toute la sûreté TS
+      - Annule une grande partie des bénéfices
+      - Est imposé
+      - Active Vitest
+    answer:
+      - 1
+    explanation: |
+      Typer les ports.
+    skills:
+      - patterns
+  - id: typescript-38-patterns-type-safe-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sur-ingénierie type-level :
+    options:
+      - Est toujours claire
+      - Peut nuire à la lisibilité
+      - Remplace les tests
+      - Est obligatoire
+    answer:
+      - 1
+    explanation: |
+      Équilibre.
+    skills:
+      - patterns

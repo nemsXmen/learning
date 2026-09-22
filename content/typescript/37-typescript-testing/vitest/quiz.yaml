@@ -1,0 +1,64 @@
+id: typescript-37-vitest-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-vitest-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Vitest est un :
+    options:
+      - ORM
+      - Test runner
+      - Bundler CSS only
+      - Serveur DNS
+    answer:
+      - 1
+    explanation: |
+      Tests.
+    skills:
+      - testing
+  - id: typescript-37-vitest-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Vitest gère bien TypeScript et ESM.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-vitest-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      environment: "jsdom" sert plutôt pour :
+    options:
+      - Tests purement Node backend
+      - Tests avec APIs navigateur / DOM
+      - Compiler SQL
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Front components.
+    skills:
+      - testing
+  - id: typescript-37-vitest-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      vi dans Vitest sert notamment aux :
+    options:
+      - Styles
+      - Mocks et spies
+      - Migrations DB
+      - Routes HTTP only
+    answer:
+      - 1
+    explanation: |
+      Test doubles.
+    skills:
+      - testing

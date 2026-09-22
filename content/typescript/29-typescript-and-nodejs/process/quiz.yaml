@@ -1,0 +1,64 @@
+id: typescript-29-process-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-process-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      process.argv est typé comme :
+    options:
+      - number[]
+      - string[]
+      - object
+      - never
+    answer:
+      - 1
+    explanation: |
+      Arguments CLI en strings.
+    skills:
+      - nodejs
+  - id: typescript-29-process-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      process.env.FOO est string | undefined.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-process-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      process.exit(1) indique souvent :
+    options:
+      - Succès
+      - Échec (code ≠ 0)
+      - Un reload navigateur
+      - Un type TS
+    answer:
+      - 1
+    explanation: |
+      Code de sortie d’erreur.
+    skills:
+      - nodejs
+  - id: typescript-29-process-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      process.cwd() retourne :
+    options:
+      - Le type du module
+      - Le répertoire de travail courant
+      - La version de TypeScript
+      - Un Buffer
+    answer:
+      - 1
+    explanation: |
+      Current working directory.
+    skills:
+      - nodejs

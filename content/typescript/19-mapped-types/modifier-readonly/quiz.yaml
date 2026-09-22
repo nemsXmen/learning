@@ -1,0 +1,64 @@
+id: typescript-19-modifier-readonly-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-modifier-readonly-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `readonly [K in keyof T]` rend les props :
+    options:
+      - Optionnelles
+      - Non réassignables
+      - Privées
+      - never
+    answer:
+      - 1
+    explanation: |
+      Readonly.
+    skills:
+      - mapped-types
+  - id: typescript-19-modifier-readonly-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `-readonly` retire le caractère readonly.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-modifier-readonly-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Readonly par défaut est :
+    options:
+      - Profond
+      - Superficiel
+      - Inexistant
+      - Runtime
+    answer:
+      - 1
+    explanation: |
+      Une seule profondeur.
+    skills:
+      - mapped-types
+  - id: typescript-19-modifier-readonly-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Mutable<T> est l’inverse conceptuel de :
+    options:
+      - Partial
+      - Readonly
+      - Pick
+      - Exclude
+    answer:
+      - 1
+    explanation: |
+      Retire readonly.
+    skills:
+      - mapped-types

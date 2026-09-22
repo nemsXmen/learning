@@ -1,0 +1,64 @@
+id: typescript-18-omit-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-omit-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Omit<T, K> :
+    options:
+      - Conserve uniquement K
+      - Exclut les clés K
+      - Rend tout readonly
+      - Convertit en array
+    answer:
+      - 1
+    explanation: |
+      Suppression de propriétés.
+    skills:
+      - utility-types
+  - id: typescript-18-omit-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Omit est souvent utilisé pour retirer password ou id d’un type.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-omit-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Omit<T, K> est proche de :
+    options:
+      - Partial<T>
+      - Pick<T, Exclude<keyof T, K>>
+      - Required<T>
+      - Record<K, T>
+    answer:
+      - 1
+    explanation: |
+      Définition usuelle.
+    skills:
+      - utility-types
+  - id: typescript-18-omit-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour un payload de création sans id, on utilise souvent :
+    options:
+      - Pick uniquement
+      - Omit<Entity, "id">
+      - any
+      - never
+    answer:
+      - 1
+    explanation: |
+      Pattern classique.
+    skills:
+      - utility-types

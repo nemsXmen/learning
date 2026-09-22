@@ -1,0 +1,64 @@
+id: typescript-31-useeffect-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-useeffect-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      useEffect(async () => ...) est problématique car :
+    options:
+      - async est interdit en JS
+      - La Promise retournée n’est pas un cleanup
+      - TypeScript refuse tout effect
+      - Cela désactive React
+    answer:
+      - 1
+    explanation: |
+      Signature d’effect.
+    skills:
+      - react
+  - id: typescript-31-useeffect-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le cleanup d’un effect retourne généralement void.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-useeffect-q3
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les dépendances de useEffect devraient :
+    options:
+      - Être ignorées
+      - Lister les valeurs utilisées du scope
+      - Toujours être []
+      - Être any
+    answer:
+      - 1
+    explanation: |
+      exhaustiveness.
+    skills:
+      - react
+  - id: typescript-31-useeffect-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un fetch, on place souvent async :
+    options:
+      - Comme argument direct de useEffect
+      - Dans une fonction interne
+      - Dans le CSS
+      - Dans tsconfig
+    answer:
+      - 1
+    explanation: |
+      Pattern standard.
+    skills:
+      - react

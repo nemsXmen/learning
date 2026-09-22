@@ -1,0 +1,64 @@
+id: typescript-42-infer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-infer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      infer s’utilise dans :
+    options:
+      - Un switch runtime
+      - Un conditional type extends
+      - Un fichier CSS
+      - process.env
+    answer:
+      - 1
+    explanation: |
+      Type-level.
+    skills:
+      - type-level
+  - id: typescript-42-infer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      ReturnType est conceptuellement basé sur infer.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-infer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ElementOf<number[]> capture :
+    options:
+      - number[]
+      - number
+      - never always
+      - string
+    answer:
+      - 1
+    explanation: |
+      Élément.
+    skills:
+      - type-level
+  - id: typescript-42-infer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      infer hors d’un extends conditionnel :
+    options:
+      - Est valide partout
+      - Est invalide
+      - Active runtime
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Contexte requis.
+    skills:
+      - type-level

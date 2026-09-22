@@ -1,0 +1,64 @@
+id: typescript-17-indexed-access-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-indexed-access-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `User["name"]` extrait :
+    options:
+      - La valeur runtime
+      - Le type de la propriété name
+      - Uniquement string littéral "name"
+      - never
+    answer:
+      - 1
+    explanation: |
+      Indexed access type.
+    skills:
+      - advanced-types
+  - id: typescript-17-indexed-access-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut chaîner les accès : User["a"]["b"].
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui pour les types imbriqués.
+    skills:
+      - advanced-types
+  - id: typescript-17-indexed-access-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un tableau T, `T[number]` donne souvent :
+    options:
+      - number
+      - Le type des éléments
+      - la longueur
+      - never
+    answer:
+      - 1
+    explanation: |
+      Pattern classique.
+    skills:
+      - advanced-types
+  - id: typescript-17-indexed-access-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T["a" | "b"]` est équivalent à :
+    options:
+      - T["a"] & T["b"]
+      - T["a"] | T["b"]
+      - keyof T
+      - any
+    answer:
+      - 1
+    explanation: |
+      Union des types de propriétés.
+    skills:
+      - advanced-types

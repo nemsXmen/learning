@@ -1,0 +1,64 @@
+id: typescript-30-exports-quiz
+kind: QUIZ
+questions:
+  - id: typescript-30-exports-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le champ exports sert à :
+    options:
+      - Styliser le package
+      - Définir les points d’entrée publics (et conditions)
+      - Remplacer tsconfig
+      - Désactiver Node
+    answer:
+      - 1
+    explanation: |
+      API de package.
+    skills:
+      - npm
+  - id: typescript-30-exports-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut spécifier une condition "types" dans exports.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - npm
+  - id: typescript-30-exports-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      exports permet aussi :
+    options:
+      - Uniquement un seul fichier
+      - Des sous-chemins (./utils)
+      - De supprimer TypeScript
+      - De compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Entrées multiples.
+    skills:
+      - npm
+  - id: typescript-30-exports-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Oublier types dans exports moderne peut :
+    options:
+      - Rien changer jamais
+      - Compliquer la résolution de types
+      - Accélérer le runtime JS
+      - Activer strict
+    answer:
+      - 1
+    explanation: |
+      Résolution TS.
+    skills:
+      - npm

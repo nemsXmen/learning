@@ -1,0 +1,64 @@
+id: typescript-32-metadata-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-metadata-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le type officiel des métadonnées Next est :
+    options:
+      - any
+      - Metadata (from "next")
+      - HTMLElement
+      - process.Env
+    answer:
+      - 1
+    explanation: |
+      Export type Next.
+    skills:
+      - nextjs
+  - id: typescript-32-metadata-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      generateMetadata peut être async et retourner Promise<Metadata>.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-metadata-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      metadata sert principalement au :
+    options:
+      - Styling CSS
+      - SEO / head tags
+      - Routing middleware only
+      - Build Rust
+    answer:
+      - 1
+    explanation: |
+      Titres, OG, etc.
+    skills:
+      - nextjs
+  - id: typescript-32-metadata-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      export const metadata: Metadata = { title: "X" } est :
+    options:
+      - Invalide
+      - Une forme statique valide
+      - Uniquement client
+      - Interdite en App Router
+    answer:
+      - 1
+    explanation: |
+      Statique.
+    skills:
+      - nextjs

@@ -1,0 +1,64 @@
+id: typescript-31-architecture-des-composants-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-architecture-des-composants-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un composant UI pure devrait surtout dépendre de :
+    options:
+      - fetch global
+      - Ses props typées
+      - process.env partout
+      - localStorage non validé
+    answer:
+      - 1
+    explanation: |
+      Testable et clair.
+    skills:
+      - react
+  - id: typescript-31-architecture-des-composants-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Mapper les DTOs API vers des types domaine stabilise l’UI.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-architecture-des-composants-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La validation des réponses API se place idéalement :
+    options:
+      - Au milieu du JSX seulement
+      - À la couche API / hooks data
+      - Dans le CSS
+      - Nulle part
+    answer:
+      - 1
+    explanation: |
+      Frontière.
+    skills:
+      - react
+  - id: typescript-31-architecture-des-composants-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Faire fuiter les types HTTP bruts partout :
+    options:
+      - Est idéal
+      - Couple fortement UI et contrat réseau
+      - Active strict
+      - Remplace les hooks
+    answer:
+      - 1
+    explanation: |
+      Fragile aux changements API.
+    skills:
+      - react

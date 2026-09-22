@@ -1,0 +1,64 @@
+id: typescript-27-generic-async-typescript-basics-quiz
+kind: QUIZ
+questions:
+  - id: typescript-27-generic-async-typescript-basics-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      async function getJson<T>(url: string): Promise<T> utilise T pour :
+    options:
+      - L’URL
+      - Le type de la valeur résolue
+      - Le status HTTP
+      - Un enum
+    answer:
+      - 1
+    explanation: |
+      Type de succès.
+    skills:
+      - async
+  - id: typescript-27-generic-async-typescript-basics-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les generics fonctionnent avec les fonctions async.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - async
+  - id: typescript-27-generic-async-typescript-basics-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Retourner Promise<any> dans un helper générique :
+    options:
+      - Préserve T
+      - Fait perdre l’intérêt du générique
+      - Est obligatoire
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Il faut Promise<T>.
+    skills:
+      - async
+  - id: typescript-27-generic-async-typescript-basics-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      mapAsync items + fn async s’appuie souvent sur :
+    options:
+      - Promise.all
+      - JSON only
+      - Un enum
+      - target ES5
+    answer:
+      - 0
+    explanation: |
+      Parallelisation typée.
+    skills:
+      - async

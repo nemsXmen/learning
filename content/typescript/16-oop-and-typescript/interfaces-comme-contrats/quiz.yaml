@@ -1,0 +1,64 @@
+id: typescript-16-interfaces-comme-contrats-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-interfaces-comme-contrats-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une interface comme contrat sert à :
+    options:
+      - Exécuter du code
+      - Définir une frontière stable entre modules
+      - Remplacer le compilateur
+      - Créer des enums
+    answer:
+      - 1
+    explanation: |
+      Port / API stable.
+    skills:
+      - oop
+  - id: typescript-16-interfaces-comme-contrats-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Programmer contre des interfaces facilite le mock dans les tests.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-interfaces-comme-contrats-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Créer une interface pour chaque classe sans besoin réel est :
+    options:
+      - Toujours une bonne idée
+      - Souvent de la sur-ingénierie
+      - Obligatoire en TypeScript
+      - Plus rapide à runtime
+    answer:
+      - 1
+    explanation: |
+      Abstraire quand il y a un vrai besoin de substitution.
+    skills:
+      - oop
+  - id: typescript-16-interfaces-comme-contrats-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Dans une architecture hexagonale, l’interface du repository est souvent un :
+    options:
+      - Adapter
+      - Port
+      - Enum
+      - Décorateur
+    answer:
+      - 1
+    explanation: |
+      Port = contrat ; adapter = implémentation.
+    skills:
+      - oop

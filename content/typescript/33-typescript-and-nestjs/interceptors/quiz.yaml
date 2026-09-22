@@ -1,0 +1,64 @@
+id: typescript-33-interceptors-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-interceptors-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un interceptor s’exécute :
+    options:
+      - Uniquement au boot
+      - Autour de l’appel du handler
+      - À la place du module
+      - Dans le navigateur only
+    answer:
+      - 1
+    explanation: |
+      Before/after handler.
+    skills:
+      - nestjs
+  - id: typescript-33-interceptors-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      next.handle() retourne un Observable de la réponse.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-interceptors-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      map((data) => ({ data })) sert à :
+    options:
+      - Valider un DTO
+      - Transformer la réponse
+      - Créer une route
+      - Compiler TS
+    answer:
+      - 1
+    explanation: |
+      Enveloppe / mapping.
+    skills:
+      - nestjs
+  - id: typescript-33-interceptors-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les interceptors Nest s’appuient souvent sur :
+    options:
+      - jQuery
+      - RxJS
+      - Uniquement du CSS
+      - localStorage
+    answer:
+      - 1
+    explanation: |
+      Observable pipeline.
+    skills:
+      - nestjs

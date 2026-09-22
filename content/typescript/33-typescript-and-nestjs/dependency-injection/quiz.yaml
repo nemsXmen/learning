@@ -1,0 +1,64 @@
+id: typescript-33-dependency-injection-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-dependency-injection-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’injection Nest se fait principalement via :
+    options:
+      - Des variables globales
+      - Le constructeur
+      - Uniquement process.env
+      - Des fichiers CSS
+    answer:
+      - 1
+    explanation: |
+      Constructor injection.
+    skills:
+      - nestjs
+  - id: typescript-33-dependency-injection-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Les interfaces TypeScript pures ne sont pas des tokens DI valides (type erasure).
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-dependency-injection-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le scope par défaut d’un provider est souvent :
+    options:
+      - Request obligatoire
+      - Singleton
+      - Transient only always
+      - Aucun
+    answer:
+      - 1
+    explanation: |
+      Une instance partagée.
+    skills:
+      - nestjs
+  - id: typescript-33-dependency-injection-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La DI Nest s’appuie sur :
+    options:
+      - Uniquement le nom de fichier
+      - Les métadonnées de types / décorateurs
+      - Le CSS modules
+      - localStorage
+    answer:
+      - 1
+    explanation: |
+      reflect-metadata.
+    skills:
+      - nestjs

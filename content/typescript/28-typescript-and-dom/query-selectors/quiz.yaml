@@ -1,0 +1,64 @@
+id: typescript-28-query-selectors-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-query-selectors-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      document.querySelector("#x") retourne par défaut :
+    options:
+      - Element
+      - Element | null
+      - HTMLElement obligatoire
+      - never
+    answer:
+      - 1
+    explanation: |
+      Peut être absent.
+    skills:
+      - dom
+  - id: typescript-28-query-selectors-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      querySelector<HTMLInputElement> affine le type de retour.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui (compile-time).
+    skills:
+      - dom
+  - id: typescript-28-query-selectors-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      querySelectorAll typé retourne :
+    options:
+      - Array<T>
+      - NodeListOf<T>
+      - T uniquement
+      - Promise<T>
+    answer:
+      - 1
+    explanation: |
+      NodeList typée.
+    skills:
+      - dom
+  - id: typescript-28-query-selectors-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le générique de querySelector :
+    options:
+      - Valide le DOM à runtime
+      - Est une aide de typage, pas une garantie runtime
+      - Remplace le sélecteur
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Comme une assertion.
+    skills:
+      - dom

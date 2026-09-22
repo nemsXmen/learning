@@ -1,0 +1,64 @@
+id: typescript-29-modules-nodejs-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-modules-nodejs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour Node moderne, une config courante est :
+    options:
+      - '{"module":"AMD"}'
+      - '{"module + moduleResolution":"NodeNext"}'
+      - '{"module":"None"}'
+      - Uniquement target ES3
+    answer:
+      - 1
+    explanation: |
+      Alignement Node.
+    skills:
+      - nodejs
+  - id: typescript-29-modules-nodejs-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      "type": "module" dans package.json active le mode ESM.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-modules-nodejs-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mélanger CJS et ESM :
+    options:
+      - Est toujours transparent
+      - Demande de la prudence (interop)
+      - Est impossible
+      - Remplace TypeScript
+    answer:
+      - 1
+    explanation: |
+      Interop à maîtriser.
+    skills:
+      - nodejs
+  - id: typescript-29-modules-nodejs-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      NodeNext respecte notamment :
+    options:
+      - Uniquement le DOM
+      - Les règles d’exports / extensions de Node
+      - Uniquement Webpack
+      - Les fichiers CSS
+    answer:
+      - 1
+    explanation: |
+      Résolution Node réelle.
+    skills:
+      - nodejs

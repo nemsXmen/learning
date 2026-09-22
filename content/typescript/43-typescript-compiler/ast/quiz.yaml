@@ -1,0 +1,64 @@
+id: typescript-43-ast-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-ast-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      ts.forEachChild sert à :
+    options:
+      - Exécuter le programme
+      - Parcourir les enfants d’un nœud AST
+      - Minifier le CSS
+      - Lancer Docker
+    answer:
+      - 1
+    explanation: |
+      Traversée.
+    skills:
+      - compiler
+  - id: typescript-43-ast-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      ts.isCallExpression est un type guard de nœud.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - compiler
+  - id: typescript-43-ast-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      SyntaxKind identifie :
+    options:
+      - Le type runtime uniquement
+      - La sorte de nœud AST
+      - Un package npm
+      - Une route HTTP
+    answer:
+      - 1
+    explanation: |
+      Kind enum.
+    skills:
+      - compiler
+  - id: typescript-43-ast-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Muter l’AST à la main sans API factory :
+    options:
+      - Est recommandé
+      - Est fragile / déconseillé
+      - Est obligatoire
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Utiliser transformers.
+    skills:
+      - compiler

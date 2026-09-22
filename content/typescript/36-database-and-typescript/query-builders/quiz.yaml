@@ -1,0 +1,64 @@
+id: typescript-36-query-builders-quiz
+kind: QUIZ
+questions:
+  - id: typescript-36-query-builders-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Kysely / Drizzle sont des exemples de :
+    options:
+      - Bundlers
+      - Query builders / ORM typés
+      - Frameworks CSS
+      - Linters HTML
+    answer:
+      - 1
+    explanation: |
+      Data layer TS.
+    skills:
+      - database
+  - id: typescript-36-query-builders-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un builder typé réduit les typos de noms de colonnes.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - database
+  - id: typescript-36-query-builders-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      SQL string non paramétré expose à :
+    options:
+      - Rien
+      - Injection SQL
+      - Une meilleure perf toujours
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Sécurité.
+    skills:
+      - database
+  - id: typescript-36-query-builders-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Régénérer les types de tables après changement de schema :
+    options:
+      - Est optionnel sans risque
+      - Maintient l’alignement builder/DB
+      - Supprime les migrations
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Éviter le drift.
+    skills:
+      - database

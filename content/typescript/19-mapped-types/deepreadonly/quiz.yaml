@@ -1,0 +1,64 @@
+id: typescript-19-deepreadonly-quiz
+kind: QUIZ
+questions:
+  - id: typescript-19-deepreadonly-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      DeepReadonly applique readonly :
+    options:
+      - Au premier niveau uniquement
+      - À tous les niveaux d’objets
+      - Uniquement aux strings
+      - Jamais
+    answer:
+      - 1
+    explanation: |
+      Récursif.
+    skills:
+      - mapped-types
+  - id: typescript-19-deepreadonly-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      DeepReadonly est utile pour des états globaux immuables.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - mapped-types
+  - id: typescript-19-deepreadonly-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le pattern de DeepReadonly est proche de :
+    options:
+      - Exclude
+      - DeepPartial (avec readonly au lieu de ?)
+      - Record uniquement
+      - InstanceType
+    answer:
+      - 1
+    explanation: |
+      Même structure récursive.
+    skills:
+      - mapped-types
+  - id: typescript-19-deepreadonly-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Readonly standard est :
+    options:
+      - Toujours profond
+      - Superficiel
+      - Identique à DeepReadonly
+      - Un runtime lock
+    answer:
+      - 1
+    explanation: |
+      Une seule profondeur.
+    skills:
+      - mapped-types

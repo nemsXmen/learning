@@ -1,0 +1,64 @@
+id: typescript-35-openapi-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-openapi-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      OpenAPI décrit principalement :
+    options:
+      - Des styles CSS
+      - Des APIs HTTP (paths, schemas, responses)
+      - Des binaries Node only
+      - Des thèmes IDE
+    answer:
+      - 1
+    explanation: |
+      Spec REST.
+    skills:
+      - api
+  - id: typescript-35-openapi-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      openapi-typescript génère des types TypeScript depuis une spec.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-openapi-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une spec OpenAPI incomplète sur les erreurs :
+    options:
+      - N’a aucun impact
+      - Affaiblit le contrat client
+      - Active Zod auto
+      - Est imposée
+    answer:
+      - 1
+    explanation: |
+      Documenter les erreurs.
+    skills:
+      - api
+  - id: typescript-35-openapi-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      OpenAPI peut aussi servir à :
+    options:
+      - Uniquement du design graphique
+      - Doc, mocks, clients, validation
+      - Remplacer la base de données
+      - Compiler le CSS
+    answer:
+      - 1
+    explanation: |
+      Écosystème large.
+    skills:
+      - api

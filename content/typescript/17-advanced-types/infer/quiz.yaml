@@ -1,0 +1,64 @@
+id: typescript-17-infer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-infer-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `infer` s’utilise uniquement dans :
+    options:
+      - Les interfaces
+      - Les conditional types
+      - Les enums
+      - Les classes
+    answer:
+      - 1
+    explanation: |
+      Contexte obligatoire.
+    skills:
+      - advanced-types
+  - id: typescript-17-infer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `infer R` permet de capturer le type de retour d’une fonction dans un conditional type.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, pattern ReturnType.
+    skills:
+      - advanced-types
+  - id: typescript-17-infer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T extends (infer U)[] ? U : never` extrait :
+    options:
+      - La longueur du tableau
+      - Le type des éléments
+      - Uniquement string
+      - never toujours
+    answer:
+      - 1
+    explanation: |
+      U = type d’élément.
+    skills:
+      - advanced-types
+  - id: typescript-17-infer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `Awaited` / extraction de Promise s’appuie souvent sur :
+    options:
+      - keyof uniquement
+      - infer
+      - enum
+      - any
+    answer:
+      - 1
+    explanation: |
+      infer U dans Promise<infer U>.
+    skills:
+      - advanced-types

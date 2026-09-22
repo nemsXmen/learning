@@ -1,0 +1,64 @@
+id: typescript-44-debugging-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-debugging-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour debugger du TS on s’appuie surtout sur :
+    options:
+      - Des source maps
+      - Uniquement printf sans maps
+      - Le CSS
+      - skipLibCheck
+    answer:
+      - 0
+    explanation: |
+      Mapping lignes.
+    skills:
+      - tooling
+  - id: typescript-44-debugging-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      tsx peut exécuter du TypeScript directement en dev.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-debugging-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Breakpoints unbound indiquent souvent :
+    options:
+      - Tout va bien
+      - Un problème de maps / chemins
+      - Un succès de build
+      - Une règle Prettier
+    answer:
+      - 1
+    explanation: |
+      Config debug.
+    skills:
+      - tooling
+  - id: typescript-44-debugging-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      launch.json configure :
+    options:
+      - Le debugger VS Code
+      - Uniquement npm publish
+      - Docker DNS
+      - Prisma migrate only
+    answer:
+      - 0
+    explanation: |
+      IDE debug.
+    skills:
+      - tooling

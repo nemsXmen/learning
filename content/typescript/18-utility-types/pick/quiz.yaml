@@ -1,0 +1,64 @@
+id: typescript-18-pick-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-pick-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pick<T, K> :
+    options:
+      - Supprime les clés K
+      - Conserve uniquement les clés K
+      - Rend tout optionnel
+      - Convertit en any
+    answer:
+      - 1
+    explanation: |
+      Sélection de propriétés.
+    skills:
+      - utility-types
+  - id: typescript-18-pick-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      K dans Pick<T, K> doit être assignable à keyof T.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-pick-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pick est utile pour :
+    options:
+      - Dupliquer tout T
+      - Créer des vues / DTOs avec un sous-ensemble de champs
+      - Supprimer TypeScript
+      - Créer des enums
+    answer:
+      - 1
+    explanation: |
+      Sous-ensembles typés.
+    skills:
+      - utility-types
+  - id: typescript-18-pick-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pick<User, "id" | "name"> produit un type avec :
+    options:
+      - Toutes les props de User
+      - Uniquement id et name
+      - Aucune prop
+      - Uniquement password
+    answer:
+      - 1
+    explanation: |
+      Exactement ces deux clés.
+    skills:
+      - utility-types

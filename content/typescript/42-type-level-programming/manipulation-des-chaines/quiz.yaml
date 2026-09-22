@@ -1,0 +1,64 @@
+id: typescript-42-manipulation-des-chaines-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-manipulation-des-chaines-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Split au type-level s’appuie surtout sur :
+    options:
+      - runtime split only
+      - template + infer + récursion
+      - CSS
+      - SQL
+    answer:
+      - 1
+    explanation: |
+      Type-level parse.
+    skills:
+      - type-level
+  - id: typescript-42-manipulation-des-chaines-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `${infer Head}${D}${infer Rest}` capture avant/après un délimiteur.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-manipulation-des-chaines-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Parser `/users/:id` au type-level sert à :
+    options:
+      - Rien
+      - Typer les params de route
+      - Remplacer le routeur runtime toujours
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      DX routes.
+    skills:
+      - type-level
+  - id: typescript-42-manipulation-des-chaines-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      De très longues récursions sur strings peuvent :
+    options:
+      - Accélérer tsc toujours
+      - Ralentir ou faire échouer la compilation
+      - Activer DI
+      - Être obligatoires
+    answer:
+      - 1
+    explanation: |
+      Coût compilateur.
+    skills:
+      - type-level

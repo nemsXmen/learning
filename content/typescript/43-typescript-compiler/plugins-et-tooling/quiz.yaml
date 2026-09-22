@@ -1,0 +1,64 @@
+id: typescript-43-plugins-et-tooling-quiz
+kind: QUIZ
+questions:
+  - id: typescript-43-plugins-et-tooling-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le language service alimente surtout :
+    options:
+      - La base de données
+      - L’IDE (completions, info)
+      - Le DNS
+      - Docker Compose
+    answer:
+      - 1
+    explanation: |
+      Éditeur.
+    skills:
+      - compiler
+  - id: typescript-43-plugins-et-tooling-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un plugin language service ne remplace pas forcément un transformer d’emit.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Points d’extension différents.
+    skills:
+      - compiler
+  - id: typescript-43-plugins-et-tooling-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      ts-morph est :
+    options:
+      - Un runtime browser
+      - Une couche DX sur l’AST/compiler API
+      - Un ORM
+      - Un linter CSS
+    answer:
+      - 1
+    explanation: |
+      Tooling AST.
+    skills:
+      - compiler
+  - id: typescript-43-plugins-et-tooling-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      typescript-eslint s’appuie sur :
+    options:
+      - Uniquement regex
+      - L’analyse TypeScript (AST/types)
+      - skipLibCheck only
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Lint typé.
+    skills:
+      - compiler

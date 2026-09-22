@@ -1,0 +1,64 @@
+id: typescript-31-composants-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-31-composants-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Les props d’un composant se typent souvent via :
+    options:
+      - Un enum obligatoire
+      - Un type ou une interface
+      - process.env
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Contrat du composant.
+    skills:
+      - react
+  - id: typescript-31-composants-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      function Button({ label }: ButtonProps) est une forme courante et claire.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - react
+  - id: typescript-31-composants-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      React.FC est :
+    options:
+      - Obligatoire
+      - Optionnel (parfois déconseillé selon style)
+      - Un hook
+      - Un remplacement de JSX
+    answer:
+      - 1
+    explanation: |
+      Préférence d’équipe.
+    skills:
+      - react
+  - id: typescript-31-composants-types-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Sans typage des props, on risque :
+    options:
+      - Rien
+      - any implicite / perte de checks
+      - Une compile plus stricte auto
+      - Un runtime plus rapide
+    answer:
+      - 1
+    explanation: |
+      Moins de sécurité.
+    skills:
+      - react

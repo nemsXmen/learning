@@ -1,0 +1,64 @@
+id: typescript-25-project-references-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-project-references-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les project references servent surtout à :
+    options:
+      - Styliser l’UI
+      - Découper et ordonner des projets TS (monorepo)
+      - Remplacer npm
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Architecture multi-projets.
+    skills:
+      - tsconfig
+  - id: typescript-25-project-references-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      composite: true est souvent requis pour un projet référencé.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tsconfig
+  - id: typescript-25-project-references-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      La commande de build orchestrée est souvent :
+    options:
+      - tsc -w only
+      - tsc -b
+      - node only
+      - eslint --fix
+    answer:
+      - 1
+    explanation: |
+      Build mode.
+    skills:
+      - tsconfig
+  - id: typescript-25-project-references-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un bénéfice est :
+    options:
+      - Builds plus lents toujours
+      - Builds incrémentaux et isolation des packages
+      - Suppression des types
+      - Interdiction des monorepos
+    answer:
+      - 1
+    explanation: |
+      Scalabilité.
+    skills:
+      - tsconfig

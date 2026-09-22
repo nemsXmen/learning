@@ -1,0 +1,64 @@
+id: typescript-38-quand-utiliser-ou-eviter-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-quand-utiliser-ou-eviter-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un design pattern est :
+    options:
+      - Toujours obligatoire
+      - Un outil à utiliser selon le besoin
+      - Un remplacement de TypeScript
+      - Un fichier CSS
+    answer:
+      - 1
+    explanation: |
+      Pragmatisme.
+    skills:
+      - patterns
+  - id: typescript-38-quand-utiliser-ou-eviter-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TypeScript (unions, génériques) peut simplifier des cas autrement « pattern-lourds ».
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-quand-utiliser-ou-eviter-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Introduire un pattern sans pain point :
+    options:
+      - Est idéal
+      - Risque de sur-ingénierie
+      - Active strict
+      - Est imposé par TS
+    answer:
+      - 1
+    explanation: |
+      YAGNI.
+    skills:
+      - patterns
+  - id: typescript-38-quand-utiliser-ou-eviter-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un CRUD simple, on privilégie souvent :
+    options:
+      - Une usine à patterns
+      - Une solution simple et typée
+      - Any partout
+      - Une FSM XState obligatoire
+    answer:
+      - 1
+    explanation: |
+      Simplicité.
+    skills:
+      - patterns

@@ -1,0 +1,64 @@
+id: typescript-25-base-url-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-base-url-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      baseUrl sert à :
+    options:
+      - Définir target
+      - La base de résolution des imports non relatifs
+      - Activer strict
+      - Ignorer les .d.ts
+    answer:
+      - 1
+    explanation: |
+      Chemins absolus TS.
+    skills:
+      - tsconfig
+  - id: typescript-25-base-url-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      baseUrl doit souvent être aligné avec la config du bundler.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, sinon runtime ≠ types.
+    skills:
+      - tsconfig
+  - id: typescript-25-base-url-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Sans alignement runtime, un import baseUrl peut :
+    options:
+      - Toujours fonctionner
+      - Type-checker mais échouer à l’exécution
+      - Remplacer node_modules
+      - Activer DOM
+    answer:
+      - 1
+    explanation: |
+      TS ≠ runtime.
+    skills:
+      - tsconfig
+  - id: typescript-25-base-url-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      baseUrl se combine souvent avec :
+    options:
+      - skipLibCheck seulement
+      - paths
+      - exactOptionalPropertyTypes uniquement
+      - noEmit forcé
+    answer:
+      - 1
+    explanation: |
+      Alias de chemins.
+    skills:
+      - tsconfig

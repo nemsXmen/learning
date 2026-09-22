@@ -1,0 +1,64 @@
+id: typescript-26-type-erasure-quiz
+kind: QUIZ
+questions:
+  - id: typescript-26-type-erasure-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Une interface TypeScript à runtime :
+    options:
+      - Existe comme objet
+      - Est entièrement effacée
+      - Devient une classe
+      - Est un enum
+    answer:
+      - 1
+    explanation: |
+      Type erasure.
+    skills:
+      - runtime
+  - id: typescript-26-type-erasure-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les paramètres de type génériques n’existent pas à runtime.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - runtime
+  - id: typescript-26-type-erasure-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une class TypeScript :
+    options:
+      - Est toujours effacée
+      - Existe comme valeur runtime (fonction/constructeur)
+      - N’émet jamais de JS
+      - Est uniquement un type
+    answer:
+      - 1
+    explanation: |
+      Valeur + type.
+    skills:
+      - runtime
+  - id: typescript-26-type-erasure-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      instanceof MyInterface :
+    options:
+      - Fonctionne toujours
+      - N’a pas de sens (interface effacée)
+      - Est recommandé
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Pas de runtime pour l’interface.
+    skills:
+      - runtime

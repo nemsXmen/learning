@@ -1,0 +1,64 @@
+id: typescript-32-middleware-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-middleware-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le middleware reçoit typiquement :
+    options:
+      - HTMLElement
+      - NextRequest
+      - process.argv seulement
+      - Un Buffer obligatoire
+    answer:
+      - 1
+    explanation: |
+      Type Next.
+    skills:
+      - nextjs
+  - id: typescript-32-middleware-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      config.matcher restreint les chemins où le middleware s’applique.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-middleware-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      NextResponse.redirect sert à :
+    options:
+      - Compiler
+      - Rediriger la requête
+      - Valider Zod
+      - Typer les props React
+    answer:
+      - 1
+    explanation: |
+      Navigation.
+    skills:
+      - nextjs
+  - id: typescript-32-middleware-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le middleware doit rester :
+    options:
+      - Très lourd (DB complexes)
+      - Léger (edge constraints)
+      - Uniquement client
+      - Sans types
+    answer:
+      - 1
+    explanation: |
+      Runtime edge.
+    skills:
+      - nextjs

@@ -1,0 +1,64 @@
+id: typescript-34-validation-db-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-validation-db-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un résultat de SQL brut devrait être traité comme :
+    options:
+      - User garanti
+      - unknown à valider / mapper
+      - never
+      - HTMLElement
+    answer:
+      - 1
+    explanation: |
+      Frontière data.
+    skills:
+      - validation
+  - id: typescript-34-validation-db-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les colonnes JSON en base méritent souvent un schema de validation.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Contenu libre.
+    skills:
+      - validation
+  - id: typescript-34-validation-db-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Prisma Client désynchronisé (sans generate) :
+    options:
+      - Est sans risque
+      - Peut mentir sur le schema réel
+      - Active Zod
+      - Est impossible
+    answer:
+      - 1
+    explanation: |
+      Régénérer après migrations.
+    skills:
+      - validation
+  - id: typescript-34-validation-db-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      as User sur un row SQL :
+    options:
+      - Valide les colonnes
+      - N’offre aucune garantie runtime
+      - Est une migration
+      - Remplace l’ORM
+    answer:
+      - 1
+    explanation: |
+      Assertion.
+    skills:
+      - validation

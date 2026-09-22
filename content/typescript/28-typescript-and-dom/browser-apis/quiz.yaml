@@ -1,0 +1,64 @@
+id: typescript-28-browser-apis-quiz
+kind: QUIZ
+questions:
+  - id: typescript-28-browser-apis-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      localStorage.getItem retourne :
+    options:
+      - string
+      - string | null
+      - object
+      - never
+    answer:
+      - 1
+    explanation: |
+      Clé absente → null.
+    skills:
+      - dom
+  - id: typescript-28-browser-apis-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      fetch et Response sont typés via les libs DOM / fetch.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - dom
+  - id: typescript-28-browser-apis-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Avant d’utiliser serviceWorker, on vérifie souvent :
+    options:
+      - Rien
+      - '"serviceWorker" in navigator'
+      - skipLibCheck
+      - target ES3
+    answer:
+      - 1
+    explanation: |
+      Feature detection.
+    skills:
+      - dom
+  - id: typescript-28-browser-apis-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les données issues de localStorage devraient être :
+    options:
+      - Trustées comme User
+      - Parsées + validées
+      - Typées any sans suite
+      - Ignorées
+    answer:
+      - 1
+    explanation: |
+      Frontière externe.
+    skills:
+      - dom

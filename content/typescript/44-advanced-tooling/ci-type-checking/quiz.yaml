@@ -1,0 +1,64 @@
+id: typescript-44-ci-type-checking-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-ci-type-checking-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      tsc --noEmit en CI sert à :
+    options:
+      - Déployer
+      - Vérifier les types sans écrire de JS
+      - Formater le CSS
+      - Créer des users
+    answer:
+      - 1
+    explanation: |
+      Gate types.
+    skills:
+      - tooling
+  - id: typescript-44-ci-type-checking-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Aligner la version TypeScript local/CI évite des surprises.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-ci-type-checking-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      incremental / tsbuildinfo en CI peut :
+    options:
+      - Ralentir toujours
+      - Accélérer les runs suivants via cache
+      - Remplacer les tests
+      - Désactiver strict
+    answer:
+      - 1
+    explanation: |
+      Cache compile.
+    skills:
+      - tooling
+  - id: typescript-44-ci-type-checking-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Typecheck uniquement sur la machine du lead :
+    options:
+      - Suffit toujours
+      - Est un risque pour l’équipe
+      - Active ESLint
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      CI partagée.
+    skills:
+      - tooling

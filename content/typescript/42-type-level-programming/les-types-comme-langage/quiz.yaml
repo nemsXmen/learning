@@ -1,0 +1,64 @@
+id: typescript-42-les-types-comme-langage-quiz
+kind: QUIZ
+questions:
+  - id: typescript-42-les-types-comme-langage-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le type-level programming s’exécute :
+    options:
+      - À runtime dans Node
+      - À la compilation (effacé ensuite)
+      - Dans le navigateur only
+      - Via CSS
+    answer:
+      - 1
+    explanation: |
+      Compile-time.
+    skills:
+      - type-level
+  - id: typescript-42-les-types-comme-langage-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      T extends U ? X : Y est une branche au niveau des types.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - type-level
+  - id: typescript-42-les-types-comme-langage-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Mettre de la logique métier runtime en types :
+    options:
+      - Est idéal
+      - Est un mauvais usage du type-level
+      - Active Vitest
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Types ≠ runtime métier.
+    skills:
+      - type-level
+  - id: typescript-42-les-types-comme-langage-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      L’objectif principal est surtout :
+    options:
+      - Accélérer le CPU
+      - Sûreté et DX compile-time
+      - Remplacer SQL
+      - Minifier le CSS
+    answer:
+      - 1
+    explanation: |
+      Compile-time safety.
+    skills:
+      - type-level

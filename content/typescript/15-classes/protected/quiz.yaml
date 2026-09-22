@@ -1,0 +1,64 @@
+id: typescript-15-protected-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-protected-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un membre protected est accessible :
+    options:
+      - Partout
+      - Dans la classe et ses sous-classes
+      - Uniquement dans la classe
+      - Uniquement depuis l’extérieur
+    answer:
+      - 1
+    explanation: |
+      Classe + héritiers.
+    skills:
+      - classes
+  - id: typescript-15-protected-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le code externe à la hiérarchie de classes peut accéder à un membre protected.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux.
+    skills:
+      - classes
+  - id: typescript-15-protected-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      protected est surtout utile pour :
+    options:
+      - Tout exposer
+      - Permettre l’extension par sous-classes sans exposer au monde extérieur
+      - Remplacer public
+      - Créer des enums
+    answer:
+      - 1
+    explanation: |
+      Hooks d’héritage contrôlés.
+    skills:
+      - classes
+  - id: typescript-15-protected-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      private vs protected : qui est visible dans une sous-classe ?
+    options:
+      - private uniquement
+      - protected uniquement (pas private)
+      - Les deux
+      - Aucun des deux
+    answer:
+      - 1
+    explanation: |
+      Seul protected est visible dans la sous-classe.
+    skills:
+      - classes

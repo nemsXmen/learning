@@ -1,0 +1,64 @@
+id: typescript-39-domain-layer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-39-domain-layer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      La couche domaine contient surtout :
+    options:
+      - Les routes HTTP
+      - Les règles et modèles métier
+      - Le CSS
+      - La config Docker only
+    answer:
+      - 1
+    explanation: |
+      Cœur métier.
+    skills:
+      - architecture
+  - id: typescript-39-domain-layer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le domain ne devrait pas importer le framework web.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Indépendance.
+    skills:
+      - architecture
+  - id: typescript-39-domain-layer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un domain anémique :
+    options:
+      - A beaucoup de règles riches
+      - N’a presque que des structures de données
+      - Est toujours idéal
+      - Remplace l’infra
+    answer:
+      - 1
+    explanation: |
+      Manque de comportement.
+    skills:
+      - architecture
+  - id: typescript-39-domain-layer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les value objects dans le domain servent à :
+    options:
+      - Styliser
+      - Encapsuler invariants (Email, Money…)
+      - Remplacer SQL
+      - Configurer Vite
+    answer:
+      - 1
+    explanation: |
+      Invariants métier.
+    skills:
+      - architecture

@@ -1,0 +1,64 @@
+id: typescript-29-eventemitter-quiz
+kind: QUIZ
+questions:
+  - id: typescript-29-eventemitter-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour typer EventEmitter, on utilise souvent :
+    options:
+      - Uniquement any
+      - Une map event → args
+      - Un fichier CSS
+      - skipLibCheck seulement
+    answer:
+      - 1
+    explanation: |
+      Contrats d’événements.
+    skills:
+      - nodejs
+  - id: typescript-29-eventemitter-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Un EventEmitter non typé laisse souvent les payloads en any.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nodejs
+  - id: typescript-29-eventemitter-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      emit typé empêche :
+    options:
+      - Tout événement
+      - Les noms / payloads incorrects (selon la map)
+      - Les listeners
+      - Node.js
+    answer:
+      - 1
+    explanation: |
+      Sécurité des événements.
+    skills:
+      - nodejs
+  - id: typescript-29-eventemitter-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      EventEmitter vient du module :
+    options:
+      - fs
+      - events
+      - path
+      - http only
+    answer:
+      - 1
+    explanation: |
+      module events.
+    skills:
+      - nodejs

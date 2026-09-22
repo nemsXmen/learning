@@ -1,0 +1,64 @@
+id: typescript-44-language-service-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-language-service-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      tsserver sert surtout à :
+    options:
+      - L’expérience IDE TypeScript
+      - Héberger une API prod
+      - Minifier Docker
+      - Remplacer Git
+    answer:
+      - 0
+    explanation: |
+      Language service.
+    skills:
+      - tooling
+  - id: typescript-44-language-service-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Go to definition s’appuie sur le language service.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-language-service-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un tsconfig incorrect peut :
+    options:
+      - Améliorer toujours IntelliSense
+      - Casser completions / diagnostics
+      - Activer Prettier
+      - Créer une DB
+    answer:
+      - 1
+    explanation: |
+      Config critique.
+    skills:
+      - tooling
+  - id: typescript-44-language-service-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le language service est optimisé pour :
+    options:
+      - Des réponses interactives incrémentales
+      - Uniquement des builds nightly
+      - Le CSS
+      - process.exit
+    answer:
+      - 0
+    explanation: |
+      DX live.
+    skills:
+      - tooling

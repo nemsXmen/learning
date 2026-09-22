@@ -1,0 +1,64 @@
+id: typescript-23-declare-quiz
+kind: QUIZ
+questions:
+  - id: typescript-23-declare-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      declare indique que :
+    options:
+      - TypeScript doit générer l’implémentation
+      - L’entité existe déjà à runtime
+      - La variable est private
+      - On désactive strict
+    answer:
+      - 1
+    explanation: |
+      Ambient.
+    skills:
+      - declaration-files
+  - id: typescript-23-declare-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      declare n’émet pas de code JavaScript.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - declaration-files
+  - id: typescript-23-declare-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      On peut declare :
+    options:
+      - Uniquement des strings
+      - var, function, class, module, namespace…
+      - Uniquement des enums runtime
+      - Uniquement du CSS
+    answer:
+      - 1
+    explanation: |
+      Large éventail de formes.
+    skills:
+      - declaration-files
+  - id: typescript-23-declare-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `declare function f(): void` dans un .d.ts :
+    options:
+      - Crée une fonction vide en JS
+      - Type la fonction f existante
+      - Est une erreur de syntaxe
+      - Active le mode strict
+    answer:
+      - 1
+    explanation: |
+      Déclaration de signature.
+    skills:
+      - declaration-files

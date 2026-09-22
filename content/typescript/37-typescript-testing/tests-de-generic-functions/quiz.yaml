@@ -1,0 +1,64 @@
+id: typescript-37-tests-de-generic-typescript-basics-quiz
+kind: QUIZ
+questions:
+  - id: typescript-37-tests-de-generic-typescript-basics-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      À runtime, le paramètre T d’une fonction générique :
+    options:
+      - Existe comme objet
+      - Est effacé
+      - Devient une classe
+      - Valide Zod auto
+    answer:
+      - 1
+    explanation: |
+      Type erasure.
+    skills:
+      - testing
+  - id: typescript-37-tests-de-generic-typescript-basics-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Tester plusieurs types concrets aide pour les génériques.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - testing
+  - id: typescript-37-tests-de-generic-typescript-basics-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      L’inférence de types se vérifie surtout via :
+    options:
+      - Uniquement console.log
+      - Des type tests / tsd
+      - Du CSS
+      - process.exit
+    answer:
+      - 1
+    explanation: |
+      Niveau types.
+    skills:
+      - testing
+  - id: typescript-37-tests-de-generic-typescript-basics-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un seul cas number pour identity :
+    options:
+      - Couvre toute l’API de types
+      - Est une couverture partielle
+      - Remplace tsc
+      - Est interdit
+    answer:
+      - 1
+    explanation: |
+      Multiplier les cas.
+    skills:
+      - testing

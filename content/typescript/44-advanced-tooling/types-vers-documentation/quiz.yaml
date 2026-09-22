@@ -1,0 +1,64 @@
+id: typescript-44-types-vers-documentation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-types-vers-documentation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      TypeDoc génère de la documentation à partir de :
+    options:
+      - Uniquement du CSS
+      - Types et commentaires TS
+      - Dockerfiles only
+      - Fichiers PNG
+    answer:
+      - 1
+    explanation: |
+      Doc générique.
+    skills:
+      - tooling
+  - id: typescript-44-types-vers-documentation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      TSDoc est un format de commentaires pour documenter TS.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-types-vers-documentation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      any dans l’API publique documentée :
+    options:
+      - Améliore la doc
+      - Affaiblit le contrat documenté
+      - Est idéal
+      - Active Prettier
+    answer:
+      - 1
+    explanation: |
+      Types précis.
+    skills:
+      - tooling
+  - id: typescript-44-types-vers-documentation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Régénérer la doc en CI aide à :
+    options:
+      - Ignorer les drifts
+      - Détecter les écarts doc/code
+      - Remplacer tsc
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Alignement.
+    skills:
+      - tooling

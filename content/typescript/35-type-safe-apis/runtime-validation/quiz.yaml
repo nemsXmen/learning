@@ -1,0 +1,64 @@
+id: typescript-35-runtime-validation-quiz
+kind: QUIZ
+questions:
+  - id: typescript-35-runtime-validation-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Sans validation runtime, les types d’API sont surtout :
+    options:
+      - Des garanties réseau
+      - De la documentation compile-time
+      - Des middleware
+      - Des buffers
+    answer:
+      - 1
+    explanation: |
+      Pas de check réel.
+    skills:
+      - api
+  - id: typescript-35-runtime-validation-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le schema peut servir de contrat exécutable.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - api
+  - id: typescript-35-runtime-validation-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Valider les réponses en staging peut :
+    options:
+      - Rien apporter
+      - Détecter les drifts de sérialisation
+      - Remplacer les tests unitaires toujours
+      - Désactiver HTTP
+    answer:
+      - 1
+    explanation: |
+      Détection de régression.
+    skills:
+      - api
+  - id: typescript-35-runtime-validation-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Validation uniquement en développement :
+    options:
+      - Suffit en prod
+      - Laisse un trou en production
+      - Active strict
+      - Est imposée
+    answer:
+      - 1
+    explanation: |
+      Prod aussi.
+    skills:
+      - api

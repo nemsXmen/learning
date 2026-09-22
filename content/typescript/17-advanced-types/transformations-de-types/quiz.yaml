@@ -1,0 +1,64 @@
+id: typescript-17-transformations-de-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-17-transformations-de-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      `Omit<User, "password">` produit :
+    options:
+      - User avec uniquement password
+      - User sans la propriété password
+      - any
+      - never
+    answer:
+      - 1
+    explanation: |
+      Suppression de clés.
+    skills:
+      - advanced-types
+  - id: typescript-17-transformations-de-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      On peut composer Partial et Omit.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, très courant.
+    skills:
+      - advanced-types
+  - id: typescript-17-transformations-de-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le key remapping utilise :
+    options:
+      - extends uniquement
+      - as dans un mapped type
+      - enum
+      - class
+    answer:
+      - 1
+    explanation: |
+      { [K in keyof T as NewKey]: ... }
+    skills:
+      - advanced-types
+  - id: typescript-17-transformations-de-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Avant de réinventer un helper de transformation, on vérifie :
+    options:
+      - Rien
+      - Les utilitaires standards (Pick, Omit, Exclude…)
+      - Uniquement Stack Overflow
+      - Les décorateurs
+    answer:
+      - 1
+    explanation: |
+      La lib standard couvre beaucoup de cas.
+    skills:
+      - advanced-types

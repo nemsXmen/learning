@@ -1,0 +1,64 @@
+id: typescript-34-z-infer-quiz
+kind: QUIZ
+questions:
+  - id: typescript-34-z-infer-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      z.infer<typeof UserSchema> produit :
+    options:
+      - Un schema runtime
+      - Le type TypeScript correspondant au schema
+      - Un fichier CSS
+      - Un buffer
+    answer:
+      - 1
+    explanation: |
+      Extraction de type.
+    skills:
+      - validation
+  - id: typescript-34-z-infer-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      z.infer évite de dupliquer type et schema.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - validation
+  - id: typescript-34-z-infer-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Avec des transforms Zod, on peut distinguer :
+    options:
+      - z.css et z.html
+      - z.input et z.output
+      - z.never only
+      - z.module
+    answer:
+      - 1
+    explanation: |
+      Avant/après transform.
+    skills:
+      - validation
+  - id: typescript-34-z-infer-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Redéfinir type User à la main en plus du schema :
+    options:
+      - Est idéal
+      - Risque de dérive
+      - Est imposé
+      - Active strict
+    answer:
+      - 1
+    explanation: |
+      Single source of truth.
+    skills:
+      - validation

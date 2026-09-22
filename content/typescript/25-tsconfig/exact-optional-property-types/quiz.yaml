@@ -1,0 +1,64 @@
+id: typescript-25-exact-optional-property-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-exact-optional-property-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Avec exactOptionalPropertyTypes, { color?: string } accepte color: undefined :
+    options:
+      - Oui toujours
+      - Non (sauf string | undefined)
+      - Uniquement en tableau
+      - Uniquement avec any
+    answer:
+      - 1
+    explanation: |
+      Distinction absence / undefined.
+    skills:
+      - tsconfig
+  - id: typescript-25-exact-optional-property-types-q2
+    type: true_false
+    difficulty: 2
+    question: |
+      Ce flag n’est pas inclus automatiquement dans strict.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, option séparée.
+    skills:
+      - tsconfig
+  - id: typescript-25-exact-optional-property-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour autoriser undefined explicitement :
+    options:
+      - '{"prop?":"T suffit toujours"}'
+      - '{"prop?":"T | undefined"}'
+      - '{"prop":"never"}'
+      - '{"prop":"any obligatoire"}'
+    answer:
+      - 1
+    explanation: |
+      Inclure undefined dans le type.
+    skills:
+      - tsconfig
+  - id: typescript-25-exact-optional-property-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Ce flag est utile quand :
+    options:
+      - On ignore les optionnels
+      - L’API distingue clé absente et undefined
+      - On n’utilise jamais d’objets
+      - On désactive TypeScript
+    answer:
+      - 1
+    explanation: |
+      Précision sémantique.
+    skills:
+      - tsconfig

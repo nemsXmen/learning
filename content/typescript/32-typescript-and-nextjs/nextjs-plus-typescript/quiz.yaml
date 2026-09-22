@@ -1,0 +1,64 @@
+id: typescript-32-nextjs-plus-typescript-quiz
+kind: QUIZ
+questions:
+  - id: typescript-32-nextjs-plus-typescript-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      create-next-app avec TypeScript génère notamment :
+    options:
+      - Uniquement un Dockerfile
+      - tsconfig.json et types Next
+      - Un serveur Java
+      - Un fichier CSS interdit
+    answer:
+      - 1
+    explanation: |
+      Bootstrap typé.
+    skills:
+      - nextjs
+  - id: typescript-32-nextjs-plus-typescript-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      next-env.d.ts référence les types Next.js.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nextjs
+  - id: typescript-32-nextjs-plus-typescript-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      En CI, on peut type-check avec :
+    options:
+      - Uniquement ESLint CSS
+      - tsc --noEmit
+      - process.exit only
+      - skipLibCheck désactivé forcé
+    answer:
+      - 1
+    explanation: |
+      Vérification pure.
+    skills:
+      - nextjs
+  - id: typescript-32-nextjs-plus-typescript-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Next.js + TypeScript est :
+    options:
+      - Non supporté
+      - Supporté officiellement
+      - Uniquement via Flow
+      - Réservé à Vue
+    answer:
+      - 1
+    explanation: |
+      First-class.
+    skills:
+      - nextjs

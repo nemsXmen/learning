@@ -1,0 +1,64 @@
+id: typescript-18-required-quiz
+kind: QUIZ
+questions:
+  - id: typescript-18-required-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Required<T> rend les propriétés :
+    options:
+      - Optionnelles
+      - Obligatoires
+      - Readonly
+      - never
+    answer:
+      - 1
+    explanation: |
+      Retire le ?.
+    skills:
+      - utility-types
+  - id: typescript-18-required-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Required est l’opposé de Partial.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - utility-types
+  - id: typescript-18-required-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Required utilise le modifier :
+    options:
+      - +?
+      - -?
+      - +readonly
+      - -readonly
+    answer:
+      - 1
+    explanation: |
+      Suppression de l’optionalité.
+    skills:
+      - utility-types
+  - id: typescript-18-required-q4
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Required est utile après :
+    options:
+      - Suppression de toutes les props
+      - Application de valeurs par défaut (forme complète)
+      - Conversion en any
+      - Désactivation de strict
+    answer:
+      - 1
+    explanation: |
+      Garantir que tout est présent.
+    skills:
+      - utility-types

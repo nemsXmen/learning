@@ -1,0 +1,64 @@
+id: typescript-14-contraintes-complexes-quiz
+kind: QUIZ
+questions:
+  - id: typescript-14-contraintes-complexes-q1
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Comment combiner deux contraintes A et B sur T ?
+    options:
+      - T extends A | B
+      - T extends A & B
+      - T extends A + B
+      - T extends A, B
+    answer:
+      - 1
+    explanation: |
+      L’intersection exige les deux.
+    skills:
+      - generics
+  - id: typescript-14-contraintes-complexes-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une contrainte peut être une interface ou un type alias.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - generics
+  - id: typescript-14-contraintes-complexes-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      `T extends "a" | "b"` autorise :
+    options:
+      - N’importe quelle string
+      - Uniquement "a" ou "b" (ou un sous-type)
+      - Uniquement number
+      - any
+    answer:
+      - 1
+    explanation: |
+      Contrainte sur une literal union.
+    skills:
+      - generics
+  - id: typescript-14-contraintes-complexes-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Le risque d’une contrainte trop stricte est :
+    options:
+      - Aucun
+      - Une API difficile à utiliser / trop limitée
+      - Une erreur de syntaxe
+      - Un runtime plus lent
+    answer:
+      - 1
+    explanation: |
+      Il faut trouver le bon équilibre.
+    skills:
+      - generics

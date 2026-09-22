@@ -1,0 +1,64 @@
+id: typescript-16-heritage-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-heritage-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Comment une classe en hérite-t-elle une autre ?
+    options:
+      - class B inherits A
+      - class B extends A
+      - class B implements A
+      - class B = A
+    answer:
+      - 1
+    explanation: |
+      Mot-clé extends.
+    skills:
+      - oop
+  - id: typescript-16-heritage-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      `super()` appelle le constructeur de la classe parente.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - oop
+  - id: typescript-16-heritage-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les classes TypeScript supportent-elles l’héritage multiple de classes ?
+    options:
+      - Oui
+      - Non (une seule super-classe)
+      - Uniquement en mode strict
+      - Uniquement avec des interfaces
+    answer:
+      - 1
+    explanation: |
+      Une seule classe parente ; plusieurs interfaces possibles.
+    skills:
+      - oop
+  - id: typescript-16-heritage-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Un risque de l’héritage est :
+    options:
+      - Aucun
+      - Des hiérarchies trop profondes et rigides
+      - L’interdiction de super
+      - La perte de tous les types
+    answer:
+      - 1
+    explanation: |
+      La composition est souvent plus flexible.
+    skills:
+      - oop

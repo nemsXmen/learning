@@ -1,0 +1,64 @@
+id: typescript-25-configuration-production-quiz
+kind: QUIZ
+questions:
+  - id: typescript-25-configuration-production-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      En production, on recommande surtout :
+    options:
+      - "strict: false"
+      - "strict: true"
+      - Aucun tsconfig
+      - target ES3 forcé partout
+    answer:
+      - 1
+    explanation: |
+      Socle de qualité.
+    skills:
+      - tsconfig
+  - id: typescript-25-configuration-production-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      skipLibCheck est souvent activé pour accélérer les builds.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui, pragmatique.
+    skills:
+      - tsconfig
+  - id: typescript-25-configuration-production-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour une app bundlée (Vite), on utilise souvent :
+    options:
+      - "module: None"
+      - "module: ESNext + moduleResolution: bundler + noEmit"
+      - Uniquement CommonJS forcé
+      - "skipLibCheck: false obligatoire"
+    answer:
+      - 1
+    explanation: |
+      Le bundler émet le JS.
+    skills:
+      - tsconfig
+  - id: typescript-25-configuration-production-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une bonne config production aligne :
+    options:
+      - Uniquement l’IDE
+      - target, module, moduleResolution et le runtime réel
+      - Uniquement les paths décoratifs
+      - Aucune option
+    answer:
+      - 1
+    explanation: |
+      Cohérence bout en bout.
+    skills:
+      - tsconfig

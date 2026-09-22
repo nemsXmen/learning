@@ -1,0 +1,64 @@
+id: typescript-15-private-quiz
+kind: QUIZ
+questions:
+  - id: typescript-15-private-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un membre private est accessible :
+    options:
+      - Partout
+      - Uniquement dans la classe qui le déclare
+      - Dans les sous-classes
+      - Uniquement dans les modules
+    answer:
+      - 1
+    explanation: |
+      Strictement interne à la classe.
+    skills:
+      - classes
+  - id: typescript-15-private-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Le private TypeScript existe encore comme contrainte à runtime après compilation.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. C’est effacé ; seul le type-checker l’applique.
+    skills:
+      - classes
+  - id: typescript-15-private-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour un vrai champ privé runtime, on utilise :
+    options:
+      - private uniquement
+      - Les private fields
+      - protected
+      - public
+    answer:
+      - 1
+    explanation: |
+      Syntaxe native JavaScript.
+    skills:
+      - classes
+  - id: typescript-15-private-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une sous-classe peut-elle accéder à un membre private du parent ?
+    options:
+      - Oui
+      - Non
+      - Uniquement en mode strict
+      - Uniquement avec super
+    answer:
+      - 1
+    explanation: |
+      Non. Il faut protected pour cela.
+    skills:
+      - classes

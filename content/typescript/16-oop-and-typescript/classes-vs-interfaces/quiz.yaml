@@ -1,0 +1,64 @@
+id: typescript-16-classes-vs-interfaces-quiz
+kind: QUIZ
+questions:
+  - id: typescript-16-classes-vs-interfaces-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Pour un contrat sans implémentation, on préfère souvent :
+    options:
+      - Une classe concrète
+      - Une interface
+      - Un enum
+      - any
+    answer:
+      - 1
+    explanation: |
+      L’interface décrit la forme.
+    skills:
+      - oop
+  - id: typescript-16-classes-vs-interfaces-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Les interfaces TypeScript existent à runtime.
+    options:
+      - "true"
+      - "false"
+    answer: false
+    explanation: |
+      Faux. Elles sont effacées.
+    skills:
+      - oop
+  - id: typescript-16-classes-vs-interfaces-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Une classe sans aucun comportement est souvent :
+    options:
+      - Idéale
+      - Anémique — un type/interface suffirait
+      - Obligatoire
+      - Plus sûre que les types
+    answer:
+      - 1
+    explanation: |
+      Éviter les classes superflues.
+    skills:
+      - oop
+  - id: typescript-16-classes-vs-interfaces-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Pour factoriser du code concret entre variantes, on peut utiliser :
+    options:
+      - Uniquement des interfaces
+      - Une classe abstraite
+      - Uniquement des enums
+      - any
+    answer:
+      - 1
+    explanation: |
+      Implémentation partagée + points d’extension.
+    skills:
+      - oop

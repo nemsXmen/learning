@@ -1,0 +1,64 @@
+id: typescript-44-schemas-vers-types-quiz
+kind: QUIZ
+questions:
+  - id: typescript-44-schemas-vers-types-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      z.infer<typeof Schema> produit :
+    options:
+      - Un schema runtime
+      - Un type TypeScript
+      - Un fichier CSS
+      - Un conteneur Docker
+    answer:
+      - 1
+    explanation: |
+      Extraction de type.
+    skills:
+      - tooling
+  - id: typescript-44-schemas-vers-types-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Schema → type réduit la duplication.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - tooling
+  - id: typescript-44-schemas-vers-types-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Maintenir type User à la main + schema :
+    options:
+      - Est idéal
+      - Risque de drift
+      - Est imposé
+      - Active Prettier
+    answer:
+      - 1
+    explanation: |
+      Single source.
+    skills:
+      - tooling
+  - id: typescript-44-schemas-vers-types-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      z.input vs z.output utile quand :
+    options:
+      - Il y a transforms
+      - Jamais
+      - Uniquement en CSS
+      - skipLibCheck
+    answer:
+      - 0
+    explanation: |
+      Avant/après parse.
+    skills:
+      - tooling

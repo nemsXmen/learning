@@ -1,0 +1,64 @@
+id: typescript-33-guards-quiz
+kind: QUIZ
+questions:
+  - id: typescript-33-guards-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Un guard implémente souvent :
+    options:
+      - PipeTransform
+      - CanActivate
+      - ExceptionFilter only
+      - OnModuleInit only
+    answer:
+      - 1
+    explanation: |
+      Interface guard.
+    skills:
+      - nestjs
+  - id: typescript-33-guards-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      @UseGuards(AuthGuard) protège une route ou un controller.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - nestjs
+  - id: typescript-33-guards-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      canActivate retourne false typiquement pour :
+    options:
+      - Autoriser
+      - Refuser l’accès
+      - Valider un DTO
+      - Compiler
+    answer:
+      - 1
+    explanation: |
+      Accès refusé.
+    skills:
+      - nestjs
+  - id: typescript-33-guards-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Les guards sont le bon endroit pour :
+    options:
+      - Le styling CSS
+      - Authn / authz
+      - La génération de .d.ts
+      - skipLibCheck
+    answer:
+      - 1
+    explanation: |
+      Sécurité route.
+    skills:
+      - nestjs

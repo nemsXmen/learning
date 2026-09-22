@@ -1,0 +1,64 @@
+id: typescript-38-repository-quiz
+kind: QUIZ
+questions:
+  - id: typescript-38-repository-q1
+    type: multiple_choice
+    difficulty: 1
+    question: |
+      Le Repository abstrait surtout :
+    options:
+      - Le CSS
+      - L’accès aux données
+      - Le bundler
+      - process.env only
+    answer:
+      - 1
+    explanation: |
+      Persistance.
+    skills:
+      - patterns
+  - id: typescript-38-repository-q2
+    type: true_false
+    difficulty: 1
+    question: |
+      Une implémentation in-memory peut servir aux tests.
+    options:
+      - "true"
+      - "false"
+    answer: true
+    explanation: |
+      Oui.
+    skills:
+      - patterns
+  - id: typescript-38-repository-q3
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      Fuiter le SQL dans l’interface repository :
+    options:
+      - Est idéal
+      - Casse l’abstraction
+      - Active DI
+      - Est imposé
+    answer:
+      - 1
+    explanation: |
+      Garder le contrat métier.
+    skills:
+      - patterns
+  - id: typescript-38-repository-q4
+    type: multiple_choice
+    difficulty: 2
+    question: |
+      findById retourne Promise<T | null> pour :
+    options:
+      - Interdire l’absence
+      - Modéliser l’absence possible
+      - Remplacer void
+      - Typer le CSS
+    answer:
+      - 1
+    explanation: |
+      Nullability.
+    skills:
+      - patterns
