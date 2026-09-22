@@ -37,52 +37,49 @@ Chaque agent doit avoir un contrat clair : entrée, sortie, outils et budget.
 Si une fonction déterministe ou un seul appel suffit, ajouter des agents augmente latence, coûts et surface d'erreur.
 
 ## Exercices
-Deux agents modifient la même ressource simultanément. Comment prévenir les conflits ?
+
+Deux agents qui modifient simultanément la même ressource peuvent créer une course. Utilise version optimiste, verrou, idempotence ou un service d'écriture central selon le cas.
 
 :::indice
-Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+- Deux agents modifient la même ressource simultanément. Comment prévenir les conflits ?
 :::
 
 :::solution
-Centraliser l'autorisation et l'écriture, utiliser verrou/version optimiste ou idempotency key et définir une source d'autorité unique.
-
+Cherche une source d'autorité unique pour l'écriture.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow peut être : orchestrator → specialist → résultat structuré → verifier → synthèse. Les échanges doivent être bornés et les résultats validés. Lorsqu'une ressource partagée est modifiée, l'écriture doit passer par une autorité clairement définie.
 
 ## À retenir
-Le multi-agent est une architecture, pas un objectif. Mesure son bénéfice contre sa complexité.
 
+Centraliser l'autorisation et l'écriture, utiliser une version optimiste ou un verrou et ajouter une clé d'idempotence lorsque nécessaire.
 
 ## Introduction
 
-Plusieurs agents peuvent être orchestrés mais chaque agent supplémentaire augmente la complexité.
+Quand plusieurs agents apportent réellement quelque chose
 
 ## Concept
 
-Les contrats d'entrée/sortie et la responsabilité de chaque rôle doivent être explicites.
+Le multi-agent permet de séparer des responsabilités, mais chaque agent supplémentaire ajoute une frontière de communication, une latence et une possibilité d'échec.
 
 ## Exemple
 
-Un planner peut déléguer une recherche à un worker spécialisé puis agréger les résultats.
+Un orchestrateur peut déléguer à des spécialistes : retrieval, analyse, génération ou vérification. Chaque spécialiste doit avoir un contrat d'entrée, de sortie, d'outils et de budget.
 
 ## Comment ça fonctionne
 
-planner → specialist → result → synthesis
+Par exemple, un planner peut demander à un agent de recherche de collecter les sources, puis à un vérificateur de contrôler les affirmations avant la synthèse finale. Si le même résultat peut être obtenu par une fonction déterministe, cette orchestration serait inutile.
 
 ## Questions d'entretien
 
-- Quand éviter le multi-agent ?
+Le multi-agent est une architecture à justifier par un bénéfice mesurable, pas un objectif en soi.
 
-  :::indice
-  Cherche la frontière entre décision du modèle et contrôle déterministe.
-  :::
+:::indice
+Pense à la séparation entre modèle, runtime et système d'autorisation.
+:::
 
-  :::reponse
-  Lorsque le workflow déterministe ou un seul agent répond au besoin avec moins de complexité.
-  :::
+:::reponse
+Quand éviter le multi-agent ?
+:::
