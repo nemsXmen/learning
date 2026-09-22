@@ -42,52 +42,49 @@ question -> retrieved context -> answer
 Conserve un jeu fixe de tests et compare les versions de chunking, embeddings, reranker et prompt.
 
 ## Exercices
-Après changement d'embedding, la satisfaction humaine monte mais recall@5 baisse. Que faire ?
+
+Une réponse finale peut rester bonne alors que le retrieval régresse, par exemple parce que le modèle connaît déjà le sujet. À l'inverse, un excellent retrieval ne garantit pas une réponse fidèle. Il faut donc conserver les deux niveaux de mesure.
 
 :::indice
-Sépare retrieval, contexte et génération pour localiser l'erreur.
+- Après un changement d'embedding, la satisfaction humaine monte mais recall@5 baisse. Que faire ?
 :::
 
 :::solution
-Examiner les cas gagnés et perdus. Ne pas conclure avec une seule métrique : identifier le compromis selon les objectifs produit.
-
+Cherche les cas gagnés et perdus au lieu de regarder une seule moyenne.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : dataset → retrieve → évaluation du contexte → génération → évaluation de la réponse. Conserve aussi latence, coût, citations et taux d'erreur. Une suite fixe permet de comparer chunking, embeddings, reranking et prompts.
 
 ## À retenir
-Évaluer RAG signifie mesurer séparément récupération, réponse et contraintes opérationnelles.
 
+Analyser les segments concernés et le compromis entre retrieval et résultat final. Une seule métrique ne suffit pas : la décision dépend des objectifs du produit et des contraintes opérationnelles.
 
 ## Introduction
 
-Un système RAG doit être évalué séparément sur retrieval et génération.
+Évaluer un RAG sans confondre ses étapes
 
 ## Concept
 
-Recall, precision, groundedness et qualité finale mesurent des étapes différentes.
+Un RAG peut produire une réponse convaincante pour de mauvaises raisons. Pour comprendre réellement le système, il faut tester séparément la qualité de la récupération et celle de la génération.
 
 ## Exemple
 
-Un bon answer score avec un mauvais retrieval peut cacher des réponses mémorisées ou des cas faciles.
+Construis un dataset avec question, passages pertinents attendus et critères de réponse. Ajoute des questions ambiguës, des cas négatifs, des documents similaires et des requêtes hors périmètre.
 
 ## Comment ça fonctionne
 
-dataset → retrieve → evaluate context → generate → evaluate answer
+Pour une requête, on peut d'abord mesurer si les bons passages apparaissent dans le top-k. Ensuite seulement, on mesure si la réponse utilise correctement ce contexte et si ses affirmations importantes sont supportées.
 
 ## Questions d'entretien
 
-- Pourquoi séparer retrieval et génération dans les tests ?
+Évaluer un RAG signifie mesurer récupération, fidélité de génération et contraintes opérationnelles séparément.
 
-  :::indice
-  Sépare toujours les erreurs de retrieval des erreurs de génération.
-  :::
+:::indice
+Relie ta réponse à la séparation entre retrieval et génération.
+:::
 
-  :::reponse
-  Pour localiser si une régression vient de la recherche ou du modèle génératif.
-  :::
+:::reponse
+Pourquoi séparer retrieval et génération dans les tests ?
+:::
