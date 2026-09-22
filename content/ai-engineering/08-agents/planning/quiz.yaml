@@ -1,0 +1,26 @@
+id: ai-08-planning-quiz
+kind: QUIZ
+questions:
+  - id: ai-08-planning-q1
+    type: multiple_choice
+    difficulty: 2
+    question: "Quel est le rôle principal de la planification ?"
+    options: ["Donner au modèle tous les pouvoirs","Représenter et ordonner les étapes d'une tâche complexe","Remplacer les contrôles métier","Supprimer les observations"]
+    answer: [1]
+    explanation: "La planification structure une tâche ; elle ne remplace ni les permissions ni les garde-fous."
+    skills: [ai-agents]
+  - id: ai-08-planning-q2
+    type: multiple_answer
+    difficulty: 3
+    question: "Que doit prévoir une étape robuste ?"
+    options: ["Une sortie vérifiable","Une condition d'échec","Un budget","Une condition de fin","Des permissions implicites"]
+    answer: [0, 1, 2, 3]
+    explanation: "Une étape doit être bornée et vérifiable pour être fiable et reprenable."
+    skills: [ai-agents]
+  - id: ai-08-planning-q3
+    type: true_false
+    difficulty: 2
+    question: "Un timeout signifie toujours qu'une mutation n'a pas été exécutée."
+    answer: false
+    explanation: "La réponse peut être perdue après l'exécution ; l'idempotence et la vérification d'état sont nécessaires."
+    skills: [ai-agents]
