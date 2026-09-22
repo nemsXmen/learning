@@ -15,10 +15,8 @@ tags: [deep-learning, pytorch]
 ---
 
 ## Objectifs
-- structurer un modèle PyTorch ;
-- utiliser Dataset et DataLoader ;
-- séparer train et eval ;
-- sauvegarder un checkpoint.
+
+À la fin de ce chapitre, tu dois pouvoir structurer un nn.Module, construire un pipeline Dataset/DataLoader, gérer les modes train/eval et sauvegarder un checkpoint exploitable.
 
 ## Module
 ```python
@@ -53,51 +51,49 @@ torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(), "e
 Pour reprendre, conserve aussi configuration, métriques et état d'un scheduler/scaler s'ils existent.
 
 ## Exercices
-Conçois un checkpoint permettant de reprendre l'entraînement après interruption.
+
+- Conçois le contenu minimal d'un checkpoint permettant de reprendre un entraînement après interruption.
 
 :::indice
-Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+Distingue les paramètres appris de l'état de l'expérience.
 :::
 
 :::solution
-Stocke model.state_dict(), optimizer.state_dict(), epoch/step, configuration et métriques.
-
+Conserve model.state_dict(), optimizer.state_dict(), epoch ou step, puis configuration et, si nécessaire, scheduler/scaler et métriques.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Sauvegarder uniquement les poids peut être insuffisant pour reprendre exactement un entraînement. Évite aussi de mélanger le preprocessing de train et celui de validation.
 
 ## À retenir
-PyTorch fournit les primitives ; l'AI Engineer construit autour une structure testable, versionnée et reprenable.
+
+Un pipeline PyTorch robuste doit être testable avant entraînement, explicite sur ses modes train/eval et capable de reprendre depuis un état versionné.
 
 ## Introduction
 
-PyTorch fournit les abstractions pour construire et entraîner des réseaux.
+Un modèle qui fonctionne dans un notebook n'est pas encore un composant fiable. Il faut séparer les responsabilités, tester les données, reproduire une expérience et reprendre un entraînement interrompu.
 
 ## Concept
 
-Tensor, module, dataset et autograd forment les briques principales.
+Un nn.Module encapsule les paramètres et le calcul. Dataset décrit comment récupérer un exemple tandis que DataLoader organise les exemples en batches.
 
 ## Exemple
 
-Un nn.Module encapsule paramètres et calcul ; DataLoader fournit les mini-batches.
+Avant un long entraînement, teste le pipeline sur quelques exemples. Flow : source de données → Dataset → DataLoader → batch → model → loss. Cela révèle rapidement une mauvaise shape, un dtype incorrect ou un label invalide.
 
 ## Comment ça fonctionne
 
-dataset → DataLoader → model → loss → optimizer → checkpoint
+train et eval ne sont pas interchangeables. Dropout et batch normalization changent notamment de comportement. Pour reprendre une expérience, conserve les poids, l'état de l'optimiseur, l'epoch ou le step et, selon le pipeline, scheduler, scaler, configuration et métriques.
 
 ## Questions d'entretien
 
-- Pourquoi séparer train et eval ?
+Pourquoi séparer model.train() et model.eval() ?
 
-  :::indice
-  Relie la question au comportement réel d'un entraînement.
-  :::
+:::indice
+Relie ta réponse au fonctionnement concret du système.
+:::
 
-  :::reponse
-  Certains composants comme dropout et batch normalization ont un comportement différent en évaluation.
-  :::
+:::reponse
+Dropout et batch normalization se comportent différemment pendant l'entraînement et l'évaluation. Le mauvais mode peut donc fausser les résultats.
+:::
