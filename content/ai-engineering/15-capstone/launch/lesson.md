@@ -119,11 +119,10 @@ Le rollback doit être possible sans perdre les données métier. Les migrations
 
 :::indice
 Compare l'usage réel avant/après : tokens, contexte, retries, longueur des réponses et tarif.
-::
-
+:::
 :::solution
 Comparer tokens d'entrée et de sortie, taille du contexte récupéré, nombre de retries, longueur des réponses, modèle réellement appelé et tarif fournisseur. Vérifier aussi les changements de routing ou de cache. Corriger la cause puis refaire l'évaluation avant de généraliser.
-::
+:::
 ## À retenir
 
 Un AI SaaS production doit être versionné, observable, réversible et soumis à des limites de coût et de sécurité.
@@ -136,8 +135,7 @@ Un AI SaaS production doit être versionné, observable, réversible et soumis �
 
 :::indice
 Relie chaque pratique à la capacité de détecter, diagnostiquer et corriger rapidement.
-::
-
+:::
 :::reponse
 Le rollout progressif limite l'impact d'une régression. Un runbook décrit détection, mitigation, rollback, récupération et postmortem. Il faut suivre qualité, erreurs, latence, tokens, coût, quotas et sécurité. Le versioning permet d'identifier précisément la cause d'une régression et de reproduire un comportement.
-::
+:::
