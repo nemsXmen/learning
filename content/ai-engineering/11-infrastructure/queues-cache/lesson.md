@@ -36,7 +36,7 @@ Définis TTL, invalidation et clé tenant-safe. Ne mets pas en cache un résulta
 Utilise backoff et nombre maximal d'essais. Une tâche non idempotente ne doit pas être rejouée aveuglément.
 
 ## Exercices
-Un worker tombe après l'action mais avant l'accusé de réception. Que prévoir ?
+- Un worker tombe après l'action mais avant l'accusé de réception. Que prévoir ?
 
 :::indice
 Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
