@@ -39,17 +39,15 @@ Limite nombre d'appels et temps total. Détecte répétitions, erreurs et absenc
 Le résultat d'un service externe est une donnée non fiable. Il ne doit pas devenir automatiquement une instruction système.
 
 ## Exercices
-
 - Un agent consulte une facture puis envoie un email. Pourquoi séparer les outils ?
 
 :::indice
 Compare le risque d'une lecture avec celui d'un effet de bord.
-:::
+::
 
 :::solution
 La séparation permet d'appliquer des permissions, une confirmation éventuelle, des limites, l'idempotence et un audit différents pour la lecture et l'envoi.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le résultat d'un service externe est lui aussi une donnée non fiable. Il ne doit pas devenir automatiquement une nouvelle instruction système. Il faut également prévoir les erreurs, timeouts et outils indisponibles.
@@ -75,13 +73,12 @@ Pour une facture, un outil get_invoice(invoiceId) est préférable à une primit
 Le flow est : LLM → tool request → validation → authorization → execution → résultat → LLM. Limite le nombre d'appels, le temps total et les répétitions. Pour un paiement, remboursement ou suppression, l'autorisation doit rester indépendante du modèle et l'action doit être idempotente et auditée.
 
 ## Questions d'entretien
-
-Qui doit autoriser un effet de bord ?
+- Qui doit autoriser un effet de bord ?
 
 :::indice
 Relie ta réponse à la frontière entre modèle et application.
-:::
+::
 
 :::reponse
 Le système déterministe côté serveur doit vérifier les permissions et politiques avant l'exécution.
-:::
+::
