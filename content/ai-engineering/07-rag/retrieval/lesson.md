@@ -40,52 +40,49 @@ Une recherche hybride combine signaux lexicaux et vectoriels, notamment pour des
 Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées.
 
 ## Exercices
-Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
+
+Un score de similarité élevé ne prouve ni que le passage est vrai ni que l'utilisateur a le droit de le lire. Les ACL, tenant, langue et version restent des contraintes métier.
 
 :::indice
-Sépare retrieval, contexte et génération pour localiser l'erreur.
+- Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
 :::
 
 :::solution
-Une recherche hybride peut exploiter l'identifiant exact et le sens de la description.
-
+Cherche à exploiter à la fois les termes exacts et le sens de la requête.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : requête → génération des candidats → ranking → top-k → contexte. Le retrieval doit être mesuré indépendamment de la réponse finale avec recall@k, precision@k et latence.
 
 ## À retenir
-Le retrieval est une étape de sélection mesurable, pas une fonction magique de base vectorielle.
 
+Une recherche hybride permet de combiner le signal lexical pour la référence exacte et le signal sémantique pour la description.
 
 ## Introduction
 
-Le retrieval sélectionne le contexte utile avant génération.
+Pourquoi le retrieval
 
 ## Concept
 
-Recherche lexicale, vectorielle et hybride répondent à des signaux différents.
+Un RAG commence par une question simple : quelles informations faut-il donner au modèle pour qu'il puisse répondre correctement ? Le retrieval répond à cette question en sélectionnant un petit ensemble de passages avant la génération.
 
 ## Exemple
 
-BM25 retrouve bien des termes exacts tandis que les embeddings rapprochent des formulations sémantiquement similaires.
+La recherche lexicale regarde surtout les termes présents dans la requête. La recherche sémantique utilise des embeddings pour rapprocher des formulations dont le sens est similaire. Une stratégie hybride combine les deux signaux.
 
 ## Comment ça fonctionne
 
-query → candidates → ranking → top-k → context
+Prenons une question comme « quel est le plafond de remboursement de la carte GOLD ? ». Une recherche vectorielle peut retrouver le passage parlant de plafond, tandis que BM25 peut mieux exploiter un identifiant exact ou un terme rare.
 
 ## Questions d'entretien
 
-- Pourquoi mesurer recall@k ?
+Le retrieval est une étape de sélection mesurable : sa qualité conditionne directement la qualité du contexte fourni au LLM.
 
-  :::indice
-  Sépare toujours les erreurs de retrieval des erreurs de génération.
-  :::
+:::indice
+Relie ta réponse à la séparation entre retrieval et génération.
+:::
 
-  :::reponse
-  Pour savoir si les documents pertinents sont effectivement récupérés dans les k premiers résultats.
-  :::
+:::reponse
+Pourquoi mesurer recall@k ?
+:::
