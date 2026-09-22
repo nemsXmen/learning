@@ -47,7 +47,7 @@ Le frontend ne doit pas appeler directement les fournisseurs de modèles. Le bac
 8. trace d'observabilité ;
 9. facturation.
 
-## Exercice
+## Exercices
 Dessine les trust boundaries et indique quelles opérations nécessitent une autorisation indépendante du modèle.
 
 :::indice
