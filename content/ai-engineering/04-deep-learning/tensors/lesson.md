@@ -52,7 +52,7 @@ loss.backward()
 print(w.grad)
 ```
 
-## Exercice
+## Exercices
 Crée un tenseur (32, 128), ajoute un biais (128,), puis vérifie la shape.
 
 :::indice
