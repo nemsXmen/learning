@@ -42,17 +42,15 @@ question -> retrieved context -> answer
 Conserve un jeu fixe de tests et compare les versions de chunking, embeddings, reranker et prompt.
 
 ## Exercices
-
-Une réponse finale peut rester bonne alors que le retrieval régresse, par exemple parce que le modèle connaît déjà le sujet. À l'inverse, un excellent retrieval ne garantit pas une réponse fidèle. Il faut donc conserver les deux niveaux de mesure.
+- Une réponse finale peut rester bonne alors que le retrieval régresse, par exemple parce que le modèle connaît déjà le sujet. À l'inverse, un excellent retrieval ne garantit pas une réponse fidèle. Il faut donc conserver les deux niveaux de mesure.
 
 :::indice
 - Après un changement d'embedding, la satisfaction humaine monte mais recall@5 baisse. Que faire ?
-:::
+::
 
 :::solution
 Cherche les cas gagnés et perdus au lieu de regarder une seule moyenne.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : dataset → retrieve → évaluation du contexte → génération → évaluation de la réponse. Conserve aussi latence, coût, citations et taux d'erreur. Une suite fixe permet de comparer chunking, embeddings, reranking et prompts.
@@ -78,13 +76,12 @@ Construis un dataset avec question, passages pertinents attendus et critères de
 Pour une requête, on peut d'abord mesurer si les bons passages apparaissent dans le top-k. Ensuite seulement, on mesure si la réponse utilise correctement ce contexte et si ses affirmations importantes sont supportées.
 
 ## Questions d'entretien
-
-Évaluer un RAG signifie mesurer récupération, fidélité de génération et contraintes opérationnelles séparément.
+- Évaluer un RAG signifie mesurer récupération, fidélité de génération et contraintes opérationnelles séparément.
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-:::
+::
 
 :::reponse
 Pourquoi séparer retrieval et génération dans les tests ?
-:::
+::
