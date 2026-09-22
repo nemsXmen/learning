@@ -47,7 +47,7 @@ La rétropropagation applique la règle de chaîne pour calculer les dérivées.
 ## Diagnostic
 Surveille NaN, gradients explosifs, stagnation, validation qui se dégrade et utilisation GPU.
 
-## Exercice
+## Exercices
 Un entraînement devient NaN. Donne une stratégie de diagnostic.
 
 :::indice
