@@ -33,7 +33,7 @@ Les risques incluent injection, exfiltration, abus d'outils, fuite de données, 
 ## Contrôles
 Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, sandbox, logging et approbation.
 
-## Exercice
+## Exercices
 Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
 
 :::indice
