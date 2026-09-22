@@ -38,11 +38,10 @@ Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, s
 
 :::indice
 - Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
-::
-
+:::
 :::solution
 Le document doit être considéré comme une donnée non fiable.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : actifs → frontières de confiance → menaces → impact → contrôles → risque résiduel. Les contrôles peuvent inclure ACL, validation, sandbox, rate limit, approbation et logging.
@@ -72,8 +71,7 @@ Dans un RAG multi-tenant, les documents, embeddings et identités sont des actif
 
 :::indice
 Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
-::
-
+:::
 :::reponse
 Pourquoi modéliser les frontières de confiance ?
-::
+:::
