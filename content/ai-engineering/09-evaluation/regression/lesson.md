@@ -45,6 +45,13 @@ Elle peut masquer une régression sur un sous-groupe. Il faut segmenter les rés
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 La qualité doit être testée comme une propriété versionnée du logiciel.
 
