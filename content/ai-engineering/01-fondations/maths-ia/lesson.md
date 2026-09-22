@@ -206,33 +206,30 @@ C'est cette discipline qui prépare aux modules d'évaluation.
 - apprendre une formule sans comprendre ce qu'elle mesure.
 
 ## Exercices
-
 - Calcule le produit scalaire de `[1, 2]` et `[3, 4]`.
-- Deux systèmes ont respectivement 95 % et 90 % de précision. Quelles informations supplémentaires demandes-tu avant de conclure ?
-- Pourquoi deux documents proches selon une similarité cosinus peuvent-ils malgré tout être incompatibles ?
+  - Deux systèmes ont respectivement 95 % et 90 % de précision. Quelles informations supplémentaires demandes-tu avant de conclure ?
+  - Pourquoi deux documents proches selon une similarité cosinus peuvent-ils malgré tout être incompatibles ?
 
 :::indice
 Pour les exercices d'évaluation, cherche les informations que la métrique ne contient pas.
-:::
+::
 
 :::solution
 Le produit scalaire vaut `1×3 + 2×4 = 11`. Pour comparer les systèmes, demande notamment le dataset, la distribution des classes, le recall, les performances par segment et les intervalles d'incertitude pertinents. Une similarité cosinus mesure une proximité dans un espace appris, pas la véracité ni la compatibilité logique des documents.
-:::
-
+::
 ## À retenir
 
 Les maths de l'AI Engineer servent surtout à développer une intuition quantitative : représentation vectorielle, similarité, probabilité, dispersion et incertitude. Cette intuition devient indispensable dès qu'on construit ou évalue un modèle.
 
 ## Questions d'entretien
-
 - Pourquoi la similarité cosinus est-elle utile pour les embeddings ?
-- Pourquoi une moyenne de score peut-elle être trompeuse ?
-- Quelle différence entre corrélation et causalité ?
+  - Pourquoi une moyenne de score peut-elle être trompeuse ?
+  - Quelle différence entre corrélation et causalité ?
 
 :::indice
 Relie chaque réponse à un cas concret de système IA.
-:::
+::
 
 :::reponse
 La similarité cosinus compare l'orientation de représentations vectorielles. Une moyenne peut masquer des écarts importants entre segments ou exemples. Une corrélation décrit une association statistique et ne démontre pas qu'une variable cause l'autre.
-:::
+::
