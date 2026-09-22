@@ -44,11 +44,10 @@ Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées.
 
 :::indice
 - Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
-::
-
+:::
 :::solution
 Cherche à exploiter à la fois les termes exacts et le sens de la requête.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : requête → génération des candidats → ranking → top-k → contexte. Le retrieval doit être mesuré indépendamment de la réponse finale avec recall@k, precision@k et latence.
@@ -78,8 +77,7 @@ Prenons une question comme « quel est le plafond de remboursement de la carte G
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-::
-
+:::
 :::reponse
 Pourquoi mesurer recall@k ?
-::
+:::
