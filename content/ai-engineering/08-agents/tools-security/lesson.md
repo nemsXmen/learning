@@ -36,7 +36,7 @@ Ne donne pas les clés API directement au contexte du modèle. Le serveur appell
 ## Audit
 Journalise acteur, outil, paramètres minimisés, décision d'autorisation, résultat, request ID et timestamp.
 
-## Exercice
+## Exercices
 Un agent propose un remboursement. Quelle frontière appliquer ?
 
 :::indice
