@@ -31,17 +31,15 @@ metric = quality + reliability + cost + latency
 ```
 
 ## Exercices
-
-Une moyenne globale peut masquer une régression sur une langue, une intention ou un tenant. Segmente donc les résultats selon les risques importants avant de conclure.
+- Une moyenne globale peut masquer une régression sur une langue, une intention ou un tenant. Segmente donc les résultats selon les risques importants avant de conclure.
 
 :::indice
 - Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
-:::
+::
 
 :::solution
 Cherche la contrainte opérationnelle absente du tableau.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : outputs → métriques → segmentation → seuils → décision. Un LLM-as-judge peut évaluer des propriétés difficiles à formaliser, mais il doit lui aussi être testé pour biais de longueur, formulation ou préférence de modèle.
@@ -67,13 +65,12 @@ Precision, recall et F1 répondent à des questions différentes. Exact match co
 Une réponse peut être parfaite mais dix fois plus chère. Si l'équipe ne mesure que la qualité, elle ignore une contrainte opérationnelle essentielle. Inversement, une baisse de coût n'est utile que si la qualité reste acceptable.
 
 ## Questions d'entretien
-
-Les métriques servent à prendre des décisions ; elles doivent être reliées au risque réel et analysées par segment.
+- Les métriques servent à prendre des décisions ; elles doivent être reliées au risque réel et analysées par segment.
 
 :::indice
 Relie ta réponse à une décision concrète de qualité, coût ou release.
-:::
+::
 
 :::reponse
 Pourquoi segmenter les métriques ?
-:::
+::
