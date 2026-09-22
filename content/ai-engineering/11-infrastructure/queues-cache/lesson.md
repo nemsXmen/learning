@@ -47,6 +47,13 @@ Une clé d'idempotence et un état transactionnel permettent de reprendre sans d
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Queues et cache nécessitent des contrats d'idempotence et de cohérence.
 
