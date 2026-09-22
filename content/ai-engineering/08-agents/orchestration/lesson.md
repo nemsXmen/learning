@@ -36,7 +36,7 @@ Chaque agent doit avoir un contrat clair : entrée, sortie, outils et budget.
 ## Quand éviter le multi-agent
 Si une fonction déterministe ou un seul appel suffit, ajouter des agents augmente latence, coûts et surface d'erreur.
 
-## Exercice
+## Exercices
 Deux agents modifient la même ressource simultanément. Comment prévenir les conflits ?
 
 :::indice
