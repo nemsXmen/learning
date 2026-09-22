@@ -40,11 +40,10 @@ Une release doit pouvoir revenir à une version connue sans perdre les données 
 
 :::indice
 - Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
-::
-
+:::
 :::solution
 Commence par contenir l'impact avant de modifier davantage le système.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : build → artefacts versionnés → staging → vérification → canary/rollout → production → rollback. Les migrations de données doivent être conçues pour rester compatibles pendant la transition.
@@ -74,8 +73,7 @@ Une nouvelle version du modèle augmente les erreurs après déploiement. Si l'a
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-::
-
+:::
 :::reponse
 Pourquoi garder un rollback prêt ?
-::
+:::
