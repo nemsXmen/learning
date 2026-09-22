@@ -61,7 +61,7 @@ Cela ne signifie pas que le modèle possède une base de données fiable : ses p
 
 La latence dépend notamment de la taille du modèle, de la longueur du contexte, du matériel et de la stratégie d'inférence.
 
-## Exercice
+## Exercices
 Pourquoi une température élevée peut-elle rendre une génération plus variée ?
 
 :::indice
