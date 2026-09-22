@@ -4,7 +4,7 @@ title: "Capstone : lancer, observer et faire évoluer"
 slug: launch
 technology: ai-engineering
 level: expert
-module: 15-capstone
+module: capstone
 order: 4
 estimatedMinutes: 100
 difficulty: 5
