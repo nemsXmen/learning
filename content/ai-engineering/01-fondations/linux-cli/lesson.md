@@ -95,7 +95,7 @@ python -m my_pipeline
 ```
 
 ## Exercices
-
+- 
 - Écris un script qui crée output/, lance un pipeline, sépare stdout/stderr et affiche les 20 dernières lignes d'erreur.
 
 :::indice
