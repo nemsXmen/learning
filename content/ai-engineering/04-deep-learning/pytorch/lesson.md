@@ -52,7 +52,7 @@ torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(), "e
 
 Pour reprendre, conserve aussi configuration, métriques et état d'un scheduler/scaler s'ils existent.
 
-## Exercice
+## Exercices
 Conçois un checkpoint permettant de reprendre l'entraînement après interruption.
 
 :::indice
