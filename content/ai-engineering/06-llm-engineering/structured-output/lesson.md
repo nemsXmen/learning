@@ -47,11 +47,10 @@ Si une sortie déclenche une action externe, utilise autorisation, idempotency k
 
 :::indice
 Le schéma seul ne suffit pas : il faut un invariant métier.
-::
-
+:::
 :::solution
 Rejeter la sortie, journaliser le cas et appliquer une stratégie contrôlée. Le modèle ne doit pas pouvoir contourner la règle métier en générant une autre valeur.
-::
+:::
 ## Erreurs fréquentes
 
 Il est dangereux de laisser une sortie LLM déclencher directement un effet de bord. Pour une opération financière, ajoute autorisation indépendante, idempotency key et audit. Un retry aveugle peut également créer des doublons.
@@ -81,8 +80,7 @@ Le flow est : LLM → parse → validation du schéma → validation métier →
 
 :::indice
 Relie ta réponse à la frontière entre modèle et application.
-::
-
+:::
 :::reponse
 Parce qu'une sortie probabiliste peut être invalide ou malveillante et que le modèle n'est pas une frontière d'autorisation.
-::
+:::
