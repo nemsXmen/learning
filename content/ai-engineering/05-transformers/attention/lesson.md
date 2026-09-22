@@ -55,7 +55,7 @@ Plusieurs têtes apprennent des projections différentes. Elles peuvent capturer
 ## Limitation
 L'attention dense compare potentiellement toutes les positions entre elles, ce qui rend son coût dépendant fortement de la longueur de séquence.
 
-## Exercice
+## Exercices
 Dans une génération autoregressive, pourquoi la position 5 ne doit-elle pas utiliser directement le token réel de position 6 ?
 
 :::indice
