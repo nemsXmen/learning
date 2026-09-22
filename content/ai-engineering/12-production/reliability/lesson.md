@@ -33,7 +33,7 @@ Ne masque pas une panne par des retries illimités. Les budgets de temps doivent
 Une fonctionnalité peut passer en recherche lexicale, modèle plus petit, réponse différée ou lecture seule selon le produit.
 
 ## Exercices
-Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
+- Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
 
 :::indice
 Raisonne en détection → mitigation → récupération → vérification.
