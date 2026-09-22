@@ -39,7 +39,7 @@ Un document modifié doit pouvoir être réindexé sans conserver des chunks obs
 ## Permissions
 Ne récupère jamais un chunk uniquement parce qu'il est similaire : applique les autorisations au retrieval.
 
-## Exercice
+## Exercices
 Un manuel est réindexé après modification de deux pages. Comment éviter les doublons ?
 
 :::indice
