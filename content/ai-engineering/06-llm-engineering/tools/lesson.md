@@ -43,11 +43,10 @@ Le résultat d'un service externe est une donnée non fiable. Il ne doit pas dev
 
 :::indice
 Compare le risque d'une lecture avec celui d'un effet de bord.
-::
-
+:::
 :::solution
 La séparation permet d'appliquer des permissions, une confirmation éventuelle, des limites, l'idempotence et un audit différents pour la lecture et l'envoi.
-::
+:::
 ## Erreurs fréquentes
 
 Le résultat d'un service externe est lui aussi une donnée non fiable. Il ne doit pas devenir automatiquement une nouvelle instruction système. Il faut également prévoir les erreurs, timeouts et outils indisponibles.
@@ -77,8 +76,7 @@ Le flow est : LLM → tool request → validation → authorization → executio
 
 :::indice
 Relie ta réponse à la frontière entre modèle et application.
-::
-
+:::
 :::reponse
 Le système déterministe côté serveur doit vérifier les permissions et politiques avant l'exécution.
-::
+:::

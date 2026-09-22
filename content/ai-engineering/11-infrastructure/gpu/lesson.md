@@ -35,11 +35,10 @@ FP32, FP16 et BF16 offrent des compromis entre mémoire, vitesse et stabilité.
 
 :::indice
 - Une inférence échoue par OOM alors que le modèle tient presque en VRAM. Quels leviers tester ?
-::
-
+:::
 :::solution
 Commence par réduire ce qui varie avec la requête.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : modèle → estimation mémoire → précision → batch/contexte → scheduling GPU → métriques. Compare toujours mémoire utilisée, throughput, p95/p99 et concurrence.
@@ -69,8 +68,7 @@ Un modèle tient en FP16 mais provoque un OOM avec un contexte plus long. Le mod
 
 :::indice
 Relie ta réponse à une métrique et à une contrainte système.
-::
-
+:::
 :::reponse
 Pourquoi la VRAM est-elle critique ?
-::
+:::

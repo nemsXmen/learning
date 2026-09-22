@@ -50,11 +50,10 @@ Les clés fournisseurs restent côté serveur.
 
 :::indice
 Commence par distinguer les erreurs réellement récupérables des erreurs définitives.
-::
-
+:::
 :::solution
 Détecter une erreur éligible, respecter un timeout global, choisir un fournisseur compatible, tracer le fallback et empêcher les retries en cascade.
-::
+:::
 ## Erreurs fréquentes
 
 Un retry ne corrige pas toutes les erreurs. Une erreur d'autorisation, un input invalide ou une violation de quota ne doit pas être relancée aveuglément. Le streaming ajoute aussi des cas particuliers : annulation, reconnexion et comptage des tokens.
@@ -84,8 +83,7 @@ Le flow est : application → gateway → sélection du provider → appel → v
 
 :::indice
 Relie ta réponse à la frontière entre modèle et application.
-::
-
+:::
 :::reponse
 Pour garder les secrets côté serveur et appliquer les règles de coût, sécurité, rate limit et résilience de façon cohérente.
-::
+:::

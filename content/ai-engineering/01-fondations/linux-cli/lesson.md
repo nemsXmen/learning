@@ -179,11 +179,10 @@ Cette discipline évite le diagnostic « ça ne marche pas » et permet de trans
 
 :::indice
 Pour chaque exercice, pense en termes d'observation avant d'agir. Un bon diagnostic commence par des faits.
-::
-
+:::
 :::solution
 Sépare stdout et stderr avec `>` et `2>`. Pour une fuite mémoire, observe le processus, sa consommation et l'évolution dans le temps avant de tuer le processus. Si stdout est vide, consulte stderr et le code de sortie : l'absence de sortie normale ne signifie pas l'absence de diagnostic.
-::
+:::
 ## À retenir
 
 Le terminal est l'interface de base avec l'exécution réelle d'un système IA. Savoir observer processus, ressources, flux et codes de sortie réduit fortement le temps de diagnostic.
@@ -195,8 +194,7 @@ Le terminal est l'interface de base avec l'exécution réelle d'un système IA. 
 
 :::indice
 Réponds comme un ingénieur de production : observation, hypothèse, test, correction.
-::
-
+:::
 :::reponse
 SIGTERM permet une terminaison contrôlée alors que SIGKILL force l'arrêt. stdout contient la sortie normale et stderr les diagnostics. Pour un worker en échec, on commence par la commande, le code de sortie, stderr, les logs et les ressources avant de modifier le système.
-::
+:::

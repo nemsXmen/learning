@@ -35,11 +35,10 @@ Ne dégrade pas silencieusement la qualité pour gagner quelques millisecondes. 
 
 :::indice
 - Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
-::
-
+:::
 :::solution
 Ne remplace pas directement le modèle : commence par segmenter les tâches.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : requête → classification/routing → modèle → mesure qualité/coût/latence → comparaison avec baseline. Chaque optimisation doit isoler autant que possible une variable afin de comprendre son effet.
@@ -69,8 +68,7 @@ Une application de support peut utiliser un modèle léger pour les demandes sim
 
 :::indice
 Relie ta réponse à une décision concrète de qualité, coût ou release.
-::
-
+:::
 :::reponse
 Pourquoi mesurer le coût par tâche plutôt que seulement par requête ?
-::
+:::

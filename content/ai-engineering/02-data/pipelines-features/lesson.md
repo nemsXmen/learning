@@ -208,11 +208,10 @@ Une transformation manuelle dans un notebook et une autre implémentation dans l
 
 :::indice
 Commence par définir l'identité de l'objet produit et le moment exact où chaque information devient disponible.
-::
-
+:::
 :::solution
 Utilise une clé déterministe comme `document_id + version + position` et un mécanisme d'upsert ou de contrainte unique. Un retry naïf répète les écritures déjà effectuées. Une feature calculée avec un événement futur, comme un statut connu après la date de prédiction, provoque une fuite temporelle.
-::
+:::
 ## À retenir
 
 Un pipeline IA est une chaîne de contrats et de garanties. Idempotence, reprise, temporalité et cohérence entre entraînement et production sont aussi importantes que la transformation elle-même.
@@ -224,8 +223,7 @@ Un pipeline IA est une chaîne de contrats et de garanties. Idempotence, reprise
 
 :::indice
 La question centrale est toujours : « que pouvait réellement savoir le système à cet instant ? »
-::
-
+:::
 :::reponse
 L'idempotence permet de rejouer un traitement sans créer un nouvel état incorrect. Le batch convient lorsque la fraîcheur périodique suffit et que sa simplicité est préférable ; le streaming est pertinent lorsque la faible latence est nécessaire. Une feature peut être calculée correctement mais utiliser une information future, créant une fuite de données.
-::
+:::

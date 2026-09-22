@@ -64,11 +64,10 @@ La latence dépend notamment de la taille du modèle, de la longueur du contexte
 
 :::indice
 Regarde ce qu'elle fait à la concentration de la distribution avant le sampling.
-::
-
+:::
 :::solution
 Elle tend à aplatir la distribution, donnant davantage de chances aux tokens moins probables.
-::
+:::
 ## Erreurs fréquentes
 
 Une température élevée ne donne pas au modèle de nouvelles connaissances. Elle modifie la distribution utilisée pour choisir les tokens. Il faut aussi distinguer pré-entraînement, où le modèle apprend des régularités, et inférence, où il les utilise pour produire une sortie.
@@ -98,8 +97,7 @@ Un bloc moderne combine attention, normalisation, réseau feed-forward et connex
 
 :::indice
 Relie ta réponse au fonctionnement concret du modèle.
-::
-
+:::
 :::reponse
 Elle produit des logits sur le vocabulaire, qui servent ensuite à sélectionner le prochain token.
-::
+:::

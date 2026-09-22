@@ -150,11 +150,10 @@ Tous les artefacts ne doivent pas nécessairement être stockés dans Git. L'obj
 
 :::indice
 Cherche tout ce qui peut changer le résultat sans modifier le code.
-::
-
+:::
 :::solution
 Le manifeste peut contenir nom, version, source, hash, schéma et date. Compare dataset, modèle, paramètres, environnement, preprocessing et jeu d'évaluation. Si le test sert continuellement au tuning, les décisions s'adaptent à ce jeu et son score cesse d'être une mesure indépendante.
-::
+:::
 ## À retenir
 
 En AI Engineering, la reproductibilité concerne le système expérimental complet. Le code est une pièce du puzzle ; données, modèles, paramètres et jeux d'évaluation doivent eux aussi être identifiables.
@@ -166,8 +165,7 @@ En AI Engineering, la reproductibilité concerne le système expérimental compl
 
 :::indice
 Réponds avec un scénario concret de régression ou d'audit.
-::
-
+:::
 :::reponse
 Un commit ne fixe pas nécessairement les données, le modèle ou les paramètres. Le hash permet de vérifier l'identité et l'intégrité d'un contenu. Un test indépendant fournit une mesure moins contaminée par les décisions d'optimisation.
-::
+:::

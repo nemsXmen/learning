@@ -95,11 +95,10 @@ Il faut également vérifier la qualité des labels. Un modèle ne peut pas appr
 
 :::indice
 Demande-toi ce qui arrive lorsqu'un email légitime est classé comme spam et lorsqu'un spam passe le filtre.
-::
-
+:::
 :::solution
 Un recall élevé ne garantit pas une bonne précision. Il faut mesurer au minimum precision et recall, examiner la matrice de confusion et fixer un seuil en fonction du coût des deux types d'erreurs. Une baseline simple doit servir de référence.
-::
+:::
 ## À retenir
 
 Un modèle supervisé apprend à partir d'exemples labellisés, mais le vrai objectif est la généralisation. Une bonne démarche commence par les données, le problème et la métrique, puis seulement par le choix du modèle.
@@ -109,8 +108,7 @@ Un modèle supervisé apprend à partir d'exemples labellisés, mais le vrai obj
 
 :::indice
 Pense à ce que tu risques de ne pas savoir si tu commences directement par un modèle sophistiqué.
-::
-
+:::
 :::reponse
 La baseline fournit une référence simple et reproductible. Elle permet de vérifier le pipeline de données et de mesurer si la complexité ajoutée apporte réellement une amélioration.
-::
+:::

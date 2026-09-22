@@ -46,11 +46,10 @@ Conserve un jeu fixe de tests et compare les versions de chunking, embeddings, r
 
 :::indice
 - Après un changement d'embedding, la satisfaction humaine monte mais recall@5 baisse. Que faire ?
-::
-
+:::
 :::solution
 Cherche les cas gagnés et perdus au lieu de regarder une seule moyenne.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : dataset → retrieve → évaluation du contexte → génération → évaluation de la réponse. Conserve aussi latence, coût, citations et taux d'erreur. Une suite fixe permet de comparer chunking, embeddings, reranking et prompts.
@@ -80,8 +79,7 @@ Pour une requête, on peut d'abord mesurer si les bons passages apparaissent dan
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-::
-
+:::
 :::reponse
 Pourquoi séparer retrieval et génération dans les tests ?
-::
+:::

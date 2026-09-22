@@ -95,11 +95,10 @@ Pendant l'adaptation, suis la perte d'entraînement mais ne l'utilise pas seule 
 
 :::indice
 Regarde la diversité, la couverture des cas rares et la séparation entre données d'entraînement et d'évaluation.
-::
-
+:::
 :::solution
 Mesurer les doublons et quasi-doublons, analyser la distribution des cas et vérifier la contamination du jeu de test. Dédupliquer puis enrichir le dataset avec des exemples représentatifs, notamment des cas limites. Refaire ensuite l'évaluation contre une baseline stable.
-::
+:::
 ## À retenir
 
 Le fine-tuning est une optimisation de comportement. Il commence par un dataset de qualité et se termine par une comparaison rigoureuse avec une baseline, pas par la seule fin de l'entraînement.
@@ -112,8 +111,7 @@ Le fine-tuning est une optimisation de comportement. Il commence par un dataset 
 
 :::indice
 Pour chaque réponse, raisonne en termes de besoin, données, métriques et compromis.
-::
-
+:::
 :::reponse
 RAG est adapté lorsqu'il faut injecter des connaissances externes, changeantes ou traçables. Train/validation/test permettent de mesurer la généralisation. PEFT/LoRA réduisent les paramètres et ressources à entraîner. Une régression se détecte en comparant le modèle adapté au modèle de base sur un jeu représentatif et segmenté.
-::
+:::

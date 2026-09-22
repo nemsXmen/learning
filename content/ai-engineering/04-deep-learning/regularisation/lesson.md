@@ -47,11 +47,10 @@ Surveille une métrique de validation et conserve le meilleur checkpoint. Défin
 
 :::indice
 Chaque expérience doit répondre à une hypothèse précise et modifier idéalement un facteur principal.
-::
-
+:::
 :::solution
 Comparer un modèle plus petit, une valeur différente de weight decay et une valeur différente de dropout, en conservant le reste du protocole comparable.
-::
+:::
 ## Erreurs fréquentes
 
 Changer simultanément dropout, learning rate, batch size et architecture empêche d'attribuer l'effet observé. Garde le dataset, la seed, le protocole et le budget comparables.
@@ -81,8 +80,7 @@ Flow expérimental : training → validation → diagnostic → modification con
 
 :::indice
 Relie ta réponse au fonctionnement concret du système.
-::
-
+:::
 :::reponse
 Il peut signaler du surapprentissage, mais aussi un changement de distribution, un problème de données ou un protocole de validation inadéquat. Il faut diagnostiquer avant de choisir une correction.
-::
+:::

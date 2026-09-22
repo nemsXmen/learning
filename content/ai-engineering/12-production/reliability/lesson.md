@@ -37,11 +37,10 @@ Une fonctionnalité peut passer en recherche lexicale, modèle plus petit, répo
 
 :::indice
 - Le modèle principal est indisponible mais la recherche interne fonctionne. Quelle stratégie ?
-::
-
+:::
 :::solution
 Identifie d'abord les capacités qui restent fiables.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : failure → detect → timeout/circuit breaker → fallback ou dégradation → réponse observable → recovery. Les budgets de temps doivent traverser toute la chaîne.
@@ -71,8 +70,7 @@ Si le provider principal tombe mais que la recherche interne fonctionne, retourn
 
 :::indice
 Relie ta réponse à une contrainte opérationnelle concrète.
-::
-
+:::
 :::reponse
 Pourquoi limiter les retries ?
-::
+:::

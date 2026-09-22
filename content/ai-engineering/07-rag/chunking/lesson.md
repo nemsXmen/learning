@@ -44,11 +44,10 @@ Ne récupère jamais un chunk uniquement parce qu'il est similaire : applique le
 
 :::indice
 - Un manuel est réindexé après modification de deux pages. Comment éviter les doublons ?
-::
-
+:::
 :::solution
 Pense en termes de version de document et d'identifiants déterministes.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : document → parsing → normalisation → chunks sémantiques → métadonnées → embeddings → index. Chaque chunk doit conserver source, documentId, section, version, langue et permissions utiles au retrieval.
@@ -78,8 +77,7 @@ Pour un manuel technique, découper selon les titres et sous-sections conserve m
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-::
-
+:::
 :::reponse
 Pourquoi conserver la version du document dans les chunks ?
-::
+:::

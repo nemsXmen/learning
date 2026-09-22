@@ -40,11 +40,10 @@ Une mémoire persistante peut contenir des données sensibles. Applique ACL, chi
 
 :::indice
 - Un utilisateur demande la suppression de ses données mémorisées. Que doit faire le système ?
-::
-
+:::
 :::solution
 Traite la mémoire comme des données soumises à un cycle de vie.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : requête → recherche des souvenirs pertinents → sélection/filtrage → contexte → raisonnement → éventuelle mise à jour de la mémoire. Un store peut être relationnel, vectoriel ou hybride selon le type de donnée.
@@ -74,8 +73,7 @@ Si un utilisateur indique une préférence durable, le système peut la stocker 
 
 :::indice
 Pense à la séparation entre modèle, runtime et système d'autorisation.
-::
-
+:::
 :::reponse
 Pourquoi une mémoire persistante nécessite-t-elle des ACL ?
-::
+:::

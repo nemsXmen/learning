@@ -168,11 +168,10 @@ Pour que cela fonctionne, il faut un test fiable qui dise « bon » ou « mauvai
 
 :::indice
 Liste séparément ce qui vient du code et ce qui vient de l'environnement, des données et du modèle.
-::
-
+:::
 :::solution
 Conserve au minimum la version du code, du dataset, du modèle, les hyperparamètres et les informations nécessaires sur l'environnement. `git bisect` permet de rechercher une régression dans l'historique. Deux machines peuvent différer par les dépendances, le matériel, les bibliothèques numériques ou le comportement non déterministe.
-::
+:::
 ## À retenir
 
 En AI Engineering, une expérience sans trace exploitable est difficile à comparer et presque impossible à auditer. Git est le socle de traçabilité du code ; la reproductibilité complète demande de versionner aussi les données, modèles, paramètres et résultats pertinents.
@@ -184,8 +183,7 @@ En AI Engineering, une expérience sans trace exploitable est difficile à compa
 
 :::indice
 Pense au système complet, pas uniquement au dépôt Git.
-::
-
+:::
 :::reponse
 Un commit ne fixe pas forcément les données, dépendances, modèle ou paramètres d'exécution. `git bisect` est utile pour isoler une régression introduite dans l'historique. Pour comparer deux runs, il faut au minimum identifier le code, les données, le modèle, les paramètres et le jeu d'évaluation.
-::
+:::

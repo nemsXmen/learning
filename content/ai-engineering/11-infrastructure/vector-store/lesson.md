@@ -41,11 +41,10 @@ Changer dimension ou modèle d'embedding implique souvent un nouvel index et une
 
 :::indice
 - Un index partagé retourne un chunk d'un autre tenant. Quel principe a échoué ?
-::
-
+:::
 :::solution
 Cherche le contrôle qui doit précéder la remise du résultat au modèle.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : query → embedding → ANN → metadata/ACL filter → top-k → reranking éventuel. Lors d'un changement de modèle d'embedding ou de dimension, une nouvelle génération d'index et une réindexation contrôlée peuvent être nécessaires.
@@ -75,8 +74,7 @@ Supposons deux tenants qui utilisent le même index. Une similarité élevée ne
 
 :::indice
 Relie ta réponse à une métrique et à une contrainte système.
-::
-
+:::
 :::reponse
 Pourquoi les migrations d'embeddings sont-elles coûteuses ?
-::
+:::

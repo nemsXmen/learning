@@ -37,11 +37,10 @@ Commence par la solution non-IA la plus simple. Elle permet de mesurer la valeur
 
 :::indice
 Une équipe veut ajouter un chatbot sans problème utilisateur identifié. Que mesurer d'abord ?
-::
-
+:::
 :::solution
 Commence par le job-to-be-done.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : problème → baseline → capacité AI → métrique → outcome. Pour chaque capacité, demande si elle réduit réellement une friction ou améliore un résultat.
@@ -71,8 +70,7 @@ Une équipe veut ajouter un chatbot mais ne sait pas quel problème il résout. 
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-::
-
+:::
 :::reponse
 Que faut-il définir avant le modèle ?
-::
+:::

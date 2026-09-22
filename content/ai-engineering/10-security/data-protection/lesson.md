@@ -40,11 +40,10 @@ Définis durée de conservation, suppression, backups et logs. Les données d'ob
 
 :::indice
 - Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
-::
-
+:::
 :::solution
 Considère le log comme une nouvelle surface de données.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : identité → autorisation → données filtrées → traitement → stockage/logs → rétention/suppression. L'isolation doit être appliquée avant retrieval et avant les écritures.
@@ -74,8 +73,7 @@ Imagine un log qui conserve le prompt complet d'un client. Même si le modèle e
 
 :::indice
 Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
-::
-
+:::
 :::reponse
 Pourquoi le filtrage tenant doit-il être côté serveur ?
-::
+:::

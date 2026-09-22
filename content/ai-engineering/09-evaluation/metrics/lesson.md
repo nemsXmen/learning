@@ -35,11 +35,10 @@ metric = quality + reliability + cost + latency
 
 :::indice
 - Une réponse est parfaite mais coûte dix fois plus cher. Quelle mesure manque ?
-::
-
+:::
 :::solution
 Cherche la contrainte opérationnelle absente du tableau.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : outputs → métriques → segmentation → seuils → décision. Un LLM-as-judge peut évaluer des propriétés difficiles à formaliser, mais il doit lui aussi être testé pour biais de longueur, formulation ou préférence de modèle.
@@ -69,8 +68,7 @@ Une réponse peut être parfaite mais dix fois plus chère. Si l'équipe ne mesu
 
 :::indice
 Relie ta réponse à une décision concrète de qualité, coût ou release.
-::
-
+:::
 :::reponse
 Pourquoi segmenter les métriques ?
-::
+:::

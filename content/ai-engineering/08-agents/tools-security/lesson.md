@@ -41,11 +41,10 @@ Journalise acteur, outil, paramètres minimisés, décision d'autorisation, rés
 
 :::indice
 - Un agent propose un remboursement. Quelle frontière appliquer ?
-::
-
+:::
 :::solution
 Sépare la proposition du modèle de l'autorisation métier.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : agent → proposition d'action → policy check → authorization → tool → side effect → audit. Les secrets restent côté serveur. Pour du code ou des opérations risquées, ajoute sandbox, timeout, quotas CPU/mémoire, filesystem restreint et réseau contrôlé.
@@ -75,8 +74,7 @@ Pour un agent de support, lire une facture peut être autorisé automatiquement 
 
 :::indice
 Pense à la séparation entre modèle, runtime et système d'autorisation.
-::
-
+:::
 :::reponse
 Pourquoi l'autorisation doit-elle rester hors du prompt ?
-::
+:::

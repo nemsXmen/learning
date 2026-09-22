@@ -37,11 +37,10 @@ Une réponse indisponible doit être explicite. Prévois retry, édition, annula
 
 :::indice
 Une réponse générée contient une erreur factuelle. Quelle UX aide l'utilisateur ?
-::
-
+:::
 :::solution
 Donne des moyens de vérification et de correction.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : request → progress → evidence → result → user control. Les actions à effet de bord doivent avoir une frontière de confirmation adaptée au risque.
@@ -71,8 +70,7 @@ Une réponse factuelle comporte une erreur. Afficher les sources disponibles, pe
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-::
-
+:::
 :::reponse
 Pourquoi afficher les sources lorsque c'est possible ?
-::
+:::

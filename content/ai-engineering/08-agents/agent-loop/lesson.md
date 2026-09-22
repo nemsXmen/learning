@@ -37,11 +37,10 @@ Une reprise peut répéter une action. Les opérations à effet de bord doivent 
 
 :::indice
 - Un agent appelle cinq fois la même recherche sans progresser. Quel mécanisme ajouter ?
-::
-
+:::
 :::solution
 Cherche un signal de no-progress et une borne d'exécution.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : input → state → model → tool request → validation → execution → observation → state. Ajoute nombre maximal d'étapes, timeout global, budget de tokens/coût et détection de répétition. Les actions à effet de bord doivent être idempotentes.
@@ -71,8 +70,7 @@ Imagine un agent qui doit retrouver une facture puis préparer une réponse. Il 
 
 :::indice
 Pense à la séparation entre modèle, runtime et système d'autorisation.
-::
-
+:::
 :::reponse
 Pourquoi imposer un nombre maximal d'étapes ?
-::
+:::

@@ -147,11 +147,10 @@ Le filtre d'accès doit donc être imposé dans le chemin de retrieval, testé e
 
 :::indice
 Pour chaque objet, demande-toi : « comment puis-je retrouver son parent exact et vérifier que l'utilisateur a le droit de le voir ? »
-::
-
+:::
 :::solution
 Un chunk peut contenir `id`, `document_id`, `document_version`, `tenant_id`, `position`, `text`, `embedding` et les métadonnées nécessaires. La citation doit pouvoir remonter vers le chunk puis le document, sa version et la source. Un retrieval sans filtre de tenant peut retourner les données d'une autre entreprise.
-::
+:::
 ## À retenir
 
 La modélisation des données est une partie de l'architecture IA. Une identité stable, une provenance complète, une version explicite et une frontière d'accès claire rendent les traitements auditables et reconstruisibles.
@@ -163,8 +162,7 @@ La modélisation des données est une partie de l'architecture IA. Une identité
 
 :::indice
 Explique les conséquences concrètes d'un mauvais modèle de données.
-::
-
+:::
 :::reponse
 La provenance permet de diagnostiquer une réponse et de retrouver les données qui l'ont produite. Un contrat interne limite le couplage et facilite les changements de fournisseur. Le tenant définit une frontière d'accès : l'oublier dans le retrieval peut provoquer une fuite inter-client.
-::
+:::

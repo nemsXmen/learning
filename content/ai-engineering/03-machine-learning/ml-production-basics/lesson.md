@@ -104,11 +104,10 @@ Une autre consiste à surveiller uniquement la latence et les erreurs HTTP. Un s
 
 :::indice
 Compare ce qui était vrai pendant l'évaluation offline avec ce qui est réellement envoyé au modèle en production.
-::
-
+:::
 :::solution
 Vérifier un changement de distribution, le preprocessing train/production, le seuil de décision, la qualité ou le retard des labels, et le comportement par sous-groupe. Comparer les périodes et conserver la version du modèle dans les traces.
-::
+:::
 ## À retenir
 
 Le modèle n'est qu'un composant. Une mise en production fiable nécessite un artefact reproductible, un contrat d'inférence, du monitoring, des traces exploitables et un rollback rapide.
@@ -118,8 +117,7 @@ Le modèle n'est qu'un composant. Une mise en production fiable nécessite un ar
 
 :::indice
 Sépare les signaux opérationnels des signaux de qualité.
-::
-
+:::
 :::reponse
 Au minimum les erreurs, la latence et la disponibilité, puis les distributions des entrées et sorties, la dérive et les métriques métier dès que les labels sont disponibles. La version du modèle doit aussi être traçable.
-::
+:::

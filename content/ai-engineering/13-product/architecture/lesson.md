@@ -42,11 +42,10 @@ Sépare données métier, documents, embeddings, traces et artefacts d'évaluati
 
 :::indice
 Le produit dépend directement de trois SDK fournisseurs dans dix modules. Quel risque ?
-::
-
+:::
 :::solution
 Cherche le coût d'un changement de fournisseur.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : frontend → API → gateway → services AI → persistence/observability. Les données métier, documents, embeddings, traces et artefacts d'évaluation ont des cycles de vie distincts.
@@ -76,8 +75,7 @@ Si dix modules appellent directement trois SDK fournisseurs, chaque migration de
 
 :::indice
 Relie ta réponse à une décision produit mesurable.
-::
-
+:::
 :::reponse
 Pourquoi centraliser les appels modèles ?
-::
+:::

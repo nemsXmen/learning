@@ -256,11 +256,10 @@ Ce sont ces contrats, plus que la quantité de code, qui rendent un pipeline mai
 
 :::indice
 Commence par écrire le contrat de la fonction avant son implémentation : type d'entrée, invariants et forme de sortie.
-::
-
+:::
 :::solution
 Une solution correcte sépare la normalisation, la validation et la déduplication. Pour un gros corpus, fais produire les résultats progressivement avec `yield` plutôt que de construire une liste complète.
-::
+:::
 ## À retenir
 
 Python devient une compétence d'AI Engineer lorsqu'il sert à construire des composants prévisibles : fonctions petites, contrats explicites, erreurs conservées, mémoire maîtrisée et environnement reproductible.
@@ -272,8 +271,7 @@ Python devient une compétence d'AI Engineer lorsqu'il sert à construire des co
 
 :::indice
 Ne réponds pas seulement avec une définition Python : relie chaque concept à un problème de production IA.
-::
-
+:::
 :::reponse
 Une fonction pure est facile à tester et à reproduire. Une annotation documente et aide les outils statiques mais ne protège pas une entrée externe au runtime. Un générateur est utile lorsqu'un volume important peut être traité progressivement sans tout charger en mémoire.
-::
+:::

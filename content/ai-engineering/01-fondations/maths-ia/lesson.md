@@ -212,11 +212,10 @@ C'est cette discipline qui prépare aux modules d'évaluation.
 
 :::indice
 Pour les exercices d'évaluation, cherche les informations que la métrique ne contient pas.
-::
-
+:::
 :::solution
 Le produit scalaire vaut `1×3 + 2×4 = 11`. Pour comparer les systèmes, demande notamment le dataset, la distribution des classes, le recall, les performances par segment et les intervalles d'incertitude pertinents. Une similarité cosinus mesure une proximité dans un espace appris, pas la véracité ni la compatibilité logique des documents.
-::
+:::
 ## À retenir
 
 Les maths de l'AI Engineer servent surtout à développer une intuition quantitative : représentation vectorielle, similarité, probabilité, dispersion et incertitude. Cette intuition devient indispensable dès qu'on construit ou évalue un modèle.
@@ -228,8 +227,7 @@ Les maths de l'AI Engineer servent surtout à développer une intuition quantita
 
 :::indice
 Relie chaque réponse à un cas concret de système IA.
-::
-
+:::
 :::reponse
 La similarité cosinus compare l'orientation de représentations vectorielles. Une moyenne peut masquer des écarts importants entre segments ou exemples. Une corrélation décrit une association statistique et ne démontre pas qu'une variable cause l'autre.
-::
+:::

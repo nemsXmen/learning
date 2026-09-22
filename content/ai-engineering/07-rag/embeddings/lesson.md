@@ -42,11 +42,10 @@ Le vecteur ne remplace pas les filtres métier : tenant, ACL, langue, type de do
 
 :::indice
 - Un index attend 768 dimensions mais le nouveau modèle produit 1536. Peut-on mélanger les deux ?
-::
-
+:::
 :::solution
 Vérifie d'abord le contrat de dimension de l'index.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : texte → modèle d'embedding → vecteur → index → nearest neighbors. L'indexation et la requête doivent utiliser un espace vectoriel compatible, avec une distance cohérente avec le modèle et sa normalisation.
@@ -76,8 +75,7 @@ Supposons qu'un index utilise un modèle produisant 768 dimensions. Si un nouvea
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-::
-
+:::
 :::reponse
 Pourquoi réévaluer après un changement de modèle d'embedding ?
-::
+:::
