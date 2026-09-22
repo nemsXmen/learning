@@ -15,10 +15,8 @@ tags: [deep-learning, pytorch]
 ---
 
 ## Objectifs
-- comprendre forward, loss, backward et update ;
-- choisir une loss adaptée ;
-- comprendre learning rate et batch size ;
-- diagnostiquer un entraînement instable.
+
+À la fin de ce chapitre, tu dois pouvoir expliquer chaque étape d'une boucle d'entraînement, choisir une fonction de perte cohérente et diagnostiquer un entraînement qui diverge ou produit des NaN.
 
 ## Boucle d'entraînement
 ```text
@@ -48,51 +46,49 @@ La rétropropagation applique la règle de chaîne pour calculer les dérivées.
 Surveille NaN, gradients explosifs, stagnation, validation qui se dégrade et utilisation GPU.
 
 ## Exercices
-Un entraînement devient NaN. Donne une stratégie de diagnostic.
+
+- Un entraînement devient NaN après quelques centaines de steps. Décris ton protocole de diagnostic.
 
 :::indice
-Observe shape, loss et gradients avant de modifier plusieurs paramètres à la fois.
+Commence par identifier la première étape où apparaît NaN ou inf.
 :::
 
 :::solution
-Vérifie données, labels, valeurs extrêmes, learning rate, gradients, mixed precision et opérations produisant inf/NaN. Reproduis avec un petit batch déterministe.
-
+Vérifie données et labels, activations et gradients, learning rate, mixed precision et opérations numériques instables. Reproduis avec un petit batch déterministe.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Quand une loss devient NaN, ne change pas immédiatement cinq hyperparamètres. Cherche la première valeur invalide : données, labels, activation, loss ou gradient. Reproduis avec un petit batch déterministe.
 
 ## À retenir
-Entraîner un réseau est une expérience contrôlée. Chaque changement doit être mesuré et relié à une hypothèse.
+
+L'entraînement est une boucle expérimentale : forward → loss → backward → update. Comprendre chaque étape vaut mieux que modifier les hyperparamètres au hasard.
 
 ## Introduction
 
-L'entraînement ajuste les paramètres pour réduire une fonction de perte.
+Un réseau neuronal commence avec des paramètres qui ne donnent généralement pas de bonnes prédictions. L'entraînement consiste à mesurer ses erreurs puis à modifier progressivement ces paramètres.
 
 ## Concept
 
-Forward, loss, backward et optimizer.step constituent la boucle fondamentale.
+La boucle fondamentale suit : batch → forward → prediction → loss → backward → gradients → optimizer.step() → nouveaux paramètres. zero_grad() est nécessaire parce que PyTorch accumule les gradients par défaut.
 
 ## Exemple
 
-Un gradient NaN impose de vérifier données, learning rate, opérations instables et précision numérique.
+Pour une classification multi-classe, une cross-entropy est souvent adaptée. Pour une régression, MSE ou MAE peuvent être utilisées selon le problème. La loss guide l'apprentissage mais n'est pas forcément la métrique métier finale.
 
 ## Comment ça fonctionne
 
-batch → forward → loss → backward → update → metrics
+Le learning rate contrôle l'amplitude des mises à jour. Trop grand, il peut provoquer oscillations ou divergence ; trop petit, il rend la convergence lente. Le batch size influence aussi le bruit du gradient et la mémoire nécessaire.
 
 ## Questions d'entretien
 
-- Pourquoi sauvegarder des checkpoints ?
+Pourquoi sauvegarder des checkpoints pendant l'entraînement ?
 
-  :::indice
-  Relie la question au comportement réel d'un entraînement.
-  :::
+:::indice
+Relie ta réponse au fonctionnement concret du système.
+:::
 
-  :::reponse
-  Pour reprendre, comparer des états et revenir à une version connue du modèle.
-  :::
+:::reponse
+Un checkpoint permet de reprendre après une interruption, de comparer des expériences et de revenir à un état connu.
+:::
