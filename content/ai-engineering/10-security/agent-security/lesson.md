@@ -37,52 +37,49 @@ Injecte les credentials uniquement dans le composant qui doit les utiliser. Évi
 Trace appels d'outils, décisions de politique, erreurs et request IDs sans enregistrer inutilement des données sensibles.
 
 ## Exercices
-- Un agent peut exécuter du code Python arbitraire. Quelles protections minimales ?
+
+Même un agent correctement configuré peut produire une action inattendue. Les contrôles doivent donc limiter l'impact maximal d'une erreur ou d'une compromission.
 
 :::indice
-Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
+- Un agent peut exécuter du Python arbitraire. Quelles protections minimales ?
 :::
 
 :::solution
-Sandbox isolée, timeout, quotas CPU/mémoire, filesystem restreint, réseau contrôlé et validation des résultats.
-
+Pense en termes d'isolation et de limites de ressources.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : request → policy → sandbox/tool → validation du résultat → audit. Les secrets doivent rester dans le composant qui appelle réellement le service, pas dans le contexte du modèle.
 
 ## À retenir
-L'autonomie augmente la surface d'attaque ; les privilèges doivent rester bornés.
 
+Sandbox isolée, timeout, quotas CPU/mémoire, filesystem restreint, réseau contrôlé et validation des résultats avant tout effet de bord.
 
 ## Introduction
 
-Un agent augmente la surface d'attaque lorsqu'il peut appeler des outils.
+Sécuriser l'autonomie et l'exécution de code
 
 ## Concept
 
-Least privilege, sandbox, secrets courts et audit réduisent l'impact d'une compromission.
+Un agent qui peut seulement produire du texte a une surface d'impact limitée. Dès qu'il peut appeler des outils, modifier des données ou exécuter du code, la sécurité doit contrôler chaque capacité.
 
 ## Exemple
 
-Un outil shell doit être isolé ou remplacé par une API spécialisée lorsque cela suffit.
+Le principe de least privilege consiste à donner uniquement les permissions nécessaires, pendant la durée nécessaire. L'agent propose ; le policy engine décide ; le tool exécute.
 
 ## Comment ça fonctionne
 
-request → policy → sandbox/tool → audit
+Pour un agent capable d'exécuter Python arbitraire, il ne suffit pas de vérifier le prompt. Il faut isoler le processus, limiter CPU et mémoire, contrôler le filesystem et le réseau et imposer un timeout.
 
 ## Questions d'entretien
 
-- Quel est le principe de least privilege pour un agent ?
+L'autonomie augmente la surface d'attaque ; les privilèges et les ressources doivent rester bornés.
 
-  :::indice
-  Pense aux contrôles qui restent fiables même si le modèle se trompe.
-  :::
+:::indice
+Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
+:::
 
-  :::reponse
-  Accorder uniquement les permissions nécessaires à la tâche et pour la durée nécessaire.
-  :::
+:::reponse
+Quel est le principe de least privilege pour un agent ?
+:::
