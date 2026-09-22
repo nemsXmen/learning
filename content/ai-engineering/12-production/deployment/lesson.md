@@ -35,7 +35,7 @@ Pin les dépendances, versionne les artefacts et garde la configuration hors du 
 ## Rollback
 Une release doit pouvoir revenir à une version connue sans perdre les données compatibles.
 
-## Exercice
+## Exercices
 Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
 
 :::indice
