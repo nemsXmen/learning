@@ -33,52 +33,49 @@ Une solution IA est pertinente lorsque l'incertitude ou la compréhension du lan
 Commence par la solution non-IA la plus simple. Elle permet de mesurer la valeur réellement apportée.
 
 ## Exercices
-Une équipe veut ajouter un chatbot sans problème utilisateur identifié. Que mesurer d'abord ?
+
+Un taux de génération élevé ne prouve pas la valeur. Il faut aussi considérer qualité, coût, sécurité, latence et taux de réussite de la tâche.
 
 :::indice
-Relie chaque décision technique à une métrique ou un risque utilisateur concret.
+Une équipe veut ajouter un chatbot sans problème utilisateur identifié. Que mesurer d'abord ?
 :::
 
 :::solution
-Identifier le job-to-be-done, le coût actuel et un indicateur de résultat avant de choisir la technologie.
-
+Commence par le job-to-be-done.
 :::
 
 ## Erreurs fréquentes
 
-- choisir une technologie avant de définir le problème ;
-- mesurer une moyenne sans regarder les cas critiques ;
-- confondre une sortie plausible avec une sortie validée ;
-- oublier coût, sécurité et opérations dans la conception.
+Le flow est : problème → baseline → capacité AI → métrique → outcome. Pour chaque capacité, demande si elle réduit réellement une friction ou améliore un résultat.
 
 ## À retenir
-L'IA est un moyen produit ; la métrique de valeur précède le modèle.
 
+Identifier l'utilisateur, le coût actuel, la fréquence et un indicateur de résultat avant de choisir la technologie.
 
 ## Introduction
 
-Un produit AI commence par un problème utilisateur mesurable, pas par un modèle.
+Partir du problème avant de choisir l'IA
 
 ## Concept
 
-Le job-to-be-done, le coût actuel, la fréquence et le risque définissent la valeur potentielle.
+Un produit AI commence par un résultat utilisateur mesurable. Le modèle n'est qu'un moyen parmi d'autres pour améliorer ce résultat.
 
 ## Exemple
 
-Comparer une baseline non-IA à la solution AI permet d'isoler la valeur réellement créée.
+Décris le job-to-be-done, la tâche actuelle, sa fréquence, son coût, les données disponibles, les erreurs acceptables et le résultat attendu. Une baseline non-IA donne le point de comparaison.
 
 ## Comment ça fonctionne
 
-problem → baseline → AI capability → metric → outcome
+Une équipe veut ajouter un chatbot mais ne sait pas quel problème il résout. La première étape est de mesurer les demandes actuelles, leur coût, leur délai et leur taux de résolution.
 
 ## Questions d'entretien
 
-- Que faut-il définir avant le modèle ?
+L'IA est un moyen produit ; la métrique de valeur précède le modèle.
 
-  :::indice
-  Relie la métrique à une décision produit concrète.
-  :::
+:::indice
+Relie ta réponse à une décision produit mesurable.
+:::
 
-  :::reponse
-  Le problème, l'utilisateur, la baseline et la métrique de succès.
-  :::
+:::reponse
+Que faut-il définir avant le modèle ?
+:::
