@@ -39,7 +39,7 @@ Un prompt de production doit avoir une version, un changelog et un jeu d'évalua
 ## Injection
 Une page web ou un document peut contenir des instructions malveillantes. Sépare clairement données et instructions et n'autorise jamais le modèle à contourner les contrôles applicatifs.
 
-## Exercice
+## Exercices
 Extraire name, email et amount depuis un message client. Quelles contraintes ajouter ?
 
 :::indice
