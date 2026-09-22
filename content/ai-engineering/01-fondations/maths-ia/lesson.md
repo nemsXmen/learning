@@ -1,154 +1,221 @@
 ---
-id: ai-maths-fondations
-title: "Mathématiques pour l'IA : vecteurs, matrices, probabilités et statistiques"
+id: ai-maths
+title: "Mathématiques pour l'IA : vecteurs, probabilités et statistiques"
 slug: maths-ia
 technology: ai-engineering
 level: beginner
 module: fondations
 order: 4
-estimatedMinutes: 60
+estimatedMinutes: 75
 difficulty: 3
-xp: 120
-prerequisites: []
-skills:
-  - ai-linear-algebra
-  - ai-probability
-tags: [mathematics, linear-algebra, probability, statistics]
+xp: 130
+prerequisites: [ai-git-reproductibilite]
+skills: [ai-maths]
+tags: [maths, statistiques, probabilites, vectors]
 ---
 
 ## Objectifs
 
-- comprendre vecteurs, matrices, produit scalaire et norme ;
-- calculer une similarité cosinus ;
-- utiliser probabilité conditionnelle et Bayes ;
-- lire moyenne, variance et quantiles ;
-- relier ces notions aux embeddings et à l'évaluation.
+- manipuler les notions de vecteur, matrice, produit scalaire et norme ;
+- comprendre pourquoi les embeddings peuvent être comparés par similarité ;
+- distinguer moyenne, variance et écart-type ;
+- raisonner avec probabilité conditionnelle ;
+- comprendre pourquoi une métrique seule ne suffit pas pour évaluer un système IA.
 
-## Vecteurs
+## Pourquoi apprendre les maths sans devenir mathématicien
 
-Un vecteur est une liste ordonnée de nombres.
+L'objectif n'est pas de faire des calculs à la main pendant toute une carrière.
 
-```python
-import numpy as np
+L'objectif est de pouvoir lire et questionner les outils que tu utilises.
 
-a = np.array([1.0, 2.0, 3.0])
-b = np.array([2.0, 0.0, 1.0])
+Quand tu verras :
 
-dot = a @ b
-norm = np.linalg.norm(a)
+```text
+embedding
+cosine similarity
+cross-entropy
+gradient
+precision / recall
+confidence
 ```
 
-Le produit scalaire est la somme des produits composante par composante.
+tu dois comprendre ce que mesure le concept, quelles hypothèses il suppose et dans quel cas son interprétation peut être trompeuse.
+
+## Vecteurs : représenter un objet par des nombres
+
+Un vecteur peut représenter un point dans un espace :
+
+```text
+x = [x₁, x₂, x₃]
+```
+
+En machine learning, une ligne de données peut devenir un vecteur de caractéristiques.
+
+Dans un système de recherche sémantique, un texte peut être transformé en embedding :
+
+```text
+texte → modèle d'embedding → [0.12, -0.31, 0.77, ...]
+```
+
+Le vecteur n'est pas « le sens » sous forme magique. C'est une représentation numérique apprise qui permet ensuite certaines opérations géométriques utiles.
+
+## Produit scalaire
+
+Pour deux vecteurs :
+
+```text
+a = [a₁, a₂]
+b = [b₁, b₂]
+
+a · b = a₁b₁ + a₂b₂
+```
+
+Le produit scalaire combine les composantes et intervient notamment dans l'attention des Transformers.
+
+Deux vecteurs ayant une orientation proche peuvent avoir un produit scalaire élevé, selon leurs normes.
+
+## Norme et distance
+
+La norme euclidienne d'un vecteur est :
+
+```text
+||x||₂ = √(x₁² + x₂² + ... + xₙ²)
+```
+
+Elle mesure sa longueur.
+
+La distance euclidienne entre deux points mesure leur écart géométrique. Mais dans les embeddings, la distance choisie doit être cohérente avec le modèle et l'index de recherche.
 
 ## Similarité cosinus
 
-La formule est :
+La similarité cosinus est :
 
-cos(a,b) = (a·b) / (||a|| ||b||).
-
-Elle mesure l'angle entre deux vecteurs. Elle est couramment utilisée pour comparer des embeddings, mais la métrique doit rester cohérente avec le modèle et l'index.
-
-## Matrices
-
-```python
-X = np.array([[1, 2], [3, 4], [5, 6]])
-W = np.array([[0.2, 0.4], [0.1, 0.3]])
-Y = X @ W
+```text
+cos(a,b) = (a · b) / (||a|| ||b||)
 ```
 
-Les dimensions doivent être compatibles. Les réseaux neuronaux effectuent une grande quantité d'opérations de ce type.
+Elle compare principalement l'orientation.
+
+Un point essentiel : un score de similarité n'est pas une preuve de vérité.
+
+Deux documents peuvent être très proches dans l'espace vectoriel tout en contenant une information incorrecte ou obsolète.
 
 ## Probabilité conditionnelle
 
-La probabilité conditionnelle est P(A|B) = P(A∩B) / P(B).
+La probabilité conditionnelle répond à :
 
-Bayes :
-
-P(A|B) = P(B|A)P(A) / P(B).
-
-Une sortie appelée probabilité par un modèle n'est pas automatiquement parfaitement calibrée.
-
-## Statistiques
-
-La moyenne résume le centre d'une distribution ; variance et quantiles décrivent sa dispersion.
-
-Pour une API AI, mesurer p50, p95 et p99 est plus informatif que la seule moyenne : une longue traîne peut être invisible dans une moyenne.
-
-## Train, validation et test
-
-- train : apprendre ;
-- validation : choisir et régler ;
-- test : estimation finale ;
-- production : distribution réelle.
-
-Une fuite de données entre ces ensembles peut produire une métrique artificiellement optimiste.
-
-## Lien avec l'IA
-
-- vecteurs → embeddings ;
-- matrices → couches neuronales ;
-- produit scalaire → attention et similarité ;
-- probabilités → classification et génération ;
-- statistiques → métriques et analyse d'incertitude ;
-- quantiles → SLO de latence.
-
-## Exercices
-- Calcule la similarité cosinus de a=[1,0] et b=[0.8,0.6].
-
-:::indice
-Décompose le problème en étapes simples et vérifie chaque résultat intermédiaire.
-:::
-
-:::solution
-
-Le produit scalaire vaut 0.8 et les deux normes valent 1. La similarité vaut donc 0.8.
-
-```python
-import numpy as np
-a = np.array([1.0, 0.0])
-b = np.array([0.8, 0.6])
-similarity = (a @ b) / (np.linalg.norm(a) * np.linalg.norm(b))
-print(similarity)
+```text
+P(A | B)
 ```
 
-:::
+qui signifie : probabilité de A sachant B.
+
+Cette notion est centrale dans l'IA parce que beaucoup de prédictions peuvent être vues comme une estimation conditionnelle.
+
+Exemple conceptuel :
+
+```text
+P(classe = fraude | caractéristiques_transaction)
+```
+
+Attention à ne pas confondre :
+
+```text
+P(A | B) avec P(B | A)
+```
+
+Le changement de condition change généralement la valeur.
+
+## Moyenne, variance et écart-type
+
+La moyenne décrit le centre d'un ensemble.
+
+La variance mesure la dispersion autour de la moyenne :
+
+```text
+variance = moyenne[(x - moyenne)²]
+```
+
+L'écart-type est la racine carrée de la variance.
+
+Pourquoi est-ce utile ?
+
+Parce que deux modèles peuvent avoir la même moyenne de performance mais des comportements très différents selon les segments.
+
+Exemple :
+
+```text
+modèle A : 90, 90, 90, 90
+modèle B : 100, 100, 100, 60
+```
+
+La moyenne seule masque une différence importante.
+
+## Corrélation n'est pas causalité
+
+Si deux variables évoluent ensemble, cela ne prouve pas que l'une provoque l'autre.
+
+En IA produit, une corrélation entre « utilisateurs exposés au chatbot » et « conversion » peut venir d'un troisième facteur : les utilisateurs exposés sont peut-être déjà plus engagés.
+
+Un AI Engineer doit donc distinguer :
+
+```text
+association observée
+≠
+causalité démontrée
+```
+
+## Incertitude et échantillonnage
+
+Une métrique calculée sur 20 exemples est moins informative qu'une métrique calculée sur 20 000 cas comparables, mais le volume seul ne garantit pas la représentativité.
+
+Il faut demander :
+
+- qui est dans l'échantillon ?
+- qui est absent ?
+- comment les cas ont-ils été sélectionnés ?
+- quelle est la variabilité du résultat ?
+- le jeu d'évaluation ressemble-t-il au trafic réel ?
+
+C'est cette discipline qui prépare aux modules d'évaluation.
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+- croire qu'un score numérique possède une signification universelle ;
+- confondre similarité et vérité ;
+- interpréter une moyenne sans regarder la distribution ;
+- confondre corrélation et causalité ;
+- ignorer le biais d'échantillonnage ;
+- apprendre une formule sans comprendre ce qu'elle mesure.
+
+## Exercices
+
+- Calcule le produit scalaire de `[1, 2]` et `[3, 4]`.
+- Deux systèmes ont respectivement 95 % et 90 % de précision. Quelles informations supplémentaires demandes-tu avant de conclure ?
+- Pourquoi deux documents proches selon une similarité cosinus peuvent-ils malgré tout être incompatibles ?
+
+:::indice
+Pour les exercices d'évaluation, cherche les informations que la métrique ne contient pas.
+:::
+
+:::solution
+Le produit scalaire vaut `1×3 + 2×4 = 11`. Pour comparer les systèmes, demande notamment le dataset, la distribution des classes, le recall, les performances par segment et les intervalles d'incertitude pertinents. Une similarité cosinus mesure une proximité dans un espace appris, pas la véracité ni la compatibilité logique des documents.
+:::
 
 ## À retenir
 
-Les vecteurs, matrices, probabilités et statistiques sont le langage quantitatif qui permet de comprendre embeddings, réseaux neuronaux, métriques et performances AI.
-
-
-## Introduction
-
-Les mathématiques donnent à l'AI Engineer les modèles mentaux nécessaires pour comprendre données, optimisation et métriques.
-
-## Concept
-
-Vecteurs, matrices, probabilités et statistiques permettent de raisonner sur représentations, incertitude et performance.
-
-## Exemple
-
-Exemple : le produit scalaire compare deux vecteurs et intervient directement dans de nombreux mécanismes d'embeddings.
-
-## Comment ça fonctionne
-
-Un pipeline ML transforme des données en représentations puis optimise une fonction objectif sous des hypothèses statistiques.
+Les maths de l'AI Engineer servent surtout à développer une intuition quantitative : représentation vectorielle, similarité, probabilité, dispersion et incertitude. Cette intuition devient indispensable dès qu'on construit ou évalue un modèle.
 
 ## Questions d'entretien
 
-- Pourquoi les probabilités sont-elles importantes en IA ?
+- Pourquoi la similarité cosinus est-elle utile pour les embeddings ?
+- Pourquoi une moyenne de score peut-elle être trompeuse ?
+- Quelle différence entre corrélation et causalité ?
 
-  :::indice
-  Relie le concept à un problème concret de production AI.
-  :::
+:::indice
+Relie chaque réponse à un cas concret de système IA.
+:::
 
-  :::reponse
-  Réponse : elles permettent de quantifier incertitude, distributions, erreurs d'échantillonnage et décisions sous risque.
-  :::
+:::reponse
+La similarité cosinus compare l'orientation de représentations vectorielles. Une moyenne peut masquer des écarts importants entre segments ou exemples. Une corrélation décrit une association statistique et ne démontre pas qu'une variable cause l'autre.
+:::
