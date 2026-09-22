@@ -36,52 +36,49 @@ Pin les dépendances, versionne les artefacts et garde la configuration hors du 
 Une release doit pouvoir revenir à une version connue sans perdre les données compatibles.
 
 ## Exercices
-- Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
+
+Un déploiement AI peut échouer sans erreur technique visible : qualité, coût ou latence peuvent se dégrader. Les critères de release doivent donc couvrir ces dimensions.
 
 :::indice
-Raisonne en détection → mitigation → récupération → vérification.
+- Une nouvelle version du modèle augmente les erreurs. Quelle procédure ?
 :::
 
 :::solution
-Réduire le trafic, comparer les métriques, conserver l'ancienne version et effectuer un rollback si nécessaire.
-
+Commence par contenir l'impact avant de modifier davantage le système.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : build → artefacts versionnés → staging → vérification → canary/rollout → production → rollback. Les migrations de données doivent être conçues pour rester compatibles pendant la transition.
 
 ## À retenir
-Un déploiement IA doit être réversible et observable.
 
+Réduire le trafic vers la version fautive, comparer les métriques, conserver l'ancienne version et effectuer un rollback si nécessaire, puis analyser la cause.
 
 ## Introduction
 
-Le déploiement AI doit rendre code, configuration et modèles reproductibles.
+Déployer sans perdre la reproductibilité
 
 ## Concept
 
-Environnements, artefacts, migrations et rollback forment un même processus.
+Une application AI est un ensemble de composants : API, workers, base, stockage, recherche et parfois service de modèle. Une release doit identifier exactement les versions qui composent cet ensemble.
 
 ## Exemple
 
-Une release peut référencer explicitement version du modèle, prompt et image applicative.
+Un artefact déployable doit figer les dépendances et référencer la version du modèle, du prompt et des migrations compatibles. La configuration et les secrets restent séparés du code.
 
 ## Comment ça fonctionne
 
-build → artifact → staging → verification → production
+Une nouvelle version du modèle augmente les erreurs après déploiement. Si l'ancienne version est encore disponible, on peut réduire le trafic vers la nouvelle, comparer les métriques puis revenir à la version connue.
 
 ## Questions d'entretien
 
-- Pourquoi garder un rollback prêt ?
+Un déploiement AI doit être reproductible, observable et réversible.
 
-  :::indice
-  Pense aux conséquences d'une panne sous trafic réel.
-  :::
+:::indice
+Relie ta réponse à une contrainte opérationnelle concrète.
+:::
 
-  :::reponse
-  Parce qu'une régression peut apparaître uniquement avec le trafic réel.
-  :::
+:::reponse
+Pourquoi garder un rollback prêt ?
+:::
