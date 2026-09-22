@@ -42,6 +42,13 @@ Le tableau d'évaluation doit intégrer le coût par requête ou par tâche, ave
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Aucune métrique unique ne résume un système LLM.
 
