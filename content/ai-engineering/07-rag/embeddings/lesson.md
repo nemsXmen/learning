@@ -38,17 +38,15 @@ Changer de modèle d'embedding peut changer dimension, distribution et qualité.
 Le vecteur ne remplace pas les filtres métier : tenant, ACL, langue, type de document et version peuvent être appliqués avant ou pendant la recherche selon le moteur.
 
 ## Exercices
-
-Changer de modèle peut modifier la dimension, la distribution des vecteurs et la qualité du retrieval. Une migration doit donc prévoir un nouvel index ou une stratégie compatible, une réindexation et une nouvelle évaluation.
+- Changer de modèle peut modifier la dimension, la distribution des vecteurs et la qualité du retrieval. Une migration doit donc prévoir un nouvel index ou une stratégie compatible, une réindexation et une nouvelle évaluation.
 
 :::indice
 - Un index attend 768 dimensions mais le nouveau modèle produit 1536. Peut-on mélanger les deux ?
-:::
+::
 
 :::solution
 Vérifie d'abord le contrat de dimension de l'index.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : texte → modèle d'embedding → vecteur → index → nearest neighbors. L'indexation et la requête doivent utiliser un espace vectoriel compatible, avec une distance cohérente avec le modèle et sa normalisation.
@@ -74,13 +72,12 @@ Deux textes proches selon le modèle produisent généralement des vecteurs proc
 Supposons qu'un index utilise un modèle produisant 768 dimensions. Si un nouveau modèle produit 1536 dimensions, ses vecteurs ne peuvent pas être mélangés directement avec ceux de l'ancien index homogène.
 
 ## Questions d'entretien
-
-Un embedding est un signal de recherche. Il ne remplace ni les règles d'accès, ni la validation métier, ni l'évaluation.
+- Un embedding est un signal de recherche. Il ne remplace ni les règles d'accès, ni la validation métier, ni l'évaluation.
 
 :::indice
 Relie ta réponse à la séparation entre retrieval et génération.
-:::
+::
 
 :::reponse
 Pourquoi réévaluer après un changement de modèle d'embedding ?
-:::
+::
