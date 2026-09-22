@@ -10,7 +10,7 @@ estimatedMinutes: 60
 difficulty: 2
 xp: 100
 prerequisites: [ai-python-fondamentaux]
-skills: [ai-linux]
+skills: [ai-cli-linux]
 tags: [linux, cli, processes, debugging]
 ---
 
