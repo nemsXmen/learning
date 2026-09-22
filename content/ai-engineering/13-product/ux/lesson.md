@@ -32,7 +32,7 @@ Pour une réponse sensible, afficher sources, niveau de confiance utile ou possi
 ## Erreurs
 Une réponse indisponible doit être explicite. Prévois retry, édition, annulation et reprise quand pertinent.
 
-## Exercice
+## Exercices
 Une réponse générée contient une erreur factuelle. Quelle UX aide l'utilisateur ?
 
 :::indice
