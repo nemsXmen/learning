@@ -58,7 +58,7 @@ Un modèle doit pouvoir être remplacé rapidement par une version connue. Conse
 
 ## Exercices
 
-Un modèle offline a 92 % de précision mais le taux d'erreur métier augmente après déploiement. Donne quatre pistes.
+- Un modèle offline a 92 % de précision mais le taux d'erreur métier augmente après déploiement. Donne quatre pistes.
 
 :::indice
 Commence par définir la métrique et la baseline avant de choisir une technique.
