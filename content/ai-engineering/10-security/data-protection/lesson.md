@@ -36,17 +36,15 @@ L'isolation doit être appliquée avant retrieval et avant toute écriture.
 Définis durée de conservation, suppression, backups et logs. Les données d'observabilité peuvent elles-mêmes être sensibles.
 
 ## Exercices
-
-Les embeddings ne sont pas automatiquement anonymes. Les données d'observabilité peuvent elles aussi révéler des informations sensibles. Il faut donc définir ce qui est journalisé et combien de temps.
+- Les embeddings ne sont pas automatiquement anonymes. Les données d'observabilité peuvent elles aussi révéler des informations sensibles. Il faut donc définir ce qui est journalisé et combien de temps.
 
 :::indice
 - Un log conserve le prompt complet contenant des données client. Quel problème apparaît ?
-:::
+::
 
 :::solution
 Considère le log comme une nouvelle surface de données.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : identité → autorisation → données filtrées → traitement → stockage/logs → rétention/suppression. L'isolation doit être appliquée avant retrieval et avant les écritures.
@@ -72,13 +70,12 @@ La première défense est la minimisation : envoyer uniquement les champs néces
 Imagine un log qui conserve le prompt complet d'un client. Même si le modèle est sécurisé, le log devient une nouvelle copie de données sensibles avec ses propres permissions et sa propre durée de conservation.
 
 ## Questions d'entretien
-
-La confidentialité est une propriété de pipeline, pas une option ajoutée uniquement lors de l'appel LLM.
+- La confidentialité est une propriété de pipeline, pas une option ajoutée uniquement lors de l'appel LLM.
 
 :::indice
 Relie ta réponse à une frontière de confiance et à un contrôle déterministe.
-:::
+::
 
 :::reponse
 Pourquoi le filtrage tenant doit-il être côté serveur ?
-:::
+::
