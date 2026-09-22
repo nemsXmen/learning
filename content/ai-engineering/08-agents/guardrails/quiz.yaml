@@ -1,0 +1,26 @@
+id: ai-08-guardrails-quiz
+kind: QUIZ
+questions:
+  - id: ai-08-guardrails-q1
+    type: multiple_choice
+    difficulty: 3
+    question: "Quelle frontière doit décider si un remboursement peut réellement être exécuté ?"
+    options: ["Le texte du prompt", "Le modèle seul", "Le système d'autorisation du runtime", "Le document RAG"]
+    answer: [2]
+    explanation: "Le modèle peut proposer une action, mais le runtime et la policy doivent contrôler l'effet."
+    skills: [ai-agents]
+  - id: ai-08-guardrails-q2
+    type: multiple_answer
+    difficulty: 4
+    question: "Quels contrôles sont pertinents avant un effet métier sensible ?"
+    options: ["Validation de schéma", "Validation métier", "Autorisation", "Clé d'idempotence lorsque nécessaire", "Faire confiance au document récupéré"]
+    answer: [0, 1, 2, 3]
+    explanation: "Ces contrôles réduisent les erreurs de forme, de domaine, d'autorisation et de répétition."
+    skills: [ai-agents]
+  - id: ai-08-guardrails-q3
+    type: true_false
+    difficulty: 2
+    question: "Une donnée récupérée par RAG doit être considérée comme une instruction privilégiée."
+    answer: false
+    explanation: "Les documents récupérés sont des données non fiables et ne doivent pas modifier les permissions."
+    skills: [ai-agents]
