@@ -93,7 +93,7 @@ Une fuite de données entre ces ensembles peut produire une métrique artificiel
 - quantiles → SLO de latence.
 
 ## Exercices
-
+- 
 - Calcule la similarité cosinus de a=[1,0] et b=[0.8,0.6].
 
 :::indice
