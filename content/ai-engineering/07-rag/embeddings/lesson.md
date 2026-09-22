@@ -37,7 +37,7 @@ Changer de modèle d'embedding peut changer dimension, distribution et qualité.
 ## Metadata filtering
 Le vecteur ne remplace pas les filtres métier : tenant, ACL, langue, type de document et version peuvent être appliqués avant ou pendant la recherche selon le moteur.
 
-## Exercice
+## Exercices
 Un index attend 768 dimensions mais le nouveau modèle produit 1536. Peut-on mélanger les deux ?
 
 :::indice
