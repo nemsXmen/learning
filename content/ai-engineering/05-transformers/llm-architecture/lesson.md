@@ -15,10 +15,8 @@ tags: [transformers, llm]
 ---
 
 ## Objectifs
-- comprendre les blocs fondamentaux d'un Transformer ;
-- suivre le trajet d'un token jusqu'à la sortie ;
-- distinguer pré-entraînement et génération ;
-- comprendre causalité, positions et logits.
+
+Suivre le trajet d'un token dans un LLM, comprendre les blocs Transformer, les logits et la génération autoregressive.
 
 ## Pipeline
 Un LLM autoregressif suit conceptuellement :
@@ -62,51 +60,49 @@ Cela ne signifie pas que le modèle possède une base de données fiable : ses p
 La latence dépend notamment de la taille du modèle, de la longueur du contexte, du matériel et de la stratégie d'inférence.
 
 ## Exercices
-Pourquoi une température élevée peut-elle rendre une génération plus variée ?
+
+- Pourquoi une température élevée peut-elle rendre une génération plus variée ?
 
 :::indice
-Relie le concept à la chaîne tokens → représentation → modèle → sortie.
+Regarde ce qu'elle fait à la concentration de la distribution avant le sampling.
 :::
 
 :::solution
-Elle a tendance à aplatir la distribution des logits avant le sampling, donnant davantage de chances aux tokens moins probables.
-
+Elle tend à aplatir la distribution, donnant davantage de chances aux tokens moins probables.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Une température élevée ne donne pas au modèle de nouvelles connaissances. Elle modifie la distribution utilisée pour choisir les tokens. Il faut aussi distinguer pré-entraînement, où le modèle apprend des régularités, et inférence, où il les utilise pour produire une sortie.
 
 ## À retenir
-Un LLM n'est pas seulement un prompt et une réponse : tokenizer, contexte, architecture, logits et stratégie de génération font partie du système.
+
+Un LLM est un pipeline complet : tokenizer, représentations, blocs Transformer, logits et stratégie de génération.
 
 ## Introduction
 
-Un LLM assemble embeddings, blocs Transformer et tête de sortie pour prédire des tokens.
+Un LLM ne reçoit pas directement des mots et ne produit pas directement une phrase. Il transforme le texte en tokens, les représente numériquement, applique une succession de blocs et produit finalement des scores sur son vocabulaire.
 
 ## Concept
 
-Les logits représentent des scores avant transformation en distribution de probabilités.
+Le pipeline est : texte → tokenizer → token IDs → embeddings + positions → Transformer blocks → logits → sampling → prochain token. Le processus recommence avec le nouveau contexte.
 
 ## Exemple
 
-La température modifie la distribution d'échantillonnage mais ne change pas les connaissances du modèle.
+Pour « Bonjour, comment », le modèle ne sélectionne pas directement une phrase complète. Il produit une distribution de scores pour les tokens possibles, puis une stratégie de génération choisit le prochain token.
 
 ## Comment ça fonctionne
 
-tokens → embeddings → transformer blocks → logits → sampling
+Un bloc moderne combine attention, normalisation, réseau feed-forward et connexions résiduelles. Les logits sont des scores avant conversion en probabilités. Température, top-k et top-p modifient la manière dont on échantillonne ces scores. Le flow de génération se répète token après token.
 
 ## Questions d'entretien
 
-- Que produit directement la tête d'un LLM ?
+Que produit directement la tête d'un LLM autoregressif ?
 
-  :::indice
-  Pense au lien entre comportement du modèle et contraintes de production.
-  :::
+:::indice
+Relie ta réponse au fonctionnement concret du modèle.
+:::
 
-  :::reponse
-  Des logits sur le vocabulaire, utilisés ensuite pour choisir le prochain token.
-  :::
+:::reponse
+Elle produit des logits sur le vocabulaire, qui servent ensuite à sélectionner le prochain token.
+:::
