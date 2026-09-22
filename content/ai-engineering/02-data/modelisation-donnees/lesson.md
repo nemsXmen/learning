@@ -99,6 +99,13 @@ Ajoute une contrainte d'unicité adaptée au processus d'ingestion.
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 
 La donnée AI doit être traçable, versionnée et découplée des fournisseurs. Un bon schéma rend les pipelines idempotents, auditables et évolutifs.
