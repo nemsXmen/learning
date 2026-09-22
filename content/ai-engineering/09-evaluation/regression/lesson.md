@@ -34,17 +34,15 @@ Ne regarde pas uniquement le score global. Segmente par langue, intention, diffi
 Un changement peut être bloqué si une métrique critique baisse au-delà d'un seuil défini.
 
 ## Exercices
-
-Le score global est trompeur lorsqu'une population importante masque une petite population critique. Segmente par langue, intention, difficulté, longueur ou catégorie de risque.
+- Le score global est trompeur lorsqu'une population importante masque une petite population critique. Segmente par langue, intention, difficulté, longueur ou catégorie de risque.
 
 :::indice
 - Le score global reste stable mais les requêtes en français régressent. Que montre la moyenne ?
-:::
+::
 
 :::solution
 Cherche ce que l'agrégation peut masquer.
-:::
-
+::
 ## Erreurs fréquentes
 
 Le flow est : changement → suite d'évaluation → comparaison → analyse par segment → release gate → déploiement. Une gate peut bloquer une release si une métrique critique descend sous un seuil défini.
@@ -70,13 +68,12 @@ Le golden set reste fixe pour permettre la comparaison. Il doit néanmoins évol
 Après chaque changement de modèle, prompt, chunking ou outil, la suite rejoue les cas critiques et compare la nouvelle version à une baseline.
 
 ## Questions d'entretien
-
-La qualité devient une propriété versionnée du logiciel lorsqu'elle est testée automatiquement avant les releases.
+- La qualité devient une propriété versionnée du logiciel lorsqu'elle est testée automatiquement avant les releases.
 
 :::indice
 Relie ta réponse à une décision concrète de qualité, coût ou release.
-:::
+::
 
 :::reponse
 Que doit faire une release gate ?
-:::
+::
