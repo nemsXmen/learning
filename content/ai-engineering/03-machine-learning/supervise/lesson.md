@@ -47,7 +47,7 @@ Le choix dépend du coût des erreurs.
 
 MAE mesure l'erreur absolue moyenne. RMSE amplifie davantage les grosses erreurs. La métrique doit correspondre au coût métier.
 
-## Exercice
+## Exercices
 
 Pour un filtre anti-spam, explique pourquoi recall seul ne suffit pas.
 
