@@ -40,11 +40,10 @@ Utilise backoff et nombre maximal d'essais. Une tâche non idempotente ne doit p
 
 :::indice
 - Un worker tombe après l'action mais avant l'accusé de réception. Que prévoir ?
-::
-
+:::
 :::solution
 Le problème est l'incertitude sur l'état réel de l'action.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow est : API → queue → worker → result store/cache. Le worker doit être idempotent, les retries doivent utiliser un backoff borné et les échecs persistants doivent pouvoir finir dans une dead-letter queue.
@@ -74,8 +73,7 @@ Un worker tombe après avoir effectué une écriture mais avant d'envoyer son AC
 
 :::indice
 Relie ta réponse à une métrique et à une contrainte système.
-::
-
+:::
 :::reponse
 Pourquoi l'idempotence est-elle essentielle avec les retries ?
-::
+:::
