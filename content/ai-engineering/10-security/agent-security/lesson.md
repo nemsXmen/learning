@@ -48,6 +48,13 @@ Sandbox isolée, timeout, quotas CPU/mémoire, filesystem restreint, réseau con
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 L'autonomie augmente la surface d'attaque ; les privilèges doivent rester bornés.
 
