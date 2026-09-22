@@ -39,7 +39,7 @@ Une observation inhabituelle n'est pas nécessairement une fraude ou une erreur.
 
 Les embeddings permettent aussi regroupement et recherche sémantique. Le résultat dépend du modèle, des données et de la métrique.
 
-## Exercice
+## Exercices
 
 Tu observes trois clusters de clients. Comment vérifier qu'ils sont utiles ?
 
