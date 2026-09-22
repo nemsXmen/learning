@@ -36,52 +36,49 @@ request -> relevant memory retrieval -> context -> model
 Une mémoire persistante peut contenir des données sensibles. Applique ACL, chiffrement selon le contexte, suppression et durée de rétention.
 
 ## Exercices
-Un utilisateur demande la suppression de ses données mémorisées. Que doit faire le système ?
+
+Une mémoire persistante peut contenir des données personnelles ou confidentielles. Il faut donc gérer ACL, suppression, rétention, provenance et invalidation de cache. La mémoire ne doit pas devenir une source d'instructions privilégiées sans validation.
 
 :::indice
-Identifie l'état, les permissions et les limites avant de concevoir la boucle.
+- Un utilisateur demande la suppression de ses données mémorisées. Que doit faire le système ?
 :::
 
 :::solution
-Identifier les enregistrements concernés, supprimer ou anonymiser selon la politique applicable, invalider les caches puis journaliser l'opération.
-
+Traite la mémoire comme des données soumises à un cycle de vie.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : requête → recherche des souvenirs pertinents → sélection/filtrage → contexte → raisonnement → éventuelle mise à jour de la mémoire. Un store peut être relationnel, vectoriel ou hybride selon le type de donnée.
 
 ## À retenir
-La mémoire est une fonctionnalité de données, avec cycle de vie et gouvernance, pas une simple liste de messages.
 
+Identifier les enregistrements concernés, appliquer la politique de suppression ou d'anonymisation, invalider les caches concernés et tracer l'opération.
 
 ## Introduction
 
-La mémoire d'un agent doit distinguer contexte de session et connaissance persistante.
+La mémoire comme système de données
 
 ## Concept
 
-Mémoire de travail, session et persistance ont des politiques de rétention et d'accès différentes.
+Une conversation et une mémoire persistante ne sont pas la même chose. L'historique sert au contexte immédiat ; une mémoire persistante conserve certaines informations entre sessions et devient donc un véritable système de données.
 
 ## Exemple
 
-Une préférence utilisateur persistante doit être stockée avec tenant, provenance et possibilité de suppression.
+On peut distinguer mémoire de travail, mémoire de session et mémoire persistante. Chacune doit avoir une politique de sélection, de rétention et d'accès adaptée.
 
 ## Comment ça fonctionne
 
-input → retrieve memory → reason → update memory
+Si un utilisateur indique une préférence durable, le système peut la stocker avec sa provenance, son tenant et sa date. Mais il ne faut pas injecter toute la mémoire à chaque requête : seules les informations pertinentes doivent être récupérées.
 
 ## Questions d'entretien
 
-- Pourquoi une mémoire persistante nécessite-t-elle des ACL ?
+La mémoire agentique est une fonctionnalité de données avec gouvernance, pas simplement une liste de messages.
 
-  :::indice
-  Cherche la frontière entre décision du modèle et contrôle déterministe.
-  :::
+:::indice
+Pense à la séparation entre modèle, runtime et système d'autorisation.
+:::
 
-  :::reponse
-  Parce qu'elle peut contenir des données personnelles ou appartenant à un tenant.
-  :::
+:::reponse
+Pourquoi une mémoire persistante nécessite-t-elle des ACL ?
+:::
