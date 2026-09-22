@@ -74,7 +74,7 @@ Il faut enregistrer les facteurs importants et mesurer la variabilité.
 Ne jamais committer une clé API ou un mot de passe. Si un secret a fuité, le retirer du dernier fichier ne suffit pas : il faut le révoquer et traiter l'historique selon la procédure du projet.
 
 ## Exercices
-
+- 
 - Définis un manifeste minimal pour une évaluation RAG.
 
 :::indice
