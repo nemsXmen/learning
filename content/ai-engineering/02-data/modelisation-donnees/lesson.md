@@ -74,7 +74,7 @@ Dans un SaaS, tenant_id doit participer à la frontière de données lorsque les
 
 ## Exercices
 
-Conçois le modèle minimal d'un chunk RAG permettant de retrouver document, version, tenant, texte et embedding.
+- Conçois le modèle minimal d'un chunk RAG permettant de retrouver document, version, tenant, texte et embedding.
 
 :::indice
 Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
