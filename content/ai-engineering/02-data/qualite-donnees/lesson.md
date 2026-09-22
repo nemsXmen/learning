@@ -72,7 +72,7 @@ Versionne les règles et leurs seuils.
 
 ## Exercices
 
-Définis cinq règles de qualité pour un corpus documentaire RAG.
+- Définis cinq règles de qualité pour un corpus documentaire RAG.
 
 :::indice
 Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
