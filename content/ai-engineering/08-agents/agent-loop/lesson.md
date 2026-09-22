@@ -32,7 +32,7 @@ Définis budget de tokens, nombre maximal d'étapes, timeout, outils autorisés 
 ## Idempotence
 Une reprise peut répéter une action. Les opérations à effet de bord doivent donc utiliser des clés d'idempotence et des contrôles métier.
 
-## Exercice
+## Exercices
 Un agent appelle cinq fois la même recherche sans progresser. Quel mécanisme ajouter ?
 
 :::indice
