@@ -45,7 +45,7 @@ Une classification peut bien classer tout en étant mal calibrée. Une probabili
 
 ## Exercices
 
-Un modèle obtient 99 % sur train et 72 % sur validation. Donne deux hypothèses et trois vérifications.
+- Un modèle obtient 99 % sur train et 72 % sur validation. Donne deux hypothèses et trois vérifications.
 
 :::indice
 Commence par définir la métrique et la baseline avant de choisir une technique.
