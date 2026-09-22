@@ -52,17 +52,15 @@ print(w.grad)
 ```
 
 ## Exercices
-
 - Crée un tenseur de shape (32, 128), ajoute un biais de shape (128,) et vérifie la shape obtenue.
 
 :::indice
 Lis les dimensions comme une phrase : 32 exemples, chacun avec 128 features.
-:::
+::
 
 :::solution
 Le résultat doit conserver la shape (32, 128), car le biais est appliqué à chaque exemple.
-:::
-
+::
 ## Erreurs fréquentes
 
 Une erreur classique consiste à corriger une shape sans comprendre ce que représente chaque dimension. Évite aussi les transferts CPU/GPU inutiles et ne confonds pas broadcasting et transformation métier.
@@ -88,13 +86,12 @@ Supposons un batch de 32 exemples et un biais de 128 valeurs. Le broadcasting pe
 Le device indique où le calcul est exécuté. Pour utiliser un GPU, les tenseurs et paramètres concernés doivent être sur le même device. L'autodifférentiation construit le graphe nécessaire aux gradients. Flow : paramètres → forward → loss → autograd → gradients → optimizer.
 
 ## Questions d'entretien
-
-Pourquoi contrôler le dtype et le device d'un tenseur ?
+- Pourquoi contrôler le dtype et le device d'un tenseur ?
 
 :::indice
 Relie ta réponse au fonctionnement concret du système.
-:::
+::
 
 :::reponse
 Un dtype inadapté peut provoquer des erreurs ou une perte de précision, tandis qu'un mauvais device peut empêcher une opération ou provoquer des transferts coûteux.
-:::
+::
