@@ -16,6 +16,23 @@ tags: [python, data, pipelines]
 
 ## Objectifs
 
+## Introduction
+
+Python est le langage d'orchestration central de nombreux systèmes IA : préparation des données, expérimentation, entraînement, évaluation et services.
+
+## Concept
+
+Un AI Engineer raisonne en contrats : types d'entrée, invariants, gestion des erreurs, consommation mémoire et séparation des responsabilités.
+
+## Exemple
+
+Un pipeline fiable peut suivre le flow : données → validation → transformation → modèle → évaluation. Chaque étape doit pouvoir être testée indépendamment.
+
+## Comment ça fonctionne
+
+Les fonctions transforment des données, les exceptions rendent les échecs explicites et les générateurs permettent de traiter de gros volumes progressivement.
+
+
 À la fin de cette leçon, tu dois pouvoir :
 
 - écrire des fonctions Python courtes, testables et lisibles ;
