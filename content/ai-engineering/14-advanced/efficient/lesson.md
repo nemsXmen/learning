@@ -33,7 +33,7 @@ Le batching améliore souvent le throughput mais augmente potentiellement la lat
 ## Distillation
 Un modèle plus petit peut apprendre des sorties d'un modèle enseignant. Évalue les pertes de capacités avant adoption.
 
-## Exercice
+## Exercices
 Un modèle quantifié consomme deux fois moins de mémoire mais perd sur une métrique critique. Que faire ?
 
 :::indice
