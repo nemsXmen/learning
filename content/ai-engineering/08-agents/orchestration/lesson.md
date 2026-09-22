@@ -41,11 +41,10 @@ Si une fonction déterministe ou un seul appel suffit, ajouter des agents augmen
 
 :::indice
 - Deux agents modifient la même ressource simultanément. Comment prévenir les conflits ?
-::
-
+:::
 :::solution
 Cherche une source d'autorité unique pour l'écriture.
-::
+:::
 ## Erreurs fréquentes
 
 Le flow peut être : orchestrator → specialist → résultat structuré → verifier → synthèse. Les échanges doivent être bornés et les résultats validés. Lorsqu'une ressource partagée est modifiée, l'écriture doit passer par une autorité clairement définie.
@@ -75,8 +74,7 @@ Par exemple, un planner peut demander à un agent de recherche de collecter les 
 
 :::indice
 Pense à la séparation entre modèle, runtime et système d'autorisation.
-::
-
+:::
 :::reponse
 Quand éviter le multi-agent ?
-::
+:::
