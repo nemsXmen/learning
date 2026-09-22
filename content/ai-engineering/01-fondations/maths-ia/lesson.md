@@ -16,6 +16,23 @@ tags: [maths, statistiques, probabilites, vectors]
 
 ## Objectifs
 
+## Introduction
+
+Les mathématiques permettent de comprendre ce que mesurent les modèles et les métriques au lieu de traiter leurs sorties comme des nombres magiques.
+
+## Concept
+
+Vecteurs, matrices, probabilités et statistiques fournissent le vocabulaire nécessaire pour comprendre embeddings, attention, incertitude et évaluation.
+
+## Exemple
+
+La similarité cosinus compare l'orientation de deux embeddings, tandis que moyenne et dispersion permettent d'analyser une métrique sur plusieurs segments.
+
+## Comment ça fonctionne
+
+Les opérations vectorielles décrivent les représentations, les probabilités modélisent l'incertitude et les statistiques permettent d'interpréter des résultats issus d'échantillons.
+
+
 - manipuler les notions de vecteur, matrice, produit scalaire et norme ;
 - comprendre pourquoi les embeddings peuvent être comparés par similarité ;
 - distinguer moyenne, variance et écart-type ;
