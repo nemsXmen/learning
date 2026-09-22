@@ -4,7 +4,7 @@ title: "Capstone : évaluer qualité, coût, latence et sécurité"
 slug: evaluate
 technology: ai-engineering
 level: expert
-module: 15-capstone
+module: capstone
 order: 3
 estimatedMinutes: 100
 difficulty: 5
