@@ -60,7 +60,7 @@ digest = hashlib.sha256(data).hexdigest()
 
 ## Exercices
 
-Conçois le manifeste d'une version de dataset.
+- Conçois le manifeste d'une version de dataset.
 
 :::indice
 Identifie d'abord les invariants, puis vérifie les données avant de produire la sortie.
