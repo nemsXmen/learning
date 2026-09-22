@@ -54,11 +54,10 @@ Une même information peut nécessiter des nombres de tokens très différents s
 
 :::indice
 Pense à l'unité réellement consommée par le modèle.
-::
-
+:::
 :::solution
 Le coût et la fenêtre de contexte sont mesurés en tokens. Un texte peut donc produire beaucoup de sous-tokens.
-::
+:::
 ## Erreurs fréquentes
 
 Compter les mots pour estimer le coût est une approximation fragile. Il faut mesurer les tokens réels. Il faut aussi tester les formats particuliers, les URLs, le code et les langues du produit.
@@ -88,8 +87,7 @@ Le flow est : texte → tokenizer → token IDs → embeddings → Transformer. 
 
 :::indice
 Relie ta réponse au fonctionnement concret du modèle.
-::
-
+:::
 :::reponse
 Il influence la fenêtre de contexte, la latence, le coût et la quantité d'information traitée.
-::
+:::
