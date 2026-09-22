@@ -39,7 +39,7 @@ Une recherche hybride combine signaux lexicaux et vectoriels, notamment pour des
 ## Evaluation
 Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées.
 
-## Exercice
+## Exercices
 Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
 
 :::indice
