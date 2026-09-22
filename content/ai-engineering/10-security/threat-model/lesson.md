@@ -34,7 +34,7 @@ Les risques incluent injection, exfiltration, abus d'outils, fuite de données, 
 Associe chaque menace à des mesures : validation, isolation, ACL, rate limit, sandbox, logging et approbation.
 
 ## Exercices
-Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
+- Un document externe peut influencer un agent qui possède un outil d'écriture. Quelle frontière protéger ?
 
 :::indice
 Cherche une défense qui reste fiable même si le modèle produit une sortie hostile.
