@@ -1,26 +1,34 @@
-id: ai-09-evaluation-metrics-quiz
+id: ai-09-metrics-quiz
 kind: QUIZ
 questions:
-  - id: ai-09-evaluation-metrics-q1
+  - id: ai-09-metrics-q1
     type: multiple_choice
-    difficulty: 2
-    question: "Quel principe doit guider les permissions d'un agent ?"
-    options: ["Le moindre privilège","Accès administrateur par défaut","Aucune limite","Permissions décidées par le modèle"]
-    answer: [0]
-    explanation: "Un agent ne doit recevoir que les permissions nécessaires."
+    difficulty: 3
+    question: "Quelle métrique mesure la proportion des positifs réels qui ont été retrouvés ?"
+    options: ["Precision","Recall","MRR","nDCG"]
+    answer: [1]
+    explanation: "Le recall mesure TP / (TP + FN)."
     skills: [ai-evaluation]
-  - id: ai-09-evaluation-metrics-q2
+  - id: ai-09-metrics-q2
+    type: multiple_choice
+    difficulty: 4
+    question: "Que garantit un Recall@5 élevé pour un retriever RAG ?"
+    options: ["Que le LLM sera factuel","Que les éléments pertinents sont souvent retrouvés dans le top-5","Que le coût est minimal","Que toutes les réponses sont correctes"]
+    answer: [1]
+    explanation: "Recall@k mesure la récupération des éléments pertinents, pas leur utilisation correcte par le générateur."
+    skills: [ai-evaluation]
+  - id: ai-09-metrics-q3
     type: multiple_answer
-    difficulty: 2
-    question: "Que doit contenir un bon jeu d'évaluation ?"
-    options: ["Cas représentatifs","Cas limites","Attentes explicites","Uniquement les exemples faciles"]
+    difficulty: 5
+    question: "Quels signaux peuvent compléter une métrique de qualité de génération ?"
+    options: ["Groundedness","Latence et coût","Analyse par slices","Uniquement le score global"]
     answer: [0, 1, 2]
-    explanation: "La diversité et les attentes explicites rendent l'évaluation utile."
+    explanation: "Une évaluation de production doit couvrir les dimensions pertinentes du système, pas seulement un score agrégé."
     skills: [ai-evaluation]
-  - id: ai-09-evaluation-metrics-q3
+  - id: ai-09-metrics-q4
     type: true_false
-    difficulty: 1
-    question: "Un juge automatique est toujours fiable sans calibration."
+    difficulty: 4
+    question: "Une forte similarité sémantique prouve qu'une réponse est factuellement correcte."
     answer: false
-    explanation: "Les juges doivent être validés et complétés lorsque nécessaire."
+    explanation: "La similarité sémantique est un signal de proximité, pas une preuve de factualité."
     skills: [ai-evaluation]
