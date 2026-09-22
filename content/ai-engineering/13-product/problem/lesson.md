@@ -32,7 +32,7 @@ Une solution IA est pertinente lorsque l'incertitude ou la compréhension du lan
 ## Baseline
 Commence par la solution non-IA la plus simple. Elle permet de mesurer la valeur réellement apportée.
 
-## Exercice
+## Exercices
 Une équipe veut ajouter un chatbot sans problème utilisateur identifié. Que mesurer d'abord ?
 
 :::indice
