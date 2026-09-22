@@ -4,7 +4,7 @@ title: "Capstone : construire le produit par itérations"
 slug: build
 technology: ai-engineering
 level: expert
-module: 15-capstone
+module: capstone
 order: 2
 estimatedMinutes: 120
 difficulty: 5
