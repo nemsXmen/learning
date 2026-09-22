@@ -16,6 +16,23 @@ tags: [linux, cli, processes, debugging]
 
 ## Objectifs
 
+## Introduction
+
+Le terminal donne accès à l'environnement réel dans lequel tournent les jobs, workers et services IA.
+
+## Concept
+
+Une commande produit des sorties, un code de sortie et peut lancer ou observer des processus. Ces éléments forment la base du diagnostic.
+
+## Exemple
+
+Pour diagnostiquer un worker, observe d'abord le processus, ses logs, son code de sortie et sa consommation de ressources avant de le redémarrer.
+
+## Comment ça fonctionne
+
+Les pipes composent des commandes, stdout et stderr séparent résultat et diagnostic, tandis que les signaux permettent d'arrêter un processus proprement.
+
+
 - naviguer et manipuler des fichiers depuis le terminal ;
 - comprendre processus, signaux, stdout, stderr et codes de sortie ;
 - composer des commandes sans perdre les erreurs ;
