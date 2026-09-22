@@ -16,6 +16,23 @@ tags: [git, reproducibility, experiments]
 
 ## Objectifs
 
+## Introduction
+
+Une expérience IA doit être traçable au-delà du simple code source : données, modèle, paramètres et environnement influencent le résultat.
+
+## Concept
+
+Git versionne principalement le code et les fichiers du dépôt. La reproductibilité complète exige d'identifier les autres dépendances de l'expérience.
+
+## Exemple
+
+Un run peut conserver le commit, la version du dataset, le modèle, les hyperparamètres, le seed et le jeu d'évaluation.
+
+## Comment ça fonctionne
+
+Les commits et branches structurent l'historique, tandis que des métadonnées d'expérience permettent de comparer des runs et de diagnostiquer une régression.
+
+
 - comprendre commit, branche et historique ;
 - produire des changements petits et traçables ;
 - relier code, configuration et expérience ;
