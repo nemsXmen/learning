@@ -34,52 +34,49 @@ Le batching peut augmenter le débit mais ajouter de l'attente. Mesure p50, p95 
 Une queue bornée et des réponses de surcharge protègent le système lorsque la demande dépasse la capacité.
 
 ## Exercices
-- La latence p99 explose pendant les pics. Quelles hypothèses tester ?
+
+Le batching augmente souvent le throughput, mais peut augmenter la latence. Mesure p50, p95 et p99 séparément et observe aussi le temps passé en queue.
 
 :::indice
-Mesure mémoire, débit, latence et concurrence avant de conclure à une optimisation.
+- La latence p99 explose pendant les pics. Quelles hypothèses tester ?
 :::
 
 :::solution
-Vérifier saturation GPU, file d'attente, batching, concurrence et temps de prétraitement séparément.
-
+Sépare queue, prétraitement et calcul modèle.
 :::
 
 ## Erreurs fréquentes
 
-- négliger les hypothèses et les contrats de données ;
-- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
-- ignorer les cas limites, les erreurs et la reproductibilité ;
-- optimiser avant d'avoir défini une mesure de succès.
+Le flow est : requêtes → admission → scheduler/batcher → workers GPU → réponse → métriques. Une queue bornée et une politique de surcharge évitent qu'une saturation se transforme en cascade failure.
 
 ## À retenir
-Servir un modèle est un problème de système distribué.
 
+Vérifier saturation GPU, profondeur de queue, batching, concurrence, prétraitement et temps de réponse du modèle séparément.
 
 ## Introduction
 
-Servir un modèle exige de gérer concurrence, batching, streaming et tail latency.
+Transformer un modèle en service fiable
 
 ## Concept
 
-p50, p95 et p99 décrivent des expériences différentes.
+Servir un modèle n'est pas seulement exposer une fonction HTTP. Il faut gérer concurrence, files d'attente, batching, timeouts, streaming, saturation et observation de la tail latency.
 
 ## Exemple
 
-Un service peut avoir un bon temps moyen mais un p99 très élevé sous forte concurrence.
+Le serveur d'inférence reçoit une requête, prépare les entrées, planifie le calcul puis renvoie le résultat. La capacité réelle dépend du coût par requête et du nombre de requêtes simultanées.
 
 ## Comment ça fonctionne
 
-requests → scheduler → workers → response → metrics
+Un service peut avoir une moyenne de 400 ms tout en ayant un p99 de plusieurs secondes lors d'un pic. Les requêtes lentes peuvent attendre dans la queue avant même d'entrer sur le GPU.
 
 ## Questions d'entretien
 
-- Pourquoi suivre p99 ?
+Le model serving est un problème de système distribué autant qu'un problème ML.
 
-  :::indice
-  Relie performance et fiabilité au comportement sous charge.
-  :::
+:::indice
+Relie ta réponse à une métrique et à une contrainte système.
+:::
 
-  :::reponse
-  Parce que les utilisateurs les plus lents subissent souvent les files d'attente et saturations.
-  :::
+:::reponse
+Pourquoi suivre p99 ?
+:::
