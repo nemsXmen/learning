@@ -10,7 +10,7 @@ estimatedMinutes: 75
 difficulty: 3
 xp: 130
 prerequisites: [ai-git-reproductibilite]
-skills: [ai-maths]
+skills: [ai-linear-algebra, ai-probability]
 tags: [maths, statistiques, probabilites, vectors]
 ---
 
