@@ -16,6 +16,13 @@ tags: [python, data, pipelines]
 
 ## Objectifs
 
+À la fin de cette leçon, tu dois pouvoir :
+- écrire des fonctions Python courtes, typées et testables ;
+- choisir `list`, `dict`, `set`, `tuple` ou générateur selon le besoin ;
+- gérer les erreurs sans masquer leur cause ;
+- isoler un environnement et rendre les dépendances reproductibles ;
+- construire un pipeline de données avec des contrats explicites.
+
 ## Introduction
 
 Python est le langage d'orchestration central de nombreux systèmes IA : préparation des données, expérimentation, entraînement, évaluation et services.

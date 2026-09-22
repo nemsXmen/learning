@@ -95,6 +95,22 @@ Les tests doivent couvrir :
 - tests de sécurité pour permissions et injection ;
 - tests de charge pour les chemins coûteux.
 
+## Definition of Done du capstone
+
+Chaque tranche verticale doit être considérée comme terminée uniquement si elle possède :
+
+- un contrat d'API versionné ;
+- validation des entrées et sorties ;
+- tests unitaires et d'intégration adaptés ;
+- logs/traces corrélés ;
+- gestion explicite des timeouts et erreurs ;
+- contrôle des permissions et du tenant ;
+- métriques de coût et latence lorsque l'IA intervient ;
+- un scénario de rollback ou de désactivation ;
+- une évaluation de qualité pour toute fonctionnalité générative.
+
+Le capstone ne doit donc pas être jugé sur « ça répond dans le navigateur », mais sur la capacité à expliquer, tester, observer et faire évoluer le système.
+
 ## Erreurs fréquentes
 
 - construire toute l'infrastructure avant un premier flux fonctionnel ;

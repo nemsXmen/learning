@@ -46,7 +46,7 @@ Mesure recall@k, precision@k et latence sur un jeu de requêtes annotées.
 - Une requête contient une référence de facture exacte et une description métier. Quelle stratégie utiliser ?
 :::
 :::solution
-Cherche à exploiter à la fois les termes exacts et le sens de la requête.
+Utilise une recherche hybride : BM25 pour les termes et identifiants exacts, recherche vectorielle pour la similarité sémantique, puis fusionne ou rerank les candidats avant le top-k final.
 :::
 ## Erreurs fréquentes
 
@@ -73,11 +73,12 @@ La recherche lexicale regarde surtout les termes présents dans la requête. La 
 Prenons une question comme « quel est le plafond de remboursement de la carte GOLD ? ». Une recherche vectorielle peut retrouver le passage parlant de plafond, tandis que BM25 peut mieux exploiter un identifiant exact ou un terme rare.
 
 ## Questions d'entretien
-- Le retrieval est une étape de sélection mesurable : sa qualité conditionne directement la qualité du contexte fourni au LLM.
+- Pourquoi mesurer recall@k ?
+- Pourquoi séparer la qualité du retrieval de celle de la génération ?
 
 :::indice
-Relie ta réponse à la séparation entre retrieval et génération.
+Relie recall@k au risque de ne jamais fournir au modèle le passage nécessaire.
 :::
 :::reponse
-Pourquoi mesurer recall@k ?
+Recall@k mesure la proportion des informations ou documents pertinents retrouvés dans les k premiers résultats. Il permet de distinguer un problème de recherche d'un problème de génération. Un bon générateur ne peut pas répondre correctement si le contexte pertinent n'a jamais été récupéré.
 :::
