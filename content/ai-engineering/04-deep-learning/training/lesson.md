@@ -50,11 +50,10 @@ Surveille NaN, gradients explosifs, stagnation, validation qui se dégrade et ut
 
 :::indice
 Commence par identifier la première étape où apparaît NaN ou inf.
-::
-
+:::
 :::solution
 Vérifie données et labels, activations et gradients, learning rate, mixed precision et opérations numériques instables. Reproduis avec un petit batch déterministe.
-::
+:::
 ## Erreurs fréquentes
 
 Quand une loss devient NaN, ne change pas immédiatement cinq hyperparamètres. Cherche la première valeur invalide : données, labels, activation, loss ou gradient. Reproduis avec un petit batch déterministe.
@@ -84,8 +83,7 @@ Le learning rate contrôle l'amplitude des mises à jour. Trop grand, il peut pr
 
 :::indice
 Relie ta réponse au fonctionnement concret du système.
-::
-
+:::
 :::reponse
 Un checkpoint permet de reprendre après une interruption, de comparer des expériences et de revenir à un état connu.
-::
+:::
