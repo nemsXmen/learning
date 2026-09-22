@@ -4,7 +4,7 @@ title: "UX des produits génératifs"
 slug: ux
 technology: ai-engineering
 level: advanced
-module: 13-product
+module: product
 order: 3
 estimatedMinutes: 70
 difficulty: 4
