@@ -63,6 +63,13 @@ Parce que le coût et la fenêtre de contexte sont mesurés en tokens. Une langu
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 Tokeniser est une étape d'ingénierie : mesure les tokens, la couverture linguistique et les limites de contexte avant de dimensionner une application.
 
