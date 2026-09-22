@@ -31,7 +31,7 @@ quality
 Ne dégrade pas silencieusement la qualité pour gagner quelques millisecondes. Compare sur le même dataset.
 
 ## Exercices
-Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
+- Une fonctionnalité utilise un modèle premium pour toutes les requêtes. Quelle démarche ?
 
 :::indice
 Choisis une métrique liée au risque et vérifie les segments avant la moyenne globale.
