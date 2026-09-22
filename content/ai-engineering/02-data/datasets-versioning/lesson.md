@@ -82,6 +82,13 @@ Identifie d'abord les invariants, puis vérifie les données avant de produire l
 
 :::
 
+## Erreurs fréquentes
+
+- négliger les hypothèses et les contrats de données ;
+- modifier plusieurs variables à la fois sans pouvoir attribuer l'effet ;
+- ignorer les cas limites, les erreurs et la reproductibilité ;
+- optimiser avant d'avoir défini une mesure de succès.
+
 ## À retenir
 
 La version d'un dataset fait partie du contexte expérimental. Sans lineage, une métrique ne permet pas de savoir précisément ce qui a été évalué.
