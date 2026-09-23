@@ -153,34 +153,34 @@ Combinez le judge avec des assertions déterministes, métriques classiques, con
 
 Vous devez évaluer la fidélité d’un assistant RAG sur une échelle de 0 à 4. Définissez les critères des niveaux.
 
-:::indice
-Décrivez des comportements observables et la relation aux sources.
-:::
-:::solution
-Les niveaux doivent aller de l’absence de support ou de contradictions jusqu’à une réponse entièrement supportée, avec les niveaux intermédiaires décrivant omissions et imprécisions.
-:::
+  :::indice
+  Décrivez des comportements observables et la relation aux sources.
+  :::
+  :::solution
+  Les niveaux doivent aller de l’absence de support ou de contradictions jusqu’à une réponse entièrement supportée, avec les niveaux intermédiaires décrivant omissions et imprécisions.
+  :::
 
 2. **Détecter un biais de position**
 
 Un judge préfère systématiquement la réponse A lorsque A est affichée en premier. Comment vérifier l’hypothèse ?
 
-:::indice
-Inversez l’ordre sans modifier les réponses.
-:::
-:::solution
-Exécutez A/B puis B/A sur les mêmes cas et comparez les décisions. Une variation systématique indique un biais de position.
-:::
+  :::indice
+  Inversez l’ordre sans modifier les réponses.
+  :::
+  :::solution
+  Exécutez A/B puis B/A sur les mêmes cas et comparez les décisions. Une variation systématique indique un biais de position.
+  :::
 
 3. **Décider si un judge peut bloquer une release**
 
 Un judge affiche 95 % d’accord global avec les humains mais seulement 72 % sur les cas à haut risque. Peut-il être utilisé seul comme gate ?
 
-:::indice
-Le segment critique compte davantage que la moyenne globale.
-:::
-:::solution
-Il faut traiter séparément les cas à haut risque. L’accord global masque une faiblesse sur la population critique ; le judge doit être complété ou limité avant de devenir une gate unique.
-:::
+  :::indice
+  Le segment critique compte davantage que la moyenne globale.
+  :::
+  :::solution
+  Il faut traiter séparément les cas à haut risque. L’accord global masque une faiblesse sur la population critique ; le judge doit être complété ou limité avant de devenir une gate unique.
+  :::
 
 ## À retenir
 
@@ -188,7 +188,7 @@ LLM-as-a-Judge est une technique d’évaluation, pas une autorité absolue.
 
 Un judge sérieux possède une rubrique versionnée, une sortie structurée, une calibration humaine, des tests de biais et un protocole reproductible. Les décisions critiques doivent combiner plusieurs signaux adaptés au risque.
 
-## Questions d’entretien
+## Questions d'entretien
 
 1. **Pourquoi calibrer un LLM-as-a-Judge ?**
 
