@@ -1,0 +1,66 @@
+id: javascript-composition-et-inversion-des-dependances-quiz
+kind: QUIZ
+questions:
+  - id: js-dip-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Selon le principe d'inversion des dépendances, qui définit le contrat d'un dépôt de commandes ?
+    options:
+      - "Le cas d'utilisation qui en a besoin, dans son vocabulaire"
+      - "La bibliothèque de la base de données"
+      - "L'implémentation PostgreSQL"
+      - "Le framework HTTP"
+    answer: [0]
+    explanation: >
+      L'abstraction appartient au haut niveau : elle décrit ce dont la politique a besoin. Les détails techniques s'y
+      adaptent.
+    skills:
+      - js-dependency-inversion
+
+  - id: js-dip-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Où crée-t-on les implémentations concrètes, comme le dépôt PostgreSQL et le client d'e-mails ?
+    options:
+      - "Dans la racine de composition, au démarrage"
+      - "Dans chaque cas d'utilisation qui en a besoin"
+      - "Dans les règles métier"
+      - "Dans chaque test, en important les vraies implémentations"
+    answer: [0]
+    explanation: >
+      Un seul endroit choisit et assemble les implémentations : les choix techniques sont visibles d'un coup d'œil, et
+      une configuration de test n'est qu'une autre racine.
+    skills:
+      - js-dependency-inversion
+
+  - id: js-dip-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      `avecJournal(avecReessai(creerNotificateurEmail(config)))` : qu'est-ce qui est exact ?
+    options:
+      - "Le résultat respecte le même contrat qu'un notificateur"
+      - "Le cas d'utilisation n'a pas besoin de savoir qu'il y a des réessais"
+      - "Chaque décorateur doit modifier le code du notificateur e-mail"
+      - "On peut changer l'ordre ou retirer un décorateur dans la racine de composition"
+    answer: [0, 1, 3]
+    explanation: >
+      Un décorateur enveloppe un objet sans le modifier, et respecte son contrat. La composition se décide à
+      l'assemblage.
+    skills:
+      - js-dependency-inversion
+
+  - id: js-dip-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Il faut définir un contrat abstrait pour chaque fonction, y compris les fonctions pures et stables comme un calcul
+      de TVA.
+    answer: false
+    explanation: >
+      On inverse les dépendances vers ce qui est volatil ou lent à tester : entrées-sorties, services externes,
+      horloge. Une fonction pure et stable s'importe directement.
+    skills:
+      - js-dependency-inversion

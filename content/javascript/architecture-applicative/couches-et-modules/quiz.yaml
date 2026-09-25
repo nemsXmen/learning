@@ -1,0 +1,66 @@
+id: javascript-couches-et-modules-quiz
+kind: QUIZ
+questions:
+  - id: js-couches-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans une architecture en couches, de quoi le domaine peut-il dépendre ?
+    options:
+      - "De rien de technique : ni base de données, ni HTTP, ni framework"
+      - "De l'infrastructure, pour lire ses données"
+      - "De la présentation, pour connaître le format des réponses"
+      - "De toutes les couches, à condition de passer par des interfaces"
+    answer: [0]
+    explanation: >
+      Le domaine est au centre : les autres couches dépendent de lui, et l'infrastructure implémente ses contrats. Il se
+      teste seul et survit aux changements techniques.
+    skills:
+      - js-layered-modular
+
+  - id: js-couches-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Le module commandes a besoin du prix d'un produit du module catalogue. Quelle solution respecte les frontières ?
+    options:
+      - "Appeler produitParId, exporté par l'interface publique du catalogue"
+      - "Importer catalogue/infrastructure/depot-produits-sql.js"
+      - "Lire directement la table produits"
+      - "Copier le code du dépôt des produits dans le module commandes"
+    answer: [0]
+    explanation: >
+      Entre modules, on passe par l'interface publique, ou par des événements. Le catalogue garde la liberté de changer
+      ses détails internes.
+    skills:
+      - js-layered-modular
+
+  - id: js-couches-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Qu'est-ce qui caractérise un monolithe modulaire ?
+    options:
+      - "Un seul déploiement"
+      - "Des modules métier avec une interface publique et des détails privés"
+      - "Chaque module possède ses données"
+      - "Chaque module tourne dans un processus séparé"
+    answer: [0, 1, 2]
+    explanation: >
+      Le monolithe modulaire garde un seul processus et un seul déploiement, avec des frontières nettes entre modules.
+      Des processus séparés, ce serait des services distincts.
+    skills:
+      - js-layered-modular
+
+  - id: js-couches-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Une règle d'architecture est mieux protégée par une vérification automatique dans l'intégration continue que par
+      la seule revue de code.
+    answer: true
+    explanation: >
+      Une règle vérifiée à chaque build ne se contourne pas par mégarde. La revue de code reste utile pour discuter des
+      règles elles-mêmes.
+    skills:
+      - js-layered-modular

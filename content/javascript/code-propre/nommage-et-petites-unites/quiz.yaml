@@ -1,0 +1,64 @@
+id: javascript-nommage-et-petites-unites-quiz
+kind: QUIZ
+questions:
+  - id: js-clean-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel nom convient le mieux à une fonction qui indique si une commande peut encore être annulée ?
+    options:
+      - "peutEtreAnnulee(commande)"
+      - "verifierAnnulation(commande)"
+      - "annulation(commande)"
+      - "check(commande)"
+    answer: [0]
+    explanation: >
+      Une fonction qui renvoie un booléen se lit comme une question. « vérifier » ne dit pas ce qui est renvoyé, et
+      pourrait aussi bien lever une erreur ou annuler.
+    skills:
+      - js-clean-naming
+
+  - id: js-clean-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquels de ces signes indiquent qu'une fonction devrait être découpée ?
+    options:
+      - "Sa description demande un « et »"
+      - "Elle mélange l'orchestration d'étapes et des calculs de détail"
+      - "Elle fait cinq lignes claires"
+      - "Un bloc a besoin d'un commentaire pour être compris"
+    answer: [0, 1, 3]
+    explanation: >
+      Plusieurs responsabilités, plusieurs niveaux d'abstraction ou un bloc qui mériterait un nom sont des signaux.
+      Une fonction courte et claire n'a pas besoin d'être fragmentée.
+    skills:
+      - js-clean-naming
+
+  - id: js-clean-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment rendre lisible l'appel `creerCompte('Ana', 'ana@exemple.fr', true, false, 30)` ?
+    options:
+      - "Passer un objet d'options : creerCompte({ nom, email, newsletter: true, admin: false, essaiJours: 30 })"
+      - "Ajouter un commentaire au-dessus de chaque appel"
+      - "Remplacer true et false par 1 et 0"
+      - "Raccourcir le nom de la fonction"
+    answer: [0]
+    explanation: >
+      Avec un objet, chaque valeur est nommée à l'appel, l'ordre ne compte plus et ajouter une option ne casse rien.
+    skills:
+      - js-clean-naming
+
+  - id: js-clean-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Un bon commentaire décrit en français ce que fait chaque ligne de code.
+    answer: false
+    explanation: >
+      Les noms disent ce que fait le code. Un commentaire utile explique pourquoi : une contrainte, un choix non
+      évident, un piège.
+    skills:
+      - js-clean-naming

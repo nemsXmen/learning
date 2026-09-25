@@ -1,0 +1,66 @@
+id: javascript-architecture-hexagonale-et-clean-quiz
+kind: QUIZ
+questions:
+  - id: js-hexagonale-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans l'architecture hexagonale, une route HTTP qui appelle le cas d'utilisation reserverSalle est :
+    options:
+      - "Un adaptateur primaire"
+      - "Un adaptateur secondaire"
+      - "Un port de sortie"
+      - "Une entité du domaine"
+    answer: [0]
+    explanation: >
+      Les adaptateurs primaires pilotent l'application : ils traduisent un stimulus extérieur en appel d'un port
+      d'entrée. Les adaptateurs secondaires implémentent les ports de sortie.
+    skills:
+      - js-hexagonal-clean
+
+  - id: js-hexagonale-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi le cas d'utilisation reçoit-il une horloge au lieu d'appeler new Date() ?
+    options:
+      - "Pour que ses tests soient déterministes, et que le cœur ne dépende pas de l'environnement"
+      - "Parce que new Date() est interdit dans les modules ES"
+      - "Pour que l'application soit plus rapide"
+      - "Parce que l'horloge système est toujours fausse"
+    answer: [0]
+    explanation: >
+      L'heure, le hasard et les identifiants sont des dépendances extérieures. Passés par un port, ils se fixent dans les
+      tests, qui donnent toujours le même résultat.
+    skills:
+      - js-hexagonal-clean
+
+  - id: js-hexagonale-q3
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Qu'est-ce qui appartient à la couche application plutôt qu'au domaine ?
+    options:
+      - "Récupérer les réservations existantes par un port avant de vérifier le chevauchement"
+      - "La règle « la fin d'une réservation suit son début »"
+      - "Décider de l'ordre des étapes et publier un événement après l'enregistrement"
+      - "Vérifier que l'utilisateur a le droit de réserver cette salle"
+    answer: [0, 2, 3]
+    explanation: >
+      L'application orchestre, obtient les données par les ports, gère autorisations et événements. Un invariant qui ne
+      dépend que de la réservation elle-même relève du domaine.
+    skills:
+      - js-hexagonal-clean
+
+  - id: js-hexagonale-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Selon la règle de dépendance de la clean architecture, le domaine peut importer l'adaptateur de base de données
+      s'il en a besoin.
+    answer: false
+    explanation: >
+      Les dépendances pointent vers l'intérieur. Le domaine ou l'application déclare un port, et l'adaptateur de base de
+      données l'implémente.
+    skills:
+      - js-hexagonal-clean

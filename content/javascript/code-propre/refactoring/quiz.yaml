@@ -1,0 +1,65 @@
+id: javascript-refactoring-quiz
+kind: QUIZ
+questions:
+  - id: js-refactoring-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Qu'est-ce qu'un refactoring ?
+    options:
+      - "Modifier la structure du code sans changer son comportement observable"
+      - "Réécrire un module entièrement dans une nouvelle technologie"
+      - "Corriger un bug en même temps qu'on réorganise le code"
+      - "Ajouter une fonctionnalité en réutilisant du code existant"
+    answer: [0]
+    explanation: >
+      Le refactoring transforme la structure par petites étapes, en gardant le comportement : les tests existants
+      passent sans modification.
+    skills:
+      - js-refactoring
+
+  - id: js-refactoring-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pendant l'écriture de tests de caractérisation, tu découvres un comportement qui semble être un bug. Que fais-tu ?
+    options:
+      - "Je le note, je le fige dans les tests, et je le corrigerai dans un commit dédié après le refactoring"
+      - "Je le corrige immédiatement dans le même commit"
+      - "Je supprime le cas de la grille de tests"
+      - "J'arrête le refactoring définitivement"
+    answer: [0]
+    explanation: >
+      Les tests de caractérisation enregistrent le comportement actuel. Corriger pendant le refactoring mélangerait
+      structure et comportement ; la correction vient ensuite, volontairement, avec son test.
+    skills:
+      - js-refactoring
+
+  - id: js-refactoring-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Associe correctement l'odeur de code et le refactoring. Lesquelles de ces paires sont justes ?
+    options:
+      - "Code dupliqué → extraire une fonction"
+      - "Longue liste de paramètres → introduire un objet de paramètres"
+      - "Montant représenté par un simple nombre partout → objet valeur"
+      - "Fonction longue → ajouter des commentaires à chaque bloc"
+    answer: [0, 1, 2]
+    explanation: >
+      Une fonction longue se découpe en fonctions extraites et nommées ; des commentaires ne réduisent pas sa
+      complexité.
+    skills:
+      - js-refactoring
+
+  - id: js-refactoring-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Un commit de refactoring bien fait ne modifie aucun test existant.
+    answer: true
+    explanation: >
+      Le comportement ne change pas : les tests existants doivent passer tels quels. Un test modifié signale un
+      changement de comportement, qui a sa place dans un autre commit.
+    skills:
+      - js-refactoring

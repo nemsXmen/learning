@@ -1,0 +1,65 @@
+id: javascript-responsabilite-cohesion-couplage-quiz
+kind: QUIZ
+questions:
+  - id: js-srp-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que signifie le principe de responsabilité unique ?
+    options:
+      - "Une unité de code ne devrait avoir qu'une seule raison de changer"
+      - "Une fonction ne doit contenir qu'une seule ligne"
+      - "Chaque classe ne doit avoir qu'une seule méthode"
+      - "Un seul développeur doit être responsable de chaque fichier"
+    answer: [0]
+    explanation: >
+      Le principe sépare ce qui évolue pour des raisons différentes, souvent portées par des acteurs différents. Il
+      ne fixe pas de taille.
+    skills:
+      - js-cohesion-coupling
+
+  - id: js-srp-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      `formater(montant, true, false)` illustre quelle forme de couplage ?
+    options:
+      - "Le couplage au contrôle : des indicateurs dictent le comportement de la fonction"
+      - "Le couplage aux données"
+      - "Le couplage temporel"
+      - "Aucun couplage"
+    answer: [0]
+    explanation: >
+      Des booléens qui changent ce que fait la fonction signalent qu'elle fait plusieurs choses. Deux fonctions
+      nommées, ou un objet d'options, sont plus clairs.
+    skills:
+      - js-cohesion-coupling
+
+  - id: js-srp-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels choix augmentent la cohésion et réduisent le couplage ?
+    options:
+      - "Ranger le code par fonctionnalité plutôt que par type technique"
+      - "Passer au cas d'utilisation ses collaborateurs en paramètres"
+      - "Exposer une variable globale modifiable pour partager l'utilisateur courant"
+      - "Faire décider le statut HTTP par la couche HTTP, pas par les règles métier"
+    answer: [0, 1, 3]
+    explanation: >
+      Une variable globale modifiable couple tous les modules qui la lisent ou l'écrivent, et rend l'ordre
+      d'exécution important.
+    skills:
+      - js-cohesion-coupling
+
+  - id: js-srp-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Si une règle de validation ne peut être testée qu'avec une vraie base de données, elle est probablement mal placée.
+    answer: true
+    explanation: >
+      Une règle métier ne devrait pas dépendre des entrées-sorties. Extraite dans une fonction pure, elle se teste en
+      une ligne.
+    skills:
+      - js-cohesion-coupling

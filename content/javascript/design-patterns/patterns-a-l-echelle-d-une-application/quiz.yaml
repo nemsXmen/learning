@@ -1,0 +1,65 @@
+id: javascript-patterns-a-l-echelle-d-une-application-quiz
+kind: QUIZ
+questions:
+  - id: js-patterns-echelle-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel nom convient à un événement de domaine publié après l'enregistrement d'une commande ?
+    options:
+      - "CommandePassee"
+      - "EnvoyerEmailConfirmation"
+      - "MettreAJourStock"
+      - "TraiterCommande"
+    answer: [0]
+    explanation: >
+      Un événement annonce un fait passé ; les réactions, e-mail ou stock, sont décidées par ceux qui s'abonnent. Un
+      nom à l'impératif désigne une commande déguisée.
+    skills:
+      - js-patterns-at-scale
+
+  - id: js-patterns-echelle-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que doit faire la table de stratégies de tarification quand un client a un segment inconnu ?
+    options:
+      - "Lever une erreur explicite"
+      - "Appliquer le tarif particulier par défaut"
+      - "Renvoyer un total de 0"
+      - "Choisir une stratégie au hasard"
+    answer: [0]
+    explanation: >
+      Un tarif par défaut silencieux cache une erreur de données, et peut facturer un mauvais prix. Une table fermée
+      refuse ce qu'elle ne connaît pas.
+    skills:
+      - js-patterns-at-scale
+
+  - id: js-patterns-echelle-q3
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Pourquoi publier les événements avec Promise.allSettled plutôt que Promise.all ?
+    options:
+      - "L'échec d'une réaction n'empêche pas les autres de s'exécuter"
+      - "Chaque échec peut être journalisé séparément"
+      - "Les réactions s'exécutent plus vite"
+      - "Les événements ne peuvent plus être perdus si le processus s'arrête"
+    answer: [0, 1]
+    explanation: >
+      allSettled attend toutes les réactions et rapporte chaque résultat. Il n'accélère rien, et ne protège pas contre
+      un arrêt du processus : pour cela, il faut une outbox.
+    skills:
+      - js-patterns-at-scale
+
+  - id: js-patterns-echelle-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Un dépôt bien conçu expose une méthode générique trouver(table, filtres) pour couvrir tous les besoins.
+    answer: false
+    explanation: >
+      Une méthode générique fait fuir la structure de la base dans tout le code. Un dépôt nomme les besoins métier :
+      dernieresDuClient, paniersAbandonnesDepuis.
+    skills:
+      - js-patterns-at-scale

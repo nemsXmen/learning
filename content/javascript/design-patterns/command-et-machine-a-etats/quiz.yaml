@@ -1,0 +1,61 @@
+id: javascript-command-et-machine-a-etats-quiz
+kind: QUIZ
+questions:
+  - id: js-command-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans un historique d'annulation, que doit-il se passer quand l'utilisateur fait une nouvelle action après avoir
+      annulé ?
+    options:
+      - "La pile des actions à rétablir est vidée"
+      - "Les actions annulées sont réexécutées"
+      - "La nouvelle action est placée dans la pile à rétablir"
+      - "L'historique est entièrement effacé"
+    answer: [0]
+    explanation: >
+      Rétablir une branche d'historique abandonnée produirait un état incohérent : une nouvelle action efface ce qu'on
+      pouvait rétablir.
+    skills:
+      - js-command-state-machine
+
+  - id: js-command-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Avec la table des transitions du chapitre, qu'affiche `console.log(Object.keys(TRANSITIONS.expediee).join(','))` ?
+    answer: 'LIVRER'
+    explanation: >
+      Une commande expédiée ne peut plus qu'être livrée : l'annulation n'est acceptée que dans les états brouillon et
+      payee.
+    skills:
+      - js-command-state-machine
+
+  - id: js-command-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels usages le pattern Command rend-il possibles ?
+    options:
+      - "Annuler et rétablir des actions"
+      - "Mettre des actions en file pour les exécuter plus tard"
+      - "Journaliser les actions pour l'audit"
+      - "Supprimer le besoin de tester les actions"
+    answer: [0, 1, 2]
+    explanation: >
+      Une action devenue objet peut être stockée, rejouée, journalisée. Elle doit toujours être testée.
+    skills:
+      - js-command-state-machine
+
+  - id: js-command-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Représenter l'état d'un chargement par trois champs indépendants, chargement, erreur et donnees, permet des
+      combinaisons qui n'ont pas de sens.
+    answer: true
+    explanation: >
+      Rien n'empêche chargement à true avec une erreur et des données. Une union d'états distingués par un statut rend
+      ces combinaisons impossibles.
+    skills:
+      - js-command-state-machine

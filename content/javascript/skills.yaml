@@ -619,6 +619,62 @@ skills:
     importance: 4
     requires: [js-package-managers]
 
+  # Partie 16 — Architecture JavaScript
+  - id: js-clean-naming
+    name: Code propre, nommage et petites unités
+    importance: 5
+    requires: [pure-functions, module-boundaries]
+
+  - id: js-cohesion-coupling
+    name: Responsabilité unique, cohésion et couplage
+    importance: 5
+    requires: [js-clean-naming, composition-over-inheritance]
+
+  - id: js-dependency-inversion
+    name: Composition et inversion des dépendances
+    importance: 5
+    requires: [js-cohesion-coupling, behavioral-patterns]
+
+  - id: js-refactoring
+    name: Refactoring sous protection des tests
+    importance: 5
+    requires: [js-clean-naming, behavior-testing]
+
+  - id: js-structural-patterns
+    name: Builder, Adapter et Facade
+    importance: 4
+    requires: [creational-patterns, js-dependency-inversion]
+
+  - id: js-command-state-machine
+    name: Command et machines à états
+    importance: 4
+    requires: [behavioral-patterns, js-cohesion-coupling]
+
+  - id: js-patterns-at-scale
+    name: Patterns à l'échelle d'une application
+    importance: 4
+    requires: [js-structural-patterns, js-dependency-inversion]
+
+  - id: js-layered-modular
+    name: Architecture en couches et modulaire
+    importance: 5
+    requires: [js-dependency-inversion, module-boundaries]
+
+  - id: js-hexagonal-clean
+    name: Architecture hexagonale et clean architecture
+    importance: 4
+    requires: [js-layered-modular, js-patterns-at-scale]
+
+  - id: js-ddd-basics
+    name: Les bases du Domain-Driven Design
+    importance: 4
+    requires: [js-hexagonal-clean]
+
+  - id: js-node-app-architecture
+    name: Architecture d'une application Node.js
+    importance: 5
+    requires: [js-hexagonal-clean, js-node-http-server]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

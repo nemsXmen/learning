@@ -1,0 +1,65 @@
+id: javascript-architecture-d-une-application-node-quiz
+kind: QUIZ
+questions:
+  - id: js-archi-node-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi construire l'application dans une fonction construireApplication plutôt que de démarrer le serveur à
+      l'import d'un module ?
+    options:
+      - "Pour créer dans les tests des applications isolées, configurées, qu'on démarre et arrête à volonté"
+      - "Parce que les modules ES interdisent d'écouter un port à l'import"
+      - "Pour que le serveur réponde plus vite"
+      - "Pour éviter d'avoir un fichier main.js"
+    answer: [0]
+    explanation: >
+      Rien ne se passe à l'import : chaque appel construit une application avec sa configuration et ses dépendances, sur
+      un port libre, et la ferme proprement.
+    skills:
+      - js-node-app-architecture
+
+  - id: js-archi-node-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Où l'erreur métier CRENEAU_PRIS devient-elle un statut HTTP 409 ?
+    options:
+      - "Dans une table centrale du serveur HTTP partagé"
+      - "Dans le domaine, qui connaît les statuts HTTP"
+      - "Dans chaque route, avec son propre try...catch"
+      - "Dans le dépôt de données"
+    answer: [0]
+    explanation: >
+      Les couches internes lèvent des erreurs avec un code métier ; la frontière HTTP les traduit en un seul endroit.
+    skills:
+      - js-node-app-architecture
+
+  - id: js-archi-node-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quels changements ne touchent que les adaptateurs et la racine de composition ?
+    options:
+      - "Remplacer le dépôt en mémoire par PostgreSQL"
+      - "Passer de node:http à Fastify"
+      - "Ajouter une commande en ligne qui réserve une salle"
+      - "Changer la durée maximale d'une réservation"
+    answer: [0, 1, 2]
+    explanation: >
+      Ce sont des changements techniques ou de canal. La durée maximale est une règle métier : elle se change dans le
+      domaine.
+    skills:
+      - js-node-app-architecture
+
+  - id: js-archi-node-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans cette architecture, la majorité des tests devraient être des tests de bout en bout sur l'API HTTP.
+    answer: false
+    explanation: >
+      Les règles se testent au niveau du domaine, avec des tests unitaires rapides et nombreux ; les adaptateurs par des
+      tests de contrat ; quelques tests de bout en bout suffisent pour vérifier l'assemblage.
+    skills:
+      - js-node-app-architecture

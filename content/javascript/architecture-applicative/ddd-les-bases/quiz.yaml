@@ -1,0 +1,65 @@
+id: javascript-ddd-les-bases-quiz
+kind: QUIZ
+questions:
+  - id: js-ddd-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Une adresse postale, comparée par ses valeurs et remplaçable par une autre identique, est :
+    options:
+      - "Un objet valeur"
+      - "Une entité"
+      - "Un agrégat"
+      - "Un dépôt"
+    answer: [0]
+    explanation: >
+      Elle n'a pas d'identité propre : deux adresses aux mêmes valeurs sont interchangeables. On la rend immuable et
+      auto-validée.
+    skills:
+      - js-ddd-basics
+
+  - id: js-ddd-q2
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Pourquoi le getter lignes de l'agrégat Commande renvoie-t-il des copies ?
+    options:
+      - "Pour que l'extérieur ne puisse pas modifier les lignes en contournant les invariants"
+      - "Pour accélérer la lecture des lignes"
+      - "Parce que les champs privés ne peuvent pas être renvoyés"
+      - "Pour que le total soit recalculé"
+    answer: [0]
+    explanation: >
+      Toute modification doit passer par la racine, dont les méthodes vérifient les règles. Renvoyer le tableau interne
+      permettrait de les contourner.
+    skills:
+      - js-ddd-basics
+
+  - id: js-ddd-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques relèvent du DDD ?
+    options:
+      - "Utiliser dans le code le vocabulaire des experts du métier"
+      - "Découper le domaine en contextes délimités, chacun avec son modèle"
+      - "Référencer un autre agrégat par son identifiant"
+      - "Créer un modèle unique partagé par toutes les équipes pour chaque concept"
+    answer: [0, 1, 2]
+    explanation: >
+      Un modèle unique pour tout le système devient incohérent : le DDD préfère un modèle par contexte, avec des
+      traductions explicites.
+    skills:
+      - js-ddd-basics
+
+  - id: js-ddd-q4
+    type: predict_output
+    difficulty: 2
+    question: >
+      Qu'affiche `console.log(0.1 + 0.2 === 0.3)` ?
+    answer: 'false'
+    explanation: >
+      Les nombres à virgule flottante ne représentent pas exactement 0,1 et 0,2 : la somme vaut 0.30000000000000004.
+      C'est pourquoi un objet valeur Montant compte en centimes entiers.
+    skills:
+      - js-ddd-basics
