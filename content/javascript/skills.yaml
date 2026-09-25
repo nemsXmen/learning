@@ -762,6 +762,42 @@ skills:
     importance: 5
     requires: [js-bug-isolation, js-git-collaboration]
 
+  # Partie 19 — JavaScript + TypeScript Bridge
+  - id: js-ts-why
+    name: Pourquoi TypeScript
+    importance: 5
+    requires: [js-lint-format-types]
+
+  - id: js-ts-compiler-config
+    name: Compiler et configurer TypeScript
+    importance: 5
+    requires: [js-ts-why, js-build-tools]
+
+  - id: js-ts-migration
+    name: Migrer progressivement vers TypeScript
+    importance: 4
+    requires: [js-ts-compiler-config]
+
+  - id: js-ts-basic-types
+    name: Types des valeurs, tableaux, objets et fonctions
+    importance: 5
+    requires: [js-ts-why]
+
+  - id: js-ts-unions-narrowing
+    name: Interfaces, alias, unions et rétrécissement
+    importance: 5
+    requires: [js-ts-basic-types]
+
+  - id: js-ts-generics-utility
+    name: Génériques et types utilitaires
+    importance: 5
+    requires: [js-ts-unions-narrowing]
+
+  - id: js-ts-async-apis
+    name: TypeScript asynchrone et API typées
+    importance: 5
+    requires: [js-ts-generics-utility, js-validation-secrets-deps]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

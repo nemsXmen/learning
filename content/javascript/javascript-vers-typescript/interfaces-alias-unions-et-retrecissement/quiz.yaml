@@ -1,0 +1,64 @@
+id: javascript-interfaces-alias-unions-et-retrecissement-quiz
+kind: QUIZ
+questions:
+  - id: js-ts-unions-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans `if (paiement.type === 'virement') { … }`, que sait TypeScript de paiement à l'intérieur du bloc ?
+    options:
+      - "C'est la variante de l'union dont type vaut 'virement', avec ses propriétés propres comme iban"
+      - "Rien de plus qu'avant le test"
+      - "C'est une chaîne"
+      - "C'est never"
+    answer: [0]
+    explanation: >
+      Le test sur le discriminant rétrécit l'union à la variante correspondante.
+    skills:
+      - js-ts-unions-narrowing
+
+  - id: js-ts-unions-q2
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      À quoi sert `nePasOublier(paiement)` dans le default d'un switch, avec `function nePasOublier(cas: never): never` ?
+    options:
+      - "À faire échouer la compilation si une variante de l'union n'est pas traitée"
+      - "À ignorer les valeurs inconnues"
+      - "À convertir la valeur en chaîne"
+      - "À rendre le switch plus rapide"
+    answer: [0]
+    explanation: >
+      Si tous les cas sont traités, la valeur est de type never dans le default et l'appel compile ; une variante oubliée
+      provoque une erreur à cet endroit.
+    skills:
+      - js-ts-unions-narrowing
+
+  - id: js-ts-unions-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles conditions TypeScript utilise-t-il pour rétrécir un type ?
+    options:
+      - "typeof x === 'string'"
+      - "x instanceof Date"
+      - "'iban' in paiement"
+      - "Un commentaire // x est une chaîne"
+    answer: [0, 1, 2]
+    explanation: >
+      TypeScript suit le flux de contrôle et comprend typeof, instanceof, in, les égalités et les tests de nullité. Les
+      commentaires ne changent rien aux types.
+    skills:
+      - js-ts-unions-narrowing
+
+  - id: js-ts-unions-q4
+    type: true_false
+    difficulty: 4
+    question: >
+      Sur un tableau de type (number | null)[], `filter(Boolean)` produit un tableau de type number[].
+    answer: false
+    explanation: >
+      filter(Boolean) n'est pas reconnu comme prédicat de type, et il retire aussi 0. Un prédicat explicite ou
+      (x) => x !== null donne number[].
+    skills:
+      - js-ts-unions-narrowing

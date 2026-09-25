@@ -1,0 +1,63 @@
+id: javascript-migration-progressive-quiz
+kind: QUIZ
+questions:
+  - id: js-ts-migration-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Dans quel ordre convertir les fichiers d'un projet vers TypeScript ?
+    options:
+      - "Des modules sans dépendances internes vers les points d'entrée"
+      - "Du point d'entrée vers les utilitaires"
+      - "Par ordre alphabétique"
+      - "Tous les fichiers en même temps"
+    answer: [0]
+    explanation: >
+      Les types des feuilles se propagent à leurs utilisateurs : chaque conversion ne demande de typer que son propre
+      code.
+    skills:
+      - js-ts-migration
+
+  - id: js-ts-migration-q2
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Que se passe-t-il quand l'erreur masquée par un `// @ts-expect-error` disparaît ?
+    options:
+      - "TypeScript signale une directive @ts-expect-error inutilisée"
+      - "Rien : le commentaire reste silencieux"
+      - "Le fichier n'est plus vérifié"
+      - "La ligne suivante est supprimée"
+    answer: [0]
+    explanation: >
+      C'est ce qui distingue @ts-expect-error de @ts-ignore : le compromis doit être retiré dès qu'il devient inutile.
+    skills:
+      - js-ts-migration
+
+  - id: js-ts-migration-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques conviennent à une migration progressive ?
+    options:
+      - "allowJs pour faire cohabiter fichiers .js et .ts"
+      - "Des annotations JSDoc avec checkJs avant de renommer les fichiers"
+      - "Écrire tout nouveau fichier en TypeScript"
+      - "Remplacer chaque erreur par un any pour avancer vite"
+    answer: [0, 1, 2]
+    explanation: >
+      any désactive la vérification et contamine les types dérivés : on obtiendrait du TypeScript sans ses bénéfices.
+    skills:
+      - js-ts-migration
+
+  - id: js-ts-migration-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Avec TypeScript 7, un tsconfig qui ne mentionne pas strict active quand même les vérifications strictes.
+    answer: true
+    explanation: >
+      strict est activé par défaut dans les versions récentes. Une migration commence donc par "strict": false explicite,
+      puis active les vérifications une à une.
+    skills:
+      - js-ts-migration

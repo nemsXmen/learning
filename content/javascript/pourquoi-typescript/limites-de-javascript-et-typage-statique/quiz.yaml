@@ -1,0 +1,65 @@
+id: javascript-limites-de-javascript-et-typage-statique-quiz
+kind: QUIZ
+questions:
+  - id: js-ts-pourquoi-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quand TypeScript détecte-t-il `commande.totl` à la place de `commande.total` ?
+    options:
+      - "Avant l'exécution, pendant la vérification des types"
+      - "À l'exécution, quand la ligne est atteinte"
+      - "Jamais : accéder à une propriété inexistante est légal"
+      - "Seulement si un test couvre cette ligne"
+    answer: [0]
+    explanation: >
+      La vérification statique analyse tout le code sans l'exécuter. JavaScript seul renverrait undefined sans rien
+      signaler.
+    skills:
+      - js-ts-why
+
+  - id: js-ts-pourquoi-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Déclarer `const produit = JSON.parse(texte) as Produit` garantit à l'exécution que produit respecte l'interface.
+    answer: false
+    explanation: >
+      as est une simple affirmation, et les types sont effacés à l'exécution. Les données extérieures doivent être
+      validées par du code.
+    skills:
+      - js-ts-why
+
+  - id: js-ts-pourquoi-q3
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel type TypeScript infère-t-il pour `let quantite = 3` ?
+    options:
+      - "number"
+      - "3"
+      - "any"
+      - "unknown"
+    answer: [0]
+    explanation: >
+      Avec let, la variable peut changer : TypeScript élargit la valeur littérale 3 au type number. Avec const, il
+      garderait le type littéral 3.
+    skills:
+      - js-ts-why
+
+  - id: js-ts-pourquoi-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Que n'apporte pas TypeScript ?
+    options:
+      - "Un code plus rapide à l'exécution"
+      - "La vérification du comportement métier, qui reste le rôle des tests"
+      - "La validation des données reçues à l'exécution"
+      - "La détection d'une valeur possiblement undefined"
+    answer: [0, 1, 2]
+    explanation: >
+      TypeScript détecte les erreurs de types, dont les valeurs possiblement absentes en mode strict. Il ne change ni la
+      vitesse, ni le besoin de tests et de validation.
+    skills:
+      - js-ts-why

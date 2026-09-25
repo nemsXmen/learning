@@ -1,0 +1,67 @@
+id: javascript-generiques-et-types-utilitaires-quiz
+kind: QUIZ
+questions:
+  - id: js-ts-generiques-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Avec `function premier<T>(t: readonly T[]): T | undefined`, quel est le type de `premier([{ id: 'c1' }])` ?
+    options:
+      - "{ id: string } | undefined"
+      - "any"
+      - "T"
+      - "unknown"
+    answer: [0]
+    explanation: >
+      TypeScript infère T à partir de l'argument : T vaut { id: string }, et le résultat garde ce lien.
+    skills:
+      - js-ts-generics-utility
+
+  - id: js-ts-generiques-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel type décrit les modifications acceptées par une mise à jour de Produit, identifiant exclu ?
+    options:
+      - "Partial<Omit<Produit, 'id'>>"
+      - "Omit<Partial<Produit>, 'nom'>"
+      - "Pick<Produit, 'id'>"
+      - "Required<Produit>"
+    answer: [0]
+    explanation: >
+      Omit retire id, Partial rend le reste facultatif. Toute nouvelle propriété de Produit y apparaît automatiquement.
+    skills:
+      - js-ts-generics-utility
+
+  - id: js-ts-generiques-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Dans `trierPar<K extends keyof T>(cle: K)`, que garantit la contrainte ?
+    options:
+      - "Que cle est le nom d'une propriété existante de T"
+      - "Que a[cle] a le type de cette propriété"
+      - "Que la propriété existe à l'exécution sur tous les objets, même non validés"
+      - "Qu'une faute de frappe dans le nom de la clé est signalée"
+    answer: [0, 1, 3]
+    explanation: >
+      Les types sont effacés à l'exécution : des objets non validés peuvent ne pas respecter T. La contrainte vérifie le
+      code, pas les données.
+    skills:
+      - js-ts-generics-utility
+
+  - id: js-ts-generiques-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Avec `const TAILLES = ['S', 'M', 'L'] as const;`, quel type donne `(typeof TAILLES)[number]` ?
+    options:
+      - "'S' | 'M' | 'L'"
+      - "string"
+      - "string[]"
+      - "readonly ['S', 'M', 'L']"
+    answer: [0]
+    explanation: >
+      as const fige les littéraux dans un tuple en lecture seule ; l'accès par [number] donne l'union de ses éléments.
+    skills:
+      - js-ts-generics-utility

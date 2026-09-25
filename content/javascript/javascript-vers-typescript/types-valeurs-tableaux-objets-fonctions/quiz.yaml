@@ -1,0 +1,63 @@
+id: javascript-types-valeurs-tableaux-objets-fonctions-quiz
+kind: QUIZ
+questions:
+  - id: js-ts-types-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel type décrit le mieux le statut d'une commande, qui ne peut valoir que brouillon, payee ou expediee ?
+    options:
+      - "'brouillon' | 'payee' | 'expediee'"
+      - "string"
+      - "String"
+      - "any"
+    answer: [0]
+    explanation: >
+      Une union de types littéraux refuse les fautes de frappe et les valeurs inexistantes. string accepterait
+      n'importe quelle chaîne.
+    skills:
+      - js-ts-basic-types
+
+  - id: js-ts-types-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel type donner au résultat de JSON.parse d'une donnée extérieure ?
+    options:
+      - "unknown, puis vérifier sa forme avant usage"
+      - "any, pour pouvoir l'utiliser librement"
+      - "never"
+      - "object"
+    answer: [0]
+    explanation: >
+      unknown oblige à vérifier la valeur avant de l'utiliser. any désactiverait toute vérification.
+    skills:
+      - js-ts-basic-types
+
+  - id: js-ts-types-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Une fonction reçoit un paramètre de type readonly Ligne[]. Que lui interdit TypeScript ?
+    options:
+      - "Appeler push sur le tableau"
+      - "Remplacer un élément avec lignes[0] = autre"
+      - "Lire lignes.length"
+      - "Appeler map pour produire un nouveau tableau"
+    answer: [0, 1]
+    explanation: >
+      readonly interdit les modifications du tableau. La lecture et les méthodes qui renvoient un nouveau tableau restent
+      permises.
+    skills:
+      - js-ts-basic-types
+
+  - id: js-ts-types-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      En mode strict, une propriété déclarée `codePromo?: string` a le type string | undefined.
+    answer: true
+    explanation: >
+      La propriété peut être absente : TypeScript oblige à traiter le cas undefined, avec une condition, ?. ou ??.
+    skills:
+      - js-ts-basic-types

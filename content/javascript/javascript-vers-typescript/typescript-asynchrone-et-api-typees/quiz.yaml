@@ -1,0 +1,65 @@
+id: javascript-typescript-asynchrone-et-api-typees-quiz
+kind: QUIZ
+questions:
+  - id: js-ts-api-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel est le type de `await Promise.all([chargerClient(id), chargerCommandes(id)])`, si les deux fonctions renvoient
+      Promise<Client> et Promise<Commande[]> ?
+    options:
+      - "[Client, Commande[]]"
+      - "(Client | Commande[])[]"
+      - "Promise<[Client, Commande[]]>"
+      - "any[]"
+    answer: [0]
+    explanation: >
+      Promise.all conserve le type de chaque position dans un tuple, et await retire la promesse.
+    skills:
+      - js-ts-async-apis
+
+  - id: js-ts-api-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment obtenir le type Produit à partir d'un schéma zod ProduitSchema ?
+    options:
+      - "type Produit = z.infer<typeof ProduitSchema>"
+      - "type Produit = typeof ProduitSchema"
+      - "En réécrivant une interface identique"
+      - "type Produit = ReturnType<typeof ProduitSchema>"
+    answer: [0]
+    explanation: >
+      z.infer déduit le type des données validées par le schéma : une seule source de vérité pour le type et la
+      validation.
+    skills:
+      - js-ts-async-apis
+
+  - id: js-ts-api-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles valeurs faut-il traiter comme unknown et valider avant usage ?
+    options:
+      - "Le résultat de reponse.json()"
+      - "Le résultat de JSON.parse"
+      - "L'erreur reçue dans un catch"
+      - "Le résultat d'une fonction typée du même module"
+    answer: [0, 1, 2]
+    explanation: >
+      Les données extérieures et les erreurs attrapées ne sont pas vérifiées par les types. Une fonction typée du même
+      projet est déjà vérifiée par le compilateur.
+    skills:
+      - js-ts-async-apis
+
+  - id: js-ts-api-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Si le serveur et le client partagent les mêmes types, il devient inutile de valider les réponses côté client.
+    answer: false
+    explanation: >
+      Client et serveur sont déployés séparément : une ancienne version de l'un peut parler à une nouvelle version de
+      l'autre. La validation aux frontières reste le filet de sécurité.
+    skills:
+      - js-ts-async-apis

@@ -1,0 +1,62 @@
+id: javascript-compiler-et-configurer-typescript-quiz
+kind: QUIZ
+questions:
+  - id: js-ts-config-q1
+    type: true_false
+    difficulty: 3
+    question: >
+      `vite build` échoue si le projet contient une erreur de type TypeScript.
+    answer: false
+    explanation: >
+      Vite efface les types sans les vérifier. La vérification se fait avec tsc --noEmit, dans un script et en intégration
+      continue.
+    skills:
+      - js-ts-compiler-config
+
+  - id: js-ts-config-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi `node commande.ts` refuse-t-il un fichier qui contient un enum ?
+    options:
+      - "Un enum génère du JavaScript, alors que Node se contente d'effacer les annotations"
+      - "Node ne sait pas exécuter de fichiers .ts"
+      - "Les enums sont interdits en mode strict"
+      - "Il faut importer les enums depuis node:typescript"
+    answer: [0]
+    explanation: >
+      Node exécute seulement la syntaxe effaçable. Une union de chaînes ou un objet as const remplace l'enum.
+    skills:
+      - js-ts-compiler-config
+
+  - id: js-ts-config-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles options conviennent au tsconfig d'une application front-end construite par Vite ?
+    options:
+      - "noEmit: true"
+      - "strict: true"
+      - "module: preserve"
+      - "outDir: dist, pour que tsc produise les fichiers déployés"
+    answer: [0, 1, 2]
+    explanation: >
+      Avec un outil de build, tsc ne fait que vérifier : c'est Vite qui produit les fichiers.
+    skills:
+      - js-ts-compiler-config
+
+  - id: js-ts-config-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que fait l'option noUncheckedIndexedAccess ?
+    options:
+      - "Elle considère qu'un élément lu par index, comme tableau[0], peut être undefined"
+      - "Elle interdit les accès par index"
+      - "Elle vérifie les index à l'exécution"
+      - "Elle désactive la vérification des tableaux"
+    answer: [0]
+    explanation: >
+      Un tableau vide ou une clé absente donnent undefined : l'option oblige à traiter ce cas.
+    skills:
+      - js-ts-compiler-config

@@ -705,6 +705,15 @@
       "contentVersion": "f97cd2e8dad8"
     },
     {
+      "slug": "javascript-vers-typescript",
+      "title": "JavaScript vers TypeScript",
+      "order": 55,
+      "part": "typescript-bridge",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-vers-typescript/module.yaml",
+      "contentVersion": "9f97638b8b8f"
+    },
+    {
       "slug": "map-et-set",
       "title": "Map, Set et structures modernes",
       "order": 9,
@@ -793,6 +802,15 @@
       "technology": "javascript",
       "contentPath": "javascript/portee/module.yaml",
       "contentVersion": "8f62552d7a92"
+    },
+    {
+      "slug": "pourquoi-typescript",
+      "title": "Pourquoi TypeScript ?",
+      "order": 54,
+      "part": "typescript-bridge",
+      "technology": "javascript",
+      "contentPath": "javascript/pourquoi-typescript/module.yaml",
+      "contentVersion": "d6e5344ade4c"
     },
     {
       "slug": "programmation-fonctionnelle",
@@ -2925,6 +2943,71 @@
       "requires": [
         "js-bug-isolation",
         "js-git-collaboration"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ts-why",
+      "name": "Pourquoi TypeScript",
+      "importance": 5,
+      "requires": [
+        "js-lint-format-types"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ts-compiler-config",
+      "name": "Compiler et configurer TypeScript",
+      "importance": 5,
+      "requires": [
+        "js-ts-why",
+        "js-build-tools"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ts-migration",
+      "name": "Migrer progressivement vers TypeScript",
+      "importance": 4,
+      "requires": [
+        "js-ts-compiler-config"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ts-basic-types",
+      "name": "Types des valeurs, tableaux, objets et fonctions",
+      "importance": 5,
+      "requires": [
+        "js-ts-why"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ts-unions-narrowing",
+      "name": "Interfaces, alias, unions et rétrécissement",
+      "importance": 5,
+      "requires": [
+        "js-ts-basic-types"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ts-generics-utility",
+      "name": "Génériques et types utilitaires",
+      "importance": 5,
+      "requires": [
+        "js-ts-unions-narrowing"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ts-async-apis",
+      "name": "TypeScript asynchrone et API typées",
+      "importance": 5,
+      "requires": [
+        "js-ts-generics-utility",
+        "js-validation-secrets-deps"
       ],
       "technology": "javascript"
     },
@@ -10542,6 +10625,152 @@
       ]
     },
     {
+      "id": "javascript-generiques-et-types-utilitaires",
+      "title": "Génériques et types utilitaires",
+      "slug": "generiques-et-types-utilitaires",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "javascript-vers-typescript",
+      "order": 3,
+      "estimatedMinutes": 50,
+      "difficulty": 4,
+      "xp": 110,
+      "prerequisites": [
+        "javascript-interfaces-alias-unions-et-retrecissement"
+      ],
+      "skills": [
+        "js-ts-generics-utility"
+      ],
+      "tags": [
+        "javascript",
+        "typescript"
+      ],
+      "contentPath": "javascript/javascript-vers-typescript/generiques-et-types-utilitaires/lesson.md",
+      "contentVersion": "48575ba784b0",
+      "body": "\n## Objectifs\n\n- Écrire des fonctions et des types génériques, qui gardent le lien entre les types d'entrée et de sortie.\n- Contraindre un paramètre de type avec `extends`, et utiliser `keyof` pour des clés sûres.\n- Dériver des types à partir d'autres avec `Partial`, `Pick`, `Omit`, `Readonly`, `Record`, `ReturnType`, `Awaited`.\n- Déduire des types de valeurs avec `typeof` et `as const`, pour n'avoir qu'une source de vérité.\n\n## Introduction\n\nBeaucoup de fonctions JavaScript sont écrites pour fonctionner avec n'importe quel type : `premier(tableau)`,\n`grouperPar(elements, cle)`, `memoize(fonction)`, un dépôt en mémoire qui stocke des commandes ou des clients. Les typer\navec `any` ferait perdre toute l'information : le premier élément d'un tableau de commandes deviendrait « n'importe\nquoi ». Les **génériques** permettent de dire « le même type qu'en entrée ».\n\nLes **types utilitaires**, eux, évitent de réécrire dix variantes d'un même type : la commande, la commande sans son\nidentifiant pour la création, la commande partielle pour une mise à jour, la commande en lecture seule pour l'affichage.\nOn les dérive tous d'une seule définition.\n\n## Concept\n\n| Générique | Exemple | Sens |\n| --- | --- | --- |\n| fonction | `function premier<T>(t: readonly T[]): T \\| undefined` | le résultat a le type des éléments |\n| contrainte | `<T extends { id: string }>` | `T` doit au moins avoir un `id` |\n| `keyof` | `<T, K extends keyof T>` | `K` est l'une des clés de `T` |\n| type générique | `type Resultat<T> = { ok: true; valeur: T } \\| { ok: false; erreur: string }` | un type paramétré |\n| valeur par défaut | `<T = unknown>` | le type utilisé si rien n'est précisé |\n\n| Type utilitaire | Produit |\n| --- | --- |\n| `Partial<T>` | toutes les propriétés facultatives |\n| `Required<T>` | toutes les propriétés obligatoires |\n| `Readonly<T>` | toutes les propriétés en lecture seule |\n| `Pick<T, 'a' \\| 'b'>` | seulement certaines propriétés |\n| `Omit<T, 'id'>` | toutes sauf certaines |\n| `Record<K, V>` | un objet de clés `K` et de valeurs `V` |\n| `ReturnType<typeof f>`, `Parameters<typeof f>` | le retour, les paramètres d'une fonction |\n| `Awaited<T>` | le type résolu d'une promesse |\n| `NonNullable<T>` | `T` sans `null` ni `undefined` |\n\n## Exemple\n\nUn dépôt en mémoire générique, réutilisable pour n'importe quelle entité qui a un identifiant :\n\n```ts\ninterface Produit {\n  id: string;\n  nom: string;\n  prix: number;\n  stock: number;\n}\n\nclass DepotEnMemoire<T extends { id: string }> {\n  #elements = new Map<string, T>();\n\n  ajouter(element: T): T {\n    this.#elements.set(element.id, element);\n    return element;\n  }\n\n  parId(id: string): T | undefined {\n    return this.#elements.get(id);\n  }\n\n  mettreAJour(id: string, modifications: Partial<Omit<T, 'id'>>): T {\n    const actuel = this.#elements.get(id);\n    if (!actuel) throw new Error(`Introuvable : ${id}`);\n    const suivant = { ...actuel, ...modifications };\n    this.#elements.set(id, suivant);\n    return suivant;\n  }\n\n  trierPar<K extends keyof T>(cle: K): T[] {\n    return [...this.#elements.values()].toSorted((a, b) => (a[cle] < b[cle] ? -1 : a[cle] > b[cle] ? 1 : 0));\n  }\n}\n\nconst produits = new DepotEnMemoire<Produit>();\nproduits.ajouter({ id: 'p1', nom: 'Lampe', prix: 49.9, stock: 3 });\nproduits.ajouter({ id: 'p2', nom: 'Vase', prix: 25, stock: 0 });\n\nconst lampe = produits.mettreAJour('p1', { stock: 2 });\nconsole.log(lampe); // { id: 'p1', nom: 'Lampe', prix: 49.9, stock: 2 }\nconsole.log(produits.trierPar('prix').map((p) => p.nom)); // [ 'Vase', 'Lampe' ]\n```\n\nCe que TypeScript refuse, grâce aux génériques et aux types dérivés :\n\n```ts\nproduits.mettreAJour('p1', { id: 'p9' });\n// error TS2353: Object literal may only specify known properties, and 'id' does not exist in type 'Partial<Omit<Produit, \"id\">>'.\n\nproduits.mettreAJour('p1', { prix: 'gratuit' });\n// error TS2322: Type 'string' is not assignable to type 'number'.\n\nproduits.trierPar('poids');\n// error TS2345: Argument of type '\"poids\"' is not assignable to parameter of type 'keyof Produit'.\n```\n\n## Comment ça fonctionne\n\n**Un paramètre de type.** Dans `function premier<T>(tableau: readonly T[]): T | undefined`, `T` est une variable de type.\nÀ chaque appel, TypeScript l'**infère** à partir des arguments : avec un tableau de produits, `T` vaut `Produit`, et le\nrésultat est un `Produit | undefined`. On précise rarement `T` soi-même ; on le fait quand rien ne permet de le déduire,\ncomme `new DepotEnMemoire<Produit>()` ou `new Map<string, Commande>()`. Les collections du langage sont déjà\ngénériques : `Array<T>`, `Map<K, V>`, `Set<T>`, `Promise<T>`.\n\n**Les contraintes.** Sans contrainte, `T` peut être n'importe quoi, et l'on ne peut rien faire de ses valeurs. `T extends\n{ id: string }` exige que `T` ait au moins un `id` de type chaîne : le dépôt peut alors utiliser `element.id`. `K extends\nkeyof T` restreint `K` aux noms de propriétés de `T` : `trierPar('prix')` est accepté, `trierPar('poids')` refusé, et\n`a[cle]` a le bon type.\n\n**Les types génériques.** Un alias ou une interface peut aussi avoir des paramètres. `Resultat<T>`, une union discriminée\nqui contient soit une valeur de type `T`, soit une erreur, sert pour n'importe quel cas d'utilisation : on l'a utilisé\nsans types dans la partie sur les patterns fonctionnels.\n\n**Dériver plutôt que dupliquer.** `Partial<Omit<Produit, 'id'>>` se lit de l'intérieur vers l'extérieur : les propriétés\nde `Produit` sans `id`, toutes facultatives. C'est exactement ce qu'accepte une mise à jour. Si l'on ajoute une propriété\n`categorie` à `Produit`, elle apparaît automatiquement dans ce type : une seule source de vérité. `Pick` choisit les\nchamps d'un résumé public, `Readonly` protège un objet renvoyé à l'affichage, `Record` décrit un dictionnaire. Tous ces\nutilitaires sont eux-mêmes écrits avec des génériques et des types *mappés*, que le parcours TypeScript de la plateforme\ndétaille.\n\n**Des types à partir des valeurs.** `typeof` appliqué à une valeur, dans une position de type, donne son type :\n`ReturnType<typeof creerCommande>` est le type de ce que renvoie la fonction, sans l'écrire une seconde fois.\n`as const` fige une valeur littérale : `const STATUTS = ['brouillon', 'payee'] as const` a le type\n`readonly ['brouillon', 'payee']`, et `(typeof STATUTS)[number]` donne l'union `'brouillon' | 'payee'`. La liste existe à\nl'exécution, pour une validation ou un menu, et le type en découle.\n\n**Ne pas en faire trop.** Les génériques servent quand une fonction ou un type fonctionne vraiment pour plusieurs types,\navec un lien entre eux. Un paramètre de type utilisé une seule fois, `function afficher<T>(x: T): void`, n'apporte rien\npar rapport à `unknown`. Des types très sophistiqués deviennent vite illisibles : la clarté pour le lecteur reste le\ncritère, comme pour le reste du code.\n\n## Erreurs fréquentes\n\n**Typer une fonction générique avec `any`.** On perd le lien entre entrée et sortie ; utilise un paramètre de type.\n\n**Oublier la contrainte.** Sans `extends`, on ne peut rien faire des valeurs de type `T`.\n\n**Utiliser `string` pour un nom de propriété.** `keyof T` n'accepte que les propriétés existantes.\n\n**Dupliquer un type pour chaque variante.** Dérive-le avec `Partial`, `Pick`, `Omit`.\n\n**Écrire deux fois la même liste de valeurs.** Une constante `as const` et `(typeof X)[number]`.\n\n**Des génériques pour le plaisir.** Un paramètre de type qui ne relie rien complique sans raison.\n\n## À retenir\n\n- Un générique relie les types d'entrée et de sortie ; TypeScript l'infère presque toujours.\n- `extends` contraint un paramètre de type ; `keyof T` limite aux clés existantes.\n- `Partial`, `Required`, `Readonly`, `Pick`, `Omit`, `Record` dérivent des types d'une seule définition.\n- `ReturnType`, `Parameters`, `Awaited`, `typeof` : des types tirés des fonctions et des valeurs.\n- `as const` et `(typeof X)[number]` : une liste à l'exécution, une union dans les types.\n\n## Exercices\n\n1. Écris une fonction générique `grouperPar(elements, cle)` qui groupe des objets selon la valeur d'une de leurs\n   propriétés, et dont le résultat est correctement typé.\n\n   :::indice\n   Deux paramètres de type : `T` pour les éléments, `K extends keyof T` pour la clé. Le résultat associe une valeur de\n   `T[K]` à un tableau de `T`.\n   :::\n\n   :::solution\n   ```ts\n   function grouperPar<T, K extends keyof T>(elements: readonly T[], cle: K): Map<T[K], T[]> {\n     const groupes = new Map<T[K], T[]>();\n     for (const element of elements) {\n       const valeur = element[cle];\n       const groupe = groupes.get(valeur);\n       if (groupe) groupe.push(element);\n       else groupes.set(valeur, [element]);\n     }\n     return groupes;\n   }\n\n   const commandes = [\n     { id: 'c1', statut: 'payee' as const, total: 40 },\n     { id: 'c2', statut: 'brouillon' as const, total: 15 },\n     { id: 'c3', statut: 'payee' as const, total: 25 },\n   ];\n\n   const parStatut = grouperPar(commandes, 'statut'); // Map<'payee' | 'brouillon', …[]>\n   console.log(parStatut.get('payee')?.map((c) => c.id)); // [ 'c1', 'c3' ]\n   ```\n\n   `T[K]` est le type de la propriété choisie : ici, l'union des statuts. `grouperPar(commandes, 'client')` serait\n   refusé, car `client` n'est pas une clé. Pour des clés de type chaîne, `Map.groupBy`, vu dans la partie sur la\n   transformation de données, fait la même chose et est déjà typé ainsi.\n   :::\n\n2. À partir de cette seule interface, dérive quatre types sans réécrire de propriété : les données de création (sans `id`\n   ni `creeLe`), une mise à jour (tout facultatif sauf ce qui ne se modifie pas), le résumé public (`id` et `nom`), et\n   une version en lecture seule.\n\n   ```ts\n   interface Client {\n     id: string;\n     nom: string;\n     email: string;\n     telephone?: string;\n     creeLe: Date;\n   }\n   ```\n\n   :::indice\n   Combine `Omit`, `Partial`, `Pick` et `Readonly`.\n   :::\n\n   :::solution\n   ```ts\n   interface Client {\n     id: string;\n     nom: string;\n     email: string;\n     telephone?: string;\n     creeLe: Date;\n   }\n\n   type NouveauClient = Omit<Client, 'id' | 'creeLe'>;\n   type MiseAJourClient = Partial<Omit<Client, 'id' | 'creeLe'>>;\n   type ResumeClient = Pick<Client, 'id' | 'nom'>;\n   type ClientLecture = Readonly<Client>;\n\n   function creer(donnees: NouveauClient): Client {\n     return { ...donnees, id: crypto.randomUUID(), creeLe: new Date() };\n   }\n\n   const ana = creer({ nom: 'Ana', email: 'ana@exemple.fr' });\n   const miseAJour: MiseAJourClient = { telephone: '0600000000' };\n   const resume: ResumeClient = { id: ana.id, nom: ana.nom };\n   const lecture: ClientLecture = ana;\n   console.log(Object.keys(resume), miseAJour, typeof lecture.creeLe); // [ 'id', 'nom' ] { telephone: '0600000000' } object\n   ```\n\n   Ajouter `adresse` à `Client` l'ajoute automatiquement à la création et à la mise à jour, sans toucher aux types\n   dérivés. `lecture.nom = 'X'` serait refusé.\n   :::\n\n3. Ce module déclare deux fois la liste des catégories : une fois dans le type, une fois dans un tableau pour le menu.\n   Réécris-le avec une seule source de vérité, et écris une fonction qui valide qu'une chaîne reçue est une catégorie.\n\n   ```ts\n   type Categorie = 'luminaires' | 'textile' | 'ceramique';\n   const CATEGORIES = ['luminaires', 'textile', 'ceramique'];\n   ```\n\n   :::indice\n   `as const`, puis `(typeof CATEGORIES)[number]`, et un prédicat de type.\n   :::\n\n   :::solution\n   ```ts\n   const CATEGORIES = ['luminaires', 'textile', 'ceramique'] as const;\n   type Categorie = (typeof CATEGORIES)[number]; // 'luminaires' | 'textile' | 'ceramique'\n\n   function estCategorie(valeur: string): valeur is Categorie {\n     return (CATEGORIES as readonly string[]).includes(valeur);\n   }\n\n   const recue: string = 'textile';\n   if (estCategorie(recue)) {\n     const categorie: Categorie = recue; // accepté : rétréci par le prédicat\n     console.log(`catégorie valide : ${categorie}`); // catégorie valide : textile\n   }\n   console.log(estCategorie('jardin')); // false\n   ```\n\n   Ajouter une catégorie se fait à un seul endroit, et le type, le menu et la validation suivent. La conversion\n   `as readonly string[]` est nécessaire car `includes` sur un tuple de littéraux n'accepte que ces littéraux ; elle est\n   sans risque ici, puisqu'on ne fait que lire.\n   :::\n\n## Questions d'entretien\n\n- À quoi servent les génériques ?\n\n  :::indice\n  Réutiliser sans perdre l'information de type.\n  :::\n\n  :::reponse\n  À écrire des fonctions, classes et types qui fonctionnent pour plusieurs types tout en gardant le lien entre eux : le\n  premier élément d'un tableau de commandes est une commande, pas « n'importe quoi ». Le paramètre de type est le plus\n  souvent inféré à l'appel. Avec des contraintes, `T extends { id: string }`, on peut utiliser certaines propriétés, et\n  avec `keyof`, limiter un argument aux clés existantes. On les retrouve partout : `Array<T>`, `Promise<T>`, `Map<K, V>`,\n  les dépôts, les résultats typés.\n  :::\n\n- Cite quelques types utilitaires et un cas d'usage pour chacun.\n\n  :::indice\n  Création, mise à jour, résumé, lecture seule.\n  :::\n\n  :::reponse\n  `Omit<Client, 'id'>` pour les données de création, sans l'identifiant attribué par le serveur. `Partial<…>` pour une\n  mise à jour où chaque champ est facultatif. `Pick<Client, 'id' | 'nom'>` pour un résumé public. `Readonly<T>` pour\n  empêcher la modification d'un objet renvoyé. `Record<Statut, number>` pour un compteur par statut. `ReturnType` et\n  `Awaited` pour réutiliser le type de ce que renvoie une fonction asynchrone. Tous dérivent d'une seule définition, qui\n  reste la source de vérité.\n  :::\n\n- Comment éviter de déclarer deux fois une liste de valeurs, dans les types et à l'exécution ?\n\n  :::indice\n  `as const`.\n  :::\n\n  :::reponse\n  On déclare la liste une fois, comme valeur, avec `as const` : `const STATUTS = ['brouillon', 'payee'] as const`. Le type\n  s'en déduit avec `(typeof STATUTS)[number]`, qui donne l'union des littéraux. La liste reste disponible à l'exécution,\n  pour construire un menu ou valider une donnée avec un prédicat de type, et ajouter une valeur ne se fait qu'à un endroit.\n  Les bibliothèques de validation comme zod poussent l'idée plus loin : on écrit le schéma, et le type en est déduit.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-interfaces-alias-unions-et-retrecissement",
+      "title": "Interfaces, alias de types, unions et rétrécissement",
+      "slug": "interfaces-alias-unions-et-retrecissement",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "javascript-vers-typescript",
+      "order": 2,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-types-valeurs-tableaux-objets-fonctions"
+      ],
+      "skills": [
+        "js-ts-unions-narrowing"
+      ],
+      "tags": [
+        "javascript",
+        "typescript"
+      ],
+      "contentPath": "javascript/javascript-vers-typescript/interfaces-alias-unions-et-retrecissement/lesson.md",
+      "contentVersion": "ee2161c0e9e7",
+      "body": "\n## Objectifs\n\n- Nommer des types avec `interface` et `type`, et savoir choisir.\n- Combiner des types avec l'union `|` et l'intersection `&`.\n- Modéliser des variantes avec une union discriminée, et rendre les états impossibles impossibles à écrire.\n- Rétrécir un type avec `typeof`, `instanceof`, `in`, l'égalité et les prédicats de type.\n- Garantir qu'aucun cas n'est oublié grâce à la vérification d'exhaustivité avec `never`.\n\n## Introduction\n\nEn JavaScript, une valeur change souvent de forme selon le cas : un paiement par carte a un numéro masqué, un virement a\nun IBAN, un paiement en espèces n'a rien de tout cela. Le code s'en sort avec des `if` sur une propriété `type`, et tout\nva bien jusqu'au jour où l'on ajoute un quatrième moyen de paiement et qu'on oublie de le traiter à un endroit.\n\nTypeScript décrit ces variantes avec des **unions**, et suit le raisonnement du code : après `if (paiement.type ===\n'carte')`, il sait que `paiement` est un paiement par carte. C'est le **rétrécissement**, ou *narrowing*. Combiné à une\nvérification d'exhaustivité, il signale chaque endroit où le nouveau cas n'est pas traité.\n\n## Concept\n\n| Construction | Exemple | Usage |\n| --- | --- | --- |\n| `interface` | `interface Client { nom: string }` | la forme d'un objet ; extensible avec `extends` |\n| `type` | `type Id = string`, `type Statut = 'a' \\| 'b'` | n'importe quel type : unions, tuples, fonctions, objets |\n| union `A \\| B` | `string \\| number` | une valeur de l'un **ou** de l'autre |\n| intersection `A & B` | `Client & { fidelite: number }` | une valeur qui a **les deux** formes |\n| union discriminée | `{ type: 'carte'; … } \\| { type: 'virement'; … }` | des variantes, distinguées par une propriété littérale commune |\n\n| Rétrécissement | Condition | TypeScript en déduit |\n| --- | --- | --- |\n| `typeof` | `typeof x === 'string'` | un primitif précis |\n| `instanceof` | `erreur instanceof Error` | une instance de classe |\n| `in` | `'iban' in paiement` | une variante qui possède cette propriété |\n| égalité sur un discriminant | `paiement.type === 'carte'` | la variante correspondante |\n| valeur non nulle | `if (client)`, `client != null` | la valeur n'est ni `null` ni `undefined` |\n| prédicat de type | `function estCarte(p): p is Carte` | ce que la fonction affirme |\n\n## Exemple\n\nTrois moyens de paiement, modélisés par une union discriminée :\n\n```ts\ninterface PaiementCarte {\n  type: 'carte';\n  derniersChiffres: string;\n  montant: number;\n}\n\ninterface PaiementVirement {\n  type: 'virement';\n  iban: string;\n  montant: number;\n}\n\ninterface PaiementEspeces {\n  type: 'especes';\n  montant: number;\n}\n\ntype Paiement = PaiementCarte | PaiementVirement | PaiementEspeces;\n\nfunction nePasOublier(cas: never): never {\n  throw new Error(`Cas non traité : ${JSON.stringify(cas)}`);\n}\n\nfunction libelle(paiement: Paiement): string {\n  switch (paiement.type) {\n    case 'carte':\n      return `Carte •••• ${paiement.derniersChiffres}`; // ici, paiement est un PaiementCarte\n    case 'virement':\n      return `Virement depuis ${paiement.iban.slice(0, 4)}…`;\n    case 'especes':\n      return 'Espèces';\n    default:\n      return nePasOublier(paiement); // ici, paiement est de type never\n  }\n}\n\nconst paiements: Paiement[] = [\n  { type: 'carte', derniersChiffres: '4242', montant: 49.9 },\n  { type: 'virement', iban: 'FR7630006000011234567890189', montant: 120 },\n  { type: 'especes', montant: 12 },\n];\n\nconsole.log(paiements.map(libelle)); // [ 'Carte •••• 4242', 'Virement depuis FR76…', 'Espèces' ]\n```\n\nSix mois plus tard, on ajoute les paiements par chèque à l'union, en oubliant `libelle` :\n\n```ts\ninterface PaiementCheque {\n  type: 'cheque';\n  numero: string;\n  montant: number;\n}\ntype Paiement = PaiementCarte | PaiementVirement | PaiementEspeces | PaiementCheque;\n```\n\n```text\nerror TS2345: Argument of type 'PaiementCheque' is not assignable to parameter of type 'never'.\n```\n\nTypeScript désigne exactement le `switch` qui ne traite pas le nouveau cas.\n\n## Comment ça fonctionne\n\n**`interface` ou `type` ?** Les deux décrivent la forme d'un objet, et se valent dans la plupart des cas. `interface`\ns'étend avec `extends` et peut être complétée par une seconde déclaration du même nom, ce qu'utilisent les\nbibliothèques pour permettre d'enrichir leurs types. `type` sait nommer n'importe quel type : une union, un tuple, un type\nde fonction, un type littéral. Une convention courante : `interface` pour les objets, `type` pour le reste. L'essentiel\nest de rester cohérent dans un projet.\n\n**Unions et intersections.** Une union `A | B` accepte une valeur de l'un ou de l'autre ; on ne peut alors utiliser que\nce qui est commun aux deux, jusqu'à ce qu'on ait rétréci. Une intersection `A & B` exige les deux formes à la fois : utile\npour ajouter des propriétés à un type existant, par exemple `Commande & { client: Client }`.\n\n**Les unions discriminées.** Chaque variante porte une propriété de même nom, ici `type`, avec une valeur littérale\ndifférente. Tester cette propriété suffit à TypeScript pour savoir de quelle variante il s'agit, et donner accès à ses\npropriétés propres : `iban` n'existe que dans la branche `'virement'`. C'est la traduction typée des états et des\nvariantes vus dans la partie sur les patterns : chaque variante ne porte que ses propres données, et les combinaisons\nabsurdes, un paiement en espèces avec un IBAN, ne peuvent pas s'écrire.\n\n**Le rétrécissement suit le code.** TypeScript analyse le flux de contrôle : après `if (typeof x === 'string') return;`,\nil sait que `x` n'est plus une chaîne dans la suite. Il comprend `typeof`, `instanceof`, `in`, les égalités, les tests\nde nullité, les `return`, `throw` et `break`. On écrit du JavaScript ordinaire, et les types se précisent tout seuls.\n\n**Les prédicats de type.** Quand la vérification est dans une fonction, TypeScript ne la voit pas. Un **prédicat de\ntype**, `function estCarte(p: Paiement): p is PaiementCarte`, lui dit ce que la fonction garantit quand elle renvoie\n`true`. `paiements.filter(estCarte)` a alors le type `PaiementCarte[]`. Les versions récentes de TypeScript infèrent\nmême le prédicat de fonctions simples, comme `(p) => p.type === 'carte'`. Attention : TypeScript fait confiance au\nprédicat ; un prédicat faux produit des types faux.\n\n**L'exhaustivité avec `never`.** Dans le `default` d'un `switch` qui traite toutes les variantes, il ne reste aucune\nvaleur possible : le type de `paiement` est `never`. Passer cette valeur à une fonction qui n'accepte que `never` ne\ncompile donc que si tous les cas sont traités. Le jour où une variante est ajoutée, le `default` n'est plus vide, et la\ncompilation échoue à cet endroit précis. À l'exécution, la fonction lève une erreur si une valeur inattendue arrive\nmalgré tout, par exemple depuis une donnée non validée.\n\n## Erreurs fréquentes\n\n**Des variantes sans discriminant.** Des propriétés facultatives partout, `iban?`, `derniersChiffres?`, permettent des\ncombinaisons absurdes ; une union discriminée les interdit.\n\n**Un `default` qui renvoie une valeur « au cas où ».** Le compilateur ne signalera jamais un cas oublié ; utilise la\nvérification avec `never`.\n\n**Utiliser une propriété avant de rétrécir.** Sur une union, seules les propriétés communes sont accessibles.\n\n**Écrire un prédicat de type faux.** TypeScript lui fait confiance ; teste-le.\n\n**Rétrécir avec `as`.** `paiement as PaiementCarte` affirme sans vérifier ; préfère un test réel.\n\n**Mélanger `interface` et `type` sans règle.** Choisis une convention pour le projet.\n\n## À retenir\n\n- `interface` pour les objets extensibles, `type` pour les unions, tuples et fonctions.\n- Union `|` : l'un ou l'autre ; intersection `&` : les deux à la fois.\n- Union discriminée : une propriété littérale commune distingue les variantes.\n- TypeScript rétrécit les types en suivant `typeof`, `instanceof`, `in`, les égalités et les tests de nullité.\n- Prédicats de type `x is T` pour les vérifications dans une fonction, notamment avec `filter`.\n- Exhaustivité : un `default` qui passe la valeur à une fonction `never`.\n\n## Exercices\n\n1. Remplace ce type aux propriétés facultatives par une union discriminée, et écris la fonction `afficher` avec une\n   vérification d'exhaustivité.\n\n   ```ts\n   interface Notification {\n     canal: 'email' | 'sms' | 'push';\n     adresse?: string;\n     numero?: string;\n     jetonAppareil?: string;\n     message: string;\n   }\n   ```\n\n   :::indice\n   Une variante par canal, chacune avec la seule propriété de destination qui la concerne.\n   :::\n\n   :::solution\n   ```ts\n   type Notification =\n     | { canal: 'email'; adresse: string; message: string }\n     | { canal: 'sms'; numero: string; message: string }\n     | { canal: 'push'; jetonAppareil: string; message: string };\n\n   function nePasOublier(cas: never): never {\n     throw new Error(`Canal non traité : ${JSON.stringify(cas)}`);\n   }\n\n   function afficher(notification: Notification): string {\n     switch (notification.canal) {\n       case 'email':\n         return `E-mail à ${notification.adresse} : ${notification.message}`;\n       case 'sms':\n         return `SMS au ${notification.numero} : ${notification.message}`;\n       case 'push':\n         return `Push vers ${notification.jetonAppareil.slice(0, 6)}… : ${notification.message}`;\n       default:\n         return nePasOublier(notification);\n     }\n   }\n\n   console.log(afficher({ canal: 'sms', numero: '0600000000', message: 'Colis livré' }));\n   // SMS au 0600000000 : Colis livré\n   ```\n\n   Avec l'ancien type, `{ canal: 'sms', adresse: 'a@b.fr', message: '…' }` était accepté, sans numéro. Désormais, chaque\n   canal exige sa destination, et aucune autre.\n   :::\n\n2. Écris un prédicat de type `estDefini` pour retirer les `null` et `undefined` d'un tableau avec `filter`, et montre la\n   différence de type obtenue avec un simple `filter(Boolean)`.\n\n   :::indice\n   `function estDefini<T>(valeur: T | null | undefined): valeur is T`.\n   :::\n\n   :::solution\n   ```ts\n   function estDefini<T>(valeur: T | null | undefined): valeur is T {\n     return valeur !== null && valeur !== undefined;\n   }\n\n   const saisies: (number | null | undefined)[] = [12, null, 0, undefined, 7];\n\n   const nombres = saisies.filter(estDefini); // number[]\n   const avecBoolean = saisies.filter(Boolean); // (number | null | undefined)[] : TypeScript ne rétrécit pas\n   console.log(nombres, avecBoolean); // [ 12, 0, 7 ] [ 12, 7 ]\n   ```\n\n   Le prédicat donne le type `number[]`. `filter(Boolean)` n'est pas reconnu comme un prédicat, et il a un second défaut,\n   visible à l'exécution : il retire aussi `0`, qui est une valeur fausse. Le prédicat explicite est donc plus juste,\n   pour les types comme pour les valeurs.\n   :::\n\n3. Cette fonction reçoit une valeur d'un formulaire, qui peut être une chaîne, un nombre ou une date. Écris-la en\n   TypeScript pour qu'elle renvoie toujours une date, en rétrécissant proprement chaque cas.\n\n   ```js\n   function versDate(valeur) {\n     if (valeur instanceof Date) return valeur;\n     if (typeof valeur === 'number') return new Date(valeur);\n     const date = new Date(valeur);\n     if (Number.isNaN(date.getTime())) throw new Error(`Date invalide : ${valeur}`);\n     return date;\n   }\n   ```\n\n   :::indice\n   Le paramètre est une union ; chaque condition retire un cas, et le dernier bloc ne voit plus qu'une chaîne.\n   :::\n\n   :::solution\n   ```ts\n   function versDate(valeur: string | number | Date): Date {\n     if (valeur instanceof Date) return valeur;\n     if (typeof valeur === 'number') return new Date(valeur);\n     // Ici, TypeScript sait que valeur est une string.\n     const date = new Date(valeur.trim());\n     if (Number.isNaN(date.getTime())) throw new Error(`Date invalide : ${valeur}`);\n     return date;\n   }\n\n   console.log(versDate('2026-09-25').toISOString()); // 2026-09-25T00:00:00.000Z\n   console.log(versDate(0).toISOString()); // 1970-01-01T00:00:00.000Z\n   try {\n     versDate('pas une date');\n   } catch (erreur) {\n     console.log((erreur as Error).message); // Date invalide : pas une date\n   }\n   ```\n\n   Après les deux `return`, il ne reste qu'une possibilité : `valeur.trim()` est accepté sans conversion. Un appel\n   `versDate(true)` est signalé par TypeScript, alors que JavaScript l'aurait converti en date de 1970.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `interface` et `type` ?\n\n  :::indice\n  Ce que chacun peut nommer, et l'extension.\n  :::\n\n  :::reponse\n  Les deux décrivent la forme d'un objet et sont interchangeables dans la plupart des cas. `interface` ne décrit que des\n  objets, s'étend avec `extends`, et peut être complétée par une autre déclaration du même nom, ce que les bibliothèques\n  utilisent pour permettre d'augmenter leurs types. `type` nomme n'importe quel type : unions, intersections, tuples,\n  types de fonctions, littéraux, types calculés. J'utilise souvent `interface` pour les objets du domaine et `type` pour\n  les unions et le reste, en restant cohérent dans le projet.\n  :::\n\n- Qu'est-ce qu'une union discriminée, et pourquoi est-elle utile ?\n\n  :::indice\n  Une propriété littérale commune.\n  :::\n\n  :::reponse\n  C'est une union de types objets qui partagent une propriété, le discriminant, dont la valeur littérale est différente\n  dans chaque variante, par exemple `type: 'carte' | 'virement'`. Tester cette propriété permet à TypeScript de savoir\n  quelle variante on manipule et de donner accès à ses propriétés propres. Chaque variante ne porte que ses données, ce\n  qui rend les combinaisons absurdes impossibles, et combinée à une vérification d'exhaustivité avec `never`, elle fait\n  signaler tout cas oublié quand une variante est ajoutée.\n  :::\n\n- Comment vérifier qu'un `switch` traite tous les cas d'une union ?\n\n  :::indice\n  Que reste-t-il dans le `default` quand tout est traité ?\n  :::\n\n  :::reponse\n  Dans le `default`, je passe la valeur à une fonction qui n'accepte que le type `never`. Si tous les cas sont traités,\n  le type restant est `never`, et l'appel compile. Si une variante est ajoutée à l'union sans être traitée, la valeur a\n  encore ce type dans le `default`, et la compilation échoue exactement à cet endroit. La fonction lève aussi une erreur à\n  l'exécution, au cas où une donnée non validée apporterait une valeur imprévue.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-types-valeurs-tableaux-objets-fonctions",
+      "title": "Typer les valeurs, les tableaux, les objets et les fonctions",
+      "slug": "types-valeurs-tableaux-objets-fonctions",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "javascript-vers-typescript",
+      "order": 1,
+      "estimatedMinutes": 45,
+      "difficulty": 3,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-limites-de-javascript-et-typage-statique"
+      ],
+      "skills": [
+        "js-ts-basic-types"
+      ],
+      "tags": [
+        "javascript",
+        "typescript"
+      ],
+      "contentPath": "javascript/javascript-vers-typescript/types-valeurs-tableaux-objets-fonctions/lesson.md",
+      "contentVersion": "3c5d71f0ab67",
+      "body": "\n## Objectifs\n\n- Associer chaque valeur JavaScript à son type TypeScript : primitifs, littéraux, `null` et `undefined`.\n- Typer des tableaux, des tuples et des tableaux en lecture seule.\n- Décrire la forme d'un objet : propriétés facultatives, en lecture seule, dictionnaires avec `Record`.\n- Typer des fonctions : paramètres, valeurs par défaut, paramètres du reste, retour, types de fonctions.\n- Choisir entre `unknown`, `any` et `never`.\n\n## Introduction\n\nCe chapitre traduit ce que vous savez déjà de JavaScript dans la langue de TypeScript. Chaque valeur que vous\nmanipulez depuis le début du cours a un type : une chaîne, un tableau de commandes, un objet client avec une adresse\nfacultative, une fonction qui prend un montant et renvoie un montant. TypeScript donne simplement un nom à ces formes,\net vérifie qu'on les respecte.\n\nLe parcours TypeScript de la plateforme consacre un module à chacune de ces notions. Ici, l'objectif est de pouvoir\ntyper un module JavaScript courant, et de reconnaître les pièges propres à JavaScript que les types rendent visibles.\n\n## Concept\n\n| Valeur JavaScript | Type TypeScript | Remarque |\n| --- | --- | --- |\n| `'Ana'`, `42`, `true`, `10n` | `string`, `number`, `boolean`, `bigint` | en minuscules : `String` désigne l'objet enveloppe |\n| `'payee'` en constante | `'payee'` | un type littéral : une seule valeur possible |\n| `null`, `undefined` | `null`, `undefined` | à inclure explicitement : `string \\| undefined` |\n| `[1, 2, 3]` | `number[]` ou `Array<number>` | un tableau homogène |\n| `['Ana', 34]` | `[string, number]` | un tuple : longueur et types fixés par position |\n| `{ id: 'c1', total: 42 }` | `{ id: string; total: number }` | la forme de l'objet |\n| `new Map()` | `Map<string, Commande>` | les génériques des collections |\n| une fonction | `(montant: number) => number` | le type d'une fonction |\n\n| Modificateur | Effet |\n| --- | --- |\n| `nom?: string` | propriété facultative : absente, ou chaîne |\n| `readonly id: string` | propriété non réaffectable |\n| `readonly Commande[]` | tableau sans `push`, `splice` ni affectation d'élément |\n| `Record<string, number>` | dictionnaire : des clés `string`, des valeurs `number` |\n| `unknown` | n'importe quoi, mais à vérifier avant usage |\n| `any` | n'importe quoi, sans aucune vérification |\n| `never` | aucune valeur possible : un cas qui ne doit jamais arriver |\n\n## Exemple\n\nUn module de gestion de commandes, typé :\n\n```ts\ntype Statut = 'brouillon' | 'payee' | 'expediee';\n\ninterface Ligne {\n  readonly sku: string;\n  prix: number;\n  quantite: number;\n}\n\ninterface Commande {\n  readonly id: string;\n  statut: Statut;\n  lignes: Ligne[];\n  codePromo?: string;\n  creeeLe: Date;\n}\n\nfunction total(lignes: readonly Ligne[]): number {\n  return lignes.reduce((somme, ligne) => somme + ligne.prix * ligne.quantite, 0);\n}\n\nfunction appliquerCode(commande: Commande, taux: number = 0.1): number {\n  const montant = total(commande.lignes);\n  return commande.codePromo ? montant * (1 - taux) : montant;\n}\n\nfunction compterParStatut(commandes: Commande[]): Record<Statut, number> {\n  const compte: Record<Statut, number> = { brouillon: 0, payee: 0, expediee: 0 };\n  for (const commande of commandes) compte[commande.statut] += 1;\n  return compte;\n}\n\nconst trier = (commandes: Commande[], cle: (c: Commande) => number): Commande[] =>\n  commandes.toSorted((a, b) => cle(a) - cle(b));\n\nconst commandes: Commande[] = [\n  { id: 'c1', statut: 'payee', lignes: [{ sku: 'lampe', prix: 49.9, quantite: 2 }], creeeLe: new Date('2026-09-20') },\n  { id: 'c2', statut: 'brouillon', lignes: [], codePromo: 'BIENVENUE', creeeLe: new Date('2026-09-21') },\n];\n\nconsole.log(appliquerCode(commandes[0]!)); // 99.8\nconsole.log(compterParStatut(commandes)); // { brouillon: 1, payee: 1, expediee: 0 }\nconsole.log(trier(commandes, (c) => -c.creeeLe.getTime()).map((c) => c.id)); // [ 'c2', 'c1' ]\n```\n\nEt ce que TypeScript refuse désormais :\n\n```ts\ncommandes[0]!.statut = 'livree';\n// error TS2322: Type '\"livree\"' is not assignable to type 'Statut'.\n\ncommandes[0]!.id = 'c9';\n// error TS2540: Cannot assign to 'id' because it is a read-only property.\n\nconst lignes: readonly Ligne[] = commandes[0]!.lignes;\nlignes.push({ sku: 'vase', prix: 25, quantite: 1 });\n// error TS2339: Property 'push' does not exist on type 'readonly Ligne[]'.\n\nconsole.log(commandes[1]!.codePromo.toUpperCase());\n// error TS2532: Object is possibly 'undefined'.\n```\n\n## Comment ça fonctionne\n\n**Les primitifs et les littéraux.** Les types primitifs s'écrivent en minuscules : `string`, `number`, `boolean`,\n`bigint`, `symbol`. Un **type littéral** n'accepte qu'une valeur : `'payee'`. L'union de littéraux, `'brouillon' |\n'payee' | 'expediee'`, remplace avantageusement les chaînes libres : une faute de frappe ou un statut inexistant est\nsignalé. C'est la version typée des machines à états vues dans la partie sur les patterns.\n\n**`null` et `undefined`, enfin visibles.** En mode strict, `string` n'inclut ni `null` ni `undefined`. Une propriété\nfacultative, `codePromo?: string`, a le type `string | undefined` : on ne peut pas appeler une méthode dessus sans\nvérifier. Le chaînage optionnel `?.` et l'opérateur `??`, vus dans la partie sur le JavaScript moderne, deviennent les\noutils naturels de ce contrôle. Le `!` après une expression, comme `commandes[0]!`, affirme au compilateur que la valeur\nexiste : à utiliser seulement quand on le sait, comme ici pour un tableau qu'on vient de remplir.\n\n**Tableaux et tuples.** `Ligne[]` est un tableau de longueur quelconque. `[string, number]` est un tuple : exactement\ndeux éléments, une chaîne puis un nombre, comme ce que renvoie `Object.entries` pour un dictionnaire de nombres.\n`readonly Ligne[]` interdit les méthodes qui modifient le tableau : une fonction qui reçoit un tel paramètre promet de ne\npas toucher aux données de l'appelant, un contrat précieux vu la partie sur l'immutabilité.\n\n**Les objets : une forme.** Une interface ou un type objet décrit les propriétés attendues. Un objet littéral avec une\npropriété **en trop** est signalé, pour attraper les fautes de frappe dans un nom de propriété facultative. `readonly`\nempêche la réaffectation d'une propriété, sans rendre l'objet profondément immuable. Pour un dictionnaire, `Record<K, V>`\ndécrit des clés et des valeurs ; avec une union de littéraux comme clés, `Record<Statut, number>`, TypeScript exige\nqu'aucune clé ne manque.\n\n**Les fonctions.** On annote les paramètres ; le type de retour se déduit souvent, mais l'écrire explicitement sur une\nfonction exportée en fait un contrat. Un paramètre avec une valeur par défaut est facultatif ; un paramètre du reste\ns'écrit `...valeurs: number[]`. Une fonction passée en argument se type comme `(c: Commande) => number`. Une fonction\nqui ne renvoie rien renvoie `void`.\n\n**`unknown`, `any`, `never`.** `any` éteint la vérification : tout est permis sur la valeur, et l'erreur réapparaît à\nl'exécution. `unknown` accepte n'importe quelle valeur, mais interdit de l'utiliser avant d'avoir vérifié sa forme :\nc'est le bon type pour une donnée extérieure, comme `JSON.parse` ou un `catch`. `never` désigne l'absence de valeur\npossible : le type d'une fonction qui lève toujours une erreur, ou d'un cas qui ne doit jamais arriver, ce que le\nchapitre suivant exploite.\n\n## Erreurs fréquentes\n\n**Écrire `String`, `Number` ou `Object`.** Ce sont les objets enveloppes ; utilise `string`, `number`, `object`.\n\n**Typer un statut en `string`.** Une union de littéraux attrape les fautes et les valeurs inexistantes.\n\n**Abuser de `!`.** Chaque `!` est une affirmation non vérifiée ; préfère `?.`, `??` ou une vérification.\n\n**Utiliser `any` pour une donnée extérieure.** Utilise `unknown`, et vérifie.\n\n**Oublier `readonly` sur un paramètre qu'on ne doit pas modifier.** Le contrat d'immutabilité n'est pas vérifié.\n\n**Annoter ce que TypeScript infère déjà.** `const total: number = 0` n'apporte rien ; annote les frontières.\n\n## À retenir\n\n- Primitifs en minuscules, types littéraux et unions de littéraux pour les valeurs fermées.\n- En mode strict, `null` et `undefined` sont explicites ; `?.`, `??`, et `!` avec parcimonie.\n- `T[]`, tuples `[A, B]`, `readonly T[]` pour ne pas modifier les données reçues.\n- Objets : propriétés facultatives `?`, `readonly`, dictionnaires `Record<K, V>`.\n- Fonctions : paramètres annotés, retour explicite pour l'API publique, types de fonctions pour les rappels.\n- `unknown` pour l'inconnu, `never` pour l'impossible, `any` en dernier recours.\n\n## Exercices\n\n1. Type ce module JavaScript, en choisissant des types précis : le rôle ne peut valoir que `client`, `support` ou\n   `admin` ; le téléphone est facultatif ; l'identifiant ne doit pas être modifié.\n\n   ```js\n   function creerUtilisateur(id, email, role, telephone) {\n     return { id, email, role, telephone, creeLe: new Date() };\n   }\n\n   function estAdministrateur(utilisateur) {\n     return utilisateur.role === 'admin';\n   }\n\n   function contacts(utilisateurs) {\n     return utilisateurs.filter((u) => u.telephone).map((u) => [u.email, u.telephone]);\n   }\n   ```\n\n   :::indice\n   Une union de littéraux pour le rôle, une propriété facultative, `readonly`, et un tuple pour les paires renvoyées.\n   :::\n\n   :::solution\n   ```ts\n   type Role = 'client' | 'support' | 'admin';\n\n   interface Utilisateur {\n     readonly id: string;\n     email: string;\n     role: Role;\n     telephone?: string;\n     creeLe: Date;\n   }\n\n   function creerUtilisateur(id: string, email: string, role: Role, telephone?: string): Utilisateur {\n     return { id, email, role, telephone, creeLe: new Date() };\n   }\n\n   const estAdministrateur = (utilisateur: Utilisateur): boolean => utilisateur.role === 'admin';\n\n   function contacts(utilisateurs: readonly Utilisateur[]): [string, string][] {\n     return utilisateurs.flatMap((u) => (u.telephone ? [[u.email, u.telephone] as [string, string]] : []));\n   }\n\n   const equipe = [\n     creerUtilisateur('u1', 'ana@exemple.fr', 'admin', '0600000001'),\n     creerUtilisateur('u2', 'bao@exemple.fr', 'client'),\n   ];\n   console.log(estAdministrateur(equipe[0]!), contacts(equipe)); // true [ [ 'ana@exemple.fr', '0600000001' ] ]\n   ```\n\n   Avec `filter` puis `map`, TypeScript ne sait pas que le `filter` a éliminé les téléphones absents, et le tuple\n   contiendrait `string | undefined`. `flatMap` avec une condition garde le rétrécissement dans une seule expression. Le\n   chapitre suivant montre une autre solution : un prédicat de type.\n   :::\n\n2. Pour chaque cas, choisis entre `any`, `unknown` et `never`, et justifie.\n   - a) La valeur renvoyée par `JSON.parse` d'un fichier de configuration.\n   - b) Le paramètre d'un `catch (erreur)`.\n   - c) Le type de retour de `function echouer(message: string) { throw new Error(message); }`.\n   - d) La réponse d'une bibliothèque ancienne sans types, pendant une migration, pour une seule ligne.\n\n   :::indice\n   Qu'est-ce qu'on sait de la valeur, et doit-on la vérifier avant usage ?\n   :::\n\n   :::solution\n   - a) `unknown` : la forme du fichier n'est pas garantie ; on la valide avant usage, par exemple avec un schéma.\n   - b) `unknown`, ce que TypeScript utilise en mode strict : n'importe quoi peut être levé, pas seulement une `Error`. On\n     vérifie avec `erreur instanceof Error` avant de lire `message`.\n   - c) `never` : la fonction ne se termine jamais normalement. TypeScript sait alors que le code qui suit un appel est\n     inaccessible.\n   - d) `any`, localisé et commenté, en attendant de décrire la bibliothèque dans un fichier de déclaration : c'est le\n     seul cas où il se justifie, et il doit rester temporaire.\n\n   ```ts\n   function echouer(message: string): never {\n     throw new Error(message);\n   }\n\n   try {\n     echouer('configuration absente');\n   } catch (erreur: unknown) {\n     console.log(erreur instanceof Error ? erreur.message : String(erreur)); // configuration absente\n   }\n   ```\n   :::\n\n3. Cette fonction accepte n'importe quel objet et en affiche les montants. Remplace `any` par des types précis, et montre\n   l'erreur que TypeScript signale alors sur l'appel fautif.\n\n   ```ts\n   function afficherMontants(montants: any) {\n     for (const nom of Object.keys(montants)) {\n       console.log(`${nom} : ${montants[nom].toFixed(2)} €`);\n     }\n   }\n\n   afficherMontants({ loyer: 850, courses: '312.40' });\n   ```\n\n   :::indice\n   Un dictionnaire de nombres : `Record<string, number>`.\n   :::\n\n   :::solution\n   ```ts\n   function afficherMontants(montants: Record<string, number>): void {\n     for (const [nom, valeur] of Object.entries(montants)) {\n       console.log(`${nom} : ${valeur.toFixed(2)} €`);\n     }\n   }\n\n   afficherMontants({ loyer: 850, courses: 312.4 });\n   // loyer : 850.00 €\n   // courses : 312.40 €\n   ```\n\n   Avec l'appel d'origine, `courses: '312.40'`, TypeScript signale : `Type 'string' is not assignable to type 'number'`.\n   Avec `any`, TypeScript ne disait rien, et le programme plantait à l'exécution : `montants[nom].toFixed is not a\n   function`, car une chaîne n'a pas de\n   méthode `toFixed`.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `any` et `unknown` ?\n\n  :::indice\n  Que peut-on faire avec la valeur sans vérification ?\n  :::\n\n  :::reponse\n  Les deux acceptent n'importe quelle valeur. Avec `any`, TypeScript désactive toute vérification : on peut appeler\n  n'importe quelle méthode, passer la valeur n'importe où, et l'erreur n'apparaît qu'à l'exécution ; `any` se propage\n  aussi aux valeurs dérivées. Avec `unknown`, on ne peut rien faire de la valeur tant qu'on n'a pas vérifié sa forme, par\n  `typeof`, `instanceof` ou une validation. C'est le type à utiliser pour les données extérieures et les erreurs\n  attrapées ; `any` reste un dernier recours temporaire.\n  :::\n\n- Comment TypeScript traite-t-il `null` et `undefined` ?\n\n  :::indice\n  Mode strict, propriétés facultatives, opérateurs.\n  :::\n\n  :::reponse\n  En mode strict, avec `strictNullChecks`, `null` et `undefined` ne font partie d'aucun autre type : une valeur qui peut\n  être absente a un type explicite comme `string | undefined`, et TypeScript interdit de l'utiliser comme une chaîne sans\n  vérification. Les propriétés facultatives `?` et les accès par index avec `noUncheckedIndexedAccess` produisent ces\n  types. On les traite avec une condition, le chaînage optionnel `?.` ou `??`. C'est l'un des plus grands apports de\n  TypeScript, car les `Cannot read properties of undefined` sont parmi les erreurs les plus fréquentes en JavaScript.\n  :::\n\n- Quand utiliser un tuple plutôt qu'un objet ?\n\n  :::indice\n  Position contre nom.\n  :::\n\n  :::reponse\n  Un tuple convient à des paires ou petits ensembles dont le sens est évident par position et le plus souvent\n  déstructurés aussitôt : les entrées de `Object.entries`, un couple `[valeur, setValeur]` comme dans les hooks React, des\n  coordonnées. Dès que les éléments sont nombreux ou que leur sens n'est pas évident, un objet aux propriétés nommées est\n  plus lisible et plus robuste aux évolutions.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-typescript-asynchrone-et-api-typees",
+      "title": "TypeScript asynchrone et API typées de bout en bout",
+      "slug": "typescript-asynchrone-et-api-typees",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "javascript-vers-typescript",
+      "order": 4,
+      "estimatedMinutes": 50,
+      "difficulty": 4,
+      "xp": 110,
+      "prerequisites": [
+        "javascript-generiques-et-types-utilitaires",
+        "javascript-validation-secrets-et-dependances"
+      ],
+      "skills": [
+        "js-ts-async-apis"
+      ],
+      "tags": [
+        "javascript",
+        "typescript",
+        "api"
+      ],
+      "contentPath": "javascript/javascript-vers-typescript/typescript-asynchrone-et-api-typees/lesson.md",
+      "contentVersion": "4a2781b5afc6",
+      "body": "\n## Objectifs\n\n- Typer les fonctions asynchrones : `Promise<T>`, `Awaited`, `Promise.all` et ses tuples.\n- Traiter la réponse de `fetch` comme une donnée inconnue, la valider, et en déduire un type sûr.\n- Écrire un client HTTP générique qui ne renvoie que des données validées, et des erreurs typées.\n- Partager schémas et types entre le serveur et le client pour typer une API de bout en bout.\n\n## Introduction\n\nLa frontière la plus fragile d'une application est le réseau. Côté client, on déclare `interface Produit`, on écrit\n`const produits: Produit[] = await reponse.json()`, et TypeScript est satisfait. Mais `reponse.json()` renvoie ce que le\nserveur a réellement envoyé, et TypeScript n'en sait rien : un champ renommé côté serveur, un nombre envoyé en chaîne, et\nl'application plante loin de la cause, ou affiche `NaN`.\n\nCe chapitre ferme cette brèche. On type correctement le code asynchrone, puis on fait en sorte qu'une donnée venue du\nréseau ne reçoive un type **qu'après** avoir été vérifiée. La bonne nouvelle : avec un schéma de validation, on n'écrit\nle type qu'une fois, et la vérification à l'exécution en découle.\n\n## Concept\n\n| Situation | Type |\n| --- | --- |\n| une fonction `async` qui renvoie une commande | `Promise<Commande>` |\n| le type d'une valeur attendue | `Awaited<ReturnType<typeof chargerCommande>>` |\n| `await Promise.all([chargerClient(), chargerCommandes()])` | un tuple `[Client, Commande[]]` |\n| `await reponse.json()` | `any` dans la bibliothèque standard : à traiter comme `unknown` |\n| une erreur attrapée | `unknown` : vérifier avec `instanceof` avant usage |\n\n| Frontière réseau | Bonne pratique |\n| --- | --- |\n| décrire la donnée attendue | un schéma, par exemple zod |\n| obtenir le type | `z.infer<typeof Schema>` : le type découle du schéma |\n| valider | `Schema.parse(donnees)` ou `safeParse`, à la réception |\n| partager | le même schéma côté serveur et côté client, dans un paquet commun |\n\n## Exemple\n\nUn schéma zod décrit la réponse attendue ; le type en est déduit, jamais écrit à la main :\n\n```ts\nimport { z } from 'zod';\n\nconst ProduitSchema = z.object({\n  id: z.string(),\n  nom: z.string(),\n  prix: z.number().nonnegative(),\n  enStock: z.boolean(),\n});\ntype Produit = z.infer<typeof ProduitSchema>; // { id: string; nom: string; prix: number; enStock: boolean }\n\nclass ErreurApi extends Error {\n  readonly statut: number | null;\n  constructor(message: string, statut: number | null) {\n    super(message);\n    this.statut = statut; // champ déclaré explicitement : syntaxe effaçable, exécutable par Node\n  }\n}\n\nasync function requeteJson<T>(url: string, schema: z.ZodType<T>, init?: RequestInit): Promise<T> {\n  const reponse = await fetch(url, init);\n  if (!reponse.ok) throw new ErreurApi(`HTTP ${reponse.status}`, reponse.status);\n  const brut: unknown = await reponse.json();\n  const resultat = schema.safeParse(brut);\n  if (!resultat.success) {\n    throw new ErreurApi(`Réponse inattendue : ${resultat.error.issues[0]?.path.join('.')}`, reponse.status);\n  }\n  return resultat.data;\n}\n\nconst listerProduits = (): Promise<Produit[]> => requeteJson('/api/produits', z.array(ProduitSchema));\n```\n\nPour l'essayer sans serveur, on simule `fetch`, une première fois avec une réponse conforme, puis avec un prix envoyé en\nchaîne :\n\n```ts\nfunction simulerFetch(corps: unknown): void {\n  globalThis.fetch = async () => new Response(JSON.stringify(corps), { status: 200 });\n}\n\nsimulerFetch([{ id: 'p1', nom: 'Lampe', prix: 49.9, enStock: true }]);\nconst produits = await requeteJson('http://test/produits', z.array(ProduitSchema));\nconsole.log(produits[0]?.prix.toFixed(2)); // 49.90\n\nsimulerFetch([{ id: 'p1', nom: 'Lampe', prix: '49,90', enStock: true }]);\ntry {\n  await requeteJson('http://test/produits', z.array(ProduitSchema));\n} catch (erreur) {\n  if (erreur instanceof ErreurApi) console.log(erreur.message); // Réponse inattendue : 0.prix\n}\n```\n\nLa réponse non conforme est arrêtée à la frontière, avec un message qui désigne le champ fautif, au lieu de produire\n`NaN` trois écrans plus loin.\n\n## Comment ça fonctionne\n\n**Typer l'asynchrone.** Une fonction `async` renvoie toujours une promesse : son type de retour s'écrit `Promise<T>`, et\n`await` sur une `Promise<T>` donne un `T`. `Awaited<T>` fait la même chose au niveau des types, utile avec\n`ReturnType` pour réutiliser le type de ce que renvoie une fonction asynchrone. `Promise.all` conserve les types par\nposition : `await Promise.all([chargerClient(id), chargerCommandes(id)])` est un tuple `[Client, Commande[]]`, qu'on\ndéstructure. Dans un `catch`, l'erreur est `unknown` : n'importe quoi peut avoir été levé, on vérifie avec `instanceof`.\n\n**Le trou de `reponse.json()`.** Dans les types de la bibliothèque standard, `json()` renvoie `Promise<any>`. Écrire\n`const produits: Produit[] = await reponse.json()` ne vérifie rien : c'est une affirmation déguisée. On affecte plutôt\nle résultat à une variable `unknown`, qui oblige à le valider avant de l'utiliser. Même chose pour `JSON.parse`, les\nmessages reçus d'un WebSocket, `localStorage`, ou les variables d'environnement.\n\n**Le schéma comme source de vérité.** Écrire l'interface `Produit` **et** une fonction de validation, c'est avoir deux\ndescriptions qui finissent par diverger. Avec zod, on écrit le schéma, et `z.infer` en déduit le type : ajouter un champ\nau schéma l'ajoute au type, et la validation reste d'accord avec lui. D'autres bibliothèques suivent le même principe,\ncomme Valibot ou ArkType.\n\n**Un client générique.** `requeteJson<T>(url, schema)` relie le type du résultat au schéma passé en argument : avec\n`z.array(ProduitSchema)`, `T` est `Produit[]`. Aucune fonction du reste de l'application ne manipule plus de `any`. Les\nerreurs sont regroupées dans une classe `ErreurApi` qui porte le statut, pour que l'interface distingue une panne réseau,\nun refus d'autorisation ou une réponse non conforme. On peut aussi renvoyer un résultat typé, une union discriminée\n`{ ok: true, donnees } | { ok: false, erreur }`, plutôt que de lever.\n\n**Typer de bout en bout.** Le serveur valide aussi ses entrées avec des schémas : le corps de `POST /produits`, les\nparamètres de requête. Si le serveur et le client partagent les mêmes schémas, par exemple dans un paquet commun d'un\nmonorepo, un changement de format côté serveur casse la compilation du client au lieu de casser la production. Le projet\nde ce cours procède ainsi : son paquet `@app/validation` est utilisé par l'API et par l'application web. Des outils vont\nplus loin, comme tRPC, qui partage directement les types des procédures, ou des générateurs de types à partir d'un\ncontrat OpenAPI.\n\n**Les types ne remplacent pas le contrat.** Même avec des types partagés, le client et le serveur sont déployés\nséparément : une ancienne version du client peut appeler une nouvelle version du serveur. On garde des changements\ncompatibles, ajouter plutôt que renommer, et la validation à la frontière reste le filet de sécurité.\n\n## Erreurs fréquentes\n\n**Typer `await reponse.json()` directement.** C'est une affirmation non vérifiée ; passe par `unknown` et un schéma.\n\n**Écrire l'interface et le schéma séparément.** Ils divergent ; déduis le type du schéma.\n\n**Utiliser `erreur.message` sans vérification dans un `catch`.** L'erreur est `unknown` ; teste `instanceof Error`.\n\n**Oublier de vérifier `reponse.ok`.** Une erreur 500 avec un corps JSON serait traitée comme une réponse valide.\n\n**Ajouter des `as` pour faire taire les erreurs de types sur les données reçues.** Chaque `as` est un point où la\ndonnée n'est plus vérifiée.\n\n**Croire que des types partagés suffisent.** Client et serveur évoluent séparément ; valide toujours à la frontière.\n\n## À retenir\n\n- `async` renvoie `Promise<T>` ; `Awaited`, `Promise.all` en tuple ; `catch` reçoit `unknown`.\n- `reponse.json()` et `JSON.parse` renvoient `any` : traite-les comme `unknown`.\n- Un schéma est la source de vérité : `z.infer` en déduit le type, `safeParse` vérifie à l'exécution.\n- Un client générique `requeteJson<T>(url, schema)` ne renvoie que des données validées, avec des erreurs typées.\n- Schémas partagés entre serveur et client pour typer l'API de bout en bout, et validation maintenue aux frontières.\n\n## Exercices\n\n1. Type cette fonction qui charge en parallèle un client et ses commandes, et indique le type de chaque variable.\n\n   ```ts\n   async function chargerClient(id: string) {\n     return { id, nom: 'Ana' };\n   }\n   async function chargerCommandes(clientId: string) {\n     return [{ id: 'c1', clientId, total: 42 }];\n   }\n   async function tableauDeBord(id: string) {\n     const [client, commandes] = await Promise.all([chargerClient(id), chargerCommandes(id)]);\n     return { client, nombre: commandes.length, total: commandes.reduce((s, c) => s + c.total, 0) };\n   }\n   ```\n\n   :::indice\n   Les types sont presque tous inférés. Utilise `Awaited<ReturnType<…>>` pour nommer le résultat.\n   :::\n\n   :::solution\n   ```ts\n   async function chargerClient(id: string) {\n     return { id, nom: 'Ana' };\n   }\n   async function chargerCommandes(clientId: string) {\n     return [{ id: 'c1', clientId, total: 42 }];\n   }\n   async function tableauDeBord(id: string) {\n     const [client, commandes] = await Promise.all([chargerClient(id), chargerCommandes(id)]);\n     return { client, nombre: commandes.length, total: commandes.reduce((s, c) => s + c.total, 0) };\n   }\n\n   type TableauDeBord = Awaited<ReturnType<typeof tableauDeBord>>;\n   // { client: { id: string; nom: string }; nombre: number; total: number }\n\n   const tableau: TableauDeBord = await tableauDeBord('u1');\n   console.log(tableau); // { client: { id: 'u1', nom: 'Ana' }, nombre: 1, total: 42 }\n   ```\n\n   `client` est `{ id: string; nom: string }`, `commandes` est `{ id: string; clientId: string; total: number }[]` :\n   `Promise.all` garde le type de chaque position. `ReturnType` donne `Promise<…>`, et `Awaited` en retire la promesse.\n   Aucune annotation n'a été nécessaire à l'intérieur des fonctions.\n   :::\n\n2. Écris le schéma zod d'une réponse paginée générique, `{ elements: T[], page: number, total: number }`, sous forme d'une\n   fonction qui reçoit le schéma des éléments, et utilise-la pour valider une page de produits.\n\n   :::indice\n   Une fonction qui prend un `z.ZodType<T>` et renvoie un `z.object`.\n   :::\n\n   :::solution\n   ```ts\n   import { z } from 'zod';\n\n   const ProduitSchema = z.object({ id: z.string(), nom: z.string(), prix: z.number() });\n\n   const page = <T>(element: z.ZodType<T>) =>\n     z.object({\n       elements: z.array(element),\n       page: z.number().int().positive(),\n       total: z.number().int().nonnegative(),\n     });\n\n   const PageProduits = page(ProduitSchema);\n   type PageProduits = z.infer<typeof PageProduits>;\n\n   const brut: unknown = JSON.parse('{ \"elements\": [{ \"id\": \"p1\", \"nom\": \"Lampe\", \"prix\": 49.9 }], \"page\": 1, \"total\": 37 }');\n   const resultat: PageProduits = PageProduits.parse(brut);\n   console.log(resultat.elements[0]?.nom, resultat.total); // Lampe 37\n\n   console.log(PageProduits.safeParse({ elements: [], page: 0, total: 5 }).success); // false : page doit être positive\n   ```\n\n   La même fonction sert pour les pages de commandes, de clients, d'avis : le format de pagination est décrit une fois, et\n   chaque type de page en découle.\n   :::\n\n3. Remplace les exceptions de `requeteJson` par un résultat typé : `Promise<Resultat<T>>`, où `Resultat<T>` est une union\n   discriminée qui distingue le succès, une erreur HTTP avec son statut, et une réponse non conforme. Montre comment\n   l'appelant traite chaque cas.\n\n   :::indice\n   Trois variantes, avec une propriété `type`. L'appelant fait un `switch` exhaustif.\n   :::\n\n   :::solution\n   ```ts\n   import { z } from 'zod';\n\n   type Resultat<T> =\n     | { type: 'succes'; donnees: T }\n     | { type: 'http'; statut: number }\n     | { type: 'non-conforme'; champ: string };\n\n   async function requeteJson<T>(url: string, schema: z.ZodType<T>): Promise<Resultat<T>> {\n     const reponse = await fetch(url);\n     if (!reponse.ok) return { type: 'http', statut: reponse.status };\n     const verifie = schema.safeParse(await reponse.json());\n     return verifie.success\n       ? { type: 'succes', donnees: verifie.data }\n       : { type: 'non-conforme', champ: verifie.error.issues[0]?.path.join('.') ?? '?' };\n   }\n\n   const ProduitSchema = z.object({ id: z.string(), prix: z.number() });\n\n   function message(resultat: Resultat<z.infer<typeof ProduitSchema>>): string {\n     switch (resultat.type) {\n       case 'succes':\n         return `Prix : ${resultat.donnees.prix} €`;\n       case 'http':\n         return resultat.statut === 404 ? 'Produit introuvable' : `Erreur serveur (${resultat.statut})`;\n       case 'non-conforme':\n         return `Réponse inattendue sur le champ ${resultat.champ}`;\n     }\n   }\n\n   const reponses = [\n     new Response(JSON.stringify({ id: 'p1', prix: 49.9 })),\n     new Response('{}', { status: 404 }),\n     new Response(JSON.stringify({ id: 'p1', prix: 'gratuit' })),\n   ];\n   for (const reponse of reponses) {\n     globalThis.fetch = async () => reponse;\n     console.log(message(await requeteJson('http://test/p1', ProduitSchema)));\n   }\n   // Prix : 49.9 €\n   // Produit introuvable\n   // Réponse inattendue sur le champ prix\n   ```\n\n   Chaque cas d'échec est visible dans le type : l'appelant ne peut pas oublier d'en traiter un, et TypeScript vérifie\n   que le `switch` couvre les trois variantes, sans `default`. Les pannes réseau, où `fetch` lui-même rejette, restent\n   des exceptions, qu'on peut aussi transformer en quatrième variante.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi ne faut-il pas écrire `const data: Produit[] = await res.json()` ?\n\n  :::indice\n  Que renvoie `json()` dans les types, et que vérifie l'annotation ?\n  :::\n\n  :::reponse\n  Parce que `json()` renvoie `Promise<any>` : l'annotation `Produit[]` n'est qu'une affirmation, aucune vérification n'a\n  lieu, et le type est effacé à l'exécution. Si le serveur change le format, l'erreur apparaît plus tard, loin de sa\n  cause. J'affecte le résultat à une variable `unknown` et je le valide avec un schéma dont je déduis le type, par\n  exemple avec zod : la donnée n'obtient le type `Produit[]` qu'une fois vérifiée, et une réponse non conforme est arrêtée\n  à la frontière avec un message précis.\n  :::\n\n- Comment typer une API de bout en bout, entre un serveur et un client TypeScript ?\n\n  :::indice\n  Une seule source de vérité, partagée.\n  :::\n\n  :::reponse\n  En partageant des schémas de validation entre les deux, par exemple dans un paquet commun d'un monorepo : le serveur\n  les utilise pour valider les entrées et typer ses réponses, le client pour valider ce qu'il reçoit, et les types en\n  découlent des deux côtés. Un changement de format côté serveur casse la compilation du client. D'autres approches :\n  tRPC, qui partage les types des procédures, ou la génération de types à partir d'un contrat OpenAPI. Dans tous les cas,\n  on garde la validation aux frontières et des changements compatibles, car client et serveur sont déployés séparément.\n  :::\n\n- Quel type a l'erreur dans un `catch`, et comment l'utiliser ?\n\n  :::indice\n  Qu'est-ce qu'on peut lever en JavaScript ?\n  :::\n\n  :::reponse\n  En mode strict, `unknown`, car JavaScript permet de lever n'importe quelle valeur : une `Error`, une chaîne, un objet.\n  On la rétrécit avant usage : `if (erreur instanceof ErreurApi)` pour les erreurs de l'application, `instanceof Error`\n  pour lire `message`, et sinon on la relance ou on la convertit avec `String(erreur)`. Des classes d'erreur dédiées, ou\n  un résultat typé en union discriminée, rendent les cas d'échec explicites pour l'appelant.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-choisir-structure",
       "title": "Choisir sa structure : tableau, objet, Map ou Set",
       "slug": "choisir-sa-structure",
@@ -11829,6 +12058,117 @@
       "contentPath": "javascript/portee/portees-et-chaine-de-portee/lesson.md",
       "contentVersion": "21af970bbb0d",
       "body": "\n## Objectifs\n\n- Distinguer portée globale, portée de fonction et portée de bloc.\n- Suivre la chaîne de portée que le moteur remonte pour résoudre un nom.\n- Comprendre pourquoi la portée dépend de l'endroit où le code est **écrit**.\n\n## Introduction\n\n« Pourquoi cette variable est-elle `undefined` ici alors qu'elle existe deux lignes plus\nhaut ? » Presque toutes les questions de ce genre se répondent avec une seule notion : la\n**portée**, c'est-à-dire la zone du code où un nom est visible. C'est aussi le socle des\nclosures, du hoisting et de la moitié des erreurs qu'on rencontre au quotidien.\n\n## Concept\n\n| Portée | Créée par | Visible depuis |\n| --- | --- | --- |\n| Globale | le niveau supérieur d'un script | partout |\n| Module | le niveau supérieur d'un module ES | ce module seulement |\n| Fonction | chaque appel de fonction | la fonction et ce qu'elle contient |\n| Bloc | une paire d'accolades, pour `let` et `const` | ce bloc et ce qu'il contient |\n\nDeux règles gouvernent tout le reste :\n\n1. Une portée intérieure voit les portées extérieures ; l'inverse est faux.\n2. La portée est **lexicale** : elle dépend de l'endroit où la fonction est écrite, pas de\n   l'endroit d'où elle est appelée.\n\n## Exemple\n\n```js\nconst application = 'Atelier'; // portée du module\n\nfunction afficherEntete() {\n  const titre = 'Bienvenue'; // portée de la fonction\n\n  function ligne() {\n    return `${titre} — ${application}`; // voit les deux portées extérieures\n  }\n\n  return ligne();\n}\n\nconsole.log(afficherEntete()); // 'Bienvenue — Atelier'\n// console.log(titre); // ReferenceError : titre n'existe pas ici\n\nif (true) {\n  let bloc = 'visible dans le bloc';\n  var fonction = 'visible dans toute la fonction';\n  console.log(bloc); // 'visible dans le bloc'\n}\n// console.log(bloc); // ReferenceError\nconsole.log(fonction); // 'visible dans toute la fonction' : var ignore les blocs\n\nconst message = 'extérieur';\nfunction lire() {\n  return message; // résolu là où lire est écrite\n}\nfunction appeler() {\n  const message = 'intérieur';\n  return lire(); // 'extérieur', et non 'intérieur'\n}\nconsole.log(appeler()); // 'extérieur'\n```\n\n## Comment ça fonctionne\n\nChaque appel de fonction crée un **environnement** : une table des variables déclarées dans\ncette fonction, et un lien vers l'environnement où la fonction a été **écrite**. Quand le\nmoteur rencontre un nom, il le cherche dans l'environnement courant ; s'il ne le trouve pas,\nil suit le lien vers l'environnement parent, et ainsi de suite jusqu'au niveau supérieur.\nCette suite de liens est la **chaîne de portée**. Si le nom n'existe nulle part, c'est\n`ReferenceError: x is not defined`.\n\nComme le lien pointe vers le lieu d'**écriture** et non d'appel, la portée est dite\nlexicale : c'est visible dans l'exemple, où `lire` renvoie `'extérieur'` même appelée depuis\nune fonction qui possède un `message` local. Certains langages font l'inverse — portée\ndynamique — et JavaScript ne le fait pas, ce qui rend le code prévisible à la lecture.\n\n`let` et `const` sont limités au **bloc** : toute paire d'accolades, y compris celle d'un\n`if` ou d'une boucle, crée une portée. `var` ignore les blocs et appartient à la fonction\nentière, ce qui explique qu'une variable déclarée dans un `if` reste visible après lui.\nC'est la principale raison pour laquelle `var` n'est plus utilisé.\n\nAu niveau supérieur, un script classique déclare des variables globales ; un **module ES**,\nlui, a sa propre portée : ses variables ne polluent pas l'espace global, ce qui évite les\ncollisions entre fichiers.\n\nUne portée intérieure peut déclarer un nom déjà pris à l'extérieur : c'est le masquage, vu\nen détail au chapitre suivant. Elle ne peut pas, en revanche, rendre visible un nom vers\nl'extérieur — sauf en le renvoyant, ce qui mène tout droit aux closures.\n\n## Erreurs fréquentes\n\n**Déclarer avec `var` dans un bloc en attendant qu'il y reste.** `var` appartient à la\nfonction : utilise `let` ou `const`.\n\n**Affecter sans déclarer.** `compteur = 0` crée une globale en mode non strict, et lève une\n`ReferenceError` en mode strict. Déclare toujours.\n\n**Croire qu'une fonction voit les variables de son appelant.** La portée suit le lieu\nd'écriture, pas d'appel.\n\n**Tout déclarer au niveau supérieur « au cas où ».** Chaque nom global est une collision\npotentielle : garde les variables au plus près de leur usage.\n\n## À retenir\n\n- Portées : globale ou module, fonction, bloc ; l'intérieur voit l'extérieur.\n- La chaîne de portée est remontée jusqu'à trouver le nom, sinon `ReferenceError`.\n- La portée est lexicale : elle dépend d'où le code est écrit.\n- `let` et `const` sont limités au bloc, `var` à la fonction.\n- Un module ES a sa propre portée, il ne pollue pas l'espace global.\n\n## Exercices\n\n1. Dis, pour chaque `console.log`, s'il affiche une valeur ou lève une erreur, et pourquoi.\n\n   ```js\n   const a = 1;\n   function externe() {\n     const b = 2;\n     function interne() {\n       const c = 3;\n       console.log(a, b, c);\n     }\n     interne();\n     console.log(c);\n   }\n   externe();\n   console.log(b);\n   ```\n\n   :::indice\n   Une portée intérieure voit l'extérieur ; l'inverse n'est jamais vrai.\n   :::\n\n   :::solution\n   `console.log(a, b, c)` affiche `1 2 3` : `interne` voit sa propre variable et remonte la\n   chaîne pour les deux autres. `console.log(c)` lève `ReferenceError: c is not defined`,\n   car `c` appartient à `interne`. `console.log(b)` échoue de même, `b` appartenant à\n   `externe`.\n   :::\n\n2. Corrige ce code pour que la variable de configuration reste confinée au bloc.\n\n   ```js\n   if (process.env.NODE_ENV === 'production') {\n     var niveau = 'error';\n   }\n   console.log(niveau);\n   ```\n\n   :::indice\n   Quelle déclaration respecte les accolades ?\n   :::\n\n   :::solution\n   ```js\n   const niveau = process.env.NODE_ENV === 'production' ? 'error' : 'debug';\n   console.log(niveau);\n   ```\n\n   Avec `var`, la variable appartient à la fonction entière et vaut `undefined` hors\n   production. Avec `let` dans le bloc, elle ne serait plus visible après : il faut donc\n   déclarer à l'extérieur, et le ternaire dit clairement les deux cas.\n   :::\n\n3. Écris une fonction `creerCompteur()` dont la variable interne n'est pas accessible de\n   l'extérieur, mais qui incrémente à chaque appel de la fonction renvoyée.\n\n   :::indice\n   Déclare la variable dans la fonction externe, et renvoie une fonction qui la modifie.\n   :::\n\n   :::solution\n   ```js\n   function creerCompteur() {\n     let valeur = 0;\n     return () => {\n       valeur += 1;\n       return valeur;\n     };\n   }\n\n   const compter = creerCompteur();\n   console.log(compter(), compter(), compter()); // 1 2 3\n   // console.log(valeur); // ReferenceError : inaccessible de l'extérieur\n   ```\n\n   La fonction renvoyée garde accès à la portée où elle a été écrite, même après le retour de\n   `creerCompteur` : c'est une closure, sujet du module 13.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la chaîne de portée ?\n\n  :::indice\n  Que fait le moteur quand il ne trouve pas un nom dans la portée courante ?\n  :::\n\n  :::reponse\n  C'est la suite d'environnements que le moteur remonte pour résoudre un nom : d'abord la\n  portée courante, puis celle qui la contient lexicalement, jusqu'au niveau supérieur. Le\n  premier environnement qui contient le nom l'emporte ; si aucun ne le contient, c'est\n  `ReferenceError`. Cette chaîne est construite à partir de l'endroit où le code est écrit, et\n  elle ne change jamais d'un appel à l'autre.\n  :::\n\n- Portée lexicale ou dynamique : quelle différence ?\n\n  :::indice\n  Une fonction voit-elle les variables de celle qui l'appelle ?\n  :::\n\n  :::reponse\n  En portée lexicale — celle de JavaScript —, une fonction résout ses noms là où elle est\n  **écrite** : elle ne voit jamais les variables locales de son appelant. En portée dynamique,\n  elle les verrait, et son comportement dépendrait du chemin d'appel. Le choix lexical rend le\n  code lisible statiquement : on sait ce qu'une fonction voit en regardant son fichier, sans\n  chercher qui l'appelle.\n  :::\n\n- Pourquoi `var` pose-t-il problème dans un bloc ?\n\n  :::indice\n  À quelle portée `var` appartient-il ?\n  :::\n\n  :::reponse\n  `var` est lié à la **fonction**, pas au bloc : une variable déclarée dans un `if` ou une\n  boucle reste visible après, et vaut `undefined` si la branche n'a pas été prise. Combiné au\n  hoisting, cela produit des variables qui existent avant leur ligne et survivent à leur bloc.\n  `let` et `const`, limités au bloc, expriment exactement la durée de vie voulue — et c'est\n  aussi ce qui corrige le piège des closures dans les boucles.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-compiler-et-configurer-typescript",
+      "title": "Compiler, exécuter et configurer TypeScript",
+      "slug": "compiler-et-configurer-typescript",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "pourquoi-typescript",
+      "order": 2,
+      "estimatedMinutes": 40,
+      "difficulty": 3,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-limites-de-javascript-et-typage-statique",
+        "javascript-build-vite-bundlers-et-source-maps"
+      ],
+      "skills": [
+        "js-ts-compiler-config"
+      ],
+      "tags": [
+        "javascript",
+        "typescript",
+        "outillage"
+      ],
+      "contentPath": "javascript/pourquoi-typescript/compiler-et-configurer-typescript/lesson.md",
+      "contentVersion": "72dc33a65483",
+      "body": "\n## Objectifs\n\n- Distinguer les deux rôles de TypeScript : vérifier les types, et produire du JavaScript.\n- Exécuter du TypeScript de trois façons : compilation avec `tsc`, exécution directe par Node, outil de build.\n- Savoir que Node et Vite effacent les types **sans les vérifier**, et où placer la vérification.\n- Lire et écrire un `tsconfig.json` : strictesse, modules, cible, sorties, fichiers inclus.\n\n## Introduction\n\nTypeScript fait deux choses distinctes, souvent confondues. Il **vérifie** les types : c'est son intérêt. Et il\n**transforme** le code TypeScript en JavaScript exécutable, en retirant les annotations. Aujourd'hui, la seconde tâche\nest souvent confiée à d'autres outils, plus rapides : Node lui-même, Vite, esbuild. Mais ces outils se contentent\nd'effacer les types, ils ne les vérifient jamais.\n\nComprendre cette séparation évite une surprise désagréable : une application qui démarre et se construit sans erreur,\nalors que `tsc` signale des erreurs de type que personne n'a lancées.\n\n## Concept\n\n| Façon d'exécuter | Vérifie les types ? | Usage |\n| --- | --- | --- |\n| `tsc`, puis `node dist/main.js` | oui, puis produit du JavaScript dans `outDir` | bibliothèques, serveurs compilés |\n| `node src/main.ts` | non : Node efface les types | scripts, serveurs en développement, Node 22.18 et plus |\n| `vite`, `vite build` | non : Vite efface les types | applications front-end |\n| `tsc --noEmit` | oui, sans rien produire | la vérification, dans l'éditeur, un script et l'intégration continue |\n\n| Option de `tsconfig.json` | Rôle |\n| --- | --- |\n| `strict` | active toutes les vérifications strictes, dont `strictNullChecks` ; indispensable |\n| `noUncheckedIndexedAccess` | `tableau[i]` et `objet[cle]` peuvent être `undefined` |\n| `target` | la version de JavaScript produite : `es2023`, `esnext` |\n| `module` | le système de modules : `nodenext` pour Node, `preserve` pour un outil de build |\n| `rootDir`, `outDir` | où sont les sources, où écrire le JavaScript produit |\n| `noEmit` | vérifier seulement, sans produire de fichiers |\n| `sourceMap`, `declaration` | cartes de sources, fichiers `.d.ts` pour une bibliothèque |\n| `erasableSyntaxOnly` | interdit la syntaxe qui ne s'efface pas, comme `enum` : compatible avec Node |\n| `include`, `exclude` | les fichiers du projet |\n\n## Exemple\n\nDeux fichiers TypeScript, dans un projet `\"type\": \"module\"` :\n\n```ts\n// src/prix.ts\nexport function prixTTC(ht: number, taux = 0.2): number {\n  return Math.round(ht * (1 + taux) * 100) / 100;\n}\n```\n\n```ts\n// src/main.ts\nimport { prixTTC } from './prix.ts';\n\nconsole.log(`Prix TTC : ${prixTTC(49.9)} €`);\n```\n\nUn `tsconfig.json` pour un projet Node :\n\n```json\n{\n  \"compilerOptions\": {\n    \"target\": \"es2023\",\n    \"module\": \"nodenext\",\n    \"strict\": true,\n    \"noUncheckedIndexedAccess\": true,\n    \"rootDir\": \"src\",\n    \"outDir\": \"dist\",\n    \"sourceMap\": true,\n    \"allowImportingTsExtensions\": true,\n    \"rewriteRelativeImportExtensions\": true,\n    \"erasableSyntaxOnly\": true,\n    \"verbatimModuleSyntax\": true,\n    \"skipLibCheck\": true\n  },\n  \"include\": [\"src\"]\n}\n```\n\nLes trois façons d'exécuter, et ce qui se passe quand on ajoute une erreur de type, `prixTTC('49.90')` :\n\n```text\n$ node src/main.ts\nPrix TTC : 59.88 €\n\n$ npx tsc\n$ ls dist\nmain.js  main.js.map  prix.js  prix.js.map\n$ node dist/main.js\nPrix TTC : 59.88 €\n\n# on ajoute : console.log(prixTTC('49.90'));\n$ npx tsc\nsrc/main.ts(4,21): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\n$ echo $?\n2\n$ node src/main.ts\nPrix TTC : 59.88 €\n59.88                      ← l'erreur de type ne l'empêche pas de s'exécuter\n$ npx vite build\n✓ built in 78ms            ← Vite non plus\n```\n\nSeul `tsc` signale l'erreur. Node et Vite effacent les annotations et exécutent le JavaScript restant, dans lequel\n`'49.90' * 1.2` est converti silencieusement.\n\n## Comment ça fonctionne\n\n**Vérifier et transformer, deux étapes séparables.** `tsc` fait les deux : il vérifie tout le projet, puis écrit le\nJavaScript dans `outDir`. Il écrit ce JavaScript même en cas d'erreur de type, sauf avec `noEmitOnError`, mais sort avec\nun code d'erreur. Les autres outils ne font que la seconde étape, fichier par fichier, sans connaître le reste du projet :\nc'est ce qui les rend si rapides. On vérifie donc les types à part, avec `tsc --noEmit`, dans l'éditeur, dans un script\n`typecheck`, et surtout dans l'intégration continue, où l'échec bloque la fusion.\n\n**Node exécute du TypeScript.** Depuis Node 22.18, `node fichier.ts` fonctionne sans option : Node remplace les\nannotations par des espaces et exécute le reste. Cela impose deux règles. Les imports locaux portent l'extension réelle,\n`./prix.ts` : Node ne devine pas les extensions. Et la syntaxe doit être **effaçable** : les `enum`, les `namespace` et\nles propriétés déclarées dans les paramètres du constructeur génèrent du code, et Node les refuse avec\n`ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`. L'option `erasableSyntaxOnly` fait signaler ces constructions par `tsc`, et\n`rewriteRelativeImportExtensions` fait écrire `./prix.js` dans le JavaScript produit, pour que le même code fonctionne\ncompilé ou exécuté directement.\n\n**Les outils de build.** Vite, esbuild ou les frameworks effacent les types au passage, fichier par fichier. Pour une\napplication front-end, on configure `\"module\": \"preserve\"` et `\"noEmit\": true` : `tsc` ne sert qu'à vérifier, et\nl'outil de build produit les fichiers. `isolatedModules` ou `verbatimModuleSyntax` signalent les constructions qu'un outil\nqui traite un fichier à la fois ne peut pas transformer correctement, comme un import utilisé seulement comme type sans\nle mot-clé `import type`.\n\n**`strict`, non négociable pour un nouveau projet.** `strict` regroupe plusieurs vérifications, dont la plus importante :\n`null` et `undefined` ne sont plus acceptés partout, ce qui oblige à traiter les absences. Sans `strict`, TypeScript\nlaisse passer la moitié des bugs qu'il pourrait trouver. `noUncheckedIndexedAccess` complète en rendant explicite\nqu'un élément de tableau ou une clé d'objet peut manquer. Pour un projet existant, on peut activer ces options\nprogressivement, comme on le verra au chapitre suivant.\n\n**Cible et modules.** `target` indique la version de JavaScript à produire : pour Node 22 ou des navigateurs récents,\nune version récente, qui évite de transformer inutilement la syntaxe moderne. `module` indique comment traiter les\nimports : `nodenext` suit exactement les règles de Node, `.js` ou `.ts` compris ; `preserve` laisse les imports tels quels\npour un outil de build. `tsc --init` génère un fichier de départ commenté, avec des valeurs modernes et strictes.\n\n**Bibliothèques : déclarations.** Une bibliothèque publiée en JavaScript fournit ses types dans des fichiers `.d.ts`,\ngénérés avec `declaration: true`, et référencés dans le `package.json`. Les paquets qui n'en fournissent pas ont souvent\ndes types dans `@types/<nom>`, comme `@types/node`. `skipLibCheck` évite de revérifier tous ces fichiers de déclaration,\nce qui accélère beaucoup la vérification.\n\n## Erreurs fréquentes\n\n**Croire que le serveur de développement vérifie les types.** Vite et Node les effacent ; lance `tsc --noEmit`.\n\n**Ne pas vérifier les types dans l'intégration continue.** Les erreurs s'accumulent sans que personne ne les voie.\n\n**Un `tsconfig` sans `strict`.** On perd l'essentiel de la valeur de TypeScript.\n\n**Importer `./prix` sans extension avec Node.** Node n'ajoute pas d'extension ; écris `./prix.ts`.\n\n**Utiliser `enum` avec l'exécution directe par Node.** Préfère une union de chaînes ou un objet `as const`.\n\n**Commiter le dossier `dist`.** Il se reconstruit ; ignore-le comme `node_modules`.\n\n## À retenir\n\n- TypeScript vérifie les types et produit du JavaScript : deux étapes séparables.\n- `node fichier.ts` et Vite effacent les types sans les vérifier ; `tsc --noEmit` vérifie, en intégration continue.\n- Avec Node : imports avec extension `.ts`, syntaxe effaçable, `erasableSyntaxOnly`.\n- `strict` et `noUncheckedIndexedAccess` pour tout nouveau projet.\n- `module: nodenext` pour Node, `preserve` et `noEmit` avec un outil de build ; `declaration` pour une bibliothèque.\n\n## Exercices\n\n1. Une application Vite affiche `NaN` en production. En local, `pnpm dev` démarre sans erreur, et l'intégration continue\n   lance seulement `pnpm test` et `pnpm build`. Explique comment une erreur de type a pu passer, et corrige les scripts.\n\n   :::indice\n   Qui, dans cette chaîne, vérifie réellement les types ?\n   :::\n\n   :::solution\n   Personne. Vite, en développement comme au build, efface les types sans les vérifier ; Vitest aussi. Une erreur comme\n   un nombre passé en chaîne passe toutes les étapes, et le JavaScript produit convertit silencieusement la valeur. On\n   ajoute la vérification explicite :\n\n   ```json\n   {\n     \"scripts\": {\n       \"dev\": \"vite\",\n       \"typecheck\": \"tsc --noEmit\",\n       \"test\": \"vitest run\",\n       \"build\": \"tsc --noEmit && vite build\",\n       \"check\": \"npm run typecheck && npm test\"\n     }\n   }\n   ```\n\n   L'intégration continue lance `typecheck` avant les tests ; le build refuse aussi de produire une version qui ne passe\n   pas la vérification. Dans l'éditeur, le serveur de langage TypeScript souligne l'erreur pendant la frappe.\n   :::\n\n2. Ce fichier refuse de s'exécuter avec `node commande.ts`. Explique l'erreur et réécris-le pour qu'il soit exécutable\n   directement par Node, avec le même comportement.\n\n   ```ts\n   enum Statut {\n     Brouillon = 'brouillon',\n     Payee = 'payee',\n   }\n\n   class Commande {\n     constructor(public id: string, public statut: Statut) {}\n   }\n\n   console.log(new Commande('c1', Statut.Payee));\n   ```\n\n   :::indice\n   Deux constructions génèrent du JavaScript au lieu de s'effacer : lesquelles ?\n   :::\n\n   :::solution\n   Node n'efface que les annotations. Un `enum` génère un objet à l'exécution, et `public id` dans les paramètres du\n   constructeur génère des affectations : Node les refuse avec `ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`. On les remplace par\n   des constructions effaçables :\n\n   ```ts\n   const STATUTS = ['brouillon', 'payee'] as const;\n   type Statut = (typeof STATUTS)[number]; // 'brouillon' | 'payee'\n\n   class Commande {\n     id: string;\n     statut: Statut;\n     constructor(id: string, statut: Statut) {\n       this.id = id;\n       this.statut = statut;\n     }\n   }\n\n   console.log(new Commande('c1', 'payee')); // Commande { id: 'c1', statut: 'payee' }\n   ```\n\n   L'union de chaînes offre la même sécurité que l'enum, `'expediee'` serait refusé, et `STATUTS` reste disponible à\n   l'exécution pour une validation ou une liste déroulante. L'option `erasableSyntaxOnly` aurait signalé les deux\n   constructions dès la vérification des types.\n   :::\n\n3. Écris le `tsconfig.json` d'une application front-end construite avec Vite, et explique chaque option importante.\n\n   :::indice\n   Vite produit les fichiers : `tsc` ne fait que vérifier.\n   :::\n\n   :::solution\n   ```json\n   {\n     \"compilerOptions\": {\n       \"target\": \"es2022\",\n       \"lib\": [\"es2023\", \"dom\", \"dom.iterable\"],\n       \"module\": \"preserve\",\n       \"moduleResolution\": \"bundler\",\n       \"noEmit\": true,\n       \"strict\": true,\n       \"noUncheckedIndexedAccess\": true,\n       \"verbatimModuleSyntax\": true,\n       \"skipLibCheck\": true,\n       \"types\": [\"vite/client\"]\n     },\n     \"include\": [\"src\"]\n   }\n   ```\n\n   `noEmit` : Vite produit les fichiers, `tsc` vérifie seulement. `module: preserve` et `moduleResolution: bundler` : les\n   imports sont résolus comme le fait un outil de build, sans extension obligatoire. `lib` avec `dom` : les types du\n   navigateur, `document`, `fetch`. `verbatimModuleSyntax` : impose `import type` pour les imports de types, qu'un outil\n   qui traite un fichier à la fois doit pouvoir retirer. `types: [\"vite/client\"]` : les types de `import.meta.env` et des\n   imports de fichiers statiques. `strict` et `noUncheckedIndexedAccess`, comme toujours.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `tsc` et l'exécution d'un fichier `.ts` par Vite ou Node ?\n\n  :::indice\n  Vérifier contre effacer.\n  :::\n\n  :::reponse\n  `tsc` analyse tout le projet et vérifie les types, puis produit le JavaScript. Vite, esbuild ou Node traitent chaque\n  fichier isolément et se contentent d'effacer les annotations, sans vérifier : c'est pourquoi ils sont très rapides. Un\n  code avec des erreurs de type s'exécute donc normalement avec eux. On combine les deux : l'outil rapide pour exécuter\n  et construire, et `tsc --noEmit` dans l'éditeur, dans un script et dans l'intégration continue pour vérifier.\n  :::\n\n- Quelles options de `tsconfig` actives-tu toujours ?\n\n  :::indice\n  Strictesse, indexation, modules.\n  :::\n\n  :::reponse\n  `strict`, qui active entre autres la vérification stricte de `null` et `undefined` ; `noUncheckedIndexedAccess`, pour\n  que les accès par index soient considérés comme possiblement absents ; `skipLibCheck`, pour ne pas revérifier les\n  déclarations des dépendances ; `verbatimModuleSyntax` ou `isolatedModules`, pour rester compatible avec les outils qui\n  transforment un fichier à la fois. Puis `module` et `target` selon l'environnement : `nodenext` pour Node, `preserve`\n  avec `noEmit` pour une application construite par un bundler.\n  :::\n\n- Pourquoi éviter les `enum` dans un projet moderne ?\n\n  :::indice\n  Que devient un `enum` à l'exécution ?\n  :::\n\n  :::reponse\n  Un `enum` n'est pas une simple annotation : il génère un objet JavaScript, avec des particularités, comme la\n  correspondance inverse des enums numériques. Il ne s'efface donc pas, ce qui le rend incompatible avec l'exécution\n  directe par Node et avec l'option `erasableSyntaxOnly`. Une union de chaînes littérales, éventuellement dérivée d'un\n  tableau `as const`, offre la même sécurité, reste lisible dans les données et le JSON, et disparaît à la compilation.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-limites-de-javascript-et-typage-statique",
+      "title": "Les limites de JavaScript, le typage statique et l'inférence",
+      "slug": "limites-de-javascript-et-typage-statique",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "pourquoi-typescript",
+      "order": 1,
+      "estimatedMinutes": 35,
+      "difficulty": 3,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-eslint-prettier-et-verification-des-types"
+      ],
+      "skills": [
+        "js-ts-why"
+      ],
+      "tags": [
+        "javascript",
+        "typescript"
+      ],
+      "contentPath": "javascript/pourquoi-typescript/limites-de-javascript-et-typage-statique/lesson.md",
+      "contentVersion": "44ec031f4a12",
+      "body": "\n## Objectifs\n\n- Reconnaître les erreurs que JavaScript ne signale qu'à l'exécution, voire jamais.\n- Expliquer ce qu'apporte un typage statique, et ce qu'il n'apporte pas.\n- Comprendre l'inférence : TypeScript déduit la plupart des types sans annotation.\n- Situer TypeScript par rapport à JavaScript : un sur-ensemble dont les types disparaissent à l'exécution.\n\n## Introduction\n\nJavaScript est **dynamiquement typé** : une variable peut contenir n'importe quoi, et une erreur de type ne se révèle\nqu'au moment où la ligne fautive s'exécute, parfois chez un utilisateur, parfois jamais, en produisant silencieusement un\nmauvais résultat. Dans un petit script, on s'en accommode. Dans une application de cent mille lignes, modifiée par dix\npersonnes, chaque renommage de propriété devient un pari.\n\n**TypeScript** ajoute à JavaScript un système de types vérifié **avant** l'exécution. Il est devenu le standard de fait\ndes projets JavaScript professionnels. Cette partie fait le pont : elle montre à un développeur JavaScript ce que\nTypeScript change, et le parcours TypeScript de la plateforme approfondit ensuite chaque notion.\n\n## Concept\n\n| Erreur | En JavaScript | Avec TypeScript |\n| --- | --- | --- |\n| faute de frappe dans une propriété | `undefined`, puis un affichage « undefined € » | erreur à l'écriture : la propriété n'existe pas |\n| valeur possiblement absente | `TypeError: Cannot read properties of undefined` en production | erreur : la valeur est « possiblement undefined » |\n| mauvais type d'argument | conversion implicite, résultat faux | erreur : type incompatible |\n| renommage d'une propriété | chaque usage oublié casse à l'exécution | chaque usage oublié est signalé |\n\n| | Typage dynamique (JavaScript) | Typage statique (TypeScript) |\n| --- | --- | --- |\n| quand les types sont vérifiés | à l'exécution, ligne par ligne | avant l'exécution, sur tout le code |\n| erreurs trouvées | celles des chemins exécutés | celles de tous les chemins |\n| documentation | commentaires, qui vieillissent | types, vérifiés à chaque compilation |\n| aide de l'éditeur | limitée | autocomplétion, navigation, renommage sûr |\n| données extérieures | à valider | toujours à valider : les types disparaissent à l'exécution |\n\n## Exemple\n\nCe fichier TypeScript contient cinq erreurs que JavaScript aurait laissé passer :\n\n```ts\ninterface Commande {\n  id: string;\n  total: number;\n  client?: { email: string };\n}\n\nfunction resume(commande: Commande): string {\n  return `${commande.id} : ${commande.totl} €`;\n}\n\nfunction emailDuClient(commande: Commande): string {\n  return commande.client.email;\n}\n\nfunction appliquerRemise(total: number, pourcentage: number): number {\n  return total * (1 - pourcentage / 100);\n}\nappliquerRemise('120', 10);\n\nconst commandes: Commande[] = [];\nconst premiere = commandes[0];\nconsole.log(premiere.total);\n\nlet quantite = 3;\nquantite = 'trois';\n```\n\n```text\n$ npx tsc --noEmit\nlimites.ts(8,39): error TS2551: Property 'totl' does not exist on type 'Commande'. Did you mean 'total'?\nlimites.ts(12,10): error TS18048: 'commande.client' is possibly 'undefined'.\nlimites.ts(18,17): error TS2345: Argument of type 'string' is not assignable to parameter of type 'number'.\nlimites.ts(22,13): error TS18048: 'premiere' is possibly 'undefined'.\nlimites.ts(25,1): error TS2322: Type 'string' is not assignable to type 'number'.\n```\n\nChacune de ces lignes, en JavaScript, aurait produit un bug : un résumé « undefined € », un plantage pour une commande\nsans client, une remise calculée sur une chaîne, un plantage sur une liste vide, une quantité devenue texte. TypeScript\nles signale toutes, dans l'éditeur, avant même d'exécuter le code.\n\n## Comment ça fonctionne\n\n**Ce que JavaScript ne peut pas savoir.** Dans `commande.totl`, JavaScript ne peut pas deviner qu'il s'agit d'une faute :\naccéder à une propriété inexistante est légal, et renvoie `undefined`. Il ne découvre qu'une valeur est absente qu'au\nmoment d'y accéder. Et il convertit les types à la volée : `'120' * 0.9` donne `108`, mais `'120' + 5` donne `'1205'`.\nLes tests couvrent une partie de ces cas, jamais tous.\n\n**Le typage statique vérifie tous les chemins.** TypeScript analyse le code sans l'exécuter, comme ESLint, mais avec une\nconnaissance précise de la forme de chaque valeur. Il vérifie ainsi les branches qu'aucun test n'exécute : le client\nabsent, le tableau vide. Les options strictes, `strict` et `noUncheckedIndexedAccess`, rendent les absences explicites :\nune valeur qui peut être `undefined` doit être vérifiée avant usage.\n\n**L'inférence : peu d'annotations.** On n'écrit pas un type partout. `let quantite = 3` suffit à TypeScript pour savoir\nque `quantite` est un `number` ; le type de retour d'une fonction se déduit souvent de son corps ; le type des éléments\nd'un `map` se déduit du tableau. On annote surtout les **frontières** : les paramètres des fonctions, les structures de\ndonnées partagées, les valeurs publiques d'un module. Le reste suit.\n\n**Un typage structurel.** TypeScript compare les **formes**, pas les noms : un objet qui a un `id` de type `string` et un\n`total` de type `number` est une `Commande`, qu'il ait été créé avec ce nom ou non. C'est fidèle à la façon dont on\nécrit du JavaScript, avec des objets littéraux, et cela rend l'adoption naturelle.\n\n**Un sur-ensemble de JavaScript, effacé à l'exécution.** Tout code JavaScript est, syntaxiquement, du TypeScript ; on\najoute des annotations. Pour exécuter, les annotations sont **retirées** : par le compilateur `tsc`, par un outil de\nbuild comme Vite, ou directement par Node, qui sait depuis la version 22 exécuter un fichier `.ts` en effaçant ses\ntypes. Conséquence essentielle : **les types n'existent plus à l'exécution**. Un JSON reçu d'une API peut ne pas\nrespecter l'interface déclarée ; TypeScript ne le vérifiera pas. La validation des données extérieures, vue dans la\npartie sur la sécurité, reste indispensable.\n\n**Ce que TypeScript n'est pas.** Il ne rend pas le code plus rapide, ne remplace pas les tests, qui vérifient le\ncomportement et non les types, et ne protège pas contre les erreurs de logique : `total * 0.9` au lieu de\n`total * 1.9` passe la vérification. Il coûte un peu d'apprentissage et un peu d'écriture ; en échange, il supprime une\nclasse entière de bugs et rend les grands refactorings sûrs.\n\n## Erreurs fréquentes\n\n**Croire que les types protègent les données reçues.** Une réponse d'API n'est pas vérifiée à l'exécution ; valide-la.\n\n**Annoter chaque variable.** L'inférence suffit presque partout ; annote les frontières.\n\n**Désactiver le mode strict pour aller plus vite.** On perd l'essentiel : la vérification des absences.\n\n**Penser que TypeScript remplace les tests.** Il vérifie les types, pas le comportement.\n\n**Utiliser `any` pour faire taire une erreur.** L'erreur est souvent un vrai bug ; `any` désactive la vérification.\n\n## À retenir\n\n- JavaScript ne révèle les erreurs de type qu'à l'exécution, sur les chemins exécutés.\n- TypeScript vérifie tous les chemins avant l'exécution : propriétés, absences, arguments, affectations.\n- L'inférence déduit la plupart des types ; on annote les frontières.\n- Typage structurel : les formes comptent, pas les noms.\n- Les types sont effacés à l'exécution : les données extérieures doivent toujours être validées.\n\n## Exercices\n\n1. Pour chaque ligne, dis si TypeScript en mode strict signale une erreur, et laquelle.\n\n   ```ts\n   const prix = 49.9;\n   const libelle = prix.toFixed(2) + ' €';\n   const utilisateurs = new Map<string, { nom: string }>();\n   const nom = utilisateurs.get('u1').nom;\n   const total = [10, 20].reduce((somme, x) => somme + x);\n   const moitie: number = '50' / 2;\n   ```\n\n   :::indice\n   Que renvoie `Map.get` quand la clé n'existe pas ? Et que donne la division d'une chaîne en TypeScript ?\n   :::\n\n   :::solution\n   - `prix` et `libelle` : aucune erreur ; `prix` est inféré `number`, `libelle` `string`.\n   - `utilisateurs.get('u1').nom` : erreur, l'objet est « possiblement undefined », car `get` renvoie `undefined` pour\n     une clé absente. On écrit `utilisateurs.get('u1')?.nom`, ou on vérifie avant.\n   - `reduce` sans valeur initiale sur `number[]` : aucune erreur, le résultat est un `number`.\n   - `'50' / 2` : erreur, l'opérande gauche d'une opération arithmétique doit être un nombre. JavaScript aurait converti\n     et donné `25`.\n\n   ```ts\n   const utilisateurs = new Map<string, { nom: string }>();\n   const nom = utilisateurs.get('u1')?.nom ?? 'inconnu';\n   console.log(nom); // inconnu\n   ```\n   :::\n\n2. Un collègue affirme : « Avec TypeScript, plus besoin de valider les réponses de l'API, puisque j'ai déclaré\n   l'interface `Produit` ». Montre avec un exemple pourquoi c'est faux, et ce qu'il faut faire.\n\n   :::indice\n   Que reste-t-il de `interface Produit` quand le code s'exécute ?\n   :::\n\n   :::solution\n   ```ts\n   interface Produit {\n     id: string;\n     prix: number;\n   }\n\n   // Ce que l'API renvoie vraiment, par exemple après un changement de son côté :\n   const reponse = '{ \"id\": \"p1\", \"prix\": \"49,90\" }';\n   const produit = JSON.parse(reponse) as Produit; // TypeScript fait confiance\n\n   console.log(produit.prix * 2); // NaN : prix est une chaîne à l'exécution\n   ```\n\n   `JSON.parse` renvoie une valeur de type `any`, et le `as Produit` est une simple affirmation : aucune vérification n'a\n   lieu, et l'interface est effacée à l'exécution. Le programme compile, puis calcule `NaN`. Il faut valider la réponse à\n   la frontière, par exemple avec un schéma zod dont on déduit le type, comme on le verra dans le dernier chapitre de\n   cette partie : la validation et le type restent ainsi toujours d'accord.\n   :::\n\n3. Réécris cette fonction JavaScript en TypeScript avec le minimum d'annotations nécessaires, puis indique ce que\n   TypeScript infère pour le reste.\n\n   ```js\n   function statistiques(notes) {\n     const total = notes.reduce((somme, note) => somme + note, 0);\n     const moyenne = notes.length === 0 ? 0 : total / notes.length;\n     return { total, moyenne, meilleure: Math.max(...notes) };\n   }\n   ```\n\n   :::indice\n   Une seule annotation suffit : celle du paramètre.\n   :::\n\n   :::solution\n   ```ts\n   function statistiques(notes: number[]) {\n     const total = notes.reduce((somme, note) => somme + note, 0);\n     const moyenne = notes.length === 0 ? 0 : total / notes.length;\n     return { total, moyenne, meilleure: Math.max(...notes) };\n   }\n\n   const resultat = statistiques([12, 15, 9]);\n   console.log(resultat); // { total: 36, moyenne: 12, meilleure: 15 }\n   ```\n\n   TypeScript infère `total: number`, `moyenne: number`, et le type de retour\n   `{ total: number; moyenne: number; meilleure: number }`. Un appel `statistiques(['12'])` serait signalé. On peut\n   ajouter le type de retour explicitement pour une fonction exportée : c'est un contrat, et une erreur dans le corps\n   serait alors signalée à l'intérieur de la fonction plutôt que chez ses appelants.\n   :::\n\n## Questions d'entretien\n\n- Pourquoi utiliser TypeScript plutôt que JavaScript ?\n\n  :::indice\n  Erreurs trouvées avant l'exécution, outillage, refactorings.\n  :::\n\n  :::reponse\n  TypeScript vérifie les types avant l'exécution, sur tous les chemins du code, ce qui élimine une grande classe de bugs :\n  propriétés mal orthographiées, valeurs possiblement absentes, arguments du mauvais type. Les types servent de\n  documentation toujours à jour, et l'éditeur en tire l'autocomplétion, la navigation et le renommage sûr, ce qui rend les\n  refactorings d'une grande base de code beaucoup moins risqués. En contrepartie, il faut apprendre le système de types\n  et maintenir quelques annotations. Il ne remplace ni les tests ni la validation des données extérieures.\n  :::\n\n- Qu'est-ce que l'inférence de types ?\n\n  :::indice\n  Qui écrit le type ?\n  :::\n\n  :::reponse\n  C'est la capacité de TypeScript à déduire le type d'une valeur sans annotation, à partir de son initialisation, d'une\n  expression ou du corps d'une fonction : `let n = 3` est un `number`, le retour de `tableau.map((x) => x.id)` est un\n  tableau d'identifiants. Grâce à elle, on annote surtout les frontières, paramètres et API publiques, et le code reste\n  proche du JavaScript. Une annotation explicite sert aussi de contrat, pour détecter une erreur à l'endroit où elle est\n  commise.\n  :::\n\n- Les types TypeScript existent-ils à l'exécution ?\n\n  :::indice\n  Que fait le compilateur des annotations ?\n  :::\n\n  :::reponse\n  Non. Les annotations sont effacées lors de la compilation, ou par l'outil qui exécute le code, comme Vite ou Node : il\n  ne reste que du JavaScript. On ne peut donc pas tester une interface à l'exécution, et une donnée extérieure, réponse\n  d'API, corps de requête, fichier, n'est pas vérifiée par ses types déclarés. On la valide à la frontière avec du code,\n  souvent un schéma dont on déduit le type, pour que la vérification à l'exécution et le type statique restent alignés.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-migration-progressive",
+      "title": "Migrer progressivement un projet JavaScript vers TypeScript",
+      "slug": "migration-progressive",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "pourquoi-typescript",
+      "order": 3,
+      "estimatedMinutes": 40,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-compiler-et-configurer-typescript"
+      ],
+      "skills": [
+        "js-ts-migration"
+      ],
+      "tags": [
+        "javascript",
+        "typescript",
+        "migration"
+      ],
+      "contentPath": "javascript/pourquoi-typescript/migration-progressive/lesson.md",
+      "contentVersion": "bda871a93f3f",
+      "body": "\n## Objectifs\n\n- Planifier une migration par étapes, sans jamais bloquer le développement.\n- Faire cohabiter fichiers JavaScript et TypeScript avec `allowJs` et `checkJs`.\n- Typer d'abord avec JSDoc, puis convertir les fichiers en commençant par les feuilles du graphe.\n- Activer la strictesse progressivement, et suivre le nombre d'erreurs.\n- Contenir les compromis : `@ts-expect-error` commenté plutôt que `any` dispersés.\n\n## Introduction\n\nRéécrire une application entière en TypeScript d'un coup est une mauvaise idée : des semaines de travail sans nouvelle\nfonctionnalité, une énorme pull request impossible à relire, et des bugs introduits pendant la conversion. La bonne\napproche est **progressive** : l'application continue de fonctionner et d'évoluer, pendant que les types gagnent du\nterrain fichier par fichier.\n\nTypeScript a été conçu pour cela : il sait lire des fichiers JavaScript, les vérifier à partir d'annotations JSDoc, et\nmélanger `.js` et `.ts` dans un même projet.\n\n## Concept\n\n| Étape | Configuration | Effet |\n| --- | --- | --- |\n| 1. brancher TypeScript | `allowJs: true`, `checkJs: false`, `strict: false` | `tsc` lit le projet sans rien signaler ; l'éditeur profite déjà des types inférés |\n| 2. vérifier le JavaScript | `checkJs: true`, ou `// @ts-check` fichier par fichier | les erreurs apparaissent ; on les corrige avec des annotations JSDoc |\n| 3. convertir | renommer `.js` en `.ts`, des feuilles vers les racines | les annotations deviennent de la syntaxe TypeScript |\n| 4. durcir | `noImplicitAny`, puis `strictNullChecks`, puis `strict` | chaque option ajoute une famille de vérifications |\n| 5. finir | plus de `.js`, plus de `any` non justifié | `allowJs` peut être retiré |\n\n| Compromis temporaire | Quand | Pourquoi |\n| --- | --- | --- |\n| `// @ts-expect-error raison` | une erreur connue, qu'on corrigera plus tard | signale une erreur si elle disparaît : le compromis ne survit pas à sa correction |\n| `unknown` | une donnée dont on ne connaît pas encore la forme | oblige à vérifier avant usage |\n| `any` | en dernier recours, localisé et commenté | désactive toute vérification sur la valeur |\n\n## Exemple\n\nUn petit projet JavaScript, `panier.js` et `affichage.js`. On commence par brancher TypeScript sans rien exiger :\n\n```json\n{\n  \"compilerOptions\": {\n    \"allowJs\": true,\n    \"checkJs\": false,\n    \"strict\": false,\n    \"noEmit\": true,\n    \"module\": \"nodenext\",\n    \"target\": \"es2023\"\n  },\n  \"include\": [\"src\"]\n}\n```\n\n`tsc` passe sans erreur, et l'éditeur propose déjà l'autocomplétion. On active ensuite `checkJs` et `strict` pour voir\nl'ampleur du travail :\n\n```text\n$ npx tsc\nsrc/affichage.js(3,24): error TS7006: Parameter 'lignes' implicitly has an 'any' type.\nsrc/panier.js(1,23): error TS7006: Parameter 'lignes' implicitly has an 'any' type.\nsrc/panier.js(2,25): error TS7006: Parameter 'somme' implicitly has an 'any' type.\n…\n$ npx tsc | grep -c \"error TS\"\n7\n```\n\nOn type `panier.js`, une feuille du graphe, sans le renommer, en JSDoc :\n\n```js\n/**\n * @typedef {object} Ligne\n * @property {string} sku\n * @property {number} prix\n * @property {number} quantite\n */\n\n/** @param {Ligne[]} lignes */\nexport function total(lignes) {\n  return lignes.reduce((somme, l) => somme + l.prix * l.quantite, 0);\n}\n\n/**\n * @param {Ligne[]} lignes\n * @param {string} sku\n */\nexport function trouverLigne(lignes, sku) {\n  return lignes.find((l) => l.sku === sku);\n}\n```\n\nPuis on convertit `affichage.js` en `affichage.ts`, qui importe le type défini en JSDoc :\n\n```ts\nimport { total, trouverLigne, type Ligne } from './panier.js';\n\nexport function resume(lignes: Ligne[]): string {\n  const lampe = trouverLigne(lignes, 'lampe');\n  return `Total : ${total(lignes)} € — lampes : ${lampe.quantite}`;\n}\n```\n\n```text\n$ npx tsc\nsrc/affichage.ts(5,51): error TS18048: 'lampe' is possibly 'undefined'.\n```\n\nLa migration révèle un vrai bug : un panier sans lampe faisait planter `resume`. On le corrige avec\n`lampe?.quantite ?? 0`, et `tsc` ne signale plus rien. Chaque étape est une petite pull request, et l'application\nfonctionne à chacune.\n\n## Comment ça fonctionne\n\n**`allowJs` et `checkJs`.** `allowJs` fait entrer les fichiers JavaScript dans le projet : TypeScript les lit, infère ce\nqu'il peut, et les fichiers `.ts` peuvent les importer. `checkJs` fait vérifier ces fichiers, en tirant les types des\nannotations JSDoc. On peut aussi vérifier un seul fichier avec `// @ts-check` en tête, ou en exclure un avec\n`// @ts-nocheck`. Un projet peut rester longtemps dans cet état mixte, et certains y restent définitivement.\n\n**Attention au mode strict par défaut.** Dans les versions récentes de TypeScript, dont la version 7, `strict` est activé\npar défaut. Pour brancher TypeScript\nsur un projet existant sans être submergé, on écrit explicitement `\"strict\": false` au départ, puis on active les\nvérifications une à une. Avec un projet neuf, au contraire, on garde la valeur par défaut.\n\n**Des feuilles vers les racines.** On convertit d'abord les modules qui n'importent rien du projet : utilitaires,\ncalculs, modèles de données. Leurs types se propagent ensuite automatiquement à tous les modules qui les utilisent. On\nconvertit en dernier les points d'entrée, qui importent tout. Convertir d'abord `main.js` obligerait à typer tout ce qu'il\nutilise en même temps.\n\n**Durcir par étapes.** `noImplicitAny` oblige à typer chaque paramètre : la première étape, mécanique. `strictNullChecks`\nrend visibles les valeurs possiblement absentes : c'est là que la migration trouve les vrais bugs, comme la lampe\nabsente. On peut activer une option, compter les erreurs avec `tsc | grep -c \"error TS\"`, et suivre ce nombre dans le\ntemps. Une règle simple aide : aucun **nouveau** fichier n'est écrit en JavaScript, et une erreur corrigée ne revient pas.\n\n**Les compromis, visibles et temporaires.** Parfois, une erreur ne peut pas être corrigée tout de suite : une\nbibliothèque sans types, un code ancien trop risqué à toucher. `// @ts-expect-error` suivi d'une explication supprime\nl'erreur de la ligne suivante, et signale une erreur **s'il n'y a plus rien à supprimer** : le jour où le problème est\ncorrigé, le commentaire doit partir. C'est mieux que `// @ts-ignore`, qui reste silencieux pour toujours, et bien mieux\nqu'un `any`, qui désactive la vérification de la valeur partout où elle circule. Pour une donnée de forme inconnue,\n`unknown` oblige à la vérifier avant usage.\n\n**Les dépendances non typées.** La plupart des paquets fournissent leurs types, ou en ont dans `@types/<paquet>`. Pour\nles autres, un fichier de déclaration minimal, `declare module 'vieux-paquet';`, les rend importables, en `any`, en\nattendant de décrire les fonctions réellement utilisées.\n\n**Ce qu'on gagne en chemin.** Une migration n'est pas une fin en soi. Chaque étape apporte déjà quelque chose : de\nl'autocomplétion dès l'étape 1, des bugs trouvés dès l'étape 2, des refactorings sûrs ensuite. On peut s'arrêter à\nn'importe quelle étape si le rapport coût-bénéfice ne justifie pas la suivante.\n\n## Erreurs fréquentes\n\n**Tout convertir d'un coup.** La pull request est impossible à relire, et le projet est bloqué pendant la conversion.\n\n**Commencer par le point d'entrée.** Il importe tout ; commence par les feuilles.\n\n**Oublier que `strict` est actif par défaut.** Écris `\"strict\": false` au départ d'une migration, puis active les\nvérifications une à une.\n\n**Remplacer chaque erreur par `any`.** On obtient du TypeScript sans vérification ; utilise `unknown` ou corrige.\n\n**Des `@ts-ignore` sans explication.** Préfère `@ts-expect-error` avec la raison.\n\n**Mélanger conversion et changement de comportement.** Une migration est un refactoring : les tests ne changent pas.\n\n## À retenir\n\n- On migre par étapes : `allowJs`, `checkJs` et JSDoc, conversion des fichiers, durcissement, fin.\n- Au départ, `\"strict\": false` explicite, car TypeScript l'active par défaut.\n- On convertit des feuilles du graphe vers les points d'entrée.\n- `noImplicitAny`, puis `strictNullChecks` : c'est là que se trouvent les vrais bugs.\n- Les compromis sont visibles et temporaires : `@ts-expect-error` avec une raison, `unknown` plutôt que `any`.\n\n## Exercices\n\n1. Ordonne la conversion de ces modules, sachant que la flèche signifie « importe » : `main.js` → `routes.js` →\n   `commandes.js` → `prix.js` ; `routes.js` → `utilisateurs.js` → `validation.js` ; `commandes.js` → `validation.js`.\n   Justifie l'ordre.\n\n   :::indice\n   Commence par les modules qui n'importent aucun autre module du projet.\n   :::\n\n   :::solution\n   1. `prix.js` et `validation.js` : ils n'importent rien du projet, ce sont les feuilles.\n   2. `commandes.js` et `utilisateurs.js` : leurs dépendances sont déjà typées.\n   3. `routes.js`, qui importe les deux précédents.\n   4. `main.js`, le point d'entrée, en dernier.\n\n   À chaque étape, les types des modules déjà convertis se propagent : convertir `commandes.js` ne demande de typer que\n   son propre code, puisque `prix` et `validation` sont déjà typés. Chaque conversion est une petite pull request, relue et\n   testée séparément.\n   :::\n\n2. Pendant une migration, `tsc` signale cette erreur, due à une bibliothèque de graphiques sans types, qu'on remplacera le\n   mois prochain. Écris le compromis le plus sûr, et montre ce qui se passe quand le problème disparaît.\n\n   ```ts\n   import { tracer } from 'vieux-graphiques';\n   // error TS7016: Could not find a declaration file for module 'vieux-graphiques'.\n   ```\n\n   :::indice\n   Un fichier de déclaration minimal, ou `@ts-expect-error`. Lequel se signale tout seul quand il devient inutile ?\n   :::\n\n   :::solution\n   Pour une seule ligne, `@ts-expect-error` avec la raison :\n\n   ```ts\n   // @ts-expect-error vieux-graphiques n'a pas de types ; remplacé par la bibliothèque X en octobre (ticket #620)\n   import { tracer } from 'vieux-graphiques';\n   ```\n\n   Le jour où la bibliothèque est remplacée par une bibliothèque typée, la ligne ne produit plus d'erreur, et\n   `@ts-expect-error` signale alors `Unused '@ts-expect-error' directive` : on est forcé de retirer le compromis. Un\n   `@ts-ignore` serait resté pour toujours. Si la bibliothèque est importée dans plusieurs fichiers, on préfère décrire\n   ce qu'on utilise dans un fichier de déclaration, par exemple\n   `declare module 'vieux-graphiques' { export function tracer(element: HTMLElement, donnees: number[]): void; }`, ce qui\n   donne en plus des types utiles.\n   :::\n\n3. Après avoir activé `strictNullChecks`, le projet affiche 214 erreurs. L'équipe veut continuer à livrer des\n   fonctionnalités pendant qu'elle les corrige. Propose une organisation.\n\n   :::indice\n   Pense à empêcher les nouvelles erreurs sans bloquer tout le monde, et à mesurer le progrès.\n   :::\n\n   :::solution\n   - Garder `strictNullChecks` actif dans l'éditeur et dans un script `typecheck:strict`, qui affiche le nombre\n     d'erreurs, tandis que l'intégration continue vérifie avec la configuration précédente plus une règle : le nombre\n     d'erreurs strictes ne doit pas **augmenter**. Un petit script compare le nombre à une valeur de référence commitée,\n     et la baisse à chaque correction.\n   - Corriger par module, en commençant par les feuilles, dans des pull requests dédiées, sans mélanger avec des\n     fonctionnalités.\n   - Écrire tout nouveau code en mode strict : les fichiers neufs n'ajoutent aucune erreur.\n   - Quand le compteur atteint zéro, activer l'option dans la configuration principale et supprimer le mécanisme de\n     référence.\n\n   On livre pendant toute la durée, le progrès est mesurable, et aucune erreur nouvelle n'entre dans le code.\n   :::\n\n## Questions d'entretien\n\n- Comment migrerais-tu une grosse application JavaScript vers TypeScript ?\n\n  :::indice\n  Par étapes, des feuilles vers les racines, en durcissant progressivement.\n  :::\n\n  :::reponse\n  Progressivement, sans arrêter les livraisons. D'abord brancher TypeScript avec `allowJs`, sans vérification et avec\n  `strict` désactivé explicitement, pour profiter de l'éditeur. Puis activer `checkJs`, fichier par fichier ou\n  globalement, et typer en JSDoc. Ensuite convertir les fichiers en `.ts`, en commençant par les modules sans\n  dépendances internes, et durcir option par option, `noImplicitAny` puis `strictNullChecks`, en mesurant le nombre\n  d'erreurs et en interdisant qu'il augmente. Tout nouveau code est écrit en TypeScript strict. Chaque étape est une\n  petite pull request, et les tests garantissent qu'aucun comportement ne change.\n  :::\n\n- Quelle différence entre `@ts-ignore`, `@ts-expect-error` et `any` ?\n\n  :::indice\n  Portée, et que se passe-t-il quand l'erreur disparaît ?\n  :::\n\n  :::reponse\n  `@ts-ignore` masque toute erreur sur la ligne suivante, pour toujours, même quand il n'y en a plus. `@ts-expect-error`\n  fait de même mais signale une erreur quand il n'y a plus rien à masquer : le compromis est retiré dès que le problème\n  est corrigé. On l'accompagne d'une explication. `any` est plus large : il désactive la vérification sur la valeur,\n  partout où elle circule, et contamine les types qui en dérivent. On préfère `unknown` pour une valeur de forme inconnue,\n  qu'il faut vérifier avant usage.\n  :::\n\n- Faut-il toujours aller jusqu'au bout d'une migration ?\n\n  :::indice\n  Coût et bénéfice de chaque étape.\n  :::\n\n  :::reponse\n  Pas forcément. Chaque étape apporte déjà un bénéfice : autocomplétion avec `allowJs`, bugs trouvés avec `checkJs` et\n  JSDoc, refactorings sûrs avec des fichiers typés. Certains projets s'arrêtent volontairement à JavaScript vérifié par\n  JSDoc, qui évite toute étape de compilation. Ce qui compte, c'est que la direction soit claire, que le nouveau code\n  respecte le niveau visé, et que les compromis restent visibles et suivis.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -44601,6 +44941,333 @@
       "contentVersion": "dba6d10bb3eb"
     },
     {
+      "id": "javascript-generiques-et-types-utilitaires-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ts-generiques-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Avec `function premier<T>(t: readonly T[]): T | undefined`, quel est le type de `premier([{ id: 'c1' }])` ?\n",
+          "options": [
+            "{ id: string } | undefined",
+            "any",
+            "T",
+            "unknown"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "TypeScript infère T à partir de l'argument : T vaut { id: string }, et le résultat garde ce lien.\n",
+          "skills": [
+            "js-ts-generics-utility"
+          ]
+        },
+        {
+          "id": "js-ts-generiques-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel type décrit les modifications acceptées par une mise à jour de Produit, identifiant exclu ?\n",
+          "options": [
+            "Partial<Omit<Produit, 'id'>>",
+            "Omit<Partial<Produit>, 'nom'>",
+            "Pick<Produit, 'id'>",
+            "Required<Produit>"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Omit retire id, Partial rend le reste facultatif. Toute nouvelle propriété de Produit y apparaît automatiquement.\n",
+          "skills": [
+            "js-ts-generics-utility"
+          ]
+        },
+        {
+          "id": "js-ts-generiques-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Dans `trierPar<K extends keyof T>(cle: K)`, que garantit la contrainte ?\n",
+          "options": [
+            "Que cle est le nom d'une propriété existante de T",
+            "Que a[cle] a le type de cette propriété",
+            "Que la propriété existe à l'exécution sur tous les objets, même non validés",
+            "Qu'une faute de frappe dans le nom de la clé est signalée"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "Les types sont effacés à l'exécution : des objets non validés peuvent ne pas respecter T. La contrainte vérifie le code, pas les données.\n",
+          "skills": [
+            "js-ts-generics-utility"
+          ]
+        },
+        {
+          "id": "js-ts-generiques-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Avec `const TAILLES = ['S', 'M', 'L'] as const;`, quel type donne `(typeof TAILLES)[number]` ?\n",
+          "options": [
+            "'S' | 'M' | 'L'",
+            "string",
+            "string[]",
+            "readonly ['S', 'M', 'L']"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "as const fige les littéraux dans un tuple en lecture seule ; l'accès par [number] donne l'union de ses éléments.\n",
+          "skills": [
+            "js-ts-generics-utility"
+          ]
+        }
+      ],
+      "chapterId": "javascript-generiques-et-types-utilitaires",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-vers-typescript/generiques-et-types-utilitaires/quiz.yaml",
+      "contentVersion": "0fccb4ab441c"
+    },
+    {
+      "id": "javascript-interfaces-alias-unions-et-retrecissement-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ts-unions-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans `if (paiement.type === 'virement') { … }`, que sait TypeScript de paiement à l'intérieur du bloc ?\n",
+          "options": [
+            "C'est la variante de l'union dont type vaut 'virement', avec ses propriétés propres comme iban",
+            "Rien de plus qu'avant le test",
+            "C'est une chaîne",
+            "C'est never"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le test sur le discriminant rétrécit l'union à la variante correspondante.\n",
+          "skills": [
+            "js-ts-unions-narrowing"
+          ]
+        },
+        {
+          "id": "js-ts-unions-q2",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "À quoi sert `nePasOublier(paiement)` dans le default d'un switch, avec `function nePasOublier(cas: never): never` ?\n",
+          "options": [
+            "À faire échouer la compilation si une variante de l'union n'est pas traitée",
+            "À ignorer les valeurs inconnues",
+            "À convertir la valeur en chaîne",
+            "À rendre le switch plus rapide"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Si tous les cas sont traités, la valeur est de type never dans le default et l'appel compile ; une variante oubliée provoque une erreur à cet endroit.\n",
+          "skills": [
+            "js-ts-unions-narrowing"
+          ]
+        },
+        {
+          "id": "js-ts-unions-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles conditions TypeScript utilise-t-il pour rétrécir un type ?\n",
+          "options": [
+            "typeof x === 'string'",
+            "x instanceof Date",
+            "'iban' in paiement",
+            "Un commentaire // x est une chaîne"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "TypeScript suit le flux de contrôle et comprend typeof, instanceof, in, les égalités et les tests de nullité. Les commentaires ne changent rien aux types.\n",
+          "skills": [
+            "js-ts-unions-narrowing"
+          ]
+        },
+        {
+          "id": "js-ts-unions-q4",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "Sur un tableau de type (number | null)[], `filter(Boolean)` produit un tableau de type number[].\n",
+          "answer": false,
+          "explanation": "filter(Boolean) n'est pas reconnu comme prédicat de type, et il retire aussi 0. Un prédicat explicite ou (x) => x !== null donne number[].\n",
+          "skills": [
+            "js-ts-unions-narrowing"
+          ]
+        }
+      ],
+      "chapterId": "javascript-interfaces-alias-unions-et-retrecissement",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-vers-typescript/interfaces-alias-unions-et-retrecissement/quiz.yaml",
+      "contentVersion": "15cfe31db10a"
+    },
+    {
+      "id": "javascript-types-valeurs-tableaux-objets-fonctions-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ts-types-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel type décrit le mieux le statut d'une commande, qui ne peut valoir que brouillon, payee ou expediee ?\n",
+          "options": [
+            "'brouillon' | 'payee' | 'expediee'",
+            "string",
+            "String",
+            "any"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une union de types littéraux refuse les fautes de frappe et les valeurs inexistantes. string accepterait n'importe quelle chaîne.\n",
+          "skills": [
+            "js-ts-basic-types"
+          ]
+        },
+        {
+          "id": "js-ts-types-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel type donner au résultat de JSON.parse d'une donnée extérieure ?\n",
+          "options": [
+            "unknown, puis vérifier sa forme avant usage",
+            "any, pour pouvoir l'utiliser librement",
+            "never",
+            "object"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "unknown oblige à vérifier la valeur avant de l'utiliser. any désactiverait toute vérification.\n",
+          "skills": [
+            "js-ts-basic-types"
+          ]
+        },
+        {
+          "id": "js-ts-types-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Une fonction reçoit un paramètre de type readonly Ligne[]. Que lui interdit TypeScript ?\n",
+          "options": [
+            "Appeler push sur le tableau",
+            "Remplacer un élément avec lignes[0] = autre",
+            "Lire lignes.length",
+            "Appeler map pour produire un nouveau tableau"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "readonly interdit les modifications du tableau. La lecture et les méthodes qui renvoient un nouveau tableau restent permises.\n",
+          "skills": [
+            "js-ts-basic-types"
+          ]
+        },
+        {
+          "id": "js-ts-types-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "En mode strict, une propriété déclarée `codePromo?: string` a le type string | undefined.\n",
+          "answer": true,
+          "explanation": "La propriété peut être absente : TypeScript oblige à traiter le cas undefined, avec une condition, ?. ou ??.\n",
+          "skills": [
+            "js-ts-basic-types"
+          ]
+        }
+      ],
+      "chapterId": "javascript-types-valeurs-tableaux-objets-fonctions",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-vers-typescript/types-valeurs-tableaux-objets-fonctions/quiz.yaml",
+      "contentVersion": "c2061c1afd0d"
+    },
+    {
+      "id": "javascript-typescript-asynchrone-et-api-typees-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ts-api-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel est le type de `await Promise.all([chargerClient(id), chargerCommandes(id)])`, si les deux fonctions renvoient Promise<Client> et Promise<Commande[]> ?\n",
+          "options": [
+            "[Client, Commande[]]",
+            "(Client | Commande[])[]",
+            "Promise<[Client, Commande[]]>",
+            "any[]"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Promise.all conserve le type de chaque position dans un tuple, et await retire la promesse.\n",
+          "skills": [
+            "js-ts-async-apis"
+          ]
+        },
+        {
+          "id": "js-ts-api-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Comment obtenir le type Produit à partir d'un schéma zod ProduitSchema ?\n",
+          "options": [
+            "type Produit = z.infer<typeof ProduitSchema>",
+            "type Produit = typeof ProduitSchema",
+            "En réécrivant une interface identique",
+            "type Produit = ReturnType<typeof ProduitSchema>"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "z.infer déduit le type des données validées par le schéma : une seule source de vérité pour le type et la validation.\n",
+          "skills": [
+            "js-ts-async-apis"
+          ]
+        },
+        {
+          "id": "js-ts-api-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles valeurs faut-il traiter comme unknown et valider avant usage ?\n",
+          "options": [
+            "Le résultat de reponse.json()",
+            "Le résultat de JSON.parse",
+            "L'erreur reçue dans un catch",
+            "Le résultat d'une fonction typée du même module"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Les données extérieures et les erreurs attrapées ne sont pas vérifiées par les types. Une fonction typée du même projet est déjà vérifiée par le compilateur.\n",
+          "skills": [
+            "js-ts-async-apis"
+          ]
+        },
+        {
+          "id": "js-ts-api-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Si le serveur et le client partagent les mêmes types, il devient inutile de valider les réponses côté client.\n",
+          "answer": false,
+          "explanation": "Client et serveur sont déployés séparément : une ancienne version de l'un peut parler à une nouvelle version de l'autre. La validation aux frontières reste le filet de sécurité.\n",
+          "skills": [
+            "js-ts-async-apis"
+          ]
+        }
+      ],
+      "chapterId": "javascript-typescript-asynchrone-et-api-typees",
+      "technology": "javascript",
+      "contentPath": "javascript/javascript-vers-typescript/typescript-asynchrone-et-api-typees/quiz.yaml",
+      "contentVersion": "2d1445cb2a3c"
+    },
+    {
       "id": "javascript-choisir-structure-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -47112,6 +47779,246 @@
       "technology": "javascript",
       "contentPath": "javascript/portee/portees-et-chaine-de-portee/quiz.yaml",
       "contentVersion": "63860ae20e95"
+    },
+    {
+      "id": "javascript-compiler-et-configurer-typescript-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ts-config-q1",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "`vite build` échoue si le projet contient une erreur de type TypeScript.\n",
+          "answer": false,
+          "explanation": "Vite efface les types sans les vérifier. La vérification se fait avec tsc --noEmit, dans un script et en intégration continue.\n",
+          "skills": [
+            "js-ts-compiler-config"
+          ]
+        },
+        {
+          "id": "js-ts-config-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi `node commande.ts` refuse-t-il un fichier qui contient un enum ?\n",
+          "options": [
+            "Un enum génère du JavaScript, alors que Node se contente d'effacer les annotations",
+            "Node ne sait pas exécuter de fichiers .ts",
+            "Les enums sont interdits en mode strict",
+            "Il faut importer les enums depuis node:typescript"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Node exécute seulement la syntaxe effaçable. Une union de chaînes ou un objet as const remplace l'enum.\n",
+          "skills": [
+            "js-ts-compiler-config"
+          ]
+        },
+        {
+          "id": "js-ts-config-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles options conviennent au tsconfig d'une application front-end construite par Vite ?\n",
+          "options": [
+            "noEmit: true",
+            "strict: true",
+            "module: preserve",
+            "outDir: dist, pour que tsc produise les fichiers déployés"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Avec un outil de build, tsc ne fait que vérifier : c'est Vite qui produit les fichiers.\n",
+          "skills": [
+            "js-ts-compiler-config"
+          ]
+        },
+        {
+          "id": "js-ts-config-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que fait l'option noUncheckedIndexedAccess ?\n",
+          "options": [
+            "Elle considère qu'un élément lu par index, comme tableau[0], peut être undefined",
+            "Elle interdit les accès par index",
+            "Elle vérifie les index à l'exécution",
+            "Elle désactive la vérification des tableaux"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un tableau vide ou une clé absente donnent undefined : l'option oblige à traiter ce cas.\n",
+          "skills": [
+            "js-ts-compiler-config"
+          ]
+        }
+      ],
+      "chapterId": "javascript-compiler-et-configurer-typescript",
+      "technology": "javascript",
+      "contentPath": "javascript/pourquoi-typescript/compiler-et-configurer-typescript/quiz.yaml",
+      "contentVersion": "887ea98f62d4"
+    },
+    {
+      "id": "javascript-limites-de-javascript-et-typage-statique-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ts-pourquoi-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quand TypeScript détecte-t-il `commande.totl` à la place de `commande.total` ?\n",
+          "options": [
+            "Avant l'exécution, pendant la vérification des types",
+            "À l'exécution, quand la ligne est atteinte",
+            "Jamais : accéder à une propriété inexistante est légal",
+            "Seulement si un test couvre cette ligne"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "La vérification statique analyse tout le code sans l'exécuter. JavaScript seul renverrait undefined sans rien signaler.\n",
+          "skills": [
+            "js-ts-why"
+          ]
+        },
+        {
+          "id": "js-ts-pourquoi-q2",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Déclarer `const produit = JSON.parse(texte) as Produit` garantit à l'exécution que produit respecte l'interface.\n",
+          "answer": false,
+          "explanation": "as est une simple affirmation, et les types sont effacés à l'exécution. Les données extérieures doivent être validées par du code.\n",
+          "skills": [
+            "js-ts-why"
+          ]
+        },
+        {
+          "id": "js-ts-pourquoi-q3",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel type TypeScript infère-t-il pour `let quantite = 3` ?\n",
+          "options": [
+            "number",
+            "3",
+            "any",
+            "unknown"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Avec let, la variable peut changer : TypeScript élargit la valeur littérale 3 au type number. Avec const, il garderait le type littéral 3.\n",
+          "skills": [
+            "js-ts-why"
+          ]
+        },
+        {
+          "id": "js-ts-pourquoi-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Que n'apporte pas TypeScript ?\n",
+          "options": [
+            "Un code plus rapide à l'exécution",
+            "La vérification du comportement métier, qui reste le rôle des tests",
+            "La validation des données reçues à l'exécution",
+            "La détection d'une valeur possiblement undefined"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "TypeScript détecte les erreurs de types, dont les valeurs possiblement absentes en mode strict. Il ne change ni la vitesse, ni le besoin de tests et de validation.\n",
+          "skills": [
+            "js-ts-why"
+          ]
+        }
+      ],
+      "chapterId": "javascript-limites-de-javascript-et-typage-statique",
+      "technology": "javascript",
+      "contentPath": "javascript/pourquoi-typescript/limites-de-javascript-et-typage-statique/quiz.yaml",
+      "contentVersion": "3592cb9b3e5d"
+    },
+    {
+      "id": "javascript-migration-progressive-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ts-migration-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Dans quel ordre convertir les fichiers d'un projet vers TypeScript ?\n",
+          "options": [
+            "Des modules sans dépendances internes vers les points d'entrée",
+            "Du point d'entrée vers les utilitaires",
+            "Par ordre alphabétique",
+            "Tous les fichiers en même temps"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Les types des feuilles se propagent à leurs utilisateurs : chaque conversion ne demande de typer que son propre code.\n",
+          "skills": [
+            "js-ts-migration"
+          ]
+        },
+        {
+          "id": "js-ts-migration-q2",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "Que se passe-t-il quand l'erreur masquée par un `// @ts-expect-error` disparaît ?\n",
+          "options": [
+            "TypeScript signale une directive @ts-expect-error inutilisée",
+            "Rien : le commentaire reste silencieux",
+            "Le fichier n'est plus vérifié",
+            "La ligne suivante est supprimée"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "C'est ce qui distingue @ts-expect-error de @ts-ignore : le compromis doit être retiré dès qu'il devient inutile.\n",
+          "skills": [
+            "js-ts-migration"
+          ]
+        },
+        {
+          "id": "js-ts-migration-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles pratiques conviennent à une migration progressive ?\n",
+          "options": [
+            "allowJs pour faire cohabiter fichiers .js et .ts",
+            "Des annotations JSDoc avec checkJs avant de renommer les fichiers",
+            "Écrire tout nouveau fichier en TypeScript",
+            "Remplacer chaque erreur par un any pour avancer vite"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "any désactive la vérification et contamine les types dérivés : on obtiendrait du TypeScript sans ses bénéfices.\n",
+          "skills": [
+            "js-ts-migration"
+          ]
+        },
+        {
+          "id": "js-ts-migration-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Avec TypeScript 7, un tsconfig qui ne mentionne pas strict active quand même les vérifications strictes.\n",
+          "answer": true,
+          "explanation": "strict est activé par défaut dans les versions récentes. Une migration commence donc par \"strict\": false explicite, puis active les vérifications une à une.\n",
+          "skills": [
+            "js-ts-migration"
+          ]
+        }
+      ],
+      "chapterId": "javascript-migration-progressive",
+      "technology": "javascript",
+      "contentPath": "javascript/pourquoi-typescript/migration-progressive/quiz.yaml",
+      "contentVersion": "3dc92e720a3b"
     },
     {
       "id": "javascript-motifs-fonctionnels-quiz",
