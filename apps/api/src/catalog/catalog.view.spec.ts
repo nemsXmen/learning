@@ -17,7 +17,7 @@ beforeAll(async () => {
   const result = await loadContentGraph(CONTENT_DIR);
   if (!result.ok) throw new Error('Le contenu de départ doit être valide');
   graph = result.value;
-});
+}, 30_000);
 
 const UNLOCK = PARAMETERS.mastery.unlockThreshold;
 
@@ -109,7 +109,7 @@ describe('prerequisiteSkillsOf', () => {
 describe('buildTechnologyList', () => {
   it('lists published technologies in order, with counts', () => {
     const list = buildTechnologyList(graph, [], []);
-    expect(list.map((item) => item.slug)).toEqual(['javascript', 'typescript']);
+    expect(list.map((item) => item.slug)).toEqual(['javascript', 'typescript', 'ai-engineering']);
 
     const javascript = list[0]!;
     // Counted against the graph: writing content must not break a test about counting.

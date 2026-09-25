@@ -13,7 +13,7 @@ describe('buildSyncPlan', () => {
     const graph = await seedGraph();
     const plan = buildSyncPlan(graph);
 
-    expect(plan.technologies.map((t) => t.slug).sort()).toEqual(['javascript', 'typescript']);
+    expect(plan.technologies.map((t) => t.slug).sort()).toEqual(['ai-engineering', 'javascript', 'typescript']);
     // Counted against the graph, not hard-coded: writing a chapter must not break a
     // test about the projection.
     expect(plan.modules).toHaveLength(graph.modules.length);
@@ -36,7 +36,7 @@ describe('buildSyncPlan', () => {
     for (const module of plan.modules) {
       expect(module.id).toBe(moduleKey(module.technologySlug, module.slug));
     }
-    expect(ids).toContain('typescript/fundamentals');
+    expect(ids).toContain('typescript/01-introduction-to-typescript');
     expect(new Set(ids).size).toBe(ids.length);
   });
 

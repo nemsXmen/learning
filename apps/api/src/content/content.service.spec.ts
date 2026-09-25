@@ -40,7 +40,7 @@ describe('ContentService', () => {
   it('loads the seed content tree at boot', async () => {
     const { service } = await bootService();
     const graph = service.getGraph();
-    expect(graph.technologies.map((t) => t.slug).sort()).toEqual(['javascript', 'typescript']);
+    expect(graph.technologies.map((t) => t.slug).sort()).toEqual(['ai-engineering', 'javascript', 'typescript']);
     expect(graph.chapters.length).toBeGreaterThanOrEqual(5);
   });
 

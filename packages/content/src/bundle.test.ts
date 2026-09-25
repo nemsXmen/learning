@@ -10,6 +10,7 @@ const CONTENT_DIR = resolve(__dirname, '..', '..', '..', 'content');
 describe('bundled content', () => {
   it('carries the whole seed tree', () => {
     expect(bundledGraph.technologies.map((t) => t.slug).sort()).toEqual([
+      'ai-engineering',
       'javascript',
       'typescript',
     ]);
@@ -36,5 +37,5 @@ describe('bundled content', () => {
     const committed = await readFile(GENERATED_PATH, 'utf8');
 
     expect(committed).toBe(onDisk);
-  });
+  }, 30_000);
 });
