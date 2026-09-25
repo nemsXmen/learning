@@ -522,6 +522,47 @@ skills:
     importance: 4
     requires: [behavior-testing, async-testing]
 
+  # Partie 14 — Performance
+  - id: complexity-analysis
+    name: Coût des opérations et complexité
+    importance: 5
+    requires: [loop-complexity, map-collection]
+
+  - id: search-sort-algorithms
+    name: Algorithmes de recherche et de tri
+    importance: 4
+    requires: [complexity-analysis, arrays-sort-flatten]
+
+  - id: caching-and-laziness
+    name: Mémoïsation et évaluation paresseuse
+    importance: 4
+    requires: [complexity-analysis, memoization, generators]
+
+  - id: debounce-throttle
+    name: Debouncing et throttling
+    importance: 4
+    requires: [memoization, event-loop, dom-events]
+
+  - id: rendering-pipeline
+    name: Pipeline de rendu, reflow et repaint
+    importance: 5
+    requires: [dom-modification, event-loop]
+
+  - id: large-lists-events
+    name: Événements fréquents et grandes listes
+    importance: 4
+    requires: [rendering-pipeline, event-delegation, debounce-throttle]
+
+  - id: code-splitting
+    name: Code splitting et lazy loading
+    importance: 4
+    requires: [module-reexports, large-lists-events]
+
+  - id: web-workers-profiling
+    name: Web Workers et profilage
+    importance: 4
+    requires: [rendering-pipeline, network-performance-debugging, large-lists-events]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

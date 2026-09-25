@@ -1,0 +1,59 @@
+id: javascript-recherche-et-tri-quiz
+kind: QUIZ
+questions:
+  - id: js-recherche-tri-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Combien d'étapes, au plus, demande une recherche dichotomique dans un tableau trié d'un million d'éléments ?
+    options:
+      - "Environ 20"
+      - "Environ 1 000"
+      - "Environ 500 000"
+      - "Un million"
+    answer: [0]
+    explanation: >
+      Chaque étape divise l'intervalle par deux, et 2^20 dépasse un million : une vingtaine d'étapes suffisent.
+    skills:
+      - search-sort-algorithms
+
+  - id: js-recherche-tri-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `console.log([3, 1, 2, 5, 4].sort((a, b) => a > b).join(','))` dans V8 ?
+    answer: '3,1,2,5,4'
+    explanation: >
+      Le comparateur renvoie un booléen, converti en 1 ou 0 : il n'indique jamais qu'un élément doit passer
+      avant l'autre, et le tableau n'est pas trié. Il faut renvoyer a - b.
+    skills:
+      - search-sort-algorithms
+
+  - id: js-recherche-tri-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Pour lesquels de ces besoins un tableau trié avec une recherche dichotomique est-il plus adapté qu'une Map ?
+    options:
+      - "Trouver toutes les commandes entre deux dates"
+      - "Trouver l'utilisateur d'identifiant exact 'u-42'"
+      - "Trouver la station la plus proche d'une altitude donnée"
+      - "Trouver les mots qui commencent par « pro »"
+    answer: [0, 2, 3]
+    explanation: >
+      Intervalles, plus proche valeur et préfixes demandent l'ordre des clés, que la Map ne connaît pas. Pour
+      une clé exacte, la Map répond en O(1).
+    skills:
+      - search-sort-algorithms
+
+  - id: js-recherche-tri-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Array.prototype.sort garantit que deux éléments jugés égaux par le comparateur gardent leur ordre d'origine.
+    answer: true
+    explanation: >
+      Depuis ES2019, sort et toSorted sont stables. On peut donc trier par nom, puis par ville, et garder les
+      noms dans l'ordre à l'intérieur de chaque ville.
+    skills:
+      - search-sort-algorithms

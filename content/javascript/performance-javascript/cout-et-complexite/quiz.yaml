@@ -1,0 +1,67 @@
+id: javascript-cout-et-complexite-quiz
+kind: QUIZ
+questions:
+  - id: js-complexite-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle est la complexité de `clients.filter((c) => ids.includes(c.id))`, avec n clients et m identifiants ?
+    options:
+      - "O(n × m)"
+      - "O(n + m)"
+      - "O(n)"
+      - "O(n log m)"
+    answer: [0]
+    explanation: >
+      filter appelle son callback n fois, et chaque includes parcourt jusqu'à m identifiants. Avec un Set
+      construit une fois, on descend à O(n + m).
+    skills:
+      - complexity-analysis
+
+  - id: js-complexite-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Parmi ces opérations sur un tableau de n éléments, lesquelles sont en O(n) ?
+    options:
+      - "tableau.shift()"
+      - "tableau.push(x)"
+      - "tableau.indexOf(x)"
+      - "[...tableau]"
+      - "tableau[i]"
+    answer: [0, 2, 3]
+    explanation: >
+      shift décale tous les éléments restants, indexOf parcourt le tableau et le spread copie chaque élément.
+      push est en O(1) amorti et l'accès par index en O(1).
+    skills:
+      - complexity-analysis
+
+  - id: js-complexite-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Pour une liste de 10 éléments, remplacer un tableau par une Map rend toujours les recherches plus rapides.
+    answer: false
+    explanation: >
+      Big O décrit la croissance pour de grandes tailles. Sur quelques éléments, un parcours de tableau, sans
+      hachage et avec des données contiguës, est souvent aussi rapide ou plus rapide : les constantes dominent.
+    skills:
+      - complexity-analysis
+
+  - id: js-complexite-q4
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Pourquoi dit-on que push est en O(1) amorti, et non simplement en O(1) ?
+    options:
+      - "Parce qu'un push déclenche parfois une réallocation en O(n), rare au point que le coût moyen reste constant"
+      - "Parce que push est en O(1) seulement sur les tableaux triés"
+      - "Parce que le ramasse-miettes s'exécute après chaque push"
+      - "Parce que push parcourt le tableau pour trouver sa fin"
+    answer: [0]
+    explanation: >
+      Quand la capacité est atteinte, le moteur alloue un espace proportionnellement plus grand et copie les
+      éléments. Ces copies deviennent de plus en plus rares : réparties sur tous les push, elles coûtent une
+      constante par opération.
+    skills:
+      - complexity-analysis

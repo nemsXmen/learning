@@ -1,0 +1,67 @@
+id: javascript-evenements-et-grandes-listes-quiz
+kind: QUIZ
+questions:
+  - id: js-grandes-listes-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Une liste virtuelle de 100 000 lignes de 32 px s'affiche dans un conteneur de 400 px, avec une marge de 5
+      lignes de chaque côté. Environ combien de lignes sont dans le DOM au milieu de la liste ?
+    options:
+      - "Environ 23"
+      - "Environ 400"
+      - "100 000"
+      - "Environ 3 125"
+    answer: [0]
+    explanation: >
+      400 / 32 donne 12,5, soit 13 lignes visibles, plus 5 au-dessus et 5 en dessous. Le DOM reste minuscule,
+      quelle que soit la taille de la liste.
+    skills:
+      - large-lists-events
+
+  - id: js-grandes-listes-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle est la meilleure façon de savoir quand un élément devient visible pendant le défilement ?
+    options:
+      - "Un IntersectionObserver"
+      - "Un écouteur scroll qui lit getBoundingClientRect"
+      - "Un setInterval qui compare scrollY à la position de l'élément"
+      - "Un ResizeObserver sur la fenêtre"
+    answer: [0]
+    explanation: >
+      L'IntersectionObserver calcule la visibilité dans le navigateur et n'appelle le callback que lorsqu'elle
+      change, sans mesure de géométrie dans votre code à chaque événement.
+    skills:
+      - large-lists-events
+
+  - id: js-grandes-listes-q3
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Quelles sont les limites de la virtualisation d'une liste ?
+    options:
+      - "Ctrl+F ne trouve pas les lignes hors écran"
+      - "L'état gardé dans le DOM d'une ligne, comme un champ saisi, est perdu quand elle sort de l'écran"
+      - "Les lecteurs d'écran ne connaissent pas la taille réelle sans aria-setsize et aria-posinset"
+      - "Le défilement devient plus lent à mesure que la liste grandit"
+    answer: [0, 1, 2]
+    explanation: >
+      Les lignes hors écran n'existent pas dans le DOM, d'où les trois premières limites. En revanche, le coût
+      du défilement ne dépend pas de la taille de la liste : c'est tout l'intérêt de la technique.
+    skills:
+      - large-lists-events
+
+  - id: js-grandes-listes-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      `{ passive: true }` sur un écouteur touchmove permet au navigateur de faire défiler sans attendre la fin de
+      l'écouteur.
+    answer: true
+    explanation: >
+      L'écouteur promet de ne pas appeler preventDefault() : le navigateur sait que le défilement ne sera pas
+      annulé et le démarre immédiatement.
+    skills:
+      - large-lists-events

@@ -678,6 +678,24 @@
       "contentVersion": "e54665e6e8ed"
     },
     {
+      "slug": "performance-javascript",
+      "title": "JavaScript Performance",
+      "order": 41,
+      "part": "performance",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-javascript/module.yaml",
+      "contentVersion": "61fed7876e40"
+    },
+    {
+      "slug": "performance-navigateur",
+      "title": "Browser Performance",
+      "order": 42,
+      "part": "performance",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-navigateur/module.yaml",
+      "contentVersion": "25e07c3e439c"
+    },
+    {
       "slug": "portee",
       "title": "Portée",
       "order": 12,
@@ -2343,6 +2361,90 @@
       "requires": [
         "behavior-testing",
         "async-testing"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "complexity-analysis",
+      "name": "Coût des opérations et complexité",
+      "importance": 5,
+      "requires": [
+        "loop-complexity",
+        "map-collection"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "search-sort-algorithms",
+      "name": "Algorithmes de recherche et de tri",
+      "importance": 4,
+      "requires": [
+        "complexity-analysis",
+        "arrays-sort-flatten"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "caching-and-laziness",
+      "name": "Mémoïsation et évaluation paresseuse",
+      "importance": 4,
+      "requires": [
+        "complexity-analysis",
+        "memoization",
+        "generators"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "debounce-throttle",
+      "name": "Debouncing et throttling",
+      "importance": 4,
+      "requires": [
+        "memoization",
+        "event-loop",
+        "dom-events"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "rendering-pipeline",
+      "name": "Pipeline de rendu, reflow et repaint",
+      "importance": 5,
+      "requires": [
+        "dom-modification",
+        "event-loop"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "large-lists-events",
+      "name": "Événements fréquents et grandes listes",
+      "importance": 4,
+      "requires": [
+        "rendering-pipeline",
+        "event-delegation",
+        "debounce-throttle"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "code-splitting",
+      "name": "Code splitting et lazy loading",
+      "importance": 4,
+      "requires": [
+        "module-reexports",
+        "large-lists-events"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "web-workers-profiling",
+      "name": "Web Workers et profilage",
+      "importance": 4,
+      "requires": [
+        "rendering-pipeline",
+        "network-performance-debugging",
+        "large-lists-events"
       ],
       "technology": "javascript"
     },
@@ -9501,6 +9603,318 @@
       "contentPath": "javascript/patterns-objet/strategie-observateur-injection/lesson.md",
       "contentVersion": "1ef690752183",
       "body": "\n## Objectifs\n\n- Rendre un algorithme interchangeable avec une stratégie, souvent une simple fonction.\n- Écrire un observateur qui prévient ses abonnés et permet de se désabonner.\n- Passer à un objet les collaborateurs dont il a besoin, pour pouvoir le tester.\n\n## Introduction\n\nCes trois patterns partagent une idée : **ne pas figer une décision dans le code qui\nl'utilise**. La stratégie laisse varier un calcul, l'observateur laisse varier les réactions à\nun événement, l'injection laisse varier les collaborateurs. En JavaScript, où les fonctions\nsont des valeurs, ils s'écrivent souvent en quelques lignes — et savoir quand une fonction\nsuffit fait partie du pattern.\n\n## Concept\n\n| Pattern | Ce qui varie | Forme idiomatique en JavaScript |\n| --- | --- | --- |\n| Stratégie | l'algorithme | une fonction passée en paramètre, ou un objet de fonctions |\n| Observateur | qui réagit à un événement | `abonner(evenement, rappel)` qui renvoie une fonction de désabonnement |\n| Injection de dépendances | les collaborateurs | les recevoir dans le constructeur au lieu de les créer |\n\nL'injection de dépendances ne demande aucun outil : c'est simplement **passer en paramètre**\nce qu'on créait auparavant avec `new` à l'intérieur de la classe. Les objets sont assemblés en\nun seul endroit, au démarrage de l'application.\n\n## Exemple\n\n```js\n// Stratégie : des fonctions interchangeables.\nconst livraison = {\n  standard: (commande) => (commande.total >= 50 ? 0 : 5),\n  express: () => 12,\n};\n\nfunction fraisDeLivraison(commande, strategie = livraison.standard) {\n  return strategie(commande);\n}\nconsole.log(fraisDeLivraison({ total: 30 }), fraisDeLivraison({ total: 30 }, livraison.express)); // 5 12\n\n// Observateur : s'abonner, être prévenu, se désabonner.\nclass Emetteur {\n  #abonnes = new Map();\n\n  abonner(evenement, rappel) {\n    if (!this.#abonnes.has(evenement)) {\n      this.#abonnes.set(evenement, new Set());\n    }\n    this.#abonnes.get(evenement).add(rappel);\n    return () => this.#abonnes.get(evenement).delete(rappel);\n  }\n\n  emettre(evenement, donnees) {\n    for (const rappel of this.#abonnes.get(evenement) ?? []) {\n      rappel(donnees);\n    }\n  }\n}\n\nconst panier = new Emetteur();\nconst journal = [];\nconst seDesabonner = panier.abonner('ajout', (article) => journal.push(`ajouté : ${article}`));\npanier.emettre('ajout', 'clavier');\nseDesabonner();\npanier.emettre('ajout', 'souris');\nconsole.log(journal); // ['ajouté : clavier']\n\n// Injection : le service reçoit ses collaborateurs au lieu de les fabriquer.\nclass ServiceInscription {\n  #depot;\n  #notifier;\n\n  constructor(depot, notifier) {\n    this.#depot = depot;\n    this.#notifier = notifier;\n  }\n\n  inscrire(email) {\n    if (this.#depot.existe(email)) {\n      return false;\n    }\n    this.#depot.ajouter(email);\n    this.#notifier(`Bienvenue ${email}`);\n    return true;\n  }\n}\n\n// En test : des collaborateurs factices, sans base de données ni envoi réel.\nconst emails = new Set();\nconst messages = [];\nconst service = new ServiceInscription(\n  { existe: (email) => emails.has(email), ajouter: (email) => emails.add(email) },\n  (message) => messages.push(message),\n);\nconsole.log(service.inscrire('ada@exemple.fr'), service.inscrire('ada@exemple.fr')); // true false\nconsole.log(messages); // ['Bienvenue ada@exemple.fr']\n```\n\n## Comment ça fonctionne\n\nDans les livres de patterns, une **stratégie** est une interface et une classe par\nalgorithme. En JavaScript, une fonction est déjà une valeur : l'interface se réduit à « une\nfonction qui reçoit une commande et renvoie un montant ». Un objet de fonctions sert de\nregistre, et ajouter un mode de livraison revient à ajouter une propriété. Une classe ne se\njustifie que si la stratégie a un état ou plusieurs méthodes liées.\n\nL'**observateur** découple l'émetteur des réactions : le panier ne sait pas qui l'écoute, et\nde nouvelles réactions s'ajoutent sans le modifier. Trois détails font la différence entre une\nversion jouet et une version fiable. Un `Set` évite d'enregistrer deux fois le même rappel. La\n**fonction de désabonnement** renvoyée par `abonner` permet de nettoyer, sans quoi un abonné\nreste référencé pour toujours — la fuite mémoire vue avec les closures. Enfin, un rappel qui\n**lève une erreur** interrompt la boucle, et les abonnés suivants ne sont pas prévenus : un\németteur robuste entoure chaque appel d'un `try` / `catch`. L'environnement fournit déjà ce\npattern : `EventTarget` dans les navigateurs et dans Node, `EventEmitter` dans Node.\n\nL'**injection de dépendances** rend visibles les collaborateurs d'un objet. Un service qui\nécrit `new DepotPostgres()` dans son constructeur ne peut pas être testé sans base de données,\net son couplage ne se voit qu'en lisant son code. En recevant `depot` et `notifier`, il\nannonce ses besoins dans sa signature, et le test lui passe des versions factices. Les objets\nréels sont créés et reliés en un seul endroit, souvent le fichier de démarrage, appelé\n**racine de composition**. Un conteneur d'injection, comme celui de NestJS, automatise ce\ncâblage dans les grosses applications ; il n'est pas nécessaire pour appliquer le principe.\n\nCes patterns sont des outils, pas des objectifs. Si un calcul ne varie jamais, une stratégie\nest une indirection inutile ; si un seul composant réagit à un événement, un appel direct est\nplus lisible qu'un émetteur. Et une transformation de données s'écrit mieux comme une suite de\nfonctions que comme une hiérarchie d'objets.\n\n## Erreurs fréquentes\n\n**Créer une classe par stratégie quand une fonction suffit.** L'interface est la signature.\n\n**Oublier de se désabonner.** L'abonné et tout ce qu'il retient restent en mémoire.\n\n**Laisser un abonné en erreur bloquer les autres.** Protège chaque appel dans l'émetteur.\n\n**Instancier ses dépendances dans le constructeur.** Reçois-les, pour pouvoir les remplacer.\n\n**Introduire un conteneur d'injection dans une petite application.** Passer les objets en\nparamètre suffit.\n\n## À retenir\n\n- Stratégie : un algorithme interchangeable, en JavaScript souvent une fonction.\n- Observateur : `abonner` renvoie de quoi se désabonner ; protège la boucle d'émission.\n- Injection : un objet reçoit ses collaborateurs au lieu de les créer.\n- Les objets réels sont assemblés à un seul endroit, au démarrage.\n- Un pattern se justifie par une variation réelle : sinon, un appel direct suffit.\n\n## Exercices\n\n1. Remplace cette cascade de conditions par des stratégies, sélectionnées par le nom de\n   l'abonnement.\n\n   ```js\n   function prixMensuel(abonnement, utilisateurs) {\n     if (abonnement === 'gratuit') return 0;\n     if (abonnement === 'equipe') return utilisateurs * 8;\n     if (abonnement === 'entreprise') return Math.max(200, utilisateurs * 6);\n   }\n   ```\n\n   :::indice\n   Un objet dont chaque propriété est une fonction de calcul, puis une fonction qui choisit et\n   signale un abonnement inconnu.\n   :::\n\n   :::solution\n   ```js\n   const tarifs = {\n     gratuit: () => 0,\n     equipe: (utilisateurs) => utilisateurs * 8,\n     entreprise: (utilisateurs) => Math.max(200, utilisateurs * 6),\n   };\n\n   function prixMensuel(abonnement, utilisateurs) {\n     const tarif = tarifs[abonnement];\n     if (!tarif) {\n       throw new Error(`Abonnement inconnu : ${abonnement}`);\n     }\n     return tarif(utilisateurs);\n   }\n\n   console.log(prixMensuel('equipe', 5), prixMensuel('entreprise', 10)); // 40 200\n   ```\n\n   La version d'origine renvoyait silencieusement `undefined` pour un abonnement inconnu ; le\n   registre rend ce cas explicite.\n   :::\n\n2. Ajoute à `Emetteur` une méthode `abonnerUneFois(evenement, rappel)` : le rappel ne doit être\n   exécuté qu'à la première émission.\n\n   :::indice\n   Abonne une fonction intermédiaire qui se désabonne elle-même avant d'appeler le rappel.\n   :::\n\n   :::solution\n   ```js\n   class EmetteurUneFois extends Emetteur {\n     abonnerUneFois(evenement, rappel) {\n       const seDesabonner = this.abonner(evenement, (donnees) => {\n         seDesabonner();\n         rappel(donnees);\n       });\n       return seDesabonner;\n     }\n   }\n\n   const emetteur = new EmetteurUneFois();\n   const recus = [];\n   emetteur.abonnerUneFois('pret', (valeur) => recus.push(valeur));\n   emetteur.emettre('pret', 1);\n   emetteur.emettre('pret', 2);\n   console.log(recus); // [1]\n   ```\n\n   Retirer l'élément courant d'un `Set` pendant qu'on le parcourt est sûr : l'itération continue\n   normalement avec les éléments suivants.\n   :::\n\n3. Ce service est impossible à tester sans envoyer de vrais courriels. Rends ses dépendances\n   injectables, puis écris un test avec un envoi factice.\n\n   ```js\n   class Relance {\n     constructor() {\n       this.mailer = new MailerSmtp();\n     }\n     relancer(factures) {\n       for (const facture of factures.filter((f) => !f.payee)) {\n         this.mailer.envoyer(facture.email, 'Facture en attente');\n       }\n     }\n   }\n   ```\n\n   :::indice\n   Le constructeur reçoit le `mailer` au lieu de le créer ; le test lui passe un objet qui\n   enregistre les appels.\n   :::\n\n   :::solution\n   ```js\n   class Relance {\n     #mailer;\n\n     constructor(mailer) {\n       this.#mailer = mailer;\n     }\n\n     relancer(factures) {\n       const impayees = factures.filter((facture) => !facture.payee);\n       for (const facture of impayees) {\n         this.#mailer.envoyer(facture.email, 'Facture en attente');\n       }\n       return impayees.length;\n     }\n   }\n\n   const envois = [];\n   const mailerFactice = { envoyer: (destinataire) => envois.push(destinataire) };\n\n   const relance = new Relance(mailerFactice);\n   const nombre = relance.relancer([\n     { email: 'ada@exemple.fr', payee: false },\n     { email: 'grace@exemple.fr', payee: true },\n   ]);\n   console.log(nombre, envois); // 1 ['ada@exemple.fr']\n   ```\n\n   En production, le fichier de démarrage écrit `new Relance(new MailerSmtp(configuration))` :\n   c'est le seul endroit qui connaît la classe réelle.\n   :::\n\n## Questions d'entretien\n\n- Comment s'écrit le pattern Stratégie en JavaScript ?\n\n  :::indice\n  Qu'est-ce qu'une fonction, dans ce langage ?\n  :::\n\n  :::reponse\n  Le plus souvent, avec des fonctions : puisqu'une fonction est une valeur, l'algorithme\n  interchangeable se passe en paramètre ou se range dans un objet qui sert de registre. Il n'est\n  pas nécessaire de créer une interface et une classe par variante, comme en Java. On passe à\n  des objets ou des classes seulement quand une stratégie a besoin d'un état ou de plusieurs\n  opérations liées.\n  :::\n\n- Quels sont les pièges d'un observateur fait maison ?\n\n  :::indice\n  Pense à la mémoire, aux erreurs et aux doublons.\n  :::\n\n  :::reponse\n  Les abonnés jamais retirés, qui restent référencés et provoquent des fuites mémoire — d'où une\n  fonction de désabonnement renvoyée par `abonner`. Un abonné qui lève une erreur et empêche les\n  suivants d'être prévenus, si la boucle d'émission n'est pas protégée. Les doublons, si le même\n  rappel est enregistré deux fois dans un tableau. Et une notification synchrone qui surprend\n  quand un abonné modifie l'émetteur pendant l'émission. `EventTarget` et `EventEmitter`\n  règlent déjà une partie de ces questions.\n  :::\n\n- Qu'est-ce que l'injection de dépendances, et faut-il un conteneur ?\n\n  :::indice\n  Qui crée les collaborateurs d'un objet, et où ?\n  :::\n\n  :::reponse\n  C'est le fait qu'un objet reçoive ses collaborateurs — dépôt, service d'envoi, horloge — au\n  lieu de les créer lui-même. Ses dépendances deviennent visibles dans sa signature, et on peut\n  les remplacer par des versions factices en test. Les objets réels sont assemblés à un seul\n  endroit, la racine de composition. Un conteneur, comme celui de NestJS, automatise ce câblage\n  dans les grosses applications, mais le principe s'applique très bien à la main, en passant des\n  paramètres.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-cout-et-complexite",
+      "title": "Le coût d'une opération et la complexité",
+      "slug": "cout-et-complexite",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-javascript",
+      "order": 1,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-choisir-sa-boucle",
+        "javascript-map"
+      ],
+      "skills": [
+        "complexity-analysis"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "complexite"
+      ],
+      "contentPath": "javascript/performance-javascript/cout-et-complexite/lesson.md",
+      "contentVersion": "82d4c172250e",
+      "body": "\n## Objectifs\n\n- Situer le coût d'une opération : calcul, allocation, accès au DOM, réseau.\n- Exprimer la complexité d'un algorithme en notation Big O, en temps et en mémoire.\n- Connaître le coût des méthodes de tableaux, d'objets, de `Map` et de `Set`.\n- Repérer un algorithme quadratique caché dans un code qui a l'air simple.\n\n## Introduction\n\nLe module sur les boucles a introduit l'idée : deux boucles imbriquées coûtent beaucoup plus cher qu'une seule. On va\nmaintenant en faire un outil de travail. Face à un code lent, la question n'est presque jamais « comment rendre\ncette ligne plus rapide ? », mais « combien de fois cette ligne s'exécute-t-elle, et combien coûte chaque\nexécution ? ». La **complexité** répond à la première question, les **ordres de grandeur** à la seconde.\n\nCes deux outils permettent de prévoir un problème avant de le mesurer : une fonction qui passe en 2 ms sur 1 000\néléments peut prendre plusieurs secondes sur 40 000, et on peut le savoir en lisant le code.\n\n## Concept\n\n**Ordres de grandeur.** Toutes les opérations ne se valent pas. Les chiffres exacts dépendent de la machine ; les\nrapports entre eux, beaucoup moins.\n\n| Opération | Ordre de grandeur |\n| --- | --- |\n| addition, comparaison, lecture d'une variable locale | une fraction de nanoseconde |\n| lecture d'une propriété d'objet, d'un élément de tableau | quelques nanosecondes |\n| allocation d'un petit objet ou tableau | des dizaines de nanosecondes, plus le ramasse-miettes ensuite |\n| lecture d'une taille ou d'une position dans le DOM qui force un calcul de mise en page | de quelques microsecondes à plusieurs millisecondes |\n| requête réseau | des dizaines à des centaines de millisecondes |\n\nUne seule requête réseau de trop pèse autant que des millions d'additions : on optimise d'abord ce qui coûte le plus\ncher, et ce qui se répète le plus.\n\n**Notation Big O.** Elle décrit comment le nombre d'opérations grandit avec la taille `n` des données, en ignorant\nles constantes et les termes secondaires : `3n + 20` s'écrit O(n), `n²/2 + n` s'écrit O(n²).\n\n| Complexité | Nom | Exemple | n = 1 000 → n = 1 000 000 |\n| --- | --- | --- | --- |\n| O(1) | constante | `tableau[i]`, `map.get(cle)` | identique |\n| O(log n) | logarithmique | recherche dichotomique dans un tableau trié | ×2 |\n| O(n) | linéaire | parcourir un tableau, `includes` | ×1 000 |\n| O(n log n) | quasi linéaire | `sort` | ×2 000 environ |\n| O(n²) | quadratique | `includes` dans un `filter`, boucles imbriquées | ×1 000 000 |\n| O(2ⁿ) | exponentielle | énumérer tous les sous-ensembles | inutilisable au-delà de quelques dizaines |\n\n**Coût des structures courantes.**\n\n| Opération | Coût |\n| --- | --- |\n| `tableau[i]`, `tableau.length` | O(1) |\n| `push`, `pop` | O(1) amorti |\n| `shift`, `unshift`, `splice` au début ou au milieu | O(n) : les éléments suivants sont décalés |\n| `includes`, `indexOf`, `find`, `some` | O(n) dans le pire cas |\n| `slice`, `concat`, `[...tableau]`, `map`, `filter` | O(n) en temps et en mémoire |\n| `sort`, `toSorted` | O(n log n) |\n| `objet.cle`, `cle in objet` | O(1) |\n| `Object.keys`, `Object.entries`, `{ ...objet }` | O(n), n étant le nombre de propriétés |\n| `map.get`, `map.set`, `map.has`, `set.has`, `set.add`, `delete` | O(1) en moyenne |\n\n## Exemple\n\nOn veut garder, parmi des clients, ceux dont l'identifiant figure dans une liste d'identifiants actifs. Les deux\nversions donnent le même résultat :\n\n```js\nfunction mesurer(libelle, fonction) {\n  const debut = performance.now();\n  const resultat = fonction();\n  console.log(`${libelle} : ${(performance.now() - debut).toFixed(1)} ms`);\n  return resultat;\n}\n\nconst n = 40_000;\nconst clients = Array.from({ length: n }, (_, i) => ({ id: i, nom: `Client ${i}` }));\nconst idsActifs = Array.from({ length: n / 2 }, (_, i) => i * 2);\n\n// O(n × m) : includes reparcourt idsActifs pour chaque client.\nconst lents = mesurer('includes', () => clients.filter((client) => idsActifs.includes(client.id)));\n\n// O(n + m) : le Set est construit une fois, chaque recherche est en O(1).\nconst rapides = mesurer('Set', () => {\n  const actifs = new Set(idsActifs);\n  return clients.filter((client) => actifs.has(client.id));\n});\n\nconsole.log(lents.length === rapides.length); // true\n```\n\nSur un poste de développement, on obtient par exemple :\n\n```text\nn = 1 000    includes : 1.6 ms     Set : 0.3 ms\nn = 10 000   includes : 98 ms      Set : 4.1 ms\nn = 40 000   includes : 2 414 ms   Set : 8.2 ms\n```\n\nQuand `n` est multiplié par 4, de 10 000 à 40 000, la version `includes` est environ 25 fois plus lente : c'est\nla signature d'un algorithme quadratique, un peu aggravée par les caches du processeur. La version `Set` suit\nà peu près la taille des données.\n\n## Comment ça fonctionne\n\n**Compter, puis simplifier.** Pour estimer une complexité, on compte combien de fois s'exécute l'opération la plus\nrépétée. Dans la première version, `filter` appelle son callback `n` fois, et chaque `includes` parcourt jusqu'à\n`m` identifiants : jusqu'à `n × m` comparaisons, soit 800 millions pour 40 000 clients et 20 000 identifiants.\nDans la seconde, construire le `Set` coûte `m` opérations, et chaque `has` coûte O(1) : `n + m` au total. On garde\nle terme qui domine quand les données grandissent, et on supprime les constantes : O(n²) quand `m` est\nproportionnel à `n`, O(n) pour la seconde.\n\n**Pire cas, cas moyen, coût amorti.** Big O décrit le plus souvent le pire cas : `find` peut trouver au premier\nélément, mais il faut prévoir qu'il parcoure tout. Une `Map` est en O(1) **en moyenne** : c'est une table de\nhachage, et des collisions peuvent coûter davantage, rarement. `push` est en O(1) **amorti** : de temps en temps, le\ntableau doit réallouer un espace plus grand et copier ses éléments, mais comme la capacité double à peu près à\nchaque fois, le coût réparti sur tous les `push` reste constant.\n\n**Le piège des méthodes « simples ».** Une ligne comme `ids.includes(id)`, `liste.indexOf(x)`, `tableau.shift()`\nou `{ ...acc, [cle]: valeur }` cache une boucle. Placée dans une autre boucle, elle rend l'ensemble quadratique.\n`shift` est un bon exemple : il décale tous les éléments restants. Vider une file de 100 000 éléments avec\n`while (file.length) file.shift()` a pris 2,3 secondes dans Node 22, contre 2 ms en avançant un index. Pour une file,\non garde un index de tête plutôt que de retirer le premier élément.\n\n**Objets, `Map` et `Set`.** Lire une propriété d'objet est en O(1), et les moteurs l'accélèrent encore grâce aux\n**formes** (*hidden classes*) : des objets créés avec les mêmes propriétés, dans le même ordre, partagent une\ndescription interne, et le code qui les lit est optimisé pour elle. `delete objet.cle` casse souvent cette\noptimisation : V8 fait alors passer l'objet en mode dictionnaire, plus lent. Pour une collection dont les clés\nchangent en permanence, une `Map` est faite pour cela ; pour une structure fixe, un objet littéral est idéal.\n\n**La mémoire aussi a une complexité.** `map`, `filter`, `slice` et le spread créent de nouveaux tableaux : O(n) en\nmémoire à chaque étape. Une chaîne de cinq transformations sur un million d'éléments alloue cinq tableaux d'un\nmillion d'éléments, que le ramasse-miettes devra récupérer. C'est souvent acceptable ; dans une boucle chaude, ce\nne l'est plus.\n\n**Big O ne dit pas tout.** Pour 20 éléments, un parcours O(n) d'un tableau est plus rapide qu'une `Map` : pas de\nhachage, des données contiguës en mémoire. Les constantes comptent sur les petites tailles, la complexité sur les\ngrandes. D'où la règle : on raisonne en Big O pour prévoir, et on **mesure** avant de complexifier le code.\n\n## Erreurs fréquentes\n\n**Chercher avec `includes` ou `find` dans une boucle.** Construis un `Set` ou une `Map` une fois, avant la boucle.\n\n**Utiliser `shift` pour consommer une grande file.** Avance un index, ou utilise une structure adaptée.\n\n**Oublier le coût caché d'un spread.** `{ ...acc, [cle]: valeur }` dans un `reduce` copie tout l'accumulateur à\nchaque tour : O(n²).\n\n**Croire qu'une ligne courte est bon marché.** `JSON.parse(JSON.stringify(objet))`, `Object.keys(objet).length` ou\n`tableau.sort()` coûtent au moins O(n).\n\n**Optimiser sans connaître `n`.** Un algorithme quadratique sur une liste qui ne dépassera jamais 10 éléments n'est\npas un problème. Demande-toi quelle taille les données peuvent atteindre en production.\n\n**Confondre complexité et durée.** Big O prédit la croissance, pas le temps en millisecondes : pour cela, on mesure.\n\n## À retenir\n\n- On optimise d'abord ce qui coûte le plus cher (réseau, DOM) et ce qui se répète le plus.\n- Big O décrit la croissance du travail avec `n`, en ignorant constantes et termes secondaires.\n- `includes`, `indexOf`, `find`, `shift`, `splice` et le spread sont en O(n) : dans une boucle, O(n²).\n- `Map` et `Set` offrent des recherches en O(1) en moyenne ; `push` et `pop` sont en O(1) amorti.\n- Les transformations de tableaux coûtent aussi de la mémoire.\n- On raisonne en Big O pour prévoir, on mesure pour décider.\n\n## Exercices\n\n1. Donne la complexité en temps de chacune de ces fonctions, en fonction de la taille `n` du tableau, et justifie\n   en une phrase.\n\n   ```js\n   const premier = (tableau) => tableau[0];\n   const somme = (tableau) => tableau.reduce((total, x) => total + x, 0);\n   const aDesDoublons = (tableau) => tableau.some((x, i) => tableau.indexOf(x) !== i);\n   const trieEtPremier = (tableau) => tableau.toSorted((a, b) => a - b)[0];\n   ```\n\n   :::indice\n   Compte le nombre de fois où l'opération la plus répétée s'exécute. `indexOf` est lui-même un parcours.\n   :::\n\n   :::solution\n   - `premier` : O(1), un seul accès, quelle que soit la taille.\n   - `somme` : O(n), un passage sur chaque élément.\n   - `aDesDoublons` : O(n²) dans le pire cas, car `some` peut appeler `n` fois un `indexOf` qui parcourt jusqu'à `n`\n     éléments. Un `Set` la ramène à O(n).\n   - `trieEtPremier` : O(n log n) pour le tri, plus O(n) pour la copie. Chercher le minimum avec une seule boucle,\n     ou `Math.min(...tableau)` sur un tableau de taille raisonnable, suffit : O(n).\n\n   ```js\n   const aDesDoublonsRapide = (tableau) => new Set(tableau).size !== tableau.length;\n\n   console.log(aDesDoublonsRapide([1, 2, 3, 2])); // true\n   console.log(aDesDoublonsRapide([1, 2, 3])); // false\n   ```\n   :::\n\n2. Cette fonction regroupe des ventes par vendeur. Elle devient très lente au-delà de quelques dizaines de milliers\n   de ventes. Explique pourquoi, puis réécris-la en O(n).\n\n   ```js\n   function totalParVendeur(ventes) {\n     const vendeurs = [];\n     for (const vente of ventes) {\n       const existant = vendeurs.find((v) => v.nom === vente.vendeur);\n       if (existant) {\n         existant.total += vente.montant;\n       } else {\n         vendeurs.push({ nom: vente.vendeur, total: vente.montant });\n       }\n     }\n     return vendeurs;\n   }\n   ```\n\n   :::indice\n   Combien coûte `find` quand il y a beaucoup de vendeurs différents ? Quelle structure retrouve une entrée par sa\n   clé en O(1) ?\n   :::\n\n   :::solution\n   Pour chaque vente, `find` parcourt la liste des vendeurs déjà vus : O(n × v), soit O(n²) quand presque chaque\n   vente a un vendeur différent. Une `Map` indexée par nom retrouve l'entrée en O(1) :\n\n   ```js\n   function totalParVendeur(ventes) {\n     const totaux = new Map();\n     for (const { vendeur, montant } of ventes) {\n       totaux.set(vendeur, (totaux.get(vendeur) ?? 0) + montant);\n     }\n     return [...totaux].map(([nom, total]) => ({ nom, total }));\n   }\n\n   console.log(\n     totalParVendeur([\n       { vendeur: 'Ana', montant: 10 },\n       { vendeur: 'Bao', montant: 5 },\n       { vendeur: 'Ana', montant: 7 },\n     ]),\n   );\n   // [ { nom: 'Ana', total: 17 }, { nom: 'Bao', total: 5 } ]\n   ```\n\n   Une `Map` conserve l'ordre d'insertion : le résultat garde l'ordre de première apparition, comme la version\n   d'origine.\n   :::\n\n3. Une file d'attente de tâches est traitée avec `while (file.length) traiter(file.shift())`, et elle peut contenir\n   100 000 tâches. Écris une classe `File` avec `ajouter(valeur)`, `retirer()` et `taille`, dont toutes les\n   opérations sont en O(1) amorti.\n\n   :::indice\n   Au lieu de retirer physiquement le premier élément, retiens l'index de la tête. Pense à libérer la mémoire des\n   éléments déjà retirés.\n   :::\n\n   :::solution\n   ```js\n   class File {\n     #elements = [];\n     #tete = 0;\n\n     ajouter(valeur) {\n       this.#elements.push(valeur);\n     }\n\n     retirer() {\n       if (this.taille === 0) return undefined;\n       const valeur = this.#elements[this.#tete];\n       this.#elements[this.#tete] = undefined; // libère la référence\n       this.#tete += 1;\n       // Quand la moitié du tableau est vide, on le compacte : coût O(n) rare, O(1) amorti.\n       if (this.#tete > 1024 && this.#tete * 2 > this.#elements.length) {\n         this.#elements = this.#elements.slice(this.#tete);\n         this.#tete = 0;\n       }\n       return valeur;\n     }\n\n     get taille() {\n       return this.#elements.length - this.#tete;\n     }\n   }\n\n   const file = new File();\n   for (let i = 0; i < 100_000; i++) file.ajouter(i);\n   let somme = 0;\n   while (file.taille > 0) somme += file.retirer();\n   console.log(somme); // 4999950000\n   ```\n\n   Le compactage copie les éléments restants, mais seulement quand la tête a dépassé la moitié du tableau : chaque\n   élément est copié un nombre borné de fois, d'où le coût amorti constant.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que la notation Big O, et pourquoi ignore-t-elle les constantes ?\n\n  :::indice\n  Elle décrit une croissance, pas une durée.\n  :::\n\n  :::reponse\n  Elle décrit comment le nombre d'opérations, ou la mémoire, grandit quand la taille des données augmente. Elle\n  ignore les constantes et les termes secondaires parce que, pour de grandes tailles, c'est la forme de la croissance\n  qui domine : un algorithme en O(n) finira toujours par battre un algorithme en O(n²), quelles que soient leurs\n  constantes. Pour de petites tailles en revanche, les constantes comptent, et c'est pourquoi on mesure avant\n  d'optimiser.\n  :::\n\n- Quelle est la complexité de `tableau.filter((x) => autre.includes(x))`, et comment l'améliorer ?\n\n  :::indice\n  `includes` est un parcours.\n  :::\n\n  :::reponse\n  O(n × m) : pour chacun des `n` éléments, `includes` parcourt jusqu'aux `m` éléments de `autre`. On construit une\n  fois `const ensemble = new Set(autre)`, en O(m), puis on filtre avec `ensemble.has(x)`, en O(1) : O(n + m) au\n  total. Au-delà de quelques milliers d'éléments, la différence se chiffre en secondes.\n  :::\n\n- Qu'est-ce qu'un coût amorti ? Donne un exemple en JavaScript.\n\n  :::indice\n  Pense à ce qui se passe quand un tableau n'a plus de place pour un `push`.\n  :::\n\n  :::reponse\n  C'est le coût moyen d'une opération sur une longue suite d'opérations, même si certaines sont ponctuellement\n  chères. `push` est en O(1) amorti : quand la capacité du tableau est atteinte, le moteur alloue un espace plus\n  grand, proportionnel à la taille actuelle, et copie tout, en O(n). Comme cela arrive de plus en plus rarement, la\n  somme des copies reste proportionnelle au nombre de `push`, et chaque `push` coûte en moyenne une constante.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-debounce-et-throttle",
+      "title": "Debouncing et throttling",
+      "slug": "debounce-et-throttle",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-javascript",
+      "order": 4,
+      "estimatedMinutes": 40,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-memoization",
+        "javascript-event-loop",
+        "javascript-evenements"
+      ],
+      "skills": [
+        "debounce-throttle"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "evenements"
+      ],
+      "contentPath": "javascript/performance-javascript/debounce-et-throttle/lesson.md",
+      "contentVersion": "4c5d96e95480",
+      "body": "\n## Objectifs\n\n- Distinguer le *debouncing*, qui attend le calme, du *throttling*, qui limite la cadence.\n- Écrire `debounce` et `throttle` complets : arguments et `this` conservés, annulation, exécution forcée.\n- Caler une mise à jour visuelle sur l'affichage avec `requestAnimationFrame`.\n- Choisir la bonne technique pour une recherche, une sauvegarde automatique, un défilement ou un bouton.\n- Tester ces fonctions de façon déterministe avec les faux minuteurs de Vitest.\n\n## Introduction\n\nCertains événements arrivent en rafale. Une frappe au clavier déclenche un `input` par caractère ; un défilement\nenvoie des dizaines d'événements `scroll` par seconde ; un mouvement de souris, plus encore. Si chaque événement\nlance une requête réseau ou un recalcul de mise en page, l'application sature : requêtes inutiles, réponses dans le\ndésordre, interface qui saccade.\n\nLes deux techniques de ce chapitre ne rendent pas le travail plus rapide : elles **réduisent le nombre de fois** où\non le fait. Ce sont deux closures qui retiennent un minuteur, dans la famille des motifs vus avec la mémoïsation.\n\n## Concept\n\n```text\névénements   x x x x x       x x x x x x x x x x x\ndebounce               ↓                           ↓     (une fois, après 300 ms de calme)\nthrottle     ↓     ↓     ↓   ↓     ↓     ↓     ↓   ↓     (au plus une fois toutes les 100 ms)\n```\n\n| Technique | Règle | Cas typiques |\n| --- | --- | --- |\n| *debounce* | exécuter une fois, quand les appels ont cessé depuis `delai` ms | recherche pendant la frappe, validation d'un champ, sauvegarde automatique, redimensionnement terminé |\n| *debounce* immédiat (*leading*) | exécuter au premier appel, ignorer la rafale qui suit | double clic sur un bouton d'envoi |\n| *throttle* | exécuter au plus une fois toutes les `intervalle` ms, dernier appel compris | position de défilement, suivi de la souris, envoi de statistiques |\n| `requestAnimationFrame` | exécuter au plus une fois par image affichée | toute mise à jour visuelle liée à un événement fréquent |\n\n## Exemple\n\nUn champ de recherche interroge une API. Sans précaution, taper « javascript » envoie dix requêtes. Avec\n`debounce`, on attend que l'utilisateur marque une pause :\n\n```js\nexport function debounce(fonction, delai) {\n  let minuteur = null;\n  let derniersArguments = [];\n  let dernierThis;\n\n  function executer() {\n    minuteur = null;\n    return fonction.apply(dernierThis, derniersArguments);\n  }\n\n  function debounced(...arguments_) {\n    derniersArguments = arguments_;\n    dernierThis = this;\n    clearTimeout(minuteur);\n    minuteur = setTimeout(executer, delai);\n  }\n\n  debounced.cancel = () => {\n    clearTimeout(minuteur);\n    minuteur = null;\n  };\n\n  // Exécute tout de suite l'appel en attente, s'il y en a un.\n  debounced.flush = () => {\n    if (minuteur === null) return undefined;\n    clearTimeout(minuteur);\n    return executer();\n  };\n\n  return debounced;\n}\n```\n\nDans la page, on l'utilise ainsi :\n\n```js\nconst rechercher = debounce((texte) => {\n  console.log('requête pour', texte);\n}, 300);\n\nchamp.addEventListener('input', (evenement) => rechercher(evenement.target.value));\n```\n\nEt on le teste sans attendre de vraies secondes, avec les faux minuteurs de Vitest :\n\n```js\nimport { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { debounce } from './debounce.js';\n\ndescribe('debounce', () => {\n  beforeEach(() => vi.useFakeTimers());\n  afterEach(() => vi.useRealTimers());\n\n  it(\"n'exécute qu'une fois, avec les derniers arguments, après le calme\", () => {\n    const espion = vi.fn();\n    const rechercher = debounce(espion, 300);\n\n    for (const texte of ['j', 'ja', 'jav', 'java']) {\n      rechercher(texte);\n      vi.advanceTimersByTime(100); // l'utilisateur tape toutes les 100 ms\n    }\n    expect(espion).not.toHaveBeenCalled();\n\n    vi.advanceTimersByTime(200); // 300 ms depuis la dernière frappe\n    expect(espion).toHaveBeenCalledTimes(1);\n    expect(espion).toHaveBeenCalledWith('java');\n  });\n\n  it('peut être annulé ou forcé', () => {\n    const espion = vi.fn((x) => x * 2);\n    const calcul = debounce(espion, 300);\n\n    calcul(1);\n    calcul.cancel();\n    vi.advanceTimersByTime(1000);\n    expect(espion).not.toHaveBeenCalled();\n\n    calcul(21);\n    expect(calcul.flush()).toBe(42);\n    expect(calcul.flush()).toBeUndefined(); // plus rien en attente\n  });\n\n  it('conserve this', () => {\n    const compteur = {\n      valeur: 0,\n      incrementer: debounce(function () {\n        this.valeur += 1;\n      }, 50),\n    };\n    compteur.incrementer();\n    vi.advanceTimersByTime(50);\n    expect(compteur.valeur).toBe(1);\n  });\n});\n```\n\n## Comment ça fonctionne\n\n**Le debounce.** Chaque appel annule le minuteur précédent et en programme un nouveau : tant que les appels se\nsuivent à moins de `delai` ms, le minuteur n'arrive jamais à son terme. Quand la rafale cesse, il se déclenche une\nfois, avec les **derniers** arguments. La closure retient le minuteur, les arguments et `this` ; on utilise une\n`function`, et non une fonction fléchée, pour que `debounced` reçoive le `this` de son appelant et le transmette.\n`debounced` ne renvoie rien : le résultat n'existe pas encore au moment de l'appel. `cancel` sert au démontage d'un\ncomposant, pour qu'un appel en attente ne s'exécute pas sur une page qu'on a quittée ; `flush` sert à ne rien perdre,\npar exemple pour sauvegarder immédiatement un brouillon quand la page passe en arrière-plan.\n\n**Le choix du délai.** Pour une recherche pendant la frappe, 200 à 400 ms : assez pour qu'une frappe continue ne\ndéclenche rien, assez court pour que le résultat paraisse immédiat. Un délai trop long donne une impression de\nlenteur, que le debounce devait justement éviter.\n\n**Le throttle.** Il garantit une exécution régulière pendant la rafale, au lieu d'attendre qu'elle cesse. La version\nutile exécute le premier appel tout de suite (*leading*), puis au plus une fois par intervalle, et n'oublie pas le\ndernier appel (*trailing*) : sans lui, la position finale d'un défilement ne serait jamais prise en compte.\n\n```js\nexport function throttle(fonction, intervalle) {\n  let dernierAppel = -Infinity;\n  let minuteur = null;\n  let argumentsEnAttente;\n  let thisEnAttente;\n\n  return function throttled(...arguments_) {\n    const reste = intervalle - (Date.now() - dernierAppel);\n    if (reste <= 0) {\n      clearTimeout(minuteur);\n      minuteur = null;\n      dernierAppel = Date.now();\n      fonction.apply(this, arguments_);\n      return;\n    }\n    // Trop tôt : on retient le dernier appel et on le programme à la fin de l'intervalle.\n    argumentsEnAttente = arguments_;\n    thisEnAttente = this;\n    minuteur ??= setTimeout(() => {\n      minuteur = null;\n      dernierAppel = Date.now();\n      fonction.apply(thisEnAttente, argumentsEnAttente);\n    }, reste);\n  };\n}\n```\n\n```js\nimport { it, expect, vi } from 'vitest';\nimport { throttle } from './throttle.js';\n\nit('exécute au plus une fois par intervalle, dernier appel compris', () => {\n  vi.useFakeTimers();\n  const espion = vi.fn();\n  const suivre = throttle(espion, 100);\n\n  for (let t = 0; t <= 250; t += 10) {\n    suivre(t); // un événement toutes les 10 ms, de 0 à 250\n    vi.advanceTimersByTime(10);\n  }\n  vi.advanceTimersByTime(100);\n\n  expect(espion.mock.calls.map(([t]) => t)).toEqual([0, 90, 190, 250]);\n  vi.useRealTimers();\n});\n```\n\n26 événements produisent 4 exécutions : le premier, tout de suite ; puis, à 100 et à 200 ms, le dernier appel reçu\npendant l'intervalle, 90 et 190 ; enfin le dernier événement, 250, qui porte la position finale. Les appels\nintermédiaires sont ignorés : seul le plus récent compte.\n\n**Caler sur l'affichage.** Pour une mise à jour visuelle, l'intervalle idéal n'est pas un nombre de millisecondes,\nc'est l'image suivante. `requestAnimationFrame` exécute un callback juste avant que le navigateur dessine, environ\n60 fois par seconde, et pas du tout si l'onglet est masqué. Une barre de progression de lecture n'a pas besoin de\nplus :\n\n```js\nfunction parImage(fonction) {\n  let programme = false;\n  let derniersArguments;\n  return (...arguments_) => {\n    derniersArguments = arguments_;\n    if (programme) return;\n    programme = true;\n    requestAnimationFrame(() => {\n      programme = false;\n      fonction(...derniersArguments);\n    });\n  };\n}\n\nconst majProgression = parImage(() => {\n  const parcouru = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);\n  barre.style.transform = `scaleX(${parcouru})`;\n});\nwindow.addEventListener('scroll', majProgression, { passive: true });\n```\n\n**Et les requêtes asynchrones ?** Le debounce réduit le nombre de requêtes, mais ne règle pas leur ordre : si\nl'utilisateur fait une pause, reprend, puis s'arrête, deux requêtes partent, et la plus ancienne peut répondre en\ndernier et afficher des résultats périmés. On annule la précédente avec un `AbortController`, comme dans la partie\nsur Fetch, ou l'on ignore toute réponse qui ne correspond plus au dernier texte tapé.\n\n## Erreurs fréquentes\n\n**Créer la fonction debouncée à chaque événement.**\n`champ.addEventListener('input', () => debounce(rechercher, 300)())` crée un nouveau minuteur à chaque frappe : rien\nn'est jamais annulé. On crée la version debouncée **une fois**, puis on l'appelle.\n\n**Confondre les deux.** Un debounce sur `scroll` ne met rien à jour tant que l'utilisateur défile ; un throttle sur\nune recherche envoie des requêtes pendant la frappe. Demande-toi : faut-il réagir pendant la rafale, ou après ?\n\n**Oublier le dernier appel d'un throttle.** Sans exécution finale, l'état affiché ne correspond pas à la dernière\nposition.\n\n**Laisser un appel en attente après le démontage.** Appelle `cancel`, ou `flush` s'il ne faut rien perdre.\n\n**Perdre `this` avec une fonction fléchée dans l'implémentation.** Le `this` de l'appelant n'est alors pas transmis.\n\n**Tester avec de vrais délais.** Les tests deviennent lents et instables ; utilise `vi.useFakeTimers()`.\n\n## À retenir\n\n- *Debounce* : une exécution, après `delai` ms sans appel, avec les derniers arguments.\n- *Throttle* : au plus une exécution par intervalle, pendant la rafale, dernier appel compris.\n- Mise à jour visuelle : une fois par image, avec `requestAnimationFrame`.\n- On crée la version limitée une fois, et on prévoit `cancel` et `flush`.\n- Le debounce ne règle pas l'ordre des réponses : annule les requêtes périmées.\n- Les faux minuteurs rendent ces fonctions testables en quelques millisecondes.\n\n## Exercices\n\n1. Pour chaque situation, choisis entre debounce, debounce immédiat, throttle et `requestAnimationFrame`, et\n   justifie.\n   - a) Valider un nom d'utilisateur auprès du serveur pendant la saisie.\n   - b) Empêcher qu'un double clic sur « Payer » n'envoie deux paiements.\n   - c) Envoyer au serveur la position de lecture d'une vidéo pendant qu'elle défile.\n   - d) Déplacer un élément sous le pointeur pendant un glisser-déposer.\n\n   :::indice\n   Pour chaque cas : faut-il réagir pendant la rafale ou après ? Est-ce une mise à jour visuelle ?\n   :::\n\n   :::solution\n   - a) Debounce, 300 à 500 ms : on valide quand la saisie marque une pause, pas à chaque caractère.\n   - b) Debounce immédiat : le premier clic agit, les suivants sont ignorés. En complément, on désactive le bouton\n     pendant l'envoi, et le serveur refuse un paiement en double grâce à une clé d'idempotence : l'interface ne\n     suffit jamais à garantir l'unicité.\n   - c) Throttle, par exemple toutes les 5 secondes, avec le dernier appel : on veut des mises à jour régulières\n     pendant la lecture, et la position finale.\n   - d) `requestAnimationFrame` : c'est une mise à jour visuelle ; la faire plus souvent qu'une fois par image est\n     inutile, moins souvent la rend saccadée.\n   :::\n\n2. Écris `debounceImmediat(fonction, delai)` : le premier appel d'une rafale s'exécute tout de suite, les appels\n   suivants sont ignorés tant qu'ils se suivent à moins de `delai` ms. Teste-le avec des faux minuteurs.\n\n   :::indice\n   Si aucun minuteur n'est actif, on exécute. Dans tous les cas, on (re)programme un minuteur qui, à son terme,\n   remet l'état à zéro.\n   :::\n\n   :::solution\n   ```js\n   import { it, expect, vi } from 'vitest';\n\n   function debounceImmediat(fonction, delai) {\n     let minuteur = null;\n     return function (...arguments_) {\n       const premier = minuteur === null;\n       clearTimeout(minuteur);\n       minuteur = setTimeout(() => {\n         minuteur = null;\n       }, delai);\n       if (premier) fonction.apply(this, arguments_);\n     };\n   }\n\n   it('exécute le premier appel de chaque rafale', () => {\n     vi.useFakeTimers();\n     const payer = vi.fn();\n     const clic = debounceImmediat(payer, 500);\n\n     clic('a');\n     vi.advanceTimersByTime(100);\n     clic('b');\n     vi.advanceTimersByTime(100);\n     clic('c');\n     expect(payer.mock.calls).toEqual([['a']]);\n\n     vi.advanceTimersByTime(500); // calme\n     clic('d');\n     expect(payer.mock.calls).toEqual([['a'], ['d']]);\n     vi.useRealTimers();\n   });\n   ```\n\n   Chaque appel repousse la fin de la rafale : `c`, 200 ms après `a`, est encore ignoré. Il faut 500 ms de calme\n   pour qu'un nouveau clic compte.\n   :::\n\n3. Ce champ de recherche est debouncé, mais les résultats affichés ne correspondent parfois pas au texte tapé.\n   Explique pourquoi, puis corrige `rechercher` pour qu'une réponse périmée ne soit jamais affichée. Teste-le avec un\n   faux `chercher` dont la première réponse arrive après la seconde.\n\n   ```js\n   const rechercher = debounce(async (texte) => {\n     afficher(await chercher(texte));\n   }, 300);\n   ```\n\n   :::indice\n   Deux pauses pendant la frappe déclenchent deux requêtes. Garde un `AbortController` pour la requête en cours.\n   :::\n\n   :::solution\n   Le debounce réduit le nombre de requêtes, mais si l'utilisateur fait deux pauses, deux requêtes partent, et la\n   première peut répondre après la seconde : ses résultats, périmés, écrasent les bons. On annule la requête\n   précédente avant d'en lancer une nouvelle, et on ignore toute réponse d'une requête annulée.\n\n   ```js\n   import { it, expect, vi } from 'vitest';\n\n   function creerRecherche(chercher, afficher) {\n     let controleur = null;\n     return async (texte) => {\n       controleur?.abort();\n       controleur = new AbortController();\n       const { signal } = controleur;\n       try {\n         const resultats = await chercher(texte, { signal });\n         if (!signal.aborted) afficher(resultats);\n       } catch (erreur) {\n         if (erreur.name !== 'AbortError') throw erreur;\n       }\n     };\n   }\n\n   it(\"n'affiche jamais une réponse périmée\", async () => {\n     vi.useFakeTimers();\n     const delais = { java: 500, javascript: 100 }; // la première requête est la plus lente\n     const chercher = (texte, { signal }) =>\n       new Promise((resoudre, rejeter) => {\n         const minuteur = setTimeout(() => resoudre([`résultat pour ${texte}`]), delais[texte]);\n         signal.addEventListener('abort', () => {\n           clearTimeout(minuteur);\n           rejeter(new DOMException('annulée', 'AbortError'));\n         });\n       });\n     const afficher = vi.fn();\n     const rechercher = creerRecherche(chercher, afficher);\n\n     const premiere = rechercher('java');\n     const seconde = rechercher('javascript');\n     await vi.advanceTimersByTimeAsync(600);\n     await Promise.all([premiere, seconde]);\n\n     expect(afficher.mock.calls).toEqual([[['résultat pour javascript']]]);\n     vi.useRealTimers();\n   });\n   ```\n\n   Dans la page, on combine les deux : `const rechercherDebounce = debounce(creerRecherche(chercher, afficher), 300)`.\n   Le debounce limite le nombre de requêtes, l'annulation garantit l'ordre. Avec `fetch`, on passe simplement\n   `{ signal }` en option.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre debounce et throttle ? Donne un cas d'usage pour chacun.\n\n  :::indice\n  L'un attend la fin de la rafale, l'autre agit pendant.\n  :::\n\n  :::reponse\n  Le debounce exécute la fonction une seule fois, quand les appels ont cessé depuis un certain délai : c'est adapté\n  à une recherche pendant la frappe ou à une sauvegarde automatique, où seul le dernier état compte. Le throttle\n  exécute la fonction au plus une fois par intervalle pendant la rafale, en gardant le dernier appel : c'est adapté\n  au défilement, au suivi de la souris ou à l'envoi périodique d'une position, où l'on veut des mises à jour\n  régulières. Pour les mises à jour visuelles, on préfère `requestAnimationFrame`, qui cale le travail sur les images.\n  :::\n\n- Implémente `debounce` au tableau. Qu'est-ce que la closure retient ?\n\n  :::indice\n  Un minuteur qu'on annule et reprogramme à chaque appel.\n  :::\n\n  :::reponse\n  ```js\n  function debounce(fonction, delai) {\n    let minuteur;\n    return function (...arguments_) {\n      clearTimeout(minuteur);\n      minuteur = setTimeout(() => fonction.apply(this, arguments_), delai);\n    };\n  }\n  ```\n  La closure retient l'identifiant du minuteur, partagé par tous les appels. Chaque appel annule le précédent et en\n  reprogramme un ; la fonction ne s'exécute que si aucun appel ne survient pendant `delai`. J'utilise une `function`\n  pour recevoir le `this` de l'appelant, et une fonction fléchée dans le `setTimeout` pour le conserver. En\n  production, j'ajoute `cancel` et `flush`.\n  :::\n\n- Pourquoi `requestAnimationFrame` est-il souvent préférable à un throttle de 16 ms pour une animation liée au\n  défilement ?\n\n  :::indice\n  Qui décide du moment où l'image est dessinée ?\n  :::\n\n  :::reponse\n  Un minuteur de 16 ms n'est pas synchronisé avec l'affichage : il peut s'exécuter juste après une image, et sa mise\n  à jour attend la suivante, ou deux fois entre deux images, dont une pour rien. `requestAnimationFrame` exécute le\n  callback juste avant le dessin, une fois par image, en suivant la fréquence réelle de l'écran, 60, 120 Hz ou plus.\n  Il est aussi suspendu quand l'onglet est masqué, ce qui économise le processeur et la batterie.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-eviter-les-calculs-inutiles",
+      "title": "Éviter les calculs inutiles : mémoïsation et évaluation paresseuse",
+      "slug": "eviter-les-calculs-inutiles",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-javascript",
+      "order": 3,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-cout-et-complexite",
+        "javascript-memoization",
+        "javascript-generateurs"
+      ],
+      "skills": [
+        "caching-and-laziness"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "cache"
+      ],
+      "contentPath": "javascript/performance-javascript/eviter-les-calculs-inutiles/lesson.md",
+      "contentVersion": "e15b417fae25",
+      "body": "\n## Objectifs\n\n- Repérer le travail refait à chaque appel : objets coûteux recréés, calculs invariants dans une boucle, valeurs\n  dérivées recalculées.\n- Écrire des caches sûrs : taille bornée, clés objets avec `WeakMap`, promesses partagées, expiration.\n- Retarder un calcul jusqu'à ce qu'on en ait besoin, avec un getter paresseux, une initialisation à la demande ou\n  un itérateur.\n- Savoir quand un cache coûte plus qu'il ne rapporte.\n\n## Introduction\n\nLe code le plus rapide est celui qui ne s'exécute pas. Après la complexité, c'est la deuxième grande source de\nlenteur : du travail correct, mais fait trop souvent. Un formateur de dates recréé pour chaque ligne d'un tableau,\nune expression régulière compilée dans une boucle, un total recalculé à chaque affichage alors que les données n'ont\npas changé.\n\nTrois stratégies répondent à ce problème. **Sortir** le calcul de l'endroit où il se répète. **Retenir** son\nrésultat : c'est la mémoïsation, vue avec les closures, qu'on va rendre sûre en production. **Retarder** le calcul\njusqu'à ce qu'il soit vraiment nécessaire, voire ne jamais le faire : c'est l'évaluation paresseuse.\n\n## Concept\n\n| Stratégie | Quand | Outil |\n| --- | --- | --- |\n| sortir de la boucle | le calcul ne dépend pas de l'itération | une constante avant la boucle, au niveau du module |\n| mettre en cache | mêmes entrées, même résultat, calcul coûteux, appels répétés | `Map`, `WeakMap`, cache borné |\n| partager une promesse | plusieurs appels simultanés pour la même ressource | mémoïser la promesse, pas le résultat |\n| retarder | le résultat n'est pas toujours utilisé | getter paresseux, initialisation à la demande, itérateurs |\n| invalider | les données sources changent | indicateur « à recalculer », clé de version, expiration |\n\nUn cache échange de la **mémoire** contre du **temps**, et ajoute une question difficile : quand le résultat\nretenu devient-il faux ?\n\n## Exemple\n\nFormater 20 000 montants en euros. La première version crée un formateur pour chaque montant :\n\n```js\nconst montants = Array.from({ length: 20_000 }, (_, i) => i * 1.37);\n\nlet debut = performance.now();\nconst lents = montants.map((montant) =>\n  new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(montant),\n);\nconsole.log(`formateur recréé : ${Math.round(performance.now() - debut)} ms`);\n\n// Le formateur ne dépend pas du montant : on le crée une fois.\nconst euros = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' });\ndebut = performance.now();\nconst rapides = montants.map((montant) => euros.format(montant));\nconsole.log(`formateur réutilisé : ${Math.round(performance.now() - debut)} ms`);\n\nconsole.log(lents.every((texte, i) => texte === rapides[i])); // true\n```\n\nDans Node 22, la première version est environ 60 fois plus lente : créer un `Intl.NumberFormat` charge et analyse les\ndonnées de la locale, ce que `format` n'a plus à faire. `montant.toLocaleString('fr-FR', options)` a le même\ndéfaut, car il crée un formateur à chaque appel.\n\nQuand le calcul dépend de ses arguments, on le retient. Voici une mémoïsation prête pour la production : taille\nbornée, et les entrées les moins récemment utilisées sont évincées en premier (*LRU*, *least recently used*).\n\n```js\nfunction memoiserLRU(fonction, { taille = 100, cle = (x) => x } = {}) {\n  const cache = new Map();\n  return (argument) => {\n    const k = cle(argument);\n    if (cache.has(k)) {\n      const valeur = cache.get(k);\n      cache.delete(k); // on la réinsère : elle devient la plus récente\n      cache.set(k, valeur);\n      return valeur;\n    }\n    const valeur = fonction(argument);\n    cache.set(k, valeur);\n    if (cache.size > taille) {\n      cache.delete(cache.keys().next().value); // la plus ancienne\n    }\n    return valeur;\n  };\n}\n\nlet calculs = 0;\nconst carre = memoiserLRU((n) => (calculs++, n * n), { taille: 2 });\ncarre(2);\ncarre(3);\ncarre(2); // en cache, devient la plus récente\ncarre(4); // évince 3, la moins récemment utilisée\ncarre(2); // toujours en cache\ncarre(3); // recalculé\nconsole.log(calculs); // 4\n```\n\n## Comment ça fonctionne\n\n**Ce qui se sort d'une boucle.** Tout ce qui ne dépend pas de l'élément courant : formateurs `Intl`, expressions\nrégulières construites avec `new RegExp`, lectures de configuration, `Set` de recherche, valeurs comme\n`Date.now()` quand un seul instant suffit pour tout le traitement. Les objets de configuration immuables peuvent\nmême vivre au niveau du module, créés une fois pour toute l'application.\n\n**Pourquoi un cache borné.** Une `Map` qui ne fait que grandir est une fuite mémoire : un cache sur des\nidentifiants d'utilisateurs finit par contenir tous les utilisateurs vus depuis le démarrage du serveur. Une `Map`\nconserve l'ordre d'insertion ; en supprimant puis réinsérant une clé à chaque lecture, la première clé est toujours\nla moins récemment utilisée, et c'est elle qu'on évince. Chaque opération reste en O(1).\n\n**Clés objets : `WeakMap`.** Pour mémoïser un calcul sur un objet, par exemple le total d'un panier, une `WeakMap`\nindexée par l'objet ne l'empêche pas d'être récupéré par le ramasse-miettes : quand plus rien ne référence le\npanier, son entrée disparaît avec lui. Cela suppose que l'objet ne change pas : si on modifie le panier en place,\nle total retenu devient faux. C'est une raison de plus de traiter les données comme immuables ; un nouvel objet\nest une nouvelle clé.\n\n**Mémoïser une promesse.** Si trois composants demandent le même profil en même temps, mémoïser le **résultat** ne\nsuffit pas : aucun n'est encore arrivé, et les trois requêtes partent. On retient la **promesse** dès le premier\nappel ; les suivants reçoivent la même. Si elle est rejetée, on la retire du cache, sinon l'erreur serait servie\npour toujours.\n\n**Invalidation.** Un cache n'est correct que si le résultat ne dépend que de la clé. Quand les données sources\nchangent, il faut invalider : effacer l'entrée, inclure une version dans la clé, ou fixer une durée de vie. Pour une\nvaleur dérivée d'un état qui change, le motif le plus simple est un indicateur : on marque la valeur « à recalculer »\nà chaque modification, et on ne la recalcule qu'à la prochaine lecture.\n\n**L'évaluation paresseuse.** Retarder un calcul a deux avantages : on ne le paie pas s'il n'est jamais demandé, et on\npeut s'arrêter dès qu'on a assez de résultats. Le getter paresseux calcule à la première lecture, puis se remplace\npar une propriété ordinaire :\n\n```js\nclass Rapport {\n  constructor(lignes) {\n    this.lignes = lignes;\n  }\n\n  get statistiques() {\n    console.log('calcul des statistiques');\n    const total = this.lignes.reduce((somme, ligne) => somme + ligne.montant, 0);\n    const valeur = { total, moyenne: total / this.lignes.length };\n    // La propriété propre masque désormais le getter du prototype.\n    Object.defineProperty(this, 'statistiques', { value: valeur });\n    return valeur;\n  }\n}\n\nconst rapport = new Rapport([{ montant: 10 }, { montant: 30 }]);\nconsole.log(rapport.statistiques.total); // calcul des statistiques, puis 40\nconsole.log(rapport.statistiques.moyenne); // 20, sans recalcul\n```\n\nLes générateurs et les méthodes d'itérateurs, vus dans les parties précédentes, appliquent la même idée aux suites :\n`valeurs.values().filter(f).take(10)` s'arrête au dixième résultat, là où `filter` puis `slice` traitent tout.\nL'opérateur `??` et le court-circuit de `&&` sont de la paresse au niveau d'une expression : le membre de droite\nn'est évalué que si nécessaire. Et `import()` retarde le chargement d'un module entier, ce que le module suivant\nexploite dans le navigateur.\n\n**Quand ne pas mettre en cache.** Si le calcul est bon marché, la recherche dans le cache coûte autant que lui.\nSi les arguments ne se répètent presque jamais, le cache ne fait que consommer de la mémoire. Si la fonction n'est pas\npure — elle lit l'heure, le réseau, un état modifiable —, le cache sert des réponses fausses. On mesure le taux de\nsuccès d'un cache avant de le garder.\n\n## Erreurs fréquentes\n\n**Recréer un objet coûteux à chaque appel.** Formateurs `Intl`, `RegExp`, `Set` de recherche : crée-les une fois.\n\n**Un cache sans limite.** Borne-le, ou utilise une `WeakMap` quand la clé est un objet.\n\n**Mémoïser le résultat d'une requête au lieu de sa promesse.** Les appels simultanés partent tous ; et sans\néviction en cas d'échec, une erreur passagère devient permanente.\n\n**Mettre en cache une fonction impure.** Le cache fige une réponse qui dépendait du moment ou de l'état.\n\n**Muter un objet utilisé comme clé.** Le résultat mémoïsé ne correspond plus à son contenu.\n\n**Construire la clé avec `JSON.stringify` d'un gros objet.** La sérialisation peut coûter plus que le calcul évité.\n\n## À retenir\n\n- Sors des boucles tout ce qui ne dépend pas de l'élément courant, en particulier les formateurs `Intl`.\n- Un cache de production est borné (LRU avec l'ordre d'une `Map`) ou faible (`WeakMap` pour des clés objets).\n- Pour de l'asynchrone, mémoïse la promesse et retire-la si elle échoue.\n- Tout cache pose la question de l'invalidation : indicateur, version, durée de vie.\n- La paresse évite le travail inutile : getter qui se remplace, initialisation à la demande, itérateurs.\n- Un cache n'est rentable que si le calcul est coûteux, pur et souvent répété.\n\n## Exercices\n\n1. Ce code vérifie des adresses e-mail interdites dans une liste de 50 000 inscriptions. Repère ce qui est refait\n   inutilement, et corrige-le.\n\n   ```js\n   function inscriptionsValides(inscriptions, domainesInterdits) {\n     return inscriptions.filter((inscription) => {\n       const motif = new RegExp(`@(${domainesInterdits.join('|')})$`, 'i');\n       const date = new Date(inscription.date);\n       return !motif.test(inscription.email) && date.getTime() <= Date.now();\n     });\n   }\n   ```\n\n   :::indice\n   Qu'est-ce qui dépend de l'inscription, et qu'est-ce qui n'en dépend pas ? Et si un domaine contient un point ?\n   :::\n\n   :::solution\n   L'expression régulière et l'instant présent ne dépendent pas de l'inscription : on les calcule une fois. Au\n   passage, un point dans un domaine doit être échappé, sinon il signifie « n'importe quel caractère ». Un `Set` des\n   domaines, interrogé avec la partie après `@`, évite même l'expression régulière.\n\n   ```js\n   function inscriptionsValides(inscriptions, domainesInterdits) {\n     const interdits = new Set(domainesInterdits.map((domaine) => domaine.toLowerCase()));\n     const maintenant = Date.now();\n     return inscriptions.filter((inscription) => {\n       const domaine = inscription.email.slice(inscription.email.lastIndexOf('@') + 1).toLowerCase();\n       return !interdits.has(domaine) && Date.parse(inscription.date) <= maintenant;\n     });\n   }\n\n   const resultat = inscriptionsValides(\n     [\n       { email: 'ana@exemple.fr', date: '2026-01-01' },\n       { email: 'bot@Spam.io', date: '2026-01-01' },\n       { email: 'bao@spamxio.com', date: '2026-01-01' },\n       { email: 'futur@exemple.fr', date: '2999-01-01' },\n     ],\n     ['spam.io'],\n   );\n   console.log(resultat.map((i) => i.email)); // [ 'ana@exemple.fr', 'bao@spamxio.com' ]\n   ```\n\n   Avec l'expression régulière d'origine, le point non échappé de `spam.io` accepte n'importe quel caractère : une\n   adresse en `@spam-io` aurait été rejetée à tort. Le `Set` compare des domaines entiers, sans ce piège.\n   :::\n\n2. Écris `memoiserAsync(fonction)` pour une fonction asynchrone à un argument : les appels simultanés avec le même\n   argument partagent une seule exécution, et un échec n'est pas retenu. Vérifie-le avec une fausse requête qui\n   compte ses appels.\n\n   :::indice\n   Stocke la promesse dans la `Map` avant qu'elle ne soit résolue. Ajoute un `catch` qui supprime l'entrée, puis\n   relance l'erreur.\n   :::\n\n   :::solution\n   ```js\n   function memoiserAsync(fonction) {\n     const enCours = new Map();\n     return (argument) => {\n       if (enCours.has(argument)) return enCours.get(argument);\n       const promesse = fonction(argument).catch((erreur) => {\n         enCours.delete(argument); // un échec ne reste pas en cache\n         throw erreur;\n       });\n       enCours.set(argument, promesse);\n       return promesse;\n     };\n   }\n\n   let appels = 0;\n   let echouer = true;\n   const chargerProfil = memoiserAsync(async (id) => {\n     appels += 1;\n     await new Promise((resoudre) => setTimeout(resoudre, 10));\n     if (echouer) throw new Error('réseau indisponible');\n     return { id, nom: `Profil ${id}` };\n   });\n\n   const essais = await Promise.allSettled([chargerProfil(7), chargerProfil(7), chargerProfil(7)]);\n   console.log(appels, essais.map((e) => e.status)); // 1 [ 'rejected', 'rejected', 'rejected' ]\n\n   echouer = false;\n   const [a, b] = await Promise.all([chargerProfil(7), chargerProfil(7)]);\n   console.log(appels, a === b, a.nom); // 2 true Profil 7\n   ```\n\n   Trois appels simultanés ne déclenchent qu'une requête. Après l'échec, l'entrée est retirée : l'appel suivant\n   retente, puis le succès est partagé.\n   :::\n\n3. Un panier recalcule son total à chaque lecture de `total`, alors qu'on le lit bien plus souvent qu'on ne le\n   modifie. Réécris la classe pour ne recalculer le total qu'après une modification, et seulement si on le lit.\n\n   ```js\n   class Panier {\n     #lignes = [];\n     ajouter(prix, quantite) {\n       this.#lignes.push({ prix, quantite });\n     }\n     get total() {\n       return this.#lignes.reduce((somme, l) => somme + l.prix * l.quantite, 0);\n     }\n   }\n   ```\n\n   :::indice\n   Un champ privé pour la valeur retenue, `null` quand elle doit être recalculée.\n   :::\n\n   :::solution\n   ```js\n   class Panier {\n     #lignes = [];\n     #total = null; // null : à recalculer\n     calculs = 0;\n\n     ajouter(prix, quantite) {\n       this.#lignes.push({ prix, quantite });\n       this.#total = null;\n     }\n\n     get total() {\n       if (this.#total === null) {\n         this.calculs += 1;\n         this.#total = this.#lignes.reduce((somme, l) => somme + l.prix * l.quantite, 0);\n       }\n       return this.#total;\n     }\n   }\n\n   const panier = new Panier();\n   panier.ajouter(10, 2);\n   panier.ajouter(5, 1);\n   console.log(panier.total, panier.total, panier.total); // 25 25 25\n   panier.ajouter(1, 3);\n   panier.ajouter(2, 1);\n   console.log(panier.total, panier.calculs); // 30 2\n   ```\n\n   Deux ajouts de suite ne coûtent aucun calcul : le total n'est recalculé qu'à la lecture suivante. C'est\n   l'invalidation par indicateur, combinée à la paresse. Elle ne fonctionne que parce que `#lignes` est privé : aucune\n   modification ne peut passer à côté de `ajouter`.\n   :::\n\n## Questions d'entretien\n\n- Quels sont les risques d'une mémoïsation mal faite ?\n\n  :::indice\n  Mémoire, exactitude, et cas asynchrone.\n  :::\n\n  :::reponse\n  La fuite mémoire d'abord : un cache sans limite grandit avec chaque argument distinct, d'où un cache borné (LRU)\n  ou une `WeakMap` pour des clés objets. L'exactitude ensuite : si la fonction dépend d'autre chose que ses\n  arguments, ou si l'objet clé est muté, le cache sert une réponse périmée ; il faut une stratégie d'invalidation.\n  En asynchrone, il faut mémoïser la promesse pour dédupliquer les appels simultanés, et l'évincer en cas d'échec.\n  Enfin, un cache sur un calcul bon marché ou rarement répété ne rapporte rien : on mesure son taux de succès.\n  :::\n\n- Qu'est-ce que l'évaluation paresseuse ? Donne des exemples en JavaScript.\n\n  :::indice\n  Pense aux opérateurs, aux itérateurs et aux modules.\n  :::\n\n  :::reponse\n  C'est retarder un calcul jusqu'au moment où son résultat est nécessaire, et donc ne jamais le faire s'il ne l'est\n  pas. En JavaScript : le court-circuit de `&&`, `||` et `??` ; les générateurs et les méthodes d'itérateurs, qui\n  produisent les valeurs une à une et s'arrêtent avec `take` ou `find` ; les getters qui calculent à la première\n  lecture puis retiennent la valeur ; l'initialisation d'un service coûteux au premier usage ; `import()` pour ne\n  charger un module que si l'utilisateur en a besoin.\n  :::\n\n- Pourquoi `montants.map((m) => m.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }))` est-il lent ?\n\n  :::indice\n  Qu'est-ce que `toLocaleString` doit préparer avant de formater ?\n  :::\n\n  :::reponse\n  À chaque appel, `toLocaleString` avec des options crée en interne un formateur : il résout la locale et prépare\n  ses règles, ce qui coûte beaucoup plus que le formatage lui-même. On crée une fois\n  `new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' })` et on appelle `format` dans la boucle.\n  Mesuré dans Node 22 sur 100 000 montants : plus de 10 secondes contre moins de 200 millisecondes.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-recherche-et-tri",
+      "title": "Algorithmes de recherche et de tri",
+      "slug": "recherche-et-tri",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-javascript",
+      "order": 2,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-cout-et-complexite",
+        "javascript-tableaux-trier"
+      ],
+      "skills": [
+        "search-sort-algorithms"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "algorithmes"
+      ],
+      "contentPath": "javascript/performance-javascript/recherche-et-tri/lesson.md",
+      "contentVersion": "a551eafe9254",
+      "body": "\n## Objectifs\n\n- Choisir entre recherche linéaire, index `Map` et recherche dichotomique selon les recherches à faire.\n- Écrire une recherche dichotomique correcte, y compris la variante « premier élément supérieur ou égal ».\n- Comprendre le tri par insertion et le tri fusion, et ce qu'ils disent de `Array.prototype.sort`.\n- Trier vite et juste : comparateur cohérent, clés précalculées, pas de tri complet quand quelques éléments suffisent.\n\n## Introduction\n\nChercher et trier sont les deux opérations qu'on fait le plus souvent sur des données, et celles où une mauvaise\nstratégie coûte le plus. On ne réécrit presque jamais un algorithme de tri en JavaScript : `sort` est excellent.\nMais savoir comment fonctionnent ces algorithmes permet de choisir la bonne structure, d'écrire un comparateur qui\nne sabote pas le tri, et de reconnaître les cas où une recherche dichotomique remplace des secondes par des\nmillisecondes.\n\n## Concept\n\n| Besoin | Stratégie | Coût |\n| --- | --- | --- |\n| une seule recherche dans des données non triées | parcours : `find`, `includes` | O(n) |\n| beaucoup de recherches par clé exacte | index `Map` ou `Set`, construit une fois | O(n) puis O(1) par recherche |\n| recherches par intervalle, valeur la plus proche, préfixe | tableau trié et recherche dichotomique | O(n log n) une fois, puis O(log n) |\n| les k plus grands éléments, k petit | une passe en gardant les k meilleurs | O(n × k) |\n\n| Tri | Complexité | Stable | Point fort |\n| --- | --- | --- | --- |\n| par insertion | O(n²), O(n) si presque trié | oui | petits tableaux, données presque triées |\n| fusion | O(n log n) toujours | oui | prévisible, mais O(n) de mémoire |\n| `Array.prototype.sort` | O(n log n) | oui, garanti depuis ES2019 | TimSort dans V8 : fusion et insertion combinées |\n\nUn tri est **stable** s'il conserve l'ordre d'origine des éléments égaux : trier par ville une liste déjà triée par\nnom garde les noms dans l'ordre à l'intérieur de chaque ville.\n\n## Exemple\n\nOn dispose d'un million d'horodatages triés, et l'on doit répondre à 200 questions : « à quel index commencent\nles événements postérieurs à cet instant ? ». La recherche dichotomique coupe l'intervalle en deux à chaque étape :\n\n```js\n// Renvoie le premier index dont la valeur est >= cible, ou trie.length si aucune.\nfunction premierIndexAuMoins(trie, cible) {\n  let bas = 0;\n  let haut = trie.length;\n  while (bas < haut) {\n    const milieu = (bas + haut) >>> 1;\n    if (trie[milieu] < cible) bas = milieu + 1;\n    else haut = milieu;\n  }\n  return bas;\n}\n\nconst horodatages = Array.from({ length: 1_000_000 }, (_, i) => i * 3);\nconst requetes = Array.from({ length: 200 }, (_, i) => (i * 14_999) % 3_000_000);\n\nlet debut = performance.now();\nconst lineaire = requetes.map((q) => horodatages.findIndex((t) => t >= q));\nconsole.log(`findIndex : ${Math.round(performance.now() - debut)} ms`);\n\ndebut = performance.now();\nconst dichotomie = requetes.map((q) => premierIndexAuMoins(horodatages, q));\nconsole.log(`dichotomie : ${Math.round(performance.now() - debut)} ms`);\n\nconsole.log(lineaire.every((index, i) => index === dichotomie[i])); // true\nconsole.log(premierIndexAuMoins([10, 20, 20, 30], 20)); // 1\nconsole.log(premierIndexAuMoins([10, 20, 20, 30], 25)); // 3\nconsole.log(premierIndexAuMoins([10, 20, 20, 30], 99)); // 4\n```\n\nDans Node 22, sur un poste de développement, `findIndex` a pris 1,3 seconde, la dichotomie 1 milliseconde, pour\nexactement les mêmes réponses. Un million d'éléments demandent au plus 20 étapes de dichotomie, car 2²⁰ dépasse un\nmillion.\n\n## Comment ça fonctionne\n\n**La recherche dichotomique.** Elle ne fonctionne que sur des données **triées** selon le critère recherché. À chaque\ntour, on compare l'élément du milieu à la cible et on élimine la moitié qui ne peut pas contenir la réponse.\nL'intervalle `[bas, haut)` inclut `bas` et exclut `haut` ; la boucle s'arrête quand il est vide, et `bas` désigne\nalors le premier index qui convient. Cette variante, appelée *lower bound*, est plus utile que « trouver l'élément\négal » : elle donne aussi l'endroit où insérer une valeur pour garder le tableau trié, et le début d'un intervalle.\nPour compter les valeurs comprises entre `a` inclus et `b` exclu, on fait\n`premierIndexAuMoins(t, b) - premierIndexAuMoins(t, a)`. `(bas + haut) >>> 1` divise par deux en entier ; pour des\ntableaux de plus d'un milliard d'éléments, on écrirait `bas + ((haut - bas) >> 1)`.\n\n**Trier une fois pour chercher souvent.** Trier coûte O(n log n). Si l'on ne fait qu'une recherche, un parcours en\nO(n) est moins cher ; si l'on en fait beaucoup, le tri est vite amorti. Pour des recherches par clé exacte, une `Map`\nfait mieux encore. La dichotomie garde l'avantage pour tout ce qu'une `Map` ne sait pas faire : intervalles,\nvaleur la plus proche, préfixes de chaînes triées.\n\n**Tri par insertion.** On parcourt le tableau et on insère chaque élément à sa place parmi ceux déjà triés, en\ndécalant les plus grands. Dans le pire cas, O(n²). Mais sur un tableau presque trié, chaque élément bouge peu :\nle tri devient presque linéaire, et sur une dizaine d'éléments, il bat les algorithmes plus sophistiqués.\n\n**Tri fusion.** On coupe le tableau en deux, on trie chaque moitié récursivement, puis on **fusionne** les deux\nmoitiés triées en avançant dans chacune : log n niveaux de découpe, O(n) de fusion par niveau, d'où O(n log n) dans\ntous les cas. En prenant l'élément de gauche en cas d'égalité, il est stable. Son défaut : un tableau auxiliaire de\ntaille n.\n\n**Ce que fait `sort`.** V8 utilise **TimSort**, qui repère les séquences déjà triées dans les données, les allonge\npar insertion quand elles sont courtes, puis les fusionne. D'où sa rapidité sur les données réelles, souvent\npartiellement triées. `sort` trie en place, `toSorted` renvoie une copie ; les deux sont stables.\n\n**Le comparateur est un contrat.** Il doit renvoyer un nombre négatif, positif ou nul, et être cohérent : si `a` passe\navant `b`, `b` ne doit pas passer avant `a`. Un comparateur qui renvoie un booléen, `(a, b) => a > b`, ne renvoie\njamais de valeur négative : `true` devient 1 et `false` 0, et le résultat est faux sans qu'aucune erreur ne\nl'annonce. `[3, 1, 2, 5, 4].sort((a, b) => a > b)` laisse le tableau inchangé.\n\n**Précalculer les clés.** `sort` appelle le comparateur environ n log n fois, soit environ 2 millions de fois pour\n100 000 éléments. Si chaque appel recalcule une clé coûteuse, par exemple en analysant une date ou en normalisant\nun texte, ce travail est multiplié d'autant. On calcule la clé une fois par élément, on trie les paires, puis on\nreprend les éléments :\n\n```js\nconst commandes = [\n  { id: 'c1', date: '2026-03-02T10:00:00Z' },\n  { id: 'c2', date: '2026-01-15T08:30:00Z' },\n  { id: 'c3', date: '2026-02-20T17:45:00Z' },\n];\n\nconst triees = commandes\n  .map((commande) => ({ commande, cle: Date.parse(commande.date) }))\n  .toSorted((a, b) => a.cle - b.cle)\n  .map(({ commande }) => commande);\n\nconsole.log(triees.map((c) => c.id)); // [ 'c2', 'c3', 'c1' ]\n```\n\n**Pas de tri complet pour trois éléments.** Pour les trois meilleures ventes parmi un million, trier tout coûte\nO(n log n). Une passe unique qui garde les trois meilleures vues jusqu'ici coûte O(n × 3). Quand k grandit, un tas\nbinaire ramène ce coût à O(n log k).\n\n## Erreurs fréquentes\n\n**Faire une dichotomie sur des données non triées.** Le résultat est faux, sans erreur. Trie d'abord, selon le même\ncritère que la recherche.\n\n**Se tromper de bornes.** Mélanger intervalles inclusifs et exclusifs mène à des boucles infinies ou à un élément\noublié. Garde une convention, `[bas, haut)`, et teste les cas limites : tableau vide, cible avant le premier et après\nle dernier élément, doublons.\n\n**Renvoyer un booléen depuis un comparateur.** Renvoie `a - b` pour des nombres, `a.localeCompare(b)` pour du texte.\n\n**Recalculer une clé coûteuse dans le comparateur.** Précalcule-la, une fois par élément.\n\n**Trier à chaque ajout.** Pour garder une liste triée, insère à l'index donné par la dichotomie, ou trie une fois à\nla fin.\n\n**Réécrire `sort` « pour aller plus vite ».** `sort` est stable, optimisé et testé ; on écrit son propre algorithme pour\nun besoin précis, pas pour battre le moteur.\n\n## À retenir\n\n- Une recherche : parcours ; beaucoup de recherches exactes : `Map` ; intervalles et plus proche voisin : tri et\n  dichotomie.\n- La dichotomie est en O(log n) : une vingtaine d'étapes pour un million d'éléments.\n- La variante « premier index supérieur ou égal » donne aussi la position d'insertion et les bornes d'un intervalle.\n- `sort` est O(n log n) et stable ; le comparateur renvoie un nombre et reste cohérent.\n- Précalcule les clés coûteuses ; pour les k meilleurs, évite le tri complet.\n\n## Exercices\n\n1. Écris `compterDansIntervalle(trie, min, max)`, qui compte les valeurs `v` telles que `min <= v <= max` dans un\n   tableau de nombres trié, en O(log n).\n\n   :::indice\n   Deux appels à `premierIndexAuMoins` suffisent. Le premier nombre strictement supérieur à `max` est le premier au\n   moins égal à… quoi, pour des entiers ? Et pour des nombres quelconques ?\n   :::\n\n   :::solution\n   Pour des nombres quelconques, on écrit une seconde variante qui cherche le premier index strictement supérieur :\n\n   ```js\n   function premierIndexAuMoins(trie, cible) {\n     let bas = 0;\n     let haut = trie.length;\n     while (bas < haut) {\n       const milieu = (bas + haut) >>> 1;\n       if (trie[milieu] < cible) bas = milieu + 1;\n       else haut = milieu;\n     }\n     return bas;\n   }\n\n   function premierIndexSuperieur(trie, cible) {\n     let bas = 0;\n     let haut = trie.length;\n     while (bas < haut) {\n       const milieu = (bas + haut) >>> 1;\n       if (trie[milieu] <= cible) bas = milieu + 1;\n       else haut = milieu;\n     }\n     return bas;\n   }\n\n   const compterDansIntervalle = (trie, min, max) =>\n     Math.max(0, premierIndexSuperieur(trie, max) - premierIndexAuMoins(trie, min));\n\n   const valeurs = [1, 3, 3, 5, 8, 8, 8, 12];\n   console.log(compterDansIntervalle(valeurs, 3, 8)); // 6\n   console.log(compterDansIntervalle(valeurs, 4, 4)); // 0\n   console.log(compterDansIntervalle(valeurs, 0, 100)); // 8\n   console.log(compterDansIntervalle([], 0, 1)); // 0\n   console.log(compterDansIntervalle(valeurs, 9, 2)); // 0\n   ```\n\n   Les deux fonctions ne diffèrent que par `<` et `<=` : c'est ce qui décide où se place une valeur égale à la cible.\n   `Math.max(0, …)` gère un intervalle inversé.\n   :::\n\n2. Implémente le tri fusion `triFusion(tableau, comparer)`, qui renvoie un nouveau tableau trié, stable, sans\n   modifier l'original. Vérifie la stabilité sur des objets de même clé.\n\n   :::indice\n   Cas de base : un tableau de 0 ou 1 élément est trié. Pendant la fusion, en cas d'égalité, prends l'élément de\n   gauche en premier.\n   :::\n\n   :::solution\n   ```js\n   function triFusion(tableau, comparer = (a, b) => (a < b ? -1 : a > b ? 1 : 0)) {\n     if (tableau.length <= 1) return [...tableau];\n     const milieu = tableau.length >>> 1;\n     const gauche = triFusion(tableau.slice(0, milieu), comparer);\n     const droite = triFusion(tableau.slice(milieu), comparer);\n\n     const resultat = [];\n     let i = 0;\n     let j = 0;\n     while (i < gauche.length && j < droite.length) {\n       // <= 0 : à égalité, l'élément de gauche passe d'abord, d'où la stabilité.\n       if (comparer(gauche[i], droite[j]) <= 0) resultat.push(gauche[i++]);\n       else resultat.push(droite[j++]);\n     }\n     while (i < gauche.length) resultat.push(gauche[i++]);\n     while (j < droite.length) resultat.push(droite[j++]);\n     return resultat;\n   }\n\n   const personnes = [\n     { nom: 'Ana', ville: 'Lyon' },\n     { nom: 'Bao', ville: 'Nice' },\n     { nom: 'Chloé', ville: 'Lyon' },\n     { nom: 'Dan', ville: 'Nice' },\n   ];\n   const parVille = triFusion(personnes, (a, b) => a.ville.localeCompare(b.ville));\n   console.log(parVille.map((p) => p.nom)); // [ 'Ana', 'Chloé', 'Bao', 'Dan' ]\n   console.log(triFusion([5, 2, 9, 1, 5, 6])); // [ 1, 2, 5, 5, 6, 9 ]\n   console.log(personnes[0].nom); // Ana : l'original n'a pas bougé\n   ```\n\n   Dans chaque ville, l'ordre d'origine est conservé : Ana avant Chloé, Bao avant Dan.\n   :::\n\n3. Écris `plusGrands(tableau, k, cle)` qui renvoie les `k` éléments de plus grande clé, du plus grand au plus petit,\n   sans trier tout le tableau. Compare le résultat avec la version par tri.\n\n   :::indice\n   Garde un petit tableau trié des k meilleurs vus jusqu'ici. Un nouvel élément n'y entre que s'il dépasse le plus\n   petit d'entre eux.\n   :::\n\n   :::solution\n   ```js\n   function plusGrands(tableau, k, cle) {\n     const meilleurs = []; // trié du plus grand au plus petit, au plus k éléments\n     for (const element of tableau) {\n       const valeur = cle(element);\n       if (meilleurs.length === k && valeur <= cle(meilleurs[k - 1])) continue;\n       let position = meilleurs.length;\n       while (position > 0 && cle(meilleurs[position - 1]) < valeur) position -= 1;\n       meilleurs.splice(position, 0, element);\n       if (meilleurs.length > k) meilleurs.pop();\n     }\n     return meilleurs;\n   }\n\n   const ventes = Array.from({ length: 100_000 }, (_, i) => ({ id: i, montant: (i * 7919) % 100_003 }));\n   const rapides = plusGrands(ventes, 3, (v) => v.montant);\n   const parTri = ventes.toSorted((a, b) => b.montant - a.montant).slice(0, 3);\n\n   console.log(rapides.map((v) => v.montant)); // [ 100002, 100001, 100000 ]\n   console.log(rapides.every((v, i) => v.montant === parTri[i].montant)); // true\n   ```\n\n   Chaque élément coûte au plus k comparaisons et un `splice` sur k éléments : O(n × k) au total, avec k = 3. Le\n   `continue` rend la plupart des éléments presque gratuits, car ils ne battent pas le troisième.\n   :::\n\n## Questions d'entretien\n\n- Quand préférer une recherche dichotomique à une `Map` ?\n\n  :::indice\n  Qu'est-ce qu'une `Map` ne sait pas faire ?\n  :::\n\n  :::reponse\n  Une `Map` répond en O(1) à « cette clé existe-t-elle ? », et c'est imbattable pour des recherches exactes. Elle\n  ne connaît pas l'ordre des clés : elle ne sait pas trouver toutes les valeurs d'un intervalle, la valeur la plus\n  proche, ou les chaînes qui commencent par un préfixe. Pour cela, on trie une fois, en O(n log n), et chaque\n  recherche dichotomique coûte O(log n). La dichotomie sert aussi à insérer au bon endroit dans une liste qu'on garde\n  triée.\n  :::\n\n- Qu'est-ce qu'un tri stable, et pourquoi est-ce utile ?\n\n  :::indice\n  Pense à un tableau déjà trié par nom qu'on trie ensuite par ville.\n  :::\n\n  :::reponse\n  Un tri stable conserve l'ordre relatif des éléments que le comparateur juge égaux. Cela permet de composer des\n  tris : trier par nom, puis de façon stable par ville, donne une liste par ville où les noms restent dans l'ordre.\n  C'est aussi ce qu'attend un utilisateur qui clique sur plusieurs colonnes d'un tableau. `Array.prototype.sort` est\n  stable depuis ES2019 ; le tri fusion l'est, le tri rapide classique ne l'est pas.\n  :::\n\n- Pourquoi `tableau.sort((a, b) => a > b)` est-il un bug ?\n\n  :::indice\n  Que devient un booléen dans un contexte numérique ?\n  :::\n\n  :::reponse\n  Le comparateur doit renvoyer un nombre négatif, nul ou positif. Un booléen est converti en 1 ou 0 : il ne dit\n  jamais que `a` doit passer avant `b`, et l'algorithme reçoit des informations incohérentes. Le résultat dépend de\n  l'algorithme du moteur, n'est pas trié en général, et aucune erreur ne l'indique : `[3, 1, 2, 5, 4]` reste\n  inchangé dans V8. Il faut renvoyer `a - b` pour des nombres, et `localeCompare` pour des chaînes.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-code-splitting-et-lazy-loading",
+      "title": "Code splitting et lazy loading",
+      "slug": "code-splitting-et-lazy-loading",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-navigateur",
+      "order": 3,
+      "estimatedMinutes": 40,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-reexport",
+        "javascript-evenements-et-grandes-listes"
+      ],
+      "skills": [
+        "code-splitting"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "navigateur",
+        "modules"
+      ],
+      "contentPath": "javascript/performance-navigateur/code-splitting-et-lazy-loading/lesson.md",
+      "contentVersion": "3852efc38d31",
+      "body": "\n## Objectifs\n\n- Expliquer ce que coûte le JavaScript d'une page : téléchargement, analyse, compilation, exécution.\n- Découper une application en morceaux chargés à la demande avec `import()` : par route, par fonctionnalité.\n- Précharger au bon moment pour masquer l'attente, et gérer l'échec d'un chargement.\n- Différer les images et les iframes hors écran, sans retarder l'image principale de la page.\n\n## Introduction\n\nUne application qui grandit accumule du code : un éditeur de texte riche, une bibliothèque de graphiques, un module\nd'export PDF, des pages d'administration. Si tout part dans un seul fichier, chaque visiteur télécharge et exécute\ntout cela avant de voir la première page, même s'il ne va jamais dans l'administration.\n\nLe **code splitting** découpe le code en morceaux, les *chunks*, et le **lazy loading** ne charge chaque morceau, ou\nchaque image, qu'au moment où il devient utile. Le principe est celui de l'évaluation paresseuse, appliqué au réseau :\nne pas payer pour ce qu'on n'utilise pas encore.\n\n## Concept\n\n| Technique | Ce qu'on charge plus tard | Outil |\n| --- | --- | --- |\n| découpage par route | le code d'une page, quand on y navigue | `import()` dans la table des routes |\n| découpage par fonctionnalité | un composant lourd, à la première utilisation | `import()` au clic ou quand il devient visible |\n| préchargement | un morceau probable, avant qu'on le demande | `import()` au survol ou au focus, `<link rel=\"modulepreload\">` |\n| images et iframes différées | les médias hors écran | `loading=\"lazy\"` |\n| image principale prioritaire | l'inverse : l'image visible au chargement plus tôt | `fetchpriority=\"high\"`, jamais `loading=\"lazy\"` |\n\nLe JavaScript est la ressource la plus chère octet pour octet : une image de 200 Ko est décodée puis affichée, un\nscript de 200 Ko doit être téléchargé, analysé, compilé puis exécuté, et tout sauf le téléchargement occupe le\nfil principal. Sur un téléphone d'entrée de gamme, c'est plusieurs fois plus lent que sur un poste de développement.\n\n## Exemple\n\nUn tableau de bord propose un bouton « Afficher les graphiques ». La bibliothèque de graphiques est lourde, et la\nplupart des visiteurs ne cliquent jamais. On la charge à la demande, en commençant dès que le pointeur survole le\nbouton ou qu'il reçoit le focus :\n\n```js\nlet chargement = null;\nconst chargerGraphiques = () => (chargement ??= import('./graphiques.js'));\n\n// Précharger dès que l'intention se manifeste : le module arrive souvent avant le clic.\nfor (const type of ['pointerenter', 'focus']) {\n  bouton.addEventListener(type, () => chargerGraphiques().catch(() => {}), { once: true });\n}\n\nbouton.addEventListener('click', async () => {\n  bouton.disabled = true;\n  try {\n    const { dessiner } = await chargerGraphiques();\n    dessiner(zone, donnees);\n  } catch {\n    afficherErreur(\"Les graphiques n'ont pas pu être chargés. Rechargez la page pour réessayer.\");\n  } finally {\n    bouton.disabled = false;\n  }\n});\n```\n\nAvec un outil de build comme Vite, Rollup ou webpack, chaque `import()` devient un fichier séparé : le module\n`graphiques.js` et ses dépendances sortent du bundle principal et ne sont téléchargés qu'au premier appel. La\npromesse est gardée dans `chargement`, comme une mémoïsation : survol, focus et clic partagent un seul\ntéléchargement.\n\n## Comment ça fonctionne\n\n**Ce qu'`import()` change.** Un `import` statique, en haut d'un fichier, est résolu avant l'exécution du module : le\ncode importé fait partie du graphe chargé au démarrage. `import()` est une expression, évaluée quand on l'exécute,\nqui renvoie une promesse du module. Les outils de build y voient une frontière : tout ce qui n'est accessible que\nderrière elle part dans un chunk à part. Un module importé à la fois statiquement ailleurs et dynamiquement ici reste\ndans le bundle principal : il faut que **tous** les chemins vers le code lourd soient dynamiques.\n\n**Par route.** Le découpage le plus rentable suit la navigation : chaque page est un chunk, chargé quand on y va.\n\n```js\nconst pages = {\n  '/': () => import('./pages/accueil.js'),\n  '/factures': () => import('./pages/factures.js'),\n  '/admin': () => import('./pages/admin.js'),\n};\n\nasync function naviguer(chemin) {\n  const charger = pages[chemin] ?? pages['/'];\n  const { afficher } = await charger();\n  afficher(document.querySelector('main'));\n}\n```\n\nLes frameworks font la même chose avec `React.lazy`, les routes paresseuses de Vue Router ou le découpage\nautomatique par page de Next.js. Le code partagé par plusieurs pages part dans des chunks communs, que le navigateur\nmet en cache une fois.\n\n**Précharger pour masquer l'attente.** Charger à la demande déplace le coût au moment de l'interaction : sans\nprécaution, le clic attend le réseau. On anticipe dès que l'intention se manifeste : survol, focus, apparition\nà l'écran, ou temps libre après le chargement de la page. `<link rel=\"modulepreload\" href=\"…\">` fait télécharger\net analyser un module sans l'exécuter ; les outils de build l'ajoutent pour les dépendances d'un chunk.\n\n**Quand le chargement échoue.** Un réseau instable, ou un déploiement qui remplace les anciens chunks pendant qu'un\nutilisateur a encore l'ancienne page ouverte : `import()` rejette sa promesse. Dans Chromium, un échec est retenu\npour la page : un nouvel `import()` de la même URL échoue aussitôt, sans nouvelle requête. La réponse la plus sûre\nest donc d'afficher un message et de proposer de recharger la page, qui récupérera la nouvelle version. Vite émet\nl'événement `vite:preloadError` sur `window` pour centraliser ce cas.\n\n**Les images et les iframes.** `loading=\"lazy\"` demande au navigateur de ne télécharger une image, ou une iframe,\nque lorsqu'elle approche de l'écran. On indique toujours `width` et `height` : le navigateur réserve la place, et la\npage ne saute pas quand l'image arrive. Ce saut est mesuré par le **CLS**, *Cumulative Layout Shift*, un autre Core\nWeb Vital. Mais l'image principale, visible dès l'ouverture, ne doit **jamais** être différée : elle détermine\nsouvent le **LCP**, *Largest Contentful Paint*, le moment où le plus grand élément s'affiche. On la signale au\ncontraire comme prioritaire.\n\n```html\n<img src=\"/hero.avif\" alt=\"Atelier de reliure\" width=\"1200\" height=\"600\" fetchpriority=\"high\" />\n\n<img src=\"/galerie/1.avif\" alt=\"Carnet cousu main\" width=\"400\" height=\"300\" loading=\"lazy\" />\n<iframe src=\"https://www.youtube-nocookie.com/embed/…\" title=\"Démonstration\" loading=\"lazy\"></iframe>\n```\n\n**Mesurer ce qui est inutile.** L'onglet Coverage des DevTools montre, pour chaque script, la part du code\nexécutée depuis le chargement : une grande part rouge signale du code à différer. Un analyseur de bundle, comme\n`rollup-plugin-visualizer` avec Vite, montre ce que contient chaque chunk. On y découvre souvent une bibliothèque\nentière importée pour une seule fonction, ou un fichier baril qui réexporte tout, comme on l'a vu avec les modules.\n\n**Ne pas trop découper.** Chaque chunk est une requête, et une chaîne de chunks qui s'importent les uns les autres\ncrée une cascade d'allers-retours. On découpe aux frontières naturelles, routes et fonctionnalités lourdes, pas\nchaque petit module.\n\n## Erreurs fréquentes\n\n**Garder un `import` statique du module qu'on veut différer.** Il reste dans le bundle principal : tous les chemins\ndoivent être dynamiques.\n\n**Charger au clic sans précharger.** L'utilisateur attend le réseau à chaque première utilisation ; précharge au\nsurvol, au focus ou à l'apparition.\n\n**Ignorer l'échec d'un `import()`.** Après un déploiement, les anciens chunks peuvent disparaître : affiche un\nmessage et propose de recharger.\n\n**Mettre `loading=\"lazy\"` sur l'image principale.** Elle arrive plus tard et dégrade le LCP ; utilise\n`fetchpriority=\"high\"`.\n\n**Oublier `width` et `height` sur les images.** La page saute à leur arrivée.\n\n**Découper en dizaines de petits chunks.** Les requêtes en cascade coûtent plus cher que ce qu'elles économisent.\n\n## À retenir\n\n- Le JavaScript coûte en téléchargement, analyse, compilation et exécution, surtout sur mobile.\n- `import()` crée une frontière de chunk ; on découpe par route et par fonctionnalité lourde.\n- On garde la promesse d'import, et on précharge dès que l'intention se manifeste.\n- Un `import()` peut échouer, notamment après un déploiement : message et rechargement.\n- `loading=\"lazy\"` avec `width` et `height` pour les médias hors écran ; `fetchpriority=\"high\"` pour l'image\n  principale.\n- L'onglet Coverage et un analyseur de bundle montrent ce qui doit être différé.\n\n## Exercices\n\n1. Cette application importe toutes ses pages au démarrage. Réécris-la pour que chaque page soit chargée à la\n   demande, qu'une page déjà chargée ne soit pas redemandée, et que la page suivante probable soit préchargée au\n   survol de son lien.\n\n   ```js\n   import * as accueil from './pages/accueil.js';\n   import * as factures from './pages/factures.js';\n   import * as admin from './pages/admin.js';\n\n   const pages = { '/': accueil, '/factures': factures, '/admin': admin };\n\n   function naviguer(chemin) {\n     (pages[chemin] ?? accueil).afficher(document.querySelector('main'));\n   }\n   ```\n\n   :::indice\n   Une table de fonctions `() => import(...)`, et une `Map` qui garde la promesse de chaque page. Les liens peuvent\n   porter le chemin dans leur `href`.\n   :::\n\n   :::solution\n   ```js\n   const chargeurs = {\n     '/': () => import('./pages/accueil.js'),\n     '/factures': () => import('./pages/factures.js'),\n     '/admin': () => import('./pages/admin.js'),\n   };\n   const chargees = new Map();\n\n   function chargerPage(chemin) {\n     const cle = chemin in chargeurs ? chemin : '/';\n     if (!chargees.has(cle)) chargees.set(cle, chargeurs[cle]());\n     return chargees.get(cle);\n   }\n\n   async function naviguer(chemin) {\n     const page = await chargerPage(chemin);\n     page.afficher(document.querySelector('main'));\n   }\n\n   document.addEventListener('pointerover', (evenement) => {\n     const lien = evenement.target.closest('a[data-page]');\n     if (lien) chargerPage(new URL(lien.href).pathname).catch(() => {});\n   });\n   ```\n\n   La délégation sur `document` précharge au survol de n'importe quel lien marqué `data-page`, y compris ceux\n   ajoutés plus tard. Le `catch` vide évite une promesse rejetée non gérée pendant le préchargement : c'est\n   `naviguer` qui affichera l'erreur si la page est vraiment demandée.\n   :::\n\n2. Corrige ce HTML d'une page produit : l'image principale apparaît tard, et la page saute quand les images de la\n   galerie, en bas de page, arrivent.\n\n   ```html\n   <img src=\"/produit.avif\" alt=\"Sac en cuir cognac\" loading=\"lazy\" />\n   <h1>Sac en cuir cognac</h1>\n   <section class=\"galerie\">\n     <img src=\"/galerie/dos.avif\" alt=\"Vue de dos\" />\n     <img src=\"/galerie/interieur.avif\" alt=\"Vue de l'intérieur\" />\n   </section>\n   ```\n\n   :::indice\n   Deux problèmes pour l'image principale, un pour chaque image de la galerie, et un de plus qui les concerne toutes.\n   :::\n\n   :::solution\n   ```html\n   <img src=\"/produit.avif\" alt=\"Sac en cuir cognac\" width=\"1200\" height=\"900\" fetchpriority=\"high\" />\n   <h1>Sac en cuir cognac</h1>\n   <section class=\"galerie\">\n     <img src=\"/galerie/dos.avif\" alt=\"Vue de dos\" width=\"600\" height=\"450\" loading=\"lazy\" />\n     <img src=\"/galerie/interieur.avif\" alt=\"Vue de l'intérieur\" width=\"600\" height=\"450\" loading=\"lazy\" />\n   </section>\n   ```\n\n   L'image principale, visible à l'ouverture, ne doit pas être différée : on retire `loading=\"lazy\"` et on la\n   marque prioritaire, ce qui améliore le LCP. Les images de la galerie, hors écran, sont différées. Toutes reçoivent\n   `width` et `height`, dans leurs proportions réelles : le navigateur réserve la place, et la page ne saute plus.\n   Le CSS peut toujours les redimensionner avec `max-width: 100%; height: auto`.\n   :::\n\n3. Une carte interactive, très lourde, se trouve en bas d'une page de contact. Écris `chargerQuandVisible(element,\n   charger)`, qui appelle `charger()` une seule fois quand l'élément approche à moins de 200 px de l'écran, et\n   utilise-la pour importer `./carte.js` et appeler son `afficherCarte(element)`.\n\n   :::indice\n   Un `IntersectionObserver` avec une `rootMargin`, qui se déconnecte dès le premier déclenchement.\n   :::\n\n   :::solution\n   ```js\n   function chargerQuandVisible(element, charger) {\n     const observateur = new IntersectionObserver(\n       ([entree]) => {\n         if (!entree.isIntersecting) return;\n         observateur.disconnect();\n         charger();\n       },\n       { rootMargin: '200px' },\n     );\n     observateur.observe(element);\n     return () => observateur.disconnect();\n   }\n\n   const zoneCarte = document.querySelector('#carte');\n   chargerQuandVisible(zoneCarte, async () => {\n     zoneCarte.setAttribute('aria-busy', 'true');\n     try {\n       const { afficherCarte } = await import('./carte.js');\n       afficherCarte(zoneCarte);\n     } catch {\n       zoneCarte.textContent = \"La carte n'a pas pu être chargée. Rechargez la page pour réessayer.\";\n     } finally {\n       zoneCarte.removeAttribute('aria-busy');\n     }\n   });\n   ```\n\n   Le visiteur qui ne descend jamais en bas de page ne télécharge pas la carte. Celui qui descend la reçoit juste\n   avant qu'elle n'apparaisse, grâce à la marge de 200 px. La zone doit avoir une hauteur réservée en CSS, pour que\n   l'arrivée de la carte ne fasse pas sauter la page.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que le code splitting, et comment le mettre en place ?\n\n  :::indice\n  Pense à `import()` et à ce qu'en fait un outil de build.\n  :::\n\n  :::reponse\n  C'est découper le JavaScript d'une application en plusieurs fichiers chargés à la demande, au lieu d'un seul\n  bundle téléchargé et exécuté en entier au démarrage. On le met en place avec `import()` : les outils de build\n  comme Vite, Rollup ou webpack créent un chunk pour chaque import dynamique. On découpe d'abord par route, puis les\n  fonctionnalités lourdes et rarement utilisées : éditeur, graphiques, export. On veille à ce qu'aucun import\n  statique ne ramène le code dans le bundle principal, on précharge au survol ou à l'apparition, et on gère l'échec du\n  chargement.\n  :::\n\n- Pourquoi ne faut-il pas mettre `loading=\"lazy\"` sur toutes les images ?\n\n  :::indice\n  Pense à l'image visible dès l'ouverture, et à la métrique qui la mesure.\n  :::\n\n  :::reponse\n  `loading=\"lazy\"` retarde le téléchargement jusqu'à ce que le navigateur sache que l'image approche de l'écran, ce\n  qui demande la mise en page. Pour l'image principale, visible dès l'ouverture, c'est un retard pur : elle arrive plus\n  tard, et le LCP, qui mesure souvent justement cette image, se dégrade. On réserve le chargement différé aux images\n  hors écran, et on marque l'image principale avec `fetchpriority=\"high\"`. Dans tous les cas, `width` et `height`\n  évitent les sauts de mise en page, mesurés par le CLS.\n  :::\n\n- Après un déploiement, des utilisateurs voient des erreurs « Failed to fetch dynamically imported module ».\n  Pourquoi, et que faire ?\n\n  :::indice\n  Que contient encore la page qu'ils ont ouverte avant le déploiement ?\n  :::\n\n  :::reponse\n  Leur page, chargée avant le déploiement, référence les anciens chunks, dont les noms contiennent un hachage du\n  contenu. Si le serveur ne les sert plus, le premier `import()` d'un chunk encore jamais chargé échoue. Côté\n  application, on intercepte l'échec, par exemple avec l'événement `vite:preloadError`, et on propose de recharger la\n  page, ou on la recharge automatiquement une seule fois. Côté déploiement, on conserve les anciens chunks pendant une\n  période de transition, pour que les sessions ouvertes continuent de fonctionner.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-evenements-et-grandes-listes",
+      "title": "Événements performants et grandes listes",
+      "slug": "evenements-et-grandes-listes",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-navigateur",
+      "order": 2,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-pipeline-de-rendu",
+        "javascript-delegation",
+        "javascript-debounce-et-throttle"
+      ],
+      "skills": [
+        "large-lists-events"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "navigateur",
+        "evenements"
+      ],
+      "contentPath": "javascript/performance-navigateur/evenements-et-grandes-listes/lesson.md",
+      "contentVersion": "40951dbb6ae0",
+      "body": "\n## Objectifs\n\n- Garder les gestionnaires d'événements courts, pour que l'interface réponde vite (INP).\n- Utiliser les écouteurs passifs, la délégation et les observateurs à la place des écouteurs coûteux.\n- Afficher de grandes listes sans bloquer la page : pagination, insertion groupée, `content-visibility`.\n- Écrire une liste virtuelle qui n'affiche que les lignes visibles, en restant accessible.\n\n## Introduction\n\nUne page réactive, c'est une page dont le fil principal est libre quand l'utilisateur agit. Or le fil principal\nfait tout : exécuter le JavaScript, traiter les événements, calculer la mise en page, peindre. Un gestionnaire de\nclic qui travaille 300 ms, c'est 300 ms pendant lesquelles rien ne s'affiche, pas même l'effet du clic.\n\nLes grandes listes sont le cas le plus fréquent de ce problème. Chaque élément du DOM coûte de la mémoire, du calcul\nde style et de la mise en page : dix mille lignes de tableau suffisent à rendre une page lente à ouvrir, à faire\ndéfiler et à mettre à jour. Ce chapitre montre comment traiter les événements sans bloquer, puis comment n'afficher\nque ce qui est utile.\n\n## Concept\n\n| Problème | Solution |\n| --- | --- |\n| un écouteur par élément, sur des milliers d'éléments | la délégation : un écouteur sur le conteneur |\n| un écouteur `touchmove` ou `wheel` qui peut bloquer le défilement | `{ passive: true }` |\n| un écouteur `scroll` qui teste si un élément est visible | `IntersectionObserver` |\n| un écouteur `resize` qui mesure un élément | `ResizeObserver` |\n| un gestionnaire qui fait un long travail | afficher la réaction d'abord, puis céder la main et continuer |\n\n| Liste de n éléments | Stratégie | Nœuds dans le DOM |\n| --- | --- | --- |\n| quelques centaines | tout afficher, en une insertion groupée | n |\n| quelques milliers, ou un parcours par pages | pagination, « charger plus », `content-visibility: auto` | une page, ou n allégés |\n| des dizaines de milliers et plus, défilement continu | virtualisation | les lignes visibles, plus une marge |\n\n## Exemple\n\nUne liste de 100 000 clients, dans un conteneur de 400 px de haut qui défile. La **virtualisation** n'insère dans le\nDOM que les lignes visibles, plus une petite marge, et les positionne dans un espaceur qui a la hauteur de la liste\ncomplète :\n\n```js\nfunction creerListeVirtuelle(conteneur, { elements, hauteurLigne, rendreLigne, marge = 5 }) {\n  const espaceur = document.createElement('div');\n  espaceur.style.position = 'relative';\n  espaceur.style.height = `${elements.length * hauteurLigne}px`;\n  conteneur.replaceChildren(espaceur);\n\n  let debutAffiche = -1;\n  let finAffichee = -1;\n\n  function afficher() {\n    const { scrollTop, clientHeight } = conteneur; // lectures d'abord\n    const debut = Math.max(0, Math.floor(scrollTop / hauteurLigne) - marge);\n    const fin = Math.min(elements.length, Math.ceil((scrollTop + clientHeight) / hauteurLigne) + marge);\n    if (debut === debutAffiche && fin === finAffichee) return;\n    debutAffiche = debut;\n    finAffichee = fin;\n\n    const fragment = document.createDocumentFragment();\n    for (let i = debut; i < fin; i++) {\n      const ligne = rendreLigne(elements[i], i);\n      ligne.style.position = 'absolute';\n      ligne.style.insetInline = '0';\n      ligne.style.height = `${hauteurLigne}px`;\n      ligne.style.transform = `translateY(${i * hauteurLigne}px)`;\n      ligne.setAttribute('aria-posinset', String(i + 1));\n      ligne.setAttribute('aria-setsize', String(elements.length));\n      fragment.append(ligne);\n    }\n    espaceur.replaceChildren(fragment); // écritures ensuite, en une fois\n  }\n\n  let programme = false;\n  conteneur.addEventListener(\n    'scroll',\n    () => {\n      if (programme) return;\n      programme = true;\n      requestAnimationFrame(() => {\n        programme = false;\n        afficher();\n      });\n    },\n    { passive: true },\n  );\n\n  afficher();\n  return { afficher };\n}\n```\n\n```js\nconst clients = Array.from({ length: 100_000 }, (_, i) => ({ id: i, nom: `Client ${i}` }));\n\nconst conteneur = document.querySelector('#clients'); // role=\"list\", height: 400px, overflow: auto\ncreerListeVirtuelle(conteneur, {\n  elements: clients,\n  hauteurLigne: 32,\n  rendreLigne: (client) => {\n    const ligne = document.createElement('div');\n    ligne.setAttribute('role', 'listitem');\n    ligne.textContent = client.nom;\n    return ligne;\n  },\n});\n```\n\nMesuré dans Chromium : afficher les 100 000 lignes d'un coup prend plus d'une seconde, pendant laquelle la page est\nfigée ; la liste virtuelle s'affiche en moins de 20 ms, avec 18 lignes dans le DOM. Après un défilement jusqu'au\nclient 50 000, elle en contient 23 : les 13 visibles et une marge de 5 de chaque côté.\n\n## Comment ça fonctionne\n\n**La réactivité se mesure : INP.** L'*Interaction to Next Paint* mesure le délai entre une action de l'utilisateur\net l'image qui en montre l'effet. C'est l'un des Core Web Vitals de Google ; il est jugé bon sous 200 ms. Ce délai\nadditionne l'attente que le fil principal se libère, la durée des gestionnaires d'événements, et le rendu qui suit.\nD'où la règle : un gestionnaire fait le minimum visible — ouvrir le menu, désactiver le bouton, afficher un\nindicateur —, puis **cède la main** au navigateur avant le travail lourd, pour que l'image s'affiche d'abord.\n\n```js\nfunction cederLaMain() {\n  // scheduler.yield() existe dans les navigateurs Chromium ; setTimeout ailleurs.\n  if (globalThis.scheduler?.yield) return scheduler.yield();\n  return new Promise((resoudre) => setTimeout(resoudre, 0));\n}\n\nbouton.addEventListener('click', async () => {\n  bouton.disabled = true;\n  indicateur.hidden = false; // la réaction visible\n  await cederLaMain(); // le navigateur peut peindre ici\n  const rapport = calculerRapport(donnees); // le travail lourd\n  afficherRapport(rapport);\n  indicateur.hidden = true;\n  bouton.disabled = false;\n});\n```\n\nSi le travail dure vraiment longtemps, céder une fois ne suffit pas : le chapitre sur les Web Workers montre comment\nle découper ou le sortir du fil principal.\n\n**Écouteurs passifs.** Pour `touchstart`, `touchmove` et `wheel`, le navigateur doit savoir si l'écouteur va appeler\n`preventDefault()`, qui annulerait le défilement. Tant qu'il ne le sait pas, il attend la fin de l'écouteur avant de\nfaire défiler. `{ passive: true }` promet qu'on ne l'appellera pas : le défilement démarre immédiatement. Chrome\nrend ces écouteurs passifs par défaut quand ils sont posés sur `window`, `document` ou `body`, mais pas sur un autre\nélément, et tous les navigateurs n'appliquent pas cette règle aux trois événements : on le déclare explicitement.\nL'événement `scroll`, lui, n'est pas annulable : il arrive après le défilement, et le coût à surveiller est celui de\nce qu'on y fait.\n\n**Des observateurs plutôt que des mesures.** Tester la visibilité d'un élément dans un écouteur `scroll` lit\n`getBoundingClientRect` des dizaines de fois par seconde. Un `IntersectionObserver` fait ce calcul dans le\nnavigateur, hors de votre code, et n'appelle votre callback que quand la visibilité change. C'est la bonne façon de\ncharger la suite d'une liste quand on approche du bas, ou une image quand elle va apparaître. De même, un\n`ResizeObserver` signale les changements de taille d'un élément, même quand la fenêtre, elle, ne change pas.\n\n**Délégation.** Vue dans la partie sur le navigateur : un seul écouteur sur le conteneur remplace des milliers\nd'écouteurs, économise leur mémoire et leur installation, et fonctionne pour les lignes ajoutées plus tard. Elle\ns'impose avec une liste virtuelle, dont les lignes sont sans cesse recréées.\n\n**Pourquoi une grande liste est lente.** Chaque nœud coûte de la mémoire, le calcul de son style, sa mise en page et\nsa peinture ; et une modification quelque part peut obliger à recalculer une grande partie de la liste. Au-delà de\nquelques milliers de nœuds, ouvrir la page, défiler et mettre à jour deviennent sensiblement plus lents.\n\n**Les stratégies, de la plus simple à la plus complexe.** D'abord, insérer en une fois : un `DocumentFragment` ou\n`replaceChildren` évite de modifier le document ligne par ligne. Ensuite, afficher moins : pagination, ou bouton\n« Charger plus », souvent le meilleur choix pour l'utilisateur. Puis `content-visibility: auto`, en CSS : le\nnavigateur saute le rendu des sections hors écran tout en gardant leur contenu dans le DOM, donc cherchable avec\nCtrl+F et lisible par les lecteurs d'écran ; `contain-intrinsic-size` lui donne une hauteur estimée.\n\n```css\n.section-liste {\n  content-visibility: auto;\n  contain-intrinsic-size: auto 800px;\n}\n```\n\nEnfin, la virtualisation, quand la liste est vraiment énorme.\n\n**Ce que coûte la virtualisation.** Elle est redoutablement efficace, mais les lignes hors écran n'existent plus :\nCtrl+F ne les trouve pas, un lecteur d'écran ne peut pas les compter, et l'état d'une ligne, comme le texte d'un\nchamp ou le focus, disparaît quand elle sort de l'écran. On compense avec `aria-setsize` et `aria-posinset`, qui\nannoncent la position réelle, et on garde l'état dans les données, pas dans le DOM. Des hauteurs de ligne variables\ncompliquent beaucoup le calcul des positions : en production, on utilise une bibliothèque éprouvée, comme TanStack\nVirtual, plutôt que de tout réécrire.\n\n## Erreurs fréquentes\n\n**Faire tout le travail dans le gestionnaire.** Affiche la réaction, cède la main, puis travaille.\n\n**Oublier `{ passive: true }` sur un écouteur tactile ou de molette.** Le défilement attend l'écouteur.\n\n**Tester la visibilité dans un écouteur `scroll`.** Utilise `IntersectionObserver`.\n\n**Insérer les lignes une par une dans le document.** Construis un fragment, puis insère-le en une fois.\n\n**Virtualiser une liste de 200 éléments.** La complexité et les pertes d'accessibilité ne se justifient pas : insère\ntout, ou utilise `content-visibility`.\n\n**Garder l'état d'une ligne virtualisée dans le DOM.** Il disparaît quand la ligne est recyclée ; il appartient aux\ndonnées.\n\n## À retenir\n\n- Un gestionnaire rapide fait la réaction visible, cède la main, puis travaille : c'est ce que mesure l'INP.\n- `{ passive: true }` pour `touchstart`, `touchmove` et `wheel` ; la délégation pour les listes.\n- `IntersectionObserver` et `ResizeObserver` remplacent les mesures dans `scroll` et `resize`.\n- Chaque nœud du DOM coûte : insertion groupée, pagination, `content-visibility: auto`.\n- La virtualisation n'affiche que les lignes visibles et une marge, dans un espaceur de la hauteur totale.\n- Elle a un prix en accessibilité et en complexité : `aria-setsize`, `aria-posinset`, état dans les données.\n\n## Exercices\n\n1. Ce code affiche un bouton « Retour en haut » quand l'utilisateur a dépassé l'en-tête de la page. Réécris-le avec\n   un `IntersectionObserver`.\n\n   ```js\n   window.addEventListener('scroll', () => {\n     const basEnTete = entete.getBoundingClientRect().bottom;\n     boutonHaut.hidden = basEnTete > 0;\n   });\n   ```\n\n   :::indice\n   Observe l'en-tête : le bouton doit être visible exactement quand l'en-tête ne l'est plus.\n   :::\n\n   :::solution\n   ```js\n   const observateur = new IntersectionObserver(([entree]) => {\n     boutonHaut.hidden = entree.isIntersecting;\n   });\n   observateur.observe(entete);\n   ```\n\n   Le callback n'est appelé qu'au moment où l'en-tête entre ou sort de l'écran, et une fois au démarrage, au lieu de\n   mesurer la géométrie à chaque événement de défilement. On appelle `observateur.disconnect()` quand le composant\n   disparaît.\n   :::\n\n2. Écris `chargerAuBesoin(sentinelle, chargerPage)`, qui appelle `chargerPage()` chaque fois qu'un élément sentinelle,\n   placé en bas de la liste, approche à moins de 300 px de l'écran. Un chargement ne doit jamais commencer tant que\n   le précédent n'est pas terminé, et l'observation s'arrête quand `chargerPage` renvoie `false`.\n\n   :::indice\n   `rootMargin: '0px 0px 300px 0px'` agrandit la zone observée vers le bas. Un booléen `enCours` évite les\n   chargements simultanés.\n   :::\n\n   :::solution\n   ```js\n   function chargerAuBesoin(sentinelle, chargerPage) {\n     let enCours = false;\n     const observateur = new IntersectionObserver(\n       async ([entree]) => {\n         if (!entree.isIntersecting || enCours) return;\n         enCours = true;\n         try {\n           const encore = await chargerPage();\n           if (encore === false) observateur.disconnect();\n         } finally {\n           enCours = false;\n         }\n       },\n       { rootMargin: '0px 0px 300px 0px' },\n     );\n     observateur.observe(sentinelle);\n     return () => observateur.disconnect();\n   }\n   ```\n\n   Si, après un chargement, la sentinelle est toujours dans la zone, par exemple parce qu'une page ne remplit pas\n   l'écran, l'observateur ne la signalera pas de nouveau tant qu'elle n'en sort pas. Une version robuste vérifie\n   alors la position après chaque chargement, ou réobserve la sentinelle : `observateur.unobserve(sentinelle)` puis\n   `observateur.observe(sentinelle)` déclenche un nouveau calcul.\n   :::\n\n3. Dans la liste virtuelle du chapitre, on veut qu'un clic sur une ligne affiche le nom du client. Ajoute ce\n   comportement sans poser d'écouteur sur chaque ligne, et explique pourquoi un écouteur par ligne serait ici une\n   mauvaise idée.\n\n   :::indice\n   Les lignes sont recréées à chaque défilement. Mets l'index de l'élément dans un attribut `data-`.\n   :::\n\n   :::solution\n   Un écouteur par ligne devrait être reposé à chaque rendu, sur des lignes qui disparaissent aussitôt. Avec la\n   délégation, un seul écouteur sur le conteneur retrouve la ligne cliquée et l'élément correspondant :\n\n   ```js\n   const rendreLigne = (client, index) => {\n     const ligne = document.createElement('div');\n     ligne.setAttribute('role', 'listitem');\n     ligne.dataset.index = String(index);\n     ligne.textContent = client.nom;\n     return ligne;\n   };\n\n   conteneur.addEventListener('click', (evenement) => {\n     const ligne = evenement.target.closest('[data-index]');\n     if (!ligne || !conteneur.contains(ligne)) return;\n     const client = clients[Number(ligne.dataset.index)];\n     console.log(client.nom);\n   });\n   ```\n\n   L'écouteur lit l'élément dans les données, pas dans le DOM : il fonctionne quelle que soit la ligne recyclée qui\n   l'affiche. Pour un usage au clavier, chaque ligne serait un `button`, ou la liste gérerait le focus.\n   :::\n\n## Questions d'entretien\n\n- Comment afficherais-tu une liste de 100 000 éléments ?\n\n  :::indice\n  Commence par le besoin de l'utilisateur, puis gradue les solutions.\n  :::\n\n  :::reponse\n  D'abord, je me demande si l'utilisateur a besoin de tout voir : une recherche, des filtres et une pagination\n  répondent souvent mieux au besoin, et sont plus simples. Si un défilement continu est nécessaire, je virtualise :\n  seules les lignes visibles et une petite marge sont dans le DOM, positionnées dans un conteneur de la hauteur\n  totale, et recalculées au défilement, une fois par image. J'utilise une bibliothèque éprouvée pour les hauteurs\n  variables, la délégation pour les événements, `aria-setsize` et `aria-posinset` pour l'accessibilité, et je garde\n  l'état dans les données. Pour quelques milliers d'éléments, `content-visibility: auto` peut suffire.\n  :::\n\n- Qu'est-ce qu'un écouteur passif, et quand l'utiliser ?\n\n  :::indice\n  Qu'attend le navigateur avant de faire défiler ?\n  :::\n\n  :::reponse\n  C'est un écouteur déclaré avec `{ passive: true }`, qui promet de ne pas appeler `preventDefault()`. Pour\n  `touchstart`, `touchmove` et `wheel`, le navigateur doit sinon attendre la fin de l'écouteur avant de savoir s'il\n  peut faire défiler, ce qui rend le défilement saccadé si l'écouteur est lent. Je l'utilise pour tous les écouteurs\n  de ces événements qui ne bloquent pas le défilement ; s'il faut l'empêcher, comme pour un carrousel tactile,\n  l'écouteur doit rester actif et très court.\n  :::\n\n- Qu'est-ce que l'INP, et comment l'améliorer ?\n\n  :::indice\n  De quoi se compose le délai entre un clic et l'image qui en montre l'effet ?\n  :::\n\n  :::reponse\n  L'Interaction to Next Paint mesure, pour les interactions de l'utilisateur, le délai jusqu'à l'image suivante :\n  attente que le fil principal se libère, exécution des gestionnaires, puis rendu. Un bon INP est inférieur à 200 ms.\n  Pour l'améliorer : raccourcir les tâches longues qui occupent le fil principal, faire le minimum visible dans le\n  gestionnaire puis céder la main avant le travail lourd, découper les longs traitements ou les déplacer dans un Web\n  Worker, et réduire le coût du rendu, par exemple en allégeant le DOM.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-pipeline-de-rendu",
+      "title": "Le pipeline de rendu : reflow, repaint et layout thrashing",
+      "slug": "pipeline-de-rendu",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-navigateur",
+      "order": 1,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-dom-modifier",
+        "javascript-event-loop"
+      ],
+      "skills": [
+        "rendering-pipeline"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "navigateur",
+        "dom"
+      ],
+      "contentPath": "javascript/performance-navigateur/pipeline-de-rendu/lesson.md",
+      "contentVersion": "744cbda24bbb",
+      "body": "\n## Objectifs\n\n- Décrire les étapes qui transforment le DOM en pixels : style, mise en page, peinture, composition.\n- Savoir quelles modifications déclenchent un *reflow*, un *repaint*, ou seulement une composition.\n- Reconnaître le *layout thrashing* et le corriger en groupant lectures et écritures.\n- Animer avec `transform` et `opacity`, et caler les écritures sur `requestAnimationFrame`.\n\n## Introduction\n\nModifier le DOM ne dessine rien immédiatement. Le navigateur note ce qui a changé, et c'est plus tard, avant\nd'afficher l'image suivante, qu'il recalcule les styles, la géométrie et les pixels. Ce fonctionnement différé est\nefficace : cent modifications d'affilée ne coûtent qu'un seul calcul. Mais un code qui lit une dimension au mauvais\nmoment oblige le navigateur à tout recalculer tout de suite, et le même travail peut alors être refait des\ncentaines de fois.\n\nCe chapitre explique ce que fait le navigateur entre votre JavaScript et l'écran, et comment ne pas le forcer à\ntravailler pour rien. C'est la base de tout le reste du module.\n\n## Concept\n\n**Le pipeline d'une image.**\n\n```text\nJavaScript → Style → Layout (mise en page) → Paint (peinture) → Composite (composition) → écran\n```\n\n| Étape | Ce que calcule le navigateur | Déclenchée par |\n| --- | --- | --- |\n| Style | les règles CSS qui s'appliquent à chaque élément | ajout ou retrait de classe, style en ligne, nouvel élément |\n| Layout, ou *reflow* | la taille et la position de chaque boîte | `width`, `height`, `margin`, `padding`, `top`, `font-size`, contenu texte, ajout d'élément |\n| Paint, ou *repaint* | les pixels de chaque couche | `color`, `background`, `box-shadow`, `border-color`, `visibility` |\n| Composite | l'assemblage des couches, déplacées ou rendues transparentes | `transform`, `opacity` sur un élément qui a sa propre couche |\n\nChaque étape entraîne les suivantes : un changement de géométrie coûte style, layout, peinture et composition ; un\nchangement de couleur, style, peinture et composition ; un `transform`, souvent la composition seule.\n\nÀ 60 images par seconde, le navigateur dispose d'environ **16,7 ms** par image, pour votre JavaScript et tout ce\npipeline. Au-delà, des images sont sautées : l'animation saccade.\n\n**Lectures qui forcent la mise en page.** Ces propriétés et méthodes renvoient une géométrie à jour : si le DOM a\nchangé depuis le dernier calcul, le navigateur doit refaire la mise en page **immédiatement**, avant de répondre.\n\n| Famille | Exemples |\n| --- | --- |\n| dimensions et positions | `offsetWidth`, `offsetHeight`, `offsetTop`, `clientWidth`, `scrollHeight` |\n| défilement | `scrollTop`, `scrollY`, `scrollIntoView()` |\n| géométrie | `getBoundingClientRect()`, `getClientRects()` |\n| styles calculés | `getComputedStyle(el).width`, et les propriétés liées à la mise en page |\n| texte rendu | `innerText` |\n\n## Exemple\n\nMille cartes doivent prendre la moitié de la largeur de leur bloc parent. Les deux versions produisent la même page :\n\n```js\nconst cartes = document.querySelectorAll('.carte');\n\n// Version 1 : lecture et écriture alternées.\nfor (const carte of cartes) {\n  const largeur = carte.parentElement.offsetWidth; // lecture : exige une mise en page à jour\n  carte.style.width = `${largeur / 2}px`; // écriture : invalide la mise en page\n}\n```\n\n```js\nconst cartes = document.querySelectorAll('.carte');\n\n// Version 2 : toutes les lectures, puis toutes les écritures.\nconst largeurs = Array.from(cartes, (carte) => carte.parentElement.offsetWidth);\ncartes.forEach((carte, i) => {\n  carte.style.width = `${largeurs[i] / 2}px`;\n});\n```\n\nMesurées dans Chromium, sur 1 000 cartes : environ **900 ms** pour la première version, **18 ms** pour la\nseconde. La première bloque l'interface pendant près d'une seconde.\n\n## Comment ça fonctionne\n\n**Invalider, puis recalculer au dernier moment.** Quand on écrit `carte.style.width = '100px'`, le navigateur ne\nrecalcule rien : il marque la mise en page comme périmée. Normalement, le recalcul a lieu une fois, avant l'image\nsuivante, quel que soit le nombre de modifications. C'est pourquoi la seconde version est rapide : une mise en page\npour les lectures, qui ne font que la consulter, puis mille écritures qui ne font qu'invalider, puis une seule mise\nen page avant l'affichage.\n\n**La mise en page synchrone forcée.** Dans la première version, chaque tour de boucle lit `offsetWidth` alors que le\ntour précédent vient d'invalider la mise en page. Pour répondre juste, le navigateur doit recalculer la géométrie\n**tout de suite**, de façon synchrone : c'est un *forced reflow*. Répété dans une boucle, c'est le **layout\nthrashing** : mille mises en page au lieu d'une, chacune sur toute la page. L'onglet Performance des DevTools\nl'affiche en violet, avec l'avertissement *Forced reflow is a likely performance bottleneck*.\n\n**La règle : grouper.** D'abord toutes les lectures, ensuite toutes les écritures. Quand le code est dispersé entre\nplusieurs composants, on reporte les écritures à l'image suivante avec `requestAnimationFrame`, qui s'exécute juste\navant la mise en page du navigateur. Les lectures faites ailleurs, pendant le traitement des événements, trouvent\nainsi une mise en page encore valide.\n\n```js\nfunction placerInfobulle(infobulle, ancre) {\n  const { left, bottom } = ancre.getBoundingClientRect(); // lecture, maintenant\n  requestAnimationFrame(() => {\n    // écriture, juste avant l'image suivante\n    infobulle.style.transform = `translate(${left}px, ${bottom + 8}px)`;\n  });\n}\n```\n\nAttention : une lecture placée **dans** le callback de `requestAnimationFrame`, après des écritures du même callback,\nforce encore une mise en page. Le principe reste le même : lectures d'abord, écritures ensuite.\n\n**Reflow, repaint, composition.** Une mise en page est chère parce qu'un changement se propage : agrandir un élément\npeut déplacer tous ses voisins et ses descendants. Une peinture est moins chère, mais redessine une zone. La\ncomposition, elle, déplace ou rend transparente une couche déjà peinte, souvent sur le processeur graphique. D'où la\nrègle des animations : on anime `transform` et `opacity`, jamais `left`, `top`, `width` ou `margin`.\n\n```css\n/* Déclenche une mise en page à chaque image. */\n.tiroir-lent { transition: left 300ms; }\n\n/* Composition seulement. */\n.tiroir { transition: transform 300ms; }\n.tiroir.ouvert { transform: translateX(0); }\n```\n\n`will-change: transform` demande au navigateur de préparer une couche à l'avance. Chaque couche consomme de la\nmémoire graphique : on le réserve aux éléments qui vont vraiment s'animer, jamais à `*`.\n\n**Réduire la portée d'une mise en page.** `contain: layout` ou `contain: content` en CSS indique qu'un élément ne\nmodifie pas la géométrie de l'extérieur : un changement à l'intérieur n'oblige pas à recalculer toute la page. Et\nune modification sur un élément `display: none`, ou pas encore inséré dans le document, ne coûte aucune mise en page.\n\n## Erreurs fréquentes\n\n**Lire une dimension dans une boucle qui modifie le DOM.** C'est le layout thrashing : lis tout d'abord, écris ensuite.\n\n**Animer `left`, `top`, `width` ou `height`.** Anime `transform` et `opacity`.\n\n**Mettre `will-change` partout.** Chaque couche coûte de la mémoire ; réserve-le aux éléments animés.\n\n**Lire `offsetHeight` « pour voir » dans un code chaud.** Une lecture de géométrie n'est pas gratuite : si le DOM a\nchangé, elle déclenche une mise en page.\n\n**Écrire style par style.** `el.style.width = …; el.style.height = …; el.style.margin = …` ne coûte qu'une mise en page\ns'il n'y a aucune lecture entre les écritures ; mais basculer une classe CSS est plus lisible et regroupe tout.\n\n**Optimiser sans regarder l'onglet Performance.** Il montre exactement quelles étapes coûtent, et où.\n\n## À retenir\n\n- Pipeline : JavaScript, style, mise en page, peinture, composition ; environ 16,7 ms par image à 60 Hz.\n- Géométrie modifiée : reflow ; apparence seule : repaint ; `transform` et `opacity` : composition.\n- Une écriture invalide la mise en page, une lecture de géométrie la force si elle est périmée.\n- Alterner lectures et écritures provoque le layout thrashing ; on groupe les lectures, puis les écritures.\n- `requestAnimationFrame` reporte les écritures juste avant l'image suivante.\n- On anime `transform` et `opacity`, et on vérifie dans l'onglet Performance.\n\n## Exercices\n\n1. Pour chaque modification, indique l'étape la plus coûteuse déclenchée : mise en page, peinture ou composition.\n   - a) `el.style.backgroundColor = 'red'`\n   - b) `el.style.transform = 'translateY(20px)'`\n   - c) `el.textContent = 'Un texte bien plus long qu’avant'`\n   - d) `el.classList.add('large')`, où `.large { padding: 2rem; }`\n   - e) `el.style.opacity = '0.5'`, sur un élément animé qui a sa propre couche\n\n   :::indice\n   La géométrie change-t-elle ? Sinon, les pixels de l'élément changent-ils, ou seulement la façon d'assembler sa\n   couche ?\n   :::\n\n   :::solution\n   - a) Peinture : la couleur change, pas la géométrie.\n   - b) Composition : la couche est déplacée sans nouvelle mise en page. Sans couche dédiée, une peinture peut\n     s'ajouter, mais toujours pas de mise en page.\n   - c) Mise en page : un texte plus long peut changer la taille de l'élément et déplacer ses voisins.\n   - d) Mise en page : le `padding` change la taille de la boîte.\n   - e) Composition : l'opacité est appliquée à la couche lors de l'assemblage.\n   :::\n\n2. Ce code aligne la hauteur de chaque ligne d'un tableau sur celle de la ligne correspondante d'un second tableau.\n   Il provoque du layout thrashing. Explique pourquoi, puis corrige-le.\n\n   ```js\n   function alignerLignes(gauche, droite) {\n     gauche.forEach((ligne, i) => {\n       ligne.style.height = 'auto';\n       droite[i].style.height = 'auto';\n       const hauteur = Math.max(ligne.offsetHeight, droite[i].offsetHeight);\n       ligne.style.height = `${hauteur}px`;\n       droite[i].style.height = `${hauteur}px`;\n     });\n   }\n   ```\n\n   :::indice\n   Il y a trois phases : remettre les hauteurs à `auto`, mesurer, appliquer. Chacune peut se faire pour toutes les\n   lignes d'un coup.\n   :::\n\n   :::solution\n   À chaque tour, les écritures invalident la mise en page, puis `offsetHeight` la force : une mise en page par\n   ligne. On sépare les trois phases : toutes les écritures `auto`, une seule mise en page pour toutes les mesures,\n   puis toutes les écritures finales.\n\n   ```js\n   function alignerLignes(gauche, droite) {\n     for (const ligne of [...gauche, ...droite]) ligne.style.height = 'auto';\n\n     const hauteurs = gauche.map((ligne, i) => Math.max(ligne.offsetHeight, droite[i].offsetHeight));\n\n     gauche.forEach((ligne, i) => {\n       ligne.style.height = `${hauteurs[i]}px`;\n       droite[i].style.height = `${hauteurs[i]}px`;\n     });\n   }\n   ```\n\n   La première mesure force une mise en page, les suivantes la réutilisent : elle reste valide tant qu'on n'écrit\n   rien.\n   :::\n\n3. Un menu latéral s'ouvre en animant `left` de `-300px` à `0`, et l'animation saccade sur mobile. Réécris le CSS et le\n   JavaScript pour une animation fluide.\n\n   ```js\n   bouton.addEventListener('click', () => {\n     menu.style.left = menu.style.left === '0px' ? '-300px' : '0px';\n   });\n   ```\n\n   :::indice\n   Quelle propriété déplace un élément sans mise en page ? Et plutôt qu'un style en ligne, une classe.\n   :::\n\n   :::solution\n   `left` modifie la géométrie : chaque image de l'animation refait une mise en page. `transform` déplace la couche\n   du menu à l'étape de composition.\n\n   ```css\n   .menu {\n     position: fixed;\n     left: 0;\n     width: 300px;\n     transform: translateX(-100%);\n     transition: transform 250ms ease-out;\n   }\n\n   .menu.ouvert {\n     transform: translateX(0);\n   }\n   ```\n\n   ```js\n   bouton.addEventListener('click', () => {\n     const ouvert = menu.classList.toggle('ouvert');\n     bouton.setAttribute('aria-expanded', String(ouvert));\n   });\n   ```\n\n   Basculer une classe laisse la mise en forme au CSS, et `aria-expanded` annonce l'état du menu aux technologies\n   d'assistance. Pendant l'animation, le navigateur n'a plus qu'à composer.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre reflow et repaint ?\n\n  :::indice\n  L'un calcule la géométrie, l'autre les pixels.\n  :::\n\n  :::reponse\n  Le reflow, ou mise en page, recalcule la taille et la position des éléments ; il est déclenché par un changement de\n  géométrie, comme `width`, `padding`, `font-size` ou un ajout d'élément, et il peut se propager aux voisins et aux\n  descendants. Le repaint redessine les pixels d'une zone quand l'apparence change sans changer la géométrie, comme\n  `color` ou `background`. Un reflow entraîne toujours un repaint, l'inverse non. Enfin, `transform` et `opacity`\n  peuvent n'entraîner qu'une composition, la moins coûteuse des étapes.\n  :::\n\n- Qu'est-ce que le layout thrashing, et comment l'éviter ?\n\n  :::indice\n  Pense à une boucle qui lit `offsetHeight` après chaque modification.\n  :::\n\n  :::reponse\n  C'est l'alternance de lectures de géométrie et d'écritures dans le DOM. Chaque écriture invalide la mise en page,\n  et la lecture suivante oblige le navigateur à la recalculer immédiatement, de façon synchrone. Dans une boucle, on\n  obtient une mise en page par tour au lieu d'une seule. On l'évite en groupant : toutes les lectures, puis toutes\n  les écritures ; et, quand le code est dispersé, en reportant les écritures à `requestAnimationFrame`. L'onglet\n  Performance le signale par des blocs violets marqués *Forced reflow*.\n  :::\n\n- Pourquoi anime-t-on `transform` plutôt que `left` ?\n\n  :::indice\n  Quelles étapes du pipeline chaque propriété déclenche-t-elle à chaque image ?\n  :::\n\n  :::reponse\n  Animer `left` modifie la géométrie à chaque image : style, mise en page, peinture et composition, soit beaucoup de\n  travail sur le fil principal, qui fait aussi tourner le JavaScript. `transform` déplace une couche déjà peinte à\n  l'étape de composition, que le navigateur peut confier au processeur graphique. L'animation reste fluide même quand\n  le fil principal est occupé. Même chose pour `opacity`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-web-workers-et-profilage",
+      "title": "Web Workers et profilage des performances",
+      "slug": "web-workers-et-profilage",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "performance-navigateur",
+      "order": 4,
+      "estimatedMinutes": 50,
+      "difficulty": 5,
+      "xp": 120,
+      "prerequisites": [
+        "javascript-pipeline-de-rendu",
+        "javascript-debug-reseau",
+        "javascript-evenements-et-grandes-listes"
+      ],
+      "skills": [
+        "web-workers-profiling"
+      ],
+      "tags": [
+        "javascript",
+        "performance",
+        "navigateur",
+        "workers"
+      ],
+      "contentPath": "javascript/performance-navigateur/web-workers-et-profilage/lesson.md",
+      "contentVersion": "cb9bc68466d1",
+      "body": "\n## Objectifs\n\n- Repérer les tâches longues, qui bloquent le fil principal plus de 50 ms.\n- Découper un long traitement en morceaux qui cèdent la main au navigateur.\n- Déplacer un calcul lourd dans un Web Worker : messages, clonage, transfert, erreurs.\n- Mener un profilage méthodique : reproduire, enregistrer, lire, corriger, mesurer de nouveau.\n- Distinguer mesures de laboratoire et mesures de terrain, et surveiller les Core Web Vitals.\n\n## Introduction\n\nLe JavaScript d'une page s'exécute sur un seul fil, le **fil principal**, qui gère aussi les événements, la mise en\npage et la peinture. Tant qu'une fonction s'exécute, rien d'autre ne se passe : un clic attend, une animation se fige.\nLes chapitres précédents ont réduit le travail. Il reste le travail qui est vraiment nécessaire, mais trop long :\ntrier des centaines de milliers de lignes, analyser un gros fichier, calculer des statistiques.\n\nDeux réponses existent : **découper** ce travail pour laisser le navigateur respirer entre deux morceaux, ou le\n**déplacer** sur un autre fil avec un Web Worker. Et pour savoir où agir, une seule méthode fiable : **profiler**.\n\n## Concept\n\n**Tâche longue.** Toute tâche qui occupe le fil principal plus de **50 ms**. Pendant ce temps, la page ne peut\nrépondre à aucune interaction.\n\n| Travail long | Réponse |\n| --- | --- |\n| une boucle sur beaucoup d'éléments, qui touche au DOM | la découper en morceaux et céder la main entre eux |\n| un calcul pur sur beaucoup de données : tri, analyse, compression, statistiques | un Web Worker |\n| un travail lié au réseau | rien : `fetch` ne bloque pas le fil principal ; c'est le traitement de la réponse qui peut le faire |\n\n| Web Worker | |\n| --- | --- |\n| création | `new Worker(new URL('./calcul.worker.js', import.meta.url), { type: 'module' })` |\n| communication | `postMessage(donnees)` dans un sens, événement `message` dans l'autre |\n| données envoyées | copiées par *structured clone* : objets, tableaux, `Map`, `Date`, tableaux typés… mais ni fonctions ni nœuds du DOM |\n| transfert | `postMessage(donnees, [buffer])` : l'`ArrayBuffer` change de propriétaire sans copie |\n| accès | pas de DOM, pas de `window` ; `fetch`, minuteurs, IndexedDB et `import` disponibles |\n| arrêt | `worker.terminate()` depuis la page |\n\n## Exemple\n\nOn calcule la moyenne, la médiane et le 95ᵉ centile de trois millions de temps de réponse. Le worker vit dans son\npropre fichier :\n\n```js\n// statistiques.worker.js : s'exécute dans un fil séparé, sans accès au DOM.\nfunction statistiques(valeurs) {\n  const triees = valeurs.toSorted(); // un Float64Array se trie numériquement\n  const rang = (p) => triees[Math.min(triees.length - 1, Math.floor(p * triees.length))];\n  let somme = 0;\n  for (const v of triees) somme += v;\n  return { moyenne: somme / triees.length, mediane: rang(0.5), p95: rang(0.95) };\n}\n\nself.addEventListener('message', ({ data: { id, valeurs } }) => {\n  try {\n    self.postMessage({ id, resultat: statistiques(valeurs) });\n  } catch (erreur) {\n    self.postMessage({ id, erreur: erreur.message });\n  }\n});\n```\n\nCôté page, on enveloppe les messages dans des promesses, en associant chaque réponse à sa demande par un identifiant :\n\n```js\nfunction creerClientWorker(url) {\n  const worker = new Worker(url, { type: 'module' });\n  const enAttente = new Map();\n  let prochainId = 0;\n\n  worker.addEventListener('message', ({ data: { id, resultat, erreur } }) => {\n    const { resoudre, rejeter } = enAttente.get(id);\n    enAttente.delete(id);\n    if (erreur === undefined) resoudre(resultat);\n    else rejeter(new Error(erreur));\n  });\n\n  return {\n    appeler(message, transfert = []) {\n      const id = prochainId++;\n      return new Promise((resoudre, rejeter) => {\n        enAttente.set(id, { resoudre, rejeter });\n        try {\n          worker.postMessage({ id, ...message }, transfert);\n        } catch (erreur) {\n          enAttente.delete(id); // message impossible à cloner : DataCloneError\n          rejeter(erreur);\n        }\n      });\n    },\n    terminer: () => worker.terminate(),\n  };\n}\n\nconst statistiques = creerClientWorker(new URL('./statistiques.worker.js', import.meta.url));\n\nconst valeurs = new Float64Array(3_000_000);\nfor (let i = 0; i < valeurs.length; i++) valeurs[i] = Math.random() * 1000;\n\nconst { mediane, p95 } = await statistiques.appeler({ valeurs }, [valeurs.buffer]);\nconsole.log(mediane.toFixed(0), p95.toFixed(0)); // environ 500 et 950\nconsole.log(valeurs.length); // 0 : le tampon a été transféré au worker\n```\n\nMesuré dans Chromium : sur le fil principal, ce calcul prend environ 1,3 seconde, pendant laquelle **aucune** image\nn'est affichée. Dans le worker, il prend un peu plus longtemps, démarrage du worker compris, mais la page continue\nd'afficher ses images et de répondre : plus de 70 images pendant le calcul.\n\n## Comment ça fonctionne\n\n**Un worker ne rend pas le calcul plus rapide.** Il le fait ailleurs. Le coût total augmente même un peu : démarrer\nle worker, charger son module, copier ou transférer les données. Ce qu'on gagne, c'est un fil principal libre. Un\nworker se justifie donc pour un calcul de plusieurs dizaines de millisecondes au moins, pas pour quelques\nopérations.\n\n**Clonage et transfert.** `postMessage` copie les données avec l'algorithme de *structured clone* : les objets, les\ntableaux, les `Map`, les `Set`, les dates et les tableaux typés passent, mais les fonctions, les nœuds du DOM et\nles instances perdent ce qui ne se clone pas. Une fonction ou un nœud déclenche une `DataCloneError`, que notre\nclient transforme en promesse rejetée. Copier un grand tableau coûte du temps et de la mémoire : pour les données\nbinaires, on **transfère** l'`ArrayBuffer` en le citant dans le second argument. Le transfert est quasi instantané,\nmais l'objet devient inutilisable côté expéditeur : sa taille tombe à zéro. On renvoie le résultat de la même façon,\ndans l'autre sens.\n\n**Les erreurs.** Une exception dans le gestionnaire de messages du worker ne remonte pas toute seule jusqu'à la\npromesse de la page : elle déclenche l'événement `error` du worker. D'où le `try...catch` du worker, qui renvoie un\nmessage d'erreur associé au bon identifiant. En production, on écoute aussi `error` et `messageerror` côté page, et\nune bibliothèque comme Comlink peut cacher tout ce protocole derrière de simples appels de fonctions.\n\n**Découper au lieu de déplacer.** Un traitement qui doit toucher au DOM ne peut pas aller dans un worker. On le\ndécoupe : on traite des éléments tant qu'un budget de quelques millisecondes n'est pas dépassé, puis on cède la main.\n\n```js\nfunction cederLaMain() {\n  if (globalThis.scheduler?.yield) return scheduler.yield();\n  return new Promise((resoudre) => setTimeout(resoudre, 0));\n}\n\nasync function traiterParMorceaux(elements, traiter, budget = 10) {\n  let debut = performance.now();\n  for (const element of elements) {\n    traiter(element);\n    if (performance.now() - debut > budget) {\n      await cederLaMain(); // le navigateur traite les interactions en attente\n      debut = performance.now();\n    }\n  }\n}\n```\n\nLe travail total dure un peu plus longtemps, mais plus aucune tâche ne dépasse 50 ms : mesuré dans Chromium sur trois\nmillions d'éléments, le traitement d'un bloc produisait une tâche de près d'une demi-seconde ; découpé, aucune tâche\nlongue n'est plus signalée. `scheduler.yield()`, disponible dans Chromium, reprend la suite en priorité après avoir\ncédé la main, là où `setTimeout` la remet en fin de file.\n\n**Profiler avec méthode.** On ne devine pas une cause de lenteur, on la mesure.\n\n1. **Reproduire** le problème sur un scénario précis, par exemple « filtrer la liste des factures ».\n2. **Enregistrer** avec l'onglet Performance des DevTools, en activant le ralentissement du processeur, 4× ou 6×,\n   pour se rapprocher d'un téléphone moyen.\n3. **Lire** l'enregistrement : les tâches longues sont marquées d'un triangle rouge ; le *flame chart* montre quelles\n   fonctions s'appellent et combien de temps chacune prend ; la vue *Bottom-Up*, triée par *Self time*, désigne les\n   fonctions qui consomment le plus par elles-mêmes. Les blocs violets sont de la mise en page, les verts de la\n   peinture.\n4. **Corriger** la cause la plus coûteuse, une seule à la fois.\n5. **Mesurer de nouveau**, dans les mêmes conditions, pour vérifier le gain.\n\n**Mesurer dans le code.** `performance.mark` et `performance.measure`, vus dans la partie sur le débogage, balisent\nun scénario et apparaissent dans l'onglet Performance. Un `PerformanceObserver` signale les tâches longues pendant\nque l'application tourne :\n\n```js\nnew PerformanceObserver((liste) => {\n  for (const tache of liste.getEntries()) {\n    console.warn(`Tâche longue : ${Math.round(tache.duration)} ms`);\n  }\n}).observe({ type: 'longtask', buffered: true });\n```\n\nChromium propose aussi `long-animation-frame`, plus précis, qui indique les scripts responsables d'une image en\nretard.\n\n**Laboratoire et terrain.** Une mesure sur votre poste, ou un audit Lighthouse, est une mesure de **laboratoire** :\nreproductible, mais sur une seule machine et un seul réseau. Les utilisateurs réels ont des téléphones lents, des\nréseaux instables et des données plus volumineuses. Les mesures de **terrain** les capturent : la bibliothèque\n`web-vitals` mesure le LCP, l'INP et le CLS dans le navigateur de chaque visiteur, et on les envoie à un service de\nsuivi. On s'intéresse au 75ᵉ centile, pas à la moyenne : c'est l'expérience des utilisateurs les moins bien lotis\nqui fait la réputation d'une application.\n\n## Erreurs fréquentes\n\n**Déplacer un petit calcul dans un worker.** Démarrage et copie coûtent plus cher que le gain ; réserve les workers\naux calculs de plusieurs dizaines de millisecondes.\n\n**Envoyer une fonction ou un nœud du DOM au worker.** Ils ne se clonent pas : `DataCloneError`.\n\n**Copier un gros tableau binaire au lieu de le transférer.** Cite son `ArrayBuffer` dans la liste de transfert, et ne\nle réutilise plus ensuite.\n\n**Laisser une erreur du worker sans réponse.** La promesse de la page reste en attente pour toujours ; renvoie une\nerreur associée à l'identifiant.\n\n**Profiler sans ralentir le processeur.** Un poste de développement cache les problèmes que vivent les téléphones.\n\n**Optimiser au jugé.** Enregistre, lis le *Bottom-Up*, corrige une cause, mesure de nouveau.\n\n## À retenir\n\n- Une tâche longue dépasse 50 ms et bloque toutes les interactions.\n- Découper et céder la main pour le travail qui touche au DOM ; un worker pour les calculs purs et lourds.\n- Un worker libère le fil principal, il ne rend pas le calcul plus rapide.\n- `postMessage` clone les données ; on transfère les `ArrayBuffer` volumineux ; fonctions et DOM ne passent pas.\n- Profiler : reproduire, enregistrer avec ralentissement, lire le *Bottom-Up*, corriger, mesurer de nouveau.\n- Laboratoire pour diagnostiquer, terrain (`web-vitals`, 75ᵉ centile) pour savoir ce que vivent les utilisateurs.\n\n## Exercices\n\n1. Écris un worker `recherche.worker.js` qui reçoit une fois une liste de produits, puis répond à des recherches\n   textuelles, insensibles à la casse et aux accents, en renvoyant les 20 premiers résultats. Le protocole :\n   `{ type: 'charger', produits }`, puis `{ type: 'chercher', id, texte }`, avec une réponse `{ id, resultats }`.\n\n   :::indice\n   Normalise une fois les noms au chargement avec `normalize('NFD')` et une expression qui retire les diacritiques.\n   Garde l'index dans une variable du module du worker.\n   :::\n\n   :::solution\n   ```js\n   // recherche.worker.js\n   const normaliser = (texte) =>\n     texte\n       .normalize('NFD')\n       .replace(/\\p{Diacritic}/gu, '')\n       .toLowerCase();\n\n   let index = [];\n\n   self.addEventListener('message', ({ data }) => {\n     if (data.type === 'charger') {\n       index = data.produits.map((produit) => ({ produit, cle: normaliser(produit.nom) }));\n       return;\n     }\n     if (data.type === 'chercher') {\n       const recherche = normaliser(data.texte);\n       const resultats = [];\n       for (const { produit, cle } of index) {\n         if (cle.includes(recherche)) resultats.push(produit);\n         if (resultats.length === 20) break;\n       }\n       self.postMessage({ id: data.id, resultats });\n     }\n   });\n   ```\n\n   ```js\n   // dans la page\n   const worker = new Worker(new URL('./recherche.worker.js', import.meta.url), { type: 'module' });\n   worker.postMessage({\n     type: 'charger',\n     produits: [{ nom: 'Crème brûlée' }, { nom: 'Café glacé' }, { nom: 'Thé vert' }],\n   });\n   worker.addEventListener('message', ({ data }) => {\n     console.log(data.id, data.resultats.map((p) => p.nom)); // 1 [ 'Crème brûlée' ]\n   });\n   worker.postMessage({ type: 'chercher', id: 1, texte: 'CREME' });\n   ```\n\n   La liste est envoyée une seule fois ; chaque recherche n'échange ensuite que quelques octets. Le worker traite les\n   messages dans l'ordre : la recherche arrive après le chargement. Et la page reste fluide pendant la frappe, même\n   sur des centaines de milliers de produits.\n   :::\n\n2. Ce code colore les lignes d'un tableau de 20 000 lignes selon leur montant, et bloque la page près d'une seconde\n   sur mobile. Il touche au DOM, donc un worker ne peut pas s'en charger. Réécris-le pour qu'aucune tâche ne dépasse\n   50 ms, et qu'une fonction `onTermine` soit appelée à la fin.\n\n   ```js\n   function colorerLignes(lignes) {\n     for (const ligne of lignes) {\n       const montant = Number(ligne.dataset.montant);\n       ligne.classList.toggle('eleve', montant > 1000);\n       ligne.classList.toggle('negatif', montant < 0);\n     }\n   }\n   ```\n\n   :::indice\n   Réutilise `traiterParMorceaux` et `cederLaMain`, avec un budget de 10 ms.\n   :::\n\n   :::solution\n   ```js\n   function cederLaMain() {\n     if (globalThis.scheduler?.yield) return scheduler.yield();\n     return new Promise((resoudre) => setTimeout(resoudre, 0));\n   }\n\n   async function traiterParMorceaux(elements, traiter, budget = 10) {\n     let debut = performance.now();\n     for (const element of elements) {\n       traiter(element);\n       if (performance.now() - debut > budget) {\n         await cederLaMain();\n         debut = performance.now();\n       }\n     }\n   }\n\n   async function colorerLignes(lignes, onTermine) {\n     await traiterParMorceaux(lignes, (ligne) => {\n       const montant = Number(ligne.dataset.montant);\n       ligne.classList.toggle('eleve', montant > 1000);\n       ligne.classList.toggle('negatif', montant < 0);\n     });\n     onTermine();\n   }\n   ```\n\n   La boucle ne fait que des écritures, sans lecture de géométrie : pas de layout thrashing, une seule mise en page\n   à la fin de chaque morceau. Si une nouvelle coloration peut commencer avant la fin de la précédente, on ajoute un\n   `AbortSignal` vérifié à chaque morceau, pour abandonner le travail devenu inutile.\n   :::\n\n3. Un utilisateur signale que « la page des commandes rame quand on tape dans le filtre ». Décris, étape par étape,\n   comment tu profiles ce problème et comment tu vérifies ta correction.\n\n   :::indice\n   Suis les cinq étapes de la méthode, et pense au ralentissement du processeur et à l'INP.\n   :::\n\n   :::solution\n   1. Reproduire : ouvrir la page des commandes avec un volume réaliste de données, et taper un mot dans le filtre.\n   2. Enregistrer : onglet Performance, ralentissement du processeur 4× ou 6×, démarrer l'enregistrement, taper, arrêter.\n   3. Lire : chercher les tâches longues marquées en rouge pendant la frappe, et l'INP des interactions dans la piste\n      *Interactions*. Ouvrir la tâche la plus longue : le *flame chart* montre par exemple un gestionnaire `input` qui\n      filtre et reconstruit tout le tableau à chaque touche ; le *Bottom-Up* désigne les fonctions les plus coûteuses,\n      et des blocs violets signalent une mise en page lourde, voire forcée.\n   4. Corriger une cause à la fois : debounce du filtre ; filtre sur un index précalculé ; affichage limité ou\n      virtualisé ; mise à jour groupée du DOM.\n   5. Mesurer de nouveau, dans les mêmes conditions : plus de tâche longue pendant la frappe, INP sous 200 ms. Puis\n      suivre l'INP de terrain avec `web-vitals` après le déploiement, pour confirmer le gain chez les vrais\n      utilisateurs.\n   :::\n\n## Questions d'entretien\n\n- Quand utiliser un Web Worker, et quelles sont ses limites ?\n\n  :::indice\n  Pense à ce qu'un worker peut faire, à ce qu'il ne peut pas toucher, et à ce qu'il coûte.\n  :::\n\n  :::reponse\n  Pour un calcul pur et long, qui bloquerait le fil principal plus de quelques dizaines de millisecondes : analyse\n  d'un gros fichier, tri ou recherche sur beaucoup de données, compression, traitement d'image. Ses limites : pas\n  d'accès au DOM ni à `window` ; une communication par messages, dont les données sont clonées, sans fonctions ni\n  nœuds ; un coût de démarrage et de copie qui le rend inutile pour de petits calculs. Pour les gros tableaux\n  binaires, je transfère l'`ArrayBuffer` au lieu de le copier. Il ne rend pas le calcul plus rapide : il garde\n  l'interface réactive.\n  :::\n\n- Qu'est-ce qu'une tâche longue, et comment la réduire ?\n\n  :::indice\n  50 ms, et deux stratégies.\n  :::\n\n  :::reponse\n  C'est une tâche qui occupe le fil principal plus de 50 ms ; pendant ce temps, la page ne peut traiter aucune\n  interaction, ce qui dégrade l'INP. On la repère dans l'onglet Performance, ou avec un `PerformanceObserver` sur\n  `longtask`. Pour la réduire : d'abord faire moins de travail, avec un meilleur algorithme, un cache, moins de DOM ;\n  ensuite découper le travail restant en morceaux qui cèdent la main, avec `scheduler.yield()` ou `setTimeout` ;\n  enfin déplacer les calculs purs dans un Web Worker.\n  :::\n\n- Quelle différence entre mesures de laboratoire et mesures de terrain ?\n\n  :::indice\n  Lighthouse d'un côté, les utilisateurs réels de l'autre.\n  :::\n\n  :::reponse\n  Les mesures de laboratoire, comme un enregistrement dans les DevTools ou un audit Lighthouse, sont faites sur une\n  machine et un réseau contrôlés : reproductibles, idéales pour diagnostiquer et comparer avant et après une\n  correction. Les mesures de terrain viennent des navigateurs des vrais utilisateurs, avec leurs appareils, leurs\n  réseaux et leurs données : on les collecte avec `web-vitals` ou on les lit dans le rapport CrUX de Chrome. Elles\n  disent ce que vivent réellement les utilisateurs, et on les suit au 75ᵉ centile. Les deux sont complémentaires :\n  le terrain dit où est le problème, le laboratoire aide à le comprendre et à le corriger.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -41157,6 +41571,634 @@
       "technology": "javascript",
       "contentPath": "javascript/patterns-objet/strategie-observateur-injection/quiz.yaml",
       "contentVersion": "a22540d455a7"
+    },
+    {
+      "id": "javascript-cout-et-complexite-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-complexite-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle est la complexité de `clients.filter((c) => ids.includes(c.id))`, avec n clients et m identifiants ?\n",
+          "options": [
+            "O(n × m)",
+            "O(n + m)",
+            "O(n)",
+            "O(n log m)"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "filter appelle son callback n fois, et chaque includes parcourt jusqu'à m identifiants. Avec un Set construit une fois, on descend à O(n + m).\n",
+          "skills": [
+            "complexity-analysis"
+          ]
+        },
+        {
+          "id": "js-complexite-q2",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Parmi ces opérations sur un tableau de n éléments, lesquelles sont en O(n) ?\n",
+          "options": [
+            "tableau.shift()",
+            "tableau.push(x)",
+            "tableau.indexOf(x)",
+            "[...tableau]",
+            "tableau[i]"
+          ],
+          "answer": [
+            0,
+            2,
+            3
+          ],
+          "explanation": "shift décale tous les éléments restants, indexOf parcourt le tableau et le spread copie chaque élément. push est en O(1) amorti et l'accès par index en O(1).\n",
+          "skills": [
+            "complexity-analysis"
+          ]
+        },
+        {
+          "id": "js-complexite-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Pour une liste de 10 éléments, remplacer un tableau par une Map rend toujours les recherches plus rapides.\n",
+          "answer": false,
+          "explanation": "Big O décrit la croissance pour de grandes tailles. Sur quelques éléments, un parcours de tableau, sans hachage et avec des données contiguës, est souvent aussi rapide ou plus rapide : les constantes dominent.\n",
+          "skills": [
+            "complexity-analysis"
+          ]
+        },
+        {
+          "id": "js-complexite-q4",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "Pourquoi dit-on que push est en O(1) amorti, et non simplement en O(1) ?\n",
+          "options": [
+            "Parce qu'un push déclenche parfois une réallocation en O(n), rare au point que le coût moyen reste constant",
+            "Parce que push est en O(1) seulement sur les tableaux triés",
+            "Parce que le ramasse-miettes s'exécute après chaque push",
+            "Parce que push parcourt le tableau pour trouver sa fin"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Quand la capacité est atteinte, le moteur alloue un espace proportionnellement plus grand et copie les éléments. Ces copies deviennent de plus en plus rares : réparties sur tous les push, elles coûtent une constante par opération.\n",
+          "skills": [
+            "complexity-analysis"
+          ]
+        }
+      ],
+      "chapterId": "javascript-cout-et-complexite",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-javascript/cout-et-complexite/quiz.yaml",
+      "contentVersion": "200d5c7f5ca2"
+    },
+    {
+      "id": "javascript-debounce-et-throttle-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-debounce-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Un champ de recherche interroge une API. Quelle technique évite une requête par caractère tapé ?\n",
+          "options": [
+            "Un debounce : une requête quand la frappe marque une pause",
+            "Un throttle : une requête toutes les 300 ms pendant la frappe",
+            "requestAnimationFrame : une requête par image",
+            "Un setInterval qui lit le champ toutes les secondes"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Seul le texte final compte : le debounce attend que les appels cessent, puis exécute une fois avec les derniers arguments. Un throttle enverrait encore des requêtes pendant la frappe.\n",
+          "skills": [
+            "debounce-throttle"
+          ]
+        },
+        {
+          "id": "js-debounce-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "`const f = debounce((x) => console.log(x), 100);` puis `f(1)` à 0 ms, `f(2)` à 50 ms et `f(3)` à 120 ms. Qu'est-ce qui est affiché au total ?\n",
+          "answer": "3",
+          "explanation": "Chaque appel repousse l'exécution : f(2) annule f(1), f(3) arrive 70 ms après f(2), avant la fin du délai, et l'annule à son tour. Seul 3 est affiché, à 220 ms.\n",
+          "skills": [
+            "debounce-throttle"
+          ]
+        },
+        {
+          "id": "js-debounce-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "`champ.addEventListener('input', () => debounce(rechercher, 300)())` limite correctement les recherches.\n",
+          "answer": false,
+          "explanation": "Chaque événement crée une nouvelle fonction debouncée, avec son propre minuteur : aucun appel n'est jamais annulé, et chaque frappe finit par lancer une recherche. On crée la version debouncée une fois.\n",
+          "skills": [
+            "debounce-throttle"
+          ]
+        },
+        {
+          "id": "js-debounce-q4",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Pourquoi un throttle utile exécute-t-il aussi le dernier appel de la rafale ?\n",
+          "options": [
+            "Pour que l'état final, comme la position de défilement finale, soit pris en compte",
+            "Sinon, le dernier appel pourrait être ignoré définitivement",
+            "Pour exécuter chaque appel au moins une fois",
+            "Pour annuler les appels précédents"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "Sans exécution finale, un appel reçu pendant l'intervalle serait perdu, et l'interface resterait sur un état intermédiaire. Le throttle n'exécute pas pour autant chaque appel : les intermédiaires sont ignorés.\n",
+          "skills": [
+            "debounce-throttle"
+          ]
+        }
+      ],
+      "chapterId": "javascript-debounce-et-throttle",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-javascript/debounce-et-throttle/quiz.yaml",
+      "contentVersion": "e9e5d63cf4a3"
+    },
+    {
+      "id": "javascript-eviter-les-calculs-inutiles-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-calculs-inutiles-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Trois composants demandent le même profil au même moment. Que faut-il mémoïser pour qu'une seule requête parte ?\n",
+          "options": [
+            "La promesse renvoyée par le premier appel",
+            "Le profil, une fois reçu",
+            "L'URL de la requête",
+            "Rien : fetch déduplique automatiquement les requêtes identiques"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Au moment des deuxième et troisième appels, aucun profil n'est encore arrivé. En retenant la promesse dès le premier appel, les suivants reçoivent la même, et une seule requête part.\n",
+          "skills": [
+            "caching-and-laziness"
+          ]
+        },
+        {
+          "id": "js-calculs-inutiles-q2",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "Avec un cache LRU de taille 2 qui compte ses calculs, on appelle carre(2), carre(3), carre(2), carre(4), carre(3). Combien de calculs ont été faits ?\n",
+          "answer": "4",
+          "explanation": "2 et 3 sont calculés. Relire 2 en fait la plus récente. carre(4) est calculé et évince 3, la moins récemment utilisée. carre(3) doit donc être recalculé : 4 calculs.\n",
+          "skills": [
+            "caching-and-laziness"
+          ]
+        },
+        {
+          "id": "js-calculs-inutiles-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Dans quels cas une mémoïsation est-elle une mauvaise idée ?\n",
+          "options": [
+            "La fonction lit Date.now() pour calculer son résultat",
+            "Le calcul est une simple addition",
+            "Les arguments ne se répètent presque jamais",
+            "Le calcul est coûteux, pur, et appelé souvent avec les mêmes arguments"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Une fonction impure donnerait des réponses périmées ; un calcul bon marché coûte autant que la recherche dans le cache ; des arguments uniques ne produisent aucun succès de cache. Le dernier cas est celui où la mémoïsation est rentable.\n",
+          "skills": [
+            "caching-and-laziness"
+          ]
+        },
+        {
+          "id": "js-calculs-inutiles-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une WeakMap utilisée comme cache, avec des objets pour clés, empêche ces objets d'être récupérés par le ramasse-miettes.\n",
+          "answer": false,
+          "explanation": "Les clés d'une WeakMap sont retenues faiblement : quand plus rien d'autre ne référence l'objet, il est récupéré et son entrée disparaît. C'est ce qui évite la fuite mémoire d'un cache par objet.\n",
+          "skills": [
+            "caching-and-laziness"
+          ]
+        }
+      ],
+      "chapterId": "javascript-eviter-les-calculs-inutiles",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-javascript/eviter-les-calculs-inutiles/quiz.yaml",
+      "contentVersion": "9fe0e960da56"
+    },
+    {
+      "id": "javascript-recherche-et-tri-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-recherche-tri-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Combien d'étapes, au plus, demande une recherche dichotomique dans un tableau trié d'un million d'éléments ?\n",
+          "options": [
+            "Environ 20",
+            "Environ 1 000",
+            "Environ 500 000",
+            "Un million"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Chaque étape divise l'intervalle par deux, et 2^20 dépasse un million : une vingtaine d'étapes suffisent.\n",
+          "skills": [
+            "search-sort-algorithms"
+          ]
+        },
+        {
+          "id": "js-recherche-tri-q2",
+          "type": "predict_output",
+          "difficulty": 3,
+          "question": "Qu'affiche `console.log([3, 1, 2, 5, 4].sort((a, b) => a > b).join(','))` dans V8 ?\n",
+          "answer": "3,1,2,5,4",
+          "explanation": "Le comparateur renvoie un booléen, converti en 1 ou 0 : il n'indique jamais qu'un élément doit passer avant l'autre, et le tableau n'est pas trié. Il faut renvoyer a - b.\n",
+          "skills": [
+            "search-sort-algorithms"
+          ]
+        },
+        {
+          "id": "js-recherche-tri-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Pour lesquels de ces besoins un tableau trié avec une recherche dichotomique est-il plus adapté qu'une Map ?\n",
+          "options": [
+            "Trouver toutes les commandes entre deux dates",
+            "Trouver l'utilisateur d'identifiant exact 'u-42'",
+            "Trouver la station la plus proche d'une altitude donnée",
+            "Trouver les mots qui commencent par « pro »"
+          ],
+          "answer": [
+            0,
+            2,
+            3
+          ],
+          "explanation": "Intervalles, plus proche valeur et préfixes demandent l'ordre des clés, que la Map ne connaît pas. Pour une clé exacte, la Map répond en O(1).\n",
+          "skills": [
+            "search-sort-algorithms"
+          ]
+        },
+        {
+          "id": "js-recherche-tri-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Array.prototype.sort garantit que deux éléments jugés égaux par le comparateur gardent leur ordre d'origine.\n",
+          "answer": true,
+          "explanation": "Depuis ES2019, sort et toSorted sont stables. On peut donc trier par nom, puis par ville, et garder les noms dans l'ordre à l'intérieur de chaque ville.\n",
+          "skills": [
+            "search-sort-algorithms"
+          ]
+        }
+      ],
+      "chapterId": "javascript-recherche-et-tri",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-javascript/recherche-et-tri/quiz.yaml",
+      "contentVersion": "5496110e41bf"
+    },
+    {
+      "id": "javascript-code-splitting-et-lazy-loading-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-code-splitting-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Un module lourd est importé avec import() dans le tableau de bord, mais il reste dans le bundle principal. Quelle est la cause la plus probable ?\n",
+          "options": [
+            "Un autre fichier l'importe statiquement",
+            "import() ne crée jamais de chunk séparé",
+            "Le module exporte plusieurs fonctions",
+            "Le module est écrit en JavaScript et non en TypeScript"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un chunk ne sort du bundle principal que si tous les chemins qui y mènent sont dynamiques. Un seul import statique suffit à le ramener dans le graphe chargé au démarrage.\n",
+          "skills": [
+            "code-splitting"
+          ]
+        },
+        {
+          "id": "js-code-splitting-q2",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles pratiques conviennent pour l'image principale d'une page, visible dès l'ouverture ?\n",
+          "options": [
+            "fetchpriority=\"high\"",
+            "Indiquer width et height",
+            "loading=\"lazy\"",
+            "La charger avec un IntersectionObserver"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "L'image principale doit arriver le plus tôt possible, car elle détermine souvent le LCP : on la marque prioritaire et on réserve sa place. La différer, par l'attribut ou par un observateur, la retarde.\n",
+          "skills": [
+            "code-splitting"
+          ]
+        },
+        {
+          "id": "js-code-splitting-q3",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "Dans Chromium, si import('./graphiques.js') a échoué à cause d'une panne réseau, un nouvel appel à la même URL retente le téléchargement.\n",
+          "answer": false,
+          "explanation": "L'échec est retenu pour la page : le nouvel import() rejette aussitôt, sans nouvelle requête. On affiche un message et on propose de recharger la page.\n",
+          "skills": [
+            "code-splitting"
+          ]
+        },
+        {
+          "id": "js-code-splitting-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi précharger un module au survol du bouton qui l'utilise ?\n",
+          "options": [
+            "Pour que le téléchargement ait commencé, voire soit fini, au moment du clic",
+            "Pour que le module soit inclus dans le bundle principal",
+            "Pour exécuter le module deux fois plus vite",
+            "Pour éviter d'avoir à gérer l'échec du chargement"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Charger à la demande déplace le coût au moment de l'interaction. Commencer dès l'intention, survol ou focus, masque tout ou partie de l'attente. L'échec reste à gérer.\n",
+          "skills": [
+            "code-splitting"
+          ]
+        }
+      ],
+      "chapterId": "javascript-code-splitting-et-lazy-loading",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-navigateur/code-splitting-et-lazy-loading/quiz.yaml",
+      "contentVersion": "79d3f014cb7e"
+    },
+    {
+      "id": "javascript-evenements-et-grandes-listes-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-grandes-listes-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Une liste virtuelle de 100 000 lignes de 32 px s'affiche dans un conteneur de 400 px, avec une marge de 5 lignes de chaque côté. Environ combien de lignes sont dans le DOM au milieu de la liste ?\n",
+          "options": [
+            "Environ 23",
+            "Environ 400",
+            "100 000",
+            "Environ 3 125"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "400 / 32 donne 12,5, soit 13 lignes visibles, plus 5 au-dessus et 5 en dessous. Le DOM reste minuscule, quelle que soit la taille de la liste.\n",
+          "skills": [
+            "large-lists-events"
+          ]
+        },
+        {
+          "id": "js-grandes-listes-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle est la meilleure façon de savoir quand un élément devient visible pendant le défilement ?\n",
+          "options": [
+            "Un IntersectionObserver",
+            "Un écouteur scroll qui lit getBoundingClientRect",
+            "Un setInterval qui compare scrollY à la position de l'élément",
+            "Un ResizeObserver sur la fenêtre"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'IntersectionObserver calcule la visibilité dans le navigateur et n'appelle le callback que lorsqu'elle change, sans mesure de géométrie dans votre code à chaque événement.\n",
+          "skills": [
+            "large-lists-events"
+          ]
+        },
+        {
+          "id": "js-grandes-listes-q3",
+          "type": "multiple_answer",
+          "difficulty": 4,
+          "question": "Quelles sont les limites de la virtualisation d'une liste ?\n",
+          "options": [
+            "Ctrl+F ne trouve pas les lignes hors écran",
+            "L'état gardé dans le DOM d'une ligne, comme un champ saisi, est perdu quand elle sort de l'écran",
+            "Les lecteurs d'écran ne connaissent pas la taille réelle sans aria-setsize et aria-posinset",
+            "Le défilement devient plus lent à mesure que la liste grandit"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Les lignes hors écran n'existent pas dans le DOM, d'où les trois premières limites. En revanche, le coût du défilement ne dépend pas de la taille de la liste : c'est tout l'intérêt de la technique.\n",
+          "skills": [
+            "large-lists-events"
+          ]
+        },
+        {
+          "id": "js-grandes-listes-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "`{ passive: true }` sur un écouteur touchmove permet au navigateur de faire défiler sans attendre la fin de l'écouteur.\n",
+          "answer": true,
+          "explanation": "L'écouteur promet de ne pas appeler preventDefault() : le navigateur sait que le défilement ne sera pas annulé et le démarre immédiatement.\n",
+          "skills": [
+            "large-lists-events"
+          ]
+        }
+      ],
+      "chapterId": "javascript-evenements-et-grandes-listes",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-navigateur/evenements-et-grandes-listes/quiz.yaml",
+      "contentVersion": "f8b4f23b5fdd"
+    },
+    {
+      "id": "javascript-pipeline-de-rendu-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-rendu-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Dans quel ordre le navigateur transforme-t-il le DOM en pixels ?\n",
+          "options": [
+            "Style, mise en page, peinture, composition",
+            "Mise en page, style, composition, peinture",
+            "Peinture, style, mise en page, composition",
+            "Composition, peinture, mise en page, style"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Il calcule d'abord les styles, puis la géométrie des boîtes, puis les pixels de chaque couche, et assemble enfin les couches. Chaque étape entraîne les suivantes.\n",
+          "skills": [
+            "rendering-pipeline"
+          ]
+        },
+        {
+          "id": "js-rendu-q2",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Lesquelles de ces lectures peuvent forcer une mise en page synchrone juste après une modification du DOM ?\n",
+          "options": [
+            "el.offsetHeight",
+            "el.getBoundingClientRect()",
+            "el.dataset.id",
+            "window.scrollY",
+            "el.classList.contains('actif')"
+          ],
+          "answer": [
+            0,
+            1,
+            3
+          ],
+          "explanation": "Les dimensions, la géométrie et la position de défilement doivent être à jour pour être exactes. Les attributs et les classes sont de simples données du DOM, lues sans mise en page.\n",
+          "skills": [
+            "rendering-pipeline"
+          ]
+        },
+        {
+          "id": "js-rendu-q3",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Écrire cent fois dans le style d'éléments différents, sans aucune lecture de géométrie entre les écritures, déclenche cent mises en page.\n",
+          "answer": false,
+          "explanation": "Une écriture ne fait qu'invalider la mise en page. Sans lecture intermédiaire, le navigateur la recalcule une seule fois, avant l'image suivante. C'est l'alternance lecture, écriture qui multiplie les calculs.\n",
+          "skills": [
+            "rendering-pipeline"
+          ]
+        },
+        {
+          "id": "js-rendu-q4",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelles propriétés anime-t-on de préférence pour une animation fluide ?\n",
+          "options": [
+            "transform et opacity",
+            "left et top",
+            "width et height",
+            "margin et padding"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "transform et opacity peuvent être traitées à l'étape de composition, sans mise en page ni peinture. Les autres modifient la géométrie à chaque image.\n",
+          "skills": [
+            "rendering-pipeline"
+          ]
+        }
+      ],
+      "chapterId": "javascript-pipeline-de-rendu",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-navigateur/pipeline-de-rendu/quiz.yaml",
+      "contentVersion": "2a107f398185"
+    },
+    {
+      "id": "javascript-web-workers-et-profilage-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-workers-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Un tri de 3 millions de nombres prend 1,3 s sur le fil principal. Qu'apporte son déplacement dans un Web Worker ?\n",
+          "options": [
+            "La page reste réactive pendant le calcul, même s'il ne va pas plus vite",
+            "Le calcul devient environ deux fois plus rapide",
+            "Le calcul n'a plus besoin de mémoire",
+            "Le résultat est disponible de façon synchrone"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le worker fait le calcul sur un autre fil. Démarrage et transfert compris, il ne va pas plus vite, mais le fil principal reste libre pour les interactions et l'affichage.\n",
+          "skills": [
+            "web-workers-profiling"
+          ]
+        },
+        {
+          "id": "js-workers-q2",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Parmi ces valeurs, lesquelles peuvent être envoyées à un worker avec postMessage ?\n",
+          "options": [
+            "Un tableau d'objets simples",
+            "Une Map",
+            "Une fonction fléchée",
+            "Un élément du DOM",
+            "Un Float64Array"
+          ],
+          "answer": [
+            0,
+            1,
+            4
+          ],
+          "explanation": "Le structured clone copie objets, tableaux, Map, Set, dates et tableaux typés. Les fonctions et les nœuds du DOM ne se clonent pas et provoquent une DataCloneError.\n",
+          "skills": [
+            "web-workers-profiling"
+          ]
+        },
+        {
+          "id": "js-workers-q3",
+          "type": "predict_output",
+          "difficulty": 4,
+          "question": "`const v = new Float64Array(1000); worker.postMessage(v, [v.buffer]); console.log(v.length);` Qu'est-ce qui est affiché ?\n",
+          "answer": "0",
+          "explanation": "Le tampon a été transféré : il appartient désormais au worker, et le tableau devient inutilisable côté page, avec une longueur de 0.\n",
+          "skills": [
+            "web-workers-profiling"
+          ]
+        },
+        {
+          "id": "js-workers-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Une tâche est dite longue lorsqu'elle occupe le fil principal plus de 50 ms.\n",
+          "answer": true,
+          "explanation": "Au-delà de 50 ms, une interaction qui arrive pendant la tâche attend visiblement. C'est le seuil utilisé par l'API longtask et par les DevTools.\n",
+          "skills": [
+            "web-workers-profiling"
+          ]
+        },
+        {
+          "id": "js-workers-q5",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pour profiler une lenteur signalée par des utilisateurs sur mobile, que faut-il activer dans l'onglet Performance ?\n",
+          "options": [
+            "Le ralentissement du processeur, par exemple 4× ou 6×",
+            "Le mode plein écran",
+            "La désactivation du cache uniquement",
+            "Rien : un poste de développement est représentatif"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un poste de développement est bien plus rapide qu'un téléphone moyen. Ralentir le processeur fait apparaître les tâches longues que vivent les utilisateurs.\n",
+          "skills": [
+            "web-workers-profiling"
+          ]
+        }
+      ],
+      "chapterId": "javascript-web-workers-et-profilage",
+      "technology": "javascript",
+      "contentPath": "javascript/performance-navigateur/web-workers-et-profilage/quiz.yaml",
+      "contentVersion": "f613cdbfad77"
     },
     {
       "id": "javascript-erreurs-portee-quiz",

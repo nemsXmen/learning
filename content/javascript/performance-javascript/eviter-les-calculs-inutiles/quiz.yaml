@@ -1,0 +1,63 @@
+id: javascript-eviter-les-calculs-inutiles-quiz
+kind: QUIZ
+questions:
+  - id: js-calculs-inutiles-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Trois composants demandent le même profil au même moment. Que faut-il mémoïser pour qu'une seule requête parte ?
+    options:
+      - "La promesse renvoyée par le premier appel"
+      - "Le profil, une fois reçu"
+      - "L'URL de la requête"
+      - "Rien : fetch déduplique automatiquement les requêtes identiques"
+    answer: [0]
+    explanation: >
+      Au moment des deuxième et troisième appels, aucun profil n'est encore arrivé. En retenant la promesse dès
+      le premier appel, les suivants reçoivent la même, et une seule requête part.
+    skills:
+      - caching-and-laziness
+
+  - id: js-calculs-inutiles-q2
+    type: predict_output
+    difficulty: 4
+    question: >
+      Avec un cache LRU de taille 2 qui compte ses calculs, on appelle carre(2), carre(3), carre(2), carre(4),
+      carre(3). Combien de calculs ont été faits ?
+    answer: '4'
+    explanation: >
+      2 et 3 sont calculés. Relire 2 en fait la plus récente. carre(4) est calculé et évince 3, la moins
+      récemment utilisée. carre(3) doit donc être recalculé : 4 calculs.
+    skills:
+      - caching-and-laziness
+
+  - id: js-calculs-inutiles-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Dans quels cas une mémoïsation est-elle une mauvaise idée ?
+    options:
+      - "La fonction lit Date.now() pour calculer son résultat"
+      - "Le calcul est une simple addition"
+      - "Les arguments ne se répètent presque jamais"
+      - "Le calcul est coûteux, pur, et appelé souvent avec les mêmes arguments"
+    answer: [0, 1, 2]
+    explanation: >
+      Une fonction impure donnerait des réponses périmées ; un calcul bon marché coûte autant que la recherche
+      dans le cache ; des arguments uniques ne produisent aucun succès de cache. Le dernier cas est celui où la
+      mémoïsation est rentable.
+    skills:
+      - caching-and-laziness
+
+  - id: js-calculs-inutiles-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Une WeakMap utilisée comme cache, avec des objets pour clés, empêche ces objets d'être récupérés par le
+      ramasse-miettes.
+    answer: false
+    explanation: >
+      Les clés d'une WeakMap sont retenues faiblement : quand plus rien d'autre ne référence l'objet, il est
+      récupéré et son entrée disparaît. C'est ce qui évite la fuite mémoire d'un cache par objet.
+    skills:
+      - caching-and-laziness

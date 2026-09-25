@@ -1,0 +1,61 @@
+id: javascript-debounce-et-throttle-quiz
+kind: QUIZ
+questions:
+  - id: js-debounce-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Un champ de recherche interroge une API. Quelle technique évite une requête par caractère tapé ?
+    options:
+      - "Un debounce : une requête quand la frappe marque une pause"
+      - "Un throttle : une requête toutes les 300 ms pendant la frappe"
+      - "requestAnimationFrame : une requête par image"
+      - "Un setInterval qui lit le champ toutes les secondes"
+    answer: [0]
+    explanation: >
+      Seul le texte final compte : le debounce attend que les appels cessent, puis exécute une fois avec les
+      derniers arguments. Un throttle enverrait encore des requêtes pendant la frappe.
+    skills:
+      - debounce-throttle
+
+  - id: js-debounce-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      `const f = debounce((x) => console.log(x), 100);` puis `f(1)` à 0 ms, `f(2)` à 50 ms et `f(3)` à 120 ms.
+      Qu'est-ce qui est affiché au total ?
+    answer: '3'
+    explanation: >
+      Chaque appel repousse l'exécution : f(2) annule f(1), f(3) arrive 70 ms après f(2), avant la fin du délai,
+      et l'annule à son tour. Seul 3 est affiché, à 220 ms.
+    skills:
+      - debounce-throttle
+
+  - id: js-debounce-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      `champ.addEventListener('input', () => debounce(rechercher, 300)())` limite correctement les recherches.
+    answer: false
+    explanation: >
+      Chaque événement crée une nouvelle fonction debouncée, avec son propre minuteur : aucun appel n'est jamais
+      annulé, et chaque frappe finit par lancer une recherche. On crée la version debouncée une fois.
+    skills:
+      - debounce-throttle
+
+  - id: js-debounce-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Pourquoi un throttle utile exécute-t-il aussi le dernier appel de la rafale ?
+    options:
+      - "Pour que l'état final, comme la position de défilement finale, soit pris en compte"
+      - "Sinon, le dernier appel pourrait être ignoré définitivement"
+      - "Pour exécuter chaque appel au moins une fois"
+      - "Pour annuler les appels précédents"
+    answer: [0, 1]
+    explanation: >
+      Sans exécution finale, un appel reçu pendant l'intervalle serait perdu, et l'interface resterait sur un
+      état intermédiaire. Le throttle n'exécute pas pour autant chaque appel : les intermédiaires sont ignorés.
+    skills:
+      - debounce-throttle

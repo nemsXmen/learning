@@ -1,0 +1,67 @@
+id: javascript-pipeline-de-rendu-quiz
+kind: QUIZ
+questions:
+  - id: js-rendu-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans quel ordre le navigateur transforme-t-il le DOM en pixels ?
+    options:
+      - "Style, mise en page, peinture, composition"
+      - "Mise en page, style, composition, peinture"
+      - "Peinture, style, mise en page, composition"
+      - "Composition, peinture, mise en page, style"
+    answer: [0]
+    explanation: >
+      Il calcule d'abord les styles, puis la géométrie des boîtes, puis les pixels de chaque couche, et assemble
+      enfin les couches. Chaque étape entraîne les suivantes.
+    skills:
+      - rendering-pipeline
+
+  - id: js-rendu-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquelles de ces lectures peuvent forcer une mise en page synchrone juste après une modification du DOM ?
+    options:
+      - "el.offsetHeight"
+      - "el.getBoundingClientRect()"
+      - "el.dataset.id"
+      - "window.scrollY"
+      - "el.classList.contains('actif')"
+    answer: [0, 1, 3]
+    explanation: >
+      Les dimensions, la géométrie et la position de défilement doivent être à jour pour être exactes. Les
+      attributs et les classes sont de simples données du DOM, lues sans mise en page.
+    skills:
+      - rendering-pipeline
+
+  - id: js-rendu-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Écrire cent fois dans le style d'éléments différents, sans aucune lecture de géométrie entre les écritures,
+      déclenche cent mises en page.
+    answer: false
+    explanation: >
+      Une écriture ne fait qu'invalider la mise en page. Sans lecture intermédiaire, le navigateur la recalcule
+      une seule fois, avant l'image suivante. C'est l'alternance lecture, écriture qui multiplie les calculs.
+    skills:
+      - rendering-pipeline
+
+  - id: js-rendu-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelles propriétés anime-t-on de préférence pour une animation fluide ?
+    options:
+      - "transform et opacity"
+      - "left et top"
+      - "width et height"
+      - "margin et padding"
+    answer: [0]
+    explanation: >
+      transform et opacity peuvent être traitées à l'étape de composition, sans mise en page ni peinture. Les
+      autres modifient la géométrie à chaque image.
+    skills:
+      - rendering-pipeline

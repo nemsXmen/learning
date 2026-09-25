@@ -1,0 +1,67 @@
+id: javascript-code-splitting-et-lazy-loading-quiz
+kind: QUIZ
+questions:
+  - id: js-code-splitting-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un module lourd est importé avec import() dans le tableau de bord, mais il reste dans le bundle principal.
+      Quelle est la cause la plus probable ?
+    options:
+      - "Un autre fichier l'importe statiquement"
+      - "import() ne crée jamais de chunk séparé"
+      - "Le module exporte plusieurs fonctions"
+      - "Le module est écrit en JavaScript et non en TypeScript"
+    answer: [0]
+    explanation: >
+      Un chunk ne sort du bundle principal que si tous les chemins qui y mènent sont dynamiques. Un seul import
+      statique suffit à le ramener dans le graphe chargé au démarrage.
+    skills:
+      - code-splitting
+
+  - id: js-code-splitting-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques conviennent pour l'image principale d'une page, visible dès l'ouverture ?
+    options:
+      - "fetchpriority=\"high\""
+      - "Indiquer width et height"
+      - "loading=\"lazy\""
+      - "La charger avec un IntersectionObserver"
+    answer: [0, 1]
+    explanation: >
+      L'image principale doit arriver le plus tôt possible, car elle détermine souvent le LCP : on la marque
+      prioritaire et on réserve sa place. La différer, par l'attribut ou par un observateur, la retarde.
+    skills:
+      - code-splitting
+
+  - id: js-code-splitting-q3
+    type: true_false
+    difficulty: 4
+    question: >
+      Dans Chromium, si import('./graphiques.js') a échoué à cause d'une panne réseau, un nouvel appel à la même
+      URL retente le téléchargement.
+    answer: false
+    explanation: >
+      L'échec est retenu pour la page : le nouvel import() rejette aussitôt, sans nouvelle requête. On affiche
+      un message et on propose de recharger la page.
+    skills:
+      - code-splitting
+
+  - id: js-code-splitting-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi précharger un module au survol du bouton qui l'utilise ?
+    options:
+      - "Pour que le téléchargement ait commencé, voire soit fini, au moment du clic"
+      - "Pour que le module soit inclus dans le bundle principal"
+      - "Pour exécuter le module deux fois plus vite"
+      - "Pour éviter d'avoir à gérer l'échec du chargement"
+    answer: [0]
+    explanation: >
+      Charger à la demande déplace le coût au moment de l'interaction. Commencer dès l'intention, survol ou
+      focus, masque tout ou partie de l'attente. L'échec reste à gérer.
+    skills:
+      - code-splitting
