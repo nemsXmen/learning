@@ -1,0 +1,60 @@
+id: javascript-fichiers-et-chemins-quiz
+kind: QUIZ
+questions:
+  - id: js-fs-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Comment reconnaître, dans un catch, qu'un fichier à lire n'existe pas ?
+    options:
+      - "erreur.code === 'ENOENT'"
+      - "erreur.message.includes('no such file')"
+      - "erreur instanceof FileNotFoundError"
+      - "erreur.status === 404"
+    answer: [0]
+    explanation: >
+      Les erreurs du système de fichiers portent un code stable, indépendant de la langue et du système. Le
+      message peut varier ; FileNotFoundError n'existe pas en JavaScript.
+    skills:
+      - js-node-fs-path
+
+  - id: js-fs-q2
+    type: predict_output
+    difficulty: 3
+    question: >
+      Sous Linux, qu'affiche `console.log(path.join('data', 'notes', '../a.md'))` ?
+    answer: 'data/a.md'
+    explanation: >
+      path.join assemble les segments avec le séparateur du système et normalise le résultat : notes/.. s'annule.
+    skills:
+      - js-node-fs-path
+
+  - id: js-fs-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un script lance `readFile('config.json')` avec un chemin relatif. Depuis quel dossier ce chemin est-il résolu ?
+    options:
+      - "Le dossier courant du processus, process.cwd()"
+      - "Le dossier du script"
+      - "Le dossier personnel de l'utilisateur"
+      - "La racine du projet, là où se trouve package.json"
+    answer: [0]
+    explanation: >
+      Un chemin relatif part du dossier d'où l'on a lancé Node. Pour partir du script, on utilise
+      path.join(import.meta.dirname, 'config.json').
+    skills:
+      - js-node-fs-path
+
+  - id: js-fs-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Écrire un fichier temporaire dans le même dossier puis le renommer garantit que les lecteurs ne voient jamais un
+      fichier à moitié écrit.
+    answer: true
+    explanation: >
+      Sur un même système de fichiers, rename remplace la cible en une seule opération : les lecteurs voient
+      l'ancien contenu ou le nouveau, jamais un mélange.
+    skills:
+      - js-node-fs-path

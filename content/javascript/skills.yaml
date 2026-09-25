@@ -563,6 +563,62 @@ skills:
     importance: 4
     requires: [rendering-pipeline, network-performance-debugging, large-lists-events]
 
+  # Partie 15 — Node.js
+  - id: js-node-runtime
+    name: Le runtime Node.js
+    importance: 5
+    requires: [js-runtime, event-loop, es-modules]
+
+  - id: js-npm-package-json
+    name: npm, package.json et scripts
+    importance: 5
+    requires: [js-node-runtime]
+
+  - id: js-dependencies-semver
+    name: Dépendances, semver et verrouillage
+    importance: 5
+    requires: [js-npm-package-json]
+
+  - id: js-node-fs-path
+    name: Fichiers et chemins avec Node.js
+    importance: 5
+    requires: [js-node-runtime, async-await]
+
+  - id: js-node-process-env
+    name: Processus et variables d'environnement
+    importance: 5
+    requires: [js-node-runtime]
+
+  - id: js-node-events-streams
+    name: Événements, flux et buffers
+    importance: 4
+    requires: [js-node-fs-path, async-iterators]
+
+  - id: js-node-http-server
+    name: Serveur HTTP avec Node.js
+    importance: 5
+    requires: [js-node-events-streams, http-basics]
+
+  - id: js-node-processes-threads
+    name: Processus enfants et worker threads
+    importance: 3
+    requires: [js-node-events-streams, js-node-process-env]
+
+  - id: js-package-managers
+    name: npm, pnpm et gestion des paquets
+    importance: 4
+    requires: [js-dependencies-semver]
+
+  - id: js-package-publishing
+    name: Publier un paquet, public ou privé
+    importance: 3
+    requires: [js-package-managers]
+
+  - id: js-monorepo-workspaces
+    name: Monorepos et workspaces
+    importance: 4
+    requires: [js-package-managers]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

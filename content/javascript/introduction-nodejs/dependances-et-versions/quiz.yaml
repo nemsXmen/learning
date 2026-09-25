@@ -1,0 +1,66 @@
+id: javascript-dependances-et-versions-quiz
+kind: QUIZ
+questions:
+  - id: js-semver-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Une bibliothèque passe de 2.7.1 à 3.0.0. Que signale ce changement, d'après le semantic versioning ?
+    options:
+      - "Un changement incompatible de l'API"
+      - "Une nouvelle fonctionnalité compatible"
+      - "Une correction de bug"
+      - "Rien : les numéros sont libres"
+    answer: [0]
+    explanation: >
+      La majeure augmente quand la compatibilité est cassée. Une fonctionnalité compatible augmente la mineure,
+      une correction le correctif.
+    skills:
+      - js-dependencies-semver
+
+  - id: js-semver-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles versions satisfont la plage ^0.4.2 ?
+    options:
+      - "0.4.2"
+      - "0.4.9"
+      - "0.5.0"
+      - "1.0.0"
+    answer: [0, 1]
+    explanation: >
+      Avant 1.0, une mineure peut casser l'API : ^0.4.2 n'accepte que les correctifs de 0.4, de 0.4.2 à 0.5.0
+      exclu.
+    skills:
+      - js-dependencies-semver
+
+  - id: js-semver-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle commande utiliser en intégration continue pour installer exactement les versions verrouillées ?
+    options:
+      - "npm ci"
+      - "npm install"
+      - "npm update"
+      - "npm install --force"
+    answer: [0]
+    explanation: >
+      npm ci supprime node_modules, installe l'arbre exact du fichier de verrouillage, et échoue si celui-ci ne
+      concorde pas avec package.json. npm install peut modifier le verrou.
+    skills:
+      - js-dependencies-semver
+
+  - id: js-semver-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Un fichier peut importer sans erreur un paquet absent de son package.json, si une autre dépendance l'a
+      installé à la racine de node_modules.
+    answer: true
+    explanation: >
+      C'est une dépendance fantôme, permise par l'aplatissement de node_modules. Elle peut disparaître à la
+      prochaine mise à jour de l'autre paquet : on déclare toujours ce qu'on importe.
+    skills:
+      - js-dependencies-semver

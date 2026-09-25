@@ -1,0 +1,60 @@
+id: javascript-process-et-environnement-quiz
+kind: QUIZ
+questions:
+  - id: js-process-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Lancé avec DEBUG=false dans l'environnement, qu'affiche `console.log(Boolean(process.env.DEBUG))` ?
+    answer: 'true'
+    explanation: >
+      Les variables d'environnement sont des chaînes. 'false' est une chaîne non vide, donc vraie. On compare
+      explicitement : process.env.DEBUG === 'true'.
+    skills:
+      - js-node-process-env
+
+  - id: js-process-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Le fichier .env contient PORT=4000. Quel port utilise `PORT=5000 node --env-file=.env serveur.mjs` ?
+    options:
+      - "5000 : une variable déjà définie n'est pas remplacée par le fichier"
+      - "4000 : le fichier a priorité"
+      - "Aucun : le conflit fait échouer le lancement"
+      - "4000 ou 5000, selon le système"
+    answer: [0]
+    explanation: >
+      --env-file ne remplace pas les variables déjà présentes dans l'environnement. C'est ce qui permet de
+      surcharger ponctuellement une valeur.
+    skills:
+      - js-node-process-env
+
+  - id: js-process-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Un serveur reçoit SIGTERM pendant un déploiement. Que doit-il faire ?
+    options:
+      - "Cesser d'accepter de nouvelles connexions"
+      - "Laisser les requêtes en cours se terminer"
+      - "Fermer ses connexions à la base de données"
+      - "Ignorer le signal pour ne perdre aucune requête"
+    answer: [0, 1, 2]
+    explanation: >
+      C'est l'arrêt propre. Ignorer le signal ne sert à rien : la plateforme enverra SIGKILL après un délai, et
+      tout sera coupé brutalement.
+    skills:
+      - js-node-process-env
+
+  - id: js-process-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Un outil en ligne de commande doit écrire ses messages d'erreur sur la sortie standard, avec console.log.
+    answer: false
+    explanation: >
+      Les erreurs vont sur la sortie d'erreur, avec console.error. Ainsi, une redirection de la sortie standard vers
+      un fichier ne capture que les résultats.
+    skills:
+      - js-node-process-env

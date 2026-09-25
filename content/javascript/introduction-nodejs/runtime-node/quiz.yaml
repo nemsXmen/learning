@@ -1,0 +1,62 @@
+id: javascript-runtime-node-quiz
+kind: QUIZ
+questions:
+  - id: js-runtime-node-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel composant fournit à Node.js sa boucle d'événements et ses entrées-sorties asynchrones ?
+    options:
+      - "libuv"
+      - "V8"
+      - "npm"
+      - "Le DOM"
+    answer: [0]
+    explanation: >
+      V8 exécute le JavaScript ; libuv, une bibliothèque en C, fournit la boucle d'événements, les entrées-sorties
+      asynchrones et le groupe de fils internes.
+    skills:
+      - js-node-runtime
+
+  - id: js-runtime-node-q2
+    type: predict_output
+    difficulty: 4
+    question: >
+      Dans un callback de `fs.readFile`, on écrit `setTimeout(() => console.log('T'), 0); setImmediate(() => console.log('I'));`.
+      Qu'est-ce qui est affiché ? Réponds sans espace, par exemple TI.
+    answer: 'IT'
+    explanation: >
+      Le callback d'entrée-sortie s'exécute dans la phase poll ; la phase suivante est check, celle de
+      setImmediate. Le timer attend le tour suivant. Depuis une entrée-sortie, cet ordre est garanti.
+    skills:
+      - js-node-runtime
+
+  - id: js-runtime-node-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquels de ces identifiants existent dans Node.js 22 sans rien importer ?
+    options:
+      - "fetch"
+      - "window"
+      - "structuredClone"
+      - "document"
+      - "globalThis"
+    answer: [0, 2, 4]
+    explanation: >
+      fetch, structuredClone et globalThis sont communs au navigateur et à Node. window et document
+      appartiennent au navigateur.
+    skills:
+      - js-node-runtime
+
+  - id: js-runtime-node-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Un calcul de deux secondes dans le gestionnaire d'une route ne ralentit que les clients qui appellent cette route.
+    answer: false
+    explanation: >
+      Le JavaScript de Node s'exécute sur un seul fil : pendant le calcul, aucune autre requête n'est traitée.
+      Tous les clients attendent.
+    skills:
+      - js-node-runtime

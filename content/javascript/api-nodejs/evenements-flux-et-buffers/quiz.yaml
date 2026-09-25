@@ -1,0 +1,59 @@
+id: javascript-evenements-flux-et-buffers-quiz
+kind: QUIZ
+questions:
+  - id: js-flux-q1
+    type: predict_output
+    difficulty: 3
+    question: >
+      Qu'affiche `console.log('café'.length, Buffer.byteLength('café'))` ?
+    answer: '4 5'
+    explanation: >
+      La chaîne a quatre caractères, mais é occupe deux octets en UTF-8 : cinq octets en tout.
+    skills:
+      - js-node-events-streams
+
+  - id: js-flux-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi préférer pipeline de node:stream/promises à source.pipe(destination) ?
+    options:
+      - "pipeline propage les erreurs et ferme tous les flux si une étape échoue"
+      - "pipe ne fonctionne pas avec les fichiers"
+      - "pipeline charge les données en mémoire pour aller plus vite"
+      - "pipe ignore la contre-pression"
+    answer: [0]
+    explanation: >
+      pipe gère la contre-pression, mais une erreur dans une étape ne détruit pas les autres, et les fichiers peuvent
+      rester ouverts. pipeline fait le ménage et renvoie une promesse rejetée.
+    skills:
+      - js-node-events-streams
+
+  - id: js-flux-q3
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Dans une boucle d'écriture, sortie.write(ligne) renvoie false. Que faut-il faire ?
+    options:
+      - "Attendre l'événement drain avant d'écrire de nouveau"
+      - "Réécrire immédiatement la même ligne"
+      - "Fermer le flux : l'écriture a échoué"
+      - "Ignorer la valeur : elle est purement informative"
+    answer: [0]
+    explanation: >
+      false signale que le tampon interne est plein : la donnée est acceptée, mais il faut attendre drain pour ne
+      pas accumuler les données en mémoire. C'est la contre-pression.
+    skills:
+      - js-node-events-streams
+
+  - id: js-flux-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      emitter.emit('error', erreur), sans aucun écouteur 'error', ne fait rien.
+    answer: false
+    explanation: >
+      C'est le seul événement spécial : sans écouteur, emit lève l'erreur, qui arrête le processus si personne ne
+      l'attrape.
+    skills:
+      - js-node-events-streams

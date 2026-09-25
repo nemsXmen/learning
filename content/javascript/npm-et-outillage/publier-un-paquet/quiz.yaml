@@ -1,0 +1,66 @@
+id: javascript-publier-un-paquet-quiz
+kind: QUIZ
+questions:
+  - id: js-publier-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle commande montre exactement les fichiers qu'une publication enverrait, sans rien publier ?
+    options:
+      - "npm pack --dry-run"
+      - "npm publish --list"
+      - "npm ls --files"
+      - "npm version --dry-run"
+    answer: [0]
+    explanation: >
+      npm pack --dry-run liste le contenu de l'archive qui serait publiée. npm pack sans option crée l'archive, qu'on
+      peut installer dans un autre projet pour la tester.
+    skills:
+      - js-package-publishing
+
+  - id: js-publier-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un paquet déclare "exports": { ".": "./src/index.js" }. Que se passe-t-il pour `import '@atelier/slug/src/outils.js'` ?
+    options:
+      - "Erreur ERR_PACKAGE_PATH_NOT_EXPORTED"
+      - "Le fichier est importé normalement"
+      - "Node importe src/index.js à la place"
+      - "Un avertissement, puis l'import réussit"
+    answer: [0]
+    explanation: >
+      exports définit l'API publique : tout chemin non déclaré est refusé. On peut ainsi réorganiser l'intérieur du
+      paquet sans casser les utilisateurs.
+    skills:
+      - js-package-publishing
+
+  - id: js-publier-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Une version 3.2.0 publiée contient un bug grave. Quelles actions sont appropriées ?
+    options:
+      - "Publier une version corrigée 3.2.1"
+      - "Déprécier 3.2.0 avec npm deprecate"
+      - "Republier 3.2.0 avec le correctif"
+      - "Supprimer toutes les versions 3.x"
+    answer: [0, 1]
+    explanation: >
+      Un numéro publié ne peut pas être réutilisé, et supprimer des versions casse les projets qui en dépendent. On
+      publie un correctif et on signale la version défectueuse.
+    skills:
+      - js-package-publishing
+
+  - id: js-publier-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans un .npmrc commité, on peut écrire `//registre/:_authToken=${NPM_TOKEN}` : le jeton lui-même vient de
+      l'environnement.
+    answer: true
+    explanation: >
+      npm remplace ${NPM_TOKEN} par la variable d'environnement. Le fichier ne contient aucun secret ; la valeur est
+      fournie par le poste ou par l'intégration continue.
+    skills:
+      - js-package-publishing

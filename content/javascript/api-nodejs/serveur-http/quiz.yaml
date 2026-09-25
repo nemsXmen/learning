@@ -1,0 +1,64 @@
+id: javascript-serveur-http-quiz
+kind: QUIZ
+questions:
+  - id: js-serveur-http-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      La ressource /taches existe et accepte GET et POST. Quel statut renvoyer à une requête DELETE /taches ?
+    options:
+      - "405, avec l'en-tête Allow: GET, POST"
+      - "404"
+      - "400"
+      - "501"
+    answer: [0]
+    explanation: >
+      La ressource existe, mais pas cette méthode : c'est un 405, et l'en-tête Allow indique les méthodes acceptées.
+    skills:
+      - js-node-http-server
+
+  - id: js-serveur-http-q2
+    type: true_false
+    difficulty: 4
+    question: >
+      Node attend la promesse renvoyée par un gestionnaire de requêtes async et transforme un rejet en réponse 500.
+    answer: false
+    explanation: >
+      Node ignore la promesse. Un rejet non attrapé devient une unhandledRejection qui arrête le processus : on
+      attrape toutes les erreurs dans le gestionnaire.
+    skills:
+      - js-node-http-server
+
+  - id: js-serveur-http-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles précautions prendre en lisant le corps JSON d'une requête ?
+    options:
+      - "Limiter le nombre d'octets reçus et répondre 413 au-delà"
+      - "Vérifier le content-type annoncé"
+      - "Assembler les buffers avant de décoder en UTF-8"
+      - "Renvoyer le message de JSON.parse et sa pile au client en cas d'erreur"
+    answer: [0, 1, 2]
+    explanation: >
+      Limite de taille, type annoncé et décodage correct protègent le serveur. En cas de JSON invalide, on répond
+      400 avec un message simple, sans pile d'appels.
+    skills:
+      - js-node-http-server
+
+  - id: js-serveur-http-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment calculer l'en-tête content-length d'une réponse texte ?
+    options:
+      - "Buffer.byteLength(corps)"
+      - "corps.length"
+      - "JSON.stringify(corps).length"
+      - "Il est inutile en HTTP/1.1"
+    answer: [0]
+    explanation: >
+      content-length compte des octets. Dès que le texte contient des accents, corps.length, qui compte des unités
+      UTF-16, donne une valeur fausse.
+    skills:
+      - js-node-http-server

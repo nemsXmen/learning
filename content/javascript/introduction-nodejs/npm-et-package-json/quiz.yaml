@@ -1,0 +1,65 @@
+id: javascript-npm-et-package-json-quiz
+kind: QUIZ
+questions:
+  - id: js-package-json-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi un script npm peut-il appeler `vitest` sans chemin, alors que Vitest n'est installé que dans le projet ?
+    options:
+      - "npm run ajoute node_modules/.bin au début du PATH"
+      - "npm installe automatiquement Vitest globalement"
+      - "Node connaît tous les paquets du registre"
+      - "Le shell cherche dans le dossier node_modules par défaut"
+    answer: [0]
+    explanation: >
+      Les paquets installés déposent leurs commandes dans node_modules/.bin, que npm run place en tête du PATH.
+      C'est la version du projet qui s'exécute.
+    skills:
+      - js-npm-package-json
+
+  - id: js-package-json-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Le script test vaut "vitest run". Quelle commande exécute `vitest run --watch` ?
+    options:
+      - "npm run test -- --watch"
+      - "npm run test --watch"
+      - "npm --watch run test"
+      - "npm run test:watch"
+    answer: [0]
+    explanation: >
+      Tout ce qui suit -- est ajouté à la commande du script. Sans --, l'option est interprétée par npm lui-même.
+      test:watch n'existe que si on l'a défini.
+    skills:
+      - js-npm-package-json
+
+  - id: js-package-json-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Le package.json contient prebuild, build et postbuild. Qu'est-ce qui est exact ?
+    options:
+      - "npm run build exécute prebuild, build puis postbuild"
+      - "Si prebuild échoue, build n'est pas exécuté"
+      - "node --run build exécute aussi prebuild et postbuild"
+      - "npm run postbuild exécute uniquement postbuild"
+    answer: [0, 1, 3]
+    explanation: >
+      npm encadre un script par ses crochets pre et post, et s'arrête à la première erreur. node --run ne gère
+      pas ces crochets. Lancer postbuild directement n'exécute que lui, à moins qu'un prepostbuild existe.
+    skills:
+      - js-npm-package-json
+
+  - id: js-package-json-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Un package.json peut contenir des commentaires, à condition de les écrire avec //.
+    answer: false
+    explanation: >
+      package.json est du JSON strict : ni commentaires ni virgule finale. Une seule erreur de syntaxe fait échouer
+      toutes les commandes npm.
+    skills:
+      - js-npm-package-json

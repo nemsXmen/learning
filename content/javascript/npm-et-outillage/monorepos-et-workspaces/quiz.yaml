@@ -1,0 +1,65 @@
+id: javascript-monorepos-et-workspaces-quiz
+kind: QUIZ
+questions:
+  - id: js-monorepo-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que sélectionne `pnpm --filter "...@app/validation" test` ?
+    options:
+      - "@app/validation et tous les paquets qui en dépendent"
+      - "@app/validation et toutes ses dépendances"
+      - "Uniquement @app/validation"
+      - "Tous les paquets sauf @app/validation"
+    answer: [0]
+    explanation: >
+      Les trois points avant le nom ajoutent les dépendants : ce sont les paquets qu'une modification de validation
+      peut casser. Après le nom, ils ajoutent les dépendances.
+    skills:
+      - js-monorepo-workspaces
+
+  - id: js-monorepo-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un paquet du workspace déclare "@boutique/prix": "workspace:*", et @boutique/prix est en version 1.0.0. Que
+      contient le package.json publié ?
+    options:
+      - "\"@boutique/prix\": \"1.0.0\""
+      - "\"@boutique/prix\": \"workspace:*\""
+      - "\"@boutique/prix\": \"*\""
+      - "\"@boutique/prix\": \"file:../prix\""
+    answer: [0]
+    explanation: >
+      À l'empaquetage, pnpm remplace workspace:* par la version exacte du paquet référencé, et workspace:^ par une
+      plage ^, pour que le paquet soit installable hors du monorepo.
+    skills:
+      - js-monorepo-workspaces
+
+  - id: js-monorepo-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques gardent un monorepo sain ?
+    options:
+      - "Importer les paquets internes par leur nom, via exports"
+      - "Déclarer chaque dépendance interne avec workspace:"
+      - "Importer directement ../../apps/api/src/db.js depuis l'application web"
+      - "Éviter les dépendances circulaires entre paquets"
+    answer: [0, 1, 3]
+    explanation: >
+      Les chemins relatifs entre paquets contournent l'API publique et le graphe de dépendances : un couplage
+      invisible qui casse l'ordre de construction.
+    skills:
+      - js-monorepo-workspaces
+
+  - id: js-monorepo-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      pnpm -r build construit les paquets dans l'ordre de leurs dépendances : un paquet après ceux qu'il utilise.
+    answer: true
+    explanation: >
+      pnpm suit l'ordre topologique du graphe des paquets du workspace, et parallélise ce qui est indépendant.
+    skills:
+      - js-monorepo-workspaces

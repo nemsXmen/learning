@@ -1,0 +1,66 @@
+id: javascript-processus-enfants-et-worker-threads-quiz
+kind: QUIZ
+questions:
+  - id: js-processus-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle façon de lancer `convert` avec un nom de fichier fourni par l'utilisateur évite l'injection de commande ?
+    options:
+      - "execFile('convert', [nom, 'sortie.png'])"
+      - "exec(`convert ${nom} sortie.png`)"
+      - "exec('convert ' + JSON.stringify(nom) + ' sortie.png')"
+      - "spawn(`convert ${nom} sortie.png`, { shell: true })"
+    answer: [0]
+    explanation: >
+      execFile lance le programme sans shell : le nom est un argument, jamais interprété. Les autres passent une
+      chaîne à un shell, et des guillemets JSON ne protègent pas contre toutes les syntaxes du shell.
+    skills:
+      - js-node-processes-threads
+
+  - id: js-processus-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Une commande produit des centaines de mégaoctets de sortie. Quelle fonction utiliser ?
+    options:
+      - "spawn, pour lire la sortie en flux"
+      - "execFile, avec le maxBuffer par défaut"
+      - "exec, qui tamponne toute la sortie"
+      - "fork, qui convertit la sortie en messages"
+    answer: [0]
+    explanation: >
+      execFile et exec tamponnent la sortie et tuent le processus au-delà de maxBuffer, 1 Mo par défaut. spawn
+      expose stdout en flux, traité au fil de l'eau.
+    skills:
+      - js-node-processes-threads
+
+  - id: js-processus-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Dans quels cas un worker thread est-il adapté ?
+    options:
+      - "Un calcul JavaScript de plusieurs centaines de millisecondes dans un serveur"
+      - "Hacher de nombreux mots de passe en série"
+      - "Attendre la réponse d'une API externe"
+      - "Lire un fichier depuis le disque"
+    answer: [0, 1]
+    explanation: >
+      Les workers servent au calcul, qui bloquerait la boucle d'événements. Les entrées-sorties, réseau ou disque,
+      ne bloquent déjà pas le fil principal.
+    skills:
+      - js-node-processes-threads
+
+  - id: js-processus-q4
+    type: true_false
+    difficulty: 4
+    question: >
+      Avec la version à promesses d'execFile, erreur.code vaut 'ENOENT' quand la commande n'existe pas, et le code de
+      sortie numérique quand elle s'est terminée en échec.
+    answer: true
+    explanation: >
+      Une erreur de démarrage porte un code système sous forme de chaîne ; un programme qui sort avec un code non nul
+      rejette avec ce code, un nombre.
+    skills:
+      - js-node-processes-threads
