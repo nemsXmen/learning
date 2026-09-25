@@ -1,0 +1,67 @@
+id: javascript-mocks-espions-et-modules-quiz
+kind: QUIZ
+questions:
+  - id: js-vitest-mocking-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Que renvoient les quatre appels de `f` ?
+      `const f = vi.fn().mockReturnValueOnce(1).mockReturnValueOnce(2).mockReturnValue(0)`
+    options:
+      - "1, 2, 0, 0"
+      - "1, 2, undefined, undefined"
+      - "0, 0, 0, 0"
+      - "1, 2, 1, 2"
+    answer: [0]
+    explanation: >
+      Les réponses « once » sont consommées dans l'ordre, puis la réponse permanente définie par
+      mockReturnValue reprend pour tous les appels suivants.
+    skills:
+      - vitest-mocking
+
+  - id: js-vitest-mocking-q2
+    type: true_false
+    difficulty: 2
+    question: >
+      Sans configuration supplémentaire, `vi.spyOn(calculatrice, 'additionner')` appelle toujours la vraie méthode.
+    answer: true
+    explanation: >
+      Un espion observe sans changer le comportement : il enregistre les appels et délègue à la
+      méthode originale, tant qu'on ne lui donne pas une valeur ou une implémentation.
+    skills:
+      - vitest-mocking
+
+  - id: js-vitest-mocking-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle méthode remet la vraie méthode `Math.random` en place après `vi.spyOn(Math, 'random').mockReturnValue(0.5)` ?
+    options:
+      - "mockRestore()"
+      - "mockClear()"
+      - "mockReset()"
+      - "mockReturnValue(undefined)"
+    answer: [0]
+    explanation: >
+      mockClear efface l'historique, mockReset le comportement configuré ; seul mockRestore
+      replace la propriété originale sur l'objet espionné.
+    skills:
+      - vitest-mocking
+
+  - id: js-vitest-mocking-q4
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Pourquoi `const envoi = vi.fn(); vi.mock('./email.js', () => ({ envoyerEmail: envoi }))` échoue-t-il, et comment le corriger ?
+    options:
+      - "vi.mock est hissé avant la déclaration de envoi, encore en zone morte temporelle"
+      - "Déclarer envoi avec vi.hoisted corrige le problème"
+      - "Créer vi.fn() dans la fabrique puis importer le module simulé corrige le problème"
+      - "vi.mock n'accepte pas de fabrique asynchrone ou synchrone"
+    answer: [0, 1, 2]
+    explanation: >
+      Vitest place vi.mock avant les imports ; la fabrique s'exécute alors que envoi n'est pas
+      initialisée. vi.hoisted est hissé lui aussi, et importer le module simulé redonne accès au
+      vi.fn créé dans la fabrique.
+    skills:
+      - vitest-mocking

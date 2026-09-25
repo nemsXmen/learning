@@ -1,0 +1,69 @@
+id: javascript-asynchrone-erreurs-et-couverture-quiz
+kind: QUIZ
+questions:
+  - id: js-async-testing-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi ce test est-il marqué réussi alors que l'assertion est fausse ?
+      `it('profil', () => { charger().then((p) => expect(p.nom).toBe('Bob')); })`
+    options:
+      - "La promesse n'est ni attendue ni renvoyée : le test se termine avant l'assertion"
+      - "toBe ne fonctionne pas dans un then"
+      - "Un test synchrone ignore toutes les assertions"
+      - "Vitest exécute les then après tous les tests du fichier, volontairement"
+    answer: [0]
+    explanation: >
+      Le test se termine quand sa fonction se termine. L'assertion s'exécute plus tard, hors du
+      test ; il faut écrire await ou return devant la promesse.
+    skills:
+      - async-testing
+
+  - id: js-async-testing-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans un test qui vérifie une erreur dans un bloc `catch`, `expect.assertions(1)` fait échouer le test si aucune
+      erreur n'est levée.
+    answer: true
+    explanation: >
+      Sans erreur, le catch ne s'exécute pas et aucune assertion n'a lieu. expect.assertions(1)
+      compte les assertions exécutées et signale l'écart.
+    skills:
+      - async-testing
+
+  - id: js-async-testing-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Avec des faux minuteurs, un code qui rejette pendant `vi.runAllTimersAsync()` provoque une « Unhandled Rejection ».
+      Quelle correction est la bonne ?
+    options:
+      - "Créer expect(promesse).rejects avant d'avancer le temps, puis l'attendre après"
+      - "Remplacer runAllTimersAsync par useRealTimers"
+      - "Ajouter expect.hasAssertions() au début du test"
+      - "Appeler vi.clearAllMocks() avant runAllTimersAsync"
+    answer: [0]
+    explanation: >
+      L'assertion rejects s'abonne à la promesse. Créée avant d'avancer le temps, elle gère le
+      rejet au moment où il se produit ; on l'attend ensuite.
+    skills:
+      - async-testing
+
+  - id: js-async-testing-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Que peut-on affirmer d'un module couvert à 100 % de lignes ?
+    options:
+      - "Chaque ligne a été exécutée au moins une fois par la suite"
+      - "Chaque comportement du module est vérifié par une assertion"
+      - "Le module ne contient aucun bug"
+      - "La couverture de branches peut être inférieure à 100 %"
+    answer: [0, 3]
+    explanation: >
+      La couverture mesure l'exécution, pas la vérification : un test sans assertion couvre autant
+      qu'un bon test. Et une ligne peut contenir plusieurs branches, comme un ternaire, dont une
+      seule a été parcourue.
+    skills:
+      - async-testing

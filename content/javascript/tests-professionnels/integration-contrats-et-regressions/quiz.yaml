@@ -1,0 +1,66 @@
+id: javascript-integration-contrats-et-regressions-quiz
+kind: QUIZ
+questions:
+  - id: js-test-strategy-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Tous les tests du service de commande passent avec un dépôt simulé, mais la production échoue car le vrai dépôt
+      renvoie null au lieu de undefined. Qu'est-ce qui aurait détecté le problème ?
+    options:
+      - "Une suite de contrat exécutée à la fois contre le faux et contre le vrai dépôt"
+      - "Davantage d'assertions toHaveBeenCalledWith sur le mock"
+      - "Un seuil de couverture plus élevé"
+      - "Des snapshots des réponses du mock"
+    answer: [0]
+    explanation: >
+      Le mock encodait une hypothèse fausse sur le vrai dépôt. Une suite de contrat partagée
+      oblige le faux et le vrai à se comporter de la même façon.
+    skills:
+      - test-strategy
+
+  - id: js-test-strategy-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles dépendances simule-t-on de préférence dans un test ?
+    options:
+      - "Une API de paiement externe"
+      - "L'horloge système"
+      - "Un module de calcul de son propre code"
+      - "Un module de formatage interne appelé par le service testé"
+    answer: [0, 1]
+    explanation: >
+      On simule ce qu'on ne contrôle pas ou qui est lent et instable : services externes, temps.
+      Les modules internes restent réels, pour vérifier qu'ils s'accordent.
+    skills:
+      - test-strategy
+
+  - id: js-test-strategy-q3
+    type: true_false
+    difficulty: 2
+    question: >
+      Pour un test de régression, on écrit d'abord le test qui reproduit le bug et on vérifie qu'il échoue, puis on corrige.
+    answer: true
+    explanation: >
+      Un test écrit après la correction peut passer sans avoir jamais été capable de détecter le
+      bug. Le voir échouer d'abord prouve qu'il le reproduit.
+    skills:
+      - test-strategy
+
+  - id: js-test-strategy-q4
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Dans le contract testing piloté par le consommateur, où le contrat est-il vérifié contre la vraie implémentation ?
+    options:
+      - "Dans la CI du fournisseur, qui rejoue les attentes enregistrées par le client"
+      - "Dans les tests du client, contre un mock du fournisseur uniquement"
+      - "Uniquement en production, par la supervision"
+      - "Nulle part : le contrat sert seulement de documentation"
+    answer: [0]
+    explanation: >
+      Les tests du client produisent le contrat ; le fournisseur le rejoue contre son vrai code,
+      si bien qu'un changement incompatible casse son build avant le déploiement.
+    skills:
+      - test-strategy

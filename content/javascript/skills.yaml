@@ -497,6 +497,31 @@ skills:
     importance: 5
     requires: [test-structure]
 
+  - id: vitest-mocking
+    name: Mocks, espions et modules avec Vitest
+    importance: 4
+    requires: [vitest-assertions, test-doubles]
+
+  - id: async-testing
+    name: Tests asynchrones, erreurs et couverture
+    importance: 5
+    requires: [vitest-assertions, async-errors]
+
+  - id: behavior-testing
+    name: Tester les comportements, pas l'implémentation
+    importance: 5
+    requires: [vitest-mocking]
+
+  - id: test-strategy
+    name: Stratégie de tests, contrats et régressions
+    importance: 4
+    requires: [behavior-testing, testing-levels]
+
+  - id: tdd
+    name: TDD et tests de performance
+    importance: 4
+    requires: [behavior-testing, async-testing]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

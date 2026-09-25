@@ -1,0 +1,65 @@
+id: javascript-tdd-et-tests-de-performance-quiz
+kind: QUIZ
+questions:
+  - id: js-tdd-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Dans le cycle du TDD, que fait-on juste après avoir écrit un nouveau test ?
+    options:
+      - "On l'exécute et on vérifie qu'il échoue pour la raison prévue"
+      - "On écrit le code complet de la fonctionnalité"
+      - "On refactore le code existant"
+      - "On écrit tous les autres tests de la fonctionnalité"
+    answer: [0]
+    explanation: >
+      L'étape rouge prouve que le test est capable de détecter l'absence du comportement. Ensuite
+      seulement vient le code le plus simple qui le fait passer, puis le refactor.
+    skills:
+      - tdd
+
+  - id: js-tdd-q2
+    type: true_false
+    difficulty: 3
+    question: >
+      Dans l'étape verte, on écrit le code le plus général possible pour anticiper les tests suivants.
+    answer: false
+    explanation: >
+      On écrit le code le plus simple qui fait passer les tests. C'est le test suivant qui force la
+      généralisation : c'est la triangulation.
+    skills:
+      - tdd
+
+  - id: js-tdd-q3
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment protéger de façon fiable l'exigence « afficher 500 commandes ne déclenche qu'une requête de clients » ?
+    options:
+      - "Compter les appels à la fonction de chargement avec toHaveBeenCalledTimes(1)"
+      - "Vérifier que l'affichage prend moins de 50 ms"
+      - "Lancer un benchmark dans la suite de tests unitaires"
+      - "Mesurer la couverture du module"
+    answer: [0]
+    explanation: >
+      Le nombre de requêtes est la cause de la lenteur, et il se compte de façon déterministe. Un
+      seuil de durée échoue au hasard selon la machine.
+    skills:
+      - tdd
+
+  - id: js-tdd-q4
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      À propos des benchmarks de Vitest 5, lesquelles de ces affirmations sont vraies ?
+    options:
+      - "Ils sont placés dans des fichiers *.bench.js et lancés par vitest bench"
+      - "vitest run les ignore, pour garder une suite de tests stable"
+      - "Leurs chiffres absolus sont identiques d'une machine à l'autre"
+      - "Une marge d'erreur relative (rme) élevée signale une mesure bruitée"
+    answer: [0, 1, 3]
+    explanation: >
+      Les benchmarks vivent à part de la suite de tests. On en lit l'ordre de grandeur et la marge
+      d'erreur : les valeurs absolues dépendent de la machine et de sa charge.
+    skills:
+      - tdd

@@ -1,0 +1,65 @@
+id: javascript-tester-les-comportements-quiz
+kind: QUIZ
+questions:
+  - id: js-behavior-testing-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Après un refactoring qui ne change aucun comportement, un test échoue. Que révèle cet échec ?
+    options:
+      - "Le test dépendait d'un détail d'implémentation : c'est un test fragile"
+      - "Le refactoring a forcément introduit un bug"
+      - "Il faut recopier la nouvelle valeur dans le test sans autre analyse"
+      - "Les tests ne doivent jamais être exécutés après un refactoring"
+    answer: [0]
+    explanation: >
+      Un bon test casse quand le comportement change, et seulement dans ce cas. Un échec sans
+      changement de comportement est un faux positif, signe que le test vérifiait l'implémentation.
+    skills:
+      - behavior-testing
+
+  - id: js-behavior-testing-q2
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquelles de ces vérifications portent sur un comportement observable ?
+    options:
+      - "L'email de confirmation envoyé au client"
+      - "La valeur renvoyée par panier.total()"
+      - "Le nombre d'appels à une méthode privée de calcul"
+      - "Le contenu du tableau interne panier.lignes"
+    answer: [0, 1]
+    explanation: >
+      Une valeur renvoyée et un effet sur une dépendance extérieure sont observables par
+      l'utilisateur du code. Les méthodes et structures internes sont des choix d'implémentation.
+    skills:
+      - behavior-testing
+
+  - id: js-behavior-testing-q3
+    type: true_false
+    difficulty: 3
+    question: >
+      Vérifier combien de fois un catalogue a été interrogé pour lire un prix rend le test plus robuste.
+    answer: false
+    explanation: >
+      Lire un prix est une requête : le nombre et le moment des lectures sont internes et
+      changent, par exemple avec un cache. On vérifie le total qui en résulte.
+    skills:
+      - behavior-testing
+
+  - id: js-behavior-testing-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un test vérifie `estOuvert()` sans argument, avec l'heure réelle, et échoue parfois. Quelle correction est la meilleure ?
+    options:
+      - "Passer des dates choisies, dont les limites d'ouverture, avec it.each"
+      - "Relancer automatiquement le test en cas d'échec"
+      - "Ne lancer la suite qu'en semaine pendant les heures d'ouverture"
+      - "Remplacer l'assertion par expect(estOuvert()).toBeDefined()"
+    answer: [0]
+    explanation: >
+      Le résultat dépend de l'instant d'exécution. Contrôler la date rend le test déterministe et
+      permet de vérifier les limites, comme 9 h et 19 h.
+    skills:
+      - behavior-testing
