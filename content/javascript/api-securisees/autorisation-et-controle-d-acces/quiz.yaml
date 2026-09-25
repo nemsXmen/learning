@@ -1,0 +1,64 @@
+id: javascript-autorisation-et-controle-d-acces-quiz
+kind: QUIZ
+questions:
+  - id: js-authz-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Ana, connectée, remplace /factures/f1 par /factures/f2 dans l'URL et voit la facture de Bao. Quelle faille est-ce ?
+    options:
+      - "Un accès aux objets non contrôlé (IDOR, ou BOLA)"
+      - "Une injection SQL"
+      - "Une XSS réfléchie"
+      - "Une CSRF"
+    answer: [0]
+    explanation: >
+      Le serveur vérifie la connexion, mais pas que la ressource appartient à l'utilisatrice. Chaque objet chargé doit
+      faire l'objet d'un contrôle d'appartenance.
+    skills:
+      - js-authorization
+
+  - id: js-authz-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que répondre quand un utilisateur demande une ressource qui existe mais appartient à quelqu'un d'autre ?
+    options:
+      - "404, comme si elle n'existait pas"
+      - "403, avec le nom du propriétaire"
+      - "200 avec un corps vide"
+      - "500"
+    answer: [0]
+    explanation: >
+      Un 403 confirmerait l'existence de la ressource. On répond comme pour une ressource absente.
+    skills:
+      - js-authorization
+
+  - id: js-authz-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques relèvent d'un bon contrôle d'accès ?
+    options:
+      - "Refuser par défaut toute action non prévue"
+      - "Centraliser les règles dans une politique testée"
+      - "Construire les réponses champ par champ plutôt que renvoyer l'objet de la base"
+      - "Masquer les boutons d'administration aux clients, sans contrôle côté serveur"
+    answer: [0, 1, 2]
+    explanation: >
+      Masquer un bouton améliore l'interface, mais l'attaquant appelle l'API directement : seul le contrôle côté serveur
+      protège.
+    skills:
+      - js-authorization
+
+  - id: js-authz-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Des identifiants aléatoires, comme des UUID, suffisent à protéger des factures contre les accès d'autres clients.
+    answer: false
+    explanation: >
+      Ils rendent l'énumération plus difficile, mais un identifiant finit toujours par fuir. Le contrôle d'appartenance
+      reste indispensable.
+    skills:
+      - js-authorization

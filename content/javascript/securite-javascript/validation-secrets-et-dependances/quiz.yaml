@@ -1,0 +1,64 @@
+id: javascript-validation-secrets-et-dependances-quiz
+kind: QUIZ
+questions:
+  - id: js-validation-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un client ajoute "role": "admin" au corps de sa requête de mise à jour de profil. Quelle mesure bloque cette
+      affectation de masse ?
+    options:
+      - "Un schéma strict qui rejette les clés inconnues, et l'écriture des seuls champs validés"
+      - "La validation HTML du formulaire"
+      - "Un encodage HTML du corps de la requête"
+      - "Une CSP stricte"
+    answer: [0]
+    explanation: >
+      Le serveur ne doit jamais copier le corps brut dans la base. Un schéma strict refuse les clés non prévues ; la
+      validation du navigateur est contournée par un attaquant.
+    skills:
+      - js-validation-secrets-deps
+
+  - id: js-validation-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Une clé secrète d'API est placée dans la variable VITE_CLE_API d'une application front-end. Que se passe-t-il ?
+    options:
+      - "Elle est intégrée au bundle et lisible par tous les visiteurs"
+      - "Elle reste sur le serveur de build"
+      - "Elle est chiffrée automatiquement par Vite"
+      - "Elle n'est accessible qu'aux utilisateurs connectés"
+    answer: [0]
+    explanation: >
+      Le préfixe VITE_ signale une variable exposée au code client. Une clé secrète s'utilise depuis le serveur.
+    skills:
+      - js-validation-secrets-deps
+
+  - id: js-validation-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Une clé de paiement a été poussée dans un dépôt. Quelles actions sont nécessaires ?
+    options:
+      - "Révoquer la clé chez le prestataire et en créer une nouvelle"
+      - "Vérifier dans les journaux du prestataire si la clé a été utilisée"
+      - "Mettre en place une détection de secrets dans les pushs"
+      - "Se contenter de supprimer le fichier dans un nouveau commit"
+    answer: [0, 1, 2]
+    explanation: >
+      Le secret reste dans l'historique et dans les clones : seule la révocation le neutralise.
+    skills:
+      - js-validation-secrets-deps
+
+  - id: js-validation-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Une donnée qui a passé la validation d'entrée peut être insérée dans une page avec innerHTML sans risque.
+    answer: false
+    explanation: >
+      La validation vérifie une forme, pas l'innocuité pour chaque destination : un commentaire valide peut contenir des
+      balises. L'encodage de sortie reste nécessaire.
+    skills:
+      - js-validation-secrets-deps

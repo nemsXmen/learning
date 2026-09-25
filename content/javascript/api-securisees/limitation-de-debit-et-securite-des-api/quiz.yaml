@@ -1,0 +1,65 @@
+id: javascript-limitation-de-debit-et-securite-des-api-quiz
+kind: QUIZ
+questions:
+  - id: js-api-secu-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle réponse renvoyer quand un client dépasse sa limite de débit ?
+    options:
+      - "429 Too Many Requests, avec l'en-tête Retry-After"
+      - "403 Forbidden"
+      - "500 Internal Server Error"
+      - "200 avec un corps vide"
+    answer: [0]
+    explanation: >
+      429 signale explicitement la limitation, et Retry-After indique au client quand réessayer.
+    skills:
+      - js-api-security
+
+  - id: js-api-secu-q2
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Pourquoi éviter de verrouiller un compte après cinq échecs de connexion ?
+    options:
+      - "N'importe qui pourrait bloquer le compte d'une victime en se trompant exprès"
+      - "Parce que cela ralentit les connexions légitimes"
+      - "Parce que les mots de passe hachés ne le permettent pas"
+      - "Parce que la limite par adresse IP suffit toujours"
+    answer: [0]
+    explanation: >
+      Un verrouillage dur devient un déni de service ciblé. On préfère des délais croissants, un CAPTCHA et une
+      notification, combinés à des limites par compte et par adresse.
+    skills:
+      - js-api-security
+
+  - id: js-api-secu-q3
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Une API télécharge une image depuis une URL fournie par l'utilisateur. Quelles mesures protègent contre le SSRF ?
+    options:
+      - "Refuser les adresses de bouclage, privées et locales après résolution du nom"
+      - "Se connecter à l'adresse vérifiée plutôt que de résoudre le nom une seconde fois"
+      - "Contrôler ou désactiver les redirections"
+      - "Accepter toutes les URL http et https sans autre contrôle"
+    answer: [0, 1, 2]
+    explanation: >
+      Sans contrôle, le serveur peut être amené à appeler localhost, le réseau interne ou le service de métadonnées du
+      cloud.
+    skills:
+      - js-api-security
+
+  - id: js-api-secu-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Derrière un répartiteur de charge, on peut toujours faire confiance à l'en-tête X-Forwarded-For pour identifier
+      l'adresse du client.
+    answer: false
+    explanation: >
+      Le client peut envoyer son propre X-Forwarded-For. On ne le lit que s'il a été ajouté par un proxy de confiance, en
+      prenant l'entrée ajoutée par ce proxy.
+    skills:
+      - js-api-security

@@ -1,0 +1,66 @@
+id: javascript-sessions-jwt-et-refresh-tokens-quiz
+kind: QUIZ
+questions:
+  - id: js-jwt-q1
+    type: true_false
+    difficulty: 2
+    question: >
+      La charge utile d'un JWT signé en HS256 est chiffrée : seul le serveur peut la lire.
+    answer: false
+    explanation: >
+      Un JWT est signé, pas chiffré : la charge est seulement encodée en base64url, lisible par tous. La signature
+      empêche de la modifier, pas de la lire.
+    skills:
+      - js-sessions-jwt
+
+  - id: js-jwt-q2
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Un serveur vérifie un JWT avec l'algorithme indiqué dans son en-tête. Quelle attaque cela permet-il ?
+    options:
+      - "Envoyer un jeton avec alg: none et sans signature, qui sera accepté"
+      - "Lire la charge utile du jeton"
+      - "Allonger la durée de vie du jeton sans le modifier"
+      - "Aucune, la signature protège toujours"
+    answer: [0]
+    explanation: >
+      L'algorithme doit être imposé par le serveur. Si le jeton le choisit, un attaquant choisit « aucune signature », ou
+      un algorithme qui détourne la clé publique.
+    skills:
+      - js-sessions-jwt
+
+  - id: js-jwt-q3
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Qu'est-ce qui caractérise une bonne gestion des jetons de rafraîchissement ?
+    options:
+      - "Un nouveau jeton à chaque rafraîchissement, l'ancien étant invalidé"
+      - "La révocation de toute la famille si un ancien jeton est réutilisé"
+      - "Le stockage de leur seul haché côté serveur"
+      - "Une conservation dans localStorage pour survivre aux rechargements"
+    answer: [0, 1, 2]
+    explanation: >
+      localStorage est lisible par toute XSS. On préfère un cookie HttpOnly restreint à la route de rafraîchissement, ou
+      le stockage sécurisé du système sur mobile.
+    skills:
+      - js-sessions-jwt
+
+  - id: js-jwt-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un utilisateur se déconnecte. Pourquoi la déconnexion est-elle immédiate avec une session côté serveur, mais pas avec
+      un JWT seul ?
+    options:
+      - "La session est supprimée du serveur ; le JWT reste valide jusqu'à son expiration"
+      - "Les JWT ne peuvent pas contenir d'identifiant d'utilisateur"
+      - "Les cookies de session expirent à la fermeture de l'onglet"
+      - "Un JWT est chiffré et ne peut pas être supprimé"
+    answer: [0]
+    explanation: >
+      Un JWT se vérifie sans état côté serveur : rien ne permet de l'invalider avant exp, sauf une liste de révocation.
+      D'où des jetons d'accès courts associés à un jeton de rafraîchissement révocable.
+    skills:
+      - js-sessions-jwt

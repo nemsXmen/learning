@@ -1,0 +1,64 @@
+id: javascript-injections-eval-et-pollution-de-prototype-quiz
+kind: QUIZ
+questions:
+  - id: js-injection-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle est la protection fiable contre l'injection SQL ?
+    options:
+      - "Les requêtes paramétrées, qui transmettent les valeurs séparément de la requête"
+      - "Échapper les apostrophes à la main"
+      - "Retirer les mots SELECT et DROP des entrées"
+      - "Limiter la longueur des champs"
+    answer: [0]
+    explanation: >
+      Avec des paramètres, une valeur ne peut jamais devenir du SQL. Les échappements manuels et les listes noires
+      oublient toujours un cas.
+    skills:
+      - js-injection-prototype-pollution
+
+  - id: js-injection-q2
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Un nom de colonne de tri vient de la requête HTTP. Comment l'intégrer à la requête SQL ?
+    options:
+      - "Le choisir dans une liste blanche de colonnes écrite dans le code"
+      - "Le passer comme paramètre ?"
+      - "Le concaténer après l'avoir mis en majuscules"
+      - "L'entourer de guillemets"
+    answer: [0]
+    explanation: >
+      Les paramètres ne remplacent que des valeurs, pas des identifiants. Pour un nom de colonne, la donnée sert de clé
+      dans une table fixe.
+    skills:
+      - js-injection-prototype-pollution
+
+  - id: js-injection-q3
+    type: multiple_answer
+    difficulty: 4
+    question: >
+      Quelles mesures protègent contre la pollution de prototype ?
+    options:
+      - "Ignorer les clés __proto__, constructor et prototype dans une fusion d'objets"
+      - "Stocker les clés venues des utilisateurs dans une Map"
+      - "Tester les permissions avec Object.hasOwn"
+      - "Remplacer JSON.parse par eval"
+    answer: [0, 1, 2]
+    explanation: >
+      eval aggraverait tout : il exécute du code. Les trois autres mesures empêchent d'atteindre ou d'exploiter
+      Object.prototype.
+    skills:
+      - js-injection-prototype-pollution
+
+  - id: js-injection-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Le module node:vm permet d'exécuter sans risque du code JavaScript fourni par un utilisateur.
+    answer: false
+    explanation: >
+      La documentation de Node précise que vm n'est pas un mécanisme de sécurité : un code malveillant peut en sortir.
+    skills:
+      - js-injection-prototype-pollution

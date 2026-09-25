@@ -675,6 +675,47 @@ skills:
     importance: 5
     requires: [js-hexagonal-clean, js-node-http-server]
 
+  # Partie 17 — Security
+  - id: js-xss
+    name: XSS et encodage de sortie
+    importance: 5
+    requires: [dom-modification, http-auth-cors]
+
+  - id: js-csp-cookies-csrf
+    name: CSP, cookies sécurisés, CSRF et CORS
+    importance: 5
+    requires: [js-xss, js-node-http-server]
+
+  - id: js-injection-prototype-pollution
+    name: Injections, évaluation dangereuse et pollution de prototype
+    importance: 5
+    requires: [js-xss, prototype-chain]
+
+  - id: js-validation-secrets-deps
+    name: Validation des entrées, secrets et dépendances
+    importance: 5
+    requires: [js-injection-prototype-pollution, js-node-process-env, js-package-managers]
+
+  - id: js-password-auth
+    name: Authentification et hachage des mots de passe
+    importance: 5
+    requires: [js-validation-secrets-deps]
+
+  - id: js-sessions-jwt
+    name: Sessions, JWT et jetons de rafraîchissement
+    importance: 5
+    requires: [js-password-auth, js-csp-cookies-csrf]
+
+  - id: js-authorization
+    name: Autorisation et contrôle d'accès
+    importance: 5
+    requires: [js-sessions-jwt, js-hexagonal-clean]
+
+  - id: js-api-security
+    name: Limitation de débit et sécurité des API
+    importance: 5
+    requires: [js-authorization]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

@@ -1,0 +1,65 @@
+id: javascript-csp-cookies-csrf-et-cors-quiz
+kind: QUIZ
+questions:
+  - id: js-csp-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Avec `script-src 'self' 'nonce-abc123'`, lequel de ces scripts s'exécute ?
+    options:
+      - "<script nonce=\"abc123\">…</script>"
+      - "<script>…</script> en ligne, sans attribut"
+      - "<img src=\"x\" onerror=\"…\">"
+      - "eval(chaine) appelé depuis un script autorisé"
+    answer: [0]
+    explanation: >
+      Seuls les fichiers de la même origine et les scripts portant le nonce de la réponse s'exécutent. Les scripts en
+      ligne, les attributs d'événement et eval sont bloqués.
+    skills:
+      - js-csp-cookies-csrf
+
+  - id: js-csp-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel attribut empêche une XSS de lire le cookie de session avec document.cookie ?
+    options:
+      - "HttpOnly"
+      - "Secure"
+      - "SameSite=Strict"
+      - "Path=/"
+    answer: [0]
+    explanation: >
+      HttpOnly rend le cookie invisible à JavaScript. Secure limite son envoi à HTTPS, SameSite contrôle son envoi
+      depuis d'autres sites.
+    skills:
+      - js-csp-cookies-csrf
+
+  - id: js-csp-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles mesures protègent contre la CSRF ?
+    options:
+      - "Un cookie de session SameSite=Lax"
+      - "Vérifier l'en-tête Origin des requêtes qui modifient l'état"
+      - "Ne jamais modifier l'état avec une requête GET"
+      - "Configurer CORS avec Access-Control-Allow-Origin: *"
+    answer: [0, 1, 2]
+    explanation: >
+      CORS contrôle qui peut lire les réponses, pas l'envoi des requêtes : il ne protège pas de la CSRF.
+    skills:
+      - js-csp-cookies-csrf
+
+  - id: js-csp-q4
+    type: true_false
+    difficulty: 4
+    question: >
+      Renvoyer l'Origin reçu dans Access-Control-Allow-Origin, avec Access-Control-Allow-Credentials: true, permet à
+      n'importe quel site de lire les données privées d'un utilisateur connecté.
+    answer: true
+    explanation: >
+      Le navigateur joint les cookies et CORS autorise le site demandeur, quel qu'il soit, à lire la réponse. On compare
+      l'origine à une liste blanche exacte.
+    skills:
+      - js-csp-cookies-csrf

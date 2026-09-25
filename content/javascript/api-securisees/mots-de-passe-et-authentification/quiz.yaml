@@ -1,0 +1,65 @@
+id: javascript-mots-de-passe-et-authentification-quiz
+kind: QUIZ
+questions:
+  - id: js-mdp-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle méthode convient pour stocker des mots de passe ?
+    options:
+      - "argon2id ou scrypt, avec un sel aléatoire par mot de passe"
+      - "SHA-256 avec un sel commun à toute l'application"
+      - "Un chiffrement AES avec une clé stockée sur le serveur"
+      - "MD5, plus rapide pour les connexions"
+    answer: [0]
+    explanation: >
+      Les fonctions dédiées aux mots de passe sont lentes et gourmandes en mémoire, ce qui rend le cassage d'une base
+      volée très coûteux. SHA-256 et MD5 sont trop rapides ; un chiffrement se déchiffre avec la clé.
+    skills:
+      - js-password-auth
+
+  - id: js-mdp-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      À la connexion, l'e-mail est inconnu. Que doit répondre le serveur ?
+    options:
+      - "Le même message que pour un mot de passe faux, après une durée comparable"
+      - "« Aucun compte avec cette adresse »"
+      - "Une erreur 404"
+      - "Proposer immédiatement de créer un compte avec cette adresse"
+    answer: [0]
+    explanation: >
+      Un message ou un temps de réponse différent révèle quels comptes existent. On vérifie même un haché factice pour
+      égaliser la durée.
+    skills:
+      - js-password-auth
+
+  - id: js-mdp-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Qu'est-ce qui caractérise un jeton de réinitialisation de mot de passe bien conçu ?
+    options:
+      - "Il est aléatoire et long"
+      - "Seul son haché est stocké"
+      - "Il expire rapidement et ne sert qu'une fois"
+      - "Il est dérivé de l'adresse e-mail pour être retrouvé facilement"
+    answer: [0, 1, 2]
+    explanation: >
+      Un jeton dérivé de l'e-mail serait prévisible. Aléatoire, stocké haché, court et à usage unique, il ne sert à rien
+      à un attaquant qui lirait la base.
+    skills:
+      - js-password-auth
+
+  - id: js-mdp-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Le sel d'un mot de passe doit rester secret, stocké à part du haché.
+    answer: false
+    explanation: >
+      Le sel n'est pas secret : il est stocké avec le haché, car il faut le connaître pour vérifier. Son rôle est de rendre
+      chaque haché unique et les tables précalculées inutiles.
+    skills:
+      - js-password-auth

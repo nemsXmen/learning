@@ -1,0 +1,65 @@
+id: javascript-xss-et-encodage-de-sortie-quiz
+kind: QUIZ
+questions:
+  - id: js-xss-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle ligne affiche un commentaire d'utilisateur sans risque de XSS ?
+    options:
+      - "element.textContent = commentaire"
+      - "element.innerHTML = commentaire"
+      - "element.insertAdjacentHTML('beforeend', commentaire)"
+      - "document.write(commentaire)"
+    answer: [0]
+    explanation: >
+      textContent insère la valeur comme du texte, sans passer par l'analyseur HTML. Les trois autres interprètent la
+      chaîne comme du HTML.
+    skills:
+      - js-xss
+
+  - id: js-xss-q2
+    type: true_false
+    difficulty: 4
+    question: >
+      Comme les balises script insérées par innerHTML ne s'exécutent pas, innerHTML est sûr avec des données
+      d'utilisateurs.
+    answer: false
+    explanation: >
+      Un attribut d'événement suffit : `<img src="x" onerror="…">` exécute son code dès que l'image échoue à se
+      charger, sans aucune balise script.
+    skills:
+      - js-xss
+
+  - id: js-xss-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Lesquelles de ces valeurs sont des sources possibles d'une XSS basée sur le DOM ?
+    options:
+      - "location.hash"
+      - "new URLSearchParams(location.search).get('q')"
+      - "Les données reçues par postMessage"
+      - "Une constante écrite dans le code source de l'application"
+    answer: [0, 1, 2]
+    explanation: >
+      L'URL et les messages reçus peuvent être contrôlés par un attaquant. Une constante du code ne l'est pas.
+    skills:
+      - js-xss
+
+  - id: js-xss-q4
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment afficher en toute sécurité un site web saisi par l'utilisateur dans un lien ?
+    options:
+      - "Analyser l'URL avec new URL et n'accepter que les protocoles http: et https:"
+      - "Encoder l'URL en entités HTML avant de l'affecter à href"
+      - "Retirer le mot script de l'URL"
+      - "Mettre l'URL entre guillemets dans l'attribut"
+    answer: [0]
+    explanation: >
+      javascript:alert(1) ne contient aucun caractère à encoder, et les filtres de mots se contournent. Seule la
+      vérification du protocole protège.
+    skills:
+      - js-xss
