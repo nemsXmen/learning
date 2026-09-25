@@ -1,0 +1,66 @@
+id: javascript-corriger-prouver-mesurer-et-relire-quiz
+kind: QUIZ
+questions:
+  - id: js-corriger-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Un colis de 5 kg est facturé comme un colis lourd parce que la comparaison est `poids < 5`. Quelle correction traite
+      la cause ?
+    options:
+      - "Remplacer la comparaison par poids <= 5, avec une constante qui dit que la limite est incluse"
+      - "Ajouter if (poids === 5) return base; avant le calcul"
+      - "Arrondir le poids à l'entier inférieur"
+      - "Rembourser les clients sans modifier le code"
+    answer: [0]
+    explanation: >
+      Le cas particulier corrige le symptôme signalé mais laisse la règle fausse. La cause est une frontière exclusive au
+      lieu d'inclusive.
+    skills:
+      - js-fix-and-review
+
+  - id: js-corriger-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Comment vérifier qu'un test de régression protège vraiment contre le bug ?
+    options:
+      - "Annuler temporairement la correction et constater que le test échoue"
+      - "Lancer le test deux fois de suite"
+      - "Vérifier qu'il passe sur la branche principale"
+      - "Augmenter la couverture de code"
+    answer: [0]
+    explanation: >
+      Un test qui passe aussi sans la correction ne prouve rien. Il doit être rouge sur la version fautive et vert avec
+      la correction.
+    skills:
+      - js-fix-and-review
+
+  - id: js-corriger-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Qu'est-ce qui caractérise un bon script de réparation de données ?
+    options:
+      - "Il est idempotent : une seconde exécution ne produit aucun effet supplémentaire"
+      - "Il est testé sur une copie des données et relu"
+      - "Il journalise chaque modification"
+      - "Il s'exécute directement en production sans mode simulation, pour aller plus vite"
+    answer: [0, 1, 2]
+    explanation: >
+      Une réparation modifie des données réelles : elle se prépare comme un déploiement, avec simulation, relecture et
+      traces.
+    skills:
+      - js-fix-and-review
+
+  - id: js-corriger-q4
+    type: true_false
+    difficulty: 2
+    question: >
+      Un postmortem sans reproche a pour but d'identifier la personne responsable de l'erreur.
+    answer: false
+    explanation: >
+      Il cherche les facteurs du système qui ont permis à l'erreur de passer, et débouche sur des actions concrètes.
+      Chercher un coupable pousse à cacher les erreurs.
+    skills:
+      - js-fix-and-review

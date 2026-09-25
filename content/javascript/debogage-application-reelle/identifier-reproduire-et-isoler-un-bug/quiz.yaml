@@ -1,0 +1,63 @@
+id: javascript-identifier-reproduire-et-isoler-un-bug-quiz
+kind: QUIZ
+questions:
+  - id: js-isoler-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Environ combien d'essais faut-il à git bisect pour trouver le commit fautif parmi 1 000 commits ?
+    options:
+      - "Environ 10"
+      - "Environ 100"
+      - "Environ 500"
+      - "1 000"
+    answer: [0]
+    explanation: >
+      Chaque essai divise l'intervalle par deux : log₂(1 000) vaut environ 10.
+    skills:
+      - js-bug-isolation
+
+  - id: js-isoler-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que doit renvoyer le script passé à git bisect run quand le bug n'est pas présent ?
+    options:
+      - "Le code de sortie 0"
+      - "Le code de sortie 1"
+      - "Le code de sortie 125"
+      - "N'importe quel texte contenant « good »"
+    answer: [0]
+    explanation: >
+      0 signifie bon, 125 impossible à tester, et un autre code jusqu'à 127 signifie mauvais. C'est le code de sortie qui
+      compte, pas l'affichage.
+    skills:
+      - js-bug-isolation
+
+  - id: js-isoler-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles informations rendent un signalement de bug exploitable ?
+    options:
+      - "Le comportement attendu et le comportement obtenu"
+      - "Les conditions : données, version, environnement"
+      - "La fréquence d'apparition"
+      - "Une supposition sur la ligne de code fautive, à la place des faits"
+    answer: [0, 1, 2]
+    explanation: >
+      On sépare les faits observés des suppositions. Une hypothèse est utile, mais elle ne remplace pas les faits.
+    skills:
+      - js-bug-isolation
+
+  - id: js-isoler-q4
+    type: true_false
+    difficulty: 4
+    question: >
+      `tableau.forEach(async (x) => { … })` attend la fin de chaque callback asynchrone avant de continuer.
+    answer: false
+    explanation: >
+      forEach ignore les promesses renvoyées par ses callbacks. Pour attendre, on utilise Promise.all avec map, ou une
+      boucle for...of avec await.
+    skills:
+      - js-bug-isolation

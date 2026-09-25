@@ -716,6 +716,52 @@ skills:
     importance: 5
     requires: [js-authorization]
 
+  # Partie 18 — Real-World JavaScript
+  - id: js-git-basics
+    name: Fondamentaux de Git et commits
+    importance: 5
+    requires: [js-npm-package-json]
+
+  - id: js-git-branches
+    name: Branches, fusions, conflits et rebase
+    importance: 5
+    requires: [js-git-basics]
+
+  - id: js-git-collaboration
+    name: Pull requests, revue de code et workflows
+    importance: 5
+    requires: [js-git-branches, js-refactoring]
+
+  - id: js-lint-format-types
+    name: ESLint, Prettier et vérification des types
+    importance: 5
+    requires: [js-npm-package-json, js-clean-naming]
+
+  - id: js-build-tools
+    name: Outils de build, Vite, bundlers et source maps
+    importance: 4
+    requires: [js-lint-format-types, code-splitting]
+
+  - id: js-ci-cd
+    name: CI/CD et contrôles automatiques
+    importance: 5
+    requires: [js-build-tools, js-git-collaboration]
+
+  - id: js-codebase-reading
+    name: Lire une codebase et tracer une requête
+    importance: 5
+    requires: [debugging-method, js-node-app-architecture]
+
+  - id: js-bug-isolation
+    name: Identifier, reproduire et isoler un bug
+    importance: 5
+    requires: [js-codebase-reading, js-git-branches]
+
+  - id: js-fix-and-review
+    name: Corriger, prouver, mesurer et relire
+    importance: 5
+    requires: [js-bug-isolation, js-git-collaboration]
+
   # Partie 8 — Modules & Modern JavaScript
   - id: es-modules
     name: Modules ES, export et import

@@ -1,0 +1,64 @@
+id: javascript-ci-cd-et-controles-automatiques-quiz
+kind: QUIZ
+questions:
+  - id: js-ci-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi l'intégration continue utilise-t-elle pnpm install --frozen-lockfile ou npm ci ?
+    options:
+      - "Pour installer exactement les versions du fichier de verrouillage, et échouer s'il n'est pas à jour"
+      - "Pour installer les dernières versions des dépendances"
+      - "Pour éviter d'installer les devDependencies"
+      - "Pour installer plus vite en sautant la vérification des paquets"
+    answer: [0]
+    explanation: >
+      L'intégration continue doit tester ce qui est dans le dépôt. Une installation qui modifie le verrou testerait
+      d'autres versions.
+    skills:
+      - js-ci-cd
+
+  - id: js-ci-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Que mettre dans un crochet pre-commit ?
+    options:
+      - "Formatage et lint des seuls fichiers indexés, en quelques secondes"
+      - "Toute la suite de tests et le build de production"
+      - "Le déploiement en préproduction"
+      - "Rien : les crochets sont interdits en équipe"
+    answer: [0]
+    explanation: >
+      Un crochet lent est contourné avec --no-verify. Les vérifications complètes appartiennent à l'intégration continue,
+      qui fait foi.
+    skills:
+      - js-ci-cd
+
+  - id: js-ci-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles pratiques sécurisent un workflow GitHub Actions ?
+    options:
+      - "Réduire les droits du jeton avec permissions"
+      - "Passer les secrets par des variables d'environnement de l'étape, pas en arguments"
+      - "Épingler les actions tierces par leur identifiant de commit"
+      - "Exposer tous les secrets aux pull requests de dépôts externes pour qu'elles soient testées"
+    answer: [0, 1, 2]
+    explanation: >
+      Une pull request externe peut modifier le workflow ou les scripts : lui donner les secrets permettrait de les voler.
+    skills:
+      - js-ci-cd
+
+  - id: js-ci-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Un test qui échoue au hasard peut être ignoré tant qu'il repasse au deuxième essai.
+    answer: false
+    explanation: >
+      Un test instable apprend à l'équipe à ignorer le rouge, et l'intégration continue perd sa valeur. On le corrige ou on
+      l'isole immédiatement.
+    skills:
+      - js-ci-cd

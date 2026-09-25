@@ -1,0 +1,63 @@
+id: javascript-fondamentaux-de-git-et-commits-quiz
+kind: QUIZ
+questions:
+  - id: js-git-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quelle commande montre exactement ce qui partira dans le prochain commit ?
+    options:
+      - "git diff --staged"
+      - "git diff"
+      - "git log -p"
+      - "git status --ignored"
+    answer: [0]
+    explanation: >
+      git diff --staged compare l'index au dernier commit. git diff seul montre les modifications pas encore ajoutées à
+      l'index.
+    skills:
+      - js-git-basics
+
+  - id: js-git-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quel message suit le format Conventional Commits pour une correction de bug ?
+    options:
+      - "fix(panier): refuser les remises négatives"
+      - "Fixed bug"
+      - "panier: fix"
+      - "FIX - remises"
+    answer: [0]
+    explanation: >
+      Un type, une portée facultative entre parenthèses, deux-points, puis un sujet court qui dit ce qui change.
+    skills:
+      - js-git-basics
+
+  - id: js-git-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Qu'est-ce qui caractérise un commit atomique ?
+    options:
+      - "Il réalise une seule intention"
+      - "Il laisse le projet dans un état où les tests passent"
+      - "Il peut être annulé proprement avec git revert"
+      - "Il regroupe toutes les modifications de la journée"
+    answer: [0, 1, 2]
+    explanation: >
+      Regrouper une journée de travail mélange plusieurs intentions : impossible à relire ou à annuler séparément.
+    skills:
+      - js-git-basics
+
+  - id: js-git-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      git commit --amend modifie le dernier commit sans changer son identifiant.
+    answer: false
+    explanation: >
+      L'identifiant dépend du contenu, message compris : --amend crée un nouveau commit. C'est pourquoi on ne l'utilise
+      que sur un commit non partagé.
+    skills:
+      - js-git-basics

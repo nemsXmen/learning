@@ -1,0 +1,66 @@
+id: javascript-build-vite-bundlers-et-source-maps-quiz
+kind: QUIZ
+questions:
+  - id: js-build-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Le fichier .env contient CLE_SECRETE=sk_… . Que vaut import.meta.env.CLE_SECRETE dans le code client construit par
+      Vite ?
+    options:
+      - "undefined : seules les variables préfixées par VITE_ sont exposées"
+      - "La valeur de la clé, en clair dans le bundle"
+      - "La valeur chiffrée de la clé"
+      - "Une erreur de build"
+    answer: [0]
+    explanation: >
+      Vite n'expose au client que les variables VITE_. Dans le build observé, l'accès est devenu void 0.
+    skills:
+      - js-build-tools
+
+  - id: js-build-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pourquoi les fichiers produits portent-ils des noms comme index-C-1IWzFg.js ?
+    options:
+      - "Pour pouvoir les mettre en cache très longtemps : le nom change quand le contenu change"
+      - "Pour cacher le code aux visiteurs"
+      - "Parce que les navigateurs refusent les noms lisibles"
+      - "Pour indiquer la date du build"
+    answer: [0]
+    explanation: >
+      Le hachage dépend du contenu. Une nouvelle version a un nouveau nom : le navigateur peut garder les anciens fichiers
+      en cache sans risque de servir une version périmée.
+    skills:
+      - js-build-tools
+
+  - id: js-build-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Qu'est-ce qui empêche le bundler de retirer un export inutilisé ?
+    options:
+      - "Le module a des effets de bord à l'import, comme modifier une variable globale"
+      - "Le code importe un objet entier par défaut au lieu de fonctions précises"
+      - "L'export est une fonction fléchée"
+      - "Le fichier utilise des guillemets simples"
+    answer: [0, 1]
+    explanation: >
+      Le tree shaking repose sur des imports et exports statiques sans effets de bord. La syntaxe de la fonction ou le
+      style n'y changent rien.
+    skills:
+      - js-build-tools
+
+  - id: js-build-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Changer VITE_API_URL sur le serveur de production suffit à modifier l'URL utilisée par une application déjà
+      construite.
+    answer: false
+    explanation: >
+      Les variables VITE_ sont remplacées par leur valeur au moment du build. Il faut reconstruire, ou charger la
+      configuration au démarrage de l'application.
+    skills:
+      - js-build-tools

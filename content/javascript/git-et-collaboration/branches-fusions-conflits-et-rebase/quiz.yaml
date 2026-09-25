@@ -1,0 +1,64 @@
+id: javascript-branches-fusions-conflits-et-rebase-quiz
+kind: QUIZ
+questions:
+  - id: js-branches-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Qu'est-ce qu'une branche Git ?
+    options:
+      - "Une étiquette mobile qui pointe vers un commit"
+      - "Une copie complète du dépôt"
+      - "Un dossier séparé du projet"
+      - "Une liste de fichiers modifiés"
+    answer: [0]
+    explanation: >
+      Une branche ne contient que l'identifiant d'un commit ; commiter la fait avancer. C'est pourquoi en créer une ne
+      coûte rien.
+    skills:
+      - js-git-branches
+
+  - id: js-branches-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Après un rebase, pourquoi les commits de la branche ont-ils changé d'identifiant ?
+    options:
+      - "Ils ont été rejoués sur un autre parent : ce sont de nouveaux commits"
+      - "Git renumérote les commits à chaque rebase pour les trier"
+      - "Parce que le message a été modifié automatiquement"
+      - "Ils n'ont pas changé : seul l'affichage diffère"
+    answer: [0]
+    explanation: >
+      L'identifiant dépend du contenu et du parent. Rejouer un commit au-dessus d'un autre parent crée un nouveau commit.
+    skills:
+      - js-git-branches
+
+  - id: js-branches-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Que faut-il faire avant de valider la résolution d'un conflit ?
+    options:
+      - "Comprendre les deux changements en conflit"
+      - "Retirer tous les marqueurs <<<<<<<, ======= et >>>>>>>"
+      - "Lancer les tests"
+      - "Choisir systématiquement sa propre version"
+    answer: [0, 1, 2]
+    explanation: >
+      Un conflit oppose deux changements voulus : le résultat correct combine parfois les deux. Garder sa version par
+      réflexe efface le travail de quelqu'un d'autre.
+    skills:
+      - js-git-branches
+
+  - id: js-branches-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Après un git reset --hard, les commits annulés sont définitivement perdus.
+    answer: false
+    explanation: >
+      git reflog garde les positions récentes de HEAD : on y retrouve l'identifiant et on le récupère avec une branche.
+      Seules les modifications jamais commitées sont perdues.
+    skills:
+      - js-git-branches

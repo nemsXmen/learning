@@ -1,0 +1,63 @@
+id: javascript-lire-une-codebase-et-tracer-une-requete-quiz
+kind: QUIZ
+questions:
+  - id: js-lecture-q1
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Pour comprendre pourquoi une ligne de code étrange existe, quel est le meilleur premier réflexe ?
+    options:
+      - "git blame, puis lire le commit, la pull request et le ticket associés"
+      - "Supprimer la ligne et voir si les tests passent encore"
+      - "Réécrire la fonction"
+      - "Ajouter un commentaire « à vérifier »"
+    answer: [0]
+    explanation: >
+      Un code étrange traite souvent un cas particulier documenté dans son historique. Le supprimer sans comprendre
+      réintroduit parfois un bug ancien.
+    skills:
+      - js-codebase-reading
+
+  - id: js-lecture-q2
+    type: multiple_choice
+    difficulty: 4
+    question: >
+      Que permet AsyncLocalStorage dans un serveur Node ?
+    options:
+      - "Retrouver un contexte propre à chaque requête, même après des await, sans le passer en paramètre"
+      - "Stocker des données dans le navigateur du client"
+      - "Partager une variable entre toutes les requêtes"
+      - "Accélérer les requêtes asynchrones"
+    answer: [0]
+    explanation: >
+      Tout ce qui est appelé depuis stockage.run(valeur, fonction) retrouve la valeur avec getStore(), et deux requêtes
+      simultanées ont chacune leur contexte.
+    skills:
+      - js-codebase-reading
+
+  - id: js-lecture-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Qu'est-ce qui aide à suivre une requête dans des journaux de production ?
+    options:
+      - "Un identifiant de corrélation dans chaque ligne"
+      - "Des lignes JSON avec des champs stables"
+      - "Le renvoi de l'identifiant au client, pour qu'il puisse le citer"
+      - "Un débogueur attaché au serveur de production"
+    answer: [0, 1, 2]
+    explanation: >
+      Un débogueur suspend toutes les requêtes du serveur : on reproduit le problème en local.
+    skills:
+      - js-codebase-reading
+
+  - id: js-lecture-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Les tests d'un module sont une bonne source pour comprendre le comportement attendu de ce module.
+    answer: true
+    explanation: >
+      Ils décrivent le comportement voulu par des exemples exécutables, et les lancer vérifie qu'on a bien compris.
+    skills:
+      - js-codebase-reading

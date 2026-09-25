@@ -525,6 +525,15 @@
       "contentVersion": "06c1ce012769"
     },
     {
+      "slug": "debogage-application-reelle",
+      "title": "Debugging d'une application réelle",
+      "order": 53,
+      "part": "real-world",
+      "technology": "javascript",
+      "contentPath": "javascript/debogage-application-reelle/module.yaml",
+      "contentVersion": "d9fb9af1f95b"
+    },
+    {
       "slug": "debugging",
       "title": "Débogage",
       "order": 24,
@@ -633,6 +642,15 @@
       "contentVersion": "247f90110162"
     },
     {
+      "slug": "git-et-collaboration",
+      "title": "Git & collaboration",
+      "order": 51,
+      "part": "real-world",
+      "technology": "javascript",
+      "contentPath": "javascript/git-et-collaboration/module.yaml",
+      "contentVersion": "fc2567edeccc"
+    },
+    {
       "slug": "heritage",
       "title": "Héritage",
       "order": 18,
@@ -730,6 +748,15 @@
       "technology": "javascript",
       "contentPath": "javascript/operateurs/module.yaml",
       "contentVersion": "b0bbc55b3cc5"
+    },
+    {
+      "slug": "outillage-professionnel",
+      "title": "Tooling professionnel",
+      "order": 52,
+      "part": "real-world",
+      "technology": "javascript",
+      "contentPath": "javascript/outillage-professionnel/module.yaml",
+      "contentVersion": "a979c0f57227"
     },
     {
       "slug": "patterns-objet",
@@ -2810,6 +2837,94 @@
       "importance": 5,
       "requires": [
         "js-authorization"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-git-basics",
+      "name": "Fondamentaux de Git et commits",
+      "importance": 5,
+      "requires": [
+        "js-npm-package-json"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-git-branches",
+      "name": "Branches, fusions, conflits et rebase",
+      "importance": 5,
+      "requires": [
+        "js-git-basics"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-git-collaboration",
+      "name": "Pull requests, revue de code et workflows",
+      "importance": 5,
+      "requires": [
+        "js-git-branches",
+        "js-refactoring"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-lint-format-types",
+      "name": "ESLint, Prettier et vérification des types",
+      "importance": 5,
+      "requires": [
+        "js-npm-package-json",
+        "js-clean-naming"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-build-tools",
+      "name": "Outils de build, Vite, bundlers et source maps",
+      "importance": 4,
+      "requires": [
+        "js-lint-format-types",
+        "code-splitting"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-ci-cd",
+      "name": "CI/CD et contrôles automatiques",
+      "importance": 5,
+      "requires": [
+        "js-build-tools",
+        "js-git-collaboration"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-codebase-reading",
+      "name": "Lire une codebase et tracer une requête",
+      "importance": 5,
+      "requires": [
+        "debugging-method",
+        "js-node-app-architecture"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-bug-isolation",
+      "name": "Identifier, reproduire et isoler un bug",
+      "importance": 5,
+      "requires": [
+        "js-codebase-reading",
+        "js-git-branches"
+      ],
+      "technology": "javascript"
+    },
+    {
+      "id": "js-fix-and-review",
+      "name": "Corriger, prouver, mesurer et relire",
+      "importance": 5,
+      "requires": [
+        "js-bug-isolation",
+        "js-git-collaboration"
       ],
       "technology": "javascript"
     },
@@ -8088,6 +8203,120 @@
       ]
     },
     {
+      "id": "javascript-corriger-prouver-mesurer-et-relire",
+      "title": "Corriger, prouver, mesurer l'impact et relire la correction",
+      "slug": "corriger-prouver-mesurer-et-relire",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "debogage-application-reelle",
+      "order": 3,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 110,
+      "prerequisites": [
+        "javascript-identifier-reproduire-et-isoler-un-bug",
+        "javascript-pull-requests-revue-et-workflows"
+      ],
+      "skills": [
+        "js-fix-and-review"
+      ],
+      "tags": [
+        "javascript",
+        "debogage",
+        "qualite"
+      ],
+      "contentPath": "javascript/debogage-application-reelle/corriger-prouver-mesurer-et-relire/lesson.md",
+      "contentVersion": "841e2e23f2b2",
+      "body": "\n## Objectifs\n\n- Corriger la cause d'un bug, pas son symptôme, et chercher les autres occurrences du même défaut.\n- Écrire un test de régression qui échoue sans la correction et vérifie les frontières.\n- Mesurer l'impact du bug sur les utilisateurs et les données, et décider des réparations.\n- Relire une correction avec une grille adaptée, et livrer en vérifiant le résultat en production.\n- Tirer les leçons d'un incident sans chercher de coupable.\n\n## Introduction\n\nLe chapitre précédent a trouvé la cause : un `<=` devenu `<` lors d'un refactoring, qui facture la tranche lourde aux\ncolis d'exactement 5 kg. La tentation est de changer un caractère, de pousser, et de passer à autre chose. Ce serait\nlaisser le travail à moitié fait.\n\nUne correction professionnelle répond à cinq questions. La cause est-elle vraiment corrigée, et ailleurs aussi ? Qu'est-ce\nqui garantit que le bug ne reviendra pas ? Combien de clients ont été touchés, et que leur doit-on ? La correction\nest-elle sûre à livrer ? Et qu'est-ce qui, dans la façon de travailler, a laissé passer ce bug ?\n\n## Concept\n\n| Étape | Question | Livrable |\n| --- | --- | --- |\n| corriger | la cause est-elle traitée, et existe-t-elle ailleurs ? | un changement minimal et ciblé |\n| prouver | la correction marche-t-elle, et le bug peut-il revenir ? | un test de régression, rouge avant, vert après |\n| mesurer | qui a été touché, depuis quand, pour combien ? | une requête ou un script sur les données, un chiffre |\n| réparer | que doit-on aux personnes touchées ? | remboursements, correction de données, communication |\n| relire et livrer | la correction est-elle sûre ? | une pull request courte, relue, vérifiée après déploiement |\n| apprendre | pourquoi le bug est-il passé ? | une analyse sans reproche, avec des actions |\n\n| Grille de relecture d'une correction | |\n| --- | --- |\n| la cause | la correction vise-t-elle la cause identifiée, pas un symptôme ? |\n| le test | échoue-t-il sans la correction ? couvre-t-il les frontières ? |\n| la portée | le même défaut existe-t-il ailleurs ? la correction change-t-elle autre chose ? |\n| les données | les données déjà corrompues sont-elles traitées ? |\n| le déploiement | faut-il une migration, une communication, une surveillance particulière ? |\n\n## Exemple\n\nLa correction elle-même tient en une ligne, mais on en profite pour rendre la règle explicite :\n\n```js\n// frais.js\nconst TARIF_BASE = { FR: 4.9, BE: 7.9 };\nconst TARIF_ETRANGER = 8.9;\nconst POIDS_MAX_TRANCHE_LEGERE = 5; // kg, inclus : un colis de 5 kg est « léger »\nconst SUPPLEMENT_LOURD = 5;\n\nexport function fraisDePort({ poids, pays }) {\n  const base = TARIF_BASE[pays] ?? TARIF_ETRANGER;\n  return poids <= POIDS_MAX_TRANCHE_LEGERE ? base : base + SUPPLEMENT_LOURD;\n}\n```\n\nLe test de régression vérifie la frontière exacte, et de part et d'autre :\n\n```js\n// frais.test.js\nimport { describe, it, expect } from 'vitest';\nimport { fraisDePort } from './frais.js';\n\ndescribe('fraisDePort : tranche de poids', () => {\n  it.each([\n    [4.99, 4.9],\n    [5, 4.9], // régression 1.4.0 : 5 kg était facturé comme un colis lourd\n    [5.01, 9.9],\n  ])('%s kg en France coûtent %s €', (poids, attendu) => {\n    expect(fraisDePort({ poids, pays: 'FR' })).toBe(attendu);\n  });\n});\n```\n\nPuis on mesure l'impact, à partir des commandes passées depuis le déploiement de la version fautive :\n\n```js\n// mesurer-impact.mjs\nconst commandes = [\n  { id: 'c101', poids: 5, pays: 'FR', fraisFactures: 9.9, date: '2026-09-22' },\n  { id: 'c102', poids: 3, pays: 'FR', fraisFactures: 4.9, date: '2026-09-22' },\n  { id: 'c103', poids: 5, pays: 'BE', fraisFactures: 12.9, date: '2026-09-23' },\n  { id: 'c104', poids: 7, pays: 'FR', fraisFactures: 9.9, date: '2026-09-23' },\n  { id: 'c105', poids: 5, pays: 'DE', fraisFactures: 13.9, date: '2026-09-24' },\n];\n\nconst TARIF_BASE = { FR: 4.9, BE: 7.9 };\nconst fraisCorrects = ({ poids, pays }) => (TARIF_BASE[pays] ?? 8.9) + (poids <= 5 ? 0 : 5);\n\nconst touchees = commandes\n  .map((c) => ({ ...c, trop: Math.round((c.fraisFactures - fraisCorrects(c)) * 100) / 100 }))\n  .filter((c) => c.trop > 0);\n\nconst total = touchees.reduce((somme, c) => somme + c.trop, 0);\nconsole.log(touchees.map(({ id, pays, trop }) => `${id} (${pays}) : ${trop} €`));\nconsole.log(`${touchees.length} commandes sur ${commandes.length}, ${total.toFixed(2)} € facturés en trop`);\n// [ 'c101 (FR) : 5 €', 'c103 (BE) : 5 €', 'c105 (DE) : 5 €' ]\n// 3 commandes sur 5, 15.00 € facturés en trop\n```\n\nEn production, la même logique s'exécute sur la base, avec une requête limitée à la période concernée. Le chiffre guide\nla décision : rembourser automatiquement les 5 € des commandes touchées, et prévenir les clients concernés.\n\n## Comment ça fonctionne\n\n**Corriger la cause.** La cause n'est pas « 5 kg est mal calculé », c'est « la frontière de la tranche légère est\nexclusive au lieu d'inclusive ». Ajouter un `if (poids === 5)` corrigerait le symptôme pour ce cas, et laisserait la règle\nfausse. On corrige la comparaison, et l'on rend l'intention explicite par le nom de la constante et un commentaire, pour\nque le prochain refactoring ne refasse pas l'erreur. On garde le changement **minimal** : ce n'est pas le moment de\nréorganiser tout le module.\n\n**Chercher le même défaut ailleurs.** Un bug révèle souvent un motif : si une frontière a été mal traduite ici, d'autres\nl'ont peut-être été dans le même commit, ou dans du code écrit sur le même modèle. On relit le diff du commit fautif en\nentier, et l'on cherche les motifs semblables : `rg \"< POIDS|< SEUIL|< MAX\"`.\n\n**Prouver avec un test de régression.** Le test doit échouer **sans** la correction et passer avec : on le vérifie en\nannulant temporairement la correction. Il teste la frontière elle-même, 5, et ses voisins, 4,99 et 5,01, car c'est là que\nles erreurs se cachent. Il porte un commentaire qui rappelle le bug d'origine : la personne qui le verra échouer dans deux\nans comprendra pourquoi il existe. Ce test aurait dû exister avant le refactoring ; il existera désormais.\n\n**Mesurer l'impact.** Sans chiffre, on ne sait ni l'urgence ni la réparation due. Qui est touché : les colis d'exactement\n5 kg, dans tous les pays, depuis le 22 septembre. Combien : on calcule l'écart entre ce qui a été facturé et ce qui aurait\ndû l'être, sur la période. On utilise pour cela les données et les journaux de production, en lecture seule, et une\nrequête relue. L'impact décide de la suite : une correction discrète, un remboursement automatique, une communication\naux clients, voire une obligation légale d'information pour certaines données.\n\n**Réparer les données.** Corriger le code n'efface pas les dégâts déjà faits : des commandes ont été facturées trop cher,\ndes enregistrements peuvent être incohérents. La réparation est un changement à part entière : un script idempotent,\nexécutable plusieurs fois sans effet supplémentaire, testé sur une copie, relu, et journalisé.\n\n**Relire et livrer la correction.** La pull request de correction est courte, et sa description suit le cheminement :\nsymptôme, cause, commit fautif trouvé par `git bisect`, correction, test, impact mesuré, réparation prévue. Le relecteur\napplique la grille : cause, test, portée, données, déploiement. Après la mise en production, on **vérifie** : les\nnouvelles commandes de 5 kg sont-elles facturées 4,90 € ? Un tableau de bord ou une requête le confirme. Le journal des\nmodifications mentionne la correction.\n\n**Apprendre sans chercher de coupable.** Une analyse d'incident, ou *postmortem*, reconstitue la chronologie, la cause,\net surtout les **facteurs** qui ont permis au bug de passer : aucun test sur les frontières, un commit qui mêlait une\nfonctionnalité et un refactoring, une revue qui n'a pas repéré le changement de comparaison. Elle ne cherche pas de\ncoupable : la personne qui a écrit `<` a fait une erreur que n'importe qui aurait pu faire ; c'est le système de travail\nqui n'a pas su l'attraper. Chaque facteur donne une action concrète, avec un responsable : ajouter des tests de\nfrontière aux règles tarifaires, séparer refactoring et fonctionnalité, ajouter la frontière à la grille de revue.\n\n## Erreurs fréquentes\n\n**Corriger le symptôme.** Un `if` pour le cas signalé laisse la règle fausse pour les autres.\n\n**Livrer une correction sans test de régression.** Le bug reviendra au prochain refactoring.\n\n**Un test qui passerait aussi sans la correction.** Vérifie-le en annulant la correction.\n\n**Profiter de la correction pour tout réorganiser.** Le diff devient illisible et risqué ; refactore dans une autre pull\nrequest.\n\n**Ignorer les données déjà touchées.** Les clients facturés trop cher le restent ; mesure et répare.\n\n**Ne pas vérifier après le déploiement.** « C'est corrigé » doit être constaté en production.\n\n**Chercher un coupable.** Les gens cachent alors leurs erreurs ; cherche les facteurs du système.\n\n## À retenir\n\n- Corriger la cause, minimalement, et chercher le même motif ailleurs.\n- Test de régression : rouge sans la correction, vert avec, centré sur les frontières, commenté.\n- Mesurer l'impact sur les données : qui, depuis quand, combien ; puis réparer par un script idempotent et relu.\n- Pull request courte qui raconte symptôme, cause, preuve et impact ; vérification après déploiement.\n- Postmortem sans reproche : chronologie, cause, facteurs, actions concrètes.\n\n## Exercices\n\n1. Écris le test de régression complet des frais de port pour les trois pays connus et un pays étranger, sur les\n   frontières de la tranche de poids, et vérifie qu'il échoue avec la version fautive (`<`) et passe avec la correction.\n\n   :::indice\n   `it.each` avec un tableau de cas, et une fonction qui fabrique les deux versions pour les comparer.\n   :::\n\n   :::solution\n   ```js\n   import { describe, it, expect } from 'vitest';\n\n   const TARIF_BASE = { FR: 4.9, BE: 7.9 };\n   const creerFrais = (comparer) => ({ poids, pays }) => {\n     const base = TARIF_BASE[pays] ?? 8.9;\n     return comparer(poids, 5) ? base : base + 5;\n   };\n   const fraisCorrige = creerFrais((poids, max) => poids <= max);\n   const fraisFautif = creerFrais((poids, max) => poids < max);\n\n   const CAS = [\n     ['FR', 5, 4.9], ['FR', 5.01, 9.9],\n     ['BE', 5, 7.9], ['BE', 5.01, 12.9],\n     ['US', 5, 8.9], ['US', 5.01, 13.9],\n   ];\n\n   describe('fraisDePort : frontière de 5 kg', () => {\n     it.each(CAS)('%s, %s kg → %s €', (pays, poids, attendu) => {\n       expect(fraisCorrige({ pays, poids })).toBe(attendu);\n     });\n\n     it('détecterait la régression de la version 1.4.0', () => {\n       const echecs = CAS.filter(([pays, poids, attendu]) => fraisFautif({ pays, poids }) !== attendu);\n       expect(echecs.map(([pays]) => pays)).toEqual(['FR', 'BE', 'US']);\n     });\n   });\n   ```\n\n   Le second test documente que la suite attrape bien le bug : avec la version fautive, les trois cas à 5 kg échouent.\n   Dans un vrai projet, on vérifie plus simplement en annulant la correction et en relançant les tests.\n   :::\n\n2. Écris un script de réparation qui rembourse les commandes facturées trop cher. Il doit être idempotent : exécuté deux\n   fois, il ne rembourse pas deux fois. Montre-le sur les données de l'exemple.\n\n   :::indice\n   Enregistre chaque remboursement avec l'identifiant de la commande, et ignore les commandes déjà remboursées pour cette\n   raison.\n   :::\n\n   :::solution\n   ```js\n   const TARIF_BASE = { FR: 4.9, BE: 7.9 };\n   const fraisCorrects = ({ poids, pays }) => (TARIF_BASE[pays] ?? 8.9) + (poids <= 5 ? 0 : 5);\n   const MOTIF = 'regression-frais-5kg-v1.4.0';\n\n   function reparer(commandes, remboursements) {\n     const dejaRembourses = new Set(remboursements.filter((r) => r.motif === MOTIF).map((r) => r.commandeId));\n     const nouveaux = [];\n     for (const commande of commandes) {\n       const trop = Math.round((commande.fraisFactures - fraisCorrects(commande)) * 100) / 100;\n       if (trop <= 0 || dejaRembourses.has(commande.id)) continue;\n       nouveaux.push({ commandeId: commande.id, montant: trop, motif: MOTIF });\n     }\n     remboursements.push(...nouveaux);\n     return nouveaux;\n   }\n\n   const commandes = [\n     { id: 'c101', poids: 5, pays: 'FR', fraisFactures: 9.9 },\n     { id: 'c102', poids: 3, pays: 'FR', fraisFactures: 4.9 },\n     { id: 'c103', poids: 5, pays: 'BE', fraisFactures: 12.9 },\n   ];\n   const remboursements = [];\n   console.log(reparer(commandes, remboursements).length, 'remboursements créés'); // 2 remboursements créés\n   console.log(reparer(commandes, remboursements).length, 'remboursements créés'); // 0 remboursements créés\n   console.log(remboursements);\n   // [\n   //   { commandeId: 'c101', montant: 5, motif: 'regression-frais-5kg-v1.4.0' },\n   //   { commandeId: 'c103', montant: 5, motif: 'regression-frais-5kg-v1.4.0' }\n   // ]\n   ```\n\n   Le motif identifie l'incident : une seconde exécution, après une interruption par exemple, ne crée aucun doublon. En\n   production, le script lit et écrit dans une transaction, s'exécute d'abord en mode simulation, qui affiche ce qu'il\n   ferait sans rien écrire, et journalise chaque remboursement.\n   :::\n\n3. Rédige les sections « Facteurs » et « Actions » du postmortem de cet incident, sans nommer de coupable.\n\n   :::indice\n   Pourquoi le bug a-t-il été écrit, pourquoi n'a-t-il pas été détecté, pourquoi a-t-il duré trois jours ?\n   :::\n\n   :::solution\n   **Facteurs**\n\n   - Les règles tarifaires n'avaient aucun test sur les frontières de poids : le changement de comparaison n'a fait échouer\n     aucun test.\n   - Le commit fautif mêlait une fonctionnalité, le tarif belge, et un refactoring, l'extraction des constantes : la revue\n     s'est concentrée sur la fonctionnalité.\n   - Le nom `POIDS_LEGER` ne disait pas si la limite était incluse, ce qui rendait l'erreur facile à écrire et difficile à\n     voir.\n   - Aucune surveillance ne suivait la répartition des frais facturés : le bug a été découvert par un client, trois jours\n     après le déploiement.\n\n   **Actions**\n\n   | Action | Responsable | Échéance |\n   | --- | --- | --- |\n   | tests de frontière pour toutes les règles tarifaires | équipe paiement | 2 octobre |\n   | convention : refactoring et fonctionnalité dans des commits ou pull requests séparés | tech lead | 30 septembre |\n   | ajouter « frontières et comparaisons » à la grille de revue | équipe | 30 septembre |\n   | alerte sur une variation anormale du montant moyen des frais de port | équipe plateforme | 9 octobre |\n\n   Chaque action vise un facteur du système de travail, et a un responsable et une date. Aucune ne consiste à « faire plus\n   attention » : c'est l'outillage et le processus qui doivent attraper l'erreur suivante.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qu'un bon test de régression ?\n\n  :::indice\n  Rouge sans la correction, et au bon endroit.\n  :::\n\n  :::reponse\n  Un test qui reproduit exactement les conditions du bug, qui échoue sans la correction et passe avec, ce qu'on vérifie\n  en annulant temporairement la correction. Il se concentre sur la cause, souvent une frontière ou un cas limite, et teste\n  aussi ses voisins. Il porte un nom ou un commentaire qui rappelle l'incident d'origine, pour qu'on comprenne pourquoi il\n  existe. Il s'exécute avec le reste de la suite, en intégration continue, et empêche le bug de revenir silencieusement.\n  :::\n\n- Après avoir corrigé un bug en production, qu'est-ce qui reste à faire ?\n\n  :::indice\n  Les données, les personnes touchées, la vérification, les leçons.\n  :::\n\n  :::reponse\n  Mesurer l'impact : qui a été touché, depuis quand, avec quelles conséquences, à partir des données et des journaux.\n  Réparer ce qui doit l'être, données corrompues, remboursements, par un script idempotent, testé et relu, et communiquer\n  avec les personnes concernées. Vérifier en production que la correction produit bien l'effet attendu. Documenter dans\n  le journal des modifications. Et, pour un incident significatif, mener une analyse sans reproche, qui identifie les\n  facteurs ayant permis au bug de passer et débouche sur des actions concrètes.\n  :::\n\n- Qu'est-ce qu'un postmortem sans reproche, et pourquoi ?\n\n  :::indice\n  Le système plutôt que la personne.\n  :::\n\n  :::reponse\n  C'est une analyse d'incident qui reconstitue la chronologie, la cause et les facteurs contributifs en s'intéressant au\n  système de travail, tests, outils, processus, revues, plutôt qu'à la personne qui a fait l'erreur. Une erreur humaine\n  est inévitable ; la question utile est pourquoi elle n'a pas été attrapée. Chercher un coupable pousse les gens à cacher\n  leurs erreurs et à ne plus signaler les incidents, ce qui prive l'équipe de ce qu'elle pourrait apprendre. Les\n  conclusions prennent la forme d'actions concrètes, avec un responsable et une échéance.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-identifier-reproduire-et-isoler-un-bug",
+      "title": "Identifier, reproduire et isoler un bug dans une vraie application",
+      "slug": "identifier-reproduire-et-isoler-un-bug",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "debogage-application-reelle",
+      "order": 2,
+      "estimatedMinutes": 50,
+      "difficulty": 4,
+      "xp": 110,
+      "prerequisites": [
+        "javascript-lire-une-codebase-et-tracer-une-requete",
+        "javascript-branches-fusions-conflits-et-rebase"
+      ],
+      "skills": [
+        "js-bug-isolation"
+      ],
+      "tags": [
+        "javascript",
+        "debogage",
+        "git"
+      ],
+      "contentPath": "javascript/debogage-application-reelle/identifier-reproduire-et-isoler-un-bug/lesson.md",
+      "contentVersion": "842c53b8a432",
+      "body": "\n## Objectifs\n\n- Transformer un signalement vague en description précise : attendu, obtenu, conditions, fréquence.\n- Reproduire le bug de façon fiable, idéalement par un test automatisé qui échoue.\n- Isoler la cause par dichotomie : dans l'historique avec `git bisect`, dans les données, dans le code.\n- Comparer un environnement où tout fonctionne avec un environnement où le bug apparaît.\n- Aborder les bugs difficiles : intermittents, liés au temps, aux données ou à la concurrence.\n\n## Introduction\n\nLa partie sur le débogage a posé la méthode : reproduire, isoler, corriger, prouver. Sur un exercice de vingt lignes,\nelle s'applique en quelques minutes. Dans une application réelle, chaque étape devient plus difficile : le signalement\nvient d'un client qui décrit ce qu'il a vu, pas ce qui s'est passé ; le bug n'apparaît qu'en production, avec certaines\ndonnées ; le code concerné a été modifié par dix personnes ces derniers mois.\n\nCe chapitre donne les outils de cette échelle. Le plus puissant tient en une idée : quand on ne sait pas où chercher, on\ncoupe l'espace de recherche en deux, encore et encore. Dix étapes suffisent à trouver un commit parmi mille.\n\n## Concept\n\n| Un bon signalement | Exemple |\n| --- | --- |\n| ce qui était attendu | « des frais de port de 4,90 € » |\n| ce qui a été obtenu | « 9,90 € » |\n| les conditions | « colis de 5 kg exactement, livré en France, depuis la version 1.4.0 » |\n| la fréquence | « à chaque fois », « une fois sur dix », « seulement le matin » |\n| les traces | identifiant de requête, capture, message d'erreur, heure |\n\n| Dichotomie | Question | Outil |\n| --- | --- | --- |\n| dans l'historique | quel commit a introduit le bug ? | `git bisect`, `git bisect run` |\n| dans les données | quelle partie de l'entrée le déclenche ? | réduire l'entrée de moitié, et recommencer |\n| dans le code | quelle étape produit la mauvaise valeur ? | journaux ou points d'arrêt au milieu du traitement |\n| entre environnements | qu'est-ce qui diffère entre « ça marche » et « ça casse » ? | versions, configuration, données, fuseau horaire, locale |\n\n## Exemple\n\nUn client signale : « depuis la dernière mise à jour, un colis de 5 kg en France me coûte 9,90 € de port au lieu de\n4,90 € ». La version 1.4.0 compte onze commits depuis la première version des frais de port, qui était correcte. On\nécrit d'abord un script qui décrit le bon comportement et sort avec le code 0 s'il est respecté, 1 sinon :\n\n```js\n// verifier-frais.mjs : 0 si le comportement est correct, 1 sinon, comme l'attend git bisect run.\nimport { pathToFileURL } from 'node:url';\nimport path from 'node:path';\n\nconst { fraisDePort } = await import(pathToFileURL(path.resolve('frais.js')).href);\nconst obtenu = fraisDePort({ poids: 5, pays: 'FR' });\nconsole.log(`5 kg en France : ${obtenu} €`);\nprocess.exitCode = obtenu === 4.9 ? 0 : 1;\n```\n\nPuis on laisse Git chercher, en lui indiquant une version mauvaise et une version bonne :\n\n```text\n$ git bisect start HEAD afbacf7\n$ git bisect run node ../verifier-frais.mjs\nBisecting: 5 revisions left to test after this (roughly 3 steps)\n[0661787] feat: arrondi au centime\n5 kg en France : 4.9 €\nBisecting: 2 revisions left to test after this (roughly 2 steps)\n[5bf9f81] feat: devise\n5 kg en France : 9.9 €\nBisecting: 0 revisions left to test after this (roughly 1 step)\n[1ef75cc] feat: tarif Belgique et constantes nommées\n5 kg en France : 9.9 €\nBisecting: 0 revisions left to test after this (roughly 0 steps)\n[6e955d4] docs: installation\n5 kg en France : 4.9 €\n1ef75cc is the first bad commit\n    feat: tarif Belgique et constantes nommées\n frais.js | 6 ++++--\n$ git bisect reset\n```\n\nEn quatre exécutions, Git désigne le commit fautif. Son diff tient en quelques lignes, et l'erreur saute aux yeux :\n\n```text\n-  return poids <= 5 ? base : base + 5;\n+  return poids < POIDS_LEGER ? base : base + SUPPLEMENT_LOURD;\n```\n\nEn extrayant la constante, l'auteur a changé `<=` en `<` : un colis d'exactement 5 kg est passé dans la tranche lourde.\nLe commit annonçait une fonctionnalité, le tarif belge ; il a aussi introduit une régression que personne n'a vue, faute\nde test sur la frontière.\n\n## Comment ça fonctionne\n\n**D'abord, comprendre le signalement.** « Les frais de port sont faux » ne se reproduit pas. On complète avec la personne\nqui signale, ou avec les journaux grâce à l'identifiant de la requête : quelle commande, quel poids, quel pays, quelle\nversion, quand. On sépare ce qui est observé de ce qui est supposé. On vérifie aussi que c'est bien un bug : le\ncomportement attendu est-il celui décrit par les règles, les tests, le ticket d'origine ?\n\n**Reproduire, idéalement dans un test.** Tant que le bug ne se reproduit pas à volonté, on ne peut ni l'isoler ni prouver\nsa correction. La meilleure reproduction est un test automatisé qui échoue : rapide, précis, et réutilisable comme test\nde régression. Si le bug ne se produit qu'avec certaines données, on les extrait, en retirant les informations\npersonnelles ; s'il dépend de l'heure, on fixe l'horloge ; s'il dépend d'un service externe, on rejoue sa réponse.\n\n**`git bisect`, la dichotomie dans l'historique.** Quand on sait qu'une ancienne version fonctionnait, le bug a été\nintroduit par l'un des commits intermédiaires. `git bisect` en extrait un au milieu ; on teste, on répond `good` ou `bad`,\net Git divise l'intervalle par deux. Pour `n` commits, il faut environ log₂(n) essais : 4 pour 11 commits, 10 pour\n1 000. Avec `git bisect run`, un script fait le test : code 0 pour bon, 1 à 127 pour mauvais, 125 pour « impossible à\ntester ». Des commits atomiques, qui laissent le projet fonctionnel, rendent `bisect` efficace ; un commit qui mélange dix\nchangements le rend presque inutile. Le script de test est placé hors du dépôt, ou ignoré par Git, pour qu'il ne change\npas d'un commit à l'autre.\n\n**La dichotomie dans les données et dans le code.** Un import de 10 000 lignes échoue : on essaie la première moitié,\npuis la moitié de la moitié, jusqu'à la ligne coupable. Un traitement en dix étapes produit un mauvais total : on\nvérifie la valeur au milieu, avec un journal ou un point d'arrêt, et l'on sait dans quelle moitié chercher. On retire\naussi ce qui n'est pas nécessaire au bug : cache, réseau, fonctionnalités annexes, jusqu'au cas minimal.\n\n**Comparer deux environnements.** « Ça marche chez moi, pas en production » : on liste les différences, versions de\nNode et des dépendances, variables d'environnement, données, fuseau horaire, locale, volume, et on les réduit une à une.\nLes causes classiques : une variable d'environnement absente, une dépendance à une autre version, un fuseau horaire\ndifférent qui décale une date d'un jour, des données de production qu'on n'avait jamais imaginées.\n\n**Les bugs difficiles.** Un bug **intermittent** vient souvent d'une concurrence, deux requêtes qui modifient la même\ndonnée, d'un ordre non garanti, de promesses non attendues, ou d'un cache ; on le rend fréquent en répétant l'opération\nen boucle, ou en ajoutant des délais artificiels. Un bug lié au **temps** apparaît à minuit, en fin de mois, au\nchangement d'heure : on fixe l'horloge dans un test. Un bug lié aux **données** tient à un caractère spécial, un champ\nvide, un nombre énorme. Dans tous les cas, la méthode reste : une hypothèse, un test qui la confirme ou l'infirme, et une\nseule variable changée à la fois.\n\n## Erreurs fréquentes\n\n**Corriger avant d'avoir reproduit.** On corrige peut-être autre chose, et l'on ne peut pas prouver la correction.\n\n**Partir d'un signalement incomplet.** Obtiens l'attendu, l'obtenu, les conditions et la fréquence.\n\n**Chercher à l'aveugle dans l'historique.** `git bisect` trouve en dix essais ce qu'une lecture prend des heures à trouver.\n\n**Un script de bisect qui renvoie toujours 0 ou toujours 1.** Vérifie-le d'abord sur une version bonne et une mauvaise.\n\n**Changer plusieurs choses à la fois.** Tu ne sais plus laquelle a eu de l'effet.\n\n**Ignorer un bug « qui ne se produit qu'une fois sur dix ».** Il se produira en production, au pire moment ; rends-le\nreproductible.\n\n**Oublier `git bisect reset`.** Le dépôt reste sur un commit ancien, en `HEAD` détachée.\n\n## À retenir\n\n- Un signalement utile : attendu, obtenu, conditions, fréquence, traces.\n- Reproduire d'abord, idéalement par un test qui échoue, avec données, horloge et services maîtrisés.\n- Dichotomie partout : historique avec `git bisect run`, données, étapes du code, différences d'environnement.\n- `git bisect` trouve un commit parmi `n` en environ log₂(n) essais, si les commits sont atomiques.\n- Bugs intermittents, temporels, liés aux données : une hypothèse, un test, une variable à la fois.\n\n## Exercices\n\n1. Reformule ce signalement en un rapport exploitable, en listant les questions à poser : « L'export CSV ne marche plus\n   pour certains clients. »\n\n   :::indice\n   Attendu, obtenu, conditions, fréquence, traces : chacune de ces rubriques est vide.\n   :::\n\n   :::solution\n   Questions à poser, ou réponses à chercher dans les journaux :\n\n   - **Obtenu** : que se passe-t-il exactement ? Erreur affichée, fichier vide, fichier corrompu, caractères illisibles,\n     délai dépassé ?\n   - **Attendu** : quel fichier, avec quelles colonnes ?\n   - **Conditions** : quels clients ? Qu'ont-ils en commun : volume de données, caractères accentués, séparateur\n     décimal, navigateur, langue ? Quelle période exportée ?\n   - **Depuis quand** : quelle version, quelle date ? Qu'est-ce qui a été déployé à ce moment-là ?\n   - **Fréquence** : à chaque export, ou parfois ?\n   - **Traces** : identifiant de requête, heure exacte, capture, fichier obtenu.\n\n   Rapport reformulé, par exemple : « Depuis le déploiement du 22 septembre (1.4.0), l'export CSV des commandes d'un mois\n   complet échoue avec l'erreur 504 pour les clients de plus de 5 000 commandes ; les exports plus petits fonctionnent.\n   Requête de référence : `7f3c…`. » Ce rapport oriente déjà vers une piste : le volume, et un délai dépassé.\n   :::\n\n2. Dans un dépôt jetable, crée un historique d'au moins huit commits dont l'un introduit un bug dans une fonction\n   `estJourOuvre(date)`, puis trouve-le avec `git bisect run`. Donne le script de vérification et les commandes.\n\n   :::indice\n   Le script importe la fonction depuis le répertoire courant, teste un cas précis, et fixe `process.exitCode`.\n   :::\n\n   :::solution\n   ```js\n   // ../verifier-jour-ouvre.mjs, en dehors du dépôt\n   import { pathToFileURL } from 'node:url';\n   import path from 'node:path';\n\n   const { estJourOuvre } = await import(pathToFileURL(path.resolve('calendrier.js')).href);\n   const cas = [\n     ['2026-09-25', true], // vendredi\n     ['2026-09-26', false], // samedi\n     ['2026-09-27', false], // dimanche\n     ['2026-09-28', true], // lundi\n   ];\n   const echecs = cas.filter(([jour, attendu]) => estJourOuvre(new Date(`${jour}T12:00:00Z`)) !== attendu);\n   for (const [jour] of echecs) console.log(`incorrect pour ${jour}`);\n   process.exitCode = echecs.length === 0 ? 0 : 1;\n   ```\n\n   ```text\n   $ node ../verifier-jour-ouvre.mjs && echo bon       # sur la version actuelle : doit échouer\n   $ git checkout <ancienne-version> && node ../verifier-jour-ouvre.mjs && echo bon   # doit réussir\n   $ git switch main\n   $ git bisect start HEAD <ancienne-version>\n   $ git bisect run node ../verifier-jour-ouvre.mjs\n   … <identifiant> is the first bad commit\n   $ git bisect reset\n   ```\n\n   Vérifier le script sur une version bonne et une version mauvaise avant de lancer la recherche évite un faux résultat.\n   Une introduction classique du bug : remplacer `getUTCDay()` par `getDay()`, ou changer `[0, 6]` en `[0, 5]`. Le script\n   utilise midi UTC pour que le fuseau horaire de la machine ne change pas le jour.\n   :::\n\n3. Un test échoue une fois sur vingt en intégration continue, jamais en local. Voici le code testé. Formule une hypothèse,\n   et montre comment la confirmer en rendant le bug systématique.\n\n   ```js\n   async function enregistrerTout(commandes, depot) {\n     const resultats = [];\n     commandes.forEach(async (commande) => {\n       resultats.push(await depot.enregistrer(commande));\n     });\n     return resultats;\n   }\n   ```\n\n   :::indice\n   Que renvoie `forEach` d'un callback asynchrone ? Qu'est-ce qui change entre la machine locale et l'intégration\n   continue ?\n   :::\n\n   :::solution\n   Hypothèse : `forEach` n'attend pas les callbacks asynchrones. `enregistrerTout` renvoie immédiatement un tableau vide,\n   qui se remplit plus tard. Le test passe seulement quand, par hasard, les enregistrements sont terminés avant\n   l'assertion, ce qui dépend de la vitesse de la machine : c'est pourquoi le résultat varie en intégration continue. Pour\n   rendre le bug systématique, on ajoute un délai au faux dépôt :\n\n   ```js\n   async function enregistrerTout(commandes, depot) {\n     const resultats = [];\n     commandes.forEach(async (commande) => {\n       resultats.push(await depot.enregistrer(commande));\n     });\n     return resultats;\n   }\n\n   const depotLent = { enregistrer: async (c) => { await new Promise((r) => setTimeout(r, 10)); return c.id; } };\n   console.log(await enregistrerTout([{ id: 1 }, { id: 2 }], depotLent)); // [] : le bug devient systématique\n\n   async function enregistrerToutCorrige(commandes, depot) {\n     return Promise.all(commandes.map((commande) => depot.enregistrer(commande)));\n   }\n   console.log(await enregistrerToutCorrige([{ id: 1 }, { id: 2 }], depotLent)); // [ 1, 2 ]\n   ```\n\n   La correction attend toutes les promesses, et garde l'ordre des résultats. Si les enregistrements doivent être faits\n   un par un, une boucle `for...of` avec `await` convient. Le faux dépôt lent reste dans le test : il empêche le bug de\n   revenir silencieusement.\n   :::\n\n## Questions d'entretien\n\n- Comment procèdes-tu face à un bug signalé en production ?\n\n  :::indice\n  Comprendre, reproduire, isoler, puis corriger.\n  :::\n\n  :::reponse\n  Je commence par préciser le signalement : comportement attendu et obtenu, conditions, fréquence, et traces, en\n  retrouvant la requête concernée dans les journaux grâce à son identifiant. J'évalue l'impact pour décider de l'urgence.\n  Ensuite je reproduis, idéalement par un test automatisé qui échoue, avec les données et les conditions en cause. J'isole\n  la cause par dichotomie : dans l'historique avec `git bisect` si une ancienne version fonctionnait, dans les données,\n  ou dans les étapes du traitement, en changeant une seule chose à la fois. Seulement ensuite, je corrige la cause, et le\n  test rejoint la suite comme test de régression.\n  :::\n\n- Comment fonctionne `git bisect` ?\n\n  :::indice\n  Une recherche dichotomique entre un bon et un mauvais commit.\n  :::\n\n  :::reponse\n  On indique un commit où le bug est présent et un commit où il est absent. Git place le dépôt sur un commit au milieu ;\n  on le teste et on répond `good` ou `bad`, et Git divise l'intervalle par deux, jusqu'à désigner le premier commit\n  mauvais, en environ log₂(n) étapes. Avec `git bisect run`, un script fait le test automatiquement, selon son code de\n  sortie : 0 pour bon, 125 pour ignorer, les autres codes jusqu'à 127 pour mauvais. Cela fonctionne d'autant mieux que les\n  commits sont petits et laissent tous le projet fonctionnel. On termine par `git bisect reset`.\n  :::\n\n- Comment déboguer un bug intermittent ?\n\n  :::indice\n  Rendre fréquent ce qui est rare.\n  :::\n\n  :::reponse\n  Je cherche ce qui peut varier d'une exécution à l'autre : ordre des opérations asynchrones, promesses non attendues,\n  accès concurrents à une même donnée, caches, horloge et fuseau horaire, données aléatoires, services externes. Je forme\n  une hypothèse, puis je rends le bug fréquent pour la tester : exécuter l'opération en boucle, ajouter des délais\n  artificiels, fixer l'horloge, forcer un ordre. Quand il se reproduit à chaque fois, je le fige dans un test, je corrige\n  la cause, et le test garde les conditions qui le déclenchaient.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-lire-une-codebase-et-tracer-une-requete",
+      "title": "Lire une codebase existante et tracer une requête",
+      "slug": "lire-une-codebase-et-tracer-une-requete",
+      "technology": "javascript",
+      "level": "advanced",
+      "module": "debogage-application-reelle",
+      "order": 1,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 110,
+      "prerequisites": [
+        "javascript-methode-debogage",
+        "javascript-architecture-d-une-application-node"
+      ],
+      "skills": [
+        "js-codebase-reading"
+      ],
+      "tags": [
+        "javascript",
+        "debogage",
+        "lecture-de-code"
+      ],
+      "contentPath": "javascript/debogage-application-reelle/lire-une-codebase-et-tracer-une-requete/lesson.md",
+      "contentVersion": "3a234ab7573f",
+      "body": "\n## Objectifs\n\n- Aborder une codebase inconnue avec méthode : documentation, scripts, points d'entrée, structure, tests, historique.\n- Identifier le chemin d'une fonctionnalité, de la route jusqu'à la base de données.\n- Tracer une requête à travers les couches avec un identifiant de corrélation et des journaux structurés.\n- Propager ce contexte dans le code asynchrone avec `AsyncLocalStorage`.\n- Suivre une exécution réelle avec le débogueur de Node.\n\n## Introduction\n\nDans un emploi de développeur, on écrit rarement une application à partir de rien. On arrive sur un projet de plusieurs\nannées, écrit par des dizaines de personnes, et la première mission ressemble souvent à : « un client dit que sa\nréservation a disparu, peux-tu regarder ? ». Il faut alors trouver, parmi des centaines de fichiers, les quelques lignes\nqui comptent.\n\nLire du code est une compétence à part entière, qui s'apprend comme l'écriture. On ne lit pas une codebase de la\npremière ligne à la dernière : on la questionne, en partant de ce qu'on veut comprendre, et on s'appuie sur ce que les\noutils savent montrer : les journaux, le débogueur, l'historique Git.\n\n## Concept\n\n| Pour s'orienter | On cherche |\n| --- | --- |\n| `README.md`, `docs/`, `CONTRIBUTING.md` | comment lancer le projet, ses conventions, ses décisions |\n| `package.json` | les scripts, les dépendances principales, le point d'entrée, la version de Node |\n| l'arborescence | l'organisation : couches techniques, modules métier, monorepo |\n| les points d'entrée | `main.js`, `server.js`, la racine de composition, la table des routes |\n| les tests | le comportement attendu, décrit par des exemples exécutables |\n| `git log`, `git blame` | pourquoi le code est ainsi, et qui connaît ce domaine |\n\n| Pour suivre une requête | Outil |\n| --- | --- |\n| relier toutes les traces d'une requête | un identifiant de corrélation, reçu ou généré, renvoyé dans la réponse |\n| le propager sans le passer en paramètre partout | `AsyncLocalStorage` de `node:async_hooks` |\n| des journaux exploitables | une ligne JSON par événement : niveau, message, identifiant, durée |\n| observer l'exécution pas à pas | `node --inspect` et les DevTools, ou le débogueur de l'éditeur |\n| suivre une requête entre plusieurs services | le traçage distribué, avec OpenTelemetry |\n\n## Exemple\n\nDans l'API de réservation construite dans la partie sur l'architecture, on veut pouvoir suivre une requête à travers les\ncouches. Un module de contexte, basé sur `AsyncLocalStorage`, garde l'identifiant de la requête en cours :\n\n```js\n// partage/contexte.js\nimport { AsyncLocalStorage } from 'node:async_hooks';\nimport { randomUUID } from 'node:crypto';\n\nconst stockage = new AsyncLocalStorage();\n\nexport function executerDansUneRequete(idEntrant, fonction) {\n  const id = /^[\\w-]{8,64}$/.test(idEntrant ?? '') ? idEntrant : randomUUID();\n  return stockage.run({ id, debut: performance.now() }, fonction);\n}\n\nexport const idRequete = () => stockage.getStore()?.id;\n\nexport function journal(niveau, message, details = {}) {\n  const contexte = stockage.getStore();\n  const ligne = {\n    niveau,\n    message,\n    requete: contexte?.id,\n    ms: contexte ? Math.round(performance.now() - contexte.debut) : undefined,\n    ...details,\n  };\n  console.log(JSON.stringify(ligne));\n}\n```\n\nChaque couche journalise sans recevoir l'identifiant en paramètre, même après des `await` :\n\n```js\nimport { createServer } from 'node:http';\nimport { once } from 'node:events';\n\nconst depot = {\n  async deLaSalle(salle) {\n    journal('debug', 'lecture des réservations', { salle });\n    await new Promise((resoudre) => setTimeout(resoudre, 5)); // simule la base de données\n    return [];\n  },\n};\n\nasync function reserver(demande) {\n  journal('info', 'réservation demandée', { salle: demande.salle });\n  const existantes = await depot.deLaSalle(demande.salle);\n  journal('info', 'réservation confirmée', { existantes: existantes.length });\n  return { id: 'r1' };\n}\n\nconst serveur = createServer((requete, reponse) => {\n  executerDansUneRequete(requete.headers['x-request-id'], async () => {\n    reponse.setHeader('x-request-id', idRequete());\n    const resultat = await reserver({ salle: 'A' });\n    journal('info', 'réponse envoyée', { statut: 201 });\n    reponse.writeHead(201, { 'content-type': 'application/json' }).end(JSON.stringify(resultat));\n  });\n}).listen(0);\nawait once(serveur, 'listening');\n\nconst url = `http://localhost:${serveur.address().port}/reservations`;\nawait Promise.all([\n  fetch(url, { headers: { 'x-request-id': 'client-aaaa-1111' } }),\n  fetch(url, { headers: { 'x-request-id': 'client-bbbb-2222' } }),\n]);\nserveur.close();\n```\n\n```text\n{\"niveau\":\"info\",\"message\":\"réservation demandée\",\"requete\":\"client-aaaa-1111\",\"ms\":0,\"salle\":\"A\"}\n{\"niveau\":\"debug\",\"message\":\"lecture des réservations\",\"requete\":\"client-aaaa-1111\",\"ms\":0,\"salle\":\"A\"}\n{\"niveau\":\"info\",\"message\":\"réservation demandée\",\"requete\":\"client-bbbb-2222\",\"ms\":0,\"salle\":\"A\"}\n{\"niveau\":\"debug\",\"message\":\"lecture des réservations\",\"requete\":\"client-bbbb-2222\",\"ms\":0,\"salle\":\"A\"}\n{\"niveau\":\"info\",\"message\":\"réservation confirmée\",\"requete\":\"client-aaaa-1111\",\"ms\":6,\"existantes\":0}\n{\"niveau\":\"info\",\"message\":\"réponse envoyée\",\"requete\":\"client-aaaa-1111\",\"ms\":6,\"statut\":201}\n{\"niveau\":\"info\",\"message\":\"réservation confirmée\",\"requete\":\"client-bbbb-2222\",\"ms\":6,\"existantes\":0}\n{\"niveau\":\"info\",\"message\":\"réponse envoyée\",\"requete\":\"client-bbbb-2222\",\"ms\":6,\"statut\":201}\n```\n\nLes deux requêtes s'entremêlent dans le temps, mais chaque ligne porte le bon identifiant : filtrer sur\n`client-aaaa-1111` reconstitue exactement le parcours d'une requête. Les durées, dans le champ `ms`, varient d'une\nexécution à l'autre.\n\n## Comment ça fonctionne\n\n**Questionner, pas lire.** On part d'une question précise, « que se passe-t-il quand on réserve une salle ? », et on suit\nle fil. On lance d'abord le projet en suivant le `README`, puis on lit les scripts du `package.json` : ils disent comment\ndémarrer, tester et construire, et révèlent les outils utilisés. On repère le point d'entrée, `main.js` ou `server.js`,\net la racine de composition, qui montre en un fichier quels modules existent et comment ils sont reliés.\n\n**Trouver le chemin d'une fonctionnalité.** On part de ce que voit l'utilisateur, une URL, un texte de l'interface, un\nmessage d'erreur, et on le cherche dans le code : `rg \"POST.*reservations\"`, `rg \"Créneau déjà pris\"`. La route mène au\ncas d'utilisation, qui mène au domaine et au dépôt. Les éditeurs aident beaucoup : « aller à la définition », « trouver\ntoutes les références », la hiérarchie des appels. On note le chemin au fur et à mesure, comme une carte.\n\n**Les tests comme documentation.** Les tests décrivent le comportement voulu par des exemples exécutables. Lire les tests\nd'un module donne souvent une meilleure idée de ses règles que son code, et les exécuter vérifie qu'on a bien compris.\nÉcrire un petit test pour confirmer une hypothèse est une excellente façon de lire.\n\n**L'historique explique le pourquoi.** Un code étrange a presque toujours une raison. `git blame` indique le commit qui a\nécrit une ligne ; son message, sa pull request et le ticket associé expliquent souvent le cas particulier qu'elle traite.\n`git log -p -- chemin` raconte l'évolution d'un fichier. Et l'historique dit qui connaît ce domaine : la personne à qui\nposer une question précise.\n\n**Un identifiant de corrélation.** Sur un serveur, les journaux de centaines de requêtes simultanées s'entremêlent. On\nattribue à chaque requête un identifiant, repris de l'en-tête `X-Request-Id` s'il vient d'un proxy ou d'un client de\nconfiance, et validé, sinon généré. On le renvoie dans la réponse : un client ou le support peut le citer, et on retrouve\ntoutes les lignes de journal correspondantes. Entre plusieurs services, on le transmet dans les appels sortants ; le\nstandard W3C Trace Context, utilisé par OpenTelemetry, formalise ce mécanisme avec l'en-tête `traceparent`.\n\n**`AsyncLocalStorage`.** Passer l'identifiant en paramètre à chaque fonction serait lourd, et impossible pour les\nbibliothèques. `AsyncLocalStorage` associe une valeur à une exécution asynchrone : tout ce qui est appelé depuis\n`stockage.run(valeur, fonction)`, y compris après des `await`, des minuteurs ou des callbacks, retrouve cette valeur avec\n`getStore()`. Deux requêtes simultanées ont chacune leur contexte. Les bibliothèques de journalisation et de traçage\nl'utilisent sous le capot.\n\n**Des journaux structurés.** Une ligne JSON par événement, avec un niveau, un message stable et des champs, se filtre et\ns'agrège dans un outil de centralisation des journaux : « toutes les erreurs de la salle A », « les requêtes de plus de\n500 ms ». Des bibliothèques comme pino produisent ce format efficacement. On n'y met jamais de secrets ni de données\npersonnelles inutiles.\n\n**Le débogueur sur un serveur.** `node --inspect src/main.js` ouvre un port de débogage ; dans Chrome, `chrome://inspect`\ns'y connecte, ou l'éditeur le fait directement. On pose un point d'arrêt dans le cas d'utilisation, on envoie la requête,\net l'on inspecte les variables et la pile d'appels, qui montre d'un coup le chemin de la route au dépôt. Un point d'arrêt\nconditionnel, par exemple `demande.salle === 'A'`, évite de s'arrêter à chaque requête. On ne l'utilise jamais sur un\nserveur de production : il suspend toutes les requêtes.\n\n## Erreurs fréquentes\n\n**Lire la codebase de haut en bas.** Pars d'une question précise et suis le fil.\n\n**Modifier avant d'avoir lancé le projet et ses tests.** Sans eux, tu ne sais pas ce que tu casses.\n\n**Supposer au lieu de vérifier.** Confirme chaque hypothèse avec un test, un journal ou un point d'arrêt.\n\n**Des journaux en texte libre, sans identifiant.** Impossible de reconstituer une requête parmi mille.\n\n**Faire confiance à n'importe quel `X-Request-Id`.** Valide-le, ou génère-le, pour éviter l'injection dans les journaux.\n\n**Journaliser des secrets ou des données personnelles.** Les journaux sont lus par beaucoup de monde, et conservés\nlongtemps.\n\n**Attacher un débogueur à la production.** Il suspend le serveur ; reproduis en local.\n\n## À retenir\n\n- On lit une codebase en la questionnant : `README`, scripts, point d'entrée, racine de composition, tests, historique.\n- On suit une fonctionnalité de ce que voit l'utilisateur jusqu'à la base, avec la recherche et la navigation de\n  l'éditeur.\n- Tests et `git blame` expliquent le comportement voulu et le pourquoi du code.\n- Un identifiant de corrélation par requête, renvoyé au client et présent dans chaque ligne de journal.\n- `AsyncLocalStorage` propage ce contexte à travers les `await` sans paramètre supplémentaire.\n- Journaux structurés en JSON ; débogueur avec `node --inspect`, en local.\n\n## Exercices\n\n1. Tu arrives sur un projet inconnu et on te demande de corriger « le calcul des frais de port pour la Belgique ». Décris\n   tes dix premières minutes, étape par étape, avec les commandes que tu lances.\n\n   :::indice\n   Lancer, s'orienter, chercher le texte métier, lire les tests, remonter l'historique.\n   :::\n\n   :::solution\n   1. Lire le `README` et lancer le projet et ses tests : `pnpm install`, `pnpm test`, pour partir d'un état connu.\n   2. Lire les scripts et dépendances du `package.json`, et survoler l'arborescence : `ls src`, ou `tree -L 2 src`.\n   3. Chercher le vocabulaire métier : `rg -i \"frais de port|livraison|shipping\"`, puis `rg \"'BE'\"`.\n   4. Lire les tests du module trouvé, par exemple `frais-de-port.test.js`, et chercher s'il existe un cas pour la\n      Belgique.\n   5. Remonter l'historique de ce fichier : `git log --oneline -- src/livraison/frais-de-port.js`, et\n      `git blame` sur la ligne qui concerne la Belgique.\n   6. Écrire un test qui reproduit le calcul incorrect, avant de toucher au code.\n\n   À la fin de ces dix minutes, on sait où est le code, quelles règles existent, pourquoi elles ont été écrites ainsi, et\n   on a un test rouge qui décrit le problème.\n   :::\n\n2. Étends le module de contexte pour que la fonction `journal` ajoute aussi l'identifiant de l'utilisateur connecté,\n   quand il est connu. Le middleware d'authentification appelle `definirUtilisateur(id)` après avoir vérifié la session.\n   Montre que deux requêtes simultanées de deux utilisateurs ne se mélangent pas.\n\n   :::indice\n   Le magasin renvoyé par `getStore()` est un objet : on peut y ajouter un champ pendant la requête.\n   :::\n\n   :::solution\n   ```js\n   import { AsyncLocalStorage } from 'node:async_hooks';\n\n   const stockage = new AsyncLocalStorage();\n   const lignes = [];\n\n   const executerDansUneRequete = (id, fonction) => stockage.run({ id }, fonction);\n   function definirUtilisateur(utilisateurId) {\n     const contexte = stockage.getStore();\n     if (contexte) contexte.utilisateur = utilisateurId;\n   }\n   function journal(message) {\n     const { id, utilisateur } = stockage.getStore() ?? {};\n     lignes.push({ message, requete: id, utilisateur });\n   }\n\n   const attendre = (ms) => new Promise((r) => setTimeout(r, ms));\n   async function traiter(idRequete, utilisateurId, delai) {\n     await executerDansUneRequete(idRequete, async () => {\n       journal('début');\n       await attendre(delai);\n       definirUtilisateur(utilisateurId); // après vérification de la session\n       await attendre(delai);\n       journal('fin');\n     });\n   }\n\n   await Promise.all([traiter('r1', 'ana', 10), traiter('r2', 'bao', 3)]);\n   console.log(lignes);\n   // [\n   //   { message: 'début', requete: 'r1', utilisateur: undefined },\n   //   { message: 'début', requete: 'r2', utilisateur: undefined },\n   //   { message: 'fin', requete: 'r2', utilisateur: 'bao' },\n   //   { message: 'fin', requete: 'r1', utilisateur: 'ana' }\n   // ]\n   ```\n\n   Chaque requête modifie son propre objet de contexte. La requête `r2`, plus rapide, termine avant `r1`, et chacune garde\n   son utilisateur. On évite d'y stocker des données volumineuses, car le contexte vit pendant toute la requête.\n   :::\n\n3. Un client signale : « Ma réservation de 14 h a échoué hier vers 14 h 05, avec le message Erreur interne, référence\n   `7f3c…` ». Explique comment tu retrouves ce qui s'est passé, et ce qui manquerait si l'application n'avait ni\n   identifiant de corrélation ni journaux structurés.\n\n   :::indice\n   La référence affichée est l'identifiant de la requête.\n   :::\n\n   :::solution\n   La référence est l'identifiant de corrélation, renvoyé dans la réponse et affiché par l'interface. Dans l'outil de\n   centralisation des journaux, on filtre sur `requete = \"7f3c…\"` : on obtient, dans l'ordre, toutes les lignes de cette\n   requête, route, cas d'utilisation, appels à la base, et la ligne d'erreur avec sa pile d'appels. Les champs structurés\n   donnent la salle, la durée de chaque étape, le statut. On reproduit ensuite en local avec les mêmes paramètres, et on\n   écrit un test.\n\n   Sans identifiant ni structure, il faudrait parcourir à la main toutes les lignes de texte émises vers 14 h 05, mêlées à\n   celles de centaines d'autres requêtes, en devinant lesquelles vont ensemble : des heures de travail, souvent sans\n   résultat. C'est pourquoi on met en place ces outils **avant** le premier incident.\n   :::\n\n## Questions d'entretien\n\n- Comment abordes-tu une codebase que tu ne connais pas ?\n\n  :::indice\n  Une question, des outils, et l'historique.\n  :::\n\n  :::reponse\n  Je commence par la faire tourner, avec ses tests, en suivant le `README`. Je lis les scripts et les dépendances du\n  `package.json`, puis l'arborescence et le point d'entrée, en particulier la racine de composition qui montre les\n  modules et leurs liens. Ensuite, je pars d'une question précise et je suis le fil depuis ce que voit l'utilisateur,\n  avec la recherche textuelle et la navigation de l'éditeur. Les tests me donnent le comportement attendu, `git blame` et\n  les pull requests le pourquoi, et je confirme mes hypothèses par un test ou un point d'arrêt. Je pose aussi des\n  questions ciblées aux personnes qui connaissent le domaine.\n  :::\n\n- Qu'est-ce qu'un identifiant de corrélation, et comment le propager en Node.js ?\n\n  :::indice\n  Une valeur par requête, dans chaque ligne de journal.\n  :::\n\n  :::reponse\n  C'est un identifiant unique attribué à une requête, repris d'un en-tête de confiance ou généré, présent dans chaque ligne\n  de journal qu'elle produit, transmis aux services appelés et renvoyé dans la réponse. Il permet de reconstituer le\n  parcours complet d'une requête parmi toutes les autres. En Node, on le propage avec `AsyncLocalStorage` : le middleware\n  exécute le traitement de la requête dans `run`, et n'importe quelle fonction retrouve le contexte avec `getStore()`,\n  même après des `await`. Entre services, OpenTelemetry standardise la propagation avec l'en-tête `traceparent`.\n  :::\n\n- Pourquoi des journaux structurés plutôt que du texte libre ?\n\n  :::indice\n  Filtrer, agréger, alerter.\n  :::\n\n  :::reponse\n  Une ligne JSON avec des champs stables, niveau, message, identifiant de requête, durée, code d'erreur, se filtre et\n  s'agrège automatiquement dans un outil de centralisation : toutes les erreurs d'une route, les requêtes lentes, le taux\n  d'échec par version. On peut en tirer des tableaux de bord et des alertes. Le texte libre oblige à écrire des\n  expressions régulières fragiles pour chaque question. Les journaux structurés restent lisibles par un humain, et on les\n  garde exempts de secrets et de données personnelles inutiles.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-debug-console",
       "title": "Déboguer avec la console, au-delà de console.log",
       "slug": "console",
@@ -9471,6 +9700,122 @@
       ]
     },
     {
+      "id": "javascript-branches-fusions-conflits-et-rebase",
+      "title": "Branches, fusions, conflits et rebase",
+      "slug": "branches-fusions-conflits-et-rebase",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "git-et-collaboration",
+      "order": 2,
+      "estimatedMinutes": 45,
+      "difficulty": 4,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-fondamentaux-de-git-et-commits"
+      ],
+      "skills": [
+        "js-git-branches"
+      ],
+      "tags": [
+        "javascript",
+        "git",
+        "collaboration"
+      ],
+      "contentPath": "javascript/git-et-collaboration/branches-fusions-conflits-et-rebase/lesson.md",
+      "contentVersion": "db32fb1e0f52",
+      "body": "\n## Objectifs\n\n- Créer des branches et passer de l'une à l'autre, en comprenant qu'une branche n'est qu'une étiquette.\n- Fusionner, en avance rapide ou avec un commit de fusion, et résoudre un conflit avec méthode.\n- Rebaser une branche sur une autre, et respecter la règle d'or du rebase.\n- Choisir entre fusion, rebase et fusion écrasée (*squash*).\n- Récupérer un travail qu'on croit perdu avec `git reflog`.\n\n## Introduction\n\nLes branches permettent de travailler sur plusieurs choses en parallèle : une fonctionnalité en cours, une correction\nurgente, une expérience. Chacune avance de son côté, puis on les réunit. C'est au moment de les réunir que tout se joue :\ndeux personnes ont modifié la même ligne, et Git ne peut pas deviner laquelle garder.\n\nLes conflits font peur, mais ils sont normaux et se résolvent avec méthode. Ce chapitre montre comment les branches\nfonctionnent vraiment, comment fusionner ou rebaser, et comment ne jamais perdre de travail.\n\n## Concept\n\n| Commande | Effet |\n| --- | --- |\n| `git switch -c feat/seuil` | crée une branche et s'y place |\n| `git switch main` | revient sur `main` |\n| `git merge feat/seuil` | intègre la branche dans la branche courante |\n| `git rebase main` | rejoue les commits de la branche courante au-dessus de `main` |\n| `git merge --abort`, `git rebase --abort` | annule une fusion ou un rebase en cours de conflit |\n| `git log --oneline --graph --all` | dessine l'historique et ses branches |\n| `git reflog` | liste les positions successives de `HEAD`, y compris des commits « perdus » |\n\n| Intégration | Historique obtenu | Quand |\n| --- | --- | --- |\n| avance rapide (*fast-forward*) | linéaire : l'étiquette avance simplement | la branche cible n'a pas bougé |\n| commit de fusion | une bifurcation puis une jonction, avec un commit à deux parents | on veut garder la trace de la branche |\n| rebase puis avance rapide | linéaire, commits rejoués avec de nouveaux identifiants | historique lisible, branche personnelle |\n| fusion écrasée (*squash*) | un seul commit qui résume la branche | pull request aux commits intermédiaires désordonnés |\n\n## Exemple\n\nSur `main`, `SEUIL` vaut 50. Une branche `feat/seuil` le passe à 60, pendant qu'un correctif sur `main` le passe à 45.\nLa fusion produit un conflit :\n\n```text\n$ git merge feat/seuil\nAuto-merging regles.js\nCONFLICT (content): Merge conflict in regles.js\nAutomatic merge failed; fix conflicts and then commit the result.\n\n$ cat regles.js\nexport const LIVRAISON = 4.9;\n<<<<<<< HEAD\nexport const SEUIL = 45;\n=======\nexport const SEUIL = 60;\n>>>>>>> feat/seuil\n\n$ git status --short\nUU regles.js\n```\n\nGit a fusionné tout ce qu'il pouvait, et marqué la zone où les deux versions divergent : entre `<<<<<<<` et `=======`,\nla version de la branche courante ; entre `=======` et `>>>>>>>`, celle de la branche fusionnée. On peut aussi choisir de\nrebaser la branche plutôt que de fusionner :\n\n```text\n$ git switch feat/seuil\n$ git rebase main\nCould not apply 0b1b302... feat: livraison offerte dès 60 €\n# … on édite regles.js pour garder la bonne valeur, sans les marqueurs …\n$ git add regles.js\n$ git rebase --continue\nSuccessfully rebased and updated refs/heads/feat/seuil.\n\n$ git log --oneline --graph --all\n* 33a3f59 feat: livraison offerte dès 60 €\n* eee3693 fix: seuil promotionnel de septembre\n* b67bc47 feat: règles de livraison\n\n$ git switch main && git merge --ff-only feat/seuil\nFast-forward\n```\n\nLe commit de la branche a été rejoué au-dessus du correctif : il a un **nouvel identifiant**, `33a3f59` au lieu de\n`0b1b302`, et l'historique est linéaire.\n\n## Comment ça fonctionne\n\n**Une branche est une étiquette.** Une branche n'est qu'un fichier qui contient l'identifiant d'un commit. Créer une\nbranche ne copie rien ; commiter fait avancer l'étiquette de la branche courante vers le nouveau commit. `HEAD` indique\nla branche courante. C'est pourquoi les branches sont si légères : on en crée une pour chaque tâche, et on la supprime\nune fois intégrée.\n\n**La fusion.** Si `main` n'a pas bougé depuis la création de la branche, la fusion se contente d'avancer l'étiquette :\nc'est l'avance rapide. Sinon, Git cherche l'**ancêtre commun** des deux branches et compare chacune à cet ancêtre. Les\nchangements qui touchent des zones différentes s'additionnent ; ceux qui modifient la même zone de deux façons\ndifférentes créent un conflit. Le résultat est un **commit de fusion**, à deux parents.\n\n**Résoudre un conflit, avec méthode.** Un conflit n'est pas une erreur, c'est une question : « ces deux changements\nétaient voulus ; que doit contenir le résultat ? ». La réponse n'est pas toujours l'une des deux versions. Ici, le\nseuil de septembre et le nouveau seuil de la fonctionnalité sont deux décisions métier : il faut peut-être demander à\nla personne concernée. Ensuite, on édite le fichier pour obtenir le bon contenu, on retire **tous** les marqueurs, on\nlance les tests, puis `git add` et `git commit`, ou `git rebase --continue`. En cas de doute, `--abort` ramène à l'état\nd'avant. Les éditeurs affichent les deux versions côte à côte, avec des boutons pour choisir.\n\n**Le rebase.** Rebaser `feat/seuil` sur `main`, c'est prendre ses commits, et les **rejouer** un par un au-dessus du\ndernier commit de `main`, comme si la branche avait été créée maintenant. Le résultat est linéaire et facile à lire,\nmais chaque commit rejoué est un **nouveau** commit, avec un nouvel identifiant. Les conflits se résolvent commit par\ncommit.\n\n**La règle d'or du rebase.** Comme il réécrit les commits, on ne rebase **jamais** une branche que d'autres utilisent :\nleurs copies contiennent les anciens commits, et les deux histoires divergent. On rebase ses propres branches, avant de\nles partager ou avant de les intégrer. Si l'on doit pousser une branche rebasée déjà publiée, on utilise\n`git push --force-with-lease`, qui refuse d'écraser un travail poussé entre-temps par quelqu'un d'autre, plutôt que\n`--force`.\n\n**Fusion, rebase ou squash ?** Les trois sont légitimes, et chaque équipe choisit une convention. Le rebase donne un\nhistorique linéaire, commit par commit. Le commit de fusion garde la trace exacte des branches. La fusion écrasée\nréduit une pull request à un seul commit propre, au prix des étapes intermédiaires. Ce qui compte : que `main` reste\nlisible et que chaque commit qui y arrive laisse le projet fonctionnel. Le rebase interactif, `git rebase -i`, permet\nen plus de réordonner, fusionner ou reformuler ses commits locaux avant de les partager.\n\n**Rien ne se perd vraiment.** Un commit n'est effacé que s'il n'est plus accessible depuis aucune référence pendant\nplusieurs semaines. Après un `reset --hard` malheureux ou une branche supprimée, `git reflog` liste toutes les positions\nrécentes de `HEAD` : on y retrouve l'identifiant du commit « perdu », et `git branch sauvetage <identifiant>` le\nrécupère.\n\n## Erreurs fréquentes\n\n**Travailler directement sur `main`.** Crée une branche par tâche, même petite.\n\n**Laisser des marqueurs de conflit dans le code.** Cherche `<<<<<<<` avant de commiter, et lance les tests.\n\n**Choisir « ma version » par réflexe.** Un conflit oppose deux changements voulus ; comprends les deux.\n\n**Rebaser une branche partagée.** Les autres ont les anciens commits ; rebase seulement tes branches.\n\n**`git push --force` sur une branche commune.** Utilise `--force-with-lease`, et seulement sur tes branches.\n\n**Garder une branche des semaines sans l'intégrer.** Plus elle diverge, plus les conflits sont gros ; intègre souvent.\n\n**Paniquer après un `reset --hard`.** Consulte `git reflog`.\n\n## À retenir\n\n- Une branche est une étiquette sur un commit ; `HEAD` désigne la branche courante.\n- Fusion : avance rapide si possible, sinon commit de fusion à deux parents, à partir de l'ancêtre commun.\n- Conflit : comprendre les deux changements, écrire le bon résultat, retirer les marqueurs, tester, `add`.\n- Rebase : rejoue les commits au-dessus d'une autre branche, avec de nouveaux identifiants.\n- Règle d'or : ne jamais rebaser ce qui est partagé ; `--force-with-lease` plutôt que `--force`.\n- `git reflog` retrouve les commits qu'on croit perdus.\n\n## Exercices\n\n1. Pendant un rebase, Git s'arrête sur un conflit dans `panier.js`. Décris, dans l'ordre, ce que tu fais pour terminer\n   proprement, puis ce que tu fais si tu te rends compte que tu n'es pas prêt à trancher.\n\n   :::indice\n   Éditer, vérifier, indexer, continuer ; ou tout annuler.\n   :::\n\n   :::solution\n   1. `git status` pour voir les fichiers en conflit et le commit en cours de rejeu.\n   2. Ouvrir `panier.js`, comprendre les deux versions, par exemple avec `git log -p` sur chaque branche, et écrire le\n      contenu correct.\n   3. Retirer tous les marqueurs `<<<<<<<`, `=======` et `>>>>>>>`, puis lancer les tests concernés.\n   4. `git add panier.js`, puis `git rebase --continue` ; recommencer si un commit suivant est aussi en conflit.\n\n   Si l'on n'est pas prêt à trancher, par exemple parce qu'il faut l'avis de l'auteur de l'autre changement,\n   `git rebase --abort` ramène la branche exactement à son état d'avant le rebase. Rien n'est perdu.\n   :::\n\n2. Tu as fait `git reset --hard HEAD~2` sur ta branche, et tu t'aperçois que les deux commits annulés contenaient une\n   journée de travail. Retrouve-les. Donne les commandes et explique ce que montre chacune.\n\n   :::indice\n   Le reflog garde les positions précédentes de `HEAD`.\n   :::\n\n   :::solution\n   ```text\n   $ git reflog\n   a1b2c3d HEAD@{0}: reset: moving to HEAD~2\n   9f8e7d6 HEAD@{1}: commit: feat: export PDF des factures\n   5c4b3a2 HEAD@{2}: commit: feat: modèle de facture\n   $ git branch sauvetage 9f8e7d6\n   $ git log --oneline sauvetage -3\n   9f8e7d6 feat: export PDF des factures\n   5c4b3a2 feat: modèle de facture\n   a1b2c3d …\n   $ git reset --hard sauvetage\n   ```\n\n   `git reflog` liste les positions de `HEAD` : juste avant le reset, `HEAD` était sur `9f8e7d6`. Une branche\n   `sauvetage` y pose une étiquette, pour que le commit ne soit plus menacé par le nettoyage. On vérifie son contenu,\n   puis on remet sa branche dessus. Les identifiants seront différents chez toi. Les modifications **non commitées** au\n   moment du `reset --hard`, elles, ne sont pas dans le reflog : d'où l'intérêt de commiter souvent.\n   :::\n\n3. Ton équipe hésite entre trois conventions pour intégrer les pull requests dans `main` : commit de fusion, rebase puis\n   avance rapide, ou fusion écrasée. Donne un avantage et un inconvénient de chacune, et une recommandation pour une\n   équipe de cinq personnes qui fait des pull requests courtes.\n\n   :::indice\n   Pense à la lisibilité de `main`, à `git bisect`, et à la valeur des commits intermédiaires.\n   :::\n\n   :::solution\n   - **Commit de fusion** : garde l'histoire exacte, branche comprise ; mais le graphe devient touffu, et des commits\n     intermédiaires parfois cassés arrivent dans `main`, ce qui gêne `git bisect`.\n   - **Rebase puis avance rapide** : historique linéaire et détaillé ; mais chaque commit doit être propre et vert, ce\n     qui demande de la discipline, et le rebase réécrit les commits de la branche.\n   - **Fusion écrasée** : un commit par pull request, propre, au message relu, facile à annuler ; mais les étapes\n     intermédiaires disparaissent de `main`, ce qui gêne un peu pour les grosses pull requests.\n\n   Pour des pull requests courtes, la fusion écrasée est souvent le meilleur compromis : `main` reste lisible, chaque\n   commit correspond à une intention revue et testée, et `git bisect` désigne directement la pull request fautive. Une\n   équipe très rigoureuse sur ses commits peut préférer le rebase. L'essentiel est de choisir une convention et de la\n   configurer dans l'outil de dépôt.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre `git merge` et `git rebase` ?\n\n  :::indice\n  Nouveau commit à deux parents, ou commits rejoués.\n  :::\n\n  :::reponse\n  `git merge` réunit deux branches en créant, sauf avance rapide, un commit de fusion à deux parents : l'historique\n  garde la trace exacte des branches, et aucun commit existant n'est modifié. `git rebase` rejoue les commits de la\n  branche courante au-dessus d'une autre : l'historique devient linéaire, mais les commits rejoués sont de nouveaux\n  commits, avec de nouveaux identifiants. D'où la règle : on rebase ses branches personnelles, jamais une branche\n  partagée, et on fusionne ce qui est commun.\n  :::\n\n- Comment résous-tu un conflit de fusion ?\n\n  :::indice\n  Une question à trancher, pas une erreur.\n  :::\n\n  :::reponse\n  Je regarde les fichiers en conflit avec `git status`, je comprends les deux changements, en lisant les commits de\n  chaque côté et en demandant à leur auteur si nécessaire, puis j'écris le contenu correct, qui peut combiner les deux.\n  Je retire tous les marqueurs, je lance les tests, puis `git add` et je termine la fusion ou le rebase. Si je ne peux\n  pas trancher, `--abort` ramène à l'état d'avant. Pour réduire les conflits, j'intègre souvent et je garde des branches\n  courtes.\n  :::\n\n- Qu'est-ce que la règle d'or du rebase ?\n\n  :::indice\n  Que deviennent les copies des autres ?\n  :::\n\n  :::reponse\n  Ne jamais rebaser des commits que d'autres ont déjà récupérés. Le rebase crée de nouveaux commits à la place des\n  anciens ; les personnes qui travaillaient sur les anciens se retrouvent avec une histoire divergente, difficile à\n  réconcilier, avec un risque de perte de travail. Je rebase mes branches personnelles, avant de les partager ou de les\n  intégrer, et si je dois pousser une branche à moi déjà publiée, j'utilise `--force-with-lease`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-fondamentaux-de-git-et-commits",
+      "title": "Les fondamentaux de Git, et des commits qui racontent une histoire",
+      "slug": "fondamentaux-de-git-et-commits",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "git-et-collaboration",
+      "order": 1,
+      "estimatedMinutes": 40,
+      "difficulty": 3,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-npm-et-package-json"
+      ],
+      "skills": [
+        "js-git-basics"
+      ],
+      "tags": [
+        "javascript",
+        "git",
+        "collaboration"
+      ],
+      "contentPath": "javascript/git-et-collaboration/fondamentaux-de-git-et-commits/lesson.md",
+      "contentVersion": "cfe03d5bd748",
+      "body": "\n## Objectifs\n\n- Comprendre le modèle de Git : répertoire de travail, index, dépôt, commits et références.\n- Enregistrer des changements avec `status`, `diff`, `add` et `commit`, et savoir ce que contient chaque zone.\n- Écrire des commits atomiques et des messages utiles, au format Conventional Commits.\n- Exclure les bons fichiers avec `.gitignore`, et corriger un commit qui n'est pas encore partagé.\n- Retrouver l'histoire d'une ligne avec `log`, `show` et `blame`.\n\n## Introduction\n\nGit est l'outil que tout développeur utilise chaque jour, et souvent sans le comprendre vraiment : on mémorise quelques\ncommandes, jusqu'au jour où l'une d'elles produit un résultat inattendu. Pourtant, son modèle est simple. Une fois\ncompris, les commandes cessent d'être des formules magiques.\n\nGit est aussi un outil de **communication**. L'historique d'un projet est lu bien plus souvent qu'il n'est écrit : pour\ncomprendre pourquoi une ligne existe, pour trouver quand un bug est apparu, pour rédiger les notes de version. Un\nhistorique fait de commits intitulés « fix » ou « wip » ne dit rien ; un historique soigné est une documentation.\n\n## Concept\n\n| Zone | Contient | Commandes |\n| --- | --- | --- |\n| répertoire de travail | les fichiers tels qu'ils sont sur le disque | éditer, `git restore <fichier>` pour annuler |\n| index, ou zone de préparation | le prochain commit, en cours de composition | `git add`, `git add -p`, `git restore --staged` |\n| dépôt | l'historique des commits, dans `.git` | `git commit`, `git log`, `git show` |\n\n| Objet | Ce que c'est |\n| --- | --- |\n| commit | un instantané complet du projet, avec un auteur, une date, un message et un ou plusieurs parents |\n| identifiant | une empreinte du contenu, comme `8f46847…` : modifier quoi que ce soit donne un autre commit |\n| branche | une étiquette mobile qui pointe vers un commit |\n| `HEAD` | la référence vers la branche, ou le commit, sur lequel on travaille |\n\n| Type Conventional Commits | Pour |\n| --- | --- |\n| `feat` | une nouvelle fonctionnalité, donne une version mineure |\n| `fix` | une correction de bug, donne un correctif |\n| `refactor`, `perf` | une restructuration sans changement de comportement, une optimisation |\n| `test`, `docs`, `build`, `ci`, `chore` | tests, documentation, build, intégration continue, entretien |\n| `!` ou `BREAKING CHANGE:` | un changement cassant, donne une version majeure |\n\n## Exemple\n\nUn nouveau projet, dont on enregistre les deux premières étapes :\n\n```text\n$ git init -b main\n$ printf 'node_modules/\\n.env\\n' > .gitignore\n$ git status --short\n?? .gitignore\n?? prix.js                         ← .env n'apparaît pas : il est ignoré\n\n$ git add .gitignore prix.js\n$ git status --short\nA  .gitignore\nA  prix.js                         ← dans l'index, prêts à être commités\n\n$ git commit -m \"feat(prix): calculer un prix TTC\"\n\n# … on modifie prix.js …\n$ git diff --stat\n prix.js | 2 +-\n$ git add prix.js\n$ git diff --staged\n-export const prixTTC = (ht) => ht * 1.2;\n+export const prixTTC = (ht, taux = 0.2) => Math.round(ht * (1 + taux) * 100) / 100;\n$ git commit -m \"fix(prix): arrondir au centime et accepter un taux\"\n\n$ git log --oneline\n8f46847 fix(prix): arrondir au centime et accepter un taux\na71d410 feat(prix): calculer un prix TTC\n\n$ git cat-file -p HEAD\ntree 64849a5f20c63ef43390da54ef3c526e2dbb0dc2\nparent a71d4103057879dc05a54a8ed6d39d13088f8aca\nauthor Ana <ana@exemple.fr> 1790329768 +0300\n```\n\nLa dernière commande montre ce qu'est vraiment un commit : un arbre, l'instantané des fichiers, un parent, le commit\nprécédent, un auteur, une date, et le message. C'est tout. L'historique est une chaîne de commits reliés à leurs\nparents.\n\n## Comment ça fonctionne\n\n**Des instantanés, pas des différences.** Chaque commit enregistre l'état **complet** du projet. Git économise l'espace\nen ne stockant qu'une fois les fichiers identiques, mais conceptuellement, revenir à un commit, c'est retrouver le\nprojet exactement tel qu'il était. Les différences que montrent `git diff` et `git show` sont calculées à la demande,\nen comparant deux instantanés.\n\n**L'index, pour composer ses commits.** On ne commite pas « tout ce qui a changé » : on choisit. `git add fichier` place\nun fichier dans l'index ; `git add -p` propose chaque bloc de modification un par un, pour n'en garder qu'une partie.\nOn peut ainsi avoir corrigé un bug et renommé une variable dans le même fichier, et en faire deux commits distincts.\n`git diff` montre ce qui n'est pas encore dans l'index, `git diff --staged` ce qui partira dans le prochain commit :\non relit toujours ce second diff avant de commiter.\n\n**Des identifiants d'empreinte.** L'identifiant d'un commit est calculé à partir de son contenu, y compris l'identifiant\nde son parent. Modifier un ancien commit change donc son identifiant, et celui de tous ses descendants : c'est une\nnouvelle histoire. D'où une règle essentielle : on peut réécrire ses commits **tant qu'ils ne sont pas partagés**, par\nexemple avec `git commit --amend` pour corriger le dernier ; une fois poussés et utilisés par d'autres, on ajoute un\nnouveau commit.\n\n**Des commits atomiques.** Un bon commit fait **une** chose, complète, et laisse le projet dans un état qui fonctionne :\nles tests passent. Il est ainsi facile à relire, à annuler avec `git revert`, et à identifier comme coupable d'une\nrégression, comme on le verra avec `git bisect`. « Corrige le calcul de TVA et reformate tout le dossier » mélange\ndeux intentions : deux commits.\n\n**Des messages utiles.** Le sujet, court, à l'impératif ou au présent, dit **quoi** ; le corps, après une ligne vide, dit\n**pourquoi**, ce que le diff ne montre pas. Le format Conventional Commits ajoute un type et une portée :\n`fix(prix): arrondir au centime`. Il rend l'historique lisible d'un coup d'œil, et des outils en déduisent le prochain\nnuméro de version et le journal des modifications. Le projet de ce cours l'utilise, comme beaucoup de projets\nJavaScript.\n\n**Ce qu'on ne commite pas.** `.gitignore` liste ce que Git doit ignorer : `node_modules`, reconstruit depuis le fichier de\nverrouillage ; les dossiers de build ; les fichiers de l'éditeur ; et surtout `.env` et tout fichier de secrets. Un\nfichier déjà suivi n'est pas concerné par `.gitignore` : il faut d'abord le retirer de l'index avec\n`git rm --cached`. Et un secret commité doit être révoqué, comme on l'a vu dans la partie sur la sécurité.\n\n**Remonter l'histoire.** `git log --oneline` survole l'historique ; `git log -p fichier` montre chaque modification d'un\nfichier ; `git show <commit>` détaille un commit ; `git blame fichier` indique, ligne par ligne, le dernier commit qui\nl'a modifiée. Associés à de bons messages, ils répondent à la question la plus fréquente face à un code étrange :\n« pourquoi est-ce écrit ainsi ? ».\n\n## Erreurs fréquentes\n\n**`git add .` sans relire.** Des fichiers inattendus partent : un `.env`, un fichier de débogage ; relis\n`git status` et `git diff --staged`.\n\n**Des commits fourre-tout.** Plusieurs intentions dans un commit le rendent impossible à relire ou à annuler proprement.\n\n**Des messages vides de sens.** « fix », « update », « wip » : dis quoi et pourquoi.\n\n**Modifier un commit déjà partagé.** `--amend` ou un rebase sur des commits poussés réécrit l'histoire des autres.\n\n**Commiter `node_modules` ou le dossier de build.** Ils se reconstruisent ; ignore-les.\n\n**Croire que `.gitignore` retire un fichier déjà suivi.** Utilise `git rm --cached`, et révoque tout secret déjà\ncommité.\n\n## À retenir\n\n- Trois zones : répertoire de travail, index, dépôt ; `git add` compose, `git commit` enregistre.\n- Un commit est un instantané complet, avec parents, auteur et message ; son identifiant dépend de son contenu.\n- On réécrit seulement ce qui n'est pas partagé ; sinon, un nouveau commit.\n- Des commits atomiques, qui laissent le projet fonctionnel ; `git add -p` pour les composer.\n- Messages : quoi dans le sujet, pourquoi dans le corps ; Conventional Commits pour les types.\n- `.gitignore` pour les dépendances, builds et secrets ; `log`, `show`, `blame` pour comprendre l'histoire.\n\n## Exercices\n\n1. Pour chaque situation, écris la commande à utiliser.\n   - a) Voir ce qui partira dans le prochain commit.\n   - b) Retirer de l'index un fichier ajouté par erreur, sans perdre ses modifications.\n   - c) Annuler les modifications non commitées d'un fichier.\n   - d) Ajouter à l'index seulement une partie des modifications d'un fichier.\n   - e) Corriger le message du dernier commit, pas encore poussé.\n   - f) Arrêter de suivre un fichier `config.local.json` déjà commité, tout en le gardant sur le disque.\n\n   :::indice\n   Pense aux trois zones : de quelle zone vers quelle zone chaque action déplace-t-elle les changements ?\n   :::\n\n   :::solution\n   - a) `git diff --staged` : les différences entre le dernier commit et l'index.\n   - b) `git restore --staged fichier` : le fichier sort de l'index, les modifications restent dans le répertoire de\n     travail.\n   - c) `git restore fichier` : le fichier reprend son contenu de l'index ; les modifications sont perdues.\n   - d) `git add -p fichier` : Git propose chaque bloc, on répond `y` ou `n`.\n   - e) `git commit --amend -m \"nouveau message\"`.\n   - f) `git rm --cached config.local.json`, puis l'ajouter à `.gitignore` et commiter les deux.\n   :::\n\n2. Voici le diff d'une journée de travail. Propose un découpage en commits atomiques, avec leurs messages au format\n   Conventional Commits.\n   - Correction d'un bug : les remises négatives étaient acceptées dans `panier.js`.\n   - Ajout d'un test de régression pour ce bug dans `panier.test.js`.\n   - Renommage de `calc` en `calculerTotal` dans `panier.js` et ses trois appelants.\n   - Nouvelle fonctionnalité : code promotionnel « livraison offerte », dans `promotions.js`, avec ses tests.\n   - Mise à jour de la version de Vitest dans `package.json` et le fichier de verrouillage.\n\n   :::indice\n   Chaque commit doit avoir une seule intention et laisser les tests verts. Le test de régression va avec sa correction.\n   :::\n\n   :::solution\n   ```text\n   refactor(panier): renommer calc en calculerTotal\n   fix(panier): refuser les remises négatives\n   feat(promotions): code promotionnel « livraison offerte »\n   build(deps): mettre à jour vitest\n   ```\n\n   Le renommage passe d'abord, seul : un pur refactoring, facile à relire, qui ne change aucun test. La correction\n   arrive avec son test de régression dans le même commit : le test prouve la correction, et le projet reste vert. La\n   fonctionnalité et ses tests forment un troisième commit. La mise à jour de dépendance est isolée : si elle casse\n   quelque chose, on l'annule sans toucher au reste. Le corps du commit `fix` explique la cause, par exemple\n   « la validation ne vérifiait que le maximum ».\n   :::\n\n3. Dans un dépôt jetable, reproduis la situation suivante et résous-la : tu as modifié `a.js` et `b.js`, mais tu veux\n   commiter seulement `a.js`, puis tu t'aperçois que le message du commit contient une faute. Donne la suite de commandes\n   et le résultat de `git log --oneline` et de `git status --short` à la fin.\n\n   :::indice\n   `git add a.js`, commit, puis `--amend`. `b.js` doit rester modifié et non indexé.\n   :::\n\n   :::solution\n   ```text\n   $ git init -b main demo && cd demo\n   $ echo 1 > a.js && echo 1 > b.js && git add . && git commit -m \"chore: initialiser\"\n   $ echo 2 > a.js && echo 2 > b.js\n   $ git add a.js\n   $ git commit -m \"feat: modifer a\"\n   $ git commit --amend -m \"feat: modifier a\"\n   $ git log --oneline\n   3c9d1e2 feat: modifier a\n   5b0f7a4 chore: initialiser\n   $ git status --short\n    M b.js\n   ```\n\n   Le commit corrigé a un nouvel identifiant, car son message fait partie de son contenu : c'est pourquoi on n'utilise\n   `--amend` que sur un commit non partagé. `b.js` reste modifié dans le répertoire de travail, prêt pour un prochain\n   commit. Les identifiants affichés seront différents chez toi.\n   :::\n\n## Questions d'entretien\n\n- Explique la différence entre le répertoire de travail, l'index et le dépôt.\n\n  :::indice\n  Trois zones, et les commandes qui déplacent les changements entre elles.\n  :::\n\n  :::reponse\n  Le répertoire de travail contient les fichiers tels qu'ils sont sur le disque, avec les modifications en cours.\n  L'index, ou zone de préparation, contient le prochain commit tel qu'on le compose avec `git add`, éventuellement\n  partie par partie avec `git add -p`. Le dépôt contient l'historique des commits, créés à partir de l'index par\n  `git commit`. `git diff` compare le répertoire de travail à l'index, `git diff --staged` l'index au dernier commit.\n  Cette séparation permet de faire des commits atomiques même quand on a modifié plusieurs choses à la fois.\n  :::\n\n- Qu'est-ce qu'un bon commit ?\n\n  :::indice\n  Une intention, un état fonctionnel, un message utile.\n  :::\n\n  :::reponse\n  Un commit atomique : il réalise une seule intention, complète, et laisse le projet dans un état où les tests passent.\n  Son message a un sujet court qui dit ce qui change, souvent au format Conventional Commits, et un corps qui explique\n  pourquoi quand ce n'est pas évident. Un tel commit se relit facilement, s'annule proprement avec `git revert`, et\n  permet à `git bisect` de désigner précisément l'origine d'une régression.\n  :::\n\n- Pourquoi ne faut-il pas réécrire des commits déjà poussés ?\n\n  :::indice\n  De quoi dépend l'identifiant d'un commit ?\n  :::\n\n  :::reponse\n  Parce que l'identifiant d'un commit dépend de son contenu, de son message et de son parent : modifier un commit crée un\n  nouveau commit, et change aussi tous ses descendants. Si d'autres ont déjà récupéré les anciens commits et travaillé\n  dessus, leurs historiques divergent, et il faut des manipulations délicates pour les réconcilier, avec un risque de\n  perdre du travail. On réécrit librement ses commits locaux ; une fois partagés, on corrige avec un nouveau commit, par\n  exemple un `git revert`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-pull-requests-revue-et-workflows",
+      "title": "Pull requests, revue de code et workflows Git",
+      "slug": "pull-requests-revue-et-workflows",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "git-et-collaboration",
+      "order": 3,
+      "estimatedMinutes": 45,
+      "difficulty": 3,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-branches-fusions-conflits-et-rebase",
+        "javascript-refactoring"
+      ],
+      "skills": [
+        "js-git-collaboration"
+      ],
+      "tags": [
+        "javascript",
+        "git",
+        "collaboration"
+      ],
+      "contentPath": "javascript/git-et-collaboration/pull-requests-revue-et-workflows/lesson.md",
+      "contentVersion": "56a68aa58bc3",
+      "body": "\n## Objectifs\n\n- Préparer une pull request facile à relire : petite, décrite, testée, relue par son auteur.\n- Relire le code d'un collègue : quoi vérifier, dans quel ordre, et comment formuler ses commentaires.\n- Protéger la branche principale : vérifications obligatoires, approbations, propriétaires de code.\n- Choisir un workflow d'équipe : GitHub flow, développement sur le tronc, Git flow.\n\n## Introduction\n\nDans une équipe, le code n'arrive pas dans `main` directement : il passe par une **pull request**, ou *merge request*\nselon les outils. C'est une proposition de changement, visible par toute l'équipe, sur laquelle l'intégration continue\nvérifie le code et où des collègues le relisent avant de l'intégrer.\n\nLa revue de code n'est pas un contrôle policier. C'est le principal moyen de partager la connaissance d'un projet, de\nrepérer un bug avant la production, et de faire progresser tout le monde, relecteur compris. Bien faite, elle est rapide\net agréable ; mal faite, elle bloque les livraisons ou laisse tout passer.\n\n## Concept\n\n| Une bonne pull request | Pourquoi |\n| --- | --- |\n| petite : quelques centaines de lignes au plus | au-delà, la relecture devient superficielle |\n| une seule intention | on sait quoi vérifier ; on peut l'annuler d'un bloc |\n| une description : pourquoi, quoi, comment tester | le relecteur n'a pas à deviner le contexte |\n| relue par son auteur d'abord | les oublis évidents, fichiers de débogage, `console.log`, sont retirés avant |\n| verte en intégration continue | le relecteur ne perd pas de temps sur ce que les outils attrapent |\n\n| Le relecteur vérifie, dans l'ordre | |\n| --- | --- |\n| le besoin | le changement répond-il au problème, sans en créer d'autres ? |\n| la conception | est-ce au bon endroit, avec les bonnes dépendances ? |\n| la correction | cas limites, erreurs, concurrence, sécurité |\n| les tests | prouvent-ils le comportement, y compris les cas d'échec ? |\n| la lisibilité | noms, découpage, commentaires utiles |\n| les détails | style, formatage : idéalement déjà traités par les outils |\n\n| Workflow | Principe | Adapté à |\n| --- | --- | --- |\n| GitHub flow | une branche courte par changement, pull request, fusion dans `main`, déploiement | la plupart des applications web |\n| développement sur le tronc | intégration dans `main` au moins une fois par jour, fonctionnalités inachevées cachées par des *feature flags* | équipes rodées, déploiement continu |\n| Git flow | branches `develop`, `release`, `hotfix` en plus de `main` | logiciels livrés par versions, plusieurs versions maintenues |\n\n## Exemple\n\nUne description de pull request qui donne au relecteur tout ce dont il a besoin :\n\n```text\nfix(panier): refuser les remises négatives\n\n## Pourquoi\nUn code promotionnel mal saisi dans l'administration (-15 au lieu de 15) augmentait le prix\nau lieu de le baisser. Trois commandes ont été facturées trop cher le 24 septembre.\n\n## Quoi\n- `appliquerRemise` refuse une remise hors de 0..100 % (RangeError).\n- L'administration valide la saisie avec le même schéma.\n\n## Comment tester\n- `pnpm test panier` : nouveau test de régression « refuse une remise négative ».\n- Manuellement : créer un code à -15 dans l'administration → message d'erreur.\n\n## Hors périmètre\nLe remboursement des trois commandes est suivi dans le ticket #482.\n```\n\nEt des commentaires de revue qui disent clairement leur poids :\n\n```text\nbloquant : `remise === 100` renvoie un total de 0 et la commande passe sans paiement.\n           Est-ce voulu ? Sinon, la borne haute devrait être exclue ou validée ailleurs.\n\nquestion : pourquoi valider dans la route et dans le schéma ? Le schéma ne suffit-il pas ?\n\nsuggestion : `estRemiseValide` se lirait mieux que `checkRemise`, pour rester dans\n             le vocabulaire du reste du module.\n\ndétail : une ligne vide en trop ligne 42 (sans importance, à ta convenance).\n```\n\n## Comment ça fonctionne\n\n**Petite et ciblée.** La qualité d'une revue baisse avec la taille du diff : sur 50 lignes, on lit chaque ligne ; sur\n2 000, on survole et on approuve. Découper est donc la meilleure façon d'obtenir une vraie relecture. Un gros changement\nse livre en plusieurs pull requests successives : d'abord le refactoring qui prépare, puis la fonctionnalité, cachée\nderrière un indicateur si elle n'est pas finie.\n\n**La description fait gagner du temps à tous.** Le relecteur n'a pas le contexte de l'auteur : le ticket, la discussion\nd'hier, le bug observé. La description le lui donne : pourquoi ce changement, ce qui change, comment le vérifier, ce qui\nest volontairement laissé de côté. Pour une interface, une capture avant et après. Beaucoup d'équipes fournissent un\nmodèle de description dans le dépôt.\n\n**L'auteur relit en premier.** Avant de demander une revue, l'auteur relit son propre diff dans l'outil, comme un\nrelecteur : il y trouve le `console.log` oublié, le fichier ajouté par erreur, le test manquant. L'intégration continue\ndoit être verte : lint, types, tests. Le temps du relecteur est réservé à ce qu'aucun outil ne sait juger.\n\n**Relire l'essentiel d'abord.** Un relecteur qui commence par les virgules risque de manquer le problème de conception.\nOn lit la description, on regarde la forme générale du changement, puis on descend dans les détails : correction, cas\nlimites, sécurité, tests. On exécute le code en cas de doute, et on vérifie que les tests échoueraient si le bug revenait.\n\n**Des commentaires utiles et bienveillants.** On commente le **code**, jamais la personne : « cette fonction ne gère pas\nla liste vide » plutôt que « tu as oublié ». On explique le pourquoi d'une demande, on pose des questions quand on n'est\npas sûr, et on signale le poids de chaque remarque : **bloquant**, **question**, **suggestion**, **détail**. Le format\n*Conventional Comments* formalise ces étiquettes. On note aussi ce qui est bien fait. Et l'on répond vite : une pull\nrequest qui attend trois jours bloque son auteur et accumule les conflits.\n\n**L'auteur répond à chaque commentaire.** En corrigeant, ou en expliquant pourquoi il ne corrige pas. Un désaccord se\ntranche à l'oral quand il s'éternise à l'écrit. Les remarques qui reviennent souvent deviennent une règle de lint ou une\nconvention écrite, pour ne plus avoir à les faire.\n\n**Protéger `main`.** Les dépôts permettent d'exiger, avant toute fusion dans `main` : des vérifications d'intégration\ncontinue réussies, un nombre minimal d'approbations, une branche à jour, et parfois l'approbation des **propriétaires**\nd'un dossier, déclarés dans un fichier `CODEOWNERS`. La poussée directe sur `main` est interdite. Ces règles rendent le\nprocessus fiable même un soir de livraison urgente.\n\n**Choisir un workflow.** Le GitHub flow convient à la plupart des applications web déployées en continu : des branches\ncourtes, une pull request, fusion dans `main`, qui est toujours déployable. Le développement sur le tronc pousse la\nlogique plus loin, avec des intégrations quotidiennes et des *feature flags* pour masquer ce qui n'est pas prêt. Git\nflow, plus lourd, reste utile pour un logiciel livré par versions numérotées, avec plusieurs versions maintenues en\nparallèle. Plus les branches vivent longtemps, plus les intégrations sont douloureuses : la tendance est aux branches\ncourtes.\n\n## Erreurs fréquentes\n\n**Une pull request de 2 000 lignes.** Elle sera survolée ; découpe-la.\n\n**Une description vide.** Le relecteur devine le contexte, ou passe à côté du vrai sujet.\n\n**Demander une revue avant que l'intégration continue soit verte.** Tu fais relire ce que les outils auraient signalé.\n\n**Commencer la revue par le style.** Vérifie d'abord le besoin, la conception et la correction.\n\n**Des commentaires sans poids ni explication.** « À changer » ne dit ni pourquoi ni si c'est bloquant.\n\n**Critiquer la personne plutôt que le code.** La revue perd son rôle d'apprentissage.\n\n**Laisser une pull request en attente plusieurs jours.** Relis vite, même brièvement.\n\n**Pousser directement sur `main`.** Protège la branche.\n\n## À retenir\n\n- Une pull request : petite, une intention, décrite (pourquoi, quoi, comment tester), relue par son auteur, verte.\n- Relire dans l'ordre : besoin, conception, correction, tests, lisibilité, détails.\n- Commenter le code, expliquer, étiqueter : bloquant, question, suggestion, détail ; et répondre vite.\n- Protéger `main` : vérifications obligatoires, approbations, `CODEOWNERS`, pas de poussée directe.\n- Workflows : GitHub flow par défaut, tronc et *feature flags* pour les équipes rodées, Git flow pour les versions.\n\n## Exercices\n\n1. Relis cette pull request, intitulée « Ajout du calcul des frais de port express », et écris tes commentaires en\n   indiquant leur poids. Vérifie tes remarques en exécutant le code.\n\n   ```js\n   // frais.js\n   export function fraisExpress(commande) {\n     let frais = 9.9;\n     if (commande.poids > 5) frais = frais + (commande.poids - 5) * 2;\n     if (commande.total > 100) frais == 0;\n     console.log('frais express', frais);\n     return frais;\n   }\n   ```\n\n   :::indice\n   Exécute la fonction pour une commande de 150 €. Regarde aussi ce qui manque dans la pull request, pas seulement dans\n   le code.\n   :::\n\n   :::solution\n   ```js\n   function fraisExpress(commande) {\n     let frais = 9.9;\n     if (commande.poids > 5) frais = frais + (commande.poids - 5) * 2;\n     if (commande.total > 100) frais == 0;\n     return frais;\n   }\n   console.log(fraisExpress({ poids: 2, total: 150 })); // 9.9 : la gratuité ne s'applique pas\n   console.log(fraisExpress({ poids: 6.4, total: 20 })); // 12.700000000000001\n   ```\n\n   ```text\n   bloquant : ligne 4, `frais == 0` compare au lieu d'affecter : la gratuité au-delà de 100 €\n              n'est jamais appliquée. Vérifié : 150 € → 9.9. Un test l'aurait montré.\n\n   bloquant : aucun test dans la pull request. Il faudrait au moins : poids ≤ 5, poids > 5,\n              total > 100, et les frontières exactes 5 kg et 100 €.\n\n   question : au-delà de 100 € « inclus » ou « exclu » ? La règle commerciale dit « à partir de\n              100 € » d'après le ticket, ce qui donnerait `>=`.\n\n   suggestion : arrondir au centime (6,4 kg → 12.700000000000001) et nommer les constantes :\n                FRAIS_EXPRESS_BASE, SUPPLEMENT_PAR_KG, SEUIL_GRATUITE.\n\n   détail : retirer le `console.log` de débogage.\n   ```\n\n   Les deux premiers commentaires bloquent la fusion ; la question doit être tranchée avec le métier ; le reste améliore\n   le code. Une règle de lint comme `no-unused-expressions` aurait signalé la ligne 4 : c'est une remarque à transformer\n   en règle d'outil.\n   :::\n\n2. Rédige la description de pull request pour ce changement : ajout de la pagination à `GET /produits`, avec `page` et\n   `limite` (100 au maximum), testée par trois tests d'intégration ; l'application mobile n'est pas encore mise à jour et\n   continue d'appeler la route sans paramètres.\n\n   :::indice\n   Pourquoi, quoi, comment tester, et ce qui reste compatible ou hors périmètre.\n   :::\n\n   :::solution\n   ```text\n   feat(api): paginer la liste des produits\n\n   ## Pourquoi\n   GET /produits renvoie tout le catalogue (8 400 produits, 3,2 Mo) : temps de réponse de 1,8 s\n   et page d'accueil lente. Ticket #512.\n\n   ## Quoi\n   - Paramètres `page` (défaut 1) et `limite` (défaut 20, plafonnée à 100).\n   - Réponse : { produits, page, limite, total }.\n   - Paramètres invalides (page=-1, limite=abc) → 400 avec un message.\n\n   ## Compatibilité\n   Sans paramètres, la route renvoie les 20 premiers produits. ⚠️ L'application mobile, qui\n   attend tout le catalogue, est concernée : sa mise à jour est suivie dans #515, et cette\n   pull request ne doit pas être déployée avant elle.\n\n   ## Comment tester\n   - `pnpm test produits.integration` : 3 nouveaux tests (défauts, plafond, paramètres invalides).\n   - curl \"localhost:3000/produits?page=2&limite=5\"\n   ```\n\n   Le point le plus important est la section compatibilité : le changement modifie le comportement par défaut d'une\n   route utilisée par une autre application. Le relecteur et la personne qui déploie doivent le savoir. Une alternative à\n   discuter en revue : n'appliquer la pagination que si un paramètre est fourni, le temps que le mobile soit mis à jour.\n   :::\n\n3. Une équipe de huit personnes déploie son application web plusieurs fois par jour, mais ses branches de fonctionnalité\n   vivent souvent deux semaines, et chaque fusion provoque des conflits pénibles. Propose des changements de workflow.\n\n   :::indice\n   Réduire la durée de vie des branches ; que faire d'une fonctionnalité qui n'est pas finie ?\n   :::\n\n   :::solution\n   - Découper le travail en pull requests de un à deux jours au plus, chacune utile ou au moins inoffensive seule : un\n     refactoring préparatoire, puis la fonctionnalité par étapes.\n   - Masquer les fonctionnalités inachevées derrière des *feature flags*, pour pouvoir fusionner dans `main` sans les\n     montrer aux utilisateurs ; on active le flag quand tout est prêt, et on le retire ensuite du code.\n   - Mettre sa branche à jour avec `main` chaque jour, par rebase, pour résoudre les petits conflits tant qu'ils sont\n     petits.\n   - S'engager sur un délai de revue court, par exemple dans la demi-journée, pour que les pull requests ne s'empilent pas.\n   - Protéger `main` avec des vérifications obligatoires, pour que l'intégration fréquente reste sûre.\n\n   C'est un pas vers le développement sur le tronc : intégrer souvent de petits changements coûte moins cher que de\n   réconcilier rarement de gros changements.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce qui fait une bonne pull request ?\n\n  :::indice\n  Taille, intention, description, préparation.\n  :::\n\n  :::reponse\n  Elle est petite et n'a qu'une intention, pour être relue sérieusement et annulée d'un bloc si besoin. Sa description\n  explique pourquoi, ce qui change, comment tester, et ce qui est hors périmètre ou peut casser la compatibilité. Son\n  auteur l'a relue lui-même avant de demander une revue, et l'intégration continue est verte. Les commits sont propres, ou\n  elle sera fusionnée en un seul commit au message soigné.\n  :::\n\n- Comment fais-tu une revue de code ?\n\n  :::indice\n  Ordre de lecture, ton, poids des remarques, délai.\n  :::\n\n  :::reponse\n  Je lis d'abord la description, puis la forme générale du changement : répond-il au besoin, est-il au bon endroit ?\n  Ensuite la correction : cas limites, erreurs, sécurité, concurrence ; puis les tests, en me demandant s'ils échoueraient\n  si le bug revenait ; enfin la lisibilité. Je laisse le style aux outils. Mes commentaires portent sur le code,\n  expliquent le pourquoi et indiquent leur poids : bloquant, question, suggestion, détail. Je signale aussi ce qui est\n  réussi, et je réponds rapidement pour ne pas bloquer l'auteur.\n  :::\n\n- Quel workflow Git recommanderais-tu, et pourquoi ?\n\n  :::indice\n  Durée de vie des branches, fréquence de déploiement.\n  :::\n\n  :::reponse\n  Pour une application web déployée en continu, le GitHub flow : une branche courte par changement, une pull request\n  relue et vérifiée, fusion dans un `main` protégé et toujours déployable. Si l'équipe est rodée, j'évolue vers le\n  développement sur le tronc, avec des intégrations quotidiennes et des *feature flags*. Git flow ne se justifie que pour\n  un logiciel livré par versions, avec plusieurs versions maintenues. Dans tous les cas, des branches courtes réduisent\n  les conflits et accélèrent les retours.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Pourquoi",
+        "Quoi",
+        "Comment tester",
+        "Hors périmètre",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
       "id": "javascript-composition",
       "title": "Composition contre héritage",
       "slug": "composition-vs-heritage",
@@ -10840,6 +11185,120 @@
       "contentPath": "javascript/operateurs/ternaire-et-precedence/lesson.md",
       "contentVersion": "d9846717f087",
       "body": "\n## Objectifs\n\n- Utiliser l'opérateur ternaire là où une valeur est attendue, et l'éviter ailleurs.\n- Prévoir l'ordre d'évaluation d'une expression grâce à la précédence et à\n  l'associativité.\n- Ajouter des parenthèses là où la lecture n'est pas évidente.\n\n## Introduction\n\n`2 + 3 * 4` vaut `14`, pas `20` : tout le monde l'a appris à l'école. JavaScript applique\nla même idée à tous ses opérateurs, y compris `&&`, `===`, `typeof` ou `=`, avec des\nrègles moins intuitives. L'opérateur ternaire, lui, est la version expression d'un\n`if` : il produit une valeur. Bien utilisé, il rend le code plus direct ; imbriqué, il le\nrend illisible.\n\n## Concept\n\nL'**opérateur ternaire** `condition ? siVrai : siFaux` est une **expression** : il\nproduit une valeur, là où `if` est une instruction qui n'en produit pas.\n\n```js\nconst libelle = stock > 0 ? 'En stock' : 'Rupture';\n```\n\nLa **précédence** décide quel opérateur s'applique en premier. Du plus prioritaire au\nmoins prioritaire, pour les plus courants :\n\n| Priorité | Opérateurs |\n| --- | --- |\n| 1 | `( )` groupement, `.` et `[ ]` accès, `( )` appel |\n| 2 | `++` `--` suffixes |\n| 3 | `!` `typeof` `+` `-` unaires, `++` `--` préfixes |\n| 4 | `**` |\n| 5 | `*` `/` `%` |\n| 6 | `+` `-` |\n| 7 | `<` `>` `<=` `>=` `in` `instanceof` |\n| 8 | `==` `!=` `===` `!==` |\n| 9 | `&&` |\n| 10 | `\\|\\|` `??` |\n| 11 | `? :` ternaire |\n| 12 | `=` `+=` et les autres affectations |\n\nL'**associativité** décide de l'ordre entre opérateurs de même priorité. La plupart sont\névalués de gauche à droite (`10 - 4 - 3` vaut `3`). Deux exceptions à connaître : `**` et\nl'affectation, évalués de droite à gauche.\n\n## Exemple\n\n```js\nconsole.log(2 + 3 * 4); // 14\nconsole.log((2 + 3) * 4); // 20\nconsole.log(10 - 4 - 3); // 3 : (10 - 4) - 3\nconsole.log(2 ** 3 ** 2); // 512 : 2 ** (3 ** 2)\n\nlet a;\nlet b;\na = b = 5; // a = (b = 5) : les deux valent 5\n\nconst valeur = 'Ada';\nconsole.log(typeof valeur === 'string'); // true : typeof s'applique avant ===\n\nconst age = 20;\nconst tarif = age < 26 ? 'jeune' : 'plein';\nconsole.log(`Tarif ${tarif}`); // Tarif jeune\n```\n\n## Comment ça fonctionne\n\nLe moteur construit un arbre à partir de l'expression : l'opérateur le moins prioritaire\nse retrouve à la racine, les plus prioritaires dans les feuilles. `2 + 3 * 4` devient une\naddition dont l'opérande de droite est la multiplication.\n\nCertaines combinaisons sont volontairement interdites pour éviter une ambiguïté :\n\n```js\n-2 ** 2; // SyntaxError : faut-il lire (-2) ** 2 ou -(2 ** 2) ?\n(-2) ** 2; // 4\n-(2 ** 2); // -4\n```\n\nLa précédence explique aussi des bugs discrets :\n\n```js\nconst estVide = !liste.length === 0; // (!liste.length) === 0 : toujours false\nconst estVideCorrige = liste.length === 0;\n```\n\nLe ternaire a une priorité très basse : dans `prix + estMembre ? 5 : 0`, c'est\n`prix + estMembre` qui sert de condition. Il faut écrire `prix + (estMembre ? 5 : 0)`.\n\n## Erreurs fréquentes\n\n**Imbriquer des ternaires.** Au-delà d'un niveau, le code devient une devinette.\nPréfère une suite de `if`, ou une table de correspondance.\n\n**Utiliser un ternaire pour ses effets de bord.** `estValide ? envoyer() : afficherErreur()`\nexécute des actions sans produire de valeur utile : c'est le rôle d'un `if`.\n\n**Oublier la priorité basse du ternaire dans une addition ou une concaténation.**\nEntoure le ternaire de parenthèses.\n\n**Appliquer `!` au mauvais opérande.** `!a === b` compare `!a` à `b`. Écris `a !== b` ou\n`!(a === b)`.\n\n**Compter sur sa mémoire de la table de priorité.** Dès qu'un doute existe, des\nparenthèses rendent l'intention évidente pour tout le monde.\n\n## À retenir\n\n- Le ternaire est une expression : il sert à produire une valeur, pas à exécuter des\n  actions.\n- `*` avant `+`, `===` avant `&&`, `&&` avant `||`, affectation en dernier.\n- `**` et `=` s'évaluent de droite à gauche ; les autres de gauche à droite.\n- `-2 ** 2` est une erreur de syntaxe.\n- En cas de doute, des parenthèses.\n\n## Exercices\n\n1. Prévois la valeur de `2 + 3 * 4 ** 2`, `(2 + 3) * 4`, `10 - 4 - 3` et `2 ** 3 ** 2`.\n\n   :::indice\n   `**` passe avant `*`, qui passe avant `+`. Et `**` s'évalue de droite à gauche.\n   :::\n\n   :::solution\n   - `2 + 3 * 4 ** 2` : `4 ** 2` vaut `16`, `3 * 16` vaut `48`, puis `50`.\n   - `(2 + 3) * 4` : `20`, les parenthèses passent en premier.\n   - `10 - 4 - 3` : `3`, soit `(10 - 4) - 3`.\n   - `2 ** 3 ** 2` : `2 ** 9`, soit `512`.\n   :::\n\n2. Remplace ce `if` / `else`, qui ne sert qu'à choisir une valeur, par une expression\n   ternaire.\n\n   ```js\n   let libelle;\n   if (stock > 0) {\n     libelle = 'En stock';\n   } else {\n     libelle = 'Rupture';\n   }\n   ```\n\n   :::indice\n   Le ternaire produit directement la valeur : la variable peut alors devenir une\n   constante.\n   :::\n\n   :::solution\n   ```js\n   const libelle = stock > 0 ? 'En stock' : 'Rupture';\n   ```\n\n   On gagne en concision, et `libelle` devient une constante : elle ne pourra plus être\n   réaffectée par erreur plus loin.\n   :::\n\n3. Ce ternaire imbriqué est difficile à lire. Réécris-le clairement.\n\n   ```js\n   const tarif = age < 12 ? 'enfant' : age < 26 ? 'jeune' : age >= 65 ? 'senior' : 'plein';\n   ```\n\n   :::indice\n   Une suite de `if` / `else if` exprime la même logique, une condition par ligne.\n   :::\n\n   :::solution\n   ```js\n   let tarif;\n   if (age < 12) {\n     tarif = 'enfant';\n   } else if (age < 26) {\n     tarif = 'jeune';\n   } else if (age >= 65) {\n     tarif = 'senior';\n   } else {\n     tarif = 'plein';\n   }\n   ```\n\n   Chaque cas se lit sur sa ligne, et l'ordre des conditions devient visible : c'est lui\n   qui garantit qu'un enfant n'est pas classé « jeune ».\n   :::\n\n## Questions d'entretien\n\n- Pourquoi `-2 ** 2` est-il une erreur de syntaxe en JavaScript ?\n\n  :::indice\n  Écris les deux façons possibles de lire cette expression, et calcule-les.\n  :::\n\n  :::reponse\n  L'expression est ambiguë : `(-2) ** 2` vaut `4`, `-(2 ** 2)` vaut `-4`, et les\n  mathématiques comme les autres langages ne s'accordent pas sur la lecture attendue. Plutôt\n  que de choisir une règle que la moitié des développeurs lirait mal, la spécification\n  interdit un opérateur unaire directement devant la base de `**`. Il faut écrire les\n  parenthèses.\n  :::\n\n- Quand préférer un ternaire à un `if` ?\n\n  :::indice\n  Qu'est-ce qu'un ternaire produit, et qu'est-ce qu'un `if` ne produit pas ?\n  :::\n\n  :::reponse\n  Quand il s'agit de choisir entre deux valeurs : initialiser une constante, passer un\n  argument, construire une chaîne. Le ternaire est une expression, il s'utilise là où une\n  valeur est attendue. On garde `if` pour exécuter des actions, pour plus de deux cas, ou\n  dès que le ternaire deviendrait imbriqué.\n  :::\n\n- Que signifie l'associativité d'un opérateur ? Donne un exemple.\n\n  :::indice\n  Que se passe-t-il quand plusieurs opérateurs de même priorité se suivent ?\n  :::\n\n  :::reponse\n  L'associativité décide de l'ordre d'évaluation entre des opérateurs de même priorité. La\n  soustraction est associative à gauche : `10 - 4 - 3` se lit `(10 - 4) - 3` et vaut `3`.\n  La puissance et l'affectation sont associatives à droite : `2 ** 3 ** 2` se lit\n  `2 ** (3 ** 2)` et vaut `512`, et `a = b = 5` affecte d'abord `b`, puis `a`.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-build-vite-bundlers-et-source-maps",
+      "title": "Outils de build : Vite, bundlers, configuration d'environnement et source maps",
+      "slug": "build-vite-bundlers-et-source-maps",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "outillage-professionnel",
+      "order": 2,
+      "estimatedMinutes": 45,
+      "difficulty": 3,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-eslint-prettier-et-verification-des-types",
+        "javascript-code-splitting-et-lazy-loading"
+      ],
+      "skills": [
+        "js-build-tools"
+      ],
+      "tags": [
+        "javascript",
+        "outillage",
+        "build"
+      ],
+      "contentPath": "javascript/outillage-professionnel/build-vite-bundlers-et-source-maps/lesson.md",
+      "contentVersion": "bf7b9b196087",
+      "body": "\n## Objectifs\n\n- Expliquer ce que fait un bundler : graphe de modules, suppression du code mort, minification, noms hachés, découpage.\n- Utiliser Vite : serveur de développement, build de production, prévisualisation.\n- Configurer l'application par environnement avec les modes et les fichiers `.env`, sans exposer de secret.\n- Produire et utiliser des source maps pour déboguer un code minifié, en production comprise.\n\n## Introduction\n\nLe code qu'on écrit n'est pas celui qu'on envoie aux navigateurs. On écrit des dizaines de modules, avec des noms\nlisibles, des commentaires, des dépendances de `node_modules`, parfois du TypeScript ou du JSX. Le navigateur, lui,\ngagne à recevoir peu de fichiers, compacts, mis en cache longtemps, et chargés seulement quand il en a besoin.\n\nEntre les deux, un **outil de build** transforme le premier en second. Vite est aujourd'hui l'outil le plus utilisé pour\nles nouveaux projets JavaScript ; il repose sur un **bundler**, Rolldown depuis Vite 8. Comprendre ce qu'il fait permet\nde configurer un projet sereinement, et de déboguer le code qui tourne vraiment en production.\n\n## Concept\n\n| Étape du build | Effet |\n| --- | --- |\n| résolution du graphe | à partir du point d'entrée, suivre chaque `import` jusqu'aux feuilles, `node_modules` compris |\n| transformation | TypeScript, JSX, CSS, images : tout devient du JavaScript, du CSS et des fichiers statiques |\n| suppression du code mort (*tree shaking*) | les exports jamais importés disparaissent |\n| découpage (*code splitting*) | chaque `import()` devient un fichier séparé, chargé à la demande |\n| minification | noms raccourcis, espaces et commentaires retirés |\n| noms hachés | `index-C-1IWzFg.js` : le nom change quand le contenu change, le cache peut durer un an |\n| source maps | un fichier `.map` qui relie le code produit au code source |\n\n| Commande Vite | Rôle |\n| --- | --- |\n| `vite` | serveur de développement, rechargement à chaud |\n| `vite build` | build de production dans `dist/` |\n| `vite preview` | sert `dist/` localement, pour vérifier le build |\n| `vite build --mode staging` | build avec les variables du mode `staging` |\n\n| Variable d'environnement | Visible dans le code client ? |\n| --- | --- |\n| `VITE_API_URL` dans `.env` | oui : `import.meta.env.VITE_API_URL`, écrite en clair dans le bundle |\n| `CLE_SECRETE` dans `.env` | non : sans le préfixe `VITE_`, elle vaut `undefined` côté client |\n| `import.meta.env.MODE`, `.DEV`, `.PROD` | oui : le mode courant |\n\n## Exemple\n\nUne petite application : une page, un module de prix dont un export n'est jamais utilisé, et un module de graphiques\nchargé à la demande.\n\n```js\n// src/prix.js\nexport const formaterPrix = (centimes) => `${(centimes / 100).toFixed(2).replace('.', ',')} €`;\nexport const fonctionJamaisUtilisee = () => 'CETTE_CHAINE_NE_DOIT_PAS_ETRE_DANS_LE_BUNDLE';\n```\n\n```js\n// src/main.js\nimport { formaterPrix } from './prix.js';\n\ndocument.querySelector('#prix').textContent = `${formaterPrix(4990)} — API : ${import.meta.env.VITE_API_URL}`;\nconsole.log('mode', import.meta.env.MODE, 'secret visible ?', import.meta.env.CLE_SECRETE);\n\ndocument.querySelector('#graphiques').addEventListener('click', async () => {\n  const { dessiner } = await import('./graphiques.js');\n  dessiner(document.querySelector('#prix'));\n});\n```\n\n```js\n// vite.config.js\nimport { defineConfig } from 'vite';\n\nexport default defineConfig({\n  build: { sourcemap: true },\n});\n```\n\nAvec `.env` qui contient `VITE_API_URL=http://localhost:3000` et `CLE_SECRETE=sk_ne_doit_pas_fuiter`, et\n`.env.production` qui contient `VITE_API_URL=https://api.boutique.exemple` :\n\n```text\n$ npx vite build\n✓ 7 modules transformed.\ndist/index.html                     0.28 kB │ gzip: 0.21 kB\ndist/assets/graphiques-CDUuu0RZ.js  0.12 kB │ gzip: 0.13 kB │ map: 0.27 kB\ndist/assets/index-C-1IWzFg.js       2.35 kB │ gzip: 1.20 kB │ map: 1.15 kB\n✓ built in 144ms\n```\n\nLa fin du fichier produit, minifié :\n\n```text\ndocument.querySelector(`#prix`).textContent=`${e(4990)} — API : https://api.boutique.exemple`,\nconsole.log(`mode`,`production`,`secret visible ?`,void 0), … await import(`./graphiques-CDUuu0RZ.js`) …\n//# sourceMappingURL=index-C-1IWzFg.js.map\n```\n\nTout ce qu'on attendait s'y lit : l'URL de production a été **écrite en dur**, le mode aussi ; la clé secrète, sans\npréfixe `VITE_`, est devenue `void 0` ; `fonctionJamaisUtilisee` a disparu ; le module de graphiques est un fichier\nséparé, au nom haché ; et une source map accompagne chaque fichier.\n\n## Comment ça fonctionne\n\n**Pourquoi assembler.** Le navigateur sait charger des modules ES un par un, mais une application réelle en compte des\ncentaines, avec les dépendances : autant de requêtes en cascade. Le bundler les regroupe en quelques fichiers, retire ce\nqui ne sert pas, compresse les noms, et découpe aux frontières `import()` pour que chaque page ne charge que son code.\nLes noms hachés permettent de dire au navigateur de garder ces fichiers en cache indéfiniment : une nouvelle version\nporte un nouveau nom, et seul `index.html`, qui les référence, doit être revalidé à chaque visite.\n\n**Le tree shaking.** Les modules ES déclarent statiquement ce qu'ils importent et exportent : le bundler sait, sans\nexécuter le code, que `fonctionJamaisUtilisee` n'est importée nulle part, et la retire. Il ne peut le faire que si le\nmodule n'a pas d'**effets de bord** à l'import : un module qui modifie une variable globale en étant importé doit être\ngardé. Le champ `\"sideEffects\": false` du `package.json` d'une bibliothèque lui garantit qu'il peut retirer tout module\nnon utilisé. Et l'on préfère importer une fonction précise plutôt qu'un objet entier par défaut, que le bundler ne peut\npas découper.\n\n**Vite en développement.** En développement, Vite ne regroupe pas l'application : il sert chaque module séparément au\nnavigateur, qui les charge nativement, et ne transforme que les fichiers demandés. Le démarrage est quasi instantané,\nmême sur un gros projet. Quand on enregistre un fichier, le rechargement à chaud (*HMR*) remplace ce module dans la page\nsans la recharger. En production, `vite build` produit au contraire des fichiers optimisés avec le bundler. On vérifie\ntoujours le build avec `vite preview` : certains problèmes n'apparaissent qu'en production.\n\n**Configurer par environnement.** Une même application tourne en développement, en préproduction et en production, avec\ndes URL d'API et des options différentes. Vite charge `.env`, puis `.env.[mode]`, puis leurs variantes `.local`\nignorées par Git ; le mode vaut `development` pour `vite`, `production` pour `vite build`, ou celui qu'on passe avec\n`--mode`. Seules les variables préfixées par `VITE_` sont exposées au code client, et elles sont **remplacées par leur\nvaleur au moment du build**, en clair dans le fichier produit. Deux conséquences : il ne faut jamais y mettre de\nsecret, et une valeur change seulement en reconstruisant l'application. Pour déployer le même build dans plusieurs\nenvironnements, on lit plutôt la configuration au démarrage, depuis un fichier `config.json` servi à côté, ou depuis\nle serveur.\n\n**Les source maps.** Une erreur en production signalée à `index-C-1IWzFg.js:1:1843` est illisible : tout le code tient\nsur une ligne aux noms raccourcis. La source map associe chaque position du code produit à un fichier, une ligne et une\ncolonne du code source, et souvent au code source lui-même. Les outils de développement du navigateur l'utilisent\nautomatiquement : on pose des points d'arrêt dans `main.js` et l'on voit des noms de variables lisibles. Les services\nde suivi d'erreurs, comme Sentry, l'utilisent pour afficher des piles d'appels lisibles.\n\n**Source maps en production.** Publiées avec l'application, elles permettent à n'importe qui de lire le code source,\ncommentaires compris. Ce n'est pas une faille en soi, le code client est de toute façon public, mais on peut préférer\n`sourcemap: 'hidden'` : les fichiers `.map` sont produits sans le commentaire qui les référence, et on les envoie\nseulement au service de suivi d'erreurs, sans les déployer.\n\n**Les autres outils.** Webpack a longtemps dominé et reste très répandu ; esbuild et Rolldown, écrits en Go et en Rust,\nsont extrêmement rapides ; Rollup reste une référence pour construire des bibliothèques ; les frameworks comme Next.js\nintègrent leur propre chaîne de build. Les concepts sont les mêmes partout : graphe, transformation, tree shaking,\ndécoupage, hachage, source maps.\n\n## Erreurs fréquentes\n\n**Mettre un secret dans une variable `VITE_`.** Elle est écrite en clair dans le bundle.\n\n**S'attendre à changer une variable `VITE_` sans reconstruire.** Elle est figée au moment du build.\n\n**Tester seulement avec le serveur de développement.** Vérifie le build avec `vite preview`.\n\n**Des modules avec effets de bord à l'import.** Ils empêchent le tree shaking ; déclare les effets, ou évite-les.\n\n**Mettre en cache `index.html` longtemps.** Les utilisateurs gardent une page qui référence d'anciens fichiers ; cache\nlong pour les fichiers hachés seulement.\n\n**Désactiver les source maps pour « cacher » le code.** Le code client est public ; produis-les au moins pour le suivi\nd'erreurs.\n\n## À retenir\n\n- Un bundler suit le graphe des imports, transforme, supprime le code mort, découpe aux `import()`, minifie et hache les\n  noms.\n- Vite : modules natifs et rechargement à chaud en développement, build optimisé en production, `preview` pour\n  vérifier.\n- Modes et fichiers `.env` ; seules les variables `VITE_` sont exposées, en clair et figées au build.\n- Noms hachés : cache long pour les fichiers, revalidation d'`index.html`.\n- Source maps pour déboguer le code minifié ; `hidden` pour les réserver au suivi d'erreurs.\n\n## Exercices\n\n1. Pour chaque variable, dis où la définir, si elle peut apparaître dans le bundle, et comment le code y accède : l'URL\n   de l'API publique, la clé publique d'un service de cartes prévue pour le navigateur, la clé secrète du prestataire de\n   paiement, et un indicateur qui active un bandeau « préproduction ».\n\n   :::indice\n   Qu'est-ce qui peut être lu par n'importe quel visiteur sans risque ?\n   :::\n\n   :::solution\n   - URL de l'API : `VITE_API_URL` dans `.env.production` et `.env.staging` ; publique, dans le bundle ;\n     `import.meta.env.VITE_API_URL`.\n   - Clé publique de cartes : `VITE_CARTES_CLE_PUBLIQUE` ; elle est conçue pour être visible, et on la restreint chez\n     le fournisseur aux domaines de l'application.\n   - Clé secrète de paiement : jamais côté client. Elle vit dans l'environnement du **serveur**, `process.env`, et le\n     client appelle une route du serveur qui utilise la clé.\n   - Indicateur de préproduction : `VITE_BANDEAU_PREPROD=true` dans `.env.staging`, lu comme\n     `import.meta.env.VITE_BANDEAU_PREPROD === 'true'`, puisque c'est une chaîne ; on construit avec\n     `vite build --mode staging`.\n   :::\n\n2. Une application affiche en production l'erreur `TypeError: Cannot read properties of undefined (reading 'nom') at\n   index-C-1IWzFg.js:1:1843`. Explique comment retrouver la ligne du code source, avec et sans service de suivi d'erreurs.\n\n   :::indice\n   Le fichier `.map` relie une position du code produit à une position du code source.\n   :::\n\n   :::solution\n   Avec un service de suivi d'erreurs comme Sentry, on envoie les source maps au service à chaque déploiement ; il\n   traduit automatiquement la pile d'appels, et l'on lit directement `src/panier.js:42`. Sans service, on ouvre les\n   outils de développement sur la page de production : si les source maps sont servies, l'onglet Sources affiche les\n   fichiers d'origine et la console traduit la pile. Si elles sont produites en mode `hidden`, on peut les charger\n   manuellement dans les outils de développement, ou traduire la position avec une bibliothèque comme `source-map` :\n\n   ```js\n   // Traduction d'une position avec la bibliothèque source-map (npm install source-map)\n   import { readFile } from 'node:fs/promises';\n   import { SourceMapConsumer } from 'source-map';\n\n   const carte = JSON.parse(await readFile('dist/assets/index-C-1IWzFg.js.map', 'utf8'));\n   const consommateur = await new SourceMapConsumer(carte);\n   console.log(consommateur.originalPositionFor({ line: 1, column: 1843 }));\n   // par exemple : { source: '../../src/panier.js', line: 42, column: 18, name: 'nom' }\n   ```\n\n   Dans tous les cas, il faut conserver les source maps de **chaque** version déployée : la carte d'une autre version ne\n   correspond pas.\n   :::\n\n3. Après un déploiement, certains utilisateurs voient une page blanche avec `Failed to fetch dynamically imported\n   module: /assets/graphiques-Ab12Cd.js`. Le serveur sert `index.html` avec `Cache-Control: max-age=31536000`. Explique\n   l'enchaînement, et donne la bonne politique de cache.\n\n   :::indice\n   Qui référence les noms hachés, et depuis quand l'utilisateur garde-t-il ce fichier ?\n   :::\n\n   :::solution\n   `index.html` est mis en cache un an : l'utilisateur garde l'ancienne page, qui référence les anciens fichiers hachés.\n   Le déploiement a remplacé ces fichiers par de nouveaux noms, et supprimé les anciens : le chargement échoue. La bonne\n   politique :\n\n   - `index.html` : `Cache-Control: no-cache`, pour qu'il soit revalidé à chaque visite ;\n   - fichiers hachés de `/assets/` : `Cache-Control: public, max-age=31536000, immutable`, car leur nom change avec leur\n     contenu ;\n   - conserver les fichiers de la version précédente pendant un moment, pour les onglets restés ouverts, et intercepter\n     l'échec de chargement pour proposer de recharger la page, comme on l'a vu au chapitre sur le lazy loading.\n   :::\n\n## Questions d'entretien\n\n- Que fait un bundler, et pourquoi en a-t-on encore besoin avec les modules ES natifs ?\n\n  :::indice\n  Nombre de requêtes, code mort, cache, transformations.\n  :::\n\n  :::reponse\n  Il part du point d'entrée, suit le graphe des imports, transforme ce que le navigateur ne comprend pas, comme\n  TypeScript ou JSX, retire le code non utilisé, regroupe les modules en quelques fichiers, découpe aux `import()`,\n  minifie et donne aux fichiers des noms hachés pour un cache long. Les modules natifs fonctionnent, mais une application\n  réelle en compte des centaines, avec les dépendances : charger chacun séparément créerait des cascades de requêtes, sans\n  suppression du code mort ni minification. En développement, Vite s'en passe justement, pour démarrer instantanément.\n  :::\n\n- Comment gères-tu la configuration par environnement d'une application front-end ?\n\n  :::indice\n  Variables exposées, figées au build, et jamais secrètes.\n  :::\n\n  :::reponse\n  Avec les modes et les fichiers `.env` de l'outil de build : seules les variables préfixées, `VITE_` avec Vite, sont\n  exposées au client, remplacées par leur valeur au build et donc visibles de tous ; je n'y mets aucun secret, et les\n  secrets restent sur le serveur. Si je veux déployer le même build dans plusieurs environnements, je charge la\n  configuration au démarrage, depuis un fichier servi par l'environnement ou une route du serveur, plutôt que de\n  reconstruire pour chacun.\n  :::\n\n- À quoi servent les source maps, et faut-il les publier en production ?\n\n  :::indice\n  Débogage, suivi d'erreurs, visibilité du code.\n  :::\n\n  :::reponse\n  Elles relient chaque position du code produit, minifié, à la position correspondante dans le code source. Les outils\n  de développement et les services de suivi d'erreurs s'en servent pour afficher des piles d'appels et des variables\n  lisibles. En production, les publier rend le code source lisible par tous, ce qui n'est pas une faille car le code\n  client est public, mais peut exposer des commentaires. Un bon compromis est de les produire en mode caché, et de les\n  envoyer seulement au service de suivi d'erreurs, en conservant celles de chaque version déployée.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-ci-cd-et-controles-automatiques",
+      "title": "CI/CD et contrôles de qualité automatiques",
+      "slug": "ci-cd-et-controles-automatiques",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "outillage-professionnel",
+      "order": 3,
+      "estimatedMinutes": 45,
+      "difficulty": 3,
+      "xp": 100,
+      "prerequisites": [
+        "javascript-build-vite-bundlers-et-source-maps",
+        "javascript-pull-requests-revue-et-workflows"
+      ],
+      "skills": [
+        "js-ci-cd"
+      ],
+      "tags": [
+        "javascript",
+        "outillage",
+        "ci"
+      ],
+      "contentPath": "javascript/outillage-professionnel/ci-cd-et-controles-automatiques/lesson.md",
+      "contentVersion": "9b6bde761aa5",
+      "body": "\n## Objectifs\n\n- Expliquer l'intégration continue et le déploiement continu, et ce qu'ils changent pour une équipe.\n- Écrire un workflow GitHub Actions qui installe, vérifie, teste et construit un projet JavaScript.\n- Choisir les contrôles automatiques : où les exécuter, dans quel ordre, avec quel coût.\n- Ajouter des vérifications rapides avant chaque commit, sans ralentir le travail.\n- Déployer automatiquement, en sécurité : secrets, droits minimaux, environnements, retour arrière.\n\n## Introduction\n\n« Ça marche sur ma machine » est la phrase la plus coûteuse du développement. Chaque poste a sa version de Node, ses\nfichiers non commités, ses variables d'environnement. L'**intégration continue**, ou CI, règle ce problème : à chaque\npoussée, un serveur neutre récupère le code, installe exactement les dépendances verrouillées, et lance toutes les\nvérifications. Si l'une échoue, tout le monde le sait, avant la fusion.\n\nLe **déploiement continu**, ou CD, prolonge la chaîne : un code qui a passé toutes les vérifications est mis en\nproduction automatiquement, ou sur simple approbation. Le déploiement devient un non-événement, plusieurs fois par jour,\nau lieu d'une opération risquée et redoutée.\n\n## Concept\n\n| Niveau | Quand | Contrôles | Durée visée |\n| --- | --- | --- | --- |\n| éditeur | pendant la frappe | lint, types, formatage à l'enregistrement | instantané |\n| crochet de commit | avant chaque commit | formatage et lint des fichiers modifiés | quelques secondes |\n| intégration continue | à chaque poussée et pull request | installation propre, lint, types, tests, build, audit | quelques minutes |\n| déploiement | après fusion dans `main` | build de production, migrations, déploiement, vérifications après mise en ligne | selon le projet |\n\n| Élément d'un workflow GitHub Actions | Rôle |\n| --- | --- |\n| `on:` | les événements déclencheurs : `push`, `pull_request`, planification |\n| `jobs:` | des tâches, parallèles par défaut, chacune sur une machine neuve |\n| `steps:` | les étapes d'une tâche : actions réutilisables (`uses`) ou commandes (`run`) |\n| `permissions:` | les droits du jeton de l'exécution, à réduire au minimum |\n| `secrets.*` | les secrets du dépôt, injectés sans apparaître dans les journaux |\n| `needs:`, `environment:` | l'ordre entre tâches, et les environnements protégés par une approbation |\n\n## Exemple\n\nLe workflow d'intégration continue du projet de ce cours, dans `.github/workflows/ci.yml` :\n\n```yaml\nname: CI\n\non:\n  push:\n  pull_request:\n\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: pnpm/action-setup@v4\n        with: { version: 10 }\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n          cache: pnpm\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm typecheck\n      - run: pnpm lint\n      - run: pnpm content:validate\n      - run: pnpm test\n      - run: pnpm build\n```\n\nChaque poussée, sur n'importe quelle branche, et chaque pull request déclenchent la tâche `verify`. Une machine neuve\nrécupère le code, installe pnpm et Node 22, restaure le cache des paquets, installe exactement le fichier de\nverrouillage, puis enchaîne les vérifications. La première qui échoue arrête tout, et la pull request affiche une croix\nrouge. C'est le même enchaînement que le script `pnpm verify` qu'on lance en local.\n\nUne version enrichie, avec les droits réduits, plusieurs versions de Node et un déploiement après fusion :\n\n```yaml\nname: CI/CD\n\non:\n  push:\n    branches: [main]\n  pull_request:\n\npermissions:\n  contents: read\n\nconcurrency:\n  group: ${{ github.workflow }}-${{ github.ref }}\n  cancel-in-progress: true\n\njobs:\n  verify:\n    runs-on: ubuntu-latest\n    strategy:\n      matrix:\n        node: [22, 24]\n    steps:\n      - uses: actions/checkout@v4\n      - uses: pnpm/action-setup@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: ${{ matrix.node }}\n          cache: pnpm\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm check\n      - run: pnpm test -- --coverage\n      - run: pnpm build\n\n  deploy:\n    needs: verify\n    if: github.ref == 'refs/heads/main'\n    runs-on: ubuntu-latest\n    environment: production\n    steps:\n      - uses: actions/checkout@v4\n      - uses: pnpm/action-setup@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 24\n          cache: pnpm\n      - run: pnpm install --frozen-lockfile\n      - run: pnpm build\n      - run: pnpm deploy:production\n        env:\n          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}\n```\n\n## Comment ça fonctionne\n\n**Une machine neuve, un état reproductible.** Chaque exécution part d'une machine vierge. Il n'y a ni `node_modules`\noublié, ni fichier local, ni variable d'environnement personnelle : si les vérifications passent, c'est grâce à ce qui\nest dans le dépôt. `--frozen-lockfile`, l'équivalent de `npm ci`, installe exactement le verrou, et échoue si le\n`package.json` a changé sans lui. Le cache des paquets accélère l'installation sans changer son résultat.\n\n**L'ordre des vérifications.** On place d'abord les vérifications rapides et fréquemment en échec, formatage, lint,\ntypes, puis les tests, puis le build : un échec est signalé le plus tôt possible. Une tâche qui prend plus de quelques\nminutes finit par être contournée ; on parallélise des tâches indépendantes, on met en cache, et on ne teste dans les\nmonorepos que les paquets modifiés et leurs dépendants.\n\n**Une matrice de versions.** `strategy.matrix` lance la même tâche plusieurs fois, par exemple avec Node 22 et 24 :\nutile pour une bibliothèque qui promet de fonctionner sur plusieurs versions, ou avant une montée de version. Une\napplication qui ne tourne qu'en Node 24 en production n'a besoin que de cette version, fixée comme dans son `.nvmrc`.\n\n**Des contrôles au service des relecteurs.** Tout ce qu'un outil sait vérifier ne doit plus apparaître en revue de code :\nformatage, lint, types, tests, build, couverture minimale si l'équipe y tient, audit des dépendances, détection de\nsecrets. Avec les vérifications obligatoires de la branche protégée, une pull request rouge ne peut pas être fusionnée.\nUn test qui échoue au hasard, dit *flaky*, doit être corrigé ou isolé immédiatement : sinon l'équipe apprend à ignorer\nle rouge, et l'intégration continue perd toute valeur.\n\n**Avant le commit : rapide et local.** Des crochets Git, installés par des outils comme `simple-git-hooks` ou Husky,\nlancent des vérifications avant chaque commit. Avec `lint-staged`, ils ne formatent et ne vérifient que les fichiers\nmodifiés : quelques secondes. On n'y met pas toute la suite de tests, trop lente : le crochet se contourne vite avec\n`--no-verify`, et c'est l'intégration continue qui fait foi.\n\n**Le déploiement continu.** La tâche `deploy` ne s'exécute qu'après le succès de `verify` (`needs`), et seulement sur\n`main`. L'environnement `production` peut exiger une approbation manuelle et restreindre ses secrets à cette tâche. Un\nbon déploiement est réversible : on garde les versions précédentes pour revenir en arrière en une commande, on applique\nles migrations de base compatibles avec l'ancienne et la nouvelle version, et on vérifie l'application juste après la\nmise en ligne. Beaucoup d'équipes déploient aussi chaque pull request dans un environnement de prévisualisation, avec\nsa propre URL, pour la relire en conditions réelles.\n\n**Sécuriser la chaîne.** Le pipeline a accès au code et aux secrets de déploiement : c'est une cible. On donne au jeton\nles droits minimaux avec `permissions`, on n'expose les secrets qu'aux tâches qui en ont besoin, et jamais aux pull\nrequests venues de dépôts externes. On fixe la version des actions tierces, idéalement par leur identifiant de commit\nplutôt que par une étiquette déplaçable, et on se méfie des commandes qui insèrent directement un titre de pull request\nou un nom de branche dans un script shell : c'est une injection de commande.\n\n## Erreurs fréquentes\n\n**Installer avec `npm install` ou `pnpm install` sans verrou figé.** L'intégration continue teste d'autres versions que\ncelles du dépôt.\n\n**Un pipeline de vingt minutes.** L'équipe l'attend, puis le contourne ; parallélise, mets en cache, filtre.\n\n**Ignorer un test instable.** Le rouge devient normal ; corrige-le ou isole-le tout de suite.\n\n**Mettre toute la suite de tests dans un crochet de commit.** Il sera contourné ; garde-le à quelques secondes.\n\n**Déployer sans vérifications préalables ni retour arrière.** Chaque déploiement devient un pari.\n\n**Donner au jeton du workflow tous les droits.** Réduis `permissions` au minimum.\n\n**Afficher un secret dans une commande.** Passe-le par une variable d'environnement de l'étape, jamais en argument.\n\n## À retenir\n\n- L'intégration continue vérifie chaque changement sur une machine neuve, à partir du dépôt seul.\n- Ordre : installation figée, formatage, lint, types, tests, build ; les plus rapides d'abord.\n- Les vérifications obligatoires protègent `main` ; les tests instables se corrigent immédiatement.\n- Crochets de commit rapides, limités aux fichiers modifiés ; l'intégration continue fait foi.\n- Déploiement continu : après les vérifications, sur `main`, dans un environnement protégé, réversible.\n- Droits minimaux, secrets ciblés, actions tierces épinglées : le pipeline est une cible.\n\n## Exercices\n\n1. Ce workflow fonctionne, mais contient quatre problèmes. Trouve-les et corrige-les.\n\n   ```yaml\n   name: CI\n   on: [push]\n   jobs:\n     test:\n       runs-on: ubuntu-latest\n       steps:\n         - uses: actions/checkout@v4\n         - uses: actions/setup-node@v4\n           with: { node-version: 22 }\n         - run: npm install\n         - run: npm run build\n         - run: npm test\n         - run: npm run lint\n         - run: echo \"Déploiement avec ${{ secrets.DEPLOY_TOKEN }}\" && ./deploy.sh ${{ secrets.DEPLOY_TOKEN }}\n   ```\n\n   :::indice\n   Installation, ordre des étapes, pull requests, et ce qui est déployé depuis n'importe quelle branche.\n   :::\n\n   :::solution\n   - `npm install` peut modifier le verrou : `npm ci`.\n   - L'ordre met le build, le plus lent, avant le lint, le plus rapide : lint d'abord.\n   - `on: [push]` ne déclenche rien pour les pull requests venant de dépôts externes, et le déploiement part de\n     **n'importe quelle** branche poussée, sans condition.\n   - Le secret est passé en argument de commande : il peut apparaître dans les journaux ou la liste des processus.\n\n   ```yaml\n   name: CI\n   on:\n     push:\n       branches: [main]\n     pull_request:\n   permissions:\n     contents: read\n   jobs:\n     verify:\n       runs-on: ubuntu-latest\n       steps:\n         - uses: actions/checkout@v4\n         - uses: actions/setup-node@v4\n           with: { node-version: 22, cache: npm }\n         - run: npm ci\n         - run: npm run lint\n         - run: npm test\n         - run: npm run build\n     deploy:\n       needs: verify\n       if: github.ref == 'refs/heads/main'\n       runs-on: ubuntu-latest\n       environment: production\n       steps:\n         - uses: actions/checkout@v4\n         - run: ./deploy.sh\n           env:\n             DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}\n   ```\n\n   Le script lit le jeton dans son environnement. La tâche de déploiement n'existe que sur `main`, après les\n   vérifications, dans un environnement protégé.\n   :::\n\n2. Configure des crochets de commit pour un projet npm : avant chaque commit, Prettier et ESLint doivent s'exécuter\n   uniquement sur les fichiers indexés, en corrigeant ce qui peut l'être. Donne les dépendances, la configuration et\n   l'explication de ce qui se passe au commit.\n\n   :::indice\n   `simple-git-hooks` installe le crochet, `lint-staged` restreint aux fichiers indexés.\n   :::\n\n   :::solution\n   ```json\n   {\n     \"scripts\": {\n       \"prepare\": \"simple-git-hooks\"\n     },\n     \"devDependencies\": {\n       \"lint-staged\": \"^17.5.0\",\n       \"simple-git-hooks\": \"^2.14.0\"\n     },\n     \"simple-git-hooks\": {\n       \"pre-commit\": \"npx lint-staged\"\n     },\n     \"lint-staged\": {\n       \"*.{js,mjs}\": [\"prettier --write\", \"eslint --fix\"],\n       \"*.{json,md,yml}\": [\"prettier --write\"]\n     }\n   }\n   ```\n\n   Au `npm install`, le script `prepare` installe le crochet dans `.git/hooks`. À chaque `git commit`, `lint-staged` ne\n   passe aux outils que les fichiers indexés, les formate et les corrige, puis les réindexe. Si ESLint trouve une erreur\n   qu'il ne sait pas corriger, le commit est refusé avec le message. L'ensemble prend quelques secondes ; la suite de\n   tests complète reste dans l'intégration continue, qui fait foi même si quelqu'un contourne le crochet.\n   :::\n\n3. Une équipe veut passer d'un déploiement manuel mensuel, stressant, à un déploiement continu. Propose les étapes de la\n   transition, dans l'ordre.\n\n   :::indice\n   On ne déploie automatiquement que ce qu'on sait vérifier, et on ne déploie souvent que ce qu'on sait annuler.\n   :::\n\n   :::solution\n   1. Rendre l'intégration continue fiable et rapide : installation figée, lint, types, tests, build, sur chaque pull\n      request, avec des vérifications obligatoires sur `main`, et aucun test instable.\n   2. Automatiser le déploiement actuel tel quel, en un script, déclenché à la main depuis le pipeline : il devient\n      reproductible et documenté.\n   3. Rendre le retour arrière trivial : versions précédentes conservées, migrations compatibles dans les deux sens,\n      procédure testée.\n   4. Ajouter la surveillance après mise en ligne : erreurs, temps de réponse, vérifications de santé, alertes.\n   5. Déployer automatiquement dans un environnement de préproduction à chaque fusion, puis en production sur\n      approbation, de plus en plus souvent.\n   6. Découper le travail en petites pull requests, avec des *feature flags* pour ce qui n'est pas prêt, et enfin\n      supprimer l'approbation manuelle quand la confiance est là.\n\n   Déployer souvent réduit le risque de chaque déploiement : peu de changements à la fois, faciles à diagnostiquer et à\n   annuler.\n   :::\n\n## Questions d'entretien\n\n- Qu'est-ce que l'intégration continue, et que mets-tu dans un pipeline ?\n\n  :::indice\n  Machine neuve, dépôt seul, vérifications ordonnées.\n  :::\n\n  :::reponse\n  C'est la vérification automatique de chaque changement poussé, sur une machine neuve, à partir du seul contenu du dépôt.\n  Mon pipeline installe exactement le fichier de verrouillage, puis enchaîne les vérifications des plus rapides aux plus\n  lentes : formatage, lint, types, tests, build, et selon les projets l'audit des dépendances et la détection de secrets.\n  Il tourne sur chaque pull request, ses vérifications sont obligatoires pour fusionner dans `main`, et il reste rapide,\n  quelques minutes, grâce au cache, à la parallélisation et au filtrage des paquets concernés.\n  :::\n\n- Intégration continue, livraison continue, déploiement continu : quelle différence ?\n\n  :::indice\n  Jusqu'où va l'automatisation ?\n  :::\n\n  :::reponse\n  L'intégration continue vérifie automatiquement chaque changement et l'intègre fréquemment dans la branche principale. La\n  livraison continue garantit que cette branche est toujours déployable, avec un déploiement automatisé déclenché par une\n  décision humaine. Le déploiement continu supprime cette décision : tout changement qui passe les vérifications part en\n  production. Chaque étape suppose la précédente, et le déploiement continu suppose en plus une surveillance et un retour\n  arrière fiables.\n  :::\n\n- Comment sécurises-tu un pipeline de CI/CD ?\n\n  :::indice\n  Droits, secrets, dépendances du pipeline, entrées non fiables.\n  :::\n\n  :::reponse\n  En réduisant les droits du jeton de l'exécution avec `permissions`, en n'exposant les secrets qu'aux tâches qui en ont\n  besoin, via des environnements protégés, et jamais aux pull requests de dépôts externes. En épinglant les actions tierces\n  par leur identifiant de commit. En ne passant jamais un secret en argument de commande. En traitant comme non fiables les\n  titres de pull request et noms de branche insérés dans des scripts. Et en protégeant la branche principale et les\n  environnements de production par des approbations.\n  :::\n",
+      "sections": [
+        "Objectifs",
+        "Introduction",
+        "Concept",
+        "Exemple",
+        "Comment ça fonctionne",
+        "Erreurs fréquentes",
+        "À retenir",
+        "Exercices",
+        "Questions d'entretien"
+      ]
+    },
+    {
+      "id": "javascript-eslint-prettier-et-verification-des-types",
+      "title": "ESLint, Prettier et vérification des types",
+      "slug": "eslint-prettier-et-verification-des-types",
+      "technology": "javascript",
+      "level": "intermediate",
+      "module": "outillage-professionnel",
+      "order": 1,
+      "estimatedMinutes": 40,
+      "difficulty": 3,
+      "xp": 90,
+      "prerequisites": [
+        "javascript-npm-et-package-json",
+        "javascript-nommage-et-petites-unites"
+      ],
+      "skills": [
+        "js-lint-format-types"
+      ],
+      "tags": [
+        "javascript",
+        "outillage",
+        "qualite"
+      ],
+      "contentPath": "javascript/outillage-professionnel/eslint-prettier-et-verification-des-types/lesson.md",
+      "contentVersion": "5a523cc78e3e",
+      "body": "\n## Objectifs\n\n- Distinguer trois outils complémentaires : le linter, le formateur et le vérificateur de types.\n- Configurer ESLint avec le format de configuration à plat, et choisir des règles qui attrapent de vrais bugs.\n- Déléguer toute la mise en forme à Prettier, et éviter les conflits avec ESLint.\n- Vérifier les types d'un projet JavaScript avec JSDoc et TypeScript, sans le réécrire.\n- Brancher ces outils sur l'éditeur et sur des scripts npm.\n\n## Introduction\n\nRelire le code d'un collègue pour lui signaler un `==` au lieu de `===`, une variable inutilisée ou une indentation\nirrégulière est une perte de temps pour tout le monde. Ce travail mécanique appartient à des outils, qui le font\ninstantanément, sans oubli et sans froisser personne. Le temps humain se consacre alors à ce qu'aucun outil ne sait\njuger : le besoin, la conception, la justesse des règles métier.\n\nTrois outils se partagent ce travail en JavaScript. **ESLint** cherche les erreurs et les pratiques risquées.\n**Prettier** met le code en forme. **TypeScript**, même sur un projet en JavaScript, vérifie que les valeurs ont le type\nattendu.\n\n## Concept\n\n| Outil | Question à laquelle il répond | Exemple de détection |\n| --- | --- | --- |\n| ESLint, le linter | ce code contient-il une erreur probable ou une pratique risquée ? | variable inutilisée, `==`, expression sans effet |\n| Prettier, le formateur | ce code est-il présenté selon la convention ? | indentation, guillemets, points-virgules, longueur des lignes |\n| TypeScript, `tsc` | les valeurs ont-elles les types attendus ? | propriété inexistante, chaîne passée à la place d'un nombre |\n\n| Script npm | Commande | Modifie les fichiers ? |\n| --- | --- | --- |\n| `lint` | `eslint .` | non |\n| `lint:fix` | `eslint . --fix` | oui, pour les règles réparables |\n| `format` | `prettier --write .` | oui |\n| `format:check` | `prettier --check .` | non : pour l'intégration continue |\n| `typecheck` | `tsc --noEmit` | non |\n\n## Exemple\n\nUn fichier écrit à la hâte, avec des annotations JSDoc de types :\n\n```js\n// @ts-check\n\n/**\n * @param {{ poids: number, total: number }} commande\n * @returns {number}\n */\nexport function fraisExpress(commande) {\n  let frais = 9.9\n  const inutile = 'debug'\n  if (commande.poids > 5) frais = frais + (commande.poids - 5) * 2\n  if (commande.total > 100) frais == 0\n  if (commande.pays == 'FR') frais -= 1\n  return frais\n}\n\nfraisExpress({ poids: '3', total: 50 })\n```\n\nLa configuration d'ESLint, au format à plat, dans `eslint.config.js` :\n\n```js\nimport js from '@eslint/js';\nimport globals from 'globals';\n\nexport default [\n  { ignores: ['dist/', 'coverage/'] },\n  js.configs.recommended,\n  {\n    files: ['**/*.js'],\n    languageOptions: { globals: globals.node },\n    rules: {\n      eqeqeq: 'error',\n      'no-unused-expressions': 'error',\n      'prefer-const': 'error',\n    },\n  },\n];\n```\n\nLes trois outils, lancés sur ce fichier :\n\n```text\n$ npx eslint src\nsrc/frais.js\n   9:9   error  'inutile' is assigned a value but never used                           no-unused-vars\n  11:29  error  Expected an assignment or function call and instead saw an expression  no-unused-expressions\n  11:35  error  Expected '===' and instead saw '=='                                    eqeqeq\n  12:21  error  Expected '===' and instead saw '=='                                    eqeqeq\n✖ 4 problems (4 errors, 0 warnings)\n\n$ npx prettier --check src\n[warn] src/frais.js\n[warn] Code style issues found in the above file. Run Prettier with --write to fix.\n\n$ npx tsc --noEmit\nsrc/frais.js(12,16): error TS2339: Property 'pays' does not exist on type '{ poids: number; total: number; }'.\nsrc/frais.js(16,16): error TS2322: Type 'string' is not assignable to type 'number'.\n```\n\nChaque outil trouve ce que les autres ne voient pas. ESLint repère le bug de la ligne 11, `frais == 0`, une comparaison\ndont le résultat est ignoré, celui de la revue de code du chapitre précédent. TypeScript repère une propriété `pays` qui\nn'existe pas et un poids passé en chaîne. Prettier ne juge rien : il remet en forme.\n\n## Comment ça fonctionne\n\n**ESLint analyse le code sans l'exécuter.** Il le transforme en arbre syntaxique, et chaque règle parcourt cet arbre à\nla recherche d'un motif : une variable déclarée mais jamais lue, une expression qui ne fait rien, une comparaison\nlâche. `js.configs.recommended` active les règles qui signalent presque toujours un bug ; on ajoute celles qui\ncorrespondent aux conventions de l'équipe. Une règle se règle à `'off'`, `'warn'` ou `'error'`, et seules les erreurs\nfont échouer la commande. Beaucoup de règles se corrigent automatiquement avec `--fix`.\n\n**La configuration à plat.** Depuis ESLint 9, la configuration est un tableau d'objets dans `eslint.config.js`, lus dans\nl'ordre : chaque objet peut viser des fichiers avec `files`, déclarer les globales de l'environnement avec\n`languageOptions.globals`, ajouter des extensions et régler des règles. Les anciens fichiers `.eslintrc` ne sont plus\nlus. Des extensions ajoutent des règles pour React, pour les imports, pour les tests ou pour TypeScript.\n\n**Prettier décide de la forme, une fois pour toutes.** Prettier réimprime tout le fichier selon ses règles : il ne\npropose pas, il impose. C'est justement son intérêt : les débats sur les guillemets et les virgules disparaissent, les\ndiffs ne contiennent plus que des changements de fond, et le code a partout le même aspect. Il n'a que quelques options,\ndans `.prettierrc` : guillemets simples, largeur de ligne, virgules finales. On ne laisse pas ESLint s'occuper de la mise\nen forme : ses règles de style entreraient en conflit avec Prettier. La configuration recommandée d'ESLint n'en contient\nplus, et `eslint-config-prettier` désactive celles qu'une extension ajouterait.\n\n**Des types sans réécrire en TypeScript.** Le commentaire `// @ts-check`, ou l'option `checkJs` dans un `tsconfig.json`,\ndemande à TypeScript de vérifier des fichiers JavaScript. Les annotations JSDoc, `@param`, `@returns`, `@typedef`,\ndéclarent les types attendus ; TypeScript en déduit beaucoup d'autres tout seul. `tsc --noEmit` vérifie sans produire de\nfichiers. C'est un excellent premier pas vers TypeScript, que la partie suivante du cours aborde, et beaucoup de\nbibliothèques s'en contentent.\n\n**Dans l'éditeur, puis partout.** Les extensions d'ESLint et de Prettier pour l'éditeur soulignent les problèmes pendant\nla frappe et formatent à l'enregistrement : la plupart des erreurs disparaissent avant même le commit. Les mêmes\nvérifications tournent ensuite dans des scripts npm, lancés par l'intégration continue : ce qui passe sur un poste passe\npartout, parce que les versions des outils sont fixées dans le `package.json` et le fichier de verrouillage.\n\n**Des règles au service de l'équipe.** Chaque règle doit attraper un vrai problème ou appliquer une vraie convention.\nUne remarque qui revient en revue de code devient une règle ; une règle que tout le monde désactive avec des\ncommentaires `eslint-disable` doit être supprimée ou assouplie. Désactiver une règle pour une ligne se justifie, avec un\ncommentaire qui explique pourquoi.\n\n## Erreurs fréquentes\n\n**Confier la mise en forme à ESLint et à Prettier à la fois.** Les deux se contredisent ; Prettier formate, ESLint\ncherche les erreurs.\n\n**Lancer `--fix` ou `--write` en intégration continue.** L'intégration continue vérifie, avec `--check` ; elle ne\nréécrit pas le code.\n\n**Accumuler des centaines d'avertissements.** Plus personne ne les lit ; une règle est une erreur ou n'existe pas.\n\n**Désactiver une règle sans explication.** Un `eslint-disable` doit dire pourquoi.\n\n**Installer les outils globalement.** Les versions divergent entre postes ; installe-les en `devDependencies`.\n\n**Écrire des types JSDoc sans les faire vérifier.** Sans `@ts-check` ou `checkJs`, ce ne sont que des commentaires.\n\n## À retenir\n\n- ESLint trouve les erreurs probables, Prettier met en forme, TypeScript vérifie les types.\n- Configuration à plat d'ESLint dans `eslint.config.js` : `recommended`, globales, règles de l'équipe.\n- Prettier impose la forme ; pas de règles de style dans ESLint.\n- `// @ts-check` ou `checkJs`, des annotations JSDoc et `tsc --noEmit` vérifient un projet JavaScript.\n- Éditeur pour le retour immédiat, scripts npm en mode vérification pour l'intégration continue.\n\n## Exercices\n\n1. Pour chaque problème, indique quel outil le signale : ESLint, Prettier ou TypeScript avec `checkJs`.\n   - a) Un appel `total.toFixed()` sur une variable qui peut valoir `undefined`.\n   - b) Une ligne de 180 caractères.\n   - c) Une variable importée mais jamais utilisée.\n   - d) Un `if (x = 3)` au lieu de `if (x === 3)`.\n   - e) Des guillemets doubles dans un projet qui utilise des simples.\n   - f) Un objet passé à une fonction sans une propriété obligatoire décrite en JSDoc.\n\n   :::indice\n   Style : formateur. Motif risqué : linter. Types des valeurs : vérificateur de types.\n   :::\n\n   :::solution\n   - a) TypeScript, en mode strict : il sait que la valeur peut être `undefined`.\n   - b) Prettier, qui revient à la ligne selon la largeur configurée.\n   - c) ESLint, règle `no-unused-vars`.\n   - d) ESLint, règle `no-cond-assign`, incluse dans la configuration recommandée.\n   - e) Prettier, avec l'option `singleQuote: true`.\n   - f) TypeScript, qui compare l'objet au type déclaré par `@param`.\n   :::\n\n2. Écris le `package.json` des scripts de qualité d'un projet, avec : lint, correction automatique, formatage,\n   vérification du formatage, vérification des types, et un script `check` pour l'intégration continue qui lance toutes\n   les vérifications sans rien modifier. Ajoute une configuration Prettier en guillemets simples et 110 caractères.\n\n   :::indice\n   Les scripts de l'intégration continue utilisent `--check` et `--noEmit`, jamais `--fix` ni `--write`.\n   :::\n\n   :::solution\n   ```json\n   {\n     \"scripts\": {\n       \"lint\": \"eslint .\",\n       \"lint:fix\": \"eslint . --fix\",\n       \"format\": \"prettier --write .\",\n       \"format:check\": \"prettier --check .\",\n       \"typecheck\": \"tsc --noEmit\",\n       \"check\": \"npm run format:check && npm run lint && npm run typecheck\"\n     }\n   }\n   ```\n\n   ```json\n   {\n     \"singleQuote\": true,\n     \"printWidth\": 110\n   }\n   ```\n\n   La seconde configuration va dans `.prettierrc`. `check` s'arrête à la première vérification qui échoue ; un\n   développeur lance `npm run format` et `npm run lint:fix` en local pour corriger, puis `npm run check` pour s'assurer\n   que l'intégration continue passera.\n   :::\n\n3. Ajoute des annotations JSDoc à cette fonction pour que `tsc` signale l'appel erroné, puis corrige l'appel.\n\n   ```js\n   // @ts-check\n   export function remise(prix, pourcentage) {\n     return Math.round(prix * (1 - pourcentage / 100) * 100) / 100;\n   }\n\n   remise('49.90', 10);\n   ```\n\n   :::indice\n   `@param {number} prix`, et un type de retour.\n   :::\n\n   :::solution\n   ```js\n   // @ts-check\n\n   /**\n    * Applique une remise en pourcentage et arrondit au centime.\n    * @param {number} prix Prix en euros.\n    * @param {number} pourcentage Entre 0 et 100.\n    * @returns {number}\n    */\n   export function remise(prix, pourcentage) {\n     return Math.round(prix * (1 - pourcentage / 100) * 100) / 100;\n   }\n\n   console.log(remise(49.9, 10)); // 44.91\n   ```\n\n   Avec l'appel d'origine, `tsc --noEmit` signale : `Argument of type 'string' is not assignable to parameter of type\n   'number'`. Sans vérification, `'49.90' * …` aurait fonctionné par conversion implicite ici, mais la même erreur avec\n   une addition, `'49.90' + 5`, aurait produit `'49.905'`. Le type documente et vérifie à la fois.\n   :::\n\n## Questions d'entretien\n\n- Quelle différence entre ESLint et Prettier ?\n\n  :::indice\n  Erreurs probables contre mise en forme.\n  :::\n\n  :::reponse\n  ESLint est un linter : il analyse le code pour trouver des erreurs probables et des pratiques risquées, comme une\n  variable inutilisée, une comparaison lâche ou une expression sans effet, et applique des conventions de code. Prettier\n  est un formateur : il réimprime le code selon une présentation fixe, indentation, guillemets, retours à la ligne, sans\n  juger le fond. On les utilise ensemble, en laissant la mise en forme à Prettier seul pour éviter les conflits, avec\n  `eslint-config-prettier` si une extension ajoute des règles de style.\n  :::\n\n- Comment vérifier les types d'un projet JavaScript sans le migrer vers TypeScript ?\n\n  :::indice\n  Un commentaire, une option, des annotations.\n  :::\n\n  :::reponse\n  Avec TypeScript en mode vérification : `// @ts-check` en tête de fichier, ou `allowJs` et `checkJs` dans un\n  `tsconfig.json`, puis `tsc --noEmit` dans un script et en intégration continue. Les types s'écrivent en JSDoc, avec\n  `@param`, `@returns`, `@typedef`, et TypeScript infère le reste. On obtient une grande partie des bénéfices, erreurs\n  détectées, autocomplétion, documentation vérifiée, sans étape de compilation, et c'est une migration progressive\n  possible vers TypeScript.\n  :::\n\n- Comment éviter que les outils de qualité deviennent une gêne ?\n\n  :::indice\n  Règles utiles, retour immédiat, pas d'avertissements ignorés.\n  :::\n\n  :::reponse\n  En choisissant des règles qui attrapent de vrais problèmes, et en supprimant celles que l'équipe contourne sans cesse.\n  En donnant un retour immédiat dans l'éditeur, avec formatage à l'enregistrement, pour que les corrections se fassent\n  au fil de l'eau. En traitant les avertissements comme des erreurs ou en les supprimant, pour qu'aucune liste ignorée ne\n  s'accumule. Et en rendant les commandes identiques sur les postes et en intégration continue, avec des versions fixées.\n  :::\n",
       "sections": [
         "Objectifs",
         "Introduction",
@@ -39529,6 +39988,246 @@
       "contentVersion": "7fcf37535747"
     },
     {
+      "id": "javascript-corriger-prouver-mesurer-et-relire-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-corriger-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Un colis de 5 kg est facturé comme un colis lourd parce que la comparaison est `poids < 5`. Quelle correction traite la cause ?\n",
+          "options": [
+            "Remplacer la comparaison par poids <= 5, avec une constante qui dit que la limite est incluse",
+            "Ajouter if (poids === 5) return base; avant le calcul",
+            "Arrondir le poids à l'entier inférieur",
+            "Rembourser les clients sans modifier le code"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le cas particulier corrige le symptôme signalé mais laisse la règle fausse. La cause est une frontière exclusive au lieu d'inclusive.\n",
+          "skills": [
+            "js-fix-and-review"
+          ]
+        },
+        {
+          "id": "js-corriger-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Comment vérifier qu'un test de régression protège vraiment contre le bug ?\n",
+          "options": [
+            "Annuler temporairement la correction et constater que le test échoue",
+            "Lancer le test deux fois de suite",
+            "Vérifier qu'il passe sur la branche principale",
+            "Augmenter la couverture de code"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un test qui passe aussi sans la correction ne prouve rien. Il doit être rouge sur la version fautive et vert avec la correction.\n",
+          "skills": [
+            "js-fix-and-review"
+          ]
+        },
+        {
+          "id": "js-corriger-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Qu'est-ce qui caractérise un bon script de réparation de données ?\n",
+          "options": [
+            "Il est idempotent : une seconde exécution ne produit aucun effet supplémentaire",
+            "Il est testé sur une copie des données et relu",
+            "Il journalise chaque modification",
+            "Il s'exécute directement en production sans mode simulation, pour aller plus vite"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Une réparation modifie des données réelles : elle se prépare comme un déploiement, avec simulation, relecture et traces.\n",
+          "skills": [
+            "js-fix-and-review"
+          ]
+        },
+        {
+          "id": "js-corriger-q4",
+          "type": "true_false",
+          "difficulty": 2,
+          "question": "Un postmortem sans reproche a pour but d'identifier la personne responsable de l'erreur.\n",
+          "answer": false,
+          "explanation": "Il cherche les facteurs du système qui ont permis à l'erreur de passer, et débouche sur des actions concrètes. Chercher un coupable pousse à cacher les erreurs.\n",
+          "skills": [
+            "js-fix-and-review"
+          ]
+        }
+      ],
+      "chapterId": "javascript-corriger-prouver-mesurer-et-relire",
+      "technology": "javascript",
+      "contentPath": "javascript/debogage-application-reelle/corriger-prouver-mesurer-et-relire/quiz.yaml",
+      "contentVersion": "5a024720f865"
+    },
+    {
+      "id": "javascript-identifier-reproduire-et-isoler-un-bug-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-isoler-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Environ combien d'essais faut-il à git bisect pour trouver le commit fautif parmi 1 000 commits ?\n",
+          "options": [
+            "Environ 10",
+            "Environ 100",
+            "Environ 500",
+            "1 000"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Chaque essai divise l'intervalle par deux : log₂(1 000) vaut environ 10.\n",
+          "skills": [
+            "js-bug-isolation"
+          ]
+        },
+        {
+          "id": "js-isoler-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que doit renvoyer le script passé à git bisect run quand le bug n'est pas présent ?\n",
+          "options": [
+            "Le code de sortie 0",
+            "Le code de sortie 1",
+            "Le code de sortie 125",
+            "N'importe quel texte contenant « good »"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "0 signifie bon, 125 impossible à tester, et un autre code jusqu'à 127 signifie mauvais. C'est le code de sortie qui compte, pas l'affichage.\n",
+          "skills": [
+            "js-bug-isolation"
+          ]
+        },
+        {
+          "id": "js-isoler-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles informations rendent un signalement de bug exploitable ?\n",
+          "options": [
+            "Le comportement attendu et le comportement obtenu",
+            "Les conditions : données, version, environnement",
+            "La fréquence d'apparition",
+            "Une supposition sur la ligne de code fautive, à la place des faits"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "On sépare les faits observés des suppositions. Une hypothèse est utile, mais elle ne remplace pas les faits.\n",
+          "skills": [
+            "js-bug-isolation"
+          ]
+        },
+        {
+          "id": "js-isoler-q4",
+          "type": "true_false",
+          "difficulty": 4,
+          "question": "`tableau.forEach(async (x) => { … })` attend la fin de chaque callback asynchrone avant de continuer.\n",
+          "answer": false,
+          "explanation": "forEach ignore les promesses renvoyées par ses callbacks. Pour attendre, on utilise Promise.all avec map, ou une boucle for...of avec await.\n",
+          "skills": [
+            "js-bug-isolation"
+          ]
+        }
+      ],
+      "chapterId": "javascript-identifier-reproduire-et-isoler-un-bug",
+      "technology": "javascript",
+      "contentPath": "javascript/debogage-application-reelle/identifier-reproduire-et-isoler-un-bug/quiz.yaml",
+      "contentVersion": "530f9d84c090"
+    },
+    {
+      "id": "javascript-lire-une-codebase-et-tracer-une-requete-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-lecture-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pour comprendre pourquoi une ligne de code étrange existe, quel est le meilleur premier réflexe ?\n",
+          "options": [
+            "git blame, puis lire le commit, la pull request et le ticket associés",
+            "Supprimer la ligne et voir si les tests passent encore",
+            "Réécrire la fonction",
+            "Ajouter un commentaire « à vérifier »"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un code étrange traite souvent un cas particulier documenté dans son historique. Le supprimer sans comprendre réintroduit parfois un bug ancien.\n",
+          "skills": [
+            "js-codebase-reading"
+          ]
+        },
+        {
+          "id": "js-lecture-q2",
+          "type": "multiple_choice",
+          "difficulty": 4,
+          "question": "Que permet AsyncLocalStorage dans un serveur Node ?\n",
+          "options": [
+            "Retrouver un contexte propre à chaque requête, même après des await, sans le passer en paramètre",
+            "Stocker des données dans le navigateur du client",
+            "Partager une variable entre toutes les requêtes",
+            "Accélérer les requêtes asynchrones"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Tout ce qui est appelé depuis stockage.run(valeur, fonction) retrouve la valeur avec getStore(), et deux requêtes simultanées ont chacune leur contexte.\n",
+          "skills": [
+            "js-codebase-reading"
+          ]
+        },
+        {
+          "id": "js-lecture-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Qu'est-ce qui aide à suivre une requête dans des journaux de production ?\n",
+          "options": [
+            "Un identifiant de corrélation dans chaque ligne",
+            "Des lignes JSON avec des champs stables",
+            "Le renvoi de l'identifiant au client, pour qu'il puisse le citer",
+            "Un débogueur attaché au serveur de production"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Un débogueur suspend toutes les requêtes du serveur : on reproduit le problème en local.\n",
+          "skills": [
+            "js-codebase-reading"
+          ]
+        },
+        {
+          "id": "js-lecture-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Les tests d'un module sont une bonne source pour comprendre le comportement attendu de ce module.\n",
+          "answer": true,
+          "explanation": "Ils décrivent le comportement voulu par des exemples exécutables, et les lancer vérifie qu'on a bien compris.\n",
+          "skills": [
+            "js-codebase-reading"
+          ]
+        }
+      ],
+      "chapterId": "javascript-lire-une-codebase-et-tracer-une-requete",
+      "technology": "javascript",
+      "contentPath": "javascript/debogage-application-reelle/lire-une-codebase-et-tracer-une-requete/quiz.yaml",
+      "contentVersion": "9f57c4e54d5a"
+    },
+    {
       "id": "javascript-debug-console-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -42230,6 +42929,246 @@
       "contentVersion": "3fd7303aa889"
     },
     {
+      "id": "javascript-branches-fusions-conflits-et-rebase-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-branches-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Qu'est-ce qu'une branche Git ?\n",
+          "options": [
+            "Une étiquette mobile qui pointe vers un commit",
+            "Une copie complète du dépôt",
+            "Un dossier séparé du projet",
+            "Une liste de fichiers modifiés"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une branche ne contient que l'identifiant d'un commit ; commiter la fait avancer. C'est pourquoi en créer une ne coûte rien.\n",
+          "skills": [
+            "js-git-branches"
+          ]
+        },
+        {
+          "id": "js-branches-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Après un rebase, pourquoi les commits de la branche ont-ils changé d'identifiant ?\n",
+          "options": [
+            "Ils ont été rejoués sur un autre parent : ce sont de nouveaux commits",
+            "Git renumérote les commits à chaque rebase pour les trier",
+            "Parce que le message a été modifié automatiquement",
+            "Ils n'ont pas changé : seul l'affichage diffère"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'identifiant dépend du contenu et du parent. Rejouer un commit au-dessus d'un autre parent crée un nouveau commit.\n",
+          "skills": [
+            "js-git-branches"
+          ]
+        },
+        {
+          "id": "js-branches-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Que faut-il faire avant de valider la résolution d'un conflit ?\n",
+          "options": [
+            "Comprendre les deux changements en conflit",
+            "Retirer tous les marqueurs <<<<<<<, ======= et >>>>>>>",
+            "Lancer les tests",
+            "Choisir systématiquement sa propre version"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Un conflit oppose deux changements voulus : le résultat correct combine parfois les deux. Garder sa version par réflexe efface le travail de quelqu'un d'autre.\n",
+          "skills": [
+            "js-git-branches"
+          ]
+        },
+        {
+          "id": "js-branches-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Après un git reset --hard, les commits annulés sont définitivement perdus.\n",
+          "answer": false,
+          "explanation": "git reflog garde les positions récentes de HEAD : on y retrouve l'identifiant et on le récupère avec une branche. Seules les modifications jamais commitées sont perdues.\n",
+          "skills": [
+            "js-git-branches"
+          ]
+        }
+      ],
+      "chapterId": "javascript-branches-fusions-conflits-et-rebase",
+      "technology": "javascript",
+      "contentPath": "javascript/git-et-collaboration/branches-fusions-conflits-et-rebase/quiz.yaml",
+      "contentVersion": "4dacb678d69a"
+    },
+    {
+      "id": "javascript-fondamentaux-de-git-et-commits-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-git-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quelle commande montre exactement ce qui partira dans le prochain commit ?\n",
+          "options": [
+            "git diff --staged",
+            "git diff",
+            "git log -p",
+            "git status --ignored"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "git diff --staged compare l'index au dernier commit. git diff seul montre les modifications pas encore ajoutées à l'index.\n",
+          "skills": [
+            "js-git-basics"
+          ]
+        },
+        {
+          "id": "js-git-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quel message suit le format Conventional Commits pour une correction de bug ?\n",
+          "options": [
+            "fix(panier): refuser les remises négatives",
+            "Fixed bug",
+            "panier: fix",
+            "FIX - remises"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un type, une portée facultative entre parenthèses, deux-points, puis un sujet court qui dit ce qui change.\n",
+          "skills": [
+            "js-git-basics"
+          ]
+        },
+        {
+          "id": "js-git-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Qu'est-ce qui caractérise un commit atomique ?\n",
+          "options": [
+            "Il réalise une seule intention",
+            "Il laisse le projet dans un état où les tests passent",
+            "Il peut être annulé proprement avec git revert",
+            "Il regroupe toutes les modifications de la journée"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Regrouper une journée de travail mélange plusieurs intentions : impossible à relire ou à annuler séparément.\n",
+          "skills": [
+            "js-git-basics"
+          ]
+        },
+        {
+          "id": "js-git-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "git commit --amend modifie le dernier commit sans changer son identifiant.\n",
+          "answer": false,
+          "explanation": "L'identifiant dépend du contenu, message compris : --amend crée un nouveau commit. C'est pourquoi on ne l'utilise que sur un commit non partagé.\n",
+          "skills": [
+            "js-git-basics"
+          ]
+        }
+      ],
+      "chapterId": "javascript-fondamentaux-de-git-et-commits",
+      "technology": "javascript",
+      "contentPath": "javascript/git-et-collaboration/fondamentaux-de-git-et-commits/quiz.yaml",
+      "contentVersion": "6a525118819b"
+    },
+    {
+      "id": "javascript-pull-requests-revue-et-workflows-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-pr-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Pourquoi garder les pull requests petites ?\n",
+          "options": [
+            "Parce que la qualité de la relecture baisse avec la taille du diff",
+            "Parce que les outils refusent les gros diffs",
+            "Pour avoir plus de commits dans l'historique",
+            "Parce que l'intégration continue ne teste que les petits changements"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Sur quelques dizaines de lignes, on lit chaque ligne ; sur des milliers, on survole. Découper permet une vraie revue.\n",
+          "skills": [
+            "js-git-collaboration"
+          ]
+        },
+        {
+          "id": "js-pr-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Par quoi un relecteur devrait-il commencer ?\n",
+          "options": [
+            "Le besoin et la conception du changement",
+            "Le formatage et les espaces",
+            "Les noms de variables",
+            "Le nombre de commits"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un problème de conception rend les remarques de détail inutiles. Le style est d'ailleurs le rôle des outils.\n",
+          "skills": [
+            "js-git-collaboration"
+          ]
+        },
+        {
+          "id": "js-pr-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles règles protègent utilement la branche main ?\n",
+          "options": [
+            "Des vérifications d'intégration continue obligatoires avant fusion",
+            "Un nombre minimal d'approbations",
+            "L'interdiction de pousser directement sur main",
+            "Autoriser la fusion sans revue le vendredi soir pour livrer plus vite"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Les règles valent justement pour les livraisons pressées, où les erreurs sont les plus probables.\n",
+          "skills": [
+            "js-git-collaboration"
+          ]
+        },
+        {
+          "id": "js-pr-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Avec le développement sur le tronc, une fonctionnalité inachevée peut être fusionnée dans main si elle est cachée par un feature flag.\n",
+          "answer": true,
+          "explanation": "Le flag garde la fonctionnalité invisible pour les utilisateurs, tout en permettant d'intégrer de petits changements chaque jour.\n",
+          "skills": [
+            "js-git-collaboration"
+          ]
+        }
+      ],
+      "chapterId": "javascript-pull-requests-revue-et-workflows",
+      "technology": "javascript",
+      "contentPath": "javascript/git-et-collaboration/pull-requests-revue-et-workflows/quiz.yaml",
+      "contentVersion": "2ef053724ebc"
+    },
+    {
       "id": "javascript-composition-quiz",
       "kind": "QUIZ",
       "questions": [
@@ -44884,6 +45823,245 @@
       "technology": "javascript",
       "contentPath": "javascript/operateurs/ternaire-et-precedence/quiz.yaml",
       "contentVersion": "593d900cd422"
+    },
+    {
+      "id": "javascript-build-vite-bundlers-et-source-maps-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-build-q1",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Le fichier .env contient CLE_SECRETE=sk_… . Que vaut import.meta.env.CLE_SECRETE dans le code client construit par Vite ?\n",
+          "options": [
+            "undefined : seules les variables préfixées par VITE_ sont exposées",
+            "La valeur de la clé, en clair dans le bundle",
+            "La valeur chiffrée de la clé",
+            "Une erreur de build"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Vite n'expose au client que les variables VITE_. Dans le build observé, l'accès est devenu void 0.\n",
+          "skills": [
+            "js-build-tools"
+          ]
+        },
+        {
+          "id": "js-build-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Pourquoi les fichiers produits portent-ils des noms comme index-C-1IWzFg.js ?\n",
+          "options": [
+            "Pour pouvoir les mettre en cache très longtemps : le nom change quand le contenu change",
+            "Pour cacher le code aux visiteurs",
+            "Parce que les navigateurs refusent les noms lisibles",
+            "Pour indiquer la date du build"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Le hachage dépend du contenu. Une nouvelle version a un nouveau nom : le navigateur peut garder les anciens fichiers en cache sans risque de servir une version périmée.\n",
+          "skills": [
+            "js-build-tools"
+          ]
+        },
+        {
+          "id": "js-build-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Qu'est-ce qui empêche le bundler de retirer un export inutilisé ?\n",
+          "options": [
+            "Le module a des effets de bord à l'import, comme modifier une variable globale",
+            "Le code importe un objet entier par défaut au lieu de fonctions précises",
+            "L'export est une fonction fléchée",
+            "Le fichier utilise des guillemets simples"
+          ],
+          "answer": [
+            0,
+            1
+          ],
+          "explanation": "Le tree shaking repose sur des imports et exports statiques sans effets de bord. La syntaxe de la fonction ou le style n'y changent rien.\n",
+          "skills": [
+            "js-build-tools"
+          ]
+        },
+        {
+          "id": "js-build-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Changer VITE_API_URL sur le serveur de production suffit à modifier l'URL utilisée par une application déjà construite.\n",
+          "answer": false,
+          "explanation": "Les variables VITE_ sont remplacées par leur valeur au moment du build. Il faut reconstruire, ou charger la configuration au démarrage de l'application.\n",
+          "skills": [
+            "js-build-tools"
+          ]
+        }
+      ],
+      "chapterId": "javascript-build-vite-bundlers-et-source-maps",
+      "technology": "javascript",
+      "contentPath": "javascript/outillage-professionnel/build-vite-bundlers-et-source-maps/quiz.yaml",
+      "contentVersion": "056c780a13b4"
+    },
+    {
+      "id": "javascript-ci-cd-et-controles-automatiques-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-ci-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Pourquoi l'intégration continue utilise-t-elle pnpm install --frozen-lockfile ou npm ci ?\n",
+          "options": [
+            "Pour installer exactement les versions du fichier de verrouillage, et échouer s'il n'est pas à jour",
+            "Pour installer les dernières versions des dépendances",
+            "Pour éviter d'installer les devDependencies",
+            "Pour installer plus vite en sautant la vérification des paquets"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'intégration continue doit tester ce qui est dans le dépôt. Une installation qui modifie le verrou testerait d'autres versions.\n",
+          "skills": [
+            "js-ci-cd"
+          ]
+        },
+        {
+          "id": "js-ci-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Que mettre dans un crochet pre-commit ?\n",
+          "options": [
+            "Formatage et lint des seuls fichiers indexés, en quelques secondes",
+            "Toute la suite de tests et le build de production",
+            "Le déploiement en préproduction",
+            "Rien : les crochets sont interdits en équipe"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Un crochet lent est contourné avec --no-verify. Les vérifications complètes appartiennent à l'intégration continue, qui fait foi.\n",
+          "skills": [
+            "js-ci-cd"
+          ]
+        },
+        {
+          "id": "js-ci-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Quelles pratiques sécurisent un workflow GitHub Actions ?\n",
+          "options": [
+            "Réduire les droits du jeton avec permissions",
+            "Passer les secrets par des variables d'environnement de l'étape, pas en arguments",
+            "Épingler les actions tierces par leur identifiant de commit",
+            "Exposer tous les secrets aux pull requests de dépôts externes pour qu'elles soient testées"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Une pull request externe peut modifier le workflow ou les scripts : lui donner les secrets permettrait de les voler.\n",
+          "skills": [
+            "js-ci-cd"
+          ]
+        },
+        {
+          "id": "js-ci-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Un test qui échoue au hasard peut être ignoré tant qu'il repasse au deuxième essai.\n",
+          "answer": false,
+          "explanation": "Un test instable apprend à l'équipe à ignorer le rouge, et l'intégration continue perd sa valeur. On le corrige ou on l'isole immédiatement.\n",
+          "skills": [
+            "js-ci-cd"
+          ]
+        }
+      ],
+      "chapterId": "javascript-ci-cd-et-controles-automatiques",
+      "technology": "javascript",
+      "contentPath": "javascript/outillage-professionnel/ci-cd-et-controles-automatiques/quiz.yaml",
+      "contentVersion": "982018f73101"
+    },
+    {
+      "id": "javascript-eslint-prettier-et-verification-des-types-quiz",
+      "kind": "QUIZ",
+      "questions": [
+        {
+          "id": "js-outils-qualite-q1",
+          "type": "multiple_choice",
+          "difficulty": 2,
+          "question": "Quel outil signale `if (commande.total > 100) frais == 0;`, une comparaison dont le résultat est ignoré ?\n",
+          "options": [
+            "ESLint, avec la règle no-unused-expressions",
+            "Prettier",
+            "TypeScript avec checkJs",
+            "Aucun outil ne peut le détecter"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "Une expression qui ne fait rien est un motif d'erreur typique, détecté par le linter. Prettier ne juge que la forme.\n",
+          "skills": [
+            "js-lint-format-types"
+          ]
+        },
+        {
+          "id": "js-outils-qualite-q2",
+          "type": "multiple_choice",
+          "difficulty": 3,
+          "question": "Quelle commande l'intégration continue doit-elle lancer pour Prettier ?\n",
+          "options": [
+            "prettier --check .",
+            "prettier --write .",
+            "prettier --fix .",
+            "Aucune : Prettier ne sert que dans l'éditeur"
+          ],
+          "answer": [
+            0
+          ],
+          "explanation": "L'intégration continue vérifie sans modifier : --check échoue si un fichier n'est pas formaté. --write est pour le poste du développeur.\n",
+          "skills": [
+            "js-lint-format-types"
+          ]
+        },
+        {
+          "id": "js-outils-qualite-q3",
+          "type": "multiple_answer",
+          "difficulty": 3,
+          "question": "Que faut-il pour vérifier les types d'un fichier JavaScript avec TypeScript ?\n",
+          "options": [
+            "Activer la vérification avec // @ts-check ou l'option checkJs",
+            "Décrire les types attendus en JSDoc là où l'inférence ne suffit pas",
+            "Lancer tsc --noEmit",
+            "Renommer tous les fichiers en .ts"
+          ],
+          "answer": [
+            0,
+            1,
+            2
+          ],
+          "explanation": "Le renommage n'est pas nécessaire : TypeScript sait vérifier du JavaScript annoté en JSDoc.\n",
+          "skills": [
+            "js-lint-format-types"
+          ]
+        },
+        {
+          "id": "js-outils-qualite-q4",
+          "type": "true_false",
+          "difficulty": 3,
+          "question": "Il est recommandé de configurer les règles d'indentation et de guillemets à la fois dans ESLint et dans Prettier.\n",
+          "answer": false,
+          "explanation": "Les deux outils se contrediraient. On laisse toute la mise en forme à Prettier, et ESLint aux erreurs probables.\n",
+          "skills": [
+            "js-lint-format-types"
+          ]
+        }
+      ],
+      "chapterId": "javascript-eslint-prettier-et-verification-des-types",
+      "technology": "javascript",
+      "contentPath": "javascript/outillage-professionnel/eslint-prettier-et-verification-des-types/quiz.yaml",
+      "contentVersion": "00a25d719eda"
     },
     {
       "id": "javascript-fabrique-singleton-quiz",

@@ -1,0 +1,62 @@
+id: javascript-eslint-prettier-et-verification-des-types-quiz
+kind: QUIZ
+questions:
+  - id: js-outils-qualite-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Quel outil signale `if (commande.total > 100) frais == 0;`, une comparaison dont le résultat est ignoré ?
+    options:
+      - "ESLint, avec la règle no-unused-expressions"
+      - "Prettier"
+      - "TypeScript avec checkJs"
+      - "Aucun outil ne peut le détecter"
+    answer: [0]
+    explanation: >
+      Une expression qui ne fait rien est un motif d'erreur typique, détecté par le linter. Prettier ne juge que la forme.
+    skills:
+      - js-lint-format-types
+
+  - id: js-outils-qualite-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Quelle commande l'intégration continue doit-elle lancer pour Prettier ?
+    options:
+      - "prettier --check ."
+      - "prettier --write ."
+      - "prettier --fix ."
+      - "Aucune : Prettier ne sert que dans l'éditeur"
+    answer: [0]
+    explanation: >
+      L'intégration continue vérifie sans modifier : --check échoue si un fichier n'est pas formaté. --write est pour le
+      poste du développeur.
+    skills:
+      - js-lint-format-types
+
+  - id: js-outils-qualite-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Que faut-il pour vérifier les types d'un fichier JavaScript avec TypeScript ?
+    options:
+      - "Activer la vérification avec // @ts-check ou l'option checkJs"
+      - "Décrire les types attendus en JSDoc là où l'inférence ne suffit pas"
+      - "Lancer tsc --noEmit"
+      - "Renommer tous les fichiers en .ts"
+    answer: [0, 1, 2]
+    explanation: >
+      Le renommage n'est pas nécessaire : TypeScript sait vérifier du JavaScript annoté en JSDoc.
+    skills:
+      - js-lint-format-types
+
+  - id: js-outils-qualite-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Il est recommandé de configurer les règles d'indentation et de guillemets à la fois dans ESLint et dans Prettier.
+    answer: false
+    explanation: >
+      Les deux outils se contrediraient. On laisse toute la mise en forme à Prettier, et ESLint aux erreurs probables.
+    skills:
+      - js-lint-format-types

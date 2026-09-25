@@ -1,0 +1,63 @@
+id: javascript-pull-requests-revue-et-workflows-quiz
+kind: QUIZ
+questions:
+  - id: js-pr-q1
+    type: multiple_choice
+    difficulty: 2
+    question: >
+      Pourquoi garder les pull requests petites ?
+    options:
+      - "Parce que la qualité de la relecture baisse avec la taille du diff"
+      - "Parce que les outils refusent les gros diffs"
+      - "Pour avoir plus de commits dans l'historique"
+      - "Parce que l'intégration continue ne teste que les petits changements"
+    answer: [0]
+    explanation: >
+      Sur quelques dizaines de lignes, on lit chaque ligne ; sur des milliers, on survole. Découper permet une vraie revue.
+    skills:
+      - js-git-collaboration
+
+  - id: js-pr-q2
+    type: multiple_choice
+    difficulty: 3
+    question: >
+      Par quoi un relecteur devrait-il commencer ?
+    options:
+      - "Le besoin et la conception du changement"
+      - "Le formatage et les espaces"
+      - "Les noms de variables"
+      - "Le nombre de commits"
+    answer: [0]
+    explanation: >
+      Un problème de conception rend les remarques de détail inutiles. Le style est d'ailleurs le rôle des outils.
+    skills:
+      - js-git-collaboration
+
+  - id: js-pr-q3
+    type: multiple_answer
+    difficulty: 3
+    question: >
+      Quelles règles protègent utilement la branche main ?
+    options:
+      - "Des vérifications d'intégration continue obligatoires avant fusion"
+      - "Un nombre minimal d'approbations"
+      - "L'interdiction de pousser directement sur main"
+      - "Autoriser la fusion sans revue le vendredi soir pour livrer plus vite"
+    answer: [0, 1, 2]
+    explanation: >
+      Les règles valent justement pour les livraisons pressées, où les erreurs sont les plus probables.
+    skills:
+      - js-git-collaboration
+
+  - id: js-pr-q4
+    type: true_false
+    difficulty: 3
+    question: >
+      Avec le développement sur le tronc, une fonctionnalité inachevée peut être fusionnée dans main si elle est cachée par
+      un feature flag.
+    answer: true
+    explanation: >
+      Le flag garde la fonctionnalité invisible pour les utilisateurs, tout en permettant d'intégrer de petits changements
+      chaque jour.
+    skills:
+      - js-git-collaboration
